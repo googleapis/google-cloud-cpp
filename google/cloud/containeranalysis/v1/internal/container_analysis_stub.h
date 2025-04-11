@@ -55,6 +55,11 @@ class ContainerAnalysisStub {
       grpc::ClientContext& context, Options const& options,
       google::devtools::containeranalysis::v1::
           GetVulnerabilityOccurrencesSummaryRequest const& request) = 0;
+
+  virtual StatusOr<google::devtools::containeranalysis::v1::ExportSBOMResponse>
+  ExportSBOM(grpc::ClientContext& context, Options const& options,
+             google::devtools::containeranalysis::v1::ExportSBOMRequest const&
+                 request) = 0;
 };
 
 class DefaultContainerAnalysisStub : public ContainerAnalysisStub {
@@ -83,6 +88,11 @@ class DefaultContainerAnalysisStub : public ContainerAnalysisStub {
       grpc::ClientContext& context, Options const& options,
       google::devtools::containeranalysis::v1::
           GetVulnerabilityOccurrencesSummaryRequest const& request) override;
+
+  StatusOr<google::devtools::containeranalysis::v1::ExportSBOMResponse>
+  ExportSBOM(grpc::ClientContext& context, Options const& options,
+             google::devtools::containeranalysis::v1::ExportSBOMRequest const&
+                 request) override;
 
  private:
   std::unique_ptr<

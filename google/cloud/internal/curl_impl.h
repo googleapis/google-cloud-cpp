@@ -23,6 +23,7 @@
 #include "google/cloud/internal/rest_request.h"
 #include "google/cloud/internal/rest_response.h"
 #include "google/cloud/options.h"
+#include "google/cloud/ssl_certificate.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include "absl/types/optional.h"
@@ -143,6 +144,10 @@ class CurlImpl {
   absl::optional<std::string> proxy_username_;
   absl::optional<std::string> proxy_password_;
 
+  absl::optional<experimental::SslCertificate> client_ssl_cert_ = absl::nullopt;
+
+  absl::optional<std::string> interface_;
+
   CurlReceivedHeaders received_headers_;
   std::string url_;
   HttpStatusCode http_code_;
@@ -191,6 +196,9 @@ absl::optional<std::string> CurlOptProxyUsername(Options const& options);
 
 /// Compute the CURLOPT_PROXYPASSWORD setting from @p options.
 absl::optional<std::string> CurlOptProxyPassword(Options const& options);
+
+/// Compute the CURLOPT_INTERFACE setting from @p options.
+absl::optional<std::string> CurlOptInterface(Options const& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace rest_internal

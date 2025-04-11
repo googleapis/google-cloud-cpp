@@ -198,6 +198,10 @@ class ContainerAnalysisConnection {
   GetVulnerabilityOccurrencesSummary(
       google::devtools::containeranalysis::v1::
           GetVulnerabilityOccurrencesSummaryRequest const& request);
+
+  virtual StatusOr<google::devtools::containeranalysis::v1::ExportSBOMResponse>
+  ExportSBOM(google::devtools::containeranalysis::v1::ExportSBOMRequest const&
+                 request);
 };
 
 /**

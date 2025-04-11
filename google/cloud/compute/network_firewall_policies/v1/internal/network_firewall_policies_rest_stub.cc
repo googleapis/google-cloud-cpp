@@ -113,6 +113,73 @@ DefaultNetworkFirewallPoliciesRestStub::AddAssociation(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+DefaultNetworkFirewallPoliciesRestStub::AsyncAddPacketMirroringRule(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::network_firewall_policies::v1::
+        AddPacketMirroringRuleRequest const& request) {
+  promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back(
+            {"max_priority", std::to_string(request.max_priority())});
+        query_params.push_back(
+            {"min_priority", std::to_string(request.min_priority())});
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
+        p.set_value(
+            rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+                *service, *rest_context,
+                request.firewall_policy_rule_resource(), false,
+                absl::StrCat("/", "compute", "/",
+                             rest_internal::DetermineApiVersion("v1", *options),
+                             "/", "projects", "/", request.project(), "/",
+                             "global", "/", "firewallPolicies", "/",
+                             request.firewall_policy(), "/",
+                             "addPacketMirroringRule"),
+                std::move(query_params)));
+      },
+      std::move(p),
+      service_,
+      request,
+      std::move(rest_context),
+      std::move(options)};
+  return f.then([t = std::move(t), cq](auto f) mutable {
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
+    return f.get();
+  });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultNetworkFirewallPoliciesRestStub::AddPacketMirroringRule(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::network_firewall_policies::v1::
+        AddPacketMirroringRuleRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back(
+      {"max_priority", std::to_string(request.max_priority())});
+  query_params.push_back(
+      {"min_priority", std::to_string(request.min_priority())});
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.firewall_policy_rule_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "firewallPolicies", "/", request.firewall_policy(), "/",
+                   "addPacketMirroringRule"),
+      std::move(query_params));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultNetworkFirewallPoliciesRestStub::AsyncAddRule(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
@@ -375,6 +442,27 @@ DefaultNetworkFirewallPoliciesRestStub::GetIamPolicy(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::FirewallPolicyRule>
+DefaultNetworkFirewallPoliciesRestStub::GetPacketMirroringRule(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::network_firewall_policies::v1::
+        GetPacketMirroringRuleRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"priority", std::to_string(request.priority())});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::FirewallPolicyRule>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "firewallPolicies", "/", request.firewall_policy(), "/",
+                   "getPacketMirroringRule"),
+      std::move(query_params));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::FirewallPolicyRule>
 DefaultNetworkFirewallPoliciesRestStub::GetRule(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
@@ -535,6 +623,68 @@ DefaultNetworkFirewallPoliciesRestStub::PatchFirewallPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+DefaultNetworkFirewallPoliciesRestStub::AsyncPatchPacketMirroringRule(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::network_firewall_policies::v1::
+        PatchPacketMirroringRuleRequest const& request) {
+  promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back(
+            {"priority", std::to_string(request.priority())});
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
+        p.set_value(
+            rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+                *service, *rest_context,
+                request.firewall_policy_rule_resource(), false,
+                absl::StrCat("/", "compute", "/",
+                             rest_internal::DetermineApiVersion("v1", *options),
+                             "/", "projects", "/", request.project(), "/",
+                             "global", "/", "firewallPolicies", "/",
+                             request.firewall_policy(), "/",
+                             "patchPacketMirroringRule"),
+                std::move(query_params)));
+      },
+      std::move(p),
+      service_,
+      request,
+      std::move(rest_context),
+      std::move(options)};
+  return f.then([t = std::move(t), cq](auto f) mutable {
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
+    return f.get();
+  });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultNetworkFirewallPoliciesRestStub::PatchPacketMirroringRule(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::network_firewall_policies::v1::
+        PatchPacketMirroringRuleRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"priority", std::to_string(request.priority())});
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.firewall_policy_rule_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "firewallPolicies", "/", request.firewall_policy(), "/",
+                   "patchPacketMirroringRule"),
+      std::move(query_params));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultNetworkFirewallPoliciesRestStub::AsyncPatchRule(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
@@ -644,6 +794,58 @@ DefaultNetworkFirewallPoliciesRestStub::RemoveAssociation(
                    "projects", "/", request.project(), "/", "global", "/",
                    "firewallPolicies", "/", request.firewall_policy(), "/",
                    "removeAssociation"),
+      std::move(query_params));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+DefaultNetworkFirewallPoliciesRestStub::AsyncRemovePacketMirroringRule(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::network_firewall_policies::v1::
+        RemovePacketMirroringRuleRequest const& request) {
+  promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        p.set_value(
+            rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+                *service, *rest_context, request, false,
+                absl::StrCat("/", "compute", "/",
+                             rest_internal::DetermineApiVersion("v1", *options),
+                             "/", "projects", "/", request.project(), "/",
+                             "global", "/", "firewallPolicies", "/",
+                             request.firewall_policy(), "/",
+                             "removePacketMirroringRule"),
+                std::move(query_params)));
+      },
+      std::move(p),
+      service_,
+      request,
+      std::move(rest_context),
+      std::move(options)};
+  return f.then([t = std::move(t), cq](auto f) mutable {
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
+    return f.get();
+  });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultNetworkFirewallPoliciesRestStub::RemovePacketMirroringRule(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::network_firewall_policies::v1::
+        RemovePacketMirroringRuleRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "firewallPolicies", "/", request.firewall_policy(), "/",
+                   "removePacketMirroringRule"),
       std::move(query_params));
 }
 

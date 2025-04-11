@@ -82,7 +82,7 @@ RUN curl -fsSL https://github.com/abseil/abseil-cpp/archive/20250127.1.tar.gz | 
     ldconfig && cd /var/tmp && rm -fr build
 
 WORKDIR /var/tmp/build
-RUN curl -fsSL https://github.com/google/googletest/archive/v1.15.2.tar.gz | \
+RUN curl -fsSL https://github.com/google/googletest/archive/v1.16.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE="Release" \
@@ -92,7 +92,7 @@ RUN curl -fsSL https://github.com/google/googletest/archive/v1.15.2.tar.gz | \
     ldconfig && cd /var/tmp && rm -fr build
 
 WORKDIR /var/tmp/build
-RUN curl -fsSL https://github.com/google/benchmark/archive/v1.9.1.tar.gz | \
+RUN curl -fsSL https://github.com/google/benchmark/archive/v1.9.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE="Release" \
@@ -141,7 +141,7 @@ RUN curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v30.0.tar.gz 
     ldconfig && cd /var/tmp && rm -fr build
 
 WORKDIR /var/tmp/build/
-RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.19.0.tar.gz | \
+RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.20.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_CXX_STANDARD=17 \
@@ -211,7 +211,7 @@ RUN curl -fsSL https://github.com/matus-chochlik/ctcache/archive/62631eb1c05688f
     cd /var/tmp && rm -fr build
 
 WORKDIR /var/tmp/sccache
-RUN curl -fsSL https://github.com/mozilla/sccache/releases/download/v0.9.1/sccache-v0.9.1-x86_64-unknown-linux-musl.tar.gz | \
+RUN curl -fsSL https://github.com/mozilla/sccache/releases/download/v0.10.0/sccache-v0.10.0-x86_64-unknown-linux-musl.tar.gz | \
     tar -zxf - --strip-components=1 && \
     mkdir -p /usr/local/bin && \
     mv sccache /usr/local/bin/sccache && \

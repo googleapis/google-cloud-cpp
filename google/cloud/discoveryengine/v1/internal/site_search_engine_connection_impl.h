@@ -121,6 +121,34 @@ class SiteSearchEngineServiceConnectionImpl
       google::cloud::discoveryengine::v1::ListTargetSitesRequest request)
       override;
 
+  future<StatusOr<google::cloud::discoveryengine::v1::Sitemap>> CreateSitemap(
+      google::cloud::discoveryengine::v1::CreateSitemapRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CreateSitemap(
+      NoAwaitTag,
+      google::cloud::discoveryengine::v1::CreateSitemapRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::discoveryengine::v1::Sitemap>> CreateSitemap(
+      google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::discoveryengine::v1::DeleteSitemapMetadata>>
+  DeleteSitemap(google::cloud::discoveryengine::v1::DeleteSitemapRequest const&
+                    request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteSitemap(
+      NoAwaitTag,
+      google::cloud::discoveryengine::v1::DeleteSitemapRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::discoveryengine::v1::DeleteSitemapMetadata>>
+  DeleteSitemap(google::longrunning::Operation const& operation) override;
+
+  StatusOr<google::cloud::discoveryengine::v1::FetchSitemapsResponse>
+  FetchSitemaps(google::cloud::discoveryengine::v1::FetchSitemapsRequest const&
+                    request) override;
+
   future<StatusOr<
       google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchResponse>>
   EnableAdvancedSiteSearch(

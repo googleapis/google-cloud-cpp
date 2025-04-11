@@ -21,7 +21,6 @@ GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES = [
 ]
 
 GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES = [
-    "bigquerycontrol",
     "storage_grpc",
 ]
 
@@ -45,6 +44,7 @@ GOOGLE_CLOUD_CPP_GA_LIBRARIES = [
     "batch",
     "beyondcorp",
     "bigquery",
+    "bigquerycontrol",
     "bigtable",
     "billing",
     "binaryauthorization",
@@ -148,6 +148,7 @@ GOOGLE_CLOUD_CPP_GA_LIBRARIES = [
     "datastream",
     "deploy",
     "developerconnect",
+    "devicestreaming",
     "dialogflow_cx",
     "dialogflow_es",
     "discoveryengine",
@@ -159,6 +160,7 @@ GOOGLE_CLOUD_CPP_GA_LIBRARIES = [
     "essentialcontacts",
     "eventarc",
     "filestore",
+    "financialservices",
     "functions",
     "gkebackup",
     "gkeconnect",
@@ -218,6 +220,7 @@ GOOGLE_CLOUD_CPP_GA_LIBRARIES = [
     "speech",
     "sql",
     "storage",
+    "storagebatchoperations",
     "storagecontrol",
     "storageinsights",
     "storagetransfer",

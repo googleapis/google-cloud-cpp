@@ -310,7 +310,7 @@ class ReservationsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.reservations.v1.GetReservationRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L297}
-  /// [google.cloud.cpp.compute.v1.Reservation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_006.proto#L153}
+  /// [google.cloud.cpp.compute.v1.Reservation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_006.proto#L167}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Reservation> GetReservation(
@@ -342,7 +342,7 @@ class ReservationsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.reservations.v1.GetReservationRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L297}
-  /// [google.cloud.cpp.compute.v1.Reservation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_006.proto#L153}
+  /// [google.cloud.cpp.compute.v1.Reservation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_006.proto#L167}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Reservation> GetReservation(
@@ -569,7 +569,7 @@ class ReservationsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.reservations.v1.ListReservationsRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L344}
-  /// [google.cloud.cpp.compute.v1.Reservation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_006.proto#L153}
+  /// [google.cloud.cpp.compute.v1.Reservation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_006.proto#L167}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Reservation> ListReservations(
@@ -610,7 +610,7 @@ class ReservationsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.reservations.v1.ListReservationsRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L344}
-  /// [google.cloud.cpp.compute.v1.Reservation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_006.proto#L153}
+  /// [google.cloud.cpp.compute.v1.Reservation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_006.proto#L167}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Reservation> ListReservations(

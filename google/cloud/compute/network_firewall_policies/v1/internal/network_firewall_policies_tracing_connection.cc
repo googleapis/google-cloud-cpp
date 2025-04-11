@@ -71,6 +71,41 @@ NetworkFirewallPoliciesTracingConnection::AddAssociation(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NetworkFirewallPoliciesTracingConnection::AddPacketMirroringRule(
+    google::cloud::cpp::compute::network_firewall_policies::v1::
+        AddPacketMirroringRuleRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_network_firewall_policies_v1::NetworkFirewallPoliciesConnection:"
+      ":AddPacketMirroringRule");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->AddPacketMirroringRule(request));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworkFirewallPoliciesTracingConnection::AddPacketMirroringRule(
+    NoAwaitTag, google::cloud::cpp::compute::network_firewall_policies::v1::
+                    AddPacketMirroringRuleRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_network_firewall_policies_v1::NetworkFirewallPoliciesConnection:"
+      ":AddPacketMirroringRule");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->AddPacketMirroringRule(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NetworkFirewallPoliciesTracingConnection::AddPacketMirroringRule(
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_network_firewall_policies_v1::NetworkFirewallPoliciesConnection:"
+      ":AddPacketMirroringRule");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->AddPacketMirroringRule(operation));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworkFirewallPoliciesTracingConnection::AddRule(
     google::cloud::cpp::compute::network_firewall_policies::v1::
         AddRuleRequest const& request) {
@@ -219,6 +254,17 @@ NetworkFirewallPoliciesTracingConnection::GetIamPolicy(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::FirewallPolicyRule>
+NetworkFirewallPoliciesTracingConnection::GetPacketMirroringRule(
+    google::cloud::cpp::compute::network_firewall_policies::v1::
+        GetPacketMirroringRuleRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_network_firewall_policies_v1::NetworkFirewallPoliciesConnection:"
+      ":GetPacketMirroringRule");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetPacketMirroringRule(request));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::FirewallPolicyRule>
 NetworkFirewallPoliciesTracingConnection::GetRule(
     google::cloud::cpp::compute::network_firewall_policies::v1::
         GetRuleRequest const& request) {
@@ -314,6 +360,41 @@ NetworkFirewallPoliciesTracingConnection::PatchFirewallPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NetworkFirewallPoliciesTracingConnection::PatchPacketMirroringRule(
+    google::cloud::cpp::compute::network_firewall_policies::v1::
+        PatchPacketMirroringRuleRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_network_firewall_policies_v1::NetworkFirewallPoliciesConnection:"
+      ":PatchPacketMirroringRule");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->PatchPacketMirroringRule(request));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworkFirewallPoliciesTracingConnection::PatchPacketMirroringRule(
+    NoAwaitTag, google::cloud::cpp::compute::network_firewall_policies::v1::
+                    PatchPacketMirroringRuleRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_network_firewall_policies_v1::NetworkFirewallPoliciesConnection:"
+      ":PatchPacketMirroringRule");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->PatchPacketMirroringRule(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NetworkFirewallPoliciesTracingConnection::PatchPacketMirroringRule(
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_network_firewall_policies_v1::NetworkFirewallPoliciesConnection:"
+      ":PatchPacketMirroringRule");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->PatchPacketMirroringRule(operation));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworkFirewallPoliciesTracingConnection::PatchRule(
     google::cloud::cpp::compute::network_firewall_policies::v1::
         PatchRuleRequest const& request) {
@@ -377,6 +458,41 @@ NetworkFirewallPoliciesTracingConnection::RemoveAssociation(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->RemoveAssociation(operation));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NetworkFirewallPoliciesTracingConnection::RemovePacketMirroringRule(
+    google::cloud::cpp::compute::network_firewall_policies::v1::
+        RemovePacketMirroringRuleRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_network_firewall_policies_v1::NetworkFirewallPoliciesConnection:"
+      ":RemovePacketMirroringRule");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->RemovePacketMirroringRule(request));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworkFirewallPoliciesTracingConnection::RemovePacketMirroringRule(
+    NoAwaitTag, google::cloud::cpp::compute::network_firewall_policies::v1::
+                    RemovePacketMirroringRuleRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_network_firewall_policies_v1::NetworkFirewallPoliciesConnection:"
+      ":RemovePacketMirroringRule");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->RemovePacketMirroringRule(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NetworkFirewallPoliciesTracingConnection::RemovePacketMirroringRule(
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_network_firewall_policies_v1::NetworkFirewallPoliciesConnection:"
+      ":RemovePacketMirroringRule");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->RemovePacketMirroringRule(operation));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

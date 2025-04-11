@@ -64,6 +64,31 @@ NetworkFirewallPoliciesConnection::AddAssociation(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NetworkFirewallPoliciesConnection::AddPacketMirroringRule(
+    google::cloud::cpp::compute::network_firewall_policies::v1::
+        AddPacketMirroringRuleRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworkFirewallPoliciesConnection::AddPacketMirroringRule(
+    NoAwaitTag, google::cloud::cpp::compute::network_firewall_policies::v1::
+                    AddPacketMirroringRuleRequest const&) {
+  return StatusOr<google::cloud::cpp::compute::v1::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NetworkFirewallPoliciesConnection::AddPacketMirroringRule(
+    google::cloud::cpp::compute::v1::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworkFirewallPoliciesConnection::AddRule(
     google::cloud::cpp::compute::network_firewall_policies::v1::
         AddRuleRequest const&) {
@@ -170,6 +195,13 @@ NetworkFirewallPoliciesConnection::GetIamPolicy(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::FirewallPolicyRule>
+NetworkFirewallPoliciesConnection::GetPacketMirroringRule(
+    google::cloud::cpp::compute::network_firewall_policies::v1::
+        GetPacketMirroringRuleRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::cpp::compute::v1::FirewallPolicyRule>
 NetworkFirewallPoliciesConnection::GetRule(
     google::cloud::cpp::compute::network_firewall_policies::v1::
         GetRuleRequest const&) {
@@ -235,6 +267,31 @@ NetworkFirewallPoliciesConnection::PatchFirewallPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NetworkFirewallPoliciesConnection::PatchPacketMirroringRule(
+    google::cloud::cpp::compute::network_firewall_policies::v1::
+        PatchPacketMirroringRuleRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworkFirewallPoliciesConnection::PatchPacketMirroringRule(
+    NoAwaitTag, google::cloud::cpp::compute::network_firewall_policies::v1::
+                    PatchPacketMirroringRuleRequest const&) {
+  return StatusOr<google::cloud::cpp::compute::v1::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NetworkFirewallPoliciesConnection::PatchPacketMirroringRule(
+    google::cloud::cpp::compute::v1::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworkFirewallPoliciesConnection::PatchRule(
     google::cloud::cpp::compute::network_firewall_policies::v1::
         PatchRuleRequest const&) {
@@ -278,6 +335,31 @@ NetworkFirewallPoliciesConnection::RemoveAssociation(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworkFirewallPoliciesConnection::RemoveAssociation(
+    google::cloud::cpp::compute::v1::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NetworkFirewallPoliciesConnection::RemovePacketMirroringRule(
+    google::cloud::cpp::compute::network_firewall_policies::v1::
+        RemovePacketMirroringRuleRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworkFirewallPoliciesConnection::RemovePacketMirroringRule(
+    NoAwaitTag, google::cloud::cpp::compute::network_firewall_policies::v1::
+                    RemovePacketMirroringRuleRequest const&) {
+  return StatusOr<google::cloud::cpp::compute::v1::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NetworkFirewallPoliciesConnection::RemovePacketMirroringRule(
     google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(

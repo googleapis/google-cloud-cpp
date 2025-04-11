@@ -56,7 +56,7 @@ RUN curl -fsSL https://github.com/google/re2/archive/2024-07-02.tar.gz | \
 # Install googletest, remove the downloaded files and the temporary artifacts
 # after a successful build to keep the image smaller (and with fewer layers)
 WORKDIR /var/tmp/build
-RUN curl -fsSL https://github.com/google/googletest/archive/v1.15.2.tar.gz | \
+RUN curl -fsSL https://github.com/google/googletest/archive/v1.16.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE="Release" \
@@ -68,7 +68,7 @@ RUN curl -fsSL https://github.com/google/googletest/archive/v1.15.2.tar.gz | \
 
 # Download and compile Google microbenchmark support library:
 WORKDIR /var/tmp/build
-RUN curl -fsSL https://github.com/google/benchmark/archive/v1.9.1.tar.gz | \
+RUN curl -fsSL https://github.com/google/benchmark/archive/v1.9.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE="Release" \
@@ -95,7 +95,7 @@ RUN curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v30.0.tar.gz 
 # GCC 7.x. See https://github.com/open-telemetry/opentelemetry-cpp/issues/1014
 # for more details.
 WORKDIR /var/tmp/build/opentelemetry-cpp
-RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.19.0.tar.gz | \
+RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.20.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     sed -i 's/Stack &GetStack()/Stack \&GetStack() __attribute__((noinline, noclone))/' "api/include/opentelemetry/context/runtime_context.h" && \
     cmake \
@@ -143,7 +143,7 @@ RUN curl -fsSL https://github.com/nlohmann/json/archive/v3.11.3.tar.gz | \
     ldconfig && cd /var/tmp && rm -fr build
 
 WORKDIR /var/tmp/sccache
-RUN curl -fsSL https://github.com/mozilla/sccache/releases/download/v0.9.1/sccache-v0.9.1-x86_64-unknown-linux-musl.tar.gz | \
+RUN curl -fsSL https://github.com/mozilla/sccache/releases/download/v0.10.0/sccache-v0.10.0-x86_64-unknown-linux-musl.tar.gz | \
     tar -zxf - --strip-components=1 && \
     mkdir -p /usr/local/bin && \
     mv sccache /usr/local/bin/sccache && \

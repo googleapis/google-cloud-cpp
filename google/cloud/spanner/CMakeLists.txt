@@ -211,6 +211,8 @@ add_library(
     transaction.cc
     transaction.h
     update_instance_request_builder.h
+    uuid.cc
+    uuid.h
     value.cc
     value.h
     version.cc
@@ -502,6 +504,7 @@ function (spanner_client_define_tests)
         timestamp_test.cc
         transaction_test.cc
         update_instance_request_builder_test.cc
+        uuid_test.cc
         value_test.cc)
 
     # Export the list of unit tests to a .bzl file so we do not need to maintain

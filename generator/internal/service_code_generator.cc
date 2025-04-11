@@ -287,6 +287,7 @@ std::string ServiceCodeGenerator::vars(std::string const& key) const {
 VarsDictionary ServiceCodeGenerator::MergeServiceAndMethodVars(
     google::protobuf::MethodDescriptor const& method) const {
   auto vars = service_vars_;
+  // NOLINTNEXTLINE(performance-unnecessary-copy-initialization)
   std::string const method_full_name{method.full_name()};
   vars.insert(service_method_vars_.at(method_full_name).begin(),
               service_method_vars_.at(method_full_name).end());

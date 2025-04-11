@@ -354,6 +354,18 @@ class InstancesConnection {
   RemoveResourcePolicies(
       google::cloud::cpp::compute::v1::Operation const& operation);
 
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  ReportHostAsFaulty(google::cloud::cpp::compute::instances::v1::
+                         ReportHostAsFaultyRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  ReportHostAsFaulty(NoAwaitTag, google::cloud::cpp::compute::instances::v1::
+                                     ReportHostAsFaultyRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  ReportHostAsFaulty(
+      google::cloud::cpp::compute::v1::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Reset(
       google::cloud::cpp::compute::instances::v1::ResetRequest const& request);
 

@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DISCOVERYENGINE_V1_INTERNAL_CONVERSATIONAL_SEARCH_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DISCOVERYENGINE_V1_INTERNAL_CONVERSATIONAL_SEARCH_STUB_H
 
+#include "google/cloud/internal/streaming_read_rpc.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
@@ -77,6 +78,13 @@ class ConversationalSearchServiceStub {
   AnswerQuery(grpc::ClientContext& context, Options const& options,
               google::cloud::discoveryengine::v1::AnswerQueryRequest const&
                   request) = 0;
+
+  virtual std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+      google::cloud::discoveryengine::v1::AnswerQueryResponse>>
+  StreamAnswerQuery(
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      google::cloud::discoveryengine::v1::AnswerQueryRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::discoveryengine::v1::Answer> GetAnswer(
       grpc::ClientContext& context, Options const& options,
@@ -165,6 +173,13 @@ class DefaultConversationalSearchServiceStub
 
   StatusOr<google::cloud::discoveryengine::v1::AnswerQueryResponse> AnswerQuery(
       grpc::ClientContext& context, Options const& options,
+      google::cloud::discoveryengine::v1::AnswerQueryRequest const& request)
+      override;
+
+  std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+      google::cloud::discoveryengine::v1::AnswerQueryResponse>>
+  StreamAnswerQuery(
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::discoveryengine::v1::AnswerQueryRequest const& request)
       override;
 

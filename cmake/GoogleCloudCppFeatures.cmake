@@ -37,7 +37,7 @@ set(GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES
 )
 
 set(GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES # cmake-format: sort
-                                          "bigquerycontrol" "storage_grpc")
+                                          "storage_grpc")
 
 set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     # cmake-format: sort
@@ -60,6 +60,7 @@ set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     "batch"
     "beyondcorp"
     "bigquery"
+    "bigquerycontrol"
     "bigtable"
     "billing"
     "binaryauthorization"
@@ -87,6 +88,7 @@ set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     "datastream"
     "deploy"
     "developerconnect"
+    "devicestreaming"
     "dialogflow_cx"
     "dialogflow_es"
     "discoveryengine"
@@ -98,6 +100,7 @@ set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     "essentialcontacts"
     "eventarc"
     "filestore"
+    "financialservices"
     "functions"
     "gkebackup"
     "gkeconnect"
@@ -157,6 +160,7 @@ set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     "speech"
     "sql"
     "storage"
+    "storagebatchoperations"
     "storagecontrol"
     "storageinsights"
     "storagetransfer"

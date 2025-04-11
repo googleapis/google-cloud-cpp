@@ -45,6 +45,11 @@ Idempotency RoutersConnectionIdempotencyPolicy::DeleteRouter(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency RoutersConnectionIdempotencyPolicy::DeleteRoutePolicy(
+    google::cloud::cpp::compute::routers::v1::DeleteRoutePolicyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency RoutersConnectionIdempotencyPolicy::GetRouter(
     google::cloud::cpp::compute::routers::v1::GetRouterRequest const&) {
   return Idempotency::kIdempotent;
@@ -57,6 +62,11 @@ Idempotency RoutersConnectionIdempotencyPolicy::GetNatIpInfo(
 
 Idempotency RoutersConnectionIdempotencyPolicy::GetNatMappingInfo(
     google::cloud::cpp::compute::routers::v1::GetNatMappingInfoRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency RoutersConnectionIdempotencyPolicy::GetRoutePolicy(
+    google::cloud::cpp::compute::routers::v1::GetRoutePolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
@@ -75,8 +85,23 @@ Idempotency RoutersConnectionIdempotencyPolicy::ListRouters(
   return Idempotency::kIdempotent;
 }
 
+Idempotency RoutersConnectionIdempotencyPolicy::ListBgpRoutes(
+    google::cloud::cpp::compute::routers::v1::ListBgpRoutesRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency RoutersConnectionIdempotencyPolicy::ListRoutePolicies(
+    google::cloud::cpp::compute::routers::v1::ListRoutePoliciesRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 Idempotency RoutersConnectionIdempotencyPolicy::PatchRouter(
     google::cloud::cpp::compute::routers::v1::PatchRouterRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency RoutersConnectionIdempotencyPolicy::PatchRoutePolicy(
+    google::cloud::cpp::compute::routers::v1::PatchRoutePolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -88,6 +113,11 @@ Idempotency RoutersConnectionIdempotencyPolicy::Preview(
 Idempotency RoutersConnectionIdempotencyPolicy::UpdateRouter(
     google::cloud::cpp::compute::routers::v1::UpdateRouterRequest const&) {
   return Idempotency::kIdempotent;
+}
+
+Idempotency RoutersConnectionIdempotencyPolicy::UpdateRoutePolicy(
+    google::cloud::cpp::compute::routers::v1::UpdateRoutePolicyRequest const&) {
+  return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<RoutersConnectionIdempotencyPolicy>

@@ -57,6 +57,11 @@ class ContainerAnalysisAuth : public ContainerAnalysisStub {
       google::devtools::containeranalysis::v1::
           GetVulnerabilityOccurrencesSummaryRequest const& request) override;
 
+  StatusOr<google::devtools::containeranalysis::v1::ExportSBOMResponse>
+  ExportSBOM(grpc::ClientContext& context, Options const& options,
+             google::devtools::containeranalysis::v1::ExportSBOMRequest const&
+                 request) override;
+
  private:
   std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;
   std::shared_ptr<ContainerAnalysisStub> child_;

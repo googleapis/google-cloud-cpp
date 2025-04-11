@@ -82,6 +82,18 @@ ConversationalSearchServiceConnection::AnswerQuery(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StreamRange<google::cloud::discoveryengine::v1::AnswerQueryResponse>
+ConversationalSearchServiceConnection::StreamAnswerQuery(
+    google::cloud::discoveryengine::v1::AnswerQueryRequest const&) {
+  return google::cloud::internal::MakeStreamRange<
+      google::cloud::discoveryengine::v1::AnswerQueryResponse>(
+      []()
+          -> absl::variant<
+              Status, google::cloud::discoveryengine::v1::AnswerQueryResponse> {
+        return Status(StatusCode::kUnimplemented, "not implemented");
+      });
+}
+
 StatusOr<google::cloud::discoveryengine::v1::Answer>
 ConversationalSearchServiceConnection::GetAnswer(
     google::cloud::discoveryengine::v1::GetAnswerRequest const&) {

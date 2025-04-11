@@ -3,6 +3,8 @@
 @com_google_googleapis//google/devtools/artifactregistry/v1:attachment.proto
 @com_google_googleapis//google/devtools/artifactregistry/v1:file.proto
 @com_google_googleapis//google/devtools/artifactregistry/v1:generic.proto
+@com_google_googleapis//google/devtools/artifactregistry/v1:go.proto
+@com_google_googleapis//google/devtools/artifactregistry/v1:kfp_artifact.proto
 @com_google_googleapis//google/devtools/artifactregistry/v1:package.proto
 @com_google_googleapis//google/devtools/artifactregistry/v1:repository.proto
 @com_google_googleapis//google/devtools/artifactregistry/v1:rule.proto
