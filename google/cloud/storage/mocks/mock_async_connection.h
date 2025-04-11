@@ -36,10 +36,22 @@ class MockAsyncConnection : public storage_experimental::AsyncConnection {
               (InsertObjectParams), (override));
   MOCK_METHOD(
       future<StatusOr<
+          std::shared_ptr<storage_experimental::ObjectDescriptorConnection>>>,
+      Open, (OpenParams), (override));
+  MOCK_METHOD(
+      future<StatusOr<
           std::unique_ptr<storage_experimental::AsyncReaderConnection>>>,
       ReadObject, (ReadObjectParams), (override));
   MOCK_METHOD(future<StatusOr<storage_experimental::ReadPayload>>,
               ReadObjectRange, (ReadObjectParams), (override));
+  MOCK_METHOD(
+      future<StatusOr<
+          std::unique_ptr<storage_experimental::AsyncWriterConnection>>>,
+      StartAppendableObjectUpload, (AppendableUploadParams), (override));
+  MOCK_METHOD(
+      future<StatusOr<
+          std::unique_ptr<storage_experimental::AsyncWriterConnection>>>,
+      ResumeAppendableObjectUpload, (AppendableUploadParams), (override));
   MOCK_METHOD(
       future<StatusOr<
           std::unique_ptr<storage_experimental::AsyncWriterConnection>>>,

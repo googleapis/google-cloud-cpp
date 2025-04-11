@@ -73,6 +73,19 @@ struct UseMD5ValueOption {
   using Type = std::string;
 };
 
+/**
+ * Use this option to limit the size of `ObjectDescriptor::Read()` requests.
+ *
+ * @par Example
+ * @code
+ * auto client = gcs::AsyncClient(gcs::MakeAsyncConnection(
+ *   Options{}.set<MaximumRangeSizeOption>(128L * 1024 * 1024)));
+ * @endcode
+ */
+struct MaximumRangeSizeOption {
+  using Type = std::uint64_t;
+};
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_experimental
 }  // namespace cloud

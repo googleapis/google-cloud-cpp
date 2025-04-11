@@ -85,6 +85,13 @@ TEST(DefaultOptionsAsync, Adjust) {
   EXPECT_LT(lwm, hwm);
 }
 
+TEST(DefaultOptionsAsync, MaximumRangeSizeOption) {
+  auto const options = DefaultOptionsAsync({});
+  auto const max_range_size_option =
+      options.get<storage_experimental::MaximumRangeSizeOption>();
+  EXPECT_EQ(max_range_size_option, 128 * 1024 * 1024L);
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
