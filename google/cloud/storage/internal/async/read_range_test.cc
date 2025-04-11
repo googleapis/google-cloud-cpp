@@ -184,7 +184,7 @@ TEST(ReadRange, Queue) {
 
 TEST(ReadRange, HashFunctionCalled) {
   auto hash_function = std::make_shared<MockHashFunction>();
-  absl::Cord contents("1234567890");
+  absl::string_view contents("1234567890");
   EXPECT_CALL(*hash_function, Update(0, contents, _)).Times(AtLeast(1));
 
   ReadRange actual(0, 0, hash_function);
