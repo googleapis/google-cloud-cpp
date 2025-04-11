@@ -18,10 +18,12 @@
 #include "google/cloud/internal/curl_wrappers.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
+#include "absl/strings/string_view.h"
 #include "absl/types/optional.h"
 #include <deque>
 #include <mutex>
 #include <string>
+#include <vector>
 
 namespace google {
 namespace cloud {
@@ -54,6 +56,7 @@ class CurlHandleFactory {
   // class is in `internal::`.
   virtual absl::optional<std::string> cainfo() const = 0;
   virtual absl::optional<std::string> capath() const = 0;
+  virtual std::vector<absl::string_view> const& ca_certs() const = 0;
 
  protected:
   // Only virtual for testing purposes.
@@ -90,6 +93,9 @@ class DefaultCurlHandleFactory : public CurlHandleFactory {
 
   absl::optional<std::string> cainfo() const override { return cainfo_; }
   absl::optional<std::string> capath() const override { return capath_; }
+  std::vector<absl::string_view> const& ca_certs() const override {
+    return ca_certs_;
+  }
 
  private:
   void SetCurlOptions(CURL* handle);
@@ -98,6 +104,7 @@ class DefaultCurlHandleFactory : public CurlHandleFactory {
   std::string last_client_ip_address_;
   absl::optional<std::string> cainfo_;
   absl::optional<std::string> capath_;
+  std::vector<absl::string_view> ca_certs_;
 };
 
 /**
@@ -137,16 +144,21 @@ class PooledCurlHandleFactory : public CurlHandleFactory {
 
   absl::optional<std::string> cainfo() const override { return cainfo_; }
   absl::optional<std::string> capath() const override { return capath_; }
+  std::vector<absl::string_view> const& ca_certs() const override {
+    return ca_certs_;
+  }
 
  private:
   void SetCurlOptions(CURL* handle);
   static absl::optional<std::string> CAInfo(Options const& o);
   static absl::optional<std::string> CAPath(Options const& o);
+  static std::vector<absl::string_view> CACerts(Options const& o);
 
   // These are constant after initialization and thus need no locking.
   std::size_t const maximum_size_;
   absl::optional<std::string> const cainfo_;
   absl::optional<std::string> const capath_;
+  std::vector<absl::string_view> ca_certs_;
 
   mutable std::mutex handles_mu_;
   std::deque<CurlPtr> handles_;
