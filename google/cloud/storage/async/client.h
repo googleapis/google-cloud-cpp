@@ -259,8 +259,8 @@ class AsyncClient {
    * will resume any incomplete ranged reads if the connection(s) are
    * interrupted. Use `ResumePolicyOption` and `ResumePolicy` to control this.
    *
-   * @param bucket_name the name of the bucket that contains the object.
-   * @param object_name the name of the object to be read.
+   * @param spec the BidiReadObjectSpec to use when retrieving the
+   * ObjectDescriptor.
    * @param opts options controlling the behavior of this RPC, for example
    *     the application may change the retry policy.
    */
@@ -429,8 +429,6 @@ class AsyncClient {
   /**
    * Resume a resumable upload session for appendable objects and automatic
    * recovery from transient failures.
-   *
-   * @snippet{doc} async/client.h resume-appendable-object-upload
    *
    * @param bucket_name the name of the bucket that contains the object.
    * @param object_name the name of the object to be uploaded.
