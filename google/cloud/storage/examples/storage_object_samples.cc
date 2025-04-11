@@ -322,8 +322,8 @@ void ReadObjectIntoMemory(google::cloud::storage::Client client,
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& object_name) {
     gcs::ObjectReadStream stream = client.ReadObject(bucket_name, object_name);
-    std::string buffer{std::istream_iterator<char>(stream),
-                       std::istream_iterator<char>()};
+    std::string buffer{std::istreambuf_iterator<char>(stream),
+                       std::istreambuf_iterator<char>()};
     if (stream.bad()) throw google::cloud::Status(stream.status());
 
     std::cout << "The object has " << buffer.size() << " characters\n";
@@ -340,7 +340,7 @@ void ReadObjectGzip(google::cloud::storage::Client client,
      std::string const& object_name) {
     auto is =
         client.ReadObject(bucket_name, object_name, gcs::AcceptEncodingGzip());
-    auto const contents = std::string{std::istream_iterator<char>(is), {}};
+    auto const contents = std::string{std::istreambuf_iterator<char>(is), {}};
     if (is.bad()) throw google::cloud::Status(is.status());
     std::cout << "The object has " << contents.size() << " characters\n";
   }
