@@ -97,7 +97,7 @@ class Interval {
   }
   ///@}
 
-  /// @name Conversion to a string using "intervalstyle == postgres".
+  /// @name Conversion to a string using ISO8601 duration format.
   explicit operator std::string() const;
 
   /// @name Output streaming
