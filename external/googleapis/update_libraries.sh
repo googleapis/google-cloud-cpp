@@ -91,6 +91,7 @@ declare -A -r LIBRARIES=(
       "@com_google_googleapis//google/cloud/certificatemanager/v1:certificatemanager_cc_grpc"
   )"
   ["channel"]="@com_google_googleapis//google/cloud/channel/v1:channel_cc_grpc"
+  ["chronicle"]="@com_google_googleapis//google/cloud/chronicle/v1:chronicle_cc_grpc"
   ["cloudbuild"]="$(
     printf ",%s" \
       "@com_google_googleapis//google/devtools/cloudbuild/v1:cloudbuild_cc_grpc" \

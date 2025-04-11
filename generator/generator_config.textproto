@@ -666,6 +666,42 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+# Chronicle
+service {
+  service_proto_path: "google/cloud/chronicle/v1/entity.proto"
+  product_path: "google/cloud/chronicle/v1"
+  initial_copyright_year: "2025"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/chronicle/v1/data_access_control.proto"
+  product_path: "google/cloud/chronicle/v1"
+  initial_copyright_year: "2025"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/chronicle/v1/instance.proto"
+  product_path: "google/cloud/chronicle/v1"
+  initial_copyright_year: "2025"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/chronicle/v1/rule.proto"
+  product_path: "google/cloud/chronicle/v1"
+  initial_copyright_year: "2025"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/chronicle/v1/reference_list.proto"
+  product_path: "google/cloud/chronicle/v1"
+  initial_copyright_year: "2025"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Cloud Build
 service {
   service_proto_path: "google/devtools/cloudbuild/v1/cloudbuild.proto"

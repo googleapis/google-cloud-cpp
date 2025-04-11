@@ -66,6 +66,7 @@ set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     "binaryauthorization"
     "certificatemanager"
     "channel"
+    "chronicle"
     "cloudbuild"
     "cloudcontrolspartner"
     "cloudquotas"
