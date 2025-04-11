@@ -202,6 +202,80 @@ DefaultSiteSearchEngineServiceStub::ListTargetSites(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+DefaultSiteSearchEngineServiceStub::AsyncCreateSitemap(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::discoveryengine::v1::CreateSitemapRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::discoveryengine::v1::CreateSitemapRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::discoveryengine::v1::CreateSitemapRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCreateSitemap(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultSiteSearchEngineServiceStub::CreateSitemap(
+    grpc::ClientContext& context, Options,
+    google::cloud::discoveryengine::v1::CreateSitemapRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateSitemap(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultSiteSearchEngineServiceStub::AsyncDeleteSitemap(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::discoveryengine::v1::DeleteSitemapRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::discoveryengine::v1::DeleteSitemapRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::discoveryengine::v1::DeleteSitemapRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeleteSitemap(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultSiteSearchEngineServiceStub::DeleteSitemap(
+    grpc::ClientContext& context, Options,
+    google::cloud::discoveryengine::v1::DeleteSitemapRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteSitemap(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::discoveryengine::v1::FetchSitemapsResponse>
+DefaultSiteSearchEngineServiceStub::FetchSitemaps(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::discoveryengine::v1::FetchSitemapsRequest const& request) {
+  google::cloud::discoveryengine::v1::FetchSitemapsResponse response;
+  auto status = grpc_stub_->FetchSitemaps(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
 DefaultSiteSearchEngineServiceStub::AsyncEnableAdvancedSiteSearch(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

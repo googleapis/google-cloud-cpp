@@ -75,6 +75,21 @@ Idempotency SiteSearchEngineServiceConnectionIdempotencyPolicy::ListTargetSites(
   return Idempotency::kIdempotent;
 }
 
+Idempotency SiteSearchEngineServiceConnectionIdempotencyPolicy::CreateSitemap(
+    google::cloud::discoveryengine::v1::CreateSitemapRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency SiteSearchEngineServiceConnectionIdempotencyPolicy::DeleteSitemap(
+    google::cloud::discoveryengine::v1::DeleteSitemapRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency SiteSearchEngineServiceConnectionIdempotencyPolicy::FetchSitemaps(
+    google::cloud::discoveryengine::v1::FetchSitemapsRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 Idempotency
 SiteSearchEngineServiceConnectionIdempotencyPolicy::EnableAdvancedSiteSearch(
     google::cloud::discoveryengine::v1::

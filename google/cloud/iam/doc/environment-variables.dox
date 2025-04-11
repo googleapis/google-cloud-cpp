@@ -26,6 +26,14 @@ environment variables are convenient when troubleshooting problems.
   `EndpointOption` (which defaults to "iam.googleapis.com")
   used by `MakePoliciesConnection()`.
 
+- `GOOGLE_CLOUD_CPP_POLICY_BINDINGS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "iam.googleapis.com")
+  used by `MakePolicyBindingsConnection()`.
+
+- `GOOGLE_CLOUD_CPP_PRINCIPAL_ACCESS_BOUNDARY_POLICIES_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "iam.googleapis.com")
+  used by `MakePrincipalAccessBoundaryPoliciesConnection()`.
+
 <!-- inject-endpoint-env-vars-end -->
 
 @see google::cloud::EndpointOption

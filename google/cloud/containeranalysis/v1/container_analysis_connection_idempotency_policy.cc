@@ -57,6 +57,11 @@ Idempotency ContainerAnalysisConnectionIdempotencyPolicy::
   return Idempotency::kIdempotent;
 }
 
+Idempotency ContainerAnalysisConnectionIdempotencyPolicy::ExportSBOM(
+    google::devtools::containeranalysis::v1::ExportSBOMRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<ContainerAnalysisConnectionIdempotencyPolicy>
 MakeDefaultContainerAnalysisConnectionIdempotencyPolicy() {
   return std::make_unique<ContainerAnalysisConnectionIdempotencyPolicy>();

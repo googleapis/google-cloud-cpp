@@ -70,6 +70,11 @@ class ConversationalSearchServiceTracingConnection
       google::cloud::discoveryengine::v1::AnswerQueryRequest const& request)
       override;
 
+  StreamRange<google::cloud::discoveryengine::v1::AnswerQueryResponse>
+  StreamAnswerQuery(
+      google::cloud::discoveryengine::v1::AnswerQueryRequest const& request)
+      override;
+
   StatusOr<google::cloud::discoveryengine::v1::Answer> GetAnswer(
       google::cloud::discoveryengine::v1::GetAnswerRequest const& request)
       override;

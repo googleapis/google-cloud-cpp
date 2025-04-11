@@ -64,6 +64,15 @@ class SiteSearchEngineServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency ListTargetSites(
       google::cloud::discoveryengine::v1::ListTargetSitesRequest request);
 
+  virtual google::cloud::Idempotency CreateSitemap(
+      google::cloud::discoveryengine::v1::CreateSitemapRequest const& request);
+
+  virtual google::cloud::Idempotency DeleteSitemap(
+      google::cloud::discoveryengine::v1::DeleteSitemapRequest const& request);
+
+  virtual google::cloud::Idempotency FetchSitemaps(
+      google::cloud::discoveryengine::v1::FetchSitemapsRequest const& request);
+
   virtual google::cloud::Idempotency EnableAdvancedSiteSearch(
       google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchRequest const&
           request);

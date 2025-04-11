@@ -113,7 +113,7 @@ class UserEventServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.UserEvent]: @googleapis_reference_link{google/cloud/discoveryengine/v1/user_event.proto#L36}
-  /// [google.cloud.discoveryengine.v1.WriteUserEventRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/user_event_service.proto#L122}
+  /// [google.cloud.discoveryengine.v1.WriteUserEventRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/user_event_service.proto#L126}
   ///
   // clang-format on
   StatusOr<google::cloud::discoveryengine::v1::UserEvent> WriteUserEvent(
@@ -148,7 +148,7 @@ class UserEventServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.api.HttpBody]: @googleapis_reference_link{google/api/httpbody.proto#L70}
-  /// [google.cloud.discoveryengine.v1.CollectUserEventRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/user_event_service.proto#L149}
+  /// [google.cloud.discoveryengine.v1.CollectUserEventRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/user_event_service.proto#L153}
   ///
   // clang-format on
   StatusOr<google::api::HttpBody> CollectUserEvent(
@@ -190,7 +190,7 @@ class UserEventServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.PurgeUserEventsRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/purge_config.proto#L35}
-  /// [google.cloud.discoveryengine.v1.PurgeUserEventsResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/purge_config.proto#L85}
+  /// [google.cloud.discoveryengine.v1.PurgeUserEventsResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/purge_config.proto#L89}
   ///
   // clang-format on
   future<StatusOr<google::cloud::discoveryengine::v1::PurgeUserEventsResponse>>
@@ -263,8 +263,8 @@ class UserEventServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.ImportUserEventsRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/import_config.proto#L403}
-  /// [google.cloud.discoveryengine.v1.ImportUserEventsResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/import_config.proto#L439}
+  /// [google.cloud.discoveryengine.v1.ImportUserEventsRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/import_config.proto#L415}
+  /// [google.cloud.discoveryengine.v1.ImportUserEventsResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/import_config.proto#L451}
   ///
   // clang-format on
   future<StatusOr<google::cloud::discoveryengine::v1::ImportUserEventsResponse>>

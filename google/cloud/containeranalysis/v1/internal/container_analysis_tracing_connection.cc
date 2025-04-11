@@ -72,6 +72,15 @@ ContainerAnalysisTracingConnection::GetVulnerabilityOccurrencesSummary(
                            child_->GetVulnerabilityOccurrencesSummary(request));
 }
 
+StatusOr<google::devtools::containeranalysis::v1::ExportSBOMResponse>
+ContainerAnalysisTracingConnection::ExportSBOM(
+    google::devtools::containeranalysis::v1::ExportSBOMRequest const& request) {
+  auto span = internal::MakeSpan(
+      "containeranalysis_v1::ContainerAnalysisConnection::ExportSBOM");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->ExportSBOM(request));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<containeranalysis_v1::ContainerAnalysisConnection>

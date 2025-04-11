@@ -83,6 +83,15 @@ ContainerAnalysisMetadata::GetVulnerabilityOccurrencesSummary(
   return child_->GetVulnerabilityOccurrencesSummary(context, options, request);
 }
 
+StatusOr<google::devtools::containeranalysis::v1::ExportSBOMResponse>
+ContainerAnalysisMetadata::ExportSBOM(
+    grpc::ClientContext& context, Options const& options,
+    google::devtools::containeranalysis::v1::ExportSBOMRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->ExportSBOM(context, options, request);
+}
+
 void ContainerAnalysisMetadata::SetMetadata(grpc::ClientContext& context,
                                             Options const& options,
                                             std::string const& request_params) {

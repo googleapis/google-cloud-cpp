@@ -67,6 +67,15 @@ ContainerAnalysisAuth::GetVulnerabilityOccurrencesSummary(
   return child_->GetVulnerabilityOccurrencesSummary(context, options, request);
 }
 
+StatusOr<google::devtools::containeranalysis::v1::ExportSBOMResponse>
+ContainerAnalysisAuth::ExportSBOM(
+    grpc::ClientContext& context, Options const& options,
+    google::devtools::containeranalysis::v1::ExportSBOMRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ExportSBOM(context, options, request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace containeranalysis_v1_internal
 }  // namespace cloud

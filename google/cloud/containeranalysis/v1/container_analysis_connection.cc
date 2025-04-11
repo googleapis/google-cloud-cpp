@@ -61,6 +61,12 @@ ContainerAnalysisConnection::GetVulnerabilityOccurrencesSummary(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::devtools::containeranalysis::v1::ExportSBOMResponse>
+ContainerAnalysisConnection::ExportSBOM(
+    google::devtools::containeranalysis::v1::ExportSBOMRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 std::shared_ptr<ContainerAnalysisConnection> MakeContainerAnalysisConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

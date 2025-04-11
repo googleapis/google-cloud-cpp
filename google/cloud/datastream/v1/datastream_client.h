@@ -114,7 +114,7 @@ class DatastreamClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datastream.v1.ConnectionProfile]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L427}
+  /// [google.cloud.datastream.v1.ConnectionProfile]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L516}
   /// [google.cloud.datastream.v1.ListConnectionProfilesRequest]: @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L422}
   ///
   // clang-format on
@@ -154,7 +154,7 @@ class DatastreamClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datastream.v1.ConnectionProfile]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L427}
+  /// [google.cloud.datastream.v1.ConnectionProfile]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L516}
   /// [google.cloud.datastream.v1.ListConnectionProfilesRequest]: @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L422}
   ///
   // clang-format on
@@ -181,7 +181,7 @@ class DatastreamClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datastream.v1.ConnectionProfile]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L427}
+  /// [google.cloud.datastream.v1.ConnectionProfile]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L516}
   /// [google.cloud.datastream.v1.GetConnectionProfileRequest]: @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L464}
   ///
   // clang-format on
@@ -211,7 +211,7 @@ class DatastreamClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datastream.v1.ConnectionProfile]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L427}
+  /// [google.cloud.datastream.v1.ConnectionProfile]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L516}
   /// [google.cloud.datastream.v1.GetConnectionProfileRequest]: @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L464}
   ///
   // clang-format on
@@ -247,7 +247,7 @@ class DatastreamClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datastream.v1.ConnectionProfile]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L427}
+  /// [google.cloud.datastream.v1.ConnectionProfile]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L516}
   /// [google.cloud.datastream.v1.CreateConnectionProfileRequest]: @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L475}
   ///
   // clang-format on
@@ -305,7 +305,7 @@ class DatastreamClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datastream.v1.ConnectionProfile]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L427}
+  /// [google.cloud.datastream.v1.ConnectionProfile]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L516}
   /// [google.cloud.datastream.v1.CreateConnectionProfileRequest]: @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L475}
   ///
   // clang-format on
@@ -375,7 +375,7 @@ class DatastreamClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datastream.v1.ConnectionProfile]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L427}
+  /// [google.cloud.datastream.v1.ConnectionProfile]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L516}
   /// [google.cloud.datastream.v1.UpdateConnectionProfileRequest]: @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L515}
   ///
   // clang-format on
@@ -432,7 +432,7 @@ class DatastreamClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datastream.v1.ConnectionProfile]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L427}
+  /// [google.cloud.datastream.v1.ConnectionProfile]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L516}
   /// [google.cloud.datastream.v1.UpdateConnectionProfileRequest]: @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L515}
   ///
   // clang-format on
@@ -652,7 +652,7 @@ class DatastreamClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.datastream.v1.ListStreamsRequest]: @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L578}
-  /// [google.cloud.datastream.v1.Stream]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L1042}
+  /// [google.cloud.datastream.v1.Stream]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L1228}
   ///
   // clang-format on
   StreamRange<google::cloud::datastream::v1::Stream> ListStreams(
@@ -691,7 +691,7 @@ class DatastreamClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.datastream.v1.ListStreamsRequest]: @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L578}
-  /// [google.cloud.datastream.v1.Stream]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L1042}
+  /// [google.cloud.datastream.v1.Stream]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L1228}
   ///
   // clang-format on
   StreamRange<google::cloud::datastream::v1::Stream> ListStreams(
@@ -717,7 +717,7 @@ class DatastreamClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.datastream.v1.GetStreamRequest]: @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L620}
-  /// [google.cloud.datastream.v1.Stream]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L1042}
+  /// [google.cloud.datastream.v1.Stream]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L1228}
   ///
   // clang-format on
   StatusOr<google::cloud::datastream::v1::Stream> GetStream(
@@ -747,7 +747,7 @@ class DatastreamClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.datastream.v1.GetStreamRequest]: @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L620}
-  /// [google.cloud.datastream.v1.Stream]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L1042}
+  /// [google.cloud.datastream.v1.Stream]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L1228}
   ///
   // clang-format on
   StatusOr<google::cloud::datastream::v1::Stream> GetStream(
@@ -782,7 +782,7 @@ class DatastreamClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.datastream.v1.CreateStreamRequest]: @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L631}
-  /// [google.cloud.datastream.v1.Stream]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L1042}
+  /// [google.cloud.datastream.v1.Stream]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L1228}
   ///
   // clang-format on
   future<StatusOr<google::cloud::datastream::v1::Stream>> CreateStream(
@@ -837,7 +837,7 @@ class DatastreamClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.datastream.v1.CreateStreamRequest]: @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L631}
-  /// [google.cloud.datastream.v1.Stream]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L1042}
+  /// [google.cloud.datastream.v1.Stream]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L1228}
   ///
   // clang-format on
   future<StatusOr<google::cloud::datastream::v1::Stream>> CreateStream(
@@ -902,7 +902,7 @@ class DatastreamClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datastream.v1.Stream]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L1042}
+  /// [google.cloud.datastream.v1.Stream]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L1228}
   /// [google.cloud.datastream.v1.UpdateStreamRequest]: @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L670}
   ///
   // clang-format on
@@ -955,7 +955,7 @@ class DatastreamClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.datastream.v1.Stream]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L1042}
+  /// [google.cloud.datastream.v1.Stream]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L1228}
   /// [google.cloud.datastream.v1.UpdateStreamRequest]: @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L670}
   ///
   // clang-format on
@@ -1138,7 +1138,7 @@ class DatastreamClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.datastream.v1.RunStreamRequest]: @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L732}
-  /// [google.cloud.datastream.v1.Stream]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L1042}
+  /// [google.cloud.datastream.v1.Stream]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L1228}
   ///
   // clang-format on
   future<StatusOr<google::cloud::datastream::v1::Stream>> RunStream(
@@ -1192,7 +1192,7 @@ class DatastreamClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.datastream.v1.GetStreamObjectRequest]: @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L751}
-  /// [google.cloud.datastream.v1.StreamObject]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L1161}
+  /// [google.cloud.datastream.v1.StreamObject]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L1356}
   ///
   // clang-format on
   StatusOr<google::cloud::datastream::v1::StreamObject> GetStreamObject(
@@ -1222,7 +1222,7 @@ class DatastreamClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.datastream.v1.GetStreamObjectRequest]: @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L751}
-  /// [google.cloud.datastream.v1.StreamObject]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L1161}
+  /// [google.cloud.datastream.v1.StreamObject]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L1356}
   ///
   // clang-format on
   StatusOr<google::cloud::datastream::v1::StreamObject> GetStreamObject(
@@ -1253,7 +1253,7 @@ class DatastreamClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.datastream.v1.LookupStreamObjectRequest]: @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L763}
-  /// [google.cloud.datastream.v1.StreamObject]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L1161}
+  /// [google.cloud.datastream.v1.StreamObject]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L1356}
   ///
   // clang-format on
   StatusOr<google::cloud::datastream::v1::StreamObject> LookupStreamObject(
@@ -1288,7 +1288,7 @@ class DatastreamClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.datastream.v1.ListStreamObjectsRequest]: @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L815}
-  /// [google.cloud.datastream.v1.StreamObject]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L1161}
+  /// [google.cloud.datastream.v1.StreamObject]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L1356}
   ///
   // clang-format on
   StreamRange<google::cloud::datastream::v1::StreamObject> ListStreamObjects(
@@ -1327,7 +1327,7 @@ class DatastreamClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.datastream.v1.ListStreamObjectsRequest]: @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L815}
-  /// [google.cloud.datastream.v1.StreamObject]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L1161}
+  /// [google.cloud.datastream.v1.StreamObject]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L1356}
   ///
   // clang-format on
   StreamRange<google::cloud::datastream::v1::StreamObject> ListStreamObjects(
@@ -1549,7 +1549,7 @@ class DatastreamClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.datastream.v1.CreatePrivateConnectionRequest]: @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L882}
-  /// [google.cloud.datastream.v1.PrivateConnection]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L222}
+  /// [google.cloud.datastream.v1.PrivateConnection]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L298}
   ///
   // clang-format on
   future<StatusOr<google::cloud::datastream::v1::PrivateConnection>>
@@ -1607,7 +1607,7 @@ class DatastreamClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.datastream.v1.CreatePrivateConnectionRequest]: @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L882}
-  /// [google.cloud.datastream.v1.PrivateConnection]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L222}
+  /// [google.cloud.datastream.v1.PrivateConnection]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L298}
   ///
   // clang-format on
   future<StatusOr<google::cloud::datastream::v1::PrivateConnection>>
@@ -1665,7 +1665,7 @@ class DatastreamClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.datastream.v1.GetPrivateConnectionRequest]: @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L993}
-  /// [google.cloud.datastream.v1.PrivateConnection]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L222}
+  /// [google.cloud.datastream.v1.PrivateConnection]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L298}
   ///
   // clang-format on
   StatusOr<google::cloud::datastream::v1::PrivateConnection>
@@ -1695,7 +1695,7 @@ class DatastreamClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.datastream.v1.GetPrivateConnectionRequest]: @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L993}
-  /// [google.cloud.datastream.v1.PrivateConnection]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L222}
+  /// [google.cloud.datastream.v1.PrivateConnection]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L298}
   ///
   // clang-format on
   StatusOr<google::cloud::datastream::v1::PrivateConnection>
@@ -1733,7 +1733,7 @@ class DatastreamClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.datastream.v1.ListPrivateConnectionsRequest]: @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L918}
-  /// [google.cloud.datastream.v1.PrivateConnection]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L222}
+  /// [google.cloud.datastream.v1.PrivateConnection]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L298}
   ///
   // clang-format on
   StreamRange<google::cloud::datastream::v1::PrivateConnection>
@@ -1773,7 +1773,7 @@ class DatastreamClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.datastream.v1.ListPrivateConnectionsRequest]: @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L918}
-  /// [google.cloud.datastream.v1.PrivateConnection]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L222}
+  /// [google.cloud.datastream.v1.PrivateConnection]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L298}
   ///
   // clang-format on
   StreamRange<google::cloud::datastream::v1::PrivateConnection>
@@ -1926,7 +1926,7 @@ class DatastreamClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.datastream.v1.CreateRouteRequest]: @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L1004}
-  /// [google.cloud.datastream.v1.Route]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L294}
+  /// [google.cloud.datastream.v1.Route]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L376}
   ///
   // clang-format on
   future<StatusOr<google::cloud::datastream::v1::Route>> CreateRoute(
@@ -1982,7 +1982,7 @@ class DatastreamClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.datastream.v1.CreateRouteRequest]: @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L1004}
-  /// [google.cloud.datastream.v1.Route]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L294}
+  /// [google.cloud.datastream.v1.Route]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L376}
   ///
   // clang-format on
   future<StatusOr<google::cloud::datastream::v1::Route>> CreateRoute(
@@ -2036,7 +2036,7 @@ class DatastreamClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.datastream.v1.GetRouteRequest]: @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L1106}
-  /// [google.cloud.datastream.v1.Route]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L294}
+  /// [google.cloud.datastream.v1.Route]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L376}
   ///
   // clang-format on
   StatusOr<google::cloud::datastream::v1::Route> GetRoute(
@@ -2066,7 +2066,7 @@ class DatastreamClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.datastream.v1.GetRouteRequest]: @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L1106}
-  /// [google.cloud.datastream.v1.Route]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L294}
+  /// [google.cloud.datastream.v1.Route]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L376}
   ///
   // clang-format on
   StatusOr<google::cloud::datastream::v1::Route> GetRoute(
@@ -2102,7 +2102,7 @@ class DatastreamClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.datastream.v1.ListRoutesRequest]: @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L1036}
-  /// [google.cloud.datastream.v1.Route]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L294}
+  /// [google.cloud.datastream.v1.Route]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L376}
   ///
   // clang-format on
   StreamRange<google::cloud::datastream::v1::Route> ListRoutes(
@@ -2142,7 +2142,7 @@ class DatastreamClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.datastream.v1.ListRoutesRequest]: @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L1036}
-  /// [google.cloud.datastream.v1.Route]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L294}
+  /// [google.cloud.datastream.v1.Route]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L376}
   ///
   // clang-format on
   StreamRange<google::cloud::datastream::v1::Route> ListRoutes(

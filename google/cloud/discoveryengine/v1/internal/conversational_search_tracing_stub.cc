@@ -18,6 +18,7 @@
 
 #include "google/cloud/discoveryengine/v1/internal/conversational_search_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/internal/streaming_read_rpc_tracing.h"
 #include <memory>
 #include <utility>
 
@@ -125,6 +126,22 @@ ConversationalSearchServiceTracingStub::AnswerQuery(
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->AnswerQuery(context, options, request));
+}
+
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+    google::cloud::discoveryengine::v1::AnswerQueryResponse>>
+ConversationalSearchServiceTracingStub::StreamAnswerQuery(
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::cloud::discoveryengine::v1::AnswerQueryRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.ConversationalSearchService",
+      "StreamAnswerQuery");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto stream = child_->StreamAnswerQuery(context, options, request);
+  return std::make_unique<internal::StreamingReadRpcTracing<
+      google::cloud::discoveryengine::v1::AnswerQueryResponse>>(
+      std::move(context), std::move(stream), std::move(span));
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Answer>

@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-//! [all]
+//! [all] [START storage_enable_otel_tracing]
 #include "google/cloud/opentelemetry/configure_basic_tracing.h"
 #include "google/cloud/storage/client.h"
 #include "google/cloud/opentelemetry_options.h"
@@ -63,4 +63,4 @@ int main(int argc, char* argv[]) {
 
   return 0;
 }
-//! [all]
+//! [all] [END storage_enable_otel_tracing]
