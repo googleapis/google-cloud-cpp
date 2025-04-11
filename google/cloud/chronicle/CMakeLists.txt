@@ -28,8 +28,13 @@ if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
         COMMAND
             cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
             $<TARGET_FILE:chronicle_quickstart> GOOGLE_CLOUD_PROJECT
-            GOOGLE_CLOUD_CPP_TEST_REGION # EDIT HERE
+            GOOGLE_CLOUD_CPP_TEST_REGION "instance-id-x")
+    set_tests_properties(
+        chronicle_quickstart
+        PROPERTIES
+            LABELS
+            "integration-test;quickstart"
+            PASS_REGULAR_EXPRESSION
+            "UNIMPLEMENTED: Permanent error, with a last message of Received http2 header with status: 404"
     )
-    set_tests_properties(chronicle_quickstart
-                         PROPERTIES LABELS "integration-test;quickstart")
 endif ()

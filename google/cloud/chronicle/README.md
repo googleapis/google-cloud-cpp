@@ -18,23 +18,26 @@ this library.
 <!-- inject-quickstart-start -->
 
 ```cc
-#include "google/cloud/chronicle/v1/ EDIT HERE _client.h"
+#include "google/cloud/chronicle/v1/entity_client.h"
 #include "google/cloud/location.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 3) {
-    std::cerr << "Usage: " << argv[0] << " project-id location-id\n";
+  if (argc != 4) {
+    std::cerr << "Usage: " << argv[0]
+              << " project-id location-id instance-id\n";
     return 1;
   }
 
   auto const location = google::cloud::Location(argv[1], argv[2]);
+  auto const instance_id = std::string(argv[3]);
 
   namespace chronicle = ::google::cloud::chronicle_v1;
-  auto client = chronicle::ServiceClient(
-      chronicle::MakeServiceConnection());  // EDIT HERE
+  auto client =
+      chronicle::EntityServiceClient(chronicle::MakeEntityServiceConnection());
 
-  for (auto r : client.List /*EDIT HERE*/ (location.FullName())) {
+  for (auto r : client.ListWatchlists(location.FullName() + "/instances/" +
+                                      instance_id)) {
     if (!r) throw std::move(r).status();
     std::cout << r->DebugString() << "\n";
   }
