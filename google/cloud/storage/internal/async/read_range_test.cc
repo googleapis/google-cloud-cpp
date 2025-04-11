@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/async/read_range.h"
+#include "google/cloud/storage/internal/grpc/ctype_cord_workaround.h"
 #include "google/cloud/storage/internal/hash_function.h"
 #include "google/cloud/storage/internal/hash_values.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
@@ -48,6 +49,10 @@ using ::testing::ElementsAre;
 using ::testing::Optional;
 using ::testing::ResultOf;
 using ::testing::VariantWith;
+
+using HashUpdateType =
+    std::conditional_t<std::is_same<absl::Cord, ContentType>::value,
+                       absl::Cord const&, absl::string_view>;
 
 TEST(ReadRange, BasicLifecycle) {
   ReadRange actual(10000, 40);
@@ -171,7 +176,7 @@ TEST(ReadRange, Queue) {
 
 TEST(ReadRange, HashFunctionCalled) {
   auto hash_function = std::make_shared<MockHashFunction>();
-  EXPECT_CALL(*hash_function, Update(0, An<absl::Cord const&>(), _))
+  EXPECT_CALL(*hash_function, Update(0, An<HashUpdateType>(), _))
       .Times(AtLeast(1));
 
   ReadRange actual(0, 10, hash_function);
