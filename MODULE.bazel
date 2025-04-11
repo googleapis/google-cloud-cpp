@@ -64,7 +64,6 @@ archive_override(
     ],
 )
 
-
 switched_rules = use_extension("@com_google_googleapis//:extensions.bzl", "switched_rules")
 switched_rules.use_languages(
     cc = True,
