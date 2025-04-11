@@ -115,7 +115,7 @@ std::string SerializeInterval(std::int32_t months, std::int32_t days,
     if (years == 0 && months == 0 && days == 0) ss << "0D";
   } else {
     ss << 'T';
-    auto* sign = "";
+    auto const* sign = "";
     nanoseconds::rep nanosecond_carry = 0;
     if (offset < nanoseconds::zero()) {
       sign = "-";
@@ -208,7 +208,7 @@ bool ParseInteger(absl::string_view& s, T& n, bool allow_sign) {
 Status SyntaxError(absl::string_view str, absl::string_view suf,
                    internal::ErrorInfoBuilder eib) {
   return internal::InvalidArgumentError(
-      absl::StrFormat("\"%s\": Syntax error at \"%s\" (position %d)",  //
+      absl::StrFormat(R"("%s": Syntax error at "%s" (position %d))",  //
                       str, suf.substr(0, 5), suf.data() - str.data()),
       std::move(eib));
 }
@@ -256,8 +256,8 @@ StatusOr<Interval> ParseISO8601Interval(absl::string_view str) {
   Interval intvl;
   absl::string_view s = str;
 
-  auto units = std::begin(kISO8601DateUnitFactories);
-  auto units_end = std::end(kISO8601DateUnitFactories);
+  auto const* units = std::begin(kISO8601DateUnitFactories);
+  auto const* units_end = std::end(kISO8601DateUnitFactories);
   enum { kValue, kUnit, kNothing } expecting = kValue;
   bool negated = false;
 
