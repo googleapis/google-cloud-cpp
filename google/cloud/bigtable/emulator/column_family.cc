@@ -89,33 +89,20 @@ std::map<std::string, std::vector<Cell>> ColumnFamily::DeleteRow(
   std::map<std::string, std::vector<Cell>> res;
 
   auto row_it = rows_.find(row_key);
+  if (row_it == rows_.end()) {
+    return {};
+  }
 
-  for (auto column_it = row_it->second.begin();
-       row_it != rows_.end() && column_it != row_it->second.end();
-       // Why we call row_it->second.begin() every iteration:
-       // DeleteColumn can invalidate the iterator by deleting a
-       // column family row's keys (the column qualifiers and their
-       // column rows), therefore we need to re-calculate the
-       // beginning of the map every loop. At the same time because we
-       // are removing all cells of every column, we know DeleteColumn
-       // will eventually remove all the columns and the row itself,
-       // so this loop will terminate.
-       //
-       // Unfortunately we also have to re-initialize the row_it after
-       // every loop execution because DeleteColumn maintains the
-       // invariant that a row cannot be empty, so every loop
-       // execution can also delete the row_key and invalidate the
-       // iterator.
-       row_it = rows_.find(row_key),
-            column_it = row_it->second.begin()) {
-    // Not setting start and end timestamps selects all cells for deletion.
+  for (auto& column : row_it->second.columns_) {
+    // Not setting start and end timestamps will select all cells for deletion
     ::google::bigtable::v2::TimestampRange time_range;
-
-    auto deleted_column = DeleteColumn(row_it, column_it->first, time_range);
-    if (deleted_column.size() > 0) {
-      res[std::move(column_it->first)] = std::move(deleted_column);
+    auto deleted_cells = column.second.DeleteTimeRange(time_range);
+    if (deleted_cells.size() > 0) {
+      res[std::move(column.first)] = std::move(deleted_cells);
     }
   }
+
+  rows_.erase(row_key);
 
   return res;
 }

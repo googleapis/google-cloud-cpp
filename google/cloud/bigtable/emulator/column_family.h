@@ -153,6 +153,8 @@ class ColumnFamilyRow {
   }
 
  private:
+  friend class ColumnFamily;
+
   std::map<std::string, ColumnRow> columns_;
 };
 
