@@ -46,23 +46,25 @@ namespace emulator {
 //
 // Unfortunately, some filters (e.g. `cells_per_row_limit_filter`) prevents us
 // from moving filters applied later in the chain to its beginning. Hence, we
-// need to keep the naive (object-per-graph-node) approach.
+// need to keep the naive (object-per-graph-node) approach at least as a backup
+// option.
 //
-// We do attempt to apply the filtering as close to the root as possible via
-// `AbstractCellStreamImpl::Apply()`. This operation has different
-// implementations for different filters.
+// We do attempt to apply the filtering as close to the root as possible,
+// though. It is performed via the `AbstractCellStreamImpl::Apply()` function.
+// This operation has different implementations for different filters.
 //
 // The algorithm looks as follows:
 // * we try to build the DAG according to the proto, from the ground up
-// * every time we're about to add a new node, we first try applying the
-//   the graph we built so far by calling `Apply()` on the last node we added;
+// * every time we're about to add a new node, we first try applying the filter
+//   to the graph we built so far by calling `Apply()` on the last node we
+//   added;
 // * these `Apply()` calls are propagated through the graph all the way to the
 //   root
 // * if the `Apply()` call fails (e.g. because there is a
 //   `cells_per_row_limit_filter` in the DAG), we will continue with adding a
 //   new node to the graph
-// * if the `Apply` call fails then we know that the lower layers will filter
-//   out the unwanted data so we can skip adding the node to the graph.
+// * if the `Apply` call succeeds then we know that the lower layers will filter
+//   out the unwanted data, so we can skip adding the node to the graph.
 
 /// Only return cells from rows whose keys match `regex`.
 struct RowKeyRegex {
@@ -239,8 +241,6 @@ class MergeCellStreams : public AbstractCellStreamImpl {
 
  private:
   void InitializeIfNeeded() const;
-  void ReassesStreams() const;
-  bool SkipRowOrColumn(NextMode mode);
 
   mutable bool initialized_{false};
 

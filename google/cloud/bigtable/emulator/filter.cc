@@ -256,9 +256,9 @@ class TrivialFilter : public AbstractCellStreamImpl {
    *     whether to filter it out or not (if not, also how far to advance the
    *     underlying cell stream).
    *  @param filter_filter a functor which given an `InternalFilter` decides
-   *    whether filtering this cell streams results and then applying the
+   *    whether filtering this cell stream's results and then applying the
    *    `InternalFilter` would yield the same results as applying
-   *    `InternalFilter` to the underlying stream and the perform this stream's
+   *    `InternalFilter` to the underlying stream and then perform this stream's
    *    filtering.
    */
   TrivialFilter(CellStream source, Filter filter,
@@ -322,11 +322,11 @@ class TrivialFilter : public AbstractCellStreamImpl {
  * @param filter functor, which accepts a `CellView` and decides
  *     whether to filter it out or not (if not, also how far to advance the
  *     underlying cell stream).
- *  @param filter_filter a functor which given an `InternalFilter` decides
- *    whether filtering this cell stream's results and then applying the
- *    `InternalFilter` would yield the same results as applying
- *    `InternalFilter` to the underlying stream and the perform this stream's
- *    filtering.
+ * @param filter_filter a functor which given an `InternalFilter` decides
+ *     whether filtering this cell stream's results and then applying the
+ *     `InternalFilter` would yield the same results as applying
+ *     `InternalFilter` to the underlying stream and the perform this stream's
+ *     filtering.
  */
 template <typename Filter>
 CellStream MakeTrivialFilter(
@@ -409,67 +409,83 @@ CellView const& MergeCellStreams::Value() const {
 
 bool MergeCellStreams::Next(NextMode mode) {
   InitializeIfNeeded();
-  if (unfinished_streams_.empty()) {
-    return true;
-  }
-  if (mode != NextMode::kCell) {
-    SkipRowOrColumn(mode);
-    return true;
-  }
+  assert(!unfinished_streams_.empty());
+
+  // If we're skipping to the next column/row, we need to advance all streams
+  // that currently point to that column/row.
+  //
+  // To do this, we temporarily remove those streams from the heap
+  // (since advancing them would require re-adjusting the heap).
+  // These streams remain at the end of the `unfinished_streams_` vector,
+  // but are not considered part of the heap. The `to_readd_begin` iterator
+  // marks the start of the range in `unfinished_streams_` that is outside
+  // the heap.
+
   std::pop_heap(unfinished_streams_.begin(), unfinished_streams_.end(),
                 CellStreamGreater());
-  auto& stream_to_advance = unfinished_streams_.back();
-  stream_to_advance->Next(NextMode::kCell);
-  if (stream_to_advance->HasValue()) {
-    std::push_heap(unfinished_streams_.begin(), unfinished_streams_.end(),
-                   CellStreamGreater());
-  } else {
+  std::vector<std::unique_ptr<CellStream>>::iterator first_to_advance =
+      std::prev(unfinished_streams_.end());
+  std::vector<std::unique_ptr<CellStream>>::iterator to_readd_begin =
+      first_to_advance;
+
+  auto all_streams_to_advance_removed_from_heap = [&] () {
+    if (unfinished_streams_.begin() == to_readd_begin) {
+      // All streams removed.
+      return true;
+    }
+    if (mode == NextMode::kCell) {
+      // We only need to remove one stream, which we already did.
+      return true;
+    }
+    if (mode == NextMode::kRow) {
+      return unfinished_streams_.front()->Value().row_key() !=
+             (*first_to_advance)->Value().row_key();
+    }
+    assert(mode == NextMode::kColumn);
+    return unfinished_streams_.front()->Value().column_qualifier() !=
+               (*first_to_advance)->Value().column_qualifier() ||
+           unfinished_streams_.front()->Value().column_family() !=
+               (*first_to_advance)->Value().column_family() ||
+           unfinished_streams_.front()->Value().row_key() !=
+               (*first_to_advance)->Value().row_key();
+  };
+  while (!all_streams_to_advance_removed_from_heap()) {
+    std::pop_heap(unfinished_streams_.begin(), to_readd_begin,
+                  CellStreamGreater());
+    --to_readd_begin;
+  }
+  while (to_readd_begin != unfinished_streams_.end()) {
+    (*to_readd_begin)->Next(mode);
+    if ((*to_readd_begin)->HasValue()) {
+      ++to_readd_begin;
+      std::push_heap(unfinished_streams_.begin(), to_readd_begin,
+                     CellStreamGreater());
+      continue;
+    }
+    // The stream is finished, delete it.
+    to_readd_begin->swap(unfinished_streams_.back());
     unfinished_streams_.pop_back();
+    // Don't advance `to_readd_begin` since it points to a different stream
+    // after `swap()`.
   }
   return true;
 }
 
 void MergeCellStreams::InitializeIfNeeded() const {
   if (!initialized_) {
-    ReassesStreams();
+    for (auto stream_it = unfinished_streams_.begin();
+         stream_it != unfinished_streams_.end();) {
+      if (!(*stream_it)->HasValue()) {
+        stream_it->swap(unfinished_streams_.back());
+        unfinished_streams_.pop_back();
+      } else {
+        ++stream_it;
+      }
+    }
+    std::make_heap(unfinished_streams_.begin(), unfinished_streams_.end(),
+                   CellStreamGreater());
     initialized_ = true;
   }
-}
-
-void MergeCellStreams::ReassesStreams() const {
-  for (auto stream_it = unfinished_streams_.begin();
-       stream_it != unfinished_streams_.end();) {
-    if (!(*stream_it)->HasValue()) {
-      stream_it->swap(unfinished_streams_.back());
-      unfinished_streams_.pop_back();
-    } else {
-      ++stream_it;
-    }
-  }
-  std::make_heap(unfinished_streams_.begin(), unfinished_streams_.end(),
-                 CellStreamGreater());
-}
-
-bool MergeCellStreams::SkipRowOrColumn(NextMode mode) {
-  assert(mode != NextMode::kCell);
-  // The first element in `unfinished_streams_` is the stream beginning with the
-  // smallest Cell - the one we would normally return. Before we alter this
-  // stream alter all others which point to the same column/row.
-  for (auto stream_it = std::next(unfinished_streams_.begin());
-       stream_it != unfinished_streams_.end(); ++stream_it) {
-    if ((mode == NextMode::kRow ||
-         ((*stream_it)->Value().column_qualifier() ==
-              unfinished_streams_.front()->Value().column_qualifier() &&
-          (*stream_it)->Value().column_family() ==
-              unfinished_streams_.front()->Value().column_family())) &&
-        (*stream_it)->Value().row_key() ==
-            unfinished_streams_.front()->Value().row_key()) {
-      (*stream_it)->Next(mode);
-    }
-  }
-  unfinished_streams_.front()->Next(mode);
-  ReassesStreams();
-  return true;
 }
 
 /// A cell stream for handling a Condition filter.
@@ -597,7 +613,8 @@ class EmptyCellStreamImpl : public AbstractCellStreamImpl {
   bool HasValue() const override { return false; }
   CellView const& Value() const override {
     assert(false);
-    // The code below makes no sense but it should be dead.
+    // The code below makes no sense but it should be dead. It's to silence
+    // compiler warnings.
     static CellView dummy{"row", "cf", "col", std::chrono::milliseconds(0),
                           "val"};
     return dummy;
