@@ -137,7 +137,7 @@ TEST(AsyncConnectionImplTest, OpenSimple) {
         });
         EXPECT_CALL(*stream, Write)
             .WillOnce(
-                [&sequencer](
+                [&sequencer, kExpectedRequest](
                     google::storage::v2::BidiReadObjectRequest const& request,
                     grpc::WriteOptions) {
                   auto expected = google::storage::v2::BidiReadObjectRequest{};
@@ -150,7 +150,7 @@ TEST(AsyncConnectionImplTest, OpenSimple) {
         EXPECT_CALL(*stream, Read)
             .WillOnce([&]() {
               return sequencer.PushBack("Read").then(
-                  [](auto f) -> absl::optional<
+                  [kMetadataText](auto f) -> absl::optional<
                                  google::storage::v2::BidiReadObjectResponse> {
                     if (!f.get()) return absl::nullopt;
                     auto constexpr kHandleText = R"pb(
