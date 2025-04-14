@@ -109,13 +109,15 @@ Status RedirectError(absl::string_view handle, absl::string_view token) {
 // Verify we can open a stream, without retries, timeouts, or any other
 // difficulties. This test does not read any data.
 TEST(AsyncConnectionImplTest, OpenSimple) {
-  auto constexpr kExpectedRequest = R"pb(
+  // These variables are declared as static to work around a MSVC
+  // compiler issue requiring explicit capture of constexpr in a lmabda.
+  auto static constexpr kExpectedRequest = R"pb(
     bucket: "test-only-invalid"
     object: "test-object"
     generation: 42
     if_metageneration_match: 7
   )pb";
-  auto constexpr kMetadataText = R"pb(
+  auto static constexpr kMetadataText = R"pb(
     bucket: "projects/_/buckets/test-bucket"
     name: "test-object"
     generation: 42
@@ -137,7 +139,7 @@ TEST(AsyncConnectionImplTest, OpenSimple) {
         });
         EXPECT_CALL(*stream, Write)
             .WillOnce(
-                [&sequencer, kExpectedRequest](
+                [&sequencer](
                     google::storage::v2::BidiReadObjectRequest const& request,
                     grpc::WriteOptions) {
                   auto expected = google::storage::v2::BidiReadObjectRequest{};
@@ -150,7 +152,7 @@ TEST(AsyncConnectionImplTest, OpenSimple) {
         EXPECT_CALL(*stream, Read)
             .WillOnce([&]() {
               return sequencer.PushBack("Read").then(
-                  [kMetadataText](auto f) -> absl::optional<
+                  [](auto f) -> absl::optional<
                                  google::storage::v2::BidiReadObjectResponse> {
                     if (!f.get()) return absl::nullopt;
                     auto constexpr kHandleText = R"pb(
