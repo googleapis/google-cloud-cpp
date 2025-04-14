@@ -104,7 +104,8 @@ struct Interface {
 /// The complete list of options accepted by `CurlRestClient`
 using RestOptionList =
     ::google::cloud::OptionList<QuotaUserOption, RestTracingOptionsOption,
-                                ServerTimeoutOption, UserIpOption, Interface>;
+                                ServerTimeoutOption, UserIpOption, Interface,
+                                experimental::SslCtxCallbackOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
