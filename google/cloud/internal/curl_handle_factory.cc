@@ -17,8 +17,10 @@
 #include "google/cloud/internal/curl_options.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/log.h"
+#ifndef _WIN32
 #include <openssl/err.h>
 #include <openssl/ssl.h>
+#endif
 #include <algorithm>
 #include <iterator>
 
