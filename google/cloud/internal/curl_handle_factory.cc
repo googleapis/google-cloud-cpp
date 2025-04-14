@@ -44,7 +44,8 @@ struct X509InfoPtrCleanup {
 };
 
 using X509InfoPtr = std::unique_ptr<STACK_OF(X509_INFO), X509InfoPtrCleanup>;
-
+#else
+using SSL_CTX = void;
 #endif
 
 Status SetCurlCAInMemory(CurlHandleFactory const& factory, SSL_CTX* ssl_ctx) {
