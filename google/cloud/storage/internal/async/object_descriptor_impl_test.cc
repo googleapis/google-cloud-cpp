@@ -159,8 +159,8 @@ TEST(ObjectDescriptorImpl, ReadSingleRange) {
         });
       });
   EXPECT_CALL(*stream, Read)
-      .WillOnce([&sequencer]() {
-        return sequencer.PushBack("Read[1]").then([](auto) {
+      .WillOnce([&]() {
+        return sequencer.PushBack("Read[1]").then([&](auto) {
           auto response = Response{};
           EXPECT_TRUE(TextFormat::ParseFromString(kResponse1, &response));
           return absl::make_optional(response);
@@ -658,7 +658,7 @@ auto InitialStream(AsyncSequencer<bool>& sequencer) {
 
   EXPECT_CALL(*stream, Read)
       .WillOnce([&]() {
-        return sequencer.PushBack("Read[1]").then([](auto) {
+        return sequencer.PushBack("Read[1]").then([&](auto) {
           auto response = Response{};
           EXPECT_TRUE(TextFormat::ParseFromString(kResponse1, &response));
           return absl::make_optional(response);
@@ -712,7 +712,7 @@ TEST(ObjectDescriptorImpl, ResumeRangesOnRecoverableError) {
   AsyncSequencer<bool> sequencer;
 
   MockFactory factory;
-  EXPECT_CALL(factory, Call).WillOnce([&sequencer](Request const& request) {
+  EXPECT_CALL(factory, Call).WillOnce([&](Request const& request) {
     auto expected = Request{};
     EXPECT_TRUE(TextFormat::ParseFromString(kResumeRequest, &expected));
     EXPECT_THAT(request, IsProtoEqualModuloRepeatedFieldOrdering(expected));
@@ -981,7 +981,7 @@ TEST(ObjectDescriptorImpl, ResumeUsesRouting) {
   )pb";
 
   MockFactory factory;
-  EXPECT_CALL(factory, Call).WillOnce([&sequencer](Request const& request) {
+  EXPECT_CALL(factory, Call).WillOnce([&](Request const& request) {
     auto expected = Request{};
     EXPECT_TRUE(TextFormat::ParseFromString(kResumeRequest, &expected));
     EXPECT_THAT(request, IsProtoEqualModuloRepeatedFieldOrdering(expected));
@@ -1114,7 +1114,7 @@ TEST(ObjectDescriptorImpl, RecoverFromPartialFailure) {
   EXPECT_CALL(*stream, Cancel).Times(1);
 
   MockFactory factory;
-  EXPECT_CALL(factory, Call).WillOnce([&sequencer](Request const& request) {
+  EXPECT_CALL(factory, Call).WillOnce([&](Request const& request) {
     auto expected = Request{};
     EXPECT_TRUE(TextFormat::ParseFromString(kResumeRequest, &expected));
     EXPECT_THAT(request, IsProtoEqualModuloRepeatedFieldOrdering(expected));
