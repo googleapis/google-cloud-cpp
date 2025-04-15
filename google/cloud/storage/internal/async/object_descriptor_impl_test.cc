@@ -639,7 +639,7 @@ auto InitialStream(AsyncSequencer<bool>& sequencer) {
   auto stream = std::make_unique<MockStream>();
   EXPECT_CALL(*stream, Cancel).Times(1);  // Always called by OpenStream
   EXPECT_CALL(*stream, Write)
-      .WillOnce([&](Request const& request, grpc::WriteOptions) {
+      .WillOnce([=, &sequencer](Request const& request, grpc::WriteOptions) {
         auto expected = Request{};
         EXPECT_TRUE(TextFormat::ParseFromString(kRequest1, &expected));
         EXPECT_THAT(request, IsProtoEqual(expected));
@@ -848,7 +848,7 @@ TEST(ObjectDescriptorImpl, PendingFinish) {
     auto stream = std::make_unique<MockStream>();
     EXPECT_CALL(*stream, Cancel).Times(1);  // Always called by OpenStream
     EXPECT_CALL(*stream, Write)
-        .WillOnce([&](Request const& request, grpc::WriteOptions) {
+        .WillOnce([=, &sequencer](Request const& request, grpc::WriteOptions) {
           auto expected = Request{};
           EXPECT_TRUE(TextFormat::ParseFromString(kRequest1, &expected));
           EXPECT_THAT(request, IsProtoEqual(expected));
@@ -935,7 +935,7 @@ TEST(ObjectDescriptorImpl, ResumeUsesRouting) {
     auto stream = std::make_unique<MockStream>();
     EXPECT_CALL(*stream, Cancel).Times(1);  // Always called by OpenStream
     EXPECT_CALL(*stream, Write)
-        .WillOnce([&](Request const& request, grpc::WriteOptions) {
+        .WillOnce([=, &sequencer](Request const& request, grpc::WriteOptions) {
           auto expected = Request{};
           EXPECT_TRUE(TextFormat::ParseFromString(kRequest1, &expected));
           EXPECT_THAT(request, IsProtoEqual(expected));
