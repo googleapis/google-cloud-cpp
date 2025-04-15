@@ -42,8 +42,8 @@ Options PopulateAuthOptions(Options options) {
                        .set<AccessTokenLifetimeOption>(kDefaultTokenLifetime));
   // Then apply any overrides.
   return MergeOptions(
-      Options{}.set<LoggingComponentsOption>(DefaultTracingComponents()),
-      std::move(options));
+      std::move(options),
+      Options{}.set<LoggingComponentsOption>(DefaultTracingComponents()));
 }
 
 void CredentialsVisitor::dispatch(Credentials const& credentials,
