@@ -679,6 +679,12 @@ auto InitialStream(AsyncSequencer<bool>& sequencer) {
 
 /// @test Verify that resuming a stream adjusts all offsets.
 TEST(ObjectDescriptorImpl, ResumeRangesOnRecoverableError) {
+// There is a problem with this test and certain versions of MSVC (19.43.34808)
+// skipping it on WIN32 for now.
+#ifdef _WIN32
+  GTEST_SKIP();
+#endif
+
   auto constexpr kLength = 100;
   auto constexpr kOffset = 20000;
   auto constexpr kReadSpecText = R"pb(
