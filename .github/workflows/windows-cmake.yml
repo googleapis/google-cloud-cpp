@@ -119,17 +119,6 @@ jobs:
           servicecontrol
           speech
           support
-          video
-          datacatalog
-          iam
-          kms
-          run
-          talent
-          contentwarehouse
-          dataplex
-          bigquery
-          bigquerycontrol
-          resourcemanager
         )
         shard3_features=(
           securesourcemanager
@@ -215,6 +204,19 @@ jobs:
           gkeconnect
           gkehub
         )
+        shard5_features=(
+          video
+          datacatalog
+          iam
+          kms
+          run
+          talent
+          contentwarehouse
+          dataplex
+          bigquery
+          bigquerycontrol
+          resourcemanager
+        )
         if [[ "${{ matrix.shard }}" == "Core1" ]]; then
           features="$(printf ",%s" "${core1_features[@]}")"
           echo "features=${features:1}" >> "${GITHUB_OUTPUT}"
@@ -246,6 +248,9 @@ jobs:
         elif [[ "${{matrix.shard}}" == "Shard4" ]]; then
           features="$(printf ",%s" "${shard4_features[@]}")"
           echo "features=${features:1}" >> "${GITHUB_OUTPUT}"
+        elif [[ "${{matrix.shard}}" == "Shard5" ]]; then
+          features="$(printf ",%s" "${shard5_features[@]}")"
+          echo "features=${features:1}" >> "${GITHUB_OUTPUT}"
         else
           skipped_features=("${core1_features[@]}")
           skipped_features+=("${core2_features[@]}")
@@ -258,6 +263,7 @@ jobs:
           skipped_features+=("${shard2_features[@]}")
           skipped_features+=("${shard3_features[@]}")
           skipped_features+=("${shard4_features[@]}")
+          skipped_features+=("${shard5_features[@]}")
           # We use vcpkg in this build, which ships with Protobuf v21.x.
           # Both `asset` and `channel` require Protobuf >= 23.x to compile on
           # Windows.
