@@ -215,6 +215,12 @@ class IdentityAwareProxyAdminServiceConnection {
   virtual StatusOr<google::cloud::iap::v1::IapSettings> UpdateIapSettings(
       google::cloud::iap::v1::UpdateIapSettingsRequest const& request);
 
+  virtual StatusOr<
+      google::cloud::iap::v1::ValidateIapAttributeExpressionResponse>
+  ValidateIapAttributeExpression(
+      google::cloud::iap::v1::ValidateIapAttributeExpressionRequest const&
+          request);
+
   virtual StreamRange<google::cloud::iap::v1::TunnelDestGroup>
   ListTunnelDestGroups(
       google::cloud::iap::v1::ListTunnelDestGroupsRequest request);

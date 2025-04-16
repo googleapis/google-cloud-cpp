@@ -115,8 +115,8 @@ class AMLClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.financialservices.v1.Instance]: @googleapis_reference_link{google/cloud/financialservices/v1/instance.proto#L36}
-  /// [google.cloud.financialservices.v1.ListInstancesRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/instance.proto#L90}
+  /// [google.cloud.financialservices.v1.Instance]: @googleapis_reference_link{google/cloud/financialservices/v1/instance.proto#L39}
+  /// [google.cloud.financialservices.v1.ListInstancesRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/instance.proto#L93}
   ///
   // clang-format on
   StreamRange<google::cloud::financialservices::v1::Instance> ListInstances(
@@ -154,8 +154,8 @@ class AMLClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.financialservices.v1.Instance]: @googleapis_reference_link{google/cloud/financialservices/v1/instance.proto#L36}
-  /// [google.cloud.financialservices.v1.ListInstancesRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/instance.proto#L90}
+  /// [google.cloud.financialservices.v1.Instance]: @googleapis_reference_link{google/cloud/financialservices/v1/instance.proto#L39}
+  /// [google.cloud.financialservices.v1.ListInstancesRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/instance.proto#L93}
   ///
   // clang-format on
   StreamRange<google::cloud::financialservices::v1::Instance> ListInstances(
@@ -180,8 +180,8 @@ class AMLClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.financialservices.v1.GetInstanceRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/instance.proto#L132}
-  /// [google.cloud.financialservices.v1.Instance]: @googleapis_reference_link{google/cloud/financialservices/v1/instance.proto#L36}
+  /// [google.cloud.financialservices.v1.GetInstanceRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/instance.proto#L135}
+  /// [google.cloud.financialservices.v1.Instance]: @googleapis_reference_link{google/cloud/financialservices/v1/instance.proto#L39}
   ///
   // clang-format on
   StatusOr<google::cloud::financialservices::v1::Instance> GetInstance(
@@ -210,8 +210,8 @@ class AMLClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.financialservices.v1.GetInstanceRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/instance.proto#L132}
-  /// [google.cloud.financialservices.v1.Instance]: @googleapis_reference_link{google/cloud/financialservices/v1/instance.proto#L36}
+  /// [google.cloud.financialservices.v1.GetInstanceRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/instance.proto#L135}
+  /// [google.cloud.financialservices.v1.Instance]: @googleapis_reference_link{google/cloud/financialservices/v1/instance.proto#L39}
   ///
   // clang-format on
   StatusOr<google::cloud::financialservices::v1::Instance> GetInstance(
@@ -246,8 +246,8 @@ class AMLClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.financialservices.v1.CreateInstanceRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/instance.proto#L143}
-  /// [google.cloud.financialservices.v1.Instance]: @googleapis_reference_link{google/cloud/financialservices/v1/instance.proto#L36}
+  /// [google.cloud.financialservices.v1.CreateInstanceRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/instance.proto#L146}
+  /// [google.cloud.financialservices.v1.Instance]: @googleapis_reference_link{google/cloud/financialservices/v1/instance.proto#L39}
   ///
   // clang-format on
   future<StatusOr<google::cloud::financialservices::v1::Instance>>
@@ -301,8 +301,8 @@ class AMLClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.financialservices.v1.CreateInstanceRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/instance.proto#L143}
-  /// [google.cloud.financialservices.v1.Instance]: @googleapis_reference_link{google/cloud/financialservices/v1/instance.proto#L36}
+  /// [google.cloud.financialservices.v1.CreateInstanceRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/instance.proto#L146}
+  /// [google.cloud.financialservices.v1.Instance]: @googleapis_reference_link{google/cloud/financialservices/v1/instance.proto#L39}
   ///
   // clang-format on
   future<StatusOr<google::cloud::financialservices::v1::Instance>>
@@ -372,8 +372,8 @@ class AMLClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.financialservices.v1.Instance]: @googleapis_reference_link{google/cloud/financialservices/v1/instance.proto#L36}
-  /// [google.cloud.financialservices.v1.UpdateInstanceRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/instance.proto#L176}
+  /// [google.cloud.financialservices.v1.Instance]: @googleapis_reference_link{google/cloud/financialservices/v1/instance.proto#L39}
+  /// [google.cloud.financialservices.v1.UpdateInstanceRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/instance.proto#L179}
   ///
   // clang-format on
   future<StatusOr<google::cloud::financialservices::v1::Instance>>
@@ -427,8 +427,8 @@ class AMLClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.financialservices.v1.Instance]: @googleapis_reference_link{google/cloud/financialservices/v1/instance.proto#L36}
-  /// [google.cloud.financialservices.v1.UpdateInstanceRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/instance.proto#L176}
+  /// [google.cloud.financialservices.v1.Instance]: @googleapis_reference_link{google/cloud/financialservices/v1/instance.proto#L39}
+  /// [google.cloud.financialservices.v1.UpdateInstanceRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/instance.proto#L179}
   ///
   // clang-format on
   future<StatusOr<google::cloud::financialservices::v1::Instance>>
@@ -492,8 +492,8 @@ class AMLClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.financialservices.v1.DeleteInstanceRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/instance.proto#L206}
-  /// [google.cloud.financialservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/financialservices/v1/service.proto#L517}
+  /// [google.cloud.financialservices.v1.DeleteInstanceRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/instance.proto#L209}
+  /// [google.cloud.financialservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/financialservices/v1/service.proto#L520}
   ///
   // clang-format on
   future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
@@ -543,8 +543,8 @@ class AMLClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.financialservices.v1.DeleteInstanceRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/instance.proto#L206}
-  /// [google.cloud.financialservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/financialservices/v1/service.proto#L517}
+  /// [google.cloud.financialservices.v1.DeleteInstanceRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/instance.proto#L209}
+  /// [google.cloud.financialservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/financialservices/v1/service.proto#L520}
   ///
   // clang-format on
   future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
@@ -591,12 +591,12 @@ class AMLClient {
   /// for information on the input schema and response for this method.
   ///
   /// @param name  Required. The full path to the Instance resource in this API.
-  ///  format: "projects/{project}/locations/{location}/instances/{instance}"
+  ///  format: `projects/{project}/locations/{location}/instances/{instance}`
   /// @param mode  Required. Mode of the request.
   /// @param line_of_business  Required. LineOfBusiness for the specified registered parties.
   /// @param party_tables  Optional. List of BigQuery tables. Union of tables will be taken if there
   ///  is more than one table. VPC-SC restrictions apply. format:
-  ///  "bq://{project}.{bqDatasetID}.{bqTableID}" Use of `datasets` is preferred
+  ///  `bq://{project}.{bqDatasetID}.{bqTableID}` Use of `datasets` is preferred
   ///  over the latter due to its simplicity and the reduced risk of errors
   ///  `party_tables` and `datasets` must not be provided at the
   ///  same time
@@ -620,8 +620,8 @@ class AMLClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.financialservices.v1.ImportRegisteredPartiesRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/instance.proto#L233}
-  /// [google.cloud.financialservices.v1.ImportRegisteredPartiesResponse]: @googleapis_reference_link{google/cloud/financialservices/v1/instance.proto#L275}
+  /// [google.cloud.financialservices.v1.ImportRegisteredPartiesRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/instance.proto#L236}
+  /// [google.cloud.financialservices.v1.ImportRegisteredPartiesResponse]: @googleapis_reference_link{google/cloud/financialservices/v1/instance.proto#L278}
   ///
   // clang-format on
   future<StatusOr<
@@ -684,8 +684,8 @@ class AMLClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.financialservices.v1.ImportRegisteredPartiesRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/instance.proto#L233}
-  /// [google.cloud.financialservices.v1.ImportRegisteredPartiesResponse]: @googleapis_reference_link{google/cloud/financialservices/v1/instance.proto#L275}
+  /// [google.cloud.financialservices.v1.ImportRegisteredPartiesRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/instance.proto#L236}
+  /// [google.cloud.financialservices.v1.ImportRegisteredPartiesResponse]: @googleapis_reference_link{google/cloud/financialservices/v1/instance.proto#L278}
   ///
   // clang-format on
   future<StatusOr<
@@ -733,7 +733,7 @@ class AMLClient {
   /// for information on the output schema for this method.
   ///
   /// @param name  Required. The full path to the Instance resource in this API.
-  ///  format: "projects/{project}/locations/{location}/instances/{instance}"
+  ///  format: `projects/{project}/locations/{location}/instances/{instance}`
   /// @param dataset  Required. The location to output the RegisteredParties.
   /// @param line_of_business  Required. LineOfBusiness to get RegisteredParties from.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -756,8 +756,8 @@ class AMLClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.financialservices.v1.ExportRegisteredPartiesRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/instance.proto#L299}
-  /// [google.cloud.financialservices.v1.ExportRegisteredPartiesResponse]: @googleapis_reference_link{google/cloud/financialservices/v1/instance.proto#L317}
+  /// [google.cloud.financialservices.v1.ExportRegisteredPartiesRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/instance.proto#L302}
+  /// [google.cloud.financialservices.v1.ExportRegisteredPartiesResponse]: @googleapis_reference_link{google/cloud/financialservices/v1/instance.proto#L320}
   ///
   // clang-format on
   future<StatusOr<
@@ -818,8 +818,8 @@ class AMLClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.financialservices.v1.ExportRegisteredPartiesRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/instance.proto#L299}
-  /// [google.cloud.financialservices.v1.ExportRegisteredPartiesResponse]: @googleapis_reference_link{google/cloud/financialservices/v1/instance.proto#L317}
+  /// [google.cloud.financialservices.v1.ExportRegisteredPartiesRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/instance.proto#L302}
+  /// [google.cloud.financialservices.v1.ExportRegisteredPartiesResponse]: @googleapis_reference_link{google/cloud/financialservices/v1/instance.proto#L320}
   ///
   // clang-format on
   future<StatusOr<
@@ -886,8 +886,8 @@ class AMLClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.financialservices.v1.Dataset]: @googleapis_reference_link{google/cloud/financialservices/v1/dataset.proto#L32}
-  /// [google.cloud.financialservices.v1.ListDatasetsRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/dataset.proto#L97}
+  /// [google.cloud.financialservices.v1.Dataset]: @googleapis_reference_link{google/cloud/financialservices/v1/dataset.proto#L35}
+  /// [google.cloud.financialservices.v1.ListDatasetsRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/dataset.proto#L100}
   ///
   // clang-format on
   StreamRange<google::cloud::financialservices::v1::Dataset> ListDatasets(
@@ -925,8 +925,8 @@ class AMLClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.financialservices.v1.Dataset]: @googleapis_reference_link{google/cloud/financialservices/v1/dataset.proto#L32}
-  /// [google.cloud.financialservices.v1.ListDatasetsRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/dataset.proto#L97}
+  /// [google.cloud.financialservices.v1.Dataset]: @googleapis_reference_link{google/cloud/financialservices/v1/dataset.proto#L35}
+  /// [google.cloud.financialservices.v1.ListDatasetsRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/dataset.proto#L100}
   ///
   // clang-format on
   StreamRange<google::cloud::financialservices::v1::Dataset> ListDatasets(
@@ -951,8 +951,8 @@ class AMLClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.financialservices.v1.Dataset]: @googleapis_reference_link{google/cloud/financialservices/v1/dataset.proto#L32}
-  /// [google.cloud.financialservices.v1.GetDatasetRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/dataset.proto#L138}
+  /// [google.cloud.financialservices.v1.Dataset]: @googleapis_reference_link{google/cloud/financialservices/v1/dataset.proto#L35}
+  /// [google.cloud.financialservices.v1.GetDatasetRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/dataset.proto#L141}
   ///
   // clang-format on
   StatusOr<google::cloud::financialservices::v1::Dataset> GetDataset(
@@ -981,8 +981,8 @@ class AMLClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.financialservices.v1.Dataset]: @googleapis_reference_link{google/cloud/financialservices/v1/dataset.proto#L32}
-  /// [google.cloud.financialservices.v1.GetDatasetRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/dataset.proto#L138}
+  /// [google.cloud.financialservices.v1.Dataset]: @googleapis_reference_link{google/cloud/financialservices/v1/dataset.proto#L35}
+  /// [google.cloud.financialservices.v1.GetDatasetRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/dataset.proto#L141}
   ///
   // clang-format on
   StatusOr<google::cloud::financialservices::v1::Dataset> GetDataset(
@@ -1016,8 +1016,8 @@ class AMLClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.financialservices.v1.CreateDatasetRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/dataset.proto#L149}
-  /// [google.cloud.financialservices.v1.Dataset]: @googleapis_reference_link{google/cloud/financialservices/v1/dataset.proto#L32}
+  /// [google.cloud.financialservices.v1.CreateDatasetRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/dataset.proto#L152}
+  /// [google.cloud.financialservices.v1.Dataset]: @googleapis_reference_link{google/cloud/financialservices/v1/dataset.proto#L35}
   ///
   // clang-format on
   future<StatusOr<google::cloud::financialservices::v1::Dataset>> CreateDataset(
@@ -1071,8 +1071,8 @@ class AMLClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.financialservices.v1.CreateDatasetRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/dataset.proto#L149}
-  /// [google.cloud.financialservices.v1.Dataset]: @googleapis_reference_link{google/cloud/financialservices/v1/dataset.proto#L32}
+  /// [google.cloud.financialservices.v1.CreateDatasetRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/dataset.proto#L152}
+  /// [google.cloud.financialservices.v1.Dataset]: @googleapis_reference_link{google/cloud/financialservices/v1/dataset.proto#L35}
   ///
   // clang-format on
   future<StatusOr<google::cloud::financialservices::v1::Dataset>> CreateDataset(
@@ -1138,8 +1138,8 @@ class AMLClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.financialservices.v1.Dataset]: @googleapis_reference_link{google/cloud/financialservices/v1/dataset.proto#L32}
-  /// [google.cloud.financialservices.v1.UpdateDatasetRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/dataset.proto#L181}
+  /// [google.cloud.financialservices.v1.Dataset]: @googleapis_reference_link{google/cloud/financialservices/v1/dataset.proto#L35}
+  /// [google.cloud.financialservices.v1.UpdateDatasetRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/dataset.proto#L184}
   ///
   // clang-format on
   future<StatusOr<google::cloud::financialservices::v1::Dataset>> UpdateDataset(
@@ -1191,8 +1191,8 @@ class AMLClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.financialservices.v1.Dataset]: @googleapis_reference_link{google/cloud/financialservices/v1/dataset.proto#L32}
-  /// [google.cloud.financialservices.v1.UpdateDatasetRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/dataset.proto#L181}
+  /// [google.cloud.financialservices.v1.Dataset]: @googleapis_reference_link{google/cloud/financialservices/v1/dataset.proto#L35}
+  /// [google.cloud.financialservices.v1.UpdateDatasetRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/dataset.proto#L184}
   ///
   // clang-format on
   future<StatusOr<google::cloud::financialservices::v1::Dataset>> UpdateDataset(
@@ -1252,8 +1252,8 @@ class AMLClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.financialservices.v1.DeleteDatasetRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/dataset.proto#L211}
-  /// [google.cloud.financialservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/financialservices/v1/service.proto#L517}
+  /// [google.cloud.financialservices.v1.DeleteDatasetRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/dataset.proto#L214}
+  /// [google.cloud.financialservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/financialservices/v1/service.proto#L520}
   ///
   // clang-format on
   future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
@@ -1303,8 +1303,8 @@ class AMLClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.financialservices.v1.DeleteDatasetRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/dataset.proto#L211}
-  /// [google.cloud.financialservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/financialservices/v1/service.proto#L517}
+  /// [google.cloud.financialservices.v1.DeleteDatasetRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/dataset.proto#L214}
+  /// [google.cloud.financialservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/financialservices/v1/service.proto#L520}
   ///
   // clang-format on
   future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
@@ -1368,8 +1368,8 @@ class AMLClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.financialservices.v1.ListModelsRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/model.proto#L119}
-  /// [google.cloud.financialservices.v1.Model]: @googleapis_reference_link{google/cloud/financialservices/v1/model.proto#L32}
+  /// [google.cloud.financialservices.v1.ListModelsRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/model.proto#L122}
+  /// [google.cloud.financialservices.v1.Model]: @googleapis_reference_link{google/cloud/financialservices/v1/model.proto#L35}
   ///
   // clang-format on
   StreamRange<google::cloud::financialservices::v1::Model> ListModels(
@@ -1407,8 +1407,8 @@ class AMLClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.financialservices.v1.ListModelsRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/model.proto#L119}
-  /// [google.cloud.financialservices.v1.Model]: @googleapis_reference_link{google/cloud/financialservices/v1/model.proto#L32}
+  /// [google.cloud.financialservices.v1.ListModelsRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/model.proto#L122}
+  /// [google.cloud.financialservices.v1.Model]: @googleapis_reference_link{google/cloud/financialservices/v1/model.proto#L35}
   ///
   // clang-format on
   StreamRange<google::cloud::financialservices::v1::Model> ListModels(
@@ -1433,8 +1433,8 @@ class AMLClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.financialservices.v1.GetModelRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/model.proto#L160}
-  /// [google.cloud.financialservices.v1.Model]: @googleapis_reference_link{google/cloud/financialservices/v1/model.proto#L32}
+  /// [google.cloud.financialservices.v1.GetModelRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/model.proto#L163}
+  /// [google.cloud.financialservices.v1.Model]: @googleapis_reference_link{google/cloud/financialservices/v1/model.proto#L35}
   ///
   // clang-format on
   StatusOr<google::cloud::financialservices::v1::Model> GetModel(
@@ -1463,8 +1463,8 @@ class AMLClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.financialservices.v1.GetModelRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/model.proto#L160}
-  /// [google.cloud.financialservices.v1.Model]: @googleapis_reference_link{google/cloud/financialservices/v1/model.proto#L32}
+  /// [google.cloud.financialservices.v1.GetModelRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/model.proto#L163}
+  /// [google.cloud.financialservices.v1.Model]: @googleapis_reference_link{google/cloud/financialservices/v1/model.proto#L35}
   ///
   // clang-format on
   StatusOr<google::cloud::financialservices::v1::Model> GetModel(
@@ -1498,8 +1498,8 @@ class AMLClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.financialservices.v1.CreateModelRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/model.proto#L171}
-  /// [google.cloud.financialservices.v1.Model]: @googleapis_reference_link{google/cloud/financialservices/v1/model.proto#L32}
+  /// [google.cloud.financialservices.v1.CreateModelRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/model.proto#L174}
+  /// [google.cloud.financialservices.v1.Model]: @googleapis_reference_link{google/cloud/financialservices/v1/model.proto#L35}
   ///
   // clang-format on
   future<StatusOr<google::cloud::financialservices::v1::Model>> CreateModel(
@@ -1553,8 +1553,8 @@ class AMLClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.financialservices.v1.CreateModelRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/model.proto#L171}
-  /// [google.cloud.financialservices.v1.Model]: @googleapis_reference_link{google/cloud/financialservices/v1/model.proto#L32}
+  /// [google.cloud.financialservices.v1.CreateModelRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/model.proto#L174}
+  /// [google.cloud.financialservices.v1.Model]: @googleapis_reference_link{google/cloud/financialservices/v1/model.proto#L35}
   ///
   // clang-format on
   future<StatusOr<google::cloud::financialservices::v1::Model>> CreateModel(
@@ -1620,8 +1620,8 @@ class AMLClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.financialservices.v1.Model]: @googleapis_reference_link{google/cloud/financialservices/v1/model.proto#L32}
-  /// [google.cloud.financialservices.v1.UpdateModelRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/model.proto#L203}
+  /// [google.cloud.financialservices.v1.Model]: @googleapis_reference_link{google/cloud/financialservices/v1/model.proto#L35}
+  /// [google.cloud.financialservices.v1.UpdateModelRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/model.proto#L206}
   ///
   // clang-format on
   future<StatusOr<google::cloud::financialservices::v1::Model>> UpdateModel(
@@ -1673,8 +1673,8 @@ class AMLClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.financialservices.v1.Model]: @googleapis_reference_link{google/cloud/financialservices/v1/model.proto#L32}
-  /// [google.cloud.financialservices.v1.UpdateModelRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/model.proto#L203}
+  /// [google.cloud.financialservices.v1.Model]: @googleapis_reference_link{google/cloud/financialservices/v1/model.proto#L35}
+  /// [google.cloud.financialservices.v1.UpdateModelRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/model.proto#L206}
   ///
   // clang-format on
   future<StatusOr<google::cloud::financialservices::v1::Model>> UpdateModel(
@@ -1738,8 +1738,8 @@ class AMLClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.financialservices.v1.ExportModelMetadataRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/model.proto#L259}
-  /// [google.cloud.financialservices.v1.ExportModelMetadataResponse]: @googleapis_reference_link{google/cloud/financialservices/v1/model.proto#L274}
+  /// [google.cloud.financialservices.v1.ExportModelMetadataRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/model.proto#L262}
+  /// [google.cloud.financialservices.v1.ExportModelMetadataResponse]: @googleapis_reference_link{google/cloud/financialservices/v1/model.proto#L277}
   ///
   // clang-format on
   future<StatusOr<
@@ -1800,8 +1800,8 @@ class AMLClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.financialservices.v1.ExportModelMetadataRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/model.proto#L259}
-  /// [google.cloud.financialservices.v1.ExportModelMetadataResponse]: @googleapis_reference_link{google/cloud/financialservices/v1/model.proto#L274}
+  /// [google.cloud.financialservices.v1.ExportModelMetadataRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/model.proto#L262}
+  /// [google.cloud.financialservices.v1.ExportModelMetadataResponse]: @googleapis_reference_link{google/cloud/financialservices/v1/model.proto#L277}
   ///
   // clang-format on
   future<StatusOr<
@@ -1867,8 +1867,8 @@ class AMLClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.financialservices.v1.DeleteModelRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/model.proto#L233}
-  /// [google.cloud.financialservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/financialservices/v1/service.proto#L517}
+  /// [google.cloud.financialservices.v1.DeleteModelRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/model.proto#L236}
+  /// [google.cloud.financialservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/financialservices/v1/service.proto#L520}
   ///
   // clang-format on
   future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
@@ -1919,8 +1919,8 @@ class AMLClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.financialservices.v1.DeleteModelRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/model.proto#L233}
-  /// [google.cloud.financialservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/financialservices/v1/service.proto#L517}
+  /// [google.cloud.financialservices.v1.DeleteModelRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/model.proto#L236}
+  /// [google.cloud.financialservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/financialservices/v1/service.proto#L520}
   ///
   // clang-format on
   future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
@@ -1984,8 +1984,8 @@ class AMLClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.financialservices.v1.EngineConfig]: @googleapis_reference_link{google/cloud/financialservices/v1/engine_config.proto#L32}
-  /// [google.cloud.financialservices.v1.ListEngineConfigsRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/engine_config.proto#L177}
+  /// [google.cloud.financialservices.v1.EngineConfig]: @googleapis_reference_link{google/cloud/financialservices/v1/engine_config.proto#L35}
+  /// [google.cloud.financialservices.v1.ListEngineConfigsRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/engine_config.proto#L180}
   ///
   // clang-format on
   StreamRange<google::cloud::financialservices::v1::EngineConfig>
@@ -2023,8 +2023,8 @@ class AMLClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.financialservices.v1.EngineConfig]: @googleapis_reference_link{google/cloud/financialservices/v1/engine_config.proto#L32}
-  /// [google.cloud.financialservices.v1.ListEngineConfigsRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/engine_config.proto#L177}
+  /// [google.cloud.financialservices.v1.EngineConfig]: @googleapis_reference_link{google/cloud/financialservices/v1/engine_config.proto#L35}
+  /// [google.cloud.financialservices.v1.ListEngineConfigsRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/engine_config.proto#L180}
   ///
   // clang-format on
   StreamRange<google::cloud::financialservices::v1::EngineConfig>
@@ -2050,8 +2050,8 @@ class AMLClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.financialservices.v1.EngineConfig]: @googleapis_reference_link{google/cloud/financialservices/v1/engine_config.proto#L32}
-  /// [google.cloud.financialservices.v1.GetEngineConfigRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/engine_config.proto#L219}
+  /// [google.cloud.financialservices.v1.EngineConfig]: @googleapis_reference_link{google/cloud/financialservices/v1/engine_config.proto#L35}
+  /// [google.cloud.financialservices.v1.GetEngineConfigRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/engine_config.proto#L222}
   ///
   // clang-format on
   StatusOr<google::cloud::financialservices::v1::EngineConfig> GetEngineConfig(
@@ -2080,8 +2080,8 @@ class AMLClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.financialservices.v1.EngineConfig]: @googleapis_reference_link{google/cloud/financialservices/v1/engine_config.proto#L32}
-  /// [google.cloud.financialservices.v1.GetEngineConfigRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/engine_config.proto#L219}
+  /// [google.cloud.financialservices.v1.EngineConfig]: @googleapis_reference_link{google/cloud/financialservices/v1/engine_config.proto#L35}
+  /// [google.cloud.financialservices.v1.GetEngineConfigRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/engine_config.proto#L222}
   ///
   // clang-format on
   StatusOr<google::cloud::financialservices::v1::EngineConfig> GetEngineConfig(
@@ -2116,8 +2116,8 @@ class AMLClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.financialservices.v1.CreateEngineConfigRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/engine_config.proto#L230}
-  /// [google.cloud.financialservices.v1.EngineConfig]: @googleapis_reference_link{google/cloud/financialservices/v1/engine_config.proto#L32}
+  /// [google.cloud.financialservices.v1.CreateEngineConfigRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/engine_config.proto#L233}
+  /// [google.cloud.financialservices.v1.EngineConfig]: @googleapis_reference_link{google/cloud/financialservices/v1/engine_config.proto#L35}
   ///
   // clang-format on
   future<StatusOr<google::cloud::financialservices::v1::EngineConfig>>
@@ -2172,8 +2172,8 @@ class AMLClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.financialservices.v1.CreateEngineConfigRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/engine_config.proto#L230}
-  /// [google.cloud.financialservices.v1.EngineConfig]: @googleapis_reference_link{google/cloud/financialservices/v1/engine_config.proto#L32}
+  /// [google.cloud.financialservices.v1.CreateEngineConfigRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/engine_config.proto#L233}
+  /// [google.cloud.financialservices.v1.EngineConfig]: @googleapis_reference_link{google/cloud/financialservices/v1/engine_config.proto#L35}
   ///
   // clang-format on
   future<StatusOr<google::cloud::financialservices::v1::EngineConfig>>
@@ -2243,8 +2243,8 @@ class AMLClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.financialservices.v1.EngineConfig]: @googleapis_reference_link{google/cloud/financialservices/v1/engine_config.proto#L32}
-  /// [google.cloud.financialservices.v1.UpdateEngineConfigRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/engine_config.proto#L262}
+  /// [google.cloud.financialservices.v1.EngineConfig]: @googleapis_reference_link{google/cloud/financialservices/v1/engine_config.proto#L35}
+  /// [google.cloud.financialservices.v1.UpdateEngineConfigRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/engine_config.proto#L265}
   ///
   // clang-format on
   future<StatusOr<google::cloud::financialservices::v1::EngineConfig>>
@@ -2298,8 +2298,8 @@ class AMLClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.financialservices.v1.EngineConfig]: @googleapis_reference_link{google/cloud/financialservices/v1/engine_config.proto#L32}
-  /// [google.cloud.financialservices.v1.UpdateEngineConfigRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/engine_config.proto#L262}
+  /// [google.cloud.financialservices.v1.EngineConfig]: @googleapis_reference_link{google/cloud/financialservices/v1/engine_config.proto#L35}
+  /// [google.cloud.financialservices.v1.UpdateEngineConfigRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/engine_config.proto#L265}
   ///
   // clang-format on
   future<StatusOr<google::cloud::financialservices::v1::EngineConfig>>
@@ -2367,8 +2367,8 @@ class AMLClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.financialservices.v1.ExportEngineConfigMetadataRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/engine_config.proto#L318}
-  /// [google.cloud.financialservices.v1.ExportEngineConfigMetadataResponse]: @googleapis_reference_link{google/cloud/financialservices/v1/engine_config.proto#L333}
+  /// [google.cloud.financialservices.v1.ExportEngineConfigMetadataRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/engine_config.proto#L321}
+  /// [google.cloud.financialservices.v1.ExportEngineConfigMetadataResponse]: @googleapis_reference_link{google/cloud/financialservices/v1/engine_config.proto#L336}
   ///
   // clang-format on
   future<StatusOr<
@@ -2429,8 +2429,8 @@ class AMLClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.financialservices.v1.ExportEngineConfigMetadataRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/engine_config.proto#L318}
-  /// [google.cloud.financialservices.v1.ExportEngineConfigMetadataResponse]: @googleapis_reference_link{google/cloud/financialservices/v1/engine_config.proto#L333}
+  /// [google.cloud.financialservices.v1.ExportEngineConfigMetadataRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/engine_config.proto#L321}
+  /// [google.cloud.financialservices.v1.ExportEngineConfigMetadataResponse]: @googleapis_reference_link{google/cloud/financialservices/v1/engine_config.proto#L336}
   ///
   // clang-format on
   future<StatusOr<
@@ -2496,8 +2496,8 @@ class AMLClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.financialservices.v1.DeleteEngineConfigRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/engine_config.proto#L292}
-  /// [google.cloud.financialservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/financialservices/v1/service.proto#L517}
+  /// [google.cloud.financialservices.v1.DeleteEngineConfigRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/engine_config.proto#L295}
+  /// [google.cloud.financialservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/financialservices/v1/service.proto#L520}
   ///
   // clang-format on
   future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
@@ -2547,8 +2547,8 @@ class AMLClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.financialservices.v1.DeleteEngineConfigRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/engine_config.proto#L292}
-  /// [google.cloud.financialservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/financialservices/v1/service.proto#L517}
+  /// [google.cloud.financialservices.v1.DeleteEngineConfigRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/engine_config.proto#L295}
+  /// [google.cloud.financialservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/financialservices/v1/service.proto#L520}
   ///
   // clang-format on
   future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
@@ -2605,8 +2605,8 @@ class AMLClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.financialservices.v1.EngineVersion]: @googleapis_reference_link{google/cloud/financialservices/v1/engine_version.proto#L31}
-  /// [google.cloud.financialservices.v1.GetEngineVersionRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/engine_version.proto#L128}
+  /// [google.cloud.financialservices.v1.EngineVersion]: @googleapis_reference_link{google/cloud/financialservices/v1/engine_version.proto#L34}
+  /// [google.cloud.financialservices.v1.GetEngineVersionRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/engine_version.proto#L131}
   ///
   // clang-format on
   StatusOr<google::cloud::financialservices::v1::EngineVersion>
@@ -2635,8 +2635,8 @@ class AMLClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.financialservices.v1.EngineVersion]: @googleapis_reference_link{google/cloud/financialservices/v1/engine_version.proto#L31}
-  /// [google.cloud.financialservices.v1.GetEngineVersionRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/engine_version.proto#L128}
+  /// [google.cloud.financialservices.v1.EngineVersion]: @googleapis_reference_link{google/cloud/financialservices/v1/engine_version.proto#L34}
+  /// [google.cloud.financialservices.v1.GetEngineVersionRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/engine_version.proto#L131}
   ///
   // clang-format on
   StatusOr<google::cloud::financialservices::v1::EngineVersion>
@@ -2672,8 +2672,8 @@ class AMLClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.financialservices.v1.EngineVersion]: @googleapis_reference_link{google/cloud/financialservices/v1/engine_version.proto#L31}
-  /// [google.cloud.financialservices.v1.ListEngineVersionsRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/engine_version.proto#L84}
+  /// [google.cloud.financialservices.v1.EngineVersion]: @googleapis_reference_link{google/cloud/financialservices/v1/engine_version.proto#L34}
+  /// [google.cloud.financialservices.v1.ListEngineVersionsRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/engine_version.proto#L87}
   ///
   // clang-format on
   StreamRange<google::cloud::financialservices::v1::EngineVersion>
@@ -2711,8 +2711,8 @@ class AMLClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.financialservices.v1.EngineVersion]: @googleapis_reference_link{google/cloud/financialservices/v1/engine_version.proto#L31}
-  /// [google.cloud.financialservices.v1.ListEngineVersionsRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/engine_version.proto#L84}
+  /// [google.cloud.financialservices.v1.EngineVersion]: @googleapis_reference_link{google/cloud/financialservices/v1/engine_version.proto#L34}
+  /// [google.cloud.financialservices.v1.ListEngineVersionsRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/engine_version.proto#L87}
   ///
   // clang-format on
   StreamRange<google::cloud::financialservices::v1::EngineVersion>
@@ -2747,8 +2747,8 @@ class AMLClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.financialservices.v1.ListPredictionResultsRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/prediction_result.proto#L131}
-  /// [google.cloud.financialservices.v1.PredictionResult]: @googleapis_reference_link{google/cloud/financialservices/v1/prediction_result.proto#L32}
+  /// [google.cloud.financialservices.v1.ListPredictionResultsRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/prediction_result.proto#L134}
+  /// [google.cloud.financialservices.v1.PredictionResult]: @googleapis_reference_link{google/cloud/financialservices/v1/prediction_result.proto#L35}
   ///
   // clang-format on
   StreamRange<google::cloud::financialservices::v1::PredictionResult>
@@ -2786,8 +2786,8 @@ class AMLClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.financialservices.v1.ListPredictionResultsRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/prediction_result.proto#L131}
-  /// [google.cloud.financialservices.v1.PredictionResult]: @googleapis_reference_link{google/cloud/financialservices/v1/prediction_result.proto#L32}
+  /// [google.cloud.financialservices.v1.ListPredictionResultsRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/prediction_result.proto#L134}
+  /// [google.cloud.financialservices.v1.PredictionResult]: @googleapis_reference_link{google/cloud/financialservices/v1/prediction_result.proto#L35}
   ///
   // clang-format on
   StreamRange<google::cloud::financialservices::v1::PredictionResult>
@@ -2814,8 +2814,8 @@ class AMLClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.financialservices.v1.GetPredictionResultRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/prediction_result.proto#L174}
-  /// [google.cloud.financialservices.v1.PredictionResult]: @googleapis_reference_link{google/cloud/financialservices/v1/prediction_result.proto#L32}
+  /// [google.cloud.financialservices.v1.GetPredictionResultRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/prediction_result.proto#L177}
+  /// [google.cloud.financialservices.v1.PredictionResult]: @googleapis_reference_link{google/cloud/financialservices/v1/prediction_result.proto#L35}
   ///
   // clang-format on
   StatusOr<google::cloud::financialservices::v1::PredictionResult>
@@ -2844,8 +2844,8 @@ class AMLClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.financialservices.v1.GetPredictionResultRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/prediction_result.proto#L174}
-  /// [google.cloud.financialservices.v1.PredictionResult]: @googleapis_reference_link{google/cloud/financialservices/v1/prediction_result.proto#L32}
+  /// [google.cloud.financialservices.v1.GetPredictionResultRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/prediction_result.proto#L177}
+  /// [google.cloud.financialservices.v1.PredictionResult]: @googleapis_reference_link{google/cloud/financialservices/v1/prediction_result.proto#L35}
   ///
   // clang-format on
   StatusOr<google::cloud::financialservices::v1::PredictionResult>
@@ -2881,8 +2881,8 @@ class AMLClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.financialservices.v1.CreatePredictionResultRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/prediction_result.proto#L185}
-  /// [google.cloud.financialservices.v1.PredictionResult]: @googleapis_reference_link{google/cloud/financialservices/v1/prediction_result.proto#L32}
+  /// [google.cloud.financialservices.v1.CreatePredictionResultRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/prediction_result.proto#L188}
+  /// [google.cloud.financialservices.v1.PredictionResult]: @googleapis_reference_link{google/cloud/financialservices/v1/prediction_result.proto#L35}
   ///
   // clang-format on
   future<StatusOr<google::cloud::financialservices::v1::PredictionResult>>
@@ -2939,8 +2939,8 @@ class AMLClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.financialservices.v1.CreatePredictionResultRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/prediction_result.proto#L185}
-  /// [google.cloud.financialservices.v1.PredictionResult]: @googleapis_reference_link{google/cloud/financialservices/v1/prediction_result.proto#L32}
+  /// [google.cloud.financialservices.v1.CreatePredictionResultRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/prediction_result.proto#L188}
+  /// [google.cloud.financialservices.v1.PredictionResult]: @googleapis_reference_link{google/cloud/financialservices/v1/prediction_result.proto#L35}
   ///
   // clang-format on
   future<StatusOr<google::cloud::financialservices::v1::PredictionResult>>
@@ -3010,8 +3010,8 @@ class AMLClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.financialservices.v1.PredictionResult]: @googleapis_reference_link{google/cloud/financialservices/v1/prediction_result.proto#L32}
-  /// [google.cloud.financialservices.v1.UpdatePredictionResultRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/prediction_result.proto#L218}
+  /// [google.cloud.financialservices.v1.PredictionResult]: @googleapis_reference_link{google/cloud/financialservices/v1/prediction_result.proto#L35}
+  /// [google.cloud.financialservices.v1.UpdatePredictionResultRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/prediction_result.proto#L221}
   ///
   // clang-format on
   future<StatusOr<google::cloud::financialservices::v1::PredictionResult>>
@@ -3067,8 +3067,8 @@ class AMLClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.financialservices.v1.PredictionResult]: @googleapis_reference_link{google/cloud/financialservices/v1/prediction_result.proto#L32}
-  /// [google.cloud.financialservices.v1.UpdatePredictionResultRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/prediction_result.proto#L218}
+  /// [google.cloud.financialservices.v1.PredictionResult]: @googleapis_reference_link{google/cloud/financialservices/v1/prediction_result.proto#L35}
+  /// [google.cloud.financialservices.v1.UpdatePredictionResultRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/prediction_result.proto#L221}
   ///
   // clang-format on
   future<StatusOr<google::cloud::financialservices::v1::PredictionResult>>
@@ -3136,8 +3136,8 @@ class AMLClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.financialservices.v1.ExportPredictionResultMetadataRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/prediction_result.proto#L275}
-  /// [google.cloud.financialservices.v1.ExportPredictionResultMetadataResponse]: @googleapis_reference_link{google/cloud/financialservices/v1/prediction_result.proto#L290}
+  /// [google.cloud.financialservices.v1.ExportPredictionResultMetadataRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/prediction_result.proto#L278}
+  /// [google.cloud.financialservices.v1.ExportPredictionResultMetadataResponse]: @googleapis_reference_link{google/cloud/financialservices/v1/prediction_result.proto#L293}
   ///
   // clang-format on
   future<StatusOr<google::cloud::financialservices::v1::
@@ -3198,8 +3198,8 @@ class AMLClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.financialservices.v1.ExportPredictionResultMetadataRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/prediction_result.proto#L275}
-  /// [google.cloud.financialservices.v1.ExportPredictionResultMetadataResponse]: @googleapis_reference_link{google/cloud/financialservices/v1/prediction_result.proto#L290}
+  /// [google.cloud.financialservices.v1.ExportPredictionResultMetadataRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/prediction_result.proto#L278}
+  /// [google.cloud.financialservices.v1.ExportPredictionResultMetadataResponse]: @googleapis_reference_link{google/cloud/financialservices/v1/prediction_result.proto#L293}
   ///
   // clang-format on
   future<StatusOr<google::cloud::financialservices::v1::
@@ -3265,8 +3265,8 @@ class AMLClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.financialservices.v1.DeletePredictionResultRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/prediction_result.proto#L249}
-  /// [google.cloud.financialservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/financialservices/v1/service.proto#L517}
+  /// [google.cloud.financialservices.v1.DeletePredictionResultRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/prediction_result.proto#L252}
+  /// [google.cloud.financialservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/financialservices/v1/service.proto#L520}
   ///
   // clang-format on
   future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
@@ -3316,8 +3316,8 @@ class AMLClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.financialservices.v1.DeletePredictionResultRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/prediction_result.proto#L249}
-  /// [google.cloud.financialservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/financialservices/v1/service.proto#L517}
+  /// [google.cloud.financialservices.v1.DeletePredictionResultRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/prediction_result.proto#L252}
+  /// [google.cloud.financialservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/financialservices/v1/service.proto#L520}
   ///
   // clang-format on
   future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
@@ -3383,8 +3383,8 @@ class AMLClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.financialservices.v1.BacktestResult]: @googleapis_reference_link{google/cloud/financialservices/v1/backtest_result.proto#L32}
-  /// [google.cloud.financialservices.v1.ListBacktestResultsRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/backtest_result.proto#L132}
+  /// [google.cloud.financialservices.v1.BacktestResult]: @googleapis_reference_link{google/cloud/financialservices/v1/backtest_result.proto#L35}
+  /// [google.cloud.financialservices.v1.ListBacktestResultsRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/backtest_result.proto#L135}
   ///
   // clang-format on
   StreamRange<google::cloud::financialservices::v1::BacktestResult>
@@ -3422,8 +3422,8 @@ class AMLClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.financialservices.v1.BacktestResult]: @googleapis_reference_link{google/cloud/financialservices/v1/backtest_result.proto#L32}
-  /// [google.cloud.financialservices.v1.ListBacktestResultsRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/backtest_result.proto#L132}
+  /// [google.cloud.financialservices.v1.BacktestResult]: @googleapis_reference_link{google/cloud/financialservices/v1/backtest_result.proto#L35}
+  /// [google.cloud.financialservices.v1.ListBacktestResultsRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/backtest_result.proto#L135}
   ///
   // clang-format on
   StreamRange<google::cloud::financialservices::v1::BacktestResult>
@@ -3449,8 +3449,8 @@ class AMLClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.financialservices.v1.BacktestResult]: @googleapis_reference_link{google/cloud/financialservices/v1/backtest_result.proto#L32}
-  /// [google.cloud.financialservices.v1.GetBacktestResultRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/backtest_result.proto#L175}
+  /// [google.cloud.financialservices.v1.BacktestResult]: @googleapis_reference_link{google/cloud/financialservices/v1/backtest_result.proto#L35}
+  /// [google.cloud.financialservices.v1.GetBacktestResultRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/backtest_result.proto#L178}
   ///
   // clang-format on
   StatusOr<google::cloud::financialservices::v1::BacktestResult>
@@ -3479,8 +3479,8 @@ class AMLClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.financialservices.v1.BacktestResult]: @googleapis_reference_link{google/cloud/financialservices/v1/backtest_result.proto#L32}
-  /// [google.cloud.financialservices.v1.GetBacktestResultRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/backtest_result.proto#L175}
+  /// [google.cloud.financialservices.v1.BacktestResult]: @googleapis_reference_link{google/cloud/financialservices/v1/backtest_result.proto#L35}
+  /// [google.cloud.financialservices.v1.GetBacktestResultRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/backtest_result.proto#L178}
   ///
   // clang-format on
   StatusOr<google::cloud::financialservices::v1::BacktestResult>
@@ -3516,8 +3516,8 @@ class AMLClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.financialservices.v1.BacktestResult]: @googleapis_reference_link{google/cloud/financialservices/v1/backtest_result.proto#L32}
-  /// [google.cloud.financialservices.v1.CreateBacktestResultRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/backtest_result.proto#L186}
+  /// [google.cloud.financialservices.v1.BacktestResult]: @googleapis_reference_link{google/cloud/financialservices/v1/backtest_result.proto#L35}
+  /// [google.cloud.financialservices.v1.CreateBacktestResultRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/backtest_result.proto#L189}
   ///
   // clang-format on
   future<StatusOr<google::cloud::financialservices::v1::BacktestResult>>
@@ -3574,8 +3574,8 @@ class AMLClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.financialservices.v1.BacktestResult]: @googleapis_reference_link{google/cloud/financialservices/v1/backtest_result.proto#L32}
-  /// [google.cloud.financialservices.v1.CreateBacktestResultRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/backtest_result.proto#L186}
+  /// [google.cloud.financialservices.v1.BacktestResult]: @googleapis_reference_link{google/cloud/financialservices/v1/backtest_result.proto#L35}
+  /// [google.cloud.financialservices.v1.CreateBacktestResultRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/backtest_result.proto#L189}
   ///
   // clang-format on
   future<StatusOr<google::cloud::financialservices::v1::BacktestResult>>
@@ -3645,8 +3645,8 @@ class AMLClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.financialservices.v1.BacktestResult]: @googleapis_reference_link{google/cloud/financialservices/v1/backtest_result.proto#L32}
-  /// [google.cloud.financialservices.v1.UpdateBacktestResultRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/backtest_result.proto#L218}
+  /// [google.cloud.financialservices.v1.BacktestResult]: @googleapis_reference_link{google/cloud/financialservices/v1/backtest_result.proto#L35}
+  /// [google.cloud.financialservices.v1.UpdateBacktestResultRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/backtest_result.proto#L221}
   ///
   // clang-format on
   future<StatusOr<google::cloud::financialservices::v1::BacktestResult>>
@@ -3702,8 +3702,8 @@ class AMLClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.financialservices.v1.BacktestResult]: @googleapis_reference_link{google/cloud/financialservices/v1/backtest_result.proto#L32}
-  /// [google.cloud.financialservices.v1.UpdateBacktestResultRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/backtest_result.proto#L218}
+  /// [google.cloud.financialservices.v1.BacktestResult]: @googleapis_reference_link{google/cloud/financialservices/v1/backtest_result.proto#L35}
+  /// [google.cloud.financialservices.v1.UpdateBacktestResultRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/backtest_result.proto#L221}
   ///
   // clang-format on
   future<StatusOr<google::cloud::financialservices::v1::BacktestResult>>
@@ -3771,8 +3771,8 @@ class AMLClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.financialservices.v1.ExportBacktestResultMetadataRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/backtest_result.proto#L274}
-  /// [google.cloud.financialservices.v1.ExportBacktestResultMetadataResponse]: @googleapis_reference_link{google/cloud/financialservices/v1/backtest_result.proto#L289}
+  /// [google.cloud.financialservices.v1.ExportBacktestResultMetadataRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/backtest_result.proto#L277}
+  /// [google.cloud.financialservices.v1.ExportBacktestResultMetadataResponse]: @googleapis_reference_link{google/cloud/financialservices/v1/backtest_result.proto#L292}
   ///
   // clang-format on
   future<StatusOr<google::cloud::financialservices::v1::
@@ -3833,8 +3833,8 @@ class AMLClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.financialservices.v1.ExportBacktestResultMetadataRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/backtest_result.proto#L274}
-  /// [google.cloud.financialservices.v1.ExportBacktestResultMetadataResponse]: @googleapis_reference_link{google/cloud/financialservices/v1/backtest_result.proto#L289}
+  /// [google.cloud.financialservices.v1.ExportBacktestResultMetadataRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/backtest_result.proto#L277}
+  /// [google.cloud.financialservices.v1.ExportBacktestResultMetadataResponse]: @googleapis_reference_link{google/cloud/financialservices/v1/backtest_result.proto#L292}
   ///
   // clang-format on
   future<StatusOr<google::cloud::financialservices::v1::
@@ -3900,8 +3900,8 @@ class AMLClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.financialservices.v1.DeleteBacktestResultRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/backtest_result.proto#L248}
-  /// [google.cloud.financialservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/financialservices/v1/service.proto#L517}
+  /// [google.cloud.financialservices.v1.DeleteBacktestResultRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/backtest_result.proto#L251}
+  /// [google.cloud.financialservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/financialservices/v1/service.proto#L520}
   ///
   // clang-format on
   future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
@@ -3951,8 +3951,8 @@ class AMLClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.financialservices.v1.DeleteBacktestResultRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/backtest_result.proto#L248}
-  /// [google.cloud.financialservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/financialservices/v1/service.proto#L517}
+  /// [google.cloud.financialservices.v1.DeleteBacktestResultRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/backtest_result.proto#L251}
+  /// [google.cloud.financialservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/financialservices/v1/service.proto#L520}
   ///
   // clang-format on
   future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>

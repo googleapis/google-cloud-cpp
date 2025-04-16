@@ -76,6 +76,16 @@ IdentityAwareProxyAdminServiceAuth::UpdateIapSettings(
   return child_->UpdateIapSettings(context, options, request);
 }
 
+StatusOr<google::cloud::iap::v1::ValidateIapAttributeExpressionResponse>
+IdentityAwareProxyAdminServiceAuth::ValidateIapAttributeExpression(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::iap::v1::ValidateIapAttributeExpressionRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ValidateIapAttributeExpression(context, options, request);
+}
+
 StatusOr<google::cloud::iap::v1::ListTunnelDestGroupsResponse>
 IdentityAwareProxyAdminServiceAuth::ListTunnelDestGroups(
     grpc::ClientContext& context, Options const& options,

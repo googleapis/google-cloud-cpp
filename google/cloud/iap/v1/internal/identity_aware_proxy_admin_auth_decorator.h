@@ -59,6 +59,12 @@ class IdentityAwareProxyAdminServiceAuth
       grpc::ClientContext& context, Options const& options,
       google::cloud::iap::v1::UpdateIapSettingsRequest const& request) override;
 
+  StatusOr<google::cloud::iap::v1::ValidateIapAttributeExpressionResponse>
+  ValidateIapAttributeExpression(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::iap::v1::ValidateIapAttributeExpressionRequest const&
+          request) override;
+
   StatusOr<google::cloud::iap::v1::ListTunnelDestGroupsResponse>
   ListTunnelDestGroups(
       grpc::ClientContext& context, Options const& options,

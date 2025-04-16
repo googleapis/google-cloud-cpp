@@ -115,8 +115,8 @@ class IdentityAwareProxyOAuthServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.iap.v1.ListBrandsRequest]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L613}
-  /// [google.cloud.iap.v1.ListBrandsResponse]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L620}
+  /// [google.cloud.iap.v1.ListBrandsRequest]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L696}
+  /// [google.cloud.iap.v1.ListBrandsResponse]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L703}
   ///
   // clang-format on
   StatusOr<google::cloud::iap::v1::ListBrandsResponse> ListBrands(
@@ -153,8 +153,8 @@ class IdentityAwareProxyOAuthServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.iap.v1.Brand]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L712}
-  /// [google.cloud.iap.v1.CreateBrandRequest]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L626}
+  /// [google.cloud.iap.v1.Brand]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L795}
+  /// [google.cloud.iap.v1.CreateBrandRequest]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L709}
   ///
   // clang-format on
   StatusOr<google::cloud::iap::v1::Brand> CreateBrand(
@@ -184,8 +184,8 @@ class IdentityAwareProxyOAuthServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.iap.v1.Brand]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L712}
-  /// [google.cloud.iap.v1.GetBrandRequest]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L636}
+  /// [google.cloud.iap.v1.Brand]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L795}
+  /// [google.cloud.iap.v1.GetBrandRequest]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L719}
   ///
   // clang-format on
   StatusOr<google::cloud::iap::v1::Brand> GetBrand(
@@ -217,8 +217,8 @@ class IdentityAwareProxyOAuthServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.iap.v1.CreateIdentityAwareProxyClientRequest]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L674}
-  /// [google.cloud.iap.v1.IdentityAwareProxyClient]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L730}
+  /// [google.cloud.iap.v1.CreateIdentityAwareProxyClientRequest]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L757}
+  /// [google.cloud.iap.v1.IdentityAwareProxyClient]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L813}
   ///
   // clang-format on
   StatusOr<google::cloud::iap::v1::IdentityAwareProxyClient>
@@ -259,8 +259,8 @@ class IdentityAwareProxyOAuthServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.iap.v1.IdentityAwareProxyClient]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L730}
-  /// [google.cloud.iap.v1.ListIdentityAwareProxyClientsRequest]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L643}
+  /// [google.cloud.iap.v1.IdentityAwareProxyClient]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L813}
+  /// [google.cloud.iap.v1.ListIdentityAwareProxyClientsRequest]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L726}
   ///
   // clang-format on
   StreamRange<google::cloud::iap::v1::IdentityAwareProxyClient>
@@ -292,8 +292,8 @@ class IdentityAwareProxyOAuthServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.iap.v1.GetIdentityAwareProxyClientRequest]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L687}
-  /// [google.cloud.iap.v1.IdentityAwareProxyClient]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L730}
+  /// [google.cloud.iap.v1.GetIdentityAwareProxyClientRequest]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L770}
+  /// [google.cloud.iap.v1.IdentityAwareProxyClient]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L813}
   ///
   // clang-format on
   StatusOr<google::cloud::iap::v1::IdentityAwareProxyClient>
@@ -325,8 +325,8 @@ class IdentityAwareProxyOAuthServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.iap.v1.IdentityAwareProxyClient]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L730}
-  /// [google.cloud.iap.v1.ResetIdentityAwareProxyClientSecretRequest]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L695}
+  /// [google.cloud.iap.v1.IdentityAwareProxyClient]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L813}
+  /// [google.cloud.iap.v1.ResetIdentityAwareProxyClientSecretRequest]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L778}
   ///
   // clang-format on
   StatusOr<google::cloud::iap::v1::IdentityAwareProxyClient>
@@ -358,7 +358,7 @@ class IdentityAwareProxyOAuthServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.iap.v1.DeleteIdentityAwareProxyClientRequest]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L703}
+  /// [google.cloud.iap.v1.DeleteIdentityAwareProxyClientRequest]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L786}
   ///
   // clang-format on
   Status DeleteIdentityAwareProxyClient(
