@@ -118,6 +118,31 @@ ReservationsConnection::ListReservations(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ReservationsConnection::PerformMaintenance(
+    google::cloud::cpp::compute::reservations::v1::
+        PerformMaintenanceRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ReservationsConnection::PerformMaintenance(
+    NoAwaitTag, google::cloud::cpp::compute::reservations::v1::
+                    PerformMaintenanceRequest const&) {
+  return StatusOr<google::cloud::cpp::compute::v1::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ReservationsConnection::PerformMaintenance(
+    google::cloud::cpp::compute::v1::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ReservationsConnection::Resize(
     google::cloud::cpp::compute::reservations::v1::ResizeRequest const&) {
   return google::cloud::make_ready_future<

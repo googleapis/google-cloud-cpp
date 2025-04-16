@@ -115,6 +115,30 @@ MachineImagesConnection::SetIamPolicy(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+MachineImagesConnection::SetLabels(
+    google::cloud::cpp::compute::machine_images::v1::SetLabelsRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+MachineImagesConnection::SetLabels(
+    NoAwaitTag,
+    google::cloud::cpp::compute::machine_images::v1::SetLabelsRequest const&) {
+  return StatusOr<google::cloud::cpp::compute::v1::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+MachineImagesConnection::SetLabels(
+    google::cloud::cpp::compute::v1::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 MachineImagesConnection::TestIamPermissions(
     google::cloud::cpp::compute::machine_images::v1::

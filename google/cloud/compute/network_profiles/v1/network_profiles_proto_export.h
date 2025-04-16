@@ -26,7 +26,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_NETWORK_PROFILES_V1_NETWORK_PROFILES_PROTO_EXPORT_H
 
 // IWYU pragma: begin_exports
-#include <google/cloud/compute/v1/internal/common_083.pb.h>
+#include <google/cloud/compute/v1/internal/common_084.pb.h>
 // IWYU pragma: end_exports
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_NETWORK_PROFILES_V1_NETWORK_PROFILES_PROTO_EXPORT_H

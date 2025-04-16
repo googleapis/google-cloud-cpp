@@ -512,6 +512,10 @@
 ./include/google/cloud/compute/regions/v1
 ./include/google/cloud/compute/regions/v1/internal
 ./include/google/cloud/compute/regions/v1/mocks
+./include/google/cloud/compute/reservation_blocks
+./include/google/cloud/compute/reservation_blocks/v1
+./include/google/cloud/compute/reservation_blocks/v1/internal
+./include/google/cloud/compute/reservation_blocks/v1/mocks
 ./include/google/cloud/compute/reservations
 ./include/google/cloud/compute/reservations/v1
 ./include/google/cloud/compute/reservations/v1/internal

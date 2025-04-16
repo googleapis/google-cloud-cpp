@@ -27,10 +27,10 @@
 
 // IWYU pragma: begin_exports
 #include <google/cloud/compute/v1/internal/common_016.pb.h>
-#include <google/cloud/compute/v1/internal/common_058.pb.h>
 #include <google/cloud/compute/v1/internal/common_059.pb.h>
-#include <google/cloud/compute/v1/internal/common_062.pb.h>
-#include <google/cloud/compute/v1/internal/common_079.pb.h>
+#include <google/cloud/compute/v1/internal/common_060.pb.h>
+#include <google/cloud/compute/v1/internal/common_063.pb.h>
+#include <google/cloud/compute/v1/internal/common_080.pb.h>
 // IWYU pragma: end_exports
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_INSTANCE_GROUPS_V1_INSTANCE_GROUPS_PROTO_EXPORT_H

@@ -109,7 +109,7 @@ class InstanceSettingsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.instance_settings.v1.GetInstanceSettingsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_settings/v1/instance_settings.proto#L65}
-  /// [google.cloud.cpp.compute.v1.InstanceSettings]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_063.proto#L27}
+  /// [google.cloud.cpp.compute.v1.InstanceSettings]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_064.proto#L27}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::InstanceSettings>
@@ -141,7 +141,7 @@ class InstanceSettingsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.instance_settings.v1.GetInstanceSettingsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_settings/v1/instance_settings.proto#L65}
-  /// [google.cloud.cpp.compute.v1.InstanceSettings]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_063.proto#L27}
+  /// [google.cloud.cpp.compute.v1.InstanceSettings]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_064.proto#L27}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::InstanceSettings>

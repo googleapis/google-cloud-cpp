@@ -70,6 +70,11 @@ Idempotency MachineImagesConnectionIdempotencyPolicy::SetIamPolicy(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency MachineImagesConnectionIdempotencyPolicy::SetLabels(
+    google::cloud::cpp::compute::machine_images::v1::SetLabelsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency MachineImagesConnectionIdempotencyPolicy::TestIamPermissions(
     google::cloud::cpp::compute::machine_images::v1::
         TestIamPermissionsRequest const&) {
