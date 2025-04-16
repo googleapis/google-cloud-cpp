@@ -94,11 +94,16 @@ TracingOptions DefaultTracingOptions() {
   return TracingOptions{}.SetOptions(*tracing_options);
 }
 
+// TODO(#15089): Determine if this function needs to preserve more (or all) of
+// the options passed in.
 Options MakeAuthOptions(Options const& options) {
   Options opts;
   if (options.has<OpenTelemetryTracingOption>()) {
     opts.set<OpenTelemetryTracingOption>(
         options.get<OpenTelemetryTracingOption>());
+  }
+  if (options.has<LoggingComponentsOption>()) {
+    opts.set<LoggingComponentsOption>(options.get<LoggingComponentsOption>());
   }
   return opts;
 }
