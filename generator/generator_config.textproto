@@ -1664,6 +1664,15 @@ discovery_products {
     generate_grpc_transport: false
   }
 
+  rest_services {
+    service_proto_path: "google/cloud/compute/reservation_blocks/v1/reservation_blocks.proto"
+    product_path: "google/cloud/compute/reservation_blocks/v1"
+    initial_copyright_year: "2025"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    generate_grpc_transport: false
+  }
+
   # update_discovery_doc.sh additions
 }
 
