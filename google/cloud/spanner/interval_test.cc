@@ -40,6 +40,8 @@ using std::chrono::minutes;
 using std::chrono::nanoseconds;
 using std::chrono::seconds;
 
+auto HMS(int h, int m, int s) { return hours(h) + minutes(m) + seconds(s); }
+
 Timestamp MakeTimestamp(std::string const& s) {
   return spanner_internal::TimestampFromRFC3339(s).value();
 }
@@ -91,6 +93,8 @@ TEST(Interval, ArithmeticOperators) {
   // Negation.
   EXPECT_EQ(-Interval(), Interval());
   EXPECT_EQ(-Interval(0, 10, 11, hours(12)), Interval(0, -10, -11, -hours(12)));
+  EXPECT_EQ(-Interval(-1, 2, -3, HMS(-4, 5, -6)),
+            Interval(1, -2, 3, HMS(4, -5, 6)));
 
   // Addition/subtraction.
   EXPECT_EQ(Interval(0, 1, 0) + Interval(0, 2, 0), Interval(0, 3, 0));
@@ -128,8 +132,8 @@ TEST(Interval, ArithmeticOperators) {
 
 TEST(Interval, Range) {
   auto huge = Interval(178'000'000, 0, 0);
-  EXPECT_EQ(std::string(huge), "178000000 years");
-  EXPECT_EQ(std::string(-huge), "-178000000 years");
+  EXPECT_EQ(std::string(huge), "P178000000Y");
+  EXPECT_EQ(std::string(-huge), "P-178000000Y");
 
   EXPECT_LT(-huge, huge);
   EXPECT_GT(huge, huge - Interval(microseconds(1)));
@@ -149,6 +153,8 @@ TEST(Interval, RoundTrip) {
       Interval(milliseconds(123)),
       Interval(microseconds(123456)),
       Interval(nanoseconds(123456789)),
+      Interval(0, 11, 27, HMS(3, 55, 6)),
+      Interval(-1, 2, -3, HMS(4, -5, 6)),
   };
 
   for (auto const& tc : test_cases) {
@@ -165,14 +171,107 @@ TEST(Interval, RoundTrip) {
   }
 }
 
+// https://gist.github.com/rbeauchamp/6d8f8ffe22358665a9dd6571b79e1d5f
+// is the source of many of the MakeInterval() test cases.
+TEST(Interval, MakeIntervalISO8601) {
+  std::vector<std::pair<std::string, Interval>> test_cases = {
+      {"P3Y6M4DT12H30M5S", Interval(3, 6, 4, HMS(12, 30, 5))},
+      {"-P3Y6M4DT12H30M5S", -Interval(3, 6, 4, HMS(12, 30, 5))},
+      {"P1DT2H3M4S", Interval(0, 0, 1, HMS(2, 3, 4))},
+      {"PT1H30M", Interval(0, 0, 0, HMS(1, 30, 0))},
+      {"P1Y", Interval(1, 0, 0)},
+      {"P1M", Interval(0, 1, 0)},
+      {"P2M", Interval(0, 2, 0)},
+      {"P1W", Interval(0, 0, 7)},
+      {"P1D", Interval(0, 0, 1)},
+      {"PT1H", Interval(0, 0, 0, HMS(1, 0, 0))},
+      {"PT1M", Interval(0, 0, 0, HMS(0, 1, 0))},
+      {"PT1S", Interval(0, 0, 0, HMS(0, 0, 1))},
+      {"-P1Y", -Interval(1, 0, 0)},
+      {"-P1M", -Interval(0, 1, 0)},
+      {"-P2M", -Interval(0, 2, 0)},
+      {"-P1W", -Interval(0, 0, 7)},
+      {"-P1D", -Interval(0, 0, 1)},
+      {"-PT1H", -Interval(0, 0, 0, HMS(1, 0, 0))},
+      {"-PT1M", -Interval(0, 0, 0, HMS(0, 1, 0))},
+      {"-PT1S", -Interval(0, 0, 0, HMS(0, 0, 1))},
+      {"PT1H1M1S", Interval(0, 0, 0, HMS(1, 1, 1))},
+      {"-PT1H1M1S", -Interval(0, 0, 0, HMS(1, 1, 1))},
+      {"P1Y2M3DT4H5M6S", Interval(1, 2, 3, HMS(4, 5, 6))},
+      {"P2Y10M19DT23H59M59S", Interval(2, 10, 19, HMS(23, 59, 59))},
+      {"-P1Y2M3DT4H5M6S", -Interval(1, 2, 3, HMS(4, 5, 6))},
+      {"-P2Y10M19DT23H59M59S", -Interval(2, 10, 19, HMS(23, 59, 59))},
+      {"P9998Y", Interval(9998, 0, 0)},
+      {"-P9998Y", -Interval(9998, 0, 0)},
+      {"PT0S", Interval()},
+      {"PT0M0S", Interval()},
+      {"PT0H0M0S", Interval()},
+      {"P0DT0H0M0S", Interval()},
+      {"P0W", Interval()},
+      {"P0M", Interval()},
+      {"P0Y", Interval()},
+      {"P0Y0M0DT0H0M0.1S", Interval(0, 0, 0, milliseconds(100))},
+      {"P0Y0M1DT0H0M0S", Interval(0, 0, 1)},
+      {"P0Y1M0DT0H0M0S", Interval(0, 1, 0)},
+      {"P1Y0M0DT0H0M0S", Interval(1, 0, 0)},
+      {"P1Y2M3D", Interval(1, 2, 3)},
+      {"P2Y", Interval(2, 0, 0)},
+      {"P1M1D", Interval(0, 1, 1)},
+      // Additional locally-generated cases.
+      {"P23DT23H", Interval(0, 0, 23, HMS(23, 0, 0))},
+      {"PT36H", Interval(0, 0, 0, HMS(36, 0, 0))},
+      {"P1DT12H", Interval(0, 0, 1, HMS(12, 0, 0))},
+      {"-P-1Y-2M-3DT-4H-5M-6S", -Interval(-1, -2, -3, HMS(-4, -5, -6))},
+      {"P0.5Y", Interval(0, 6, 0)},
+      {"P0,5Y", Interval(0, 6, 0)},
+      {"P0.25M", Interval(0, 0, 7, HMS(12, 0, 0))},
+      {"P2.5W", Interval(0, 0, 17, HMS(12, 0, 0))},
+      {"P0.1D", Interval(0, 0, 0, HMS(2, 24, 0))},
+      {"PT0.5H", Interval(0, 0, 0, HMS(0, 30, 0))},
+      {"PT0.25M", Interval(0, 0, 0, HMS(0, 0, 15))},
+      {"PT0.1S", Interval(0, 0, 0, milliseconds(100))},
+  };
+
+  for (auto const& tc : test_cases) {
+    auto intvl = MakeInterval(tc.first);
+    EXPECT_STATUS_OK(intvl) << tc.first;
+    if (!intvl) continue;
+    EXPECT_EQ(*intvl, tc.second);
+  }
+
+  std::vector<std::string> error_cases = {
+      "P",
+      "PT",
+      "P1",
+      "P1Y2M3DT",
+      "P1Y1M1DT1H1M1S1",
+      "P1Y1M1DT1H1M1S1D",
+      "P1Y1M1DT1H1M1S1H",
+      "P1Y1M1DT1H1M1S1M",
+      "P1Y1M1DT1H1M1S1S",
+      "PT1H1M1S1Y",
+      "P1Y1M1DT1H1M1S-",
+      "P1Y1M1DT1H1M1S+",
+      "P1Y1M1DT1H1M1SS",
+      "P1Y1M1DT1H1M1MM",
+      "P1Y1M1DT1H1M1HH",
+      "P1Y1M1DT1H1M1DD",
+      "P1Y1M1DT1H1M1YY",
+      // Additional locally-generated cases.
+      "P0.5Y1D",
+      "P1D1Y",
+      "PT1S1M",
+  };
+
+  for (auto const& ec : error_cases) {
+    EXPECT_THAT(MakeInterval(ec), StatusIs(StatusCode::kInvalidArgument));
+  }
+}
+
 // https://www.postgresql.org/docs/current/datatype-datetime.html and
 // https://www.postgresqltutorial.com/postgresql-tutorial/postgresql-interval
 // are the sources of some of the MakeInterval() test cases.
-
-TEST(Interval, MakeInterval) {
-  auto hms = [](int h, int m, int s) {
-    return hours(h) + minutes(m) + seconds(s);
-  };
+TEST(Interval, MakeIntervalPostgreSQL) {
   std::vector<std::pair<std::string, Interval>> test_cases = {
       {"2 microseconds", Interval(microseconds(2))},
       {"3 milliseconds", Interval(milliseconds(3))},
@@ -191,34 +290,34 @@ TEST(Interval, MakeInterval) {
       {"1 millennium", Interval(1'000, 0, 0)},
 
       {"1.5 years", Interval(1, 6, 0)},
-      {"1.75 months", Interval(0, 1, 22, hms(12, 0, 0))},
+      {"1.75 months", Interval(0, 1, 22, HMS(12, 0, 0))},
       {"@-1.5 years", Interval(-1, -6, 0)},
 
       {"@ 1 year 2 mons", Interval(1, 2, 0)},
       {"1 year 2 mons", Interval(1, 2, 0)},
       {"1-2", Interval(1, 2, 0)},
 
-      {"@ 3 days 4 hours 5 mins 6 secs", Interval(0, 0, 3, hms(4, 5, 6))},
-      {"3 days 04:05:06", Interval(0, 0, 3, hms(4, 5, 6))},
-      {"3 4:05:06", Interval(0, 0, 3, hms(4, 5, 6))},
+      {"@ 3 days 4 hours 5 mins 6 secs", Interval(0, 0, 3, HMS(4, 5, 6))},
+      {"3 days 04:05:06", Interval(0, 0, 3, HMS(4, 5, 6))},
+      {"3 4:05:06", Interval(0, 0, 3, HMS(4, 5, 6))},
 
       {" 6 years 5 months 4 days 3 hours 2 minutes 1 second ",
-       Interval(6, 5, 4, hms(3, 2, 1))},
+       Interval(6, 5, 4, HMS(3, 2, 1))},
       {" @ 6 years 5 mons 4 days 3 hours 2 mins 1 sec ",
-       Interval(6, 5, 4, hms(3, 2, 1))},
-      {" 6 years 5 mons 4 days 03:02:01 ", Interval(6, 5, 4, hms(3, 2, 1))},
-      {" +6-5 +4 +3:02:01 ", Interval(6, 5, 4, hms(3, 2, 1))},
+       Interval(6, 5, 4, HMS(3, 2, 1))},
+      {" 6 years 5 mons 4 days 03:02:01 ", Interval(6, 5, 4, HMS(3, 2, 1))},
+      {" +6-5 +4 +3:02:01 ", Interval(6, 5, 4, HMS(3, 2, 1))},
 
       {"1 year 2 months 3 days 4 hours 5 minutes 6 seconds",
-       Interval(1, 2, 3, hms(4, 5, 6))},
+       Interval(1, 2, 3, HMS(4, 5, 6))},
       {"-1 year -2 mons +3 days -04:05:06",
-       Interval(-1, -2, 3, hms(-4, -5, -6))},
-      {"-1-2 +3 -4:05:06", Interval(-1, 2, 3, hms(-4, -5, -6))},
+       Interval(-1, -2, 3, HMS(-4, -5, -6))},
+      {"-1-2 +3 -4:05:06", Interval(-1, 2, 3, HMS(-4, -5, -6))},
 
       {"@ 1 year 2 mons -3 days 4 hours 5 mins 6 secs ago",
-       Interval(-2, 10, 3, hms(-4, -5, -6))},
+       Interval(-2, 10, 3, HMS(-4, -5, -6))},
 
-      {"17h 20m 05s", Interval(hms(17, 20, 5))},
+      {"17h 20m 05s", Interval(HMS(17, 20, 5))},
 
       {"-42 microseconds", Interval(-microseconds(42))},
       {"+87 milliseconds", Interval(milliseconds(87))},
@@ -248,26 +347,23 @@ TEST(Interval, MakeInterval) {
 // operator, so here we simply verify that output streaming is available.
 TEST(Interval, OutputStreaming) {
   std::ostringstream os;
-  os << Interval(1, 2, 3,
-                 hours(4) + minutes(5) + seconds(6) + nanoseconds(123456789));
-  EXPECT_EQ("1 year 2 months 3 days 04:05:06.123456789", os.str());
+  os << Interval(1, 2, 3, HMS(4, 5, 6) + nanoseconds(123456789));
+  EXPECT_EQ("P1Y2M3DT4H5M6.123456789S", os.str());
 }
 
 TEST(Interval, Justification) {
-  EXPECT_EQ(std::string(Interval(0, 0, 35)), "35 days");
-  EXPECT_EQ(std::string(JustifyDays(Interval(0, 0, 35))), "1 month 5 days");
-  EXPECT_EQ(std::string(Interval(0, 0, -35)), "-35 days");
-  EXPECT_EQ(std::string(JustifyDays(Interval(0, 0, -35))), "-2 months 25 days");
+  EXPECT_EQ(std::string(Interval(0, 0, 35)), "P35D");
+  EXPECT_EQ(std::string(JustifyDays(Interval(0, 0, 35))), "P1M5D");
+  EXPECT_EQ(std::string(Interval(0, 0, -35)), "P-35D");
+  EXPECT_EQ(std::string(JustifyDays(Interval(0, 0, -35))), "P-2M25D");
 
-  EXPECT_EQ(std::string(Interval(hours(27))), "27:00:00");
-  EXPECT_EQ(std::string(JustifyHours(Interval(hours(27)))),  //
-            "1 day 03:00:00");
-  EXPECT_EQ(std::string(Interval(-hours(27))), "-27:00:00");
-  EXPECT_EQ(std::string(JustifyHours(Interval(-hours(27)))),
-            "-2 days 21:00:00");
+  EXPECT_EQ(std::string(Interval(hours(27))), "PT27H");
+  EXPECT_EQ(std::string(JustifyHours(Interval(hours(27)))), "P1DT3H");
+  EXPECT_EQ(std::string(Interval(-hours(27))), "PT-27H");
+  EXPECT_EQ(std::string(JustifyHours(Interval(-hours(27)))), "P-2DT21H");
 
   EXPECT_EQ(std::string(JustifyInterval(Interval(0, 1, 0, -hours(1)))),
-            "29 days 23:00:00");
+            "P29DT23H");
 }
 
 TEST(Interval, TimestampOperations) {
@@ -284,30 +380,26 @@ TEST(Interval, TimestampOperations) {
   EXPECT_THAT(Diff(Timestamp(), Timestamp(), utc), IsOkAndHolds(Interval()));
   EXPECT_THAT(Diff(Timestamp(), Timestamp(), nyc), IsOkAndHolds(Interval()));
 
-  auto hms = [](int h, int m, int s) {
-    return hours(h) + minutes(m) + seconds(s);
-  };
-
   // Over continuous civil-time segments, Timestamp/Interval operations
   // behave in obvious ways.
   EXPECT_THAT(  //
       Add(MakeTimestamp("2021-02-03T04:05:06.123456789Z"),
-          Interval(1, 2, 3, hms(4, 5, 6) + nanoseconds(999)), utc),
+          Interval(1, 2, 3, HMS(4, 5, 6) + nanoseconds(999)), utc),
       IsOkAndHolds(MakeTimestamp("2022-04-06T08:10:12.123457788Z")));
   EXPECT_THAT(
       Diff(MakeTimestamp("2022-04-06T08:10:12.123457788Z"),
            MakeTimestamp("2021-02-03T04:05:06.123456789Z"), utc),
-      IsOkAndHolds(Interval(0, 0, 427, hms(4, 5, 6) + nanoseconds(999))));
+      IsOkAndHolds(Interval(0, 0, 427, HMS(4, 5, 6) + nanoseconds(999))));
 
   // If we cross a Feb 29 there is an extra day.
   EXPECT_THAT(  //
       Add(MakeTimestamp("2020-02-03T04:05:06.123456789Z"),
-          Interval(1, 2, 3, hms(4, 5, 6) + nanoseconds(999)), utc),
+          Interval(1, 2, 3, HMS(4, 5, 6) + nanoseconds(999)), utc),
       IsOkAndHolds(MakeTimestamp("2021-04-06T08:10:12.123457788Z")));
   EXPECT_THAT(
       Diff(MakeTimestamp("2021-04-06T08:10:12.123457788Z"),
            MakeTimestamp("2020-02-03T04:05:06.123456789Z"), utc),
-      IsOkAndHolds(Interval(0, 0, 428, hms(4, 5, 6) + nanoseconds(999))));
+      IsOkAndHolds(Interval(0, 0, 428, HMS(4, 5, 6) + nanoseconds(999))));
 
   // Over civil-time discontinuities, one civil day is either 23 absolute
   // hours (skipped) or 25 absolute hours (repeated).
@@ -331,7 +423,7 @@ TEST(Interval, TimestampOperations) {
                     MakeTimestamp("2001-07-27T12:00:00Z"), utc);
   EXPECT_STATUS_OK(intvl);
   if (intvl) {
-    EXPECT_EQ(std::string(*intvl), "63 days 15:00:00");
+    EXPECT_EQ(std::string(*intvl), "P63DT15H");
   }
 }
 
