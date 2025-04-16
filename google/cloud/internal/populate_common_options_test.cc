@@ -299,6 +299,23 @@ TEST(MakeAuthOptions, WithTracing) {
   EXPECT_TRUE(auth_options.get<OpenTelemetryTracingOption>());
 }
 
+TEST(MakeAuthOptions, WithoutLoggingComponents) {
+  auto options = Options{}.set<EndpointOption>("endpoint_option");
+  auto auth_options = MakeAuthOptions(options);
+  EXPECT_FALSE(auth_options.has<EndpointOption>());
+  EXPECT_FALSE(auth_options.has<LoggingComponentsOption>());
+}
+
+TEST(MakeAuthOptions, WithLoggingComponents) {
+  auto options = Options{}
+                     .set<EndpointOption>("endpoint_option")
+                     .set<LoggingComponentsOption>({"logging_component"});
+  auto auth_options = MakeAuthOptions(options);
+  EXPECT_FALSE(auth_options.has<EndpointOption>());
+  EXPECT_THAT(auth_options.get<LoggingComponentsOption>(),
+              ElementsAre("logging_component"));
+}
+
 }  // namespace
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
