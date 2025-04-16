@@ -306,7 +306,7 @@ TEST(MakeAuthOptions, WithoutLoggingComponents) {
   EXPECT_FALSE(auth_options.has<LoggingComponentsOption>());
 }
 
-TEST(MakeAuthOptions, WitLoggingComponents) {
+TEST(MakeAuthOptions, WithLoggingComponents) {
   auto options = Options{}
                      .set<EndpointOption>("endpoint_option")
                      .set<LoggingComponentsOption>({"logging_component"});
