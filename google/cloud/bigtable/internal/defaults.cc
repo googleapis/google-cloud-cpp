@@ -73,13 +73,11 @@ Options DefaultConnectionRefreshOptions(Options opts) {
     opts.set<MinConnectionRefreshOption>(kDefaultMinRefreshPeriod);
     opts.set<MaxConnectionRefreshOption>(kDefaultMaxRefreshPeriod);
   } else if (has_min && !has_max) {
-    opts.set<MaxConnectionRefreshOption>(
-        (std::max)(opts.get<MinConnectionRefreshOption>(),
-                   kDefaultMaxRefreshPeriod));
+    opts.set<MaxConnectionRefreshOption>((std::max)(
+        opts.get<MinConnectionRefreshOption>(), kDefaultMaxRefreshPeriod));
   } else if (!has_min && has_max) {
-    opts.set<MinConnectionRefreshOption>(
-        (std::min)(opts.get<MaxConnectionRefreshOption>(),
-                   kDefaultMinRefreshPeriod));
+    opts.set<MinConnectionRefreshOption>((std::min)(
+        opts.get<MaxConnectionRefreshOption>(), kDefaultMinRefreshPeriod));
   } else {
     // If the range is invalid, use the greater value as both the min and max
     auto const p = opts.get<MinConnectionRefreshOption>();

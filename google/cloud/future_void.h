@@ -103,11 +103,12 @@ class future<void> final : private internal::future_base<internal::FutureVoid> {
    * Side effects: `valid() == false` if the operation is successful.
    */
   template <typename F>
-  auto then(F&& func) -> future<
-      /// @cond implementation_details
-      internal::UnwrappedType<internal::invoke_result_t<F, future<void>>>
-      /// @endcond
-      >;
+  auto then(F&& func)
+      -> future<
+          /// @cond implementation_details
+          internal::UnwrappedType<internal::invoke_result_t<F, future<void>>>
+          /// @endcond
+          >;
 
   explicit future(std::shared_ptr<shared_state_type> state)
       : future_base<internal::FutureVoid>(std::move(state)) {}

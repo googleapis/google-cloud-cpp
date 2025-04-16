@@ -123,9 +123,9 @@ google::monitoring::v3::TimeInterval ToNonGaugeTimeInterval(
   // the start value.
   //
   // https://cloud.google.com/monitoring/api/ref_v3/rpc/google.monitoring.v3#timeinterval
-  auto end_ts_nanos = (std::max)(metric_data.end_ts.time_since_epoch(),
-                                 metric_data.start_ts.time_since_epoch() +
-                                     std::chrono::milliseconds(1));
+  auto end_ts_nanos = (std::max)(
+      metric_data.end_ts.time_since_epoch(),
+      metric_data.start_ts.time_since_epoch() + std::chrono::milliseconds(1));
 
   google::monitoring::v3::TimeInterval proto;
   *proto.mutable_start_time() = ToProtoTimestamp(metric_data.start_ts);
