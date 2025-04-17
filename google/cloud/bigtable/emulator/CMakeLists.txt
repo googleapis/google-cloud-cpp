@@ -105,7 +105,4 @@ foreach (fname ${bigtable_emulator_programs})
                 gRPC::grpc
                 protobuf::libprotobuf)
     google_cloud_cpp_add_common_options(${target})
-    if (BUILD_TESTING)
-        add_test(NAME ${target} COMMAND ${target})
-    endif ()
 endforeach ()
