@@ -22,6 +22,7 @@ namespace google {
 namespace cloud {
 namespace storage_experimental {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
 
 using ::google::cloud::storage_mocks::MockAsyncObjectDescriptorConnection;
 using ::google::cloud::storage_mocks::MockAsyncReaderConnection;
@@ -146,6 +147,7 @@ TEST(ObjectDescriptor, ReadLast) {
   EXPECT_FALSE(token.valid());
 }
 
+}  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_experimental
 }  // namespace cloud

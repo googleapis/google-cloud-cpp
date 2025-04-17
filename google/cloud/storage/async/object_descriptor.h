@@ -20,6 +20,8 @@
 #include "google/cloud/storage/async/token.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include "absl/types/optional.h"
+#include <cstdint>
 #include <memory>
 #include <utility>
 

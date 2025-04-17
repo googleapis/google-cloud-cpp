@@ -166,7 +166,7 @@ TEST(AsyncClient, InsertObject3) {
   EXPECT_THAT(response, IsOkAndHolds(IsProtoEqual(TestProtoObject())));
 }
 
-TEST(AsyncClient, OpenObject1) {
+TEST(AsyncClient, Open) {
   auto constexpr kExpectedRequest = R"pb(
     bucket: "projects/_/buckets/test-bucket"
     object: "test-object"
@@ -220,7 +220,7 @@ TEST(AsyncClient, OpenObject1) {
              "empty response", [](auto const& p) { return p.size(); }, 0)));
 }
 
-TEST(AsyncClient, OpenObject2) {
+TEST(AsyncClient, OpenWithInvalidBucket) {
   auto constexpr kExpectedRequest = R"pb(
     bucket: "test-only-invalid"
     object: "test-object"

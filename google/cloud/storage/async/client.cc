@@ -154,7 +154,7 @@ AsyncClient::ResumeAppendableObjectUpload(BucketName const& bucket_name,
 
   append_object_spec.set_bucket(BucketName(bucket_name).FullName());
   append_object_spec.set_object(std::move(object_name));
-  append_object_spec.set_generation(std::move(generation));
+  append_object_spec.set_generation(generation);
 
   return connection_
       ->ResumeAppendableObjectUpload(
