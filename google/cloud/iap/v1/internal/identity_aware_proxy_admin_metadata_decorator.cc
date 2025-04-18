@@ -93,6 +93,16 @@ IdentityAwareProxyAdminServiceMetadata::UpdateIapSettings(
   return child_->UpdateIapSettings(context, options, request);
 }
 
+StatusOr<google::cloud::iap::v1::ValidateIapAttributeExpressionResponse>
+IdentityAwareProxyAdminServiceMetadata::ValidateIapAttributeExpression(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::iap::v1::ValidateIapAttributeExpressionRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->ValidateIapAttributeExpression(context, options, request);
+}
+
 StatusOr<google::cloud::iap::v1::ListTunnelDestGroupsResponse>
 IdentityAwareProxyAdminServiceMetadata::ListTunnelDestGroups(
     grpc::ClientContext& context, Options const& options,

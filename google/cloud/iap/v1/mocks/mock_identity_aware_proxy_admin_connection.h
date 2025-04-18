@@ -68,6 +68,13 @@ class MockIdentityAwareProxyAdminServiceConnection
               (google::cloud::iap::v1::UpdateIapSettingsRequest const& request),
               (override));
 
+  MOCK_METHOD(
+      StatusOr<google::cloud::iap::v1::ValidateIapAttributeExpressionResponse>,
+      ValidateIapAttributeExpression,
+      (google::cloud::iap::v1::ValidateIapAttributeExpressionRequest const&
+           request),
+      (override));
+
   MOCK_METHOD((StreamRange<google::cloud::iap::v1::TunnelDestGroup>),
               ListTunnelDestGroups,
               (google::cloud::iap::v1::ListTunnelDestGroupsRequest request),

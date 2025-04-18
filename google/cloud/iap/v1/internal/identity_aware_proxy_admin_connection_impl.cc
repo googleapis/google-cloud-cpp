@@ -138,6 +138,23 @@ IdentityAwareProxyAdminServiceConnectionImpl::UpdateIapSettings(
       *current, request, __func__);
 }
 
+StatusOr<google::cloud::iap::v1::ValidateIapAttributeExpressionResponse>
+IdentityAwareProxyAdminServiceConnectionImpl::ValidateIapAttributeExpression(
+    google::cloud::iap::v1::ValidateIapAttributeExpressionRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ValidateIapAttributeExpression(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::iap::v1::ValidateIapAttributeExpressionRequest const&
+              request) {
+        return stub_->ValidateIapAttributeExpression(context, options, request);
+      },
+      *current, request, __func__);
+}
+
 StreamRange<google::cloud::iap::v1::TunnelDestGroup>
 IdentityAwareProxyAdminServiceConnectionImpl::ListTunnelDestGroups(
     google::cloud::iap::v1::ListTunnelDestGroupsRequest request) {
