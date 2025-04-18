@@ -32,6 +32,8 @@ ENABLED_FEATURES="${ENABLED_FEATURES},compute"
 readonly ENABLED_FEATURES
 
 io::run cmake "${cmake_args[@]}" \
+  -DCMAKE_CXX_STANDARD=17 \
+  -DCMAKE_CXX_FLAGS="-Wno-error=conversion" \
   -DGOOGLE_CLOUD_CPP_ENABLE="${ENABLED_FEATURES}"
 io::run cmake --build cmake-out
 mapfile -t ctest_args < <(ctest::common_args)

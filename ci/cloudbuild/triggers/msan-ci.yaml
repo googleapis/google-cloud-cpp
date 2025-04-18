@@ -12,16 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-createTime: '2021-04-15T01:54:43.175858386Z'
 filename: ci/cloudbuild/cloudbuild.yaml
 github:
   name: google-cloud-cpp
   owner: googleapis
   push:
-    branch: ^main$
-id: 6a79664d-8602-4312-9c33-810683d8f847
+    branch: prepare-for-v3.0.0
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: msan-ci
+name: prepare-for-v3-0-0-msan-ci
 substitutions:
   _BUILD_NAME: msan
   _DISTRO: fedora-msan

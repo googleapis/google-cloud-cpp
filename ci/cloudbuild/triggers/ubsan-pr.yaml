@@ -12,18 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-createTime: '2021-04-09T18:15:53.351255451Z'
 filename: ci/cloudbuild/cloudbuild.yaml
 github:
   name: google-cloud-cpp
   owner: googleapis
   pullRequest:
-    branch: ^main$
+    branch: prepare-for-v3.0.0
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
-id: 6e77e431-c822-40c7-a8de-7860b4b0fc69
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: ubsan-pr
-resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/6e77e431-c822-40c7-a8de-7860b4b0fc69
+name: prepare-for-v3-0-0-ubsan-pr
 substitutions:
   _BUILD_NAME: ubsan
   _DISTRO: fedora-latest-bazel

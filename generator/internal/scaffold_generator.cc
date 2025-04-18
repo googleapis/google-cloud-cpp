@@ -101,11 +101,12 @@ std::string SiteRoot(
 }
 
 nlohmann::json LoadApiIndex(std::string const& googleapis_path) {
+  std::cout << __func__ << ": googleapis_path=" << googleapis_path << "\n";
   auto const api_index_path = googleapis_path + "/" + kApiIndexFilename;
   auto status = google::cloud::internal::status(api_index_path);
   if (!exists(status)) {
     GCP_LOG(WARNING) << "Cannot find API index file (" << api_index_path << ")";
-    return {};
+    return nlohmann::json::value_t();
   }
   std::ifstream is(api_index_path);
   auto index = nlohmann::json::parse(is, nullptr, false);
@@ -127,18 +128,20 @@ std::map<std::string, std::string> ScaffoldVars(
     google::cloud::cpp::generator::ServiceConfiguration const& service,
     bool experimental) {
   std::map<std::string, std::string> vars;
-  for (auto const& api : index["apis"]) {
-    if (!api.contains("directory")) continue;
-    auto const directory = api["directory"].get<std::string>() + "/";
-    if (!absl::StartsWith(service.service_proto_path(), directory)) continue;
-    vars.emplace("id", api.value("id", ""));
-    vars.emplace("title", api.value("title", ""));
-    vars.emplace("description", api.value("description", ""));
-    vars.emplace("directory", api.value("directory", ""));
-    vars.emplace("service_config_yaml_name",
-                 absl::StrCat(api.value("directory", ""), "/",
-                              api.value("configFile", "")));
-    vars.emplace("nameInServiceConfig", api.value("nameInServiceConfig", ""));
+  if (!index.is_null()) {
+    for (auto const& api : index["apis"]) {
+      if (!api.contains("directory")) continue;
+      auto const directory = api["directory"].get<std::string>() + "/";
+      if (!absl::StartsWith(service.service_proto_path(), directory)) continue;
+      vars.emplace("id", api.value("id", ""));
+      vars.emplace("title", api.value("title", ""));
+      vars.emplace("description", api.value("description", ""));
+      vars.emplace("directory", api.value("directory", ""));
+      vars.emplace("service_config_yaml_name",
+                   absl::StrCat(api.value("directory", ""), "/",
+                                api.value("configFile", "")));
+      vars.emplace("nameInServiceConfig", api.value("nameInServiceConfig", ""));
+    }
   }
   if (!service.override_service_config_yaml_name().empty()) {
     vars.emplace("service_config_yaml_name",
@@ -381,8 +384,7 @@ this library.
   google::protobuf::io::Printer printer(&output, '$');
   printer.Print(
       variables,
-      absl::StrCat(kText1, FormatCloudServiceDocsLink(variables), kText2)
-          .c_str());
+      absl::StrCat(kText1, FormatCloudServiceDocsLink(variables), kText2));
 }
 
 void GenerateBuild(std::ostream& os,
@@ -516,8 +518,7 @@ which should give you a taste of the $title$ C++ client library API.
   google::protobuf::io::Printer printer(&output, '$');
   printer.Print(
       variables,
-      absl::StrCat(kText1, FormatCloudServiceDocsLink(variables), kText2)
-          .c_str());
+      absl::StrCat(kText1, FormatCloudServiceDocsLink(variables), kText2));
 }
 
 void GenerateDoxygenEnvironmentPage(
@@ -1021,7 +1022,7 @@ $$(BIN)/quickstart: quickstart.cc
 )""";
   google::protobuf::io::OstreamOutputStream output(&os);
   google::protobuf::io::Printer printer(&output, '$');
-  printer.Print(variables, format.c_str());
+  printer.Print(variables, format);
 }
 
 void GenerateQuickstartWorkspace(
@@ -1029,7 +1030,7 @@ void GenerateQuickstartWorkspace(
     std::string const& contents) {
   google::protobuf::io::OstreamOutputStream output(&os);
   google::protobuf::io::Printer printer(&output, '$');
-  printer.Print(variables, contents.c_str());
+  printer.Print(variables, contents);
 }
 
 void GenerateQuickstartBuild(
