@@ -116,7 +116,7 @@ class RoutersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.routers.v1.AggregatedListRoutersRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L239}
-  /// [google.cloud.cpp.compute.v1.RoutersScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_013.proto#L1573}
+  /// [google.cloud.cpp.compute.v1.RoutersScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_013.proto#L1601}
   ///
   // clang-format on
   StreamRange<std::pair<std::string,
@@ -158,7 +158,7 @@ class RoutersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.routers.v1.AggregatedListRoutersRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L239}
-  /// [google.cloud.cpp.compute.v1.RoutersScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_013.proto#L1573}
+  /// [google.cloud.cpp.compute.v1.RoutersScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_013.proto#L1601}
   ///
   // clang-format on
   StreamRange<std::pair<std::string,
@@ -554,7 +554,7 @@ class RoutersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.routers.v1.GetNatMappingInfoRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L410}
-  /// [google.cloud.cpp.compute.v1.VmEndpointNatMappingsList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_013.proto#L1740}
+  /// [google.cloud.cpp.compute.v1.VmEndpointNatMappingsList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_013.proto#L1768}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::VmEndpointNatMappingsList>
@@ -586,7 +586,7 @@ class RoutersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.routers.v1.GetNatMappingInfoRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L410}
-  /// [google.cloud.cpp.compute.v1.VmEndpointNatMappingsList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_013.proto#L1740}
+  /// [google.cloud.cpp.compute.v1.VmEndpointNatMappingsList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_013.proto#L1768}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::VmEndpointNatMappingsList>
@@ -618,7 +618,7 @@ class RoutersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.routers.v1.GetRoutePolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L492}
-  /// [google.cloud.cpp.compute.v1.RoutersGetRoutePolicyResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_013.proto#L1336}
+  /// [google.cloud.cpp.compute.v1.RoutersGetRoutePolicyResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_013.proto#L1364}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::RoutersGetRoutePolicyResponse>
@@ -650,7 +650,7 @@ class RoutersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.routers.v1.GetRoutePolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L492}
-  /// [google.cloud.cpp.compute.v1.RoutersGetRoutePolicyResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_013.proto#L1336}
+  /// [google.cloud.cpp.compute.v1.RoutersGetRoutePolicyResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_013.proto#L1364}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::RoutersGetRoutePolicyResponse>
@@ -681,7 +681,7 @@ class RoutersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.routers.v1.GetRouterStatusRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L526}
-  /// [google.cloud.cpp.compute.v1.RouterStatusResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_013.proto#L1329}
+  /// [google.cloud.cpp.compute.v1.RouterStatusResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_013.proto#L1357}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::RouterStatusResponse>
@@ -713,7 +713,7 @@ class RoutersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.routers.v1.GetRouterStatusRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L526}
-  /// [google.cloud.cpp.compute.v1.RouterStatusResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_013.proto#L1329}
+  /// [google.cloud.cpp.compute.v1.RouterStatusResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_013.proto#L1357}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::RouterStatusResponse>
@@ -945,7 +945,7 @@ class RoutersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.routers.v1.ListBgpRoutesRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L574}
-  /// [google.cloud.cpp.compute.v1.RoutersListBgpRoutes]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_013.proto#L1340}
+  /// [google.cloud.cpp.compute.v1.RoutersListBgpRoutes]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_013.proto#L1368}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::RoutersListBgpRoutes> ListBgpRoutes(
@@ -977,7 +977,7 @@ class RoutersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.routers.v1.ListBgpRoutesRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L574}
-  /// [google.cloud.cpp.compute.v1.RoutersListBgpRoutes]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_013.proto#L1340}
+  /// [google.cloud.cpp.compute.v1.RoutersListBgpRoutes]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_013.proto#L1368}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::RoutersListBgpRoutes> ListBgpRoutes(
@@ -1009,7 +1009,7 @@ class RoutersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.routers.v1.ListRoutePoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L676}
-  /// [google.cloud.cpp.compute.v1.RoutersListRoutePolicies]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_013.proto#L1454}
+  /// [google.cloud.cpp.compute.v1.RoutersListRoutePolicies]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_013.proto#L1482}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::RoutersListRoutePolicies>
@@ -1042,7 +1042,7 @@ class RoutersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.routers.v1.ListRoutePoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L676}
-  /// [google.cloud.cpp.compute.v1.RoutersListRoutePolicies]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_013.proto#L1454}
+  /// [google.cloud.cpp.compute.v1.RoutersListRoutePolicies]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_013.proto#L1482}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::RoutersListRoutePolicies>
@@ -1327,7 +1327,7 @@ class RoutersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.routers.v1.PreviewRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L899}
-  /// [google.cloud.cpp.compute.v1.RoutersPreviewResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_013.proto#L1568}
+  /// [google.cloud.cpp.compute.v1.RoutersPreviewResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_013.proto#L1596}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::RoutersPreviewResponse> Preview(
@@ -1362,7 +1362,7 @@ class RoutersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.routers.v1.PreviewRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L899}
-  /// [google.cloud.cpp.compute.v1.RoutersPreviewResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_013.proto#L1568}
+  /// [google.cloud.cpp.compute.v1.RoutersPreviewResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_013.proto#L1596}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::RoutersPreviewResponse> Preview(

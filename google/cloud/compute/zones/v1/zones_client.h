@@ -104,7 +104,7 @@ class ZonesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.v1.Zone]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_144.proto#L29}
+  /// [google.cloud.cpp.compute.v1.Zone]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_146.proto#L29}
   /// [google.cloud.cpp.compute.zones.v1.GetZoneRequest]: @cloud_cpp_reference_link{google/cloud/compute/zones/v1/zones.proto#L59}
   ///
   // clang-format on
@@ -135,7 +135,7 @@ class ZonesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.v1.Zone]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_144.proto#L29}
+  /// [google.cloud.cpp.compute.v1.Zone]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_146.proto#L29}
   /// [google.cloud.cpp.compute.zones.v1.GetZoneRequest]: @cloud_cpp_reference_link{google/cloud/compute/zones/v1/zones.proto#L59}
   ///
   // clang-format on
@@ -171,7 +171,7 @@ class ZonesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.v1.Zone]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_144.proto#L29}
+  /// [google.cloud.cpp.compute.v1.Zone]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_146.proto#L29}
   /// [google.cloud.cpp.compute.zones.v1.ListZonesRequest]: @cloud_cpp_reference_link{google/cloud/compute/zones/v1/zones.proto#L69}
   ///
   // clang-format on
@@ -211,7 +211,7 @@ class ZonesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.v1.Zone]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_144.proto#L29}
+  /// [google.cloud.cpp.compute.v1.Zone]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_146.proto#L29}
   /// [google.cloud.cpp.compute.zones.v1.ListZonesRequest]: @cloud_cpp_reference_link{google/cloud/compute/zones/v1/zones.proto#L69}
   ///
   // clang-format on

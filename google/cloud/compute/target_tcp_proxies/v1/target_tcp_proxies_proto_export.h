@@ -27,8 +27,8 @@
 
 // IWYU pragma: begin_exports
 #include <google/cloud/compute/v1/internal/common_016.pb.h>
-#include <google/cloud/compute/v1/internal/common_136.pb.h>
-#include <google/cloud/compute/v1/internal/common_137.pb.h>
+#include <google/cloud/compute/v1/internal/common_138.pb.h>
+#include <google/cloud/compute/v1/internal/common_139.pb.h>
 // IWYU pragma: end_exports
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_TARGET_TCP_PROXIES_V1_TARGET_TCP_PROXIES_PROTO_EXPORT_H

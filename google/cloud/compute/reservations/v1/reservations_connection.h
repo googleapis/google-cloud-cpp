@@ -227,6 +227,18 @@ class ReservationsConnection {
       google::cloud::cpp::compute::reservations::v1::ListReservationsRequest
           request);
 
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PerformMaintenance(google::cloud::cpp::compute::reservations::v1::
+                         PerformMaintenanceRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  PerformMaintenance(NoAwaitTag, google::cloud::cpp::compute::reservations::v1::
+                                     PerformMaintenanceRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PerformMaintenance(
+      google::cloud::cpp::compute::v1::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Resize(
       google::cloud::cpp::compute::reservations::v1::ResizeRequest const&
           request);

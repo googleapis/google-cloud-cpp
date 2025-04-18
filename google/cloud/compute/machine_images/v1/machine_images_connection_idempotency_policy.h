@@ -61,6 +61,10 @@ class MachineImagesConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::machine_images::v1::
           SetIamPolicyRequest const& request);
 
+  virtual google::cloud::Idempotency SetLabels(
+      google::cloud::cpp::compute::machine_images::v1::SetLabelsRequest const&
+          request);
+
   virtual google::cloud::Idempotency TestIamPermissions(
       google::cloud::cpp::compute::machine_images::v1::
           TestIamPermissionsRequest const& request);
