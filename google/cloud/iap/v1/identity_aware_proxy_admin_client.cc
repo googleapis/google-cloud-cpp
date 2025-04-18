@@ -71,6 +71,15 @@ IdentityAwareProxyAdminServiceClient::UpdateIapSettings(
   return connection_->UpdateIapSettings(request);
 }
 
+StatusOr<google::cloud::iap::v1::ValidateIapAttributeExpressionResponse>
+IdentityAwareProxyAdminServiceClient::ValidateIapAttributeExpression(
+    google::cloud::iap::v1::ValidateIapAttributeExpressionRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ValidateIapAttributeExpression(request);
+}
+
 StreamRange<google::cloud::iap::v1::TunnelDestGroup>
 IdentityAwareProxyAdminServiceClient::ListTunnelDestGroups(
     std::string const& parent, Options opts) {

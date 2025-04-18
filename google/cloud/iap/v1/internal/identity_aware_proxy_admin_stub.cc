@@ -91,6 +91,20 @@ DefaultIdentityAwareProxyAdminServiceStub::UpdateIapSettings(
   return response;
 }
 
+StatusOr<google::cloud::iap::v1::ValidateIapAttributeExpressionResponse>
+DefaultIdentityAwareProxyAdminServiceStub::ValidateIapAttributeExpression(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::iap::v1::ValidateIapAttributeExpressionRequest const&
+        request) {
+  google::cloud::iap::v1::ValidateIapAttributeExpressionResponse response;
+  auto status =
+      grpc_stub_->ValidateIapAttributeExpression(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::iap::v1::ListTunnelDestGroupsResponse>
 DefaultIdentityAwareProxyAdminServiceStub::ListTunnelDestGroups(
     grpc::ClientContext& context, Options const&,

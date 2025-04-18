@@ -79,6 +79,18 @@ IdentityAwareProxyAdminServiceTracingConnection::UpdateIapSettings(
   return internal::EndSpan(*span, child_->UpdateIapSettings(request));
 }
 
+StatusOr<google::cloud::iap::v1::ValidateIapAttributeExpressionResponse>
+IdentityAwareProxyAdminServiceTracingConnection::ValidateIapAttributeExpression(
+    google::cloud::iap::v1::ValidateIapAttributeExpressionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "iap_v1::IdentityAwareProxyAdminServiceConnection::"
+      "ValidateIapAttributeExpression");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span,
+                           child_->ValidateIapAttributeExpression(request));
+}
+
 StreamRange<google::cloud::iap::v1::TunnelDestGroup>
 IdentityAwareProxyAdminServiceTracingConnection::ListTunnelDestGroups(
     google::cloud::iap::v1::ListTunnelDestGroupsRequest request) {

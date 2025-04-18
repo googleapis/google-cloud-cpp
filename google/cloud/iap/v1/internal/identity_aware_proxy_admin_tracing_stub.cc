@@ -95,6 +95,21 @@ IdentityAwareProxyAdminServiceTracingStub::UpdateIapSettings(
       context, *span, child_->UpdateIapSettings(context, options, request));
 }
 
+StatusOr<google::cloud::iap::v1::ValidateIapAttributeExpressionResponse>
+IdentityAwareProxyAdminServiceTracingStub::ValidateIapAttributeExpression(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::iap::v1::ValidateIapAttributeExpressionRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.iap.v1.IdentityAwareProxyAdminService",
+      "ValidateIapAttributeExpression");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->ValidateIapAttributeExpression(context, options, request));
+}
+
 StatusOr<google::cloud::iap::v1::ListTunnelDestGroupsResponse>
 IdentityAwareProxyAdminServiceTracingStub::ListTunnelDestGroups(
     grpc::ClientContext& context, Options const& options,
