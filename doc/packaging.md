@@ -651,7 +651,7 @@ without support for CMake pkg-config.
 
 ```bash
 mkdir -p $HOME/Downloads/json && cd $HOME/Downloads/json
-curl -fsSL https://github.com/nlohmann/json/archive/v3.11.3.tar.gz | \
+curl -fsSL https://github.com/nlohmann/json/archive/v3.12.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
@@ -837,7 +837,7 @@ without support for CMake pkg-config.
 
 ```bash
 mkdir -p $HOME/Downloads/json && cd $HOME/Downloads/json
-curl -fsSL https://github.com/nlohmann/json/archive/v3.11.3.tar.gz | \
+curl -fsSL https://github.com/nlohmann/json/archive/v3.12.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
@@ -1342,7 +1342,7 @@ without support for CMake pkg-config.
 
 ```bash
 mkdir -p $HOME/Downloads/json && cd $HOME/Downloads/json
-curl -fsSL https://github.com/nlohmann/json/archive/v3.11.3.tar.gz | \
+curl -fsSL https://github.com/nlohmann/json/archive/v3.12.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
