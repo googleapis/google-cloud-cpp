@@ -70,6 +70,11 @@ struct ReadPayloadImpl {
                               storage::internal::HashValues hashes) {
     payload.object_hash_values_ = std::move(hashes);
   }
+
+  static void Append(storage_experimental::ReadPayload& payload,
+                     storage_experimental::ReadPayload new_data) {
+    payload.impl_.Append(std::move(new_data.impl_));
+  }
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

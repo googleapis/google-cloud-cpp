@@ -49,6 +49,26 @@ future<StatusOr<google::storage::v2::Object>> AsyncClient::InsertObject(
        internal::MergeOptions(std::move(opts), connection_->options())});
 }
 
+future<StatusOr<ObjectDescriptor>> AsyncClient::Open(
+    BucketName const& bucket_name, std::string object_name, Options opts) {
+  auto spec = google::storage::v2::BidiReadObjectSpec{};
+  spec.set_bucket(bucket_name.FullName());
+  spec.set_object(std::move(object_name));
+  return Open(std::move(spec), std::move(opts));
+}
+
+future<StatusOr<ObjectDescriptor>> AsyncClient::Open(
+    google::storage::v2::BidiReadObjectSpec spec, Options opts) {
+  return connection_
+      ->Open({std::move(spec),
+              internal::MergeOptions(std::move(opts), connection_->options())})
+      .then([](auto f) -> StatusOr<ObjectDescriptor> {
+        auto connection = f.get();
+        if (!connection) return std::move(connection).status();
+        return ObjectDescriptor(*std::move(connection));
+      });
+}
+
 future<StatusOr<std::pair<AsyncReader, AsyncToken>>> AsyncClient::ReadObject(
     BucketName const& bucket_name, std::string object_name, Options opts) {
   auto request = google::storage::v2::ReadObjectRequest{};
@@ -90,6 +110,65 @@ future<StatusOr<ReadPayload>> AsyncClient::ReadObjectRange(
   return connection_->ReadObjectRange(
       {std::move(request),
        internal::MergeOptions(std::move(opts), connection_->options())});
+}
+
+future<StatusOr<std::pair<AsyncWriter, AsyncToken>>>
+AsyncClient::StartAppendableObjectUpload(BucketName const& bucket_name,
+                                         std::string object_name,
+                                         Options opts) {
+  auto request = google::storage::v2::BidiWriteObjectRequest{};
+  auto& resource = *request.mutable_write_object_spec()->mutable_resource();
+
+  resource.set_bucket(BucketName(bucket_name).FullName());
+  resource.set_name(std::move(object_name));
+  request.mutable_write_object_spec()->set_appendable(true);
+
+  return StartAppendableObjectUpload(std::move(request), std::move(opts));
+}
+
+future<StatusOr<std::pair<AsyncWriter, AsyncToken>>>
+AsyncClient::StartAppendableObjectUpload(
+    google::storage::v2::BidiWriteObjectRequest request, Options opts) {
+  return connection_
+      ->StartAppendableObjectUpload(
+          {std::move(request),
+           internal::MergeOptions(std::move(opts), connection_->options())})
+      .then([](auto f) -> StatusOr<std::pair<AsyncWriter, AsyncToken>> {
+        auto w = f.get();
+        if (!w) return std::move(w).status();
+        auto t = absl::holds_alternative<google::storage::v2::Object>(
+                     (*w)->PersistedState())
+                     ? AsyncToken()
+                     : storage_internal::MakeAsyncToken(w->get());
+        return std::make_pair(AsyncWriter(*std::move(w)), std::move(t));
+      });
+}
+
+future<StatusOr<std::pair<AsyncWriter, AsyncToken>>>
+AsyncClient::ResumeAppendableObjectUpload(BucketName const& bucket_name,
+                                          std::string object_name,
+                                          std::int64_t generation,
+                                          Options opts) {
+  auto request = google::storage::v2::BidiWriteObjectRequest{};
+  auto& append_object_spec = *request.mutable_append_object_spec();
+
+  append_object_spec.set_bucket(BucketName(bucket_name).FullName());
+  append_object_spec.set_object(std::move(object_name));
+  append_object_spec.set_generation(generation);
+
+  return connection_
+      ->ResumeAppendableObjectUpload(
+          {std::move(request),
+           internal::MergeOptions(std::move(opts), connection_->options())})
+      .then([](auto f) -> StatusOr<std::pair<AsyncWriter, AsyncToken>> {
+        auto w = f.get();
+        if (!w) return std::move(w).status();
+        auto t = absl::holds_alternative<google::storage::v2::Object>(
+                     (*w)->PersistedState())
+                     ? AsyncToken()
+                     : storage_internal::MakeAsyncToken(w->get());
+        return std::make_pair(AsyncWriter(*std::move(w)), std::move(t));
+      });
 }
 
 future<StatusOr<std::pair<AsyncWriter, AsyncToken>>>
