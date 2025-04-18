@@ -61,7 +61,7 @@ TEST(CurlRestClientStandaloneFunctions, HostHeader) {
     Options options;
     if (!test.authority.empty()) options.set<AuthorityOption>(test.authority);
     auto const actual = CurlRestClient::HostHeader(options, test.endpoint);
-    EXPECT_EQ(test.expected, actual);
+    EXPECT_EQ(test.expected, std::string(actual));
   }
 }
 

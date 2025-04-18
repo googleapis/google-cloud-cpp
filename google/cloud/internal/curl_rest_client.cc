@@ -47,13 +47,15 @@ Status MakeRequestWithPayload(
   if (content_type.empty()) content_type = context.GetHeader("Content-Type");
   if (content_type.empty()) {
     std::string encoded_payload;
-    impl.SetHeader("content-type: application/x-www-form-urlencoded");
+    impl.SetHeader(
+        HttpHeader("content-type", "application/x-www-form-urlencoded"));
     std::string concatenated_payload;
     for (auto const& p : payload) {
       concatenated_payload += std::string(p.begin(), p.end());
     }
     encoded_payload = impl.MakeEscapedString(concatenated_payload);
-    impl.SetHeader(absl::StrCat("Content-Length: ", encoded_payload.size()));
+    impl.SetHeader(
+        HttpHeader("Content-Length", std::to_string(encoded_payload.size())));
     return impl.MakeRequest(http_method, context,
                             {{encoded_payload.data(), encoded_payload.size()}});
   }
@@ -63,7 +65,7 @@ Status MakeRequestWithPayload(
     content_length += p.size();
   }
 
-  impl.SetHeader(absl::StrCat("Content-Length: ", content_length));
+  impl.SetHeader(HttpHeader("Content-Length", std::to_string(content_length)));
   return impl.MakeRequest(http_method, context, payload);
 }
 
@@ -86,8 +88,8 @@ std::unique_ptr<RestClient> MakeRestClient(
 
 }  // namespace
 
-std::string CurlRestClient::HostHeader(Options const& options,
-                                       std::string const& endpoint) {
+HttpHeader CurlRestClient::HostHeader(Options const& options,
+                                      std::string const& endpoint) {
   // If this function returns an empty string libcurl will fill out the `Host: `
   // header based on the URL. In most cases this is the correct value. The main
   // exception are applications using `VPC-SC`:
@@ -97,11 +99,11 @@ std::string CurlRestClient::HostHeader(Options const& options,
   // or their own proxy, and need to provide the target's service host via the
   // AuthorityOption.
   auto const& auth = options.get<AuthorityOption>();
-  if (!auth.empty()) return absl::StrCat("Host: ", auth);
+  if (!auth.empty()) return HttpHeader{"Host", auth};
   if (absl::StrContains(endpoint, "googleapis.com")) {
-    return absl::StrCat("Host: ", FormatHostHeaderValue(endpoint));
+    return HttpHeader{"Host", FormatHostHeaderValue(endpoint)};
   }
-  return {};
+  return HttpHeader{};
 }
 
 CurlRestClient::CurlRestClient(std::string endpoint_address,
@@ -125,10 +127,12 @@ StatusOr<std::unique_ptr<CurlImpl>> CurlRestClient::CreateCurlImpl(
     auto auth_header =
         credentials_->AuthenticationHeader(std::chrono::system_clock::now());
     if (!auth_header.ok()) return std::move(auth_header).status();
-    impl->SetHeader(auth_header.value());
+    impl->SetHeader(HttpHeader(auth_header->first, auth_header->second));
   }
   impl->SetHeader(HostHeader(options, endpoint_address_));
-  impl->SetHeaders(context, request);
+  impl->SetHeaders(context.headers());
+  impl->SetHeaders(request.headers());
+
   RestRequest::HttpParameters additional_parameters;
   // The UserIp option has been deprecated in favor of quotaUser. Only add the
   // parameter if the option has been set.

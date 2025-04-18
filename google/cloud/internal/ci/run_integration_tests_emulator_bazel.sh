@@ -30,10 +30,6 @@ shift
 BAZEL_VERB="$1"
 shift
 
-if bazel::has_no_tests "//google/cloud:all"; then
-  exit 0
-fi
-
 # Separate caller-provided excluded targets (starting with "-//..."), so that
 # we can make sure those appear on the command line after `--`.
 bazel_test_args=()
