@@ -154,6 +154,7 @@ Follow these links to find examples for other \c *Client classes:
 - [\c compute_region_url_maps_v1::RegionUrlMapsClient](@ref compute_region_url_maps_v1::RegionUrlMapsClient-retry-snippet)
 - [\c compute_region_zones_v1::RegionZonesClient](@ref compute_region_zones_v1::RegionZonesClient-retry-snippet)
 - [\c compute_regions_v1::RegionsClient](@ref compute_regions_v1::RegionsClient-retry-snippet)
+- [\c compute_reservation_blocks_v1::ReservationBlocksClient](@ref compute_reservation_blocks_v1::ReservationBlocksClient-retry-snippet)
 - [\c compute_reservations_v1::ReservationsClient](@ref compute_reservations_v1::ReservationsClient-retry-snippet)
 - [\c compute_resource_policies_v1::ResourcePoliciesClient](@ref compute_resource_policies_v1::ResourcePoliciesClient-retry-snippet)
 - [\c compute_routers_v1::RoutersClient](@ref compute_routers_v1::RoutersClient-retry-snippet)
@@ -1092,6 +1093,18 @@ This shows how to override the retry policies for compute_regions_v1::RegionsCli
 Assuming you have created a custom idempotency policy. Such as:
 
 @snippet google/cloud/compute/regions/v1/samples/regions_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_reservation_blocks_v1::ReservationBlocksClient-retry-snippet Override compute_reservation_blocks_v1::ReservationBlocksClient Retry Policies
+
+This shows how to override the retry policies for compute_reservation_blocks_v1::ReservationBlocksClient:
+
+@snippet google/cloud/compute/reservation_blocks/v1/samples/reservation_blocks_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/reservation_blocks/v1/samples/reservation_blocks_client_samples.cc custom-idempotency-policy
 
 */
 

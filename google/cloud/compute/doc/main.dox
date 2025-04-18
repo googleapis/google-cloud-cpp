@@ -106,6 +106,7 @@ application.
 - [\c compute_region_url_maps_v1::RegionUrlMapsClient](@ref google::cloud::compute_region_url_maps_v1::RegionUrlMapsClient)
 - [\c compute_region_zones_v1::RegionZonesClient](@ref google::cloud::compute_region_zones_v1::RegionZonesClient)
 - [\c compute_regions_v1::RegionsClient](@ref google::cloud::compute_regions_v1::RegionsClient)
+- [\c compute_reservation_blocks_v1::ReservationBlocksClient](@ref google::cloud::compute_reservation_blocks_v1::ReservationBlocksClient)
 - [\c compute_reservations_v1::ReservationsClient](@ref google::cloud::compute_reservations_v1::ReservationsClient)
 - [\c compute_resource_policies_v1::ResourcePoliciesClient](@ref google::cloud::compute_resource_policies_v1::ResourcePoliciesClient)
 - [\c compute_routers_v1::RoutersClient](@ref google::cloud::compute_routers_v1::RoutersClient)

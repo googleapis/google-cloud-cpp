@@ -27,8 +27,8 @@
 
 // IWYU pragma: begin_exports
 #include <google/cloud/compute/v1/internal/common_016.pb.h>
-#include <google/cloud/compute/v1/internal/common_119.pb.h>
-#include <google/cloud/compute/v1/internal/common_120.pb.h>
+#include <google/cloud/compute/v1/internal/common_121.pb.h>
+#include <google/cloud/compute/v1/internal/common_122.pb.h>
 // IWYU pragma: end_exports
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_SSL_CERTIFICATES_V1_SSL_CERTIFICATES_PROTO_EXPORT_H

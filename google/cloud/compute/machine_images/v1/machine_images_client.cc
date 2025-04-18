@@ -217,6 +217,62 @@ MachineImagesClient::SetIamPolicy(
   return connection_->SetIamPolicy(request);
 }
 
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+MachineImagesClient::SetLabels(
+    std::string const& project, std::string const& resource,
+    google::cloud::cpp::compute::v1::GlobalSetLabelsRequest const&
+        global_set_labels_request_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::machine_images::v1::SetLabelsRequest request;
+  request.set_project(project);
+  request.set_resource(resource);
+  *request.mutable_global_set_labels_request_resource() =
+      global_set_labels_request_resource;
+  return connection_->SetLabels(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+MachineImagesClient::SetLabels(
+    NoAwaitTag, std::string const& project, std::string const& resource,
+    google::cloud::cpp::compute::v1::GlobalSetLabelsRequest const&
+        global_set_labels_request_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::machine_images::v1::SetLabelsRequest request;
+  request.set_project(project);
+  request.set_resource(resource);
+  *request.mutable_global_set_labels_request_resource() =
+      global_set_labels_request_resource;
+  return connection_->SetLabels(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+MachineImagesClient::SetLabels(
+    google::cloud::cpp::compute::machine_images::v1::SetLabelsRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SetLabels(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+MachineImagesClient::SetLabels(
+    NoAwaitTag,
+    google::cloud::cpp::compute::machine_images::v1::SetLabelsRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SetLabels(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+MachineImagesClient::SetLabels(
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SetLabels(operation);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 MachineImagesClient::TestIamPermissions(
     std::string const& project, std::string const& resource,
