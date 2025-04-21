@@ -1,4 +1,4 @@
-// Copyright 2024 Google LLC
+// Copyright 2025 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@
 #include "google/cloud/testing_util/example_driver.h"
 #include <functional>
 #include <iostream>
-#include <map>  // Added this include
+#include <map>
 #include <string>
 #include <vector>
 
@@ -27,80 +27,89 @@ void CreateJob(
     google::cloud::storagebatchoperations_v1::StorageBatchOperationsClient
         client,
     std::vector<std::string> const& argv) {
-  if (argv.size() != 2)
-    throw google::cloud::testing_util::Usage{"create-job <parent> <job-id>"};
-  //! [storage_batch_operations_create_job]
-  auto const parent = argv[0];
-  auto const job_id = argv[1];
-  namespace sbo = google::cloud::storagebatchoperations::v1;
-  sbo::Job job;  // Customize fields as needed.
-  auto future = client.CreateJob(parent, job, job_id);
-  auto result = future.get();
-  if (!result) throw result.status();
-  std::cout << "Created job: " << result->DebugString() << "\n";
-  //! [storage_batch_operations_create_job]
+  //! [storage_batch_create_job]
+  [](google::cloud::storagebatchoperations_v1::StorageBatchOperationsClient
+         client,
+     std::string const& parent, std::string const& job_id) {
+    namespace sbo = google::cloud::storagebatchoperations::v1;
+    sbo::Job job;
+    auto future = client.CreateJob(parent, job, job_id);
+    auto result = future.get();
+    if (!result) throw result.status();
+    std::cout << "Created job: " << result->DebugString() << "\n";
+  }
+  //! [storage_batch_create_job]
+  (std::move(client), argv.at(0), argv.at(1));
 }
 
 void ListJobs(
     google::cloud::storagebatchoperations_v1::StorageBatchOperationsClient
         client,
     std::vector<std::string> const& argv) {
-  if (argv.size() != 1)
-    throw google::cloud::testing_util::Usage{"list-jobs <parent>"};
-  //! [storage_batch_operations_list_jobs]
-  auto const parent = argv[0];
-  for (auto const& job : client.ListJobs(parent)) {
-    if (!job) throw job.status();
-    std::cout << job->DebugString() << "\n";
+  //! [storage_batch_list_jobs]
+  [](google::cloud::storagebatchoperations_v1::StorageBatchOperationsClient
+         client,
+     std::string const& parent) {
+    for (auto const& job : client.ListJobs(parent)) {
+      if (!job) throw job.status();
+      std::cout << job->DebugString() << "\n";
+    }
   }
-  //! [storage_batch_operations_list_jobs]
+  //! [storage_batch_list_jobs]
+  (std::move(client), argv.at(0));
 }
 
 void GetJob(
     google::cloud::storagebatchoperations_v1::StorageBatchOperationsClient
         client,
     std::vector<std::string> const& argv) {
-  if (argv.size() != 1)
-    throw google::cloud::testing_util::Usage{"get-job <name>"};
-  //! [storage_batch_operations_get_job]
-  auto const name = argv[0];
-  auto job = client.GetJob(name);
-  if (!job) throw job.status();
-  std::cout << "Got job: " << job->DebugString() << "\n";
-  //! [storage_batch_operations_get_job]
+  //! [storage_batch_get_job]
+  [](google::cloud::storagebatchoperations_v1::StorageBatchOperationsClient
+         client,
+     std::string const& name) {
+    auto job = client.GetJob(name);
+    if (!job) throw job.status();
+    std::cout << "Got job: " << job->DebugString() << "\n";
+  }
+  //! [storage_batch_get_job]
+  (std::move(client), argv.at(0));
 }
 
 void CancelJob(
     google::cloud::storagebatchoperations_v1::StorageBatchOperationsClient
         client,
     std::vector<std::string> const& argv) {
-  if (argv.size() != 1)
-    throw google::cloud::testing_util::Usage{"cancel-job <name>"};
-  //! [storage_batch_operations_cancel_job]
-  auto const name = argv[0];
-  auto response = client.CancelJob(name);
-  if (!response) throw response.status();
-  std::cout << "Cancelled job: " << response->DebugString() << "\n";
-  //! [storage_batch_operations_cancel_job]
+  //! [storage_batch_cancel_job]
+  [](google::cloud::storagebatchoperations_v1::StorageBatchOperationsClient
+         client,
+     std::string const& name) {
+    auto response = client.CancelJob(name);
+    if (!response) throw response.status();
+    std::cout << "Cancelled job: " << response->DebugString() << "\n";
+  }
+  //! [storage_batch_cancel_job]
+  (std::move(client), argv.at(0));
 }
 
 void DeleteJob(
     google::cloud::storagebatchoperations_v1::StorageBatchOperationsClient
         client,
     std::vector<std::string> const& argv) {
-  if (argv.size() != 1)
-    throw google::cloud::testing_util::Usage{"delete-job <name>"};
-  //! [storage_batch_operations_delete_job]
-  auto const name = argv[0];
-  auto status = client.DeleteJob(name);
-  if (!status.ok()) throw status;
-  std::cout << "Deleted job\n";
-  //! [storage_batch_operations_delete_job]
+  //! [storage_batch_delete_job]
+  [](google::cloud::storagebatchoperations_v1::StorageBatchOperationsClient
+         client,
+     std::string const& name) {
+    auto status = client.DeleteJob(name);
+    if (!status.ok()) throw status;
+    std::cout << "Deleted job\n";
+  }
+  //! [storage_batch_delete_job]
+  (std::move(client), argv.at(0));
 }
 
 void AutoRun(std::vector<std::string> const& argv) {
-  if (!argv.empty()) throw google::cloud::v2_37::testing_util::Usage{"auto"};
-  google::cloud::v2_37::testing_util::CheckEnvironmentVariablesAreSet(
+  if (!argv.empty()) throw google::cloud::testing_util::Usage{"auto"};
+  google::cloud::testing_util::CheckEnvironmentVariablesAreSet(
       {"GOOGLE_CLOUD_CPP_STORAGE_BATCH_OPERATIONS_TEST_PARENT",
        "GOOGLE_CLOUD_CPP_STORAGE_BATCH_OPERATIONS_TEST_JOB_ID"});
   auto const parent =
@@ -148,15 +157,14 @@ int main(int argc, char* argv[]) {
           argv.size() != arg_names.size()) {
         std::string usage = name;
         for (auto const& a : arg_names) usage += " <" + a + ">";
-        throw google::cloud::v2_37::testing_util::Usage{std::move(usage)};
+        throw google::cloud::testing_util::Usage{std::move(usage)};
       }
       auto client = sbo::StorageBatchOperationsClient(
           sbo::MakeStorageBatchOperationsConnection());
       cmd(client, std::move(argv));
     };
-    return std::map<std::string,
-                    std::function<void(std::vector<std::string> const&)>>::
-        value_type(std::move(name), adapter);
+    return google::cloud::testing_util::Commands::value_type(
+        std::move(name), std::move(adapter));
   };
   Example example({
       make_entry("create-job", {"parent", "job-id"}, CreateJob),
