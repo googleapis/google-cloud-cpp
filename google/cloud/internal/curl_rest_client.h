@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_CURL_REST_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_CURL_REST_CLIENT_H
 
+#include "google/cloud/internal/http_header.h"
 #include "google/cloud/internal/oauth2_credentials.h"
 #include "google/cloud/internal/rest_client.h"
 #include "google/cloud/internal/rest_request.h"
@@ -40,8 +41,8 @@ class CurlImpl;
 // multiple endpoints, use a different CurlRestClient for each such endpoint.
 class CurlRestClient : public RestClient {
  public:
-  static std::string HostHeader(Options const& options,
-                                std::string const& endpoint);
+  static HttpHeader HostHeader(Options const& options,
+                               std::string const& endpoint);
   CurlRestClient(std::string endpoint_address,
                  std::shared_ptr<CurlHandleFactory> factory, Options options);
   ~CurlRestClient() override = default;
