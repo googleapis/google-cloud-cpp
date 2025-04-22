@@ -437,6 +437,7 @@ set(storage_client_grpc_unit_tests
     internal/async/connection_impl_upload_test.cc
     internal/async/connection_tracing_test.cc
     internal/async/default_options_test.cc
+    internal/async/handle_redirect_error_test.cc
     internal/async/insert_object_test.cc
     internal/async/object_descriptor_connection_tracing_test.cc
     internal/async/object_descriptor_impl_test.cc
