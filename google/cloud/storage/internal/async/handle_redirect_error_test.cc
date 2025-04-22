@@ -18,9 +18,9 @@
 #include "google/cloud/status.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <google/protobuf/text_format.h>
-#include <gmock/gmock.h>
 #include <google/rpc/error_details.pb.h>
 #include <google/rpc/status.pb.h>
+#include <gmock/gmock.h>
 
 namespace google {
 namespace cloud {
