@@ -90,7 +90,7 @@ class AsyncConnection {
   /// Open an object to perform multiple reads.
   virtual future<StatusOr<
       std::shared_ptr<storage_experimental::ObjectDescriptorConnection>>>
-  Open(OpenParams p) = 0;
+  Open(OpenParams const& p) = 0;
 
   /**
    * A thin wrapper around the `ReadObject()` parameters.

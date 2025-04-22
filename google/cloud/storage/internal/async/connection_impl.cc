@@ -192,7 +192,7 @@ future<StatusOr<google::storage::v2::Object>> AsyncConnectionImpl::InsertObject(
 
 future<
     StatusOr<std::shared_ptr<storage_experimental::ObjectDescriptorConnection>>>
-AsyncConnectionImpl::Open(OpenParams p) {
+AsyncConnectionImpl::Open(OpenParams const& p) {
   auto initial_request = google::storage::v2::BidiReadObjectRequest{};
   *initial_request.mutable_read_object_spec() = p.read_spec;
   auto current = internal::MakeImmutableOptions(p.options);
@@ -306,7 +306,7 @@ future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
 AsyncConnectionImpl::AppendableObjectUploadImpl(AppendableUploadParams p,
                                                 bool takeover) {
   auto current = internal::MakeImmutableOptions(std::move(p.options));
-  auto request = p.request;
+  auto request = std::move(p.request);
   std::int64_t persisted_size = 0;
   std::shared_ptr<storage::internal::HashFunction> hash_function =
       CreateHashFunction(*current);
@@ -329,15 +329,17 @@ AsyncConnectionImpl::AppendableObjectUploadImpl(AppendableUploadParams p,
        backoff = std::move(backoff), current, function_name = __func__,
        takeover](google::storage::v2::BidiWriteObjectRequest req) {
         auto call = [stub, request = std::move(req), takeover](
-                        google::cloud::CompletionQueue& cq,
+                        CompletionQueue& cq,
                         std::shared_ptr<grpc::ClientContext> context,
                         google::cloud::internal::ImmutableOptions options,
                         RequestPlaceholder const&) mutable
             -> future<StatusOr<WriteObject::WriteResult>> {
-          auto timeout = ScaleStallTimeout(
+          auto start_timeout = ScaleStallTimeout(
               options->get<storage::TransferStallTimeoutOption>(),
               options->get<storage::TransferStallMinimumRateOption>(),
               google::storage::v2::ServiceConstants::MAX_WRITE_CHUNK_BYTES);
+          auto per_read_timeout = start_timeout;
+          auto per_write_timeout = start_timeout;
 
           // Apply the routing header
           if (takeover)
@@ -347,8 +349,9 @@ AsyncConnectionImpl::AppendableObjectUploadImpl(AppendableUploadParams p,
 
           auto rpc = stub->AsyncBidiWriteObject(cq, std::move(context),
                                                 std::move(options));
-          rpc = std::make_unique<StreamingRpcTimeout>(cq, timeout, timeout,
-                                                      timeout, std::move(rpc));
+          rpc = std::make_unique<StreamingRpcTimeout>(
+              cq, start_timeout, per_read_timeout, per_write_timeout,
+              std::move(rpc));
           request.set_state_lookup(true);
           auto open = std::make_shared<WriteObject>(std::move(rpc), request);
           return open->Call().then([open, &request](auto f) mutable {

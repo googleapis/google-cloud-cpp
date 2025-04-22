@@ -164,7 +164,7 @@ void OpenObject(google::cloud::storage_experimental::AsyncClient& client,
   auto count_newlines =
       [](gcs_ex::AsyncReader reader,
          gcs_ex::AsyncToken token) -> google::cloud::future<std::uint64_t> {
-    auto count = std::uint64_t{0};
+    std::uint64_t count = 0;
     while (token.valid()) {
       auto [payload, t] = (co_await reader.Read(std::move(token))).value();
       token = std::move(t);

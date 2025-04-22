@@ -49,7 +49,7 @@ class AsyncConnectionTracing : public storage_experimental::AsyncConnection {
 
   future<StatusOr<
       std::shared_ptr<storage_experimental::ObjectDescriptorConnection>>>
-  Open(OpenParams p) override {
+  Open(OpenParams const& p) override {
     auto span = internal::MakeSpan("storage::AsyncConnection::Open");
     internal::OTelScope scope(span);
     return impl_->Open(std::move(p))
