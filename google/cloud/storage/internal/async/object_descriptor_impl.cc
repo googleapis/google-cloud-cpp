@@ -135,7 +135,7 @@ void ObjectDescriptorImpl::OnRead(
     auto id = range_data.read_range().read_id();
     auto const l = copy.find(id);
     if (l == copy.end()) continue;
-    // TODO(#34) - Consider returning if the range is done, and then
+    // TODO(#15104) - Consider returning if the range is done, and then
     // skipping CleanupDoneRanges().
     l->second->OnRead(std::move(range_data));
   }
@@ -201,7 +201,7 @@ void ObjectDescriptorImpl::OnResume(StatusOr<OpenStreamResult> result) {
   if (!result) return OnFinish(std::move(result).status());
   std::unique_lock<std::mutex> lk(mu_);
   stream_ = std::move(result->stream);
-  // TODO(#36) - this should be done without release the lock.
+  // TODO(#15105) - this should be done without release the lock.
   Flush(std::move(lk));
   OnRead(std::move(result->first_response));
 }
