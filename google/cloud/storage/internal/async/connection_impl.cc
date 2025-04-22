@@ -294,17 +294,17 @@ AsyncConnectionImpl::ReadObjectRange(ReadObjectParams p) {
 
 future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
 AsyncConnectionImpl::StartAppendableObjectUpload(AppendableUploadParams p) {
-  return AppendableObjectUploadImpl(std::move(p));
+  return AppendableObjectUploadImpl(std::move(p), AppendMode::kStart);
 }
 
 future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
 AsyncConnectionImpl::ResumeAppendableObjectUpload(AppendableUploadParams p) {
-  return AppendableObjectUploadImpl(std::move(p), true);
+  return AppendableObjectUploadImpl(std::move(p), AppendMode::kTakeover);
 }
 
 future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
 AsyncConnectionImpl::AppendableObjectUploadImpl(AppendableUploadParams p,
-                                                bool takeover) {
+                                                AppendMode mode) {
   auto current = internal::MakeImmutableOptions(std::move(p.options));
   auto request = std::move(p.request);
   std::int64_t persisted_size = 0;
@@ -327,8 +327,8 @@ AsyncConnectionImpl::AppendableObjectUploadImpl(AppendableUploadParams p,
       [stub = stub_, cq = cq_, retry = std::move(retry),
        // NOLINTNEXTLINE(bugprone-lambda-function-name)
        backoff = std::move(backoff), current, function_name = __func__,
-       takeover](google::storage::v2::BidiWriteObjectRequest req) {
-        auto call = [stub, request = std::move(req), takeover](
+       mode](google::storage::v2::BidiWriteObjectRequest req) {
+        auto call = [stub, request = std::move(req), mode](
                         CompletionQueue& cq,
                         std::shared_ptr<grpc::ClientContext> context,
                         google::cloud::internal::ImmutableOptions options,
@@ -342,7 +342,7 @@ AsyncConnectionImpl::AppendableObjectUploadImpl(AppendableUploadParams p,
           auto per_write_timeout = start_timeout;
 
           // Apply the routing header
-          if (takeover)
+          if (mode == AppendMode::kTakeover)
             ApplyRoutingHeaders(*context, request.append_object_spec());
           else
             ApplyRoutingHeaders(*context, request.write_object_spec());
