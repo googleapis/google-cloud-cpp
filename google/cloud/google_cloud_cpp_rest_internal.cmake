@@ -146,6 +146,11 @@ if (WIN32)
     target_link_libraries(google_cloud_cpp_rest_internal PUBLIC ws2_32 bcrypt
                                                                 crypt32)
 else ()
+    # We already require OpenSSL for non-Windows platforms.
+    target_compile_definitions(
+        google_cloud_cpp_rest_internal
+        PUBLIC # Enable OpenSSL specific functionality.
+               GOOGLE_CLOUD_CPP_HAVE_OPENSSL)
     target_link_libraries(google_cloud_cpp_rest_internal PUBLIC OpenSSL::SSL
                                                                 OpenSSL::Crypto)
 endif ()
