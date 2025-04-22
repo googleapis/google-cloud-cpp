@@ -28,10 +28,7 @@ namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-using ::google::cloud::testing_util::StatusIs;
 using ::testing::IsEmpty;
-using ::testing::Not;
-using ::testing::Property;
 
 TEST(ExtractGrpcStatus, Success) {
   auto const actual = ExtractGrpcStatus(Status());
