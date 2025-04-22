@@ -31,7 +31,7 @@ void EnsureFirstMessageAppendObjectSpec(
 }
 
 google::rpc::Status ExtractGrpcStatus(Status const& status) {
-  auto proto_status = google::rpc::Status{};
+  google::rpc::Status proto_status = google::rpc::Status{};
   auto payload = google::cloud::internal::GetPayload(
       status, google::cloud::internal::StatusPayloadGrpcProto());
   if (payload) proto_status.ParseFromString(*payload);
@@ -41,7 +41,8 @@ google::rpc::Status ExtractGrpcStatus(Status const& status) {
 void ApplyRedirectErrors(google::storage::v2::BidiReadObjectSpec& spec,
                          google::rpc::Status const& rpc_status) {
   for (auto const& any : rpc_status.details()) {
-    auto error = google::storage::v2::BidiReadObjectRedirectedError{};
+    google::storage::v2::BidiReadObjectRedirectedError error =
+        google::storage::v2::BidiReadObjectRedirectedError{};
     if (!any.UnpackTo(&error)) continue;
     *spec.mutable_read_handle() = std::move(*error.mutable_read_handle());
     *spec.mutable_routing_token() = std::move(*error.mutable_routing_token());
@@ -51,7 +52,8 @@ void ApplyRedirectErrors(google::storage::v2::BidiReadObjectSpec& spec,
 void ApplyWriteRedirectErrors(google::storage::v2::AppendObjectSpec& spec,
                               google::rpc::Status const& rpc_status) {
   for (auto const& any : rpc_status.details()) {
-    auto error = google::storage::v2::BidiWriteObjectRedirectedError{};
+    google::storage::v2::BidiWriteObjectRedirectedError error =
+        google::storage::v2::BidiWriteObjectRedirectedError{};
     if (!any.UnpackTo(&error)) continue;
     *spec.mutable_write_handle() = std::move(*error.mutable_write_handle());
     *spec.mutable_routing_token() = std::move(*error.mutable_routing_token());
