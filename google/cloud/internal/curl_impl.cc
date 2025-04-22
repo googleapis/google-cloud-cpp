@@ -237,29 +237,70 @@ CurlImpl::~CurlImpl() {
   factory_->CleanupMultiHandle(std::move(multi_), HandleDisposition::kKeep);
 }
 
-void CurlImpl::SetHeader(std::string const& header) {
+void CurlImpl::SetHeader(HttpHeader header) {
   if (header.empty()) return;
 
   // The API for credentials is complicated, and the authorization
-  // header can be empty. See, for example, AnonymousCredentials.
-  if (header == "authorization: ") return;
+  // header can be empty, but we don't actually want to send it. See, for
+  // example, AnonymousCredentials.
+  if (header.IsSameKey("authorization") && header.EmptyValues()) {
+    return;
+  }
 
+  pending_request_headers_.push_back(std::move(header));
+}
+
+void CurlImpl::WriteHeader(std::string const& header) {
   auto* headers = curl_slist_append(request_headers_.get(), header.c_str());
   (void)request_headers_.release();  // Now owned by list, not us.
   request_headers_.reset(headers);
 }
 
-void CurlImpl::SetHeader(std::pair<std::string, std::string> const& header) {
-  SetHeader(absl::StrCat(header.first, ": ", header.second));
+void CurlImpl::MergeAndWriteHeaders(
+    std::function<void(HttpHeader const&)> const& write_fn) {
+  // There are some headers that we do not want to merge. These headers
+  // could have been added via custom user headers or due to bugs in the SDK.
+  static constexpr std::array<char const*, 2> kDoNotMergeHeaderKeys{
+      "authorization", "content-length"};
+  std::stable_sort(pending_request_headers_.begin(),
+                   pending_request_headers_.end());
+
+  auto current = pending_request_headers_.begin();
+  while (current != pending_request_headers_.end()) {
+    // If this is the last header, write it and stop.
+    if (current + 1 == pending_request_headers_.end()) {
+      write_fn(*current);
+      break;
+    }
+
+    // Look ahead to see if there is another header with the same key. If so,
+    // merge its values into this header until all headers of the same key are
+    // merged.
+    auto next = current + 1;
+    while (next != pending_request_headers_.end() &&
+           current->IsSameKey(*next)) {
+      if (internal::ContainsIf(
+              kDoNotMergeHeaderKeys,
+              [&current](char const* h) { return current->IsSameKey(h); })) {
+        GCP_LOG(WARNING) << "Ignoring duplicate header: "
+                         << next->DebugString();
+      } else {
+        current->MergeHeader(*next);
+      }
+      ++next;
+    }
+
+    // Write the merged (or not merged) header and proceed to the next header
+    // key.
+    write_fn(*current);
+    current = next;
+  }
 }
 
-void CurlImpl::SetHeaders(RestContext const& context,
-                          RestRequest const& request) {
-  for (auto const& header : context.headers()) {
-    SetHeader(std::make_pair(header.first, absl::StrJoin(header.second, ",")));
-  }
-  for (auto const& header : request.headers()) {
-    SetHeader(std::make_pair(header.first, absl::StrJoin(header.second, ",")));
+void CurlImpl::SetHeaders(
+    std::unordered_map<std::string, std::vector<std::string>> const& headers) {
+  for (auto const& header : headers) {
+    SetHeader(HttpHeader(header.first, header.second));
   }
 }
 
@@ -427,7 +468,12 @@ Status CurlImpl::MakeRequest(HttpMethod method, RestContext& context,
     if (!status.ok()) return OnTransferError(context, std::move(status));
     status = handle_.SetOption(CURLOPT_SEEKDATA, &writev_);
     if (!status.ok()) return OnTransferError(context, std::move(status));
-    SetHeader("Expect:");
+    // Adding an empty Expect header instructs libcurl never to attempt to
+    // insert an "Expect: 100-continue" header per its own logic. When libcurl
+    // adds this header/value pair it introduces another round trip before data
+    // is sent. Additionally, some webservers do not handle the 100-continue
+    // correctly causing the request to fail.
+    SetHeader(HttpHeader("Expect"));
     return MakeRequestImpl(context);
   }
 
@@ -538,6 +584,8 @@ Status CurlImpl::MakeRequestImpl(RestContext& context) {
   Status status;
   status = handle_.SetOption(CURLOPT_URL, url_.c_str());
   if (!status.ok()) return OnTransferError(context, std::move(status));
+  MergeAndWriteHeaders(
+      [this](HttpHeader const& h) { WriteHeader(std::string(h)); });
   status = handle_.SetOption(CURLOPT_HTTPHEADER, request_headers_.get());
   if (!status.ok()) return OnTransferError(context, std::move(status));
   status = handle_.SetOption(CURLOPT_USERAGENT, user_agent_.c_str());
