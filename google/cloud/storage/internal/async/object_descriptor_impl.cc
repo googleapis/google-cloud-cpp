@@ -47,7 +47,7 @@ void ObjectDescriptorImpl::Start(
   OnRead(std::move(first_response));
 }
 
-void ObjectDescriptorImpl::Cancel() { return stream_->Cancel(); }
+void ObjectDescriptorImpl::Cancel() { stream_->Cancel(); }
 
 absl::optional<google::storage::v2::Object> ObjectDescriptorImpl::metadata()
     const {

@@ -192,10 +192,10 @@ future<StatusOr<google::storage::v2::Object>> AsyncConnectionImpl::InsertObject(
 
 future<
     StatusOr<std::shared_ptr<storage_experimental::ObjectDescriptorConnection>>>
-AsyncConnectionImpl::Open(OpenParams const& p) {
+AsyncConnectionImpl::Open(OpenParams p) {
   auto initial_request = google::storage::v2::BidiReadObjectRequest{};
-  *initial_request.mutable_read_object_spec() = p.read_spec;
-  auto current = internal::MakeImmutableOptions(p.options);
+  *initial_request.mutable_read_object_spec() = std::move(p.read_spec);
+  auto current = internal::MakeImmutableOptions(std::move(p.options));
   // Get the policy factory and immediately create a policy.
   auto resume_policy =
       current->get<storage_experimental::ResumePolicyOption>()();

@@ -62,7 +62,7 @@ class AsyncConnectionImpl
 
   future<StatusOr<
       std::shared_ptr<storage_experimental::ObjectDescriptorConnection>>>
-  Open(OpenParams const& p) override;
+  Open(OpenParams p) override;
 
   future<StatusOr<std::unique_ptr<storage_experimental::AsyncReaderConnection>>>
   ReadObject(ReadObjectParams p) override;
