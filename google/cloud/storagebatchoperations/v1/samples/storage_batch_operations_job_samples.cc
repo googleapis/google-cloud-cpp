@@ -36,7 +36,7 @@ void CreateJob(
     auto future = client.CreateJob(parent, job, job_id);
     auto result = future.get();
     if (!result) throw result.status();
-    std::cout << "Created job: " << result->DebugString() << "\n";
+    std::cout << "Created job: " << result->name() << "\n";
   }
   //! [storage_batch_create_job]
   (std::move(client), argv.at(0), argv.at(1));
@@ -52,7 +52,7 @@ void ListJobs(
      std::string const& parent) {
     for (auto const& job : client.ListJobs(parent)) {
       if (!job) throw job.status();
-      std::cout << job->DebugString() << "\n";
+      std::cout << job->name() << "\n";
     }
   }
   //! [storage_batch_list_jobs]
@@ -69,7 +69,7 @@ void GetJob(
      std::string const& name) {
     auto job = client.GetJob(name);
     if (!job) throw job.status();
-    std::cout << "Got job: " << job->DebugString() << "\n";
+    std::cout << "Got job: " << name << "\n";
   }
   //! [storage_batch_get_job]
   (std::move(client), argv.at(0));
@@ -85,7 +85,7 @@ void CancelJob(
      std::string const& name) {
     auto response = client.CancelJob(name);
     if (!response) throw response.status();
-    std::cout << "Cancelled job: " << response->DebugString() << "\n";
+    std::cout << "Cancelled job: " << name << "\n";
   }
   //! [storage_batch_cancel_job]
   (std::move(client), argv.at(0));
@@ -101,7 +101,7 @@ void DeleteJob(
      std::string const& name) {
     auto status = client.DeleteJob(name);
     if (!status.ok()) throw status;
-    std::cout << "Deleted job\n";
+    std::cout << "Deleted job" << name << "\n";
   }
   //! [storage_batch_delete_job]
   (std::move(client), argv.at(0));
@@ -110,16 +110,18 @@ void DeleteJob(
 void AutoRun(std::vector<std::string> const& argv) {
   if (!argv.empty()) throw google::cloud::testing_util::Usage{"auto"};
   google::cloud::testing_util::CheckEnvironmentVariablesAreSet(
-      {"GOOGLE_CLOUD_CPP_STORAGE_BATCH_OPERATIONS_TEST_PARENT",
-       "GOOGLE_CLOUD_CPP_STORAGE_BATCH_OPERATIONS_TEST_JOB_ID"});
+      {"GOOGLE_CLOUD_CPP_STORAGE_BATCH_OPERATIONS_TEST_PARENT"});
   auto const parent =
       google::cloud::internal::GetEnv(
           "GOOGLE_CLOUD_CPP_STORAGE_BATCH_OPERATIONS_TEST_PARENT")
           .value();
+
+  auto gen = google::cloud::internal::DefaultPRNG(std::random_device{}());
+  auto const prefix = std::string{"storage-batch-operations-samples"};
   auto const job_id =
-      google::cloud::internal::GetEnv(
-          "GOOGLE_CLOUD_CPP_STORAGE_BATCH_OPERATIONS_TEST_JOB_ID")
-          .value();
+      prefix + "_" +
+      google::cloud::internal::Sample(gen, 32, "abcdefghijklmnopqrstuvwxyz");
+
   auto client =
       google::cloud::storagebatchoperations_v1::StorageBatchOperationsClient(
           google::cloud::storagebatchoperations_v1::
