@@ -17,7 +17,7 @@
 #include "google/cloud/internal/curl_options.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/log.h"
-#ifndef _WIN32
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENSSL
 #include <openssl/err.h>
 #include <openssl/ssl.h>
 #endif
@@ -30,7 +30,7 @@ namespace rest_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-#ifndef _WIN32
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENSSL
 struct BIOPtrCleanup {
   int operator()(BIO* b) const { return BIO_free(b); }
 };
@@ -49,7 +49,7 @@ using SSL_CTX = void;
 #endif
 
 Status SetCurlCAInMemory(CurlHandleFactory const& factory, SSL_CTX* ssl_ctx) {
-#if _WIN32
+#ifndef GOOGLE_CLOUD_CPP_HAVE_OPENSSL
   return internal::InternalError(
       "SSL callback function currently not supported in windows",
       GCP_ERROR_INFO());
