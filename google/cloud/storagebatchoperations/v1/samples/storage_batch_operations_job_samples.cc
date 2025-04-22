@@ -110,11 +110,15 @@ void DeleteJob(
 void AutoRun(std::vector<std::string> const& argv) {
   if (!argv.empty()) throw google::cloud::testing_util::Usage{"auto"};
   google::cloud::testing_util::CheckEnvironmentVariablesAreSet(
-      {"GOOGLE_CLOUD_CPP_STORAGE_BATCH_OPERATIONS_TEST_PARENT"});
-  auto const parent =
-      google::cloud::internal::GetEnv(
-          "GOOGLE_CLOUD_CPP_STORAGE_BATCH_OPERATIONS_TEST_PARENT")
+      {"GOOGLE_CLOUD_CPP_USER_PROJECT",
+       "GOOGLE_CLOUD_CPP_STORAGE_TEST_REGION_ID"});
+  auto const project_id =
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_USER_PROJECT").value();
+  auto const location_id =
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_STORAGE_TEST_REGION_ID")
           .value();
+
+  auto const parent = "projects/" + project_id + "/locations/" + location_id;
 
   auto gen = google::cloud::internal::DefaultPRNG(std::random_device{}());
   auto const prefix = std::string{"storage-batch-operations-samples"};
