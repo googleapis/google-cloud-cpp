@@ -789,7 +789,6 @@ TEST(TransactonRollback, ZeroOrNegativeTimestampHandling) {
   v.push_back(p);
 
   auto status = set_cells(table, table_name, row_key, v);
-
   ASSERT_STATUS_OK(status);
 
   auto status_or =
@@ -801,6 +800,21 @@ TEST(TransactonRollback, ZeroOrNegativeTimestampHandling) {
     ASSERT_GT(cell.first.count(), 0);
     ASSERT_EQ(data, cell.second);
   }
+
+  // Test that a SetCell mutation with timestamp set to 0 can be
+  // correctly rolled back. In the following, the first mutation
+  // (timestamp 0) should succeed and the next one should fail. The
+  // condition after that should be that the first one (timestamp 0)
+  // should be rolled back so that a row with row_key_2 key should not
+  // exist when the MutateRow request returns.
+  v.clear();
+  v = {{column_family_name, column_qualifer, 0, data},
+       {"non_existent_column_family_name_causes_tx_rollbaclk", column_qualifer,
+        1000, data}};
+  auto const* const row_key_2 = "1";
+  status = set_cells(table, table_name, row_key_2, v);
+  ASSERT_NE(true, status.ok());
+  ASSERT_FALSE(has_row(table, column_family_name, row_key_2).ok());
 }
 
 }  // namespace emulator
