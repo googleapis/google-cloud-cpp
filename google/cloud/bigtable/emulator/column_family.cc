@@ -58,6 +58,20 @@ std::vector<Cell> ColumnRow::DeleteTimeRange(
   return deleted_cells;
 }
 
+absl::optional<Cell> ColumnRow::DeleteTimeStamp(
+    std::chrono::milliseconds timestamp) {
+  absl::optional<Cell> ret = absl::nullopt;
+
+  auto cell_it = cells_.find(timestamp);
+  if (cell_it != cells_.end()) {
+    Cell cell = {std::move(cell_it->first), std::move(cell_it->second)};
+    ret.emplace(std::move(cell));
+    cells_.erase(cell_it);
+  }
+
+  return ret;
+}
+
 absl::optional<std::string> ColumnFamilyRow::SetCell(std::string const& column_qualifier,
                               std::chrono::milliseconds timestamp,
                               std::string const& value) {
@@ -76,6 +90,21 @@ std::vector<Cell> ColumnFamilyRow::DeleteColumn(
     columns_.erase(column_it);
   }
   return res;
+}
+
+absl::optional<Cell> ColumnFamilyRow::DeleteTimeStamp(
+    std::string const& column_qulifier, std::chrono::milliseconds timestamp) {
+  auto column_it = columns_.find(column_qulifier);
+  if (column_it == columns_.end()) {
+    return absl::nullopt;
+  }
+
+  auto ret = column_it->second.DeleteTimeStamp(timestamp);
+  if(!column_it->second.HasCells()) {
+    columns_.erase(column_it);
+  }
+
+  return ret;
 }
 
 absl::optional<std::string> ColumnFamily::SetCell(
@@ -128,6 +157,22 @@ std::vector<Cell> ColumnFamily::DeleteColumn(
     return erased_cells;
   }
   return {};
+}
+
+absl::optional<Cell> ColumnFamily::DeleteTimeStamp(
+    std::string const& row_key, std::string const& column_qulifier,
+    std::chrono::milliseconds timestamp) {
+  auto row_it = rows_.find(row_key);
+  if (row_it == rows_.end()) {
+    return absl::nullopt;
+  }
+
+  auto ret = row_it->second.DeleteTimeStamp(column_qulifier, timestamp);
+  if (!row_it->second.HasColumns()) {
+    rows_.erase(row_it);
+  }
+
+  return ret;
 }
 
 class FilteredColumnFamilyStream::FilterApply {
