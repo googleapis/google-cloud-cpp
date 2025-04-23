@@ -179,7 +179,7 @@ row2 :col0 @10ms: qux
 )""",
             "\n" + DumpColumnFamily(fam));
 
-  EXPECT_TRUE(fam.DeleteRow("row2").size() > 0);
+  EXPECT_GT(fam.DeleteRow("row2").size(), 0);
   EXPECT_FALSE(fam.DeleteRow("row_nonexistent").size() > 0);
 
   EXPECT_EQ("row0 :col0 @10ms: baz\n", DumpColumnFamily(fam));
