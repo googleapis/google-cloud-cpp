@@ -187,7 +187,7 @@ class ColumnFamily {
    * @param value the value to insert/update.
    *
    * @return no value if the timestamp had no value before, otherwise
-   * the previous value of the timestamp.
+   *     the previous value of the timestamp.
    *
    */
   absl::optional<std::string> SetCell(std::string const& row_key,
@@ -206,12 +206,15 @@ class ColumnFamily {
    * Delete cells from a row falling into a given timestamp range in one column.
    *
    * @param row_key the row key to remove the cells from (or the
-   * iterator to the row - row_it - in the 2nd overloaded form of the
-   * function).
+   *     iterator to the row - row_it - in the 2nd overloaded form of the
+   *     function).
 
    * @param column_qualifier the column qualifier from which to delete
-   * the values.  @param time_range the timestamp range dictating
-   * which values to delete.  @return vector of deleted cells.
+   *     the values.
+   *
+   * @param time_range the timestamp range dictating which values to
+   *     delete.
+   * @return vector of deleted cells.
    */
   std::vector<Cell> DeleteColumn(
       std::string const& row_key, std::string const& column_qualifier,
