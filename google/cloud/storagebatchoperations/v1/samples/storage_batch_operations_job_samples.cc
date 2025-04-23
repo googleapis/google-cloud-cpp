@@ -33,8 +33,7 @@ void CreateJob(
      std::string const& parent, std::string const& job_id) {
     namespace sbo = google::cloud::storagebatchoperations::v1;
     sbo::Job job;
-    auto future = client.CreateJob(parent, job, job_id);
-    auto result = future.get();
+    auto result = client.CreateJob(parent, job, job_id).get();
     if (!result) throw result.status();
     std::cout << "Created job: " << result->name() << "\n";
   }
@@ -69,7 +68,7 @@ void GetJob(
      std::string const& name) {
     auto job = client.GetJob(name);
     if (!job) throw job.status();
-    std::cout << "Got job: " << name << "\n";
+    std::cout << "Got job: " << job->name() << "\n";
   }
   //! [storage_batch_get_job]
   (std::move(client), argv.at(0));
@@ -101,7 +100,7 @@ void DeleteJob(
      std::string const& name) {
     auto status = client.DeleteJob(name);
     if (!status.ok()) throw status;
-    std::cout << "Deleted job" << name << "\n";
+    std::cout << "Deleted job: " << name << "\n";
   }
   //! [storage_batch_delete_job]
   (std::move(client), argv.at(0));
@@ -110,10 +109,9 @@ void DeleteJob(
 void AutoRun(std::vector<std::string> const& argv) {
   if (!argv.empty()) throw google::cloud::testing_util::Usage{"auto"};
   google::cloud::testing_util::CheckEnvironmentVariablesAreSet(
-      {"GOOGLE_CLOUD_CPP_USER_PROJECT",
-       "GOOGLE_CLOUD_CPP_STORAGE_TEST_REGION_ID"});
+      {"GOOGLE_CLOUD_PROJECT", "GOOGLE_CLOUD_CPP_STORAGE_TEST_REGION_ID"});
   auto const project_id =
-      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_USER_PROJECT").value();
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value();
   auto const location_id =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_STORAGE_TEST_REGION_ID")
           .value();
