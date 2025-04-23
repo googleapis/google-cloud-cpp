@@ -262,6 +262,61 @@ Status has_row(std::shared_ptr<google::cloud::bigtable::emulator::Table>& table,
   return Status();
 }
 
+// Test that SetCell does the right thing when it receives a zero or
+// negative timestamp, and that the cell created can be correctly
+// deleted if rollback occurs.
+TEST(TransactonRollback, ZeroOrNegativeTimestampHandling) {
+  ::google::bigtable::admin::v2::Table schema;
+  ::google::bigtable::admin::v2::ColumnFamily column_family;
+
+  auto const* const table_name = "projects/test/instances/test/tables/test";
+  auto const* const row_key = "0";
+  auto const* const column_family_name = "test";
+  auto const* const column_qualifer = "test";
+  auto const timestamp_micros = 0;
+  auto const* data = "test";
+
+  std::vector<std::string> column_families = {column_family_name};
+  auto maybe_table = create_table(table_name, column_families);
+
+  ASSERT_STATUS_OK(maybe_table);
+  auto table = maybe_table.value();
+
+  std::vector<SetCellParams> v;
+  SetCellParams p = {column_family_name, column_qualifer, timestamp_micros,
+                     data};
+  v.push_back(p);
+
+  auto status = set_cells(table, table_name, row_key, v);
+  ASSERT_STATUS_OK(status);
+
+  auto status_or =
+      get_column(table, column_family_name, row_key, column_qualifer);
+  ASSERT_STATUS_OK(status_or.status());
+  auto column = status_or.value();
+  ASSERT_EQ(1, column.size());
+  for (auto const& cell : column) {
+    ASSERT_GT(cell.first.count(), 0);
+    ASSERT_EQ(data, cell.second);
+  }
+
+  // Test that a SetCell mutation with timestamp set to 0 can be
+  // correctly rolled back. In the following, the first mutation
+  // (timestamp 0) should succeed and the next one should fail. The
+  // condition after that should be that the first one (timestamp 0)
+  // should be rolled back so that a row with row_key_2 key should not
+  // exist when the MutateRow request returns.
+  v.clear();
+  v = {{column_family_name, column_qualifer, 0, data},
+       {"non_existent_column_family_name_causes_tx_rollbaclk", column_qualifer,
+        1000, data}};
+  auto const* const row_key_2 = "1";
+  status = set_cells(table, table_name, row_key_2, v);
+  ASSERT_NE(true, status.ok());
+  ASSERT_FALSE(has_row(table, column_family_name, row_key_2).ok());
+}
+
+
 // Does the SetCell mutation work to set a cell to a specific value?
 TEST(TransactonRollback, SetCellBasicFunction) {
   ::google::bigtable::admin::v2::Table schema;
@@ -764,57 +819,6 @@ TEST(TransactonRollback, DeleteFromRowBasicFunction) {
   ASSERT_EQ(false, has_column(table, second_column_family_name, row_key,
                               column_qualifer)
                        .ok());
-}
-
-TEST(TransactonRollback, ZeroOrNegativeTimestampHandling) {
-  ::google::bigtable::admin::v2::Table schema;
-  ::google::bigtable::admin::v2::ColumnFamily column_family;
-
-  auto const* const table_name = "projects/test/instances/test/tables/test";
-  auto const* const row_key = "0";
-  auto const* const column_family_name = "test";
-  auto const* const column_qualifer = "test";
-  auto const timestamp_micros = 0;
-  auto const* data = "test";
-
-  std::vector<std::string> column_families = {column_family_name};
-  auto maybe_table = create_table(table_name, column_families);
-
-  ASSERT_STATUS_OK(maybe_table);
-  auto table = maybe_table.value();
-
-  std::vector<SetCellParams> v;
-  SetCellParams p = {column_family_name, column_qualifer, timestamp_micros,
-                     data};
-  v.push_back(p);
-
-  auto status = set_cells(table, table_name, row_key, v);
-  ASSERT_STATUS_OK(status);
-
-  auto status_or =
-      get_column(table, column_family_name, row_key, column_qualifer);
-  ASSERT_STATUS_OK(status_or.status());
-  auto column = status_or.value();
-  ASSERT_EQ(1, column.size());
-  for (auto const& cell : column) {
-    ASSERT_GT(cell.first.count(), 0);
-    ASSERT_EQ(data, cell.second);
-  }
-
-  // Test that a SetCell mutation with timestamp set to 0 can be
-  // correctly rolled back. In the following, the first mutation
-  // (timestamp 0) should succeed and the next one should fail. The
-  // condition after that should be that the first one (timestamp 0)
-  // should be rolled back so that a row with row_key_2 key should not
-  // exist when the MutateRow request returns.
-  v.clear();
-  v = {{column_family_name, column_qualifer, 0, data},
-       {"non_existent_column_family_name_causes_tx_rollbaclk", column_qualifer,
-        1000, data}};
-  auto const* const row_key_2 = "1";
-  status = set_cells(table, table_name, row_key_2, v);
-  ASSERT_NE(true, status.ok());
-  ASSERT_FALSE(has_row(table, column_family_name, row_key_2).ok());
 }
 
 }  // namespace emulator
