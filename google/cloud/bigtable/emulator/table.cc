@@ -511,6 +511,11 @@ Status RowTransaction::SetCell(
   auto timestamp = std::chrono::duration_cast<std::chrono::milliseconds>(
       std::chrono::microseconds(set_cell.timestamp_micros()));
 
+  if (timestamp <= std::chrono::milliseconds::zero()) {
+    timestamp = std::chrono::duration_cast<std::chrono::milliseconds>(
+        std::chrono::system_clock::now().time_since_epoch());
+  }
+
   auto maybe_old_value =
       column_family.SetCell(request_.row_key(), set_cell.column_qualifier(),
                             timestamp, set_cell.value());

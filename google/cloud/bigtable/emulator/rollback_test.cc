@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/emulator/column_family.h"
+#include "google/cloud/bigtable/emulator/row_streamer.h"
 #include "google/cloud/bigtable/emulator/table.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/status.h"
@@ -203,6 +204,41 @@ Status has_column(
   }
 
   return Status();
+}
+
+StatusOr<std::map<std::chrono::milliseconds, std::string>> get_column(
+    std::shared_ptr<google::cloud::bigtable::emulator::Table>& table,
+    std::string const& column_family, std::string const& row_key,
+    std::string const& column_qualifier) {
+  auto column_family_it = table->find(column_family);
+  if (column_family_it == table->end()) {
+    return NotFoundError(
+        "columnn family not found in table",
+        GCP_ERROR_INFO().WithMetadata("column family", column_family));
+  }
+
+  auto const& cf = column_family_it->second;
+  auto column_family_row_it = cf->find(row_key);
+  if (column_family_row_it == cf->end()) {
+    return internal::NotFoundError(
+        "row key not found in column family",
+        GCP_ERROR_INFO()
+            .WithMetadata("row key", row_key)
+            .WithMetadata("column family", column_family));
+  }
+
+  auto& column_family_row = column_family_row_it->second;
+  auto column_row_it = column_family_row.find(column_qualifier);
+  if (column_row_it == column_family_row.end()) {
+    return NotFoundError(
+        "no column found with supplied qualifer",
+        GCP_ERROR_INFO().WithMetadata("column qualifer", column_qualifier));
+  }
+
+  std::map<std::chrono::milliseconds, std::string> ret(
+      column_row_it->second.begin(), column_row_it->second.end());
+
+  return ret;
 }
 
 Status has_row(std::shared_ptr<google::cloud::bigtable::emulator::Table>& table,
@@ -728,6 +764,43 @@ TEST(TransactonRollback, DeleteFromRowBasicFunction) {
   ASSERT_EQ(false, has_column(table, second_column_family_name, row_key,
                               column_qualifer)
                        .ok());
+}
+
+TEST(TransactonRollback, ZeroOrNegativeTimestampHandling) {
+  ::google::bigtable::admin::v2::Table schema;
+  ::google::bigtable::admin::v2::ColumnFamily column_family;
+
+  auto const* const table_name = "projects/test/instances/test/tables/test";
+  auto const* const row_key = "0";
+  auto const* const column_family_name = "test";
+  auto const* const column_qualifer = "test";
+  auto const timestamp_micros = 0;
+  auto const* data = "test";
+
+  std::vector<std::string> column_families = {column_family_name};
+  auto maybe_table = create_table(table_name, column_families);
+
+  ASSERT_STATUS_OK(maybe_table);
+  auto table = maybe_table.value();
+
+  std::vector<SetCellParams> v;
+  SetCellParams p = {column_family_name, column_qualifer, timestamp_micros,
+                     data};
+  v.push_back(p);
+
+  auto status = set_cells(table, table_name, row_key, v);
+
+  ASSERT_STATUS_OK(status);
+
+  auto status_or =
+      get_column(table, column_family_name, row_key, column_qualifer);
+  ASSERT_STATUS_OK(status_or.status());
+  auto column = status_or.value();
+  ASSERT_EQ(1, column.size());
+  for (auto const& cell : column) {
+    ASSERT_GT(cell.first.count(), 0);
+    ASSERT_EQ(data, cell.second);
+  }
 }
 
 }  // namespace emulator
