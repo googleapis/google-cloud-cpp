@@ -23,17 +23,6 @@
 
 namespace {
 
-std::string GetParentFromEnv() {
-  google::cloud::testing_util::CheckEnvironmentVariablesAreSet(
-      {"GOOGLE_CLOUD_PROJECT", "GOOGLE_CLOUD_CPP_STORAGE_TEST_REGION_ID"});
-  auto const project_id =
-      google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value();
-  auto const location_id =
-      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_STORAGE_TEST_REGION_ID")
-          .value();
-  return "projects/" + project_id + "/locations" + location_id;
-}
-
 void CreateJob(
     google::cloud::storagebatchoperations_v1::StorageBatchOperationsClient
         client,
@@ -41,8 +30,10 @@ void CreateJob(
   //! [storage_batch_create_job]
   [](google::cloud::storagebatchoperations_v1::StorageBatchOperationsClient
          client,
+     std::string const& project_id, std::string const& location_id,
      std::string const& job_id) {
-    auto const parent = GetParentFromEnv();
+    auto const parent =
+        std::string{"projects/"} + project_id + "/locations/" + location_id;
     namespace sbo = google::cloud::storagebatchoperations::v1;
     sbo::Job job;
     auto result = client.CreateJob(parent, job, job_id).get();
@@ -50,7 +41,7 @@ void CreateJob(
     std::cout << "Created job: " << result->name() << "\n";
   }
   //! [storage_batch_create_job]
-  (std::move(client), argv.at(0));
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
 void ListJobs(
@@ -59,15 +50,17 @@ void ListJobs(
     std::vector<std::string> const& argv) {
   //! [storage_batch_list_jobs]
   [](google::cloud::storagebatchoperations_v1::StorageBatchOperationsClient
-         client) {
-    auto const parent = GetParentFromEnv();
+         client,
+     std::string const& project_id, std::string const& location_id) {
+    auto const parent =
+        std::string{"projects/"} + project_id + "/locations/" + location_id;
     for (auto const& job : client.ListJobs(parent)) {
       if (!job) throw job.status();
       std::cout << job->name() << "\n";
     }
   }
   //! [storage_batch_list_jobs]
-  (std::move(client));
+  (std::move(client), argv.at(0), argv.at(1));
 }
 
 void GetJob(
@@ -77,15 +70,17 @@ void GetJob(
   //! [storage_batch_get_job]
   [](google::cloud::storagebatchoperations_v1::StorageBatchOperationsClient
          client,
+     std::string const& project_id, std::string const& location_id,
      std::string const& job_id) {
-    auto const parent = GetParentFromEnv();
+    auto const parent =
+        std::string{"projects/"} + project_id + "/locations/" + location_id;
     auto const name = parent + "/jobs/" + job_id;
     auto job = client.GetJob(name);
     if (!job) throw job.status();
     std::cout << "Got job: " << job->name() << "\n";
   }
   //! [storage_batch_get_job]
-  (std::move(client), argv.at(0));
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
 void CancelJob(
@@ -95,15 +90,17 @@ void CancelJob(
   //! [storage_batch_cancel_job]
   [](google::cloud::storagebatchoperations_v1::StorageBatchOperationsClient
          client,
+     std::string const& project_id, std::string const& location_id,
      std::string const& job_id) {
-    auto const parent = GetParentFromEnv();
+    auto const parent =
+        std::string{"projects/"} + project_id + "/locations/" + location_id;
     auto const name = parent + "/jobs/" + job_id;
     auto response = client.CancelJob(name);
     if (!response) throw response.status();
     std::cout << "Cancelled job: " << name << "\n";
   }
   //! [storage_batch_cancel_job]
-  (std::move(client), argv.at(0));
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
 void DeleteJob(
@@ -113,22 +110,28 @@ void DeleteJob(
   //! [storage_batch_delete_job]
   [](google::cloud::storagebatchoperations_v1::StorageBatchOperationsClient
          client,
+     std::string const& project_id, std::string const& location_id,
      std::string const& job_id) {
-    auto const parent = GetParentFromEnv();
+    auto const parent =
+        std::string{"projects/"} + project_id + "/locations/" + location_id;
     auto const name = parent + "/jobs/" + job_id;
     auto status = client.DeleteJob(name);
     if (!status.ok()) throw status;
     std::cout << "Deleted job: " << name << "\n";
   }
   //! [storage_batch_delete_job]
-  (std::move(client), argv.at(0));
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
 void AutoRun(std::vector<std::string> const& argv) {
   if (!argv.empty()) throw google::cloud::testing_util::Usage{"auto"};
   google::cloud::testing_util::CheckEnvironmentVariablesAreSet(
       {"GOOGLE_CLOUD_PROJECT", "GOOGLE_CLOUD_CPP_STORAGE_TEST_REGION_ID"});
-  auto const parent = GetParentFromEnv();
+  auto const project_id =
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value();
+  auto const location_id =
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_STORAGE_TEST_REGION_ID")
+          .value();
 
   auto gen = google::cloud::internal::DefaultPRNG(std::random_device{}());
   auto const prefix = std::string{"storage-batch-operations-samples"};
@@ -142,19 +145,19 @@ void AutoRun(std::vector<std::string> const& argv) {
               MakeStorageBatchOperationsConnection());
 
   std::cout << "\nRunning CreateJob() example\n";
-  CreateJob(client, {job_id});
+  CreateJob(client, {project_id, location_id, job_id});
 
   std::cout << "\nRunning GetJob() example\n";
-  GetJob(client, {job_id});
+  GetJob(client, {project_id, location_id, job_id});
 
   std::cout << "\nRunning ListJobs() example\n";
-  ListJobs(client, {});
+  ListJobs(client, {project_id, location_id});
 
   std::cout << "\nRunning CancelJob() example\n";
-  CancelJob(client, {job_id});
+  CancelJob(client, {project_id, location_id, job_id});
 
   std::cout << "\nRunning DeleteJob() example\n";
-  DeleteJob(client, {job_id});
+  DeleteJob(client, {project_id, location_id, job_id});
 }
 
 }  // namespace
@@ -182,11 +185,14 @@ int main(int argc, char* argv[]) {
         std::move(name), std::move(adapter));
   };
   Example example({
-      make_entry("create-job", {"job-id"}, CreateJob),
-      make_entry("get-job", {"job-id"}, GetJob),
-      make_entry("list-jobs", {}, ListJobs),
-      make_entry("cancel-job", {"job-id"}, CancelJob),
-      make_entry("delete-job", {"job-id"}, DeleteJob),
+      make_entry("create-job", {"project-id", "location-id", "job-id"},
+                 CreateJob),
+      make_entry("get-job", {"project-id", "location-id", "job-id"}, GetJob),
+      make_entry("list-jobs", {"project-id", "location-id"}, ListJobs),
+      make_entry("cancel-job", {"project-id", "location-id", "job-id"},
+                 CancelJob),
+      make_entry("delete-job", {"project-id", "location-id", "job-id"},
+                 DeleteJob),
       {"auto", AutoRun},
   });
   return example.Run(argc, argv);
