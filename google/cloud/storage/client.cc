@@ -105,8 +105,8 @@ ObjectWriteStream Client::WriteObjectImpl(
       response->committed_size, std::move(response->metadata), buffer_size,
       internal::CreateHashFunction(request),
       internal::HashValues{
-          request.GetOption<Crc32cChecksumValue>().value_or(""),
-          request.GetOption<MD5HashValue>().value_or(""),
+          .crc32c = request.GetOption<Crc32cChecksumValue>().value_or(""),
+          .md5 = request.GetOption<MD5HashValue>().value_or(""),
       },
       internal::CreateHashValidator(request),
       request.GetOption<AutoFinalize>().value_or(
@@ -139,9 +139,9 @@ StatusOr<ObjectMetadata> Client::UploadFileSimple(
     return google::cloud::internal::InvalidArgumentError(std::move(os).str(),
                                                          GCP_ERROR_INFO());
   }
-  auto upload_size = (std::min)(
-      request.GetOption<UploadLimit>().value_or(file_size - upload_offset),
-      file_size - upload_offset);
+  auto upload_size = (std::min)(request.GetOption<UploadLimit>().value_or(
+                                    file_size - upload_offset),
+                                file_size - upload_offset);
 
   std::ifstream is(file_name, std::ios::binary);
   if (!is.is_open()) {
@@ -205,9 +205,9 @@ integrity checks using the DisableMD5Hash() and DisableCrc32cChecksum() options.
                                                            GCP_ERROR_INFO());
     }
 
-    auto upload_size = (std::min)(
-        request.GetOption<UploadLimit>().value_or(file_size - upload_offset),
-        file_size - upload_offset);
+    auto upload_size = (std::min)(request.GetOption<UploadLimit>().value_or(
+                                      file_size - upload_offset),
+                                  file_size - upload_offset);
     request.set_option(UploadContentLength(upload_size));
   }
   std::ifstream source(file_name, std::ios::binary);
@@ -355,7 +355,8 @@ StatusOr<Client::SignBlobResponseRaw> Client::SignBlobImpl(
   // First try to sign locally.
   auto signed_blob = credentials->SignBlob(signing_account, string_to_sign);
   if (signed_blob) {
-    return SignBlobResponseRaw{credentials->KeyId(), *std::move(signed_blob)};
+    return SignBlobResponseRaw{.key_id = credentials->KeyId(),
+                               .signed_blob = *std::move(signed_blob)};
   }
 
   // If signing locally fails that may be because the credentials do not
@@ -378,7 +379,8 @@ StatusOr<Client::SignBlobResponseRaw> Client::SignBlobImpl(
   if (!response) return response.status();
   auto decoded = internal::Base64Decode(response->signed_blob);
   if (!decoded) return std::move(decoded).status();
-  return SignBlobResponseRaw{response->key_id, *std::move(decoded)};
+  return SignBlobResponseRaw{.key_id = response->key_id,
+                             .signed_blob = *std::move(decoded)};
 }
 
 StatusOr<std::string> Client::SignUrlV2(
@@ -445,8 +447,10 @@ StatusOr<PolicyDocumentResult> Client::SignPolicyDocument(
   }
 
   return PolicyDocumentResult{
-      signing_email, request.policy_document().expiration, base64_policy,
-      internal::Base64Encode(signed_blob->signed_blob)};
+      .access_id = signing_email,
+      .expiration = request.policy_document().expiration,
+      .policy = base64_policy,
+      .signature = internal::Base64Encode(signed_blob->signed_blob)};
 }
 
 StatusOr<PolicyDocumentV4Result> Client::SignPolicyDocumentV4(
@@ -468,13 +472,14 @@ StatusOr<PolicyDocumentV4Result> Client::SignPolicyDocumentV4(
   auto required_fields = request.RequiredFormFields();
   required_fields["x-goog-signature"] = signature;
   required_fields["policy"] = base64_policy;
-  return PolicyDocumentV4Result{request.Url(),
-                                request.Credentials(),
-                                request.ExpirationDate(),
-                                base64_policy,
-                                signature,
-                                "GOOG4-RSA-SHA256",
-                                std::move(required_fields)};
+  return PolicyDocumentV4Result{
+      .url = request.Url(),
+      .access_id = request.Credentials(),
+      .expiration = request.ExpirationDate(),
+      .policy = base64_policy,
+      .signature = signature,
+      .signing_algorithm = "GOOG4-RSA-SHA256",
+      .required_form_fields = std::move(required_fields)};
 }
 
 std::string CreateRandomPrefixName(std::string const& prefix) {

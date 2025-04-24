@@ -3679,7 +3679,10 @@ StatusOr<ObjectMetadata> LockPrefix(Client& client,
                                     std::string const& prefix,
                                     Options&&... options) {
   return google::cloud::internal::apply(
-      internal::InsertObjectApplyHelper{client, bucket_name, prefix, ""},
+      internal::InsertObjectApplyHelper{.client = client,
+                                        .bucket_name = bucket_name,
+                                        .object_name = prefix,
+                                        .contents = ""},
       std::tuple_cat(
           std::make_tuple(IfGenerationMatch(0)),
           internal::StaticTupleFilter<
@@ -3854,8 +3857,10 @@ StatusOr<ObjectMetadata> ComposeMany(
   internal::ScopedDeleter deleter(
       [&](std::string const& object_name, std::int64_t generation) {
         return google::cloud::internal::apply(
-            internal::DeleteApplyHelper{client, bucket_name, object_name,
-                                        generation},
+            internal::DeleteApplyHelper{.client = client,
+                                        .bucket_name = bucket_name,
+                                        .object_name = object_name,
+                                        .generation = generation},
             StaticTupleFilter<Among<QuotaUser, UserProject, UserIp>::TPred>(
                 all_options));
       });
@@ -3878,7 +3883,9 @@ StatusOr<ObjectMetadata> ComposeMany(
     std::vector<ComposeSourceObject> sources(objects.size());
     std::transform(objects.begin(), objects.end(), sources.begin(),
                    [](ObjectMetadata const& m) {
-                     return ComposeSourceObject{m.name(), m.generation(), {}};
+                     return ComposeSourceObject{.object_name = m.name(),
+                                                .generation = m.generation(),
+                                                .if_generation_match = {}};
                    });
     return sources;
   };
@@ -3887,9 +3894,11 @@ StatusOr<ObjectMetadata> ComposeMany(
                       bool is_final) -> StatusOr<ObjectMetadata> {
     if (is_final) {
       return google::cloud::internal::apply(
-          internal::ComposeApplyHelper{client, bucket_name,
-                                       std::move(compose_range),
-                                       std::move(destination_object_name)},
+          internal::ComposeApplyHelper{
+              .client = client,
+              .bucket_name = bucket_name,
+              .source_objects = std::move(compose_range),
+              .destination_object_name = std::move(destination_object_name)},
           all_options);
     }
     return google::cloud::internal::apply(
