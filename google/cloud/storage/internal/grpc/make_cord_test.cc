@@ -70,7 +70,7 @@ using TestVariations = ::testing::Types<
     std::string, std::vector<char>, std::vector<signed char>,
     std::vector<unsigned char>, std::vector<std::uint8_t> >;
 
-TYPED_TEST_SUITE(MakeCordFromVector, TestVariations);
+TYPED_TEST_SUITE(MakeCordFromVector, TestVariations, );
 
 TYPED_TEST(MakeCordFromVector, MakeCord) {
   using Collection = typename TestFixture::TestType;
