@@ -182,6 +182,10 @@
 ./include/google/cloud/channel/v1
 ./include/google/cloud/channel/v1/internal
 ./include/google/cloud/channel/v1/mocks
+./include/google/cloud/chronicle
+./include/google/cloud/chronicle/v1
+./include/google/cloud/chronicle/v1/internal
+./include/google/cloud/chronicle/v1/mocks
 ./include/google/cloud/cloudbuild
 ./include/google/cloud/cloudbuild/mocks
 ./include/google/cloud/cloudbuild/v1
@@ -1337,6 +1341,8 @@
 ./lib64/cmake/google_cloud_cpp_certificatemanager_mocks
 ./lib64/cmake/google_cloud_cpp_channel
 ./lib64/cmake/google_cloud_cpp_channel_mocks
+./lib64/cmake/google_cloud_cpp_chronicle
+./lib64/cmake/google_cloud_cpp_chronicle_mocks
 ./lib64/cmake/google_cloud_cpp_cloudbuild
 ./lib64/cmake/google_cloud_cpp_cloudbuild_mocks
 ./lib64/cmake/google_cloud_cpp_cloudcontrolspartner

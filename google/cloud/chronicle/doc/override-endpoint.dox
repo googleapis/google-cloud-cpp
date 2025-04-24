@@ -1,0 +1,57 @@
+/*!
+@page chronicle-override-endpoint How to Override the Default Endpoint
+
+In some cases, you may need to override the default endpoint used by the client
+library. Use the
+[EndpointOption](@ref google::cloud::EndpointOption) when initializing the
+client library to change this default.
+
+<!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `chronicle_v1::DataAccessControlServiceClient`:
+
+@snippet data_access_control_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c chronicle_v1::DataAccessControlServiceClient](@ref chronicle_v1::DataAccessControlServiceClient-endpoint-snippet)
+- [\c chronicle_v1::EntityServiceClient](@ref chronicle_v1::EntityServiceClient-endpoint-snippet)
+- [\c chronicle_v1::InstanceServiceClient](@ref chronicle_v1::InstanceServiceClient-endpoint-snippet)
+- [\c chronicle_v1::ReferenceListServiceClient](@ref chronicle_v1::ReferenceListServiceClient-endpoint-snippet)
+- [\c chronicle_v1::RuleServiceClient](@ref chronicle_v1::RuleServiceClient-endpoint-snippet)
+
+<!-- inject-endpoint-snippet-end -->
+
+*/
+
+// <!-- inject-endpoint-pages-start -->
+
+/*! @page chronicle_v1::DataAccessControlServiceClient-endpoint-snippet Override chronicle_v1::DataAccessControlServiceClient Endpoint Configuration
+
+@snippet google/cloud/chronicle/v1/samples/data_access_control_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page chronicle_v1::EntityServiceClient-endpoint-snippet Override chronicle_v1::EntityServiceClient Endpoint Configuration
+
+@snippet google/cloud/chronicle/v1/samples/entity_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page chronicle_v1::InstanceServiceClient-endpoint-snippet Override chronicle_v1::InstanceServiceClient Endpoint Configuration
+
+@snippet google/cloud/chronicle/v1/samples/instance_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page chronicle_v1::ReferenceListServiceClient-endpoint-snippet Override chronicle_v1::ReferenceListServiceClient Endpoint Configuration
+
+@snippet google/cloud/chronicle/v1/samples/reference_list_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page chronicle_v1::RuleServiceClient-endpoint-snippet Override chronicle_v1::RuleServiceClient Endpoint Configuration
+
+@snippet google/cloud/chronicle/v1/samples/rule_client_samples.cc set-client-endpoint
+
+*/
+// <!-- inject-endpoint-pages-end -->
