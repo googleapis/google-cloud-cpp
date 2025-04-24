@@ -63,7 +63,7 @@ using TestVariations = ::testing::Types<
     std::tuple<StatusOr<Response>, std::shared_ptr<grpc::ClientContext>>  //
     >;
 
-TYPED_TEST_SUITE(LogWrapperTest, TestVariations);
+TYPED_TEST_SUITE(LogWrapperTest, TestVariations, );
 
 // These helper functions make it easier to write the tests.
 Request MakeRequest() {

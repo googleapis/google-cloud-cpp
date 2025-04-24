@@ -92,7 +92,7 @@ class MockRpcExplicit {
 template <typename T>
 class PaginationRangeTest : public testing::Test {};
 using ResponseTypes = ::testing::Types<ProtoResponse, StructResponse>;
-TYPED_TEST_SUITE(PaginationRangeTest, ResponseTypes);
+TYPED_TEST_SUITE(PaginationRangeTest, ResponseTypes, );
 
 TYPED_TEST(PaginationRangeTest, SinglePageImplicit) {
   using ResponseType = TypeParam;
