@@ -14,6 +14,7 @@
 
 //! [all]
 #include "google/cloud/chronicle/v1/entity_client.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/location.h"
 #include <iostream>
 
@@ -23,13 +24,18 @@ int main(int argc, char* argv[]) try {
               << " project-id location-id instance-id\n";
     return 1;
   }
-
+  auto const endpoint = "us-chronicle.googleapis.com";
   auto const location = google::cloud::Location(argv[1], argv[2]);
   auto const instance_id = std::string(argv[3]);
 
+  namespace gc = ::google::cloud;
   namespace chronicle = ::google::cloud::chronicle_v1;
+
   auto client =
-      chronicle::EntityServiceClient(chronicle::MakeEntityServiceConnection());
+      chronicle::EntityServiceClient(chronicle::MakeEntityServiceConnection(
+          gc::Options{}
+              .set<gc::EndpointOption>(endpoint)
+              .set<gc::AuthorityOption>(endpoint)));
 
   for (auto r : client.ListWatchlists(location.FullName() + "/instances/" +
                                       instance_id)) {

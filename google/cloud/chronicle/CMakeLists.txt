@@ -31,10 +31,6 @@ if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
             GOOGLE_CLOUD_CPP_TEST_REGION "instance-id-x")
     set_tests_properties(
         chronicle_quickstart
-        PROPERTIES
-            LABELS
-            "integration-test;quickstart"
-            PASS_REGULAR_EXPRESSION
-            "UNIMPLEMENTED: Permanent error, with a last message of Received http2 header with status: 404"
-    )
+        PROPERTIES LABELS "integration-test;quickstart" PASS_REGULAR_EXPRESSION
+                   "Request contains an invalid argument")
 endif ()
