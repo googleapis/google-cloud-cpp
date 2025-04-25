@@ -201,18 +201,6 @@ class InstanceAdminConnectionImpl
   future<StatusOr<google::spanner::admin::instance::v1::MoveInstanceResponse>>
   MoveInstance(google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
-
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
-
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request) override;
-
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request) override;
-
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<spanner_admin_internal::InstanceAdminStub> stub_;

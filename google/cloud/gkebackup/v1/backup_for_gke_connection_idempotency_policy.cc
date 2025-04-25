@@ -59,6 +59,41 @@ Idempotency BackupForGKEConnectionIdempotencyPolicy::DeleteBackupPlan(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency BackupForGKEConnectionIdempotencyPolicy::CreateBackupChannel(
+    google::cloud::gkebackup::v1::CreateBackupChannelRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency BackupForGKEConnectionIdempotencyPolicy::ListBackupChannels(
+    google::cloud::gkebackup::v1::ListBackupChannelsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency BackupForGKEConnectionIdempotencyPolicy::GetBackupChannel(
+    google::cloud::gkebackup::v1::GetBackupChannelRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency BackupForGKEConnectionIdempotencyPolicy::UpdateBackupChannel(
+    google::cloud::gkebackup::v1::UpdateBackupChannelRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency BackupForGKEConnectionIdempotencyPolicy::DeleteBackupChannel(
+    google::cloud::gkebackup::v1::DeleteBackupChannelRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency BackupForGKEConnectionIdempotencyPolicy::ListBackupPlanBindings(
+    google::cloud::gkebackup::v1::ListBackupPlanBindingsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency BackupForGKEConnectionIdempotencyPolicy::GetBackupPlanBinding(
+    google::cloud::gkebackup::v1::GetBackupPlanBindingRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 Idempotency BackupForGKEConnectionIdempotencyPolicy::CreateBackup(
     google::cloud::gkebackup::v1::CreateBackupRequest const&) {
   return Idempotency::kNonIdempotent;
@@ -117,6 +152,41 @@ Idempotency BackupForGKEConnectionIdempotencyPolicy::UpdateRestorePlan(
 Idempotency BackupForGKEConnectionIdempotencyPolicy::DeleteRestorePlan(
     google::cloud::gkebackup::v1::DeleteRestorePlanRequest const&) {
   return Idempotency::kNonIdempotent;
+}
+
+Idempotency BackupForGKEConnectionIdempotencyPolicy::CreateRestoreChannel(
+    google::cloud::gkebackup::v1::CreateRestoreChannelRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency BackupForGKEConnectionIdempotencyPolicy::ListRestoreChannels(
+    google::cloud::gkebackup::v1::ListRestoreChannelsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency BackupForGKEConnectionIdempotencyPolicy::GetRestoreChannel(
+    google::cloud::gkebackup::v1::GetRestoreChannelRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency BackupForGKEConnectionIdempotencyPolicy::UpdateRestoreChannel(
+    google::cloud::gkebackup::v1::UpdateRestoreChannelRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency BackupForGKEConnectionIdempotencyPolicy::DeleteRestoreChannel(
+    google::cloud::gkebackup::v1::DeleteRestoreChannelRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency BackupForGKEConnectionIdempotencyPolicy::ListRestorePlanBindings(
+    google::cloud::gkebackup::v1::ListRestorePlanBindingsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency BackupForGKEConnectionIdempotencyPolicy::GetRestorePlanBinding(
+    google::cloud::gkebackup::v1::GetRestorePlanBindingRequest const&) {
+  return Idempotency::kIdempotent;
 }
 
 Idempotency BackupForGKEConnectionIdempotencyPolicy::CreateRestore(

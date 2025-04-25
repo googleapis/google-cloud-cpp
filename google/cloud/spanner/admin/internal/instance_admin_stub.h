@@ -205,22 +205,6 @@ class InstanceAdminStub {
       google::spanner::admin::instance::v1::MoveInstanceRequest const&
           request) = 0;
 
-  virtual StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
-      google::longrunning::ListOperationsRequest const& request) = 0;
-
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
-      google::longrunning::GetOperationRequest const& request) = 0;
-
-  virtual Status DeleteOperation(
-      grpc::ClientContext& context, Options const& options,
-      google::longrunning::DeleteOperationRequest const& request) = 0;
-
-  virtual Status CancelOperation(
-      grpc::ClientContext& context, Options const& options,
-      google::longrunning::CancelOperationRequest const& request) = 0;
-
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -404,22 +388,6 @@ class DefaultInstanceAdminStub : public InstanceAdminStub {
       grpc::ClientContext& context, Options options,
       google::spanner::admin::instance::v1::MoveInstanceRequest const& request)
       override;
-
-  StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
-      google::longrunning::ListOperationsRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
-      google::longrunning::GetOperationRequest const& request) override;
-
-  Status DeleteOperation(
-      grpc::ClientContext& context, Options const& options,
-      google::longrunning::DeleteOperationRequest const& request) override;
-
-  Status CancelOperation(
-      grpc::ClientContext& context, Options const& options,
-      google::longrunning::CancelOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,

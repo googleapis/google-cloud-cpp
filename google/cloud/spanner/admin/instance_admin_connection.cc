@@ -294,29 +294,6 @@ InstanceAdminConnection::MoveInstance(google::longrunning::Operation const&) {
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::longrunning::Operation>
-InstanceAdminConnection::ListOperations(
-    google::longrunning::
-        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
-  return google::cloud::internal::MakeUnimplementedPaginationRange<
-      StreamRange<google::longrunning::Operation>>();
-}
-
-StatusOr<google::longrunning::Operation> InstanceAdminConnection::GetOperation(
-    google::longrunning::GetOperationRequest const&) {
-  return Status(StatusCode::kUnimplemented, "not implemented");
-}
-
-Status InstanceAdminConnection::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const&) {
-  return Status(StatusCode::kUnimplemented, "not implemented");
-}
-
-Status InstanceAdminConnection::CancelOperation(
-    google::longrunning::CancelOperationRequest const&) {
-  return Status(StatusCode::kUnimplemented, "not implemented");
-}
-
 std::shared_ptr<InstanceAdminConnection> MakeInstanceAdminConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

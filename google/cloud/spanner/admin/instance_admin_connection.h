@@ -333,18 +333,6 @@ class InstanceAdminConnection {
   virtual future<
       StatusOr<google::spanner::admin::instance::v1::MoveInstanceResponse>>
   MoveInstance(google::longrunning::Operation const& operation);
-
-  virtual StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request);
-
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
-
-  virtual Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request);
-
-  virtual Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
 };
 
 /**

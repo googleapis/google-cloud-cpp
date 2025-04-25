@@ -149,26 +149,6 @@ Idempotency InstanceAdminConnectionIdempotencyPolicy::MoveInstance(
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency InstanceAdminConnectionIdempotencyPolicy::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT
-  return Idempotency::kIdempotent;
-}
-
-Idempotency InstanceAdminConnectionIdempotencyPolicy::GetOperation(
-    google::longrunning::GetOperationRequest const&) {
-  return Idempotency::kIdempotent;
-}
-
-Idempotency InstanceAdminConnectionIdempotencyPolicy::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const&) {
-  return Idempotency::kNonIdempotent;
-}
-
-Idempotency InstanceAdminConnectionIdempotencyPolicy::CancelOperation(
-    google::longrunning::CancelOperationRequest const&) {
-  return Idempotency::kNonIdempotent;
-}
-
 std::unique_ptr<InstanceAdminConnectionIdempotencyPolicy>
 MakeDefaultInstanceAdminConnectionIdempotencyPolicy() {
   return std::make_unique<InstanceAdminConnectionIdempotencyPolicy>();
