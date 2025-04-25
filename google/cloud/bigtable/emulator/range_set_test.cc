@@ -275,31 +275,31 @@ TEST(StringRangeSet, RangeStartLess) {
 
 TEST(StringRangeSet, RangeEndLess) {
   EXPECT_TRUE(StringRangeSet::Range::EndLess()(
-      StringRangeSet::Range("unimportant", kWhatever, "A", kOpen),
-      StringRangeSet::Range("unimportant", kWhatever, "B", kOpen)));
+      StringRangeSet::Range("A", kWhatever, "A", kOpen),
+      StringRangeSet::Range("A", kWhatever, "B", kOpen)));
   EXPECT_FALSE(StringRangeSet::Range::EndLess()(
-      StringRangeSet::Range("unimportant", kWhatever, "B", kOpen),
-      StringRangeSet::Range("unimportant", kWhatever, "A", kOpen)));
+      StringRangeSet::Range("A", kWhatever, "B", kOpen),
+      StringRangeSet::Range("A", kWhatever, "A", kOpen)));
   EXPECT_FALSE(StringRangeSet::Range::EndLess()(
-      StringRangeSet::Range("unimportant", kWhatever, "A", kOpen),
-      StringRangeSet::Range("unimportant", kWhatever, "A", kOpen)));
+      StringRangeSet::Range("A", kWhatever, "A", kOpen),
+      StringRangeSet::Range("A", kWhatever, "A", kOpen)));
 
   EXPECT_TRUE(StringRangeSet::Range::EndLess()(
-      StringRangeSet::Range("unimportant", kWhatever, "A", kClosed),
-      StringRangeSet::Range("unimportant", kWhatever, "B", kClosed)));
+      StringRangeSet::Range("A", kWhatever, "A", kClosed),
+      StringRangeSet::Range("A", kWhatever, "B", kClosed)));
   EXPECT_FALSE(StringRangeSet::Range::EndLess()(
-      StringRangeSet::Range("unimportant", kWhatever, "B", kClosed),
-      StringRangeSet::Range("unimportant", kWhatever, "A", kClosed)));
+      StringRangeSet::Range("A", kWhatever, "B", kClosed),
+      StringRangeSet::Range("A", kWhatever, "A", kClosed)));
   EXPECT_FALSE(StringRangeSet::Range::EndLess()(
-      StringRangeSet::Range("unimportant", kWhatever, "A", kClosed),
-      StringRangeSet::Range("unimportant", kWhatever, "A", kClosed)));
+      StringRangeSet::Range("A", kWhatever, "A", kClosed),
+      StringRangeSet::Range("A", kWhatever, "A", kClosed)));
 
   EXPECT_FALSE(StringRangeSet::Range::EndLess()(
-      StringRangeSet::Range("unimportant", kWhatever, "A", kClosed),
-      StringRangeSet::Range("unimportant", kWhatever, "A", kOpen)));
+      StringRangeSet::Range("A", kWhatever, "A", kClosed),
+      StringRangeSet::Range("A", kWhatever, "A", kOpen)));
   EXPECT_TRUE(StringRangeSet::Range::EndLess()(
-      StringRangeSet::Range("unimportant", kWhatever, "A", kOpen),
-      StringRangeSet::Range("unimportant", kWhatever, "A", kClosed)));
+      StringRangeSet::Range("A", kWhatever, "A", kOpen),
+      StringRangeSet::Range("A", kWhatever, "A", kClosed)));
 }
 
 TEST(StringRangeSet, BelowStart) {
@@ -322,8 +322,8 @@ TEST(StringRangeSet, BelowStart) {
 }
 
 TEST(StringRangeSet, AboveEnd) {
-  StringRangeSet::Range const open("unimportant", kWhatever, "B", kOpen);
-  StringRangeSet::Range const closed("unimportant", kWhatever, "B", kClosed);
+  StringRangeSet::Range const open("A", kWhatever, "B", kOpen);
+  StringRangeSet::Range const closed("A", kWhatever, "B", kClosed);
   StringRangeSet::Range const infinite(
       "unimportant", kWhatever, StringRangeSet::Range::Infinity{}, kClosed);
 
