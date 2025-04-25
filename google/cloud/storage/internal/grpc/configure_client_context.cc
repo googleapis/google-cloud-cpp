@@ -51,6 +51,13 @@ void ApplyRoutingHeaders(grpc::ClientContext& context,
 }
 
 void ApplyRoutingHeaders(grpc::ClientContext& context,
+                         google::storage::v2::AppendObjectSpec const& spec) {
+  context.AddMetadata(
+      "x-goog-request-params",
+      "bucket=" + google::cloud::internal::UrlEncode(spec.bucket()));
+}
+
+void ApplyRoutingHeaders(grpc::ClientContext& context,
                          storage::internal::UploadChunkRequest const& request) {
   ApplyResumableUploadRoutingHeader(context, request.upload_session_url());
 }
