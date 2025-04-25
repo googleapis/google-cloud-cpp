@@ -158,6 +158,7 @@ std::ostream& StreamHelper(std::ostream& os,  // NOLINT(misc-no-recursion)
     case google::spanner::v1::TypeCode::JSON:
     case google::spanner::v1::TypeCode::TIMESTAMP:
     case google::spanner::v1::TypeCode::NUMERIC:
+    case google::spanner::v1::TypeCode::INTERVAL:
     case google::spanner::v1::TypeCode::UUID:
       return os << v.string_value();
 
@@ -268,6 +269,10 @@ bool Value::TypeProtoIs(CommitTimestamp,
 
 bool Value::TypeProtoIs(absl::CivilDay, google::spanner::v1::Type const& type) {
   return type.code() == google::spanner::v1::TypeCode::DATE;
+}
+
+bool Value::TypeProtoIs(Interval, google::spanner::v1::Type const& type) {
+  return type.code() == google::spanner::v1::TypeCode::INTERVAL;
 }
 
 bool Value::TypeProtoIs(Uuid, google::spanner::v1::Type const& type) {
@@ -409,6 +414,12 @@ google::spanner::v1::Type Value::MakeTypeProto(absl::CivilDay) {
   return t;
 }
 
+google::spanner::v1::Type Value::MakeTypeProto(Interval) {
+  google::spanner::v1::Type t;
+  t.set_code(google::spanner::v1::TypeCode::INTERVAL);
+  return t;
+}
+
 google::spanner::v1::Type Value::MakeTypeProto(Uuid) {
   google::spanner::v1::Type t;
   t.set_code(google::spanner::v1::TypeCode::UUID);
@@ -528,6 +539,12 @@ google::protobuf::Value Value::MakeValueProto(absl::CivilDay d) {
   ss << std::setfill('0') << std::setw(2) << d.month() << '-';
   ss << std::setfill('0') << std::setw(2) << d.day();
   v.set_string_value(std::move(ss).str());
+  return v;
+}
+
+google::protobuf::Value Value::MakeValueProto(Interval intvl) {
+  google::protobuf::Value v;
+  v.set_string_value(std::string(intvl));
   return v;
 }
 
@@ -726,6 +743,14 @@ StatusOr<absl::CivilDay> Value::GetValue(absl::CivilDay,
   if (absl::ParseCivilTime(s, &day)) return day;
   return internal::InvalidArgumentError(
       s + ": Failed to match RFC3339 full-date", GCP_ERROR_INFO());
+}
+
+StatusOr<Interval> Value::GetValue(Interval, google::protobuf::Value const& pv,
+                                   google::spanner::v1::Type const&) {
+  if (pv.kind_case() != google::protobuf::Value::kStringValue) {
+    return Status(StatusCode::kUnknown, "missing Interval");
+  }
+  return MakeInterval(pv.string_value());
 }
 
 StatusOr<Uuid> Value::GetValue(Uuid, google::protobuf::Value const& pv,

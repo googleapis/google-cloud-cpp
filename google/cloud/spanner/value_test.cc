@@ -264,6 +264,15 @@ TEST(Value, BasicSemantics) {
   v.resize(10);
   TestBasicSemantics(v);
 
+  for (auto x : {Interval(), MakeInterval("P1Y1M1D").value()}) {
+    SCOPED_TRACE("Testing: google::cloud::spanner::Interval " + std::string{x});
+    TestBasicSemantics(x);
+    TestBasicSemantics(std::vector<Interval>(5, x));
+    std::vector<absl::optional<Interval>> v(5, x);
+    v.resize(10);
+    TestBasicSemantics(v);
+  }
+
   for (auto x : {Uuid()}) {
     SCOPED_TRACE("Testing: google::cloud::spanner::Uuid " + std::string{x});
     TestBasicSemantics(x);
@@ -931,6 +940,24 @@ TEST(Value, ProtoConversionDate) {
   }
 }
 
+TEST(Value, ProtoConversionInterval) {
+  for (auto const& x : std::vector<Interval>{
+           MakeInterval("-P178000Y").value(),
+           MakeInterval("-P1Y2M3DT4H5M6.789S").value(),
+           MakeInterval("-PT0.000001S").value(),
+           Interval(),
+           MakeInterval("PT0.000001S").value(),
+           MakeInterval("P1Y2M3DT4H5M6.789S").value(),
+           MakeInterval("P178000Y").value(),
+       }) {
+    Value const v(x);
+    auto const p = spanner_internal::ToProto(v);
+    EXPECT_EQ(v, spanner_internal::FromProto(p.first, p.second));
+    EXPECT_EQ(google::spanner::v1::TypeCode::INTERVAL, p.first.code());
+    EXPECT_EQ(std::string{x}, p.second.string_value());
+  }
+}
+
 TEST(Value, ProtoConversionUuid) {
   for (auto const& x : std::vector<Uuid>{
            Uuid(),
@@ -1274,6 +1301,24 @@ TEST(Value, GetBadDate) {
   EXPECT_THAT(v.get<absl::CivilDay>(), Not(IsOk()));
 }
 
+TEST(Value, GetBadInterval) {
+  Value v(Interval{});
+  ClearProtoKind(v);
+  EXPECT_THAT(v.get<Interval>(), Not(IsOk()));
+
+  SetProtoKind(v, google::protobuf::NULL_VALUE);
+  EXPECT_THAT(v.get<Interval>(), Not(IsOk()));
+
+  SetProtoKind(v, true);
+  EXPECT_THAT(v.get<Interval>(), Not(IsOk()));
+
+  SetProtoKind(v, 0.0);
+  EXPECT_THAT(v.get<Interval>(), Not(IsOk()));
+
+  SetProtoKind(v, "blah");
+  EXPECT_THAT(v.get<Interval>(), Not(IsOk()));
+}
+
 TEST(Value, GetBadUuid) {
   Value v(Uuid{});
   ClearProtoKind(v);
@@ -1470,6 +1515,7 @@ TEST(Value, OutputStream) {
       {Value(PgOid(1234567890)), "1234567890", normal},
       {Value(absl::CivilDay()), "1970-01-01", normal},
       {Value(Timestamp()), "1970-01-01T00:00:00Z", normal},
+      {Value(Interval()), "P0D", normal},
       {Value(Uuid()), "00000000-0000-0000-0000-000000000000", normal},
       {Value(ProtoEnum<testing::Genre>(testing::Genre::POP)),
        "google.cloud.spanner.testing.POP", normal},
@@ -1504,6 +1550,7 @@ TEST(Value, OutputStream) {
       {MakeNullValue<PgOid>(), "NULL", normal},
       {MakeNullValue<absl::CivilDay>(), "NULL", normal},
       {MakeNullValue<Timestamp>(), "NULL", normal},
+      {MakeNullValue<Interval>(), "NULL", normal},
       {MakeNullValue<Uuid>(), "NULL", normal},
       {MakeNullValue<ProtoEnum<testing::Genre>>(), "NULL", normal},
       {MakeNullValue<ProtoMessage<testing::SingerInfo>>(), "NULL", normal},
@@ -1525,6 +1572,7 @@ TEST(Value, OutputStream) {
       {Value(std::vector<absl::CivilDay>{2}), "[1970-01-01, 1970-01-01]",
        normal},
       {Value(std::vector<Timestamp>{1}), "[1970-01-01T00:00:00Z]", normal},
+      {Value(std::vector<Interval>{1}), "[P0D]", normal},
       {Value(std::vector<Uuid>{1}), "[00000000-0000-0000-0000-000000000000]",
        normal},
       {Value(std::vector<ProtoEnum<testing::Genre>>{testing::JAZZ,
@@ -1552,6 +1600,7 @@ TEST(Value, OutputStream) {
       {MakeNullValue<std::vector<Numeric>>(), "NULL", normal},
       {MakeNullValue<std::vector<absl::CivilDay>>(), "NULL", normal},
       {MakeNullValue<std::vector<Timestamp>>(), "NULL", normal},
+      {MakeNullValue<std::vector<Interval>>(), "NULL", normal},
       {MakeNullValue<std::vector<Uuid>>(), "NULL", normal},
       {MakeNullValue<std::vector<ProtoEnum<testing::Genre>>>(), "NULL", normal},
       {MakeNullValue<std::vector<ProtoMessage<testing::SingerInfo>>>(), "NULL",
@@ -1702,6 +1751,10 @@ TEST(Value, OutputStreamMatchesT) {
   // Timestamp
   StreamMatchesValueStream(Timestamp());
   StreamMatchesValueStream(MakeTimestamp(MakeTime(1, 1)).value());
+
+  // Interval
+  StreamMatchesValueStream(Interval());
+  StreamMatchesValueStream(MakeInterval("P1Y2M3DT4H5M6.789S").value());
 
   // Uuid
   StreamMatchesValueStream(Uuid());
