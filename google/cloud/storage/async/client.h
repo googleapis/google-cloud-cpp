@@ -17,6 +17,7 @@
 
 #include "google/cloud/storage/async/bucket_name.h"
 #include "google/cloud/storage/async/connection.h"
+#include "google/cloud/storage/async/object_descriptor.h"
 #include "google/cloud/storage/async/reader.h"
 #include "google/cloud/storage/async/rewriter.h"
 #include "google/cloud/storage/async/token.h"
@@ -232,6 +233,41 @@ class AsyncClient {
       Options opts = {});
 
   /**
+   * Open an object descriptor to perform one or more ranged reads.
+   *
+   * @par Idempotency
+   * This is a read-only operation and is always idempotent. The operation will
+   * retry until the descriptor is successfully created. The descriptor itself
+   * will resume any incomplete ranged reads if the connection(s) are
+   * interrupted. Use `ResumePolicyOption` and `ResumePolicy` to control this.
+   *
+   * @param bucket_name the name of the bucket that contains the object.
+   * @param object_name the name of the object to be read.
+   * @param opts options controlling the behavior of this RPC, for example
+   *     the application may change the retry policy.
+   */
+  future<StatusOr<ObjectDescriptor>> Open(BucketName const& bucket_name,
+                                          std::string object_name,
+                                          Options opts = {});
+
+  /**
+   * Open an object descriptor to perform one or more ranged reads.
+   *
+   * @par Idempotency
+   * This is a read-only operation and is always idempotent. The operation will
+   * retry until the descriptor is successfully created. The descriptor itself
+   * will resume any incomplete ranged reads if the connection(s) are
+   * interrupted. Use `ResumePolicyOption` and `ResumePolicy` to control this.
+   *
+   * @param spec the BidiReadObjectSpec to use when retrieving the
+   * ObjectDescriptor.
+   * @param opts options controlling the behavior of this RPC, for example
+   *     the application may change the retry policy.
+   */
+  future<StatusOr<ObjectDescriptor>> Open(
+      google::storage::v2::BidiReadObjectSpec spec, Options opts = {});
+
+  /**
    * A streaming download for the contents of an object.
    *
    * When satisfied, the returned future has a reader to asynchronously download
@@ -243,7 +279,7 @@ class AsyncClient {
    * @par Idempotency
    * This is a read-only operation and is always idempotent. Once the download
    * starts, this operation will automatically resume the download if is
-   * interrupted. Use `ResumePolicyOption` and `ResumePolicy` to control this
+   * interrupted. Use `ResumePolicyOption` and `ResumePolicy` to control this.
    *
    * @param bucket_name the name of the bucket that contains the object.
    * @param object_name the name of the object to be read.
@@ -335,9 +371,81 @@ class AsyncClient {
       std::int64_t limit, Options opts = {});
 
   /*
+  [start-appendable-object-upload]
+  Initiates a [resumable upload][resumable-link] for an appendable object.
+
+  Appendable objects allow you to create an object and upload data to it
+  incrementally until it is finalized. This means you can start an upload
+  and append data to the object later.
+
+  You can finalize an appendable object in the first call itself by providing
+  all the data in the initial upload. You can also explicitly Flush to ensure
+  the data is persisted.
+
+  The recovery can be done from most transient errors, including an unexpected
+  closure of the streaming RPC used for the upload.
+
+  @par Example
+  @snippet storage_async_samples.cc start-appendable-object-upload
+
+  @par Idempotency
+  This function is always treated as idempotent, and the library will
+  automatically retry the function on transient errors.
+
+  [resumable-link]: https://cloud.google.com/storage/docs/resumable-uploads
+  [start-appendable-object-upload]
+  */
+
+  /**
+   * Starts a new resumable upload session for appendable objects and
+   * automatic recovery from transient failures.
+   *
+   * @snippet{doc} async/client.h start-appendable-object-upload
+   *
+   * @param bucket_name the name of the bucket that contains the object.
+   * @param object_name the name of the object to be read.
+   * @param opts options controlling the behavior of this RPC, for example
+   *     the application may change the retry policy.
+   */
+  future<StatusOr<std::pair<AsyncWriter, AsyncToken>>>
+  StartAppendableObjectUpload(BucketName const& bucket_name,
+                              std::string object_name, Options opts = {});
+
+  /**
+   * Starts a new resumable upload session for appendable objects and
+   * automatic recovery from transient failures.
+   *
+   * @snippet{doc} async/client.h start-appendable-object-upload
+   *
+   * @param request the request contents, it must include the bucket name and
+   *     object names. Many other fields are optional.
+   * @param opts options controlling the behavior of this RPC, for example
+   *     the application may change the retry policy.
+   */
+  future<StatusOr<std::pair<AsyncWriter, AsyncToken>>>
+  StartAppendableObjectUpload(
+      google::storage::v2::BidiWriteObjectRequest request, Options opts = {});
+
+  /**
+   * Resume a resumable upload session for appendable objects and automatic
+   * recovery from transient failures.
+   *
+   * @param bucket_name the name of the bucket that contains the object.
+   * @param object_name the name of the object to be uploaded.
+   * @param generation the object generation to be uploaded.
+   * @param opts options controlling the behaviour of this RPC, for example the
+   * application may change the retry policy.
+   */
+  future<StatusOr<std::pair<AsyncWriter, AsyncToken>>>
+  ResumeAppendableObjectUpload(BucketName const& bucket_name,
+                               std::string object_name, std::int64_t generation,
+                               Options opts = {});
+
+  /*
   [start-buffered-upload-common]
   This function always uses [resumable uploads][resumable-link]. The objects
   returned by this function buffer data until it is persisted on the service.
+
   If the buffer becomes full, they stop accepting new data until the service
   has persisted enough data.
 

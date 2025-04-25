@@ -42,7 +42,7 @@ class AsyncWriterConnectionImpl
       google::storage::v2::BidiWriteObjectRequest request,
       std::unique_ptr<StreamingRpc> impl,
       std::shared_ptr<storage::internal::HashFunction> hash_function,
-      std::int64_t persisted_size);
+      std::int64_t persisted_size, bool first_request = true);
   explicit AsyncWriterConnectionImpl(
       google::cloud::internal::ImmutableOptions options,
       google::storage::v2::BidiWriteObjectRequest request,
@@ -72,7 +72,8 @@ class AsyncWriterConnectionImpl
       google::storage::v2::BidiWriteObjectRequest request,
       std::unique_ptr<StreamingRpc> impl,
       std::shared_ptr<storage::internal::HashFunction> hash_function,
-      PersistedStateType persisted_state, std::int64_t offset);
+      PersistedStateType persisted_state, std::int64_t offset,
+      bool first_request = true);
 
   google::storage::v2::BidiWriteObjectRequest MakeRequest();
 
@@ -90,7 +91,7 @@ class AsyncWriterConnectionImpl
   std::shared_ptr<storage::internal::HashFunction> hash_function_;
   PersistedStateType persisted_state_;
   std::int64_t offset_ = 0;
-  bool first_request_ = true;
+  bool first_request_;
 
   // `Finish()` must be called exactly once. If it has not been called by the
   // time the destructor is reached, then the destructor will arrange for a

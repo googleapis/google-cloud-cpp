@@ -125,7 +125,7 @@ function check_abi() {
       # characters in the string "internal", and it should again be followed
       # by some other number indicating the length of the symbol within the
       # "internal" namespace. See: https://en.wikipedia.org/wiki/Name_mangling
-      -skip-internal-symbols "(8internal|_internal|4absl|4grpc|6google8protobuf|6google3rpc)\d"
+      -skip-internal-symbols "(8internal|_internal|4absl|4grpc|6google8protobuf|6google3rpc|20storage_experimental)\d"
       # We ignore the raw gRPC Stub class. The generated gRPC headers that
       # contain these classes are installed alongside our headers. When a new
       # RPC is added to a service, these classes gain a pure virtual method. Our

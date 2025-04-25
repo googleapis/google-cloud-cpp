@@ -156,6 +156,48 @@ void InsertObjectVectorVectors(
 }
 
 #if GOOGLE_CLOUD_CPP_HAVE_COROUTINES
+void OpenObject(google::cloud::storage_experimental::AsyncClient& client,
+                std::vector<std::string> const& argv) {
+  //! [open-object]
+  namespace gcs_ex = google::cloud::storage_experimental;
+  // Helper coroutine, count lines returned by a AsyncReader
+  auto count_newlines =
+      [](gcs_ex::AsyncReader reader,
+         gcs_ex::AsyncToken token) -> google::cloud::future<std::uint64_t> {
+    std::uint64_t count = 0;
+    while (token.valid()) {
+      auto [payload, t] = (co_await reader.Read(std::move(token))).value();
+      token = std::move(t);
+      for (auto const& buffer : payload.contents()) {
+        count += std::count(buffer.begin(), buffer.end(), '\n');
+      }
+    }
+    co_return count;
+  };
+
+  auto coro =
+      [&count_newlines](
+          gcs_ex::AsyncClient& client, std::string bucket_name,
+          std::string object_name) -> google::cloud::future<std::uint64_t> {
+    auto descriptor =
+        (co_await client.Open(gcs_ex::BucketName(std::move(bucket_name)),
+                              std::move(object_name)))
+            .value();
+
+    auto [r1, t1] = descriptor.Read(1000, 1000);
+    auto [r2, t2] = descriptor.Read(2000, 1000);
+
+    auto c1 = count_newlines(std::move(r1), std::move(t1));
+    auto c2 = count_newlines(std::move(r2), std::move(t2));
+    co_return (co_await std::move(c1)) + (co_await std::move(c2));
+  };
+  //! [open-object]
+  // The example is easier to test and run if we call the coroutine and block
+  // until it completes.
+  auto const count = coro(client, argv.at(0), argv.at(1)).get();
+  std::cout << "The ranges contain " << count << " newlines\n";
+}
+
 void ReadObject(google::cloud::storage_experimental::AsyncClient& client,
                 std::vector<std::string> const& argv) {
   //! [read-object]
@@ -494,6 +536,34 @@ void ResumeUnbufferedUpload(
   std::cout << "Object successfully uploaded " << object.DebugString() << "\n";
 }
 
+void StartAppendableObjectUpload(
+    google::cloud::storage_experimental::AsyncClient& client,
+    std::vector<std::string> const& argv) {
+  //! [start-appendable-object-upload]
+  namespace gcs = google::cloud::storage;
+  namespace gcs_ex = google::cloud::storage_experimental;
+  auto coro = [](gcs_ex::AsyncClient& client, std::string bucket_name,
+                 std::string object_name)
+      -> google::cloud::future<google::storage::v2::Object> {
+    auto [writer, token] = (co_await client.StartAppendableObjectUpload(
+                                gcs_ex::BucketName(std::move(bucket_name)),
+                                std::move(object_name)))
+                               .value();
+    for (int i = 0; i != 1000; ++i) {
+      auto line = gcs_ex::WritePayload(std::vector<std::string>{
+          std::string("line number "), std::to_string(i), std::string("\n")});
+      token =
+          (co_await writer.Write(std::move(token), std::move(line))).value();
+    }
+    co_return (co_await writer.Finalize(std::move(token))).value();
+  };
+  //! [start-appendable-object-upload]
+  // The example is easier to test and run if we call the coroutine and block
+  // until it completes..
+  auto const object = coro(client, argv.at(0), argv.at(1)).get();
+  std::cout << "File successfully uploaded " << object.DebugString() << "\n";
+}
+
 void RewriteObject(google::cloud::storage_experimental::AsyncClient& client,
                    std::vector<std::string> const& argv) {
   //! [rewrite-object]
@@ -583,6 +653,11 @@ void ResumeRewrite(google::cloud::storage_experimental::AsyncClient& client,
 }
 
 #else
+void OpenObject(google::cloud::storage_experimental::AsyncClient&,
+                std::vector<std::string> const&) {
+  std::cerr << "AsyncClient::Open() example requires coroutines\n";
+}
+
 void ReadObject(google::cloud::storage_experimental::AsyncClient&,
                 std::vector<std::string> const&) {
   std::cerr << "AsyncClient::ReadObject() example requires coroutines\n";
@@ -642,6 +717,13 @@ void ResumeUnbufferedUpload(google::cloud::storage_experimental::AsyncClient&,
                             std::vector<std::string> const&) {
   std::cerr
       << "AsyncClient::ResumeUnbufferedUpload() example requires coroutines\n";
+}
+
+void StartAppendableObjectUpload(
+    google::cloud::storage_experimental::AsyncClient&,
+    std::vector<std::string> const&) {
+  std::cerr << "AsyncClient::StartAppendableObjectUpload() example requires "
+               "coroutines\n";
 }
 
 void RewriteObject(google::cloud::storage_experimental::AsyncClient&,
@@ -819,6 +901,9 @@ void AutoRun(std::vector<std::string> const& argv) {
   scheduled_for_delete.push_back(std::move(object_name));
   object_name = examples::MakeRandomObjectName(generator, "object-");
 
+  std::cout << "Running the OpenObject() example" << std::endl;
+  OpenObject(client, {bucket_name, composed_name});
+
   std::cout << "Running the ReadObject() example" << std::endl;
   ReadObject(client, {bucket_name, composed_name});
 
@@ -979,6 +1064,7 @@ int main(int argc, char* argv[]) try {
       make_entry("insert-object-vector", {}, InsertObjectVector),
       make_entry("insert-object-vector-strings", {}, InsertObjectVectorStrings),
       make_entry("insert-object-vector-vectors", {}, InsertObjectVectorVectors),
+      make_entry("open-object", {}, OpenObject),
       make_entry("read-object", {}, ReadObject),
       make_entry("read-all", {}, ReadAll),
       make_entry("read-object-range", {}, ReadObjectRange),
@@ -997,6 +1083,9 @@ int main(int argc, char* argv[]) try {
       make_entry("suspend-unbuffered-upload", {}, SuspendUnbufferedUpload),
       make_resume_entry("resume-unbuffered-upload", {"<filename>"},
                         ResumeUnbufferedUpload),
+
+      make_entry("start-appendable-object-upload", {},
+                 StartAppendableObjectUpload),
 
       make_entry("rewrite-object", {"<destination>"}, RewriteObject),
       make_entry("resume-rewrite-object", {"<destination>"}, ResumeRewrite),
