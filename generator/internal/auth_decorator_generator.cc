@@ -51,9 +51,10 @@ Status AuthDecoratorGenerator::GenerateHeader() {
   HeaderLocalIncludes({vars("stub_header_path"),
                        "google/cloud/internal/unified_grpc_credentials.h",
                        "google/cloud/version.h"});
-  HeaderSystemIncludes(
-      {HasLongrunningMethod() ? "google/longrunning/operations.grpc.pb.h" : "",
-       "memory", "set", "string"});
+  HeaderProtobufGenCodeIncludes({HasLongrunningMethod()
+                                     ? "google/longrunning/operations.grpc.pb.h"
+                                     : ""});
+  HeaderSystemIncludes({"memory", "set", "string"});
 
   auto result = HeaderOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;
@@ -110,7 +111,8 @@ Status AuthDecoratorGenerator::GenerateCc() {
           ? "google/cloud/internal/streaming_write_rpc_impl.h"
           : "",
   });
-  CcSystemIncludes({vars("proto_grpc_header_path"), "memory", "utility"});
+  CcProtobufGenCodeIncludes({vars("proto_grpc_header_path")});
+  CcSystemIncludes({"memory", "utility"});
 
   auto result = CcOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;

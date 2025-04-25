@@ -54,8 +54,9 @@ Status IdempotencyPolicyGenerator::GenerateHeader() {
   HeaderLocalIncludes({"google/cloud/idempotency.h", "google/cloud/version.h"});
 
   auto headers = GetMixinPbIncludeByTransport();
-  headers.insert(headers.end(), {GetPbIncludeByTransport(), "memory"});
-  HeaderSystemIncludes(headers);
+  headers.insert(headers.end(), {GetPbIncludeByTransport()});
+  HeaderProtobufGenCodeIncludes(headers);
+  HeaderSystemIncludes({"memory"});
 
   auto result = HeaderOpenNamespaces();
   if (!result.ok()) return result;

@@ -73,19 +73,19 @@ Status StubGenerator::GenerateHeader() {
        "google/cloud/version.h"});
   std::vector<std::string> additional_pb_header_paths =
       absl::StrSplit(vars("additional_pb_header_paths"), absl::ByChar(','));
-  HeaderSystemIncludes(additional_pb_header_paths);
+  HeaderProtobufGenCodeIncludes(additional_pb_header_paths);
   std::vector<std::string> mixin_headers =
       absl::StrSplit(vars("mixin_proto_grpc_header_paths"), ',');
-  HeaderSystemIncludes(mixin_headers);
+  HeaderProtobufGenCodeIncludes(mixin_headers);
   bool include_lro_header =
       HasLongrunningMethod() &&
       std::find(mixin_headers.begin(), mixin_headers.end(),
                 "google/longrunning/operations.grpc.pb.h") ==
           mixin_headers.end();
-  HeaderSystemIncludes(
+  HeaderProtobufGenCodeIncludes(
       {vars("proto_grpc_header_path"),
-       include_lro_header ? "google/longrunning/operations.grpc.pb.h" : "",
-       "memory", "utility"});
+       include_lro_header ? "google/longrunning/operations.grpc.pb.h" : ""});
+  HeaderSystemIncludes({"memory", "utility"});
 
   auto result = HeaderOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;
@@ -321,10 +321,11 @@ Status StubGenerator::GenerateCc() {
            ? "google/cloud/internal/streaming_write_rpc_impl.h"
            : "",
        "google/cloud/grpc_error_delegate.h", "google/cloud/status_or.h"});
-  CcSystemIncludes(
-      {vars("proto_grpc_header_path"),
-       HasLongrunningMethod() ? "google/longrunning/operations.grpc.pb.h" : "",
-       "memory", "utility"});
+  CcProtobufGenCodeIncludes({vars("proto_grpc_header_path"),
+                             HasLongrunningMethod()
+                                 ? "google/longrunning/operations.grpc.pb.h"
+                                 : ""});
+  CcSystemIncludes({"memory", "utility"});
 
   auto result = CcOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;
