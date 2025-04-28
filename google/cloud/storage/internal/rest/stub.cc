@@ -183,6 +183,7 @@ StatusOr<ListBucketsResponse> RestStub::ListBuckets(
   if (!headers.ok()) return headers;
   request.AddOptionsToHttpRequest(builder);
   builder.AddQueryParameter("project", request.project_id());
+  builder.AddQueryParameter("pageToken", request.page_token());
   return ParseFromRestResponse<ListBucketsResponse>(
       storage_rest_client_->Get(context, std::move(builder).BuildRequest()));
 }
