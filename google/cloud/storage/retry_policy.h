@@ -32,7 +32,8 @@ struct StatusTraits {
     return status.code() != StatusCode::kDeadlineExceeded &&
            status.code() != StatusCode::kInternal &&
            status.code() != StatusCode::kResourceExhausted &&
-           status.code() != StatusCode::kUnavailable;
+           status.code() != StatusCode::kUnavailable &&
+           status.code() != StatusCode::kUnauthenticated;
   }
 };
 }  // namespace internal
