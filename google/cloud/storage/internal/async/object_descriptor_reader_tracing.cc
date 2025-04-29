@@ -41,10 +41,10 @@ class ObjectDescriptorReaderTracing : public ObjectDescriptorReader {
   ~ObjectDescriptorReaderTracing() override = default;
 
   future<ObjectDescriptorReader::ReadResponse> Read() override {
-    auto s = internal::MakeSpan("storage::AsyncConnection::ReadObjectRange");
-    internal::OTelScope scope(s);
+    auto span = internal::MakeSpan("storage::AsyncConnection::ReadObjectRange");
+    internal::OTelScope scope(span);
     return ObjectDescriptorReader::Read().then(
-        [span = std::move(s),
+        [span = std::move(span),
          oc = opentelemetry::context::RuntimeContext::GetCurrent()](
             auto f) -> ReadResponse {
           auto result = f.get();
