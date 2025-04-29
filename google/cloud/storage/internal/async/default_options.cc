@@ -16,6 +16,7 @@
 #include "google/cloud/storage/async/idempotency_policy.h"
 #include "google/cloud/storage/async/options.h"
 #include "google/cloud/storage/async/resume_policy.h"
+#include "google/cloud/storage/async/retry_policy.h"
 #include "google/cloud/storage/async/writer_connection.h"
 #include "google/cloud/storage/internal/grpc/default_options.h"
 #include <limits>
@@ -58,12 +59,18 @@ auto Adjust(Options opts) {
   return opts;
 }
 
+auto constexpr kDefaultMaxRetryPeriod = std::chrono::minutes(15);
+
 }  // namespace
 
 Options DefaultOptionsAsync(Options opts) {
   opts = internal::MergeOptions(
       std::move(opts),
       Options{}
+          .set<storage_experimental::AsyncRetryPolicyOption>(
+              storage_experimental::LimitedTimeRetryPolicy(
+                  kDefaultMaxRetryPeriod)
+                  .clone())
           .set<storage_experimental::ResumePolicyOption>(
               storage_experimental::StopOnConsecutiveErrorsResumePolicy())
           .set<storage_experimental::IdempotencyPolicyOption>(

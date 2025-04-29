@@ -23,6 +23,7 @@ storage_client_grpc_unit_tests = [
     "async/object_descriptor_test.cc",
     "async/read_all_test.cc",
     "async/reader_test.cc",
+    "async/retry_policy_test.cc",
     "async/resume_policy_test.cc",
     "async/rewriter_test.cc",
     "async/token_test.cc",
