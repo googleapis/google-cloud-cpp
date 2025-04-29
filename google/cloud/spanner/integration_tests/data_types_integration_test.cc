@@ -497,6 +497,7 @@ TEST_F(DataTypeIntegrationTest, WriteReadArrayTimestamp) {
 }
 
 TEST_F(DataTypeIntegrationTest, SelectIntervalScalar) {
+  if (UsingEmulator()) GTEST_SKIP();
   auto expected_interval = MakeInterval("1-2 3 4:5:6.789123456");
   ASSERT_STATUS_OK(expected_interval);
 
@@ -512,6 +513,7 @@ SELECT INTERVAL '1-2 3 4:5:6.789123456' YEAR TO SECOND;)sql",
 }
 
 TEST_F(DataTypeIntegrationTest, SelectIntervalArray) {
+  if (UsingEmulator()) GTEST_SKIP();
   auto expected_interval = MakeInterval("1-2 3 4:5:6.789123456");
   ASSERT_STATUS_OK(expected_interval);
 
@@ -527,6 +529,7 @@ SELECT ARRAY<INTERVAL>[INTERVAL '1-2 3 4:5:6.789123456' YEAR TO SECOND];)sql",
 }
 
 TEST_F(DataTypeIntegrationTest, SelectIntervalFromTimestampDiff) {
+  if (UsingEmulator()) GTEST_SKIP();
   Interval expected_interval{
       std::chrono::duration_cast<std::chrono::nanoseconds>(
           std::chrono::hours(1))};
@@ -552,7 +555,6 @@ FROM DataTypes;
                                 {});
 
   auto query_result = client_->ExecuteQuery(std::move(statement));
-
   using RowType = std::tuple<Interval>;
   for (auto& row : StreamOf<RowType>(query_result)) {
     ASSERT_STATUS_OK(row);
