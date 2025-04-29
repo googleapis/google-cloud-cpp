@@ -58,6 +58,9 @@ class WritePayload {
   explicit WritePayload(std::vector<T> p)
       : impl_(storage_internal::MakeCord(std::move(p))) {}
 
+  /// Creates a payload from @p impl.
+  explicit WritePayload(absl::Cord impl) : impl_(std::move(impl)) {}
+
   /// Returns true if the payload has no data.
   bool empty() const { return impl_.empty(); }
 
@@ -76,7 +79,6 @@ class WritePayload {
 
  private:
   friend struct storage_internal::WritePayloadImpl;
-  explicit WritePayload(absl::Cord impl) : impl_(std::move(impl)) {}
 
   absl::Cord impl_;
 };
