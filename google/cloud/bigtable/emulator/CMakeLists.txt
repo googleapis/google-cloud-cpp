@@ -57,8 +57,8 @@ if (BUILD_TESTING)
         column_family_test.cc
         filter_test.cc
         filtered_map_test.cc
-        rollback_test.cc
         range_set_test.cc
+        rollback_test.cc
         server_test.cc
         table_test.cc)
     export_list_to_bazel("bigtable_emulator_unit_tests.bzl"

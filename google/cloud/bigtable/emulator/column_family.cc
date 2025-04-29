@@ -72,9 +72,9 @@ absl::optional<Cell> ColumnRow::DeleteTimeStamp(
   return ret;
 }
 
-absl::optional<std::string> ColumnFamilyRow::SetCell(std::string const& column_qualifier,
-                              std::chrono::milliseconds timestamp,
-                              std::string const& value) {
+absl::optional<std::string> ColumnFamilyRow::SetCell(
+    std::string const& column_qualifier, std::chrono::milliseconds timestamp,
+    std::string const& value) {
   return columns_[column_qualifier].SetCell(timestamp, value);
 }
 
@@ -100,7 +100,7 @@ absl::optional<Cell> ColumnFamilyRow::DeleteTimeStamp(
   }
 
   auto ret = column_it->second.DeleteTimeStamp(timestamp);
-  if(!column_it->second.HasCells()) {
+  if (!column_it->second.HasCells()) {
     columns_.erase(column_it);
   }
 
@@ -126,7 +126,7 @@ std::map<std::string, std::vector<Cell>> ColumnFamily::DeleteRow(
     // Not setting start and end timestamps will select all cells for deletion
     ::google::bigtable::v2::TimestampRange time_range;
     auto deleted_cells = column.second.DeleteTimeRange(time_range);
-    if (deleted_cells.size() > 0) {
+    if (!deleted_cells.empty()) {
       res[std::move(column.first)] = std::move(deleted_cells);
     }
   }
@@ -198,7 +198,8 @@ class FilteredColumnFamilyStream::FilterApply {
 
   bool operator()(ColumnRegex const& column_regex) {
     parent_.column_regexes_.emplace_back(column_regex.regex);
-    return true;  }
+    return true;
+  }
 
  private:
   FilteredColumnFamilyStream& parent_;

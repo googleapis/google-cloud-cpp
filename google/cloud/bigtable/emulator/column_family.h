@@ -147,7 +147,7 @@ class ColumnFamilyRow {
    * Delete a cell with the given timestamp from the column given by
    *     the given column qualifier.
    *
-   * @param column_qualifer the column from which to delete the cell.
+   * @param column_qualifier the column from which to delete the cell.
    *
    * @param timestamp the std::chrono::milliseconds timestamp of the
    *     cell to delete.
@@ -247,9 +247,9 @@ class ColumnFamily {
       ::google::bigtable::v2::TimestampRange const& time_range);
 
   std::vector<Cell> DeleteColumn(
-    std::map<std::string, ColumnFamilyRow>::iterator row_it,
-    std::string const& column_qualifier,
-    ::google::bigtable::v2::TimestampRange const& time_range);
+      std::map<std::string, ColumnFamilyRow>::iterator row_it,
+      std::string const& column_qualifier,
+      ::google::bigtable::v2::TimestampRange const& time_range);
 
   /**
    * Delete a cell with the given timestamp from the column given by
@@ -257,7 +257,7 @@ class ColumnFamily {
    *
    * @param row_key the row from which to delete the cell
    *
-   * @param column_qualifer the column from which to delete the cell.
+   * @param column_qualifier the column from which to delete the cell.
    *
    * @param timestamp the std::chrono::milliseconds timestamp of the
    *     cell to delete.

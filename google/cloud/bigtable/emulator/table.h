@@ -43,7 +43,6 @@ class Table : public std::enable_shared_from_this<Table> {
   static StatusOr<std::shared_ptr<Table>> Create(
       google::bigtable::admin::v2::Table schema);
 
-
   google::bigtable::admin::v2::Table GetSchema() const;
 
   Status Update(google::bigtable::admin::v2::Table const& new_schema,
@@ -64,7 +63,8 @@ class Table : public std::enable_shared_from_this<Table> {
   std::map<std::string, std::shared_ptr<ColumnFamily>>::iterator end() {
     return column_families_.end();
   }
-  std::map<std::string, std::shared_ptr<ColumnFamily>>::iterator find(std::string const &column_family) {
+  std::map<std::string, std::shared_ptr<ColumnFamily>>::iterator find(
+      std::string const& column_family) {
     return column_families_.find(column_family);
   }
 
@@ -135,8 +135,7 @@ class RowTransaction {
 
   bool committed_;
   std::shared_ptr<Table> table_;
-  std::stack<absl::variant<DeleteValue, RestoreValue>>
-      undo_;
+  std::stack<absl::variant<DeleteValue, RestoreValue>> undo_;
   ::google::bigtable::v2::MutateRowRequest const& request_;
 };
 

@@ -224,7 +224,7 @@ Status Table::MutateRow(google::bigtable::v2::MutateRowRequest const& request) {
 
   RowTransaction row_transaction(this->get(), request);
 
-  for (const auto& mutation : request.mutations()) {
+  for (auto const& mutation : request.mutations()) {
     if (mutation.has_set_cell()) {
       auto const& set_cell = mutation.set_cell();
       auto status = row_transaction.SetCell(set_cell);
@@ -270,7 +270,6 @@ Status Table::MutateRow(google::bigtable::v2::MutateRowRequest const& request) {
 
   return Status();
 }
-// NOLINTEND(readability-function-cognitive-complexity)
 
 bool FilteredTableStream::ApplyFilter(InternalFilter const& internal_filter) {
   if (!absl::holds_alternative<FamilyNameRegex>(internal_filter)) {
@@ -393,6 +392,7 @@ bool Table::IsDeleteProtectedNoLock() const {
   return schema_.deletion_protection();
 }
 
+// NOLINTBEGIN(readability-convert-member-functions-to-static)
 Status RowTransaction::AddToCell(
     ::google::bigtable::v2::Mutation_AddToCell const& add_to_cell) {
   return UnimplementedError(
@@ -406,6 +406,7 @@ Status RowTransaction::MergeToCell(
       "Unsupported mutation type.",
       GCP_ERROR_INFO().WithMetadata("mutation", merge_to_cell.DebugString()));
 }
+// NOLINTEND(readability-convert-member-functions-to-static)
 
 Status RowTransaction::DeleteFromColumn(
     ::google::bigtable::v2::Mutation_DeleteFromColumn const&
@@ -422,10 +423,9 @@ Status RowTransaction::DeleteFromColumn(
       delete_from_column.time_range());
 
   for (auto& cell : deleted_cells) {
-    RestoreValue restore_value{column_family,
-                               delete_from_column.column_qualifier(),
-                               std::move(cell.timestamp),
-                               std::move(cell.value)};
+    RestoreValue restore_value{
+        column_family, delete_from_column.column_qualifier(),
+        std::move(cell.timestamp), std::move(cell.value)};
     undo_.emplace(std::move(restore_value));
   }
 
@@ -439,9 +439,9 @@ Status RowTransaction::DeleteFromRow() {
 
     for (auto& column : deleted_columns) {
       for (auto& cell : column.second) {
-        RestoreValue restrore_value = {
-            *column_family.second, std::move(column.first),
-            cell.timestamp, std::move(cell.value)};
+        RestoreValue restrore_value = {*column_family.second,
+                                       std::move(column.first), cell.timestamp,
+                                       std::move(cell.value)};
         undo_.emplace(std::move(restrore_value));
         row_existed = true;
       }
@@ -544,9 +544,8 @@ void RowTransaction::Undo() {
     auto* restore_value = absl::get_if<RestoreValue>(&op);
     if (restore_value) {
       restore_value->column_family.SetCell(
-          row_key,
-          std::move(restore_value->column_qualifier), restore_value->timestamp,
-          std::move(restore_value->value));
+          row_key, std::move(restore_value->column_qualifier),
+          restore_value->timestamp, std::move(restore_value->value));
       continue;
     }
 
