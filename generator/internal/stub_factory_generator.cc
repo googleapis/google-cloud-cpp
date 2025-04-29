@@ -90,9 +90,9 @@ Status StubFactoryGenerator::GenerateCc() {
 
   std::vector<std::string> headers =
       absl::StrSplit(vars("mixin_proto_grpc_header_paths"), ',');
-  headers.insert(headers.end(),
-                 {vars("proto_grpc_header_path"), "memory", "utility"});
-  CcSystemIncludes(headers);
+  headers.insert(headers.end(), {vars("proto_grpc_header_path")});
+  CcProtobufGenCodeIncludes(headers);
+  CcSystemIncludes({"memory", "utility"});
 
   auto result = CcOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;

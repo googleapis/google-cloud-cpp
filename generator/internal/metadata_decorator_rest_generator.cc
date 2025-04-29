@@ -118,11 +118,11 @@ Status MetadataDecoratorRestGenerator::GenerateHeader() {
   HeaderLocalIncludes({vars("stub_rest_header_path"), "google/cloud/future.h",
                        "google/cloud/rest_options.h",
                        "google/cloud/version.h"});
-  HeaderSystemIncludes({vars("proto_header_path"),
-                        HasLongrunningMethod()
-                            ? vars("longrunning_operation_include_header")
-                            : "",
-                        "memory", "string"});
+  HeaderProtobufGenCodeIncludes(
+      {vars("proto_header_path"),
+       HasLongrunningMethod() ? vars("longrunning_operation_include_header")
+                              : ""});
+  HeaderSystemIncludes({"memory", "string"});
 
   auto result = HeaderOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;

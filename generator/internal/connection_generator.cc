@@ -73,12 +73,12 @@ Status ConnectionGenerator::GenerateHeader() {
        "google/cloud/version.h"});
   std::vector<std::string> const additional_pb_header_paths =
       absl::StrSplit(vars("additional_pb_header_paths"), absl::ByChar(','));
-  HeaderSystemIncludes(additional_pb_header_paths);
-  HeaderSystemIncludes({vars("proto_header_path"),
-                        HasGRPCLongrunningOperation()
-                            ? "google/longrunning/operations.grpc.pb.h"
-                            : "",
-                        "memory"});
+  HeaderProtobufGenCodeIncludes(additional_pb_header_paths);
+  HeaderProtobufGenCodeIncludes({vars("proto_header_path")});
+  HeaderProtobufGenCodeIncludes({HasGRPCLongrunningOperation()
+                                     ? "google/longrunning/operations.grpc.pb.h"
+                                     : ""});
+  HeaderSystemIncludes({"memory"});
   switch (endpoint_location_style) {
     case ServiceConfiguration::LOCATION_DEPENDENT:
     case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:
