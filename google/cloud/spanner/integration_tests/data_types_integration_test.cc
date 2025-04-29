@@ -533,13 +533,10 @@ TEST_F(DataTypeIntegrationTest, SelectIntervalFromTimestampDiff) {
   Interval expected_interval{
       std::chrono::duration_cast<std::chrono::nanoseconds>(
           std::chrono::hours(1))};
-  auto now_seconds = std::chrono::duration_cast<std::chrono::seconds>(
-                         std::chrono::system_clock::now().time_since_epoch())
-                         .count();
-  auto one_hour_later_seconds =
-      now_seconds +
-      std::chrono::duration_cast<std::chrono::seconds>(std::chrono::hours(1))
-          .count();
+  std::time_t now_seconds =
+      std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+  std::time_t one_hour_later_seconds = now_seconds + 3600;
+
   std::vector<std::vector<Timestamp>> const data = {std::vector<Timestamp>{
       MakeTimestamp(MakeTime(now_seconds, 0)).value(),
       MakeTimestamp(MakeTime(one_hour_later_seconds, 0)).value()}};
