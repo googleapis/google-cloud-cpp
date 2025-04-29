@@ -20,12 +20,17 @@
 #include "google/cloud/bigtable/emulator/row_streamer.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
+#include "absl/types/variant.h"
 #include <google/bigtable/admin/v2/bigtable_table_admin.grpc.pb.h>
 #include <google/bigtable/admin/v2/table.pb.h>
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
+#include <google/bigtable/v2/bigtable.pb.h>
 #include <google/protobuf/field_mask.pb.h>
 #include <google/protobuf/util/time_util.h>
+#include <chrono>
 #include <map>
+#include <memory>
+#include <stack>
 
 namespace google {
 namespace cloud {
@@ -33,7 +38,7 @@ namespace bigtable {
 namespace emulator {
 
 /// Objects of this class represent Bigtable tables.
-class Table {
+class Table : public std::enable_shared_from_this<Table> {
  public:
   static StatusOr<std::shared_ptr<Table>> Create(
       google::bigtable::admin::v2::Table schema);
@@ -52,10 +57,23 @@ class Table {
 
   Status ReadRows(google::bigtable::v2::ReadRowsRequest const& request,
                   RowStreamer& row_streamer) const;
+  std::map<std::string, std::shared_ptr<ColumnFamily>>::iterator begin() {
+    return column_families_.begin();
+  }
+  std::map<std::string, std::shared_ptr<ColumnFamily>>::iterator end() {
+    return column_families_.end();
+  }
+  std::map<std::string, std::shared_ptr<ColumnFamily>>::iterator find(
+      std::string const& column_family) {
+    return column_families_.find(column_family);
+  }
+
+  std::shared_ptr<Table> get() { return shared_from_this(); }
 
  private:
   Table() = default;
   friend class RowSetIterator;
+  friend class RowTransaction;
 
   template <typename MESSAGE>
   StatusOr<std::reference_wrapper<ColumnFamily>> FindColumnFamily(
@@ -66,6 +84,59 @@ class Table {
   mutable std::mutex mu_;
   google::bigtable::admin::v2::Table schema_;
   std::map<std::string, std::shared_ptr<ColumnFamily>> column_families_;
+};
+
+struct RestoreValue {
+  ColumnFamily& column_family;
+  std::string column_qualifier;
+  std::chrono::milliseconds timestamp;
+  std::string value;
+};
+
+struct DeleteValue {
+  ColumnFamily& column_family;
+  std::string column_qualifier;
+  std::chrono::milliseconds timestamp;
+};
+
+class RowTransaction {
+ public:
+  explicit RowTransaction(
+      std::shared_ptr<Table> table,
+      ::google::bigtable::v2::MutateRowRequest const& request)
+      : request_(request) {
+    table_ = std::move(table);
+    committed_ = false;
+  };
+
+  ~RowTransaction() {
+    if (!committed_) {
+      Undo();
+    }
+  };
+
+  void commit() { committed_ = true; }
+
+  Status SetCell(::google::bigtable::v2::Mutation_SetCell const& set_cell);
+  Status AddToCell(
+      ::google::bigtable::v2::Mutation_AddToCell const& add_to_cell);
+  Status MergeToCell(
+      ::google::bigtable::v2::Mutation_MergeToCell const& merge_to_cell);
+  Status DeleteFromColumn(
+      ::google::bigtable::v2::Mutation_DeleteFromColumn const&
+          delete_from_column);
+  Status DeleteFromFamily(
+      ::google::bigtable::v2::Mutation_DeleteFromFamily const&
+          delete_from_family);
+  Status DeleteFromRow();
+
+ private:
+  void Undo();
+
+  bool committed_;
+  std::shared_ptr<Table> table_;
+  std::stack<absl::variant<DeleteValue, RestoreValue>> undo_;
+  ::google::bigtable::v2::MutateRowRequest const& request_;
 };
 
 /**

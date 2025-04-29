@@ -13,13 +13,18 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/emulator/table.h"
+#include "google/cloud/bigtable/emulator/column_family.h"
 #include "google/cloud/bigtable/emulator/filter.h"
 #include "google/cloud/bigtable/emulator/filtered_map.h"
 #include "google/cloud/bigtable/internal/google_bytes_traits.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/protobuf/util/field_mask_util.h"
+#include <google/bigtable/v2/data.pb.h>
+#include <absl/strings/str_format.h>
 #include <re2/re2.h>
 #include <chrono>
+#include <cstdlib>
+#include <type_traits>
 
 namespace google {
 namespace cloud {
@@ -213,55 +218,43 @@ StatusOr<std::reference_wrapper<ColumnFamily>> Table::FindColumnFamily(
   return std::ref(*column_family_it->second);
 }
 
-// NOLINTBEGIN(readability-function-cognitive-complexity)
 Status Table::MutateRow(google::bigtable::v2::MutateRowRequest const& request) {
-  // FIXME - add atomicity
-  // FIXME - determine what happens when row/column family/column does not exist
   std::lock_guard<std::mutex> lock(mu_);
   assert(request.table_name() == schema_.name());
+
+  RowTransaction row_transaction(this->get(), request);
+
   for (auto const& mutation : request.mutations()) {
     if (mutation.has_set_cell()) {
       auto const& set_cell = mutation.set_cell();
-      auto maybe_column_family = FindColumnFamily(set_cell);
-      if (!maybe_column_family) {
-        return maybe_column_family.status();
+      auto status = row_transaction.SetCell(set_cell);
+      if (!status.ok()) {
+        return status;
       }
-      maybe_column_family->get().SetCell(
-          request.row_key(), set_cell.column_qualifier(),
-          std::chrono::duration_cast<std::chrono::milliseconds>(
-              std::chrono::microseconds(set_cell.timestamp_micros())),
-          set_cell.value());
-      //} else if (mutation.has_add_to_cell()) {
-      //  // FIXME
-      //} else if (mutation.has_merge_to_cell()) {
-      //  // FIXME
+    } else if (mutation.has_add_to_cell()) {
+      return UnimplementedError(
+          "Unsupported mutation type.",
+          GCP_ERROR_INFO().WithMetadata("mutation", mutation.DebugString()));
+    } else if (mutation.has_merge_to_cell()) {
+      return UnimplementedError(
+          "Unsupported mutation type.",
+          GCP_ERROR_INFO().WithMetadata("mutation", mutation.DebugString()));
     } else if (mutation.has_delete_from_column()) {
       auto const& delete_from_column = mutation.delete_from_column();
-      auto maybe_column_family = FindColumnFamily(delete_from_column);
-      if (!maybe_column_family) {
-        return maybe_column_family.status();
-      }
-      if (maybe_column_family->get().DeleteColumn(
-              request.row_key(), delete_from_column.column_qualifier(),
-              delete_from_column.time_range()) == 0) {
-        // FIXME no such row or column
+      auto status = row_transaction.DeleteFromColumn(delete_from_column);
+      if (!status.ok()) {
+        return status;
       }
     } else if (mutation.has_delete_from_family()) {
-      auto maybe_column_family =
-          FindColumnFamily(mutation.delete_from_family());
-      if (!maybe_column_family) {
-        return maybe_column_family.status();
-      }
-      if (maybe_column_family->get().DeleteRow(request.row_key())) {
-        // FIXME no such row existed in that column family
+      auto const& delete_from_family = mutation.delete_from_family();
+      auto status = row_transaction.DeleteFromFamily(delete_from_family);
+      if (!status.ok()) {
+        return status;
       }
     } else if (mutation.has_delete_from_row()) {
-      bool row_existed = false;
-      for (auto& column_family : column_families_) {
-        row_existed |= column_family.second->DeleteRow(request.row_key());
-      }
-      if (!row_existed) {
-        // FIXME no such row existed
+      auto status = row_transaction.DeleteFromRow();
+      if (!status.ok()) {
+        return status;
       }
     } else {
       return UnimplementedError(
@@ -269,9 +262,14 @@ Status Table::MutateRow(google::bigtable::v2::MutateRowRequest const& request) {
           GCP_ERROR_INFO().WithMetadata("mutation", mutation.DebugString()));
     }
   }
+
+  // If we get here, all mutations on the row have succeeded. We can
+  // commit and return which will prevent the destructor from undoing
+  // the transaction.
+  row_transaction.commit();
+
   return Status();
 }
-// NOLINTEND(readability-function-cognitive-complexity)
 
 bool FilteredTableStream::ApplyFilter(InternalFilter const& internal_filter) {
   if (!absl::holds_alternative<FamilyNameRegex>(internal_filter)) {
@@ -392,6 +390,177 @@ bool Table::IsDeleteProtected() const {
 
 bool Table::IsDeleteProtectedNoLock() const {
   return schema_.deletion_protection();
+}
+
+// NOLINTBEGIN(readability-convert-member-functions-to-static)
+Status RowTransaction::AddToCell(
+    ::google::bigtable::v2::Mutation_AddToCell const& add_to_cell) {
+  return UnimplementedError(
+      "Unsupported mutation type.",
+      GCP_ERROR_INFO().WithMetadata("mutation", add_to_cell.DebugString()));
+}
+
+Status RowTransaction::MergeToCell(
+    ::google::bigtable::v2::Mutation_MergeToCell const& merge_to_cell) {
+  return UnimplementedError(
+      "Unsupported mutation type.",
+      GCP_ERROR_INFO().WithMetadata("mutation", merge_to_cell.DebugString()));
+}
+// NOLINTEND(readability-convert-member-functions-to-static)
+
+Status RowTransaction::DeleteFromColumn(
+    ::google::bigtable::v2::Mutation_DeleteFromColumn const&
+        delete_from_column) {
+  auto maybe_column_family = table_->FindColumnFamily(delete_from_column);
+  if (!maybe_column_family.ok()) {
+    return maybe_column_family.status();
+  }
+
+  auto& column_family = maybe_column_family->get();
+
+  auto deleted_cells = column_family.DeleteColumn(
+      request_.row_key(), delete_from_column.column_qualifier(),
+      delete_from_column.time_range());
+
+  for (auto& cell : deleted_cells) {
+    RestoreValue restore_value{
+        column_family, delete_from_column.column_qualifier(),
+        std::move(cell.timestamp), std::move(cell.value)};
+    undo_.emplace(std::move(restore_value));
+  }
+
+  return Status();
+}
+
+Status RowTransaction::DeleteFromRow() {
+  bool row_existed;
+  for (auto& column_family : table_->column_families_) {
+    auto deleted_columns = column_family.second->DeleteRow(request_.row_key());
+
+    for (auto& column : deleted_columns) {
+      for (auto& cell : column.second) {
+        RestoreValue restrore_value = {*column_family.second,
+                                       std::move(column.first), cell.timestamp,
+                                       std::move(cell.value)};
+        undo_.emplace(std::move(restrore_value));
+        row_existed = true;
+      }
+    }
+  }
+
+  if (row_existed) {
+    return Status();
+  }
+
+  return NotFoundError(
+      "row not found in table",
+      GCP_ERROR_INFO().WithMetadata("row", request_.row_key()));
+}
+
+Status RowTransaction::DeleteFromFamily(
+    ::google::bigtable::v2::Mutation_DeleteFromFamily const&
+        delete_from_family) {
+  // If the request references an incorrect schema (non-existent
+  // column family) then return a failure status error immediately.
+  auto maybe_column_family = table_->FindColumnFamily(delete_from_family);
+  if (!maybe_column_family.ok()) {
+    return maybe_column_family.status();
+  }
+
+  auto column_family_it = table_->find(delete_from_family.family_name());
+  if (column_family_it == table_->end()) {
+    return NotFoundError(
+        "column family not found in table",
+        GCP_ERROR_INFO().WithMetadata("column family",
+                                      delete_from_family.family_name()));
+  }
+
+  std::map<std::string, ColumnFamilyRow>::iterator column_family_row_it;
+  if (column_family_it->second->find(request_.row_key()) ==
+      column_family_it->second->end()) {
+    // The row does not exist
+    return NotFoundError(
+        "row key is not found in column family",
+        GCP_ERROR_INFO()
+            .WithMetadata("row key", request_.row_key())
+            .WithMetadata("column family", column_family_it->first));
+  }
+
+  auto deleted = column_family_it->second->DeleteRow(request_.row_key());
+  for (auto const& column : deleted) {
+    for (auto const& cell : column.second) {
+      RestoreValue restore_value{*column_family_it->second,
+                                 std::move(column.first), cell.timestamp,
+                                 std::move(cell.value)};
+      undo_.emplace(std::move(restore_value));
+    }
+  }
+
+  return Status();
+}
+
+Status RowTransaction::SetCell(
+    ::google::bigtable::v2::Mutation_SetCell const& set_cell) {
+  auto maybe_column_family = table_->FindColumnFamily(set_cell);
+  if (!maybe_column_family) {
+    return maybe_column_family.status();
+  }
+
+  auto& column_family = maybe_column_family->get();
+
+  auto timestamp = std::chrono::duration_cast<std::chrono::milliseconds>(
+      std::chrono::microseconds(set_cell.timestamp_micros()));
+
+  if (timestamp <= std::chrono::milliseconds::zero()) {
+    timestamp = std::chrono::duration_cast<std::chrono::milliseconds>(
+        std::chrono::system_clock::now().time_since_epoch());
+  }
+
+  auto maybe_old_value =
+      column_family.SetCell(request_.row_key(), set_cell.column_qualifier(),
+                            timestamp, set_cell.value());
+
+  if (!maybe_old_value) {
+    DeleteValue delete_value{column_family,
+                             std::move(set_cell.column_qualifier()), timestamp};
+    undo_.emplace(std::move(delete_value));
+  } else {
+    RestoreValue restore_value{column_family,
+                               std::move(set_cell.column_qualifier()),
+                               timestamp, std::move(maybe_old_value.value())};
+    undo_.emplace(std::move(restore_value));
+  }
+
+  return Status();
+}
+
+void RowTransaction::Undo() {
+  auto row_key = request_.row_key();
+
+  while (!undo_.empty()) {
+    auto op = undo_.top();
+    undo_.pop();
+
+    auto* restore_value = absl::get_if<RestoreValue>(&op);
+    if (restore_value) {
+      restore_value->column_family.SetCell(
+          row_key, std::move(restore_value->column_qualifier),
+          restore_value->timestamp, std::move(restore_value->value));
+      continue;
+    }
+
+    auto* delete_value = absl::get_if<DeleteValue>(&op);
+    if (delete_value) {
+      delete_value->column_family.DeleteTimeStamp(
+          row_key, std::move(delete_value->column_qualifier),
+          delete_value->timestamp);
+      continue;
+    }
+
+    // If we get here, there is an type of undo log that has not been
+    // implemented!
+    std::abort();
+  }
 }
 
 }  // namespace emulator

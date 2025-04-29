@@ -22,12 +22,18 @@
 #include "absl/types/optional.h"
 #include <google/bigtable/admin/v2/table.pb.h>
 #include <google/bigtable/v2/data.pb.h>
+#include <chrono>
 #include <map>
 
 namespace google {
 namespace cloud {
 namespace bigtable {
 namespace emulator {
+
+struct Cell {
+  std::chrono::milliseconds timestamp;
+  std::string value;
+};
 
 /**
  * Objects of this class hold contents of a specific column in a specific row.
@@ -36,6 +42,11 @@ namespace emulator {
  */
 class ColumnRow {
  public:
+  ColumnRow() = default;
+  // Disable copying.
+  ColumnRow(ColumnRow const&) = delete;
+  ColumnRow& operator=(ColumnRow const&) = delete;
+
   /**
    * Insert or update and existing cell at a given timestamp.
    *
@@ -43,16 +54,31 @@ class ColumnRow {
    *     updated. If it equals zero then number of milliseconds since epoch will
    *     be used instead.
    * @param value the value to insert/update.
+   *
+   * @return no value if the timestamp had no value before, otherwise
+   * the previous value of the timestamp.
    */
-  void SetCell(std::chrono::milliseconds timestamp, std::string const& value);
+  absl::optional<std::string> SetCell(std::chrono::milliseconds timestamp,
+                                      std::string const& value);
   /**
    * Delete cells falling into a given timestamp range.
    *
    * @param time_range the timestamp range dictating which values to delete.
-   * @return number of deleted cells.
+   * @return vector of deleted cells.
    */
-  std::size_t DeleteTimeRange(
+  std::vector<Cell> DeleteTimeRange(
       ::google::bigtable::v2::TimestampRange const& time_range);
+
+  /**
+   * Delete a cell with the given timestamp.
+   *
+   * @param timestamp the std::chrono::milliseconds timestamp of the
+   *     cell to delete.
+   *
+   * @return Cell representing deleted cell, if there
+   *     was a cell with that timestamp, otherwise absl::nullopt.
+   */
+  absl::optional<Cell> DeleteTimeStamp(std::chrono::milliseconds timestamp);
 
   bool HasCells() const { return !cells_.empty(); }
   using const_iterator =
@@ -64,6 +90,16 @@ class ColumnRow {
   }
   const_iterator upper_bound(std::chrono::milliseconds timestamp) const {
     return cells_.upper_bound(timestamp);
+  }
+
+  std::map<std::chrono::milliseconds, std::string>::iterator find(
+      std::chrono::milliseconds const& timestamp) {
+    return cells_.find(timestamp);
+  }
+
+  void erase(
+      std::map<std::chrono::milliseconds, std::string>::iterator timestamp_it) {
+    cells_.erase(timestamp_it);
   }
 
  private:
@@ -88,20 +124,40 @@ class ColumnFamilyRow {
    *     updated. If it equals zero then number of milliseconds since epoch will
    *     be used instead.
    * @param value the value to insert/update.
+   *
+   * @return no value if the timestamp had no value before, otherwise
+   * the previous value of the timestamp.
+   *
    */
-  void SetCell(std::string const& column_qualifier,
-               std::chrono::milliseconds timestamp, std::string const& value);
+  absl::optional<std::string> SetCell(std::string const& column_qualifier,
+                                      std::chrono::milliseconds timestamp,
+                                      std::string const& value);
   /**
    * Delete cells falling into a given timestamp range in one column.
    *
    * @param column_qualifier the column qualifier from which to delete the
    *     values.
    * @param time_range the timestamp range dictating which values to delete.
-   * @return number of deleted cells.
+   * @return vector of deleted cells.
    */
-  std::size_t DeleteColumn(
+  std::vector<Cell> DeleteColumn(
       std::string const& column_qualifier,
       ::google::bigtable::v2::TimestampRange const& time_range);
+  /**
+   * Delete a cell with the given timestamp from the column given by
+   *     the given column qualifier.
+   *
+   * @param column_qualifier the column from which to delete the cell.
+   *
+   * @param timestamp the std::chrono::milliseconds timestamp of the
+   *     cell to delete.
+   *
+   * @return Cell representing deleted cell, if there was a cell with
+   *     that timestamp in then given column,  otherwise absl::nullopt.
+   */
+  absl::optional<Cell> DeleteTimeStamp(std::string const& column_qulifier,
+                                       std::chrono::milliseconds timestamp);
+
   bool HasColumns() { return !columns_.empty(); }
   using const_iterator = std::map<std::string, ColumnRow>::const_iterator;
   const_iterator begin() const { return columns_.begin(); }
@@ -113,7 +169,18 @@ class ColumnFamilyRow {
     return columns_.upper_bound(column_qualifier);
   }
 
+  std::map<std::string, ColumnRow>::iterator find(
+      std::string const& column_qualifier) {
+    return columns_.find(column_qualifier);
+  }
+
+  void erase(std::map<std::string, ColumnRow>::iterator column_it) {
+    columns_.erase(column_it);
+  }
+
  private:
+  friend class ColumnFamily;
+
   std::map<std::string, ColumnRow> columns_;
 };
 
@@ -128,6 +195,11 @@ class ColumnFamilyRow {
  */
 class ColumnFamily {
  public:
+  ColumnFamily() = default;
+  // Disable copying.
+  ColumnFamily(ColumnFamily const&) = delete;
+  ColumnFamily& operator=(ColumnFamily const&) = delete;
+
   using const_iterator = std::map<std::string, ColumnFamilyRow>::const_iterator;
 
   /**
@@ -139,28 +211,64 @@ class ColumnFamily {
    *     updated. If it equals zero then number of milliseconds since epoch will
    *     be used instead.
    * @param value the value to insert/update.
+   *
+   * @return no value if the timestamp had no value before, otherwise
+   *     the previous value of the timestamp.
+   *
    */
-  void SetCell(std::string const& row_key, std::string const& column_qualifier,
-               std::chrono::milliseconds timestamp, std::string const& value);
+  absl::optional<std::string> SetCell(std::string const& row_key,
+                                      std::string const& column_qualifier,
+                                      std::chrono::milliseconds timestamp,
+                                      std::string const& value);
   /**
    * Delete the whole row from this column family.
    *
    * @param row_key the row key to remove.
-   * @return whether such a row existed.
+   * @return map from deleted column qualifiers to deleted cells.
    */
-  bool DeleteRow(std::string const& row_key);
+  std::map<std::string, std::vector<Cell>> DeleteRow(
+      std::string const& row_key);
   /**
    * Delete cells from a row falling into a given timestamp range in one column.
    *
-   * @param row_key the row key to remove the cells from.
-   * @param column_qualifier the column qualifier from which to delete the
-   *     values.
-   * @param time_range the timestamp range dictating which values to delete.
-   * @return number of deleted cells.
+   * @param row_key the row key to remove the cells from (or the
+   *     iterator to the row - row_it - in the 2nd overloaded form of the
+   *     function).
+
+   * @param column_qualifier the column qualifier from which to delete
+   *     the values.
+   *
+   * @param time_range the timestamp range dictating which values to
+   *     delete.
+   * @return vector of deleted cells.
    */
-  std::size_t DeleteColumn(
+  std::vector<Cell> DeleteColumn(
       std::string const& row_key, std::string const& column_qualifier,
       ::google::bigtable::v2::TimestampRange const& time_range);
+
+  std::vector<Cell> DeleteColumn(
+      std::map<std::string, ColumnFamilyRow>::iterator row_it,
+      std::string const& column_qualifier,
+      ::google::bigtable::v2::TimestampRange const& time_range);
+
+  /**
+   * Delete a cell with the given timestamp from the column given by
+   *     the given column qualifier from the row given by row_key.
+   *
+   * @param row_key the row from which to delete the cell
+   *
+   * @param column_qualifier the column from which to delete the cell.
+   *
+   * @param timestamp the std::chrono::milliseconds timestamp of the
+   *     cell to delete.
+   *
+   * @return Cell representing deleted cell, if there was a cell with
+   *     that timestamp in then given column in the given row,
+   *     otherwise absl::nullopt.
+   */
+  absl::optional<Cell> DeleteTimeStamp(std::string const& row_key,
+                                       std::string const& column_qulifier,
+                                       std::chrono::milliseconds timestamp);
 
   const_iterator begin() const { return rows_.begin(); }
   const_iterator end() const { return rows_.end(); }
@@ -169,6 +277,15 @@ class ColumnFamily {
   }
   const_iterator upper_bound(std::string const& row_key) const {
     return rows_.upper_bound(row_key);
+  }
+
+  std::map<std::string, ColumnFamilyRow>::iterator find(
+      std::string const& row_key) {
+    return rows_.find(row_key);
+  }
+
+  void erase(std::map<std::string, ColumnFamilyRow>::iterator row_it) {
+    rows_.erase(row_it);
   }
 
  private:

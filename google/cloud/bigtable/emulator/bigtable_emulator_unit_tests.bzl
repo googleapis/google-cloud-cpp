@@ -21,6 +21,7 @@ bigtable_emulator_unit_tests = [
     "filter_test.cc",
     "filtered_map_test.cc",
     "range_set_test.cc",
+    "rollback_test.cc",
     "server_test.cc",
     "table_test.cc",
 ]

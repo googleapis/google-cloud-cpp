@@ -126,8 +126,9 @@ col2 @10ms: qux
   EXPECT_EQ("bar", fam_row.lower_bound("col1")->second.begin()->second);
   EXPECT_EQ("qux", fam_row.upper_bound("col1")->second.begin()->second);
 
-  EXPECT_EQ(1, fam_row.DeleteColumn("col1",
-                                    ::google::bigtable::v2::TimestampRange{}));
+  EXPECT_EQ(
+      1, fam_row.DeleteColumn("col1", ::google::bigtable::v2::TimestampRange{})
+             .size());
 
   // Verify that there is no empty column.
   EXPECT_EQ(2, std::distance(fam_row.begin(), fam_row.end()));
@@ -135,7 +136,7 @@ col2 @10ms: qux
   google::bigtable::v2::TimestampRange not_matching_range;
   not_matching_range.set_start_timestamp_micros(10);
   not_matching_range.set_end_timestamp_micros(20);
-  EXPECT_EQ(0, fam_row.DeleteColumn("col2", not_matching_range));
+  EXPECT_EQ(0, fam_row.DeleteColumn("col2", not_matching_range).size());
 
   EXPECT_EQ(R"""(
 col0 @10ms: baz
@@ -168,7 +169,8 @@ row2 :col0 @10ms: qux
             DumpColumnFamilyRow(fam.upper_bound("row1")->second));
 
   EXPECT_EQ(1, fam.DeleteColumn("row1", "col0",
-                                ::google::bigtable::v2::TimestampRange{}));
+                                ::google::bigtable::v2::TimestampRange{})
+                   .size());
 
   // Verify that there is no empty row
   EXPECT_EQ(2, std::distance(fam.begin(), fam.end()));
@@ -179,8 +181,8 @@ row2 :col0 @10ms: qux
 )""",
             "\n" + DumpColumnFamily(fam));
 
-  EXPECT_TRUE(fam.DeleteRow("row2"));
-  EXPECT_FALSE(fam.DeleteRow("row_nonexistent"));
+  EXPECT_GT(fam.DeleteRow("row2").size(), 0);
+  EXPECT_TRUE(fam.DeleteRow("row_nonexistent").empty());
 
   EXPECT_EQ("row0 :col0 @10ms: baz\n", DumpColumnFamily(fam));
 }
