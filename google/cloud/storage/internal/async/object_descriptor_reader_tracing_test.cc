@@ -65,7 +65,7 @@ TEST(ObjectDescriptorReaderTracing, Read) {
                          SpanHasEvents(AllOf(
                              EventNamed("gl-cpp.read-range"),
                              SpanEventAttributesAre(
-                                 OTelAttribute<std::size_t>("message.size", 10),
+                                 OTelAttribute<std::uint32_t>("message.size", 10),
                                  OTelAttribute<std::string>(sc::kThreadId, _),
                                  OTelAttribute<std::string>("rpc.message.type",
                                                             "RECEIVED")))))));
