@@ -251,7 +251,7 @@ class AsyncWriterConnectionResumedState
         });
   }
 
-  void OnFlush(Status result, std::size_t write_size) {
+  void OnFlush(Status const& result, std::size_t write_size) {
     if (!result.ok()) return Resume(std::move(result));
     std::unique_lock<std::mutex> lk(mu_);
     write_offset_ += write_size;
@@ -316,14 +316,14 @@ class AsyncWriterConnectionResumedState
         });
   }
 
-  void OnWrite(Status result, std::size_t write_size) {
+  void OnWrite(Status const& result, std::size_t write_size) {
     if (!result.ok()) return Resume(std::move(result));
     std::unique_lock<std::mutex> lk(mu_);
     write_offset_ += write_size;
     return WriteLoop(std::move(lk));
   }
 
-  void Resume(Status s) {
+  void Resume(Status const& s) {
     auto proto_status = ExtractGrpcStatus(s);
     auto request = google::storage::v2::BidiWriteObjectRequest{};
     auto spec = initial_request_.write_object_spec();
@@ -349,7 +349,7 @@ class AsyncWriterConnectionResumedState
         });
   }
 
-  void OnResume(Status original_status, bool was_finalizing,
+  void OnResume(Status const& original_status, bool was_finalizing,
                 StatusOr<WriteObject::WriteResult> res) {
     std::unique_lock<std::mutex> lk(mu_);
 
@@ -428,7 +428,7 @@ class AsyncWriterConnectionResumedState
     p.set_value(std::move(object));  // Set value on the moved promise
   }
 
-  void SetFlushed(std::unique_lock<std::mutex> lk, Status result) {
+  void SetFlushed(std::unique_lock<std::mutex> lk, Status const& result) {
     if (!result.ok()) return SetError(std::move(lk), std::move(result));
     // This flush step completed. We are no longer actively writing this chunk.
     // WriteLoop will determine if another flush/write is needed.
@@ -459,7 +459,7 @@ class AsyncWriterConnectionResumedState
     if (!finalizing_) WriteLoop(std::move(loop_lk));
   }
 
-  void SetError(std::unique_lock<std::mutex> lk, Status status) {
+  void SetError(std::unique_lock<std::mutex> lk, Status const& status) {
     resume_status_ = status;
     writing_ = false;
     finalize_ = false;

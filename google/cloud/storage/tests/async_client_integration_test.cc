@@ -932,8 +932,12 @@ TEST_F(AsyncClientIntegrationTest, Open) {
   auto descriptor = async.Open(spec).get();
   ASSERT_STATUS_OK(descriptor);
 
-  AsyncReader r0, r1, r2;
-  AsyncToken t0, t1, t2;
+  AsyncReader r0;
+  AsyncReader r1;
+  AsyncReader r2;
+  AsyncToken t0;
+  AsyncToken t1;
+  AsyncToken t2;
   std::tie(r1, t1) = descriptor->Read(1 * kStride, kSize);
   std::tie(r2, t2) = descriptor->Read(1 * kStride, kSize);
   auto actual0 = std::string{};

@@ -57,6 +57,7 @@ class AsyncRetryPolicy : public google::cloud::RetryPolicy {
  * - [`kInternal`](@ref google::cloud::StatusCode)
  * - [`kResourceExhausted`](@ref google::cloud::StatusCode)
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
+ * - [`kAborted`](@ref google::cloud::StatusCode)
  */
 class LimitedErrorCountRetryPolicy : public AsyncRetryPolicy {
  public:
@@ -107,6 +108,7 @@ class LimitedErrorCountRetryPolicy : public AsyncRetryPolicy {
  * - [`kInternal`](@ref google::cloud::StatusCode)
  * - [`kResourceExhausted`](@ref google::cloud::StatusCode)
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
+ * - [`kAborted`](@ref google::cloud::StatusCode)
  */
 class LimitedTimeRetryPolicy : public AsyncRetryPolicy {
  public:
