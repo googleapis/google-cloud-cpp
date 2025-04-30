@@ -378,7 +378,8 @@ class AsyncClient {
   incrementally until it is finalized. This means you can start an upload
   and append data to the object later.
 
-  You can either finalize the upload once all data is sent or close it to resume later.
+  You can either finalize the upload once all data is sent or close it to resume
+  later.
 
   The recovery can be done from most transient errors, including an unexpected
   closure of the streaming RPC used for the upload.
