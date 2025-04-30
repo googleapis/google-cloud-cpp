@@ -33,7 +33,7 @@ void CreateJob(
      std::string const& project_id, std::string const& location_id,
      std::string const& job_id) {
     auto const parent =
-        std::string{"projects/"} + project_id + "/locations/" + location_id;
+        std::string{"projects/"} + project_id + "/locations/" + "global";
     namespace sbo = google::cloud::storagebatchoperations::v1;
     sbo::Job job;
     auto result = client.CreateJob(parent, job, job_id).get();
@@ -145,19 +145,19 @@ void AutoRun(std::vector<std::string> const& argv) {
               MakeStorageBatchOperationsConnection());
 
   std::cout << "\nRunning CreateJob() example\n";
-  CreateJob(client, {project_id, "global", job_id});
+  CreateJob(client, {project_id, location_id, job_id});
 
   std::cout << "\nRunning GetJob() example\n";
-  GetJob(client, {project_id, "global", job_id});
+  GetJob(client, {project_id, location_id, job_id});
 
   std::cout << "\nRunning ListJobs() example\n";
-  ListJobs(client, {project_id, "global"});
+  ListJobs(client, {project_id, location_id});
 
   std::cout << "\nRunning CancelJob() example\n";
-  CancelJob(client, {project_id, "global", job_id});
+  CancelJob(client, {project_id, location_id, job_id});
 
   std::cout << "\nRunning DeleteJob() example\n";
-  DeleteJob(client, {project_id, "global", job_id});
+  DeleteJob(client, {project_id, location_id, job_id});
 }
 
 }  // namespace
