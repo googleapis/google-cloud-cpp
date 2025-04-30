@@ -145,19 +145,19 @@ void AutoRun(std::vector<std::string> const& argv) {
               MakeStorageBatchOperationsConnection());
 
   std::cout << "\nRunning CreateJob() example\n";
-  CreateJob(client, {project_id, location_id, job_id});
+  CreateJob(client, {project_id, "global", job_id});
 
   std::cout << "\nRunning GetJob() example\n";
-  GetJob(client, {project_id, location_id, job_id});
+  GetJob(client, {project_id, "global", job_id});
 
   std::cout << "\nRunning ListJobs() example\n";
-  ListJobs(client, {project_id, location_id});
+  ListJobs(client, {project_id, "global"});
 
   std::cout << "\nRunning CancelJob() example\n";
-  CancelJob(client, {project_id, location_id, job_id});
+  CancelJob(client, {project_id, "global", job_id});
 
   std::cout << "\nRunning DeleteJob() example\n";
-  DeleteJob(client, {project_id, location_id, job_id});
+  DeleteJob(client, {project_id, "global", job_id});
 }
 
 }  // namespace
