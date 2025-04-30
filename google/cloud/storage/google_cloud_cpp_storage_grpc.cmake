@@ -88,6 +88,7 @@ add_library(
     async/reader_connection.h
     async/resume_policy.cc
     async/resume_policy.h
+    async/retry_policy.h
     async/rewriter.cc
     async/rewriter.h
     async/rewriter_connection.h
@@ -424,6 +425,7 @@ set(storage_client_grpc_unit_tests
     async/read_all_test.cc
     async/reader_test.cc
     async/resume_policy_test.cc
+    async/retry_policy_test.cc
     async/rewriter_test.cc
     async/token_test.cc
     async/writer_test.cc

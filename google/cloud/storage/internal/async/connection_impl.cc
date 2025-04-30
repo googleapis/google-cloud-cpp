@@ -18,6 +18,7 @@
 #include "google/cloud/storage/async/read_all.h"
 #include "google/cloud/storage/async/reader.h"
 #include "google/cloud/storage/async/resume_policy.h"
+#include "google/cloud/storage/async/retry_policy.h"
 #include "google/cloud/storage/internal/async/default_options.h"
 #include "google/cloud/storage/internal/async/handle_redirect_error.h"
 #include "google/cloud/storage/internal/async/insert_object.h"
@@ -63,9 +64,9 @@ namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-inline std::unique_ptr<storage::RetryPolicy> retry_policy(
+inline std::unique_ptr<storage_experimental::AsyncRetryPolicy> retry_policy(
     Options const& options) {
-  return options.get<storage::RetryPolicyOption>()->clone();
+  return options.get<storage_experimental::AsyncRetryPolicyOption>()->clone();
 }
 
 inline std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
@@ -200,7 +201,8 @@ AsyncConnectionImpl::Open(OpenParams p) {
   auto resume_policy =
       current->get<storage_experimental::ResumePolicyOption>()();
 
-  auto retry = std::shared_ptr<storage::RetryPolicy>(retry_policy(*current));
+  auto retry = std::shared_ptr<storage_experimental::AsyncRetryPolicy>(
+      retry_policy(*current));
   auto backoff =
       std::shared_ptr<storage::BackoffPolicy>(backoff_policy(*current));
   auto const* function_name = __func__;
@@ -310,7 +312,8 @@ AsyncConnectionImpl::AppendableObjectUploadImpl(AppendableUploadParams p,
   std::int64_t persisted_size = 0;
   std::shared_ptr<storage::internal::HashFunction> hash_function =
       CreateHashFunction(*current);
-  auto retry = std::shared_ptr<storage::RetryPolicy>(retry_policy(*current));
+  auto retry = std::shared_ptr<storage_experimental::AsyncRetryPolicy>(
+      retry_policy(*current));
   auto backoff =
       std::shared_ptr<storage::BackoffPolicy>(backoff_policy(*current));
   using StreamingRpcTimeout =
