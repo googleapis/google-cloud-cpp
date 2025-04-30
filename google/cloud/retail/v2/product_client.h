@@ -591,8 +591,8 @@ class ProductServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.retail.v2.ImportProductsRequest]: @googleapis_reference_link{google/cloud/retail/v2/import_config.proto#L164}
-  /// [google.cloud.retail.v2.ImportProductsResponse]: @googleapis_reference_link{google/cloud/retail/v2/import_config.proto#L351}
+  /// [google.cloud.retail.v2.ImportProductsRequest]: @googleapis_reference_link{google/cloud/retail/v2/import_config.proto#L161}
+  /// [google.cloud.retail.v2.ImportProductsResponse]: @googleapis_reference_link{google/cloud/retail/v2/import_config.proto#L348}
   /// [google.cloud.retail.v2.Product]: @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
   ///
   // clang-format on
@@ -937,7 +937,7 @@ class ProductServiceClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.retail.v2.AddFulfillmentPlacesRequest]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L687}
   /// [google.cloud.retail.v2.AddFulfillmentPlacesResponse]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L763}
-  /// [google.cloud.retail.v2.FulfillmentInfo.place_ids]: @googleapis_reference_link{google/cloud/retail/v2/common.proto#L564}
+  /// [google.cloud.retail.v2.FulfillmentInfo.place_ids]: @googleapis_reference_link{google/cloud/retail/v2/common.proto#L614}
   /// [google.cloud.retail.v2.Product]: @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
   /// [google.cloud.retail.v2.ProductService.AddFulfillmentPlaces]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L229}
   /// [google.cloud.retail.v2.ProductService.AddLocalInventories]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L313}
@@ -1026,7 +1026,7 @@ class ProductServiceClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.retail.v2.AddFulfillmentPlacesRequest]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L687}
   /// [google.cloud.retail.v2.AddFulfillmentPlacesResponse]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L763}
-  /// [google.cloud.retail.v2.FulfillmentInfo.place_ids]: @googleapis_reference_link{google/cloud/retail/v2/common.proto#L564}
+  /// [google.cloud.retail.v2.FulfillmentInfo.place_ids]: @googleapis_reference_link{google/cloud/retail/v2/common.proto#L614}
   /// [google.cloud.retail.v2.Product]: @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
   /// [google.cloud.retail.v2.ProductService.AddFulfillmentPlaces]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L229}
   /// [google.cloud.retail.v2.ProductService.AddLocalInventories]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L313}
@@ -1131,7 +1131,7 @@ class ProductServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.retail.v2.FulfillmentInfo.place_ids]: @googleapis_reference_link{google/cloud/retail/v2/common.proto#L564}
+  /// [google.cloud.retail.v2.FulfillmentInfo.place_ids]: @googleapis_reference_link{google/cloud/retail/v2/common.proto#L614}
   /// [google.cloud.retail.v2.Product]: @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
   /// [google.cloud.retail.v2.ProductService.GetProduct]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L58}
   /// [google.cloud.retail.v2.ProductService.ListProducts]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L66}
@@ -1220,7 +1220,7 @@ class ProductServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.retail.v2.FulfillmentInfo.place_ids]: @googleapis_reference_link{google/cloud/retail/v2/common.proto#L564}
+  /// [google.cloud.retail.v2.FulfillmentInfo.place_ids]: @googleapis_reference_link{google/cloud/retail/v2/common.proto#L614}
   /// [google.cloud.retail.v2.Product]: @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
   /// [google.cloud.retail.v2.ProductService.GetProduct]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L58}
   /// [google.cloud.retail.v2.ProductService.ListProducts]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L66}
