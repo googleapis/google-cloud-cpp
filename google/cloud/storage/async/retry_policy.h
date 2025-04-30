@@ -38,7 +38,7 @@ struct StatusTraits {
 };
 }  // namespace internal
 
-/// The base class for the Storage library retry policies.
+/// The base class for the Storage library async retry policies.
 class AsyncRetryPolicy : public google::cloud::RetryPolicy {
  public:
   /// Creates a new instance of the policy, reset to the initial state.
