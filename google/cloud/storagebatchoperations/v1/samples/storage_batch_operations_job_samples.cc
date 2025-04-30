@@ -53,7 +53,7 @@ void ListJobs(
          client,
      std::string const& project_id, std::string const& location_id) {
     auto const parent =
-        std::string{"projects/"} + project_id + "/locations/" + location_id;
+        std::string{"projects/"} + project_id + "/locations/" + "global";
     for (auto const& job : client.ListJobs(parent)) {
       if (!job) throw job.status();
       std::cout << job->name() << "\n";
@@ -73,7 +73,7 @@ void GetJob(
      std::string const& project_id, std::string const& location_id,
      std::string const& job_id) {
     auto const parent =
-        std::string{"projects/"} + project_id + "/locations/" + location_id;
+        std::string{"projects/"} + project_id + "/locations/" + "global";
     auto const name = parent + "/jobs/" + job_id;
     auto job = client.GetJob(name);
     if (!job) throw job.status();
@@ -93,7 +93,7 @@ void CancelJob(
      std::string const& project_id, std::string const& location_id,
      std::string const& job_id) {
     auto const parent =
-        std::string{"projects/"} + project_id + "/locations/" + location_id;
+        std::string{"projects/"} + project_id + "/locations/" + "global";
     auto const name = parent + "/jobs/" + job_id;
     auto response = client.CancelJob(name);
     if (!response) throw response.status();
@@ -113,7 +113,7 @@ void DeleteJob(
      std::string const& project_id, std::string const& location_id,
      std::string const& job_id) {
     auto const parent =
-        std::string{"projects/"} + project_id + "/locations/" + location_id;
+        std::string{"projects/"} + project_id + "/locations/" + "global";
     auto const name = parent + "/jobs/" + job_id;
     auto status = client.DeleteJob(name);
     if (!status.ok()) throw status;
