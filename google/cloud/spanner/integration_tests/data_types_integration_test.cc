@@ -37,6 +37,7 @@ using ::google::cloud::testing_util::IsOkAndHolds;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::AnyOf;
 using ::testing::ElementsAre;
+using ::testing::Eq;
 using ::testing::HasSubstr;
 using ::testing::ResultOf;
 using ::testing::UnorderedElementsAreArray;
@@ -493,6 +494,69 @@ TEST_F(DataTypeIntegrationTest, WriteReadArrayTimestamp) {
   };
   auto result = WriteReadData(*client_, data, "ArrayTimestampValue");
   EXPECT_THAT(result, IsOkAndHolds(UnorderedElementsAreArray(data)));
+}
+
+TEST_F(DataTypeIntegrationTest, SelectIntervalScalar) {
+  if (UsingEmulator()) GTEST_SKIP();
+  auto expected_interval = MakeInterval("1-2 3 4:5:6.789123456");
+  ASSERT_STATUS_OK(expected_interval);
+
+  auto select = SqlStatement(R"sql(
+SELECT INTERVAL '1-2 3 4:5:6.789123456' YEAR TO SECOND;)sql",
+                             {});
+
+  auto result = client_->ExecuteQuery(std::move(select));
+  for (auto& row : StreamOf<std::tuple<Interval>>(result)) {
+    ASSERT_STATUS_OK(row);
+    EXPECT_THAT(std::get<0>(row.value()), Eq(*expected_interval));
+  }
+}
+
+TEST_F(DataTypeIntegrationTest, SelectIntervalArray) {
+  if (UsingEmulator()) GTEST_SKIP();
+  auto expected_interval = MakeInterval("1-2 3 4:5:6.789123456");
+  ASSERT_STATUS_OK(expected_interval);
+
+  auto select = SqlStatement(R"sql(
+SELECT ARRAY<INTERVAL>[INTERVAL '1-2 3 4:5:6.789123456' YEAR TO SECOND];)sql",
+                             {});
+
+  auto result = client_->ExecuteQuery(std::move(select));
+  for (auto& row : StreamOf<std::tuple<std::vector<Interval>>>(result)) {
+    ASSERT_STATUS_OK(row);
+    EXPECT_THAT(std::get<0>(row.value()).front(), Eq(*expected_interval));
+  }
+}
+
+TEST_F(DataTypeIntegrationTest, SelectIntervalFromTimestampDiff) {
+  if (UsingEmulator()) GTEST_SKIP();
+  Interval expected_interval{
+      std::chrono::duration_cast<std::chrono::nanoseconds>(
+          std::chrono::hours(1))};
+  std::time_t now_seconds =
+      std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+  std::time_t one_hour_later_seconds = now_seconds + 3600;
+
+  std::vector<std::vector<Timestamp>> const data = {std::vector<Timestamp>{
+      MakeTimestamp(MakeTime(now_seconds, 0)).value(),
+      MakeTimestamp(MakeTime(one_hour_later_seconds, 0)).value()}};
+  auto result = WriteReadData(*client_, data, "ArrayTimestampValue");
+  EXPECT_THAT(result, IsOkAndHolds(UnorderedElementsAreArray(data)));
+
+  auto statement = SqlStatement(R"sql(
+SELECT
+  CAST(ARRAY_LAST(ArrayTimestampValue) - ARRAY_FIRST(ArrayTimestampValue)
+    AS INTERVAL) as v1
+FROM DataTypes;
+)sql",
+                                {});
+
+  auto query_result = client_->ExecuteQuery(std::move(statement));
+  using RowType = std::tuple<Interval>;
+  for (auto& row : StreamOf<RowType>(query_result)) {
+    ASSERT_STATUS_OK(row);
+    EXPECT_THAT(std::get<0>(row.value()), Eq(expected_interval));
+  }
 }
 
 TEST_F(DataTypeIntegrationTest, WriteReadArrayDate) {
