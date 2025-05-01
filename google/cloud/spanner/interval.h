@@ -98,6 +98,7 @@ class Interval {
       : months_(months), days_(days), offset_(offset) {}
 
   static StatusOr<Interval> ParseISO8601Interval(absl::string_view str);
+  static StatusOr<Interval> ParsePostgreSqlInterval(absl::string_view str);
 
   friend Interval JustifyDays(Interval);
   friend Interval JustifyHours(Interval);

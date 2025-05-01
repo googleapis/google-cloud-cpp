@@ -271,6 +271,81 @@ TEST(Interval, MakeIntervalISO8601) {
   }
 }
 
+// https://www.postgresql.org/docs/current/datatype-datetime.html and
+// https://www.postgresqltutorial.com/postgresql-tutorial/postgresql-interval
+// are the sources of some of the MakeInterval() test cases.
+TEST(Interval, MakeIntervalPostgreSQL) {
+  std::vector<std::pair<std::string, Interval>> test_cases = {
+      {"2 microseconds", Interval(microseconds(2))},
+      {"3 milliseconds", Interval(milliseconds(3))},
+      {"4 seconds", Interval(seconds(4))},
+      {"5 minutes", Interval(minutes(5))},
+      {"6 hours", Interval(hours(6))},
+      {"7 days", Interval(0, 0, 7)},
+      {"8 weeks", Interval(0, 0, 8 * 7)},
+      {"9 months", Interval(0, 9, 0)},
+      {"10 years", Interval(10, 0, 0)},
+      {"11 decades", Interval(11 * 10, 0, 0)},
+      {"12 centuries", Interval(12 * 100, 0, 0)},
+      {"13 millennia", Interval(13 * 1'000, 0, 0)},
+
+      {"1 century", Interval(100, 0, 0)},
+      {"1 millennium", Interval(1'000, 0, 0)},
+
+      {"1.5 years", Interval(1, 6, 0)},
+      {"1.75 months", Interval(0, 1, 22, HMS(12, 0, 0))},
+      {"@-1.5 years", Interval(-1, -6, 0)},
+
+      {"@ 1 year 2 mons", Interval(1, 2, 0)},
+      {"1 year 2 mons", Interval(1, 2, 0)},
+      {"1-2", Interval(1, 2, 0)},
+
+      {"@ 3 days 4 hours 5 mins 6 secs", Interval(0, 0, 3, HMS(4, 5, 6))},
+      {"3 days 04:05:06", Interval(0, 0, 3, HMS(4, 5, 6))},
+      {"3 4:05:06", Interval(0, 0, 3, HMS(4, 5, 6))},
+
+      {" 6 years 5 months 4 days 3 hours 2 minutes 1 second ",
+       Interval(6, 5, 4, HMS(3, 2, 1))},
+      {" @ 6 years 5 mons 4 days 3 hours 2 mins 1 sec ",
+       Interval(6, 5, 4, HMS(3, 2, 1))},
+      {" 6 years 5 mons 4 days 03:02:01 ", Interval(6, 5, 4, HMS(3, 2, 1))},
+      {" +6-5 +4 +3:02:01 ", Interval(6, 5, 4, HMS(3, 2, 1))},
+
+      {"1 year 2 months 3 days 4 hours 5 minutes 6 seconds",
+       Interval(1, 2, 3, HMS(4, 5, 6))},
+      {"-1 year -2 mons +3 days -04:05:06",
+       Interval(-1, -2, 3, HMS(-4, -5, -6))},
+      {"-1-2 +3 -4:05:06", Interval(-1, 2, 3, HMS(-4, -5, -6))},
+
+      {"@ 1 year 2 mons -3 days 4 hours 5 mins 6 secs ago",
+       Interval(-2, 10, 3, HMS(-4, -5, -6))},
+
+      {"17h 20m 05s", Interval(HMS(17, 20, 5))},
+
+      {"-42 microseconds", Interval(-microseconds(42))},
+      {"+87 milliseconds", Interval(milliseconds(87))},
+
+      {"4 decades", Interval(40, 0, 0)},
+      {"3 centuries", Interval(300, 0, 0)},
+      {"2 millennia", Interval(2'000, 0, 0)},
+
+      {"", Interval()},
+      {"ago", Interval()},
+  };
+
+  for (auto const& tc : test_cases) {
+    auto intvl = MakeInterval(tc.first);
+    EXPECT_STATUS_OK(intvl) << tc.first;
+    if (!intvl) continue;
+    EXPECT_EQ(*intvl, tc.second);
+  }
+
+  EXPECT_THAT(MakeInterval("junk"), StatusIs(StatusCode::kInvalidArgument));
+
+  // Check that we reject double plurals.
+  EXPECT_THAT(MakeInterval("7 dayss"), StatusIs(StatusCode::kInvalidArgument));
+}
+
 // Output streaming of an Interval is defined to use the string conversion
 // operator, so here we simply verify that output streaming is available.
 TEST(Interval, OutputStreaming) {
