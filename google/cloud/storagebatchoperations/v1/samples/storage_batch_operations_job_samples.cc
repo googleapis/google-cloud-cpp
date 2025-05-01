@@ -128,9 +128,9 @@ void AutoRun(std::vector<std::string> const& argv) {
 
   auto gen = google::cloud::internal::DefaultPRNG(std::random_device{}());
   auto const prefix = std::string{"storage-batch-operations-samples"};
+  auto const alphanumeric = "abcdefghijklmnopqrstuvwxyz0123456789";
   auto const job_id =
-      prefix + "_" +
-      google::cloud::internal::Sample(gen, 32, "abcdefghijklmnopqrstuvwxyz");
+      prefix + "-" + google::cloud::internal::Sample(gen, 32, alphanumeric);
 
   auto client =
       google::cloud::storagebatchoperations_v1::StorageBatchOperationsClient(
