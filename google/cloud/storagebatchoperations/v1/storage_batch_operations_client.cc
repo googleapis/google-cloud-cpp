@@ -74,7 +74,7 @@ StorageBatchOperationsClient::CreateJob(
   google::cloud::storagebatchoperations::v1::CreateJobRequest request;
   request.set_parent(parent);
   *request.mutable_job() = job;
-  // request.set_job_id(job_id);
+  request.set_job_id(job_id);
   return connection_->CreateJob(request);
 }
 
@@ -87,7 +87,7 @@ StorageBatchOperationsClient::CreateJob(
   google::cloud::storagebatchoperations::v1::CreateJobRequest request;
   request.set_parent(parent);
   *request.mutable_job() = job;
-  // request.set_job_id(job_id);
+  request.set_job_id(job_id);
   return connection_->CreateJob(NoAwaitTag{}, request);
 }
 
