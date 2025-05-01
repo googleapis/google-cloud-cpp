@@ -12,18 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-createTime: '2022-04-28T21:23:32.712697493Z'
 filename: ci/cloudbuild/cloudbuild.yaml
 github:
   name: google-cloud-cpp
   owner: googleapis
   pullRequest:
-    branch: ^main$
+    branch: prepare-for-v3.0.0
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
-id: 4bc5ac63-ff83-4063-b5f6-c1d04c0ce706
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: cmake-gcs-rest-pr
-resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/4bc5ac63-ff83-4063-b5f6-c1d04c0ce706
+name: prepare-for-v3-0-0-cmake-gcs-rest-pr
 substitutions:
   _BUILD_NAME: cmake-gcs-rest
   _DISTRO: fedora-latest-cmake

@@ -74,13 +74,13 @@ cc_library(
     deps = [
         ":google_cloud_cpp_storage",
         "//:grpc_utils",
+        "@abseil-cpp//absl/algorithm:container",
+        "@abseil-cpp//absl/strings",
+        "@abseil-cpp//absl/time",
         "@com_github_curl_curl//:curl",
         "@com_github_google_crc32c//:crc32c",
         "@com_github_grpc_grpc//:grpc++",
         "@com_github_nlohmann_json//:json",
-        "@com_google_absl//absl/algorithm:container",
-        "@com_google_absl//absl/strings",
-        "@com_google_absl//absl/time",
         "@com_google_googleapis//google/storage/v2:storage_cc_grpc",
         "@com_google_googleapis//google/storage/v2:storage_cc_proto",
     ] + select({
@@ -141,14 +141,14 @@ cc_library(
     deps = [
         "//:common",
         "//google/cloud:google_cloud_cpp_rest_internal",
+        "@abseil-cpp//absl/strings:cord",
+        "@abseil-cpp//absl/strings:str_format",
+        "@abseil-cpp//absl/time",
+        "@abseil-cpp//absl/types:span",
+        "@abseil-cpp//absl/types:variant",
         "@com_github_curl_curl//:curl",
         "@com_github_google_crc32c//:crc32c",
         "@com_github_nlohmann_json//:json",
-        "@com_google_absl//absl/strings:cord",
-        "@com_google_absl//absl/strings:str_format",
-        "@com_google_absl//absl/time",
-        "@com_google_absl//absl/types:span",
-        "@com_google_absl//absl/types:variant",
     ] + select({
         "@platforms//os:windows": [],
         "//conditions:default": [

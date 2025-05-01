@@ -12,17 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-createTime: '2023-07-10T15:26:52.770667141Z'
 filename: ci/cloudbuild/cloudbuild.yaml
 github:
   name: google-cloud-cpp
   owner: googleapis
   push:
-    branch: ^main$
-id: 0b727502-82fe-41a1-a4e2-73f9375718ad
+    branch: prepare-for-v3.0.0
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: cmake-split-install-ci
-resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/0b727502-82fe-41a1-a4e2-73f9375718ad
+name: prepare-for-v3-0-0-cmake-split-install-ci
 substitutions:
   _BUILD_NAME: cmake-split-install
   _DISTRO: fedora-latest-cmake

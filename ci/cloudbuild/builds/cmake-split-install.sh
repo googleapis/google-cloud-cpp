@@ -42,6 +42,7 @@ io::log_h2 "Building and installing common libraries"
 # We need a custom build directory
 mapfile -t core_cmake_args < <(cmake::common_args cmake-out/common-libraries)
 io::run cmake "${core_cmake_args[@]}" "${install_args[@]}" \
+  -DCMAKE_CXX_STANDARD=17 \
   -DGOOGLE_CLOUD_CPP_ENABLE="__common__"
 io::run cmake --build cmake-out/common-libraries
 io::run cmake --install cmake-out/common-libraries --prefix "${INSTALL_PREFIX}"
@@ -50,6 +51,7 @@ io::log_h2 "Building and installing popular libraries"
 mapfile -t core_cmake_args < <(cmake::common_args cmake-out/popular-libraries)
 io::run cmake "${core_cmake_args[@]}" "${install_args[@]}" \
   -DCMAKE_PREFIX_PATH="${INSTALL_PREFIX}" \
+  -DCMAKE_CXX_STANDARD=17 \
   -DGOOGLE_CLOUD_CPP_ENABLE="bigtable,pubsub,spanner,storage,storage_grpc,iam,policytroubleshooter" \
   -DGOOGLE_CLOUD_CPP_USE_INSTALLED_COMMON=ON
 io::run cmake --build cmake-out/popular-libraries
@@ -60,6 +62,7 @@ io::log_h2 "Building and installing Compute"
 mapfile -t feature_cmake_args < <(cmake::common_args cmake-out/compute)
 io::run cmake "${feature_cmake_args[@]}" "${install_args[@]}" \
   -DCMAKE_PREFIX_PATH="${INSTALL_PREFIX}" \
+  -DCMAKE_CXX_STANDARD=17 \
   -DGOOGLE_CLOUD_CPP_USE_INSTALLED_COMMON=ON \
   -DGOOGLE_CLOUD_CPP_ENABLE="compute"
 io::run cmake --build cmake-out/compute
@@ -70,6 +73,7 @@ io::log_h2 "Building and installing all features"
 mapfile -t feature_cmake_args < <(cmake::common_args cmake-out/features)
 io::run cmake "${feature_cmake_args[@]}" "${install_args[@]}" \
   -DCMAKE_PREFIX_PATH="${INSTALL_PREFIX}" \
+  -DCMAKE_CXX_STANDARD=17 \
   -DGOOGLE_CLOUD_CPP_USE_INSTALLED_COMMON=ON \
   -DGOOGLE_CLOUD_CPP_ENABLE="__ga_libraries__,-bigtable,-pubsub,-storage,-storage_grpc,-spanner,-iam,-policytroubleshooter,-compute"
 io::run cmake --build cmake-out/features
