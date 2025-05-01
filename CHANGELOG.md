@@ -15,6 +15,7 @@ the APIs in these libraries are stable, and are ready for production use.
 - [Storage Batch Operations API](/google/cloud/storagebatchoperations/README.md)
 - [Device Streaming API](/google/cloud/devicestreaming/README.md)
 - [Chronicle API](/google/cloud/chronicle/README.md)
+- [Google Cloud Managed Lustre API](/google/cloud/lustre/README.md)
 
 ### Updated Libraries
 
