@@ -225,6 +225,55 @@ class BackupForGKEConnection {
   virtual future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
   DeleteBackupPlan(google::longrunning::Operation const& operation);
 
+  virtual future<StatusOr<google::cloud::gkebackup::v1::BackupChannel>>
+  CreateBackupChannel(
+      google::cloud::gkebackup::v1::CreateBackupChannelRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> CreateBackupChannel(
+      NoAwaitTag,
+      google::cloud::gkebackup::v1::CreateBackupChannelRequest const& request);
+
+  virtual future<StatusOr<google::cloud::gkebackup::v1::BackupChannel>>
+  CreateBackupChannel(google::longrunning::Operation const& operation);
+
+  virtual StreamRange<google::cloud::gkebackup::v1::BackupChannel>
+  ListBackupChannels(
+      google::cloud::gkebackup::v1::ListBackupChannelsRequest request);
+
+  virtual StatusOr<google::cloud::gkebackup::v1::BackupChannel>
+  GetBackupChannel(
+      google::cloud::gkebackup::v1::GetBackupChannelRequest const& request);
+
+  virtual future<StatusOr<google::cloud::gkebackup::v1::BackupChannel>>
+  UpdateBackupChannel(
+      google::cloud::gkebackup::v1::UpdateBackupChannelRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateBackupChannel(
+      NoAwaitTag,
+      google::cloud::gkebackup::v1::UpdateBackupChannelRequest const& request);
+
+  virtual future<StatusOr<google::cloud::gkebackup::v1::BackupChannel>>
+  UpdateBackupChannel(google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
+  DeleteBackupChannel(
+      google::cloud::gkebackup::v1::DeleteBackupChannelRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteBackupChannel(
+      NoAwaitTag,
+      google::cloud::gkebackup::v1::DeleteBackupChannelRequest const& request);
+
+  virtual future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
+  DeleteBackupChannel(google::longrunning::Operation const& operation);
+
+  virtual StreamRange<google::cloud::gkebackup::v1::BackupPlanBinding>
+  ListBackupPlanBindings(
+      google::cloud::gkebackup::v1::ListBackupPlanBindingsRequest request);
+
+  virtual StatusOr<google::cloud::gkebackup::v1::BackupPlanBinding>
+  GetBackupPlanBinding(
+      google::cloud::gkebackup::v1::GetBackupPlanBindingRequest const& request);
+
   virtual future<StatusOr<google::cloud::gkebackup::v1::Backup>> CreateBackup(
       google::cloud::gkebackup::v1::CreateBackupRequest const& request);
 
@@ -308,6 +357,56 @@ class BackupForGKEConnection {
 
   virtual future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
   DeleteRestorePlan(google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::gkebackup::v1::RestoreChannel>>
+  CreateRestoreChannel(
+      google::cloud::gkebackup::v1::CreateRestoreChannelRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> CreateRestoreChannel(
+      NoAwaitTag,
+      google::cloud::gkebackup::v1::CreateRestoreChannelRequest const& request);
+
+  virtual future<StatusOr<google::cloud::gkebackup::v1::RestoreChannel>>
+  CreateRestoreChannel(google::longrunning::Operation const& operation);
+
+  virtual StreamRange<google::cloud::gkebackup::v1::RestoreChannel>
+  ListRestoreChannels(
+      google::cloud::gkebackup::v1::ListRestoreChannelsRequest request);
+
+  virtual StatusOr<google::cloud::gkebackup::v1::RestoreChannel>
+  GetRestoreChannel(
+      google::cloud::gkebackup::v1::GetRestoreChannelRequest const& request);
+
+  virtual future<StatusOr<google::cloud::gkebackup::v1::RestoreChannel>>
+  UpdateRestoreChannel(
+      google::cloud::gkebackup::v1::UpdateRestoreChannelRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateRestoreChannel(
+      NoAwaitTag,
+      google::cloud::gkebackup::v1::UpdateRestoreChannelRequest const& request);
+
+  virtual future<StatusOr<google::cloud::gkebackup::v1::RestoreChannel>>
+  UpdateRestoreChannel(google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
+  DeleteRestoreChannel(
+      google::cloud::gkebackup::v1::DeleteRestoreChannelRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteRestoreChannel(
+      NoAwaitTag,
+      google::cloud::gkebackup::v1::DeleteRestoreChannelRequest const& request);
+
+  virtual future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
+  DeleteRestoreChannel(google::longrunning::Operation const& operation);
+
+  virtual StreamRange<google::cloud::gkebackup::v1::RestorePlanBinding>
+  ListRestorePlanBindings(
+      google::cloud::gkebackup::v1::ListRestorePlanBindingsRequest request);
+
+  virtual StatusOr<google::cloud::gkebackup::v1::RestorePlanBinding>
+  GetRestorePlanBinding(
+      google::cloud::gkebackup::v1::GetRestorePlanBindingRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::gkebackup::v1::Restore>> CreateRestore(
       google::cloud::gkebackup::v1::CreateRestoreRequest const& request);
