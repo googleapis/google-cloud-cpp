@@ -50,15 +50,6 @@ using std::chrono::minutes;
 using std::chrono::nanoseconds;
 using std::chrono::seconds;
 
-StatusOr<absl::TimeZone> LoadTimeZone(absl::string_view name) {
-  absl::TimeZone tz;
-  if (!absl::LoadTimeZone(name, &tz)) {
-    return internal::InvalidArgumentError(
-        absl::StrFormat("%s: Invalid time zone", name), GCP_ERROR_INFO());
-  }
-  return tz;
-}
-
 // Round d to a microsecond boundary (to even in halfway cases).
 microseconds Round(nanoseconds d) {
   auto trunc = duration_cast<microseconds>(d);
@@ -252,56 +243,6 @@ auto NameIs(char name) {
   return [name](ISO8601UnitFactory const& u) { return u.name == name; };
 }
 
-StatusOr<Interval> ParseISO8601Interval(absl::string_view str) {
-  Interval intvl;
-  absl::string_view s = str;
-
-  auto const* units = std::begin(kISO8601DateUnitFactories);
-  auto const* units_end = std::end(kISO8601DateUnitFactories);
-  enum { kValue, kUnit, kNothing } expecting = kValue;
-  bool negated = false;
-
-  for (;;) {
-    if (units == std::begin(kISO8601DateUnitFactories)) {
-      negated = !absl::ConsumePrefix(&s, "+") && absl::ConsumePrefix(&s, "-");
-      if (!absl::ConsumePrefix(&s, "P")) break;
-    }
-    if (units_end == std::end(kISO8601DateUnitFactories)) {
-      if (absl::ConsumePrefix(&s, "T")) {
-        units = std::begin(kISO8601TimeUnitFactories);
-        units_end = std::end(kISO8601TimeUnitFactories);
-        expecting = kValue;
-      }
-    }
-    if (units == units_end) break;
-    double vf;
-    if (ParseDouble(s, vf, true, true)) {
-      expecting = kUnit;
-      if (s.empty()) break;
-      units = std::find_if(units, units_end, NameIs(s.front()));
-      if (units == units_end) break;
-      intvl += units++->factory(1) * vf;
-      expecting = kNothing;
-      s.remove_prefix(1);
-      break;  // must be last unit
-    }
-    std::int32_t vn;
-    if (!ParseInteger(s, vn, true)) break;
-    expecting = kUnit;
-    if (s.empty()) break;
-    units = std::find_if(units, units_end, NameIs(s.front()));
-    if (units == units_end) break;
-    intvl += units++->factory(vn);
-    expecting = kNothing;
-    s.remove_prefix(1);
-  }
-
-  if (!s.empty() || expecting != kNothing) {
-    return SyntaxError(str, s, GCP_ERROR_INFO());
-  }
-  return negated ? -intvl : intvl;
-}
-
 /**
  * https://www.postgresql.org/docs/current/datatype-datetime.html
  *
@@ -398,7 +339,59 @@ Interval PostgreSqlUnit(absl::string_view& s, std::int32_t n) {
   return Interval(0, 0, n);  // default to days without removing unit
 }
 
-StatusOr<Interval> ParsePostgreSqlInterval(absl::string_view str) {
+}  // namespace
+
+StatusOr<Interval> Interval::ParseISO8601Interval(absl::string_view str) {
+  Interval intvl;
+  absl::string_view s = str;
+
+  auto const* units = std::begin(kISO8601DateUnitFactories);
+  auto const* units_end = std::end(kISO8601DateUnitFactories);
+  enum { kValue, kUnit, kNothing } expecting = kValue;
+  bool negated = false;
+
+  for (;;) {
+    if (units == std::begin(kISO8601DateUnitFactories)) {
+      negated = !absl::ConsumePrefix(&s, "+") && absl::ConsumePrefix(&s, "-");
+      if (!absl::ConsumePrefix(&s, "P")) break;
+    }
+    if (units_end == std::end(kISO8601DateUnitFactories)) {
+      if (absl::ConsumePrefix(&s, "T")) {
+        units = std::begin(kISO8601TimeUnitFactories);
+        units_end = std::end(kISO8601TimeUnitFactories);
+        expecting = kValue;
+      }
+    }
+    if (units == units_end) break;
+    double vf;
+    if (ParseDouble(s, vf, true, true)) {
+      expecting = kUnit;
+      if (s.empty()) break;
+      units = std::find_if(units, units_end, NameIs(s.front()));
+      if (units == units_end) break;
+      intvl += units++->factory(1) * vf;
+      expecting = kNothing;
+      s.remove_prefix(1);
+      break;  // must be last unit
+    }
+    std::int32_t vn;
+    if (!ParseInteger(s, vn, true)) break;
+    expecting = kUnit;
+    if (s.empty()) break;
+    units = std::find_if(units, units_end, NameIs(s.front()));
+    if (units == units_end) break;
+    intvl += units++->factory(vn);
+    expecting = kNothing;
+    s.remove_prefix(1);
+  }
+
+  if (!s.empty() || expecting != kNothing) {
+    return SyntaxError(str, s, GCP_ERROR_INFO());
+  }
+  return negated ? -intvl : intvl;
+}
+
+StatusOr<Interval> Interval::ParsePostgreSqlInterval(absl::string_view str) {
   Interval intvl;
   absl::string_view s = str;
 
@@ -440,8 +433,6 @@ StatusOr<Interval> ParsePostgreSqlInterval(absl::string_view str) {
   if (!s.empty()) return SyntaxError(str, s, GCP_ERROR_INFO());
   return intvl;
 }
-
-}  // namespace
 
 bool operator==(Interval const& a, Interval const& b) {
   return Cmp<std::equal_to>(a.months_, a.days_, a.offset_,  //
@@ -491,10 +482,11 @@ Interval::operator std::string() const {
 }
 
 StatusOr<Interval> MakeInterval(absl::string_view s) {
-  auto interval = ParseISO8601Interval(s);
+  auto interval = Interval::ParseISO8601Interval(s);
   if (interval.ok()) return interval;
 
-  auto pg_interval = ParsePostgreSqlInterval(absl::AsciiStrToLower(s));
+  auto pg_interval =
+      Interval::ParsePostgreSqlInterval(absl::AsciiStrToLower(s));
   if (pg_interval.ok()) return pg_interval;
 
   // We failed to parse the argument using either syntax. The most
@@ -530,34 +522,6 @@ Interval JustifyHours(Interval intvl) {
 
 Interval JustifyInterval(Interval intvl) {
   return JustifyDays(JustifyHours(intvl));
-}
-
-StatusOr<Timestamp> Add(Timestamp const& ts, Interval const& intvl,
-                        absl::string_view time_zone) {
-  auto tz = LoadTimeZone(time_zone);
-  if (!tz) return tz.status();
-  auto ci = tz->At(*ts.get<absl::Time>());
-  auto cs = absl::CivilSecond(  // add the civil-time parts
-      ci.cs.year(), ci.cs.month() + intvl.months_, ci.cs.day() + intvl.days_,
-      ci.cs.hour(), ci.cs.minute(), ci.cs.second());
-  return *MakeTimestamp(internal::ToProtoTimestamp(  // overflow saturates
-      absl::FromCivil(cs, *tz) + ci.subsecond +
-      absl::FromChrono(intvl.offset_)));
-}
-
-StatusOr<Interval> Diff(Timestamp const& ts1, Timestamp const& ts2,
-                        absl::string_view time_zone) {
-  auto tz = LoadTimeZone(time_zone);
-  if (!tz) return tz.status();
-  auto ci1 = tz->At(*ts1.get<absl::Time>());
-  auto ci2 = tz->At(*ts2.get<absl::Time>());
-  auto days = absl::CivilDay(ci1.cs) - absl::CivilDay(ci2.cs);
-  auto offset = absl::Hours(ci1.cs.hour() - ci2.cs.hour()) +
-                absl::Minutes(ci1.cs.minute() - ci2.cs.minute()) +
-                absl::Seconds(ci1.cs.second() - ci2.cs.second()) +
-                (ci1.subsecond - ci2.subsecond);
-  return JustifyHours(Interval(0, 0, static_cast<std::int32_t>(days),
-                               absl::ToChronoNanoseconds(offset)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

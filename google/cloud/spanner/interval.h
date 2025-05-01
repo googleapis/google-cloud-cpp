@@ -36,6 +36,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @see https://cloud.google.com/spanner/docs/data-types#interval_type
  */
 class Interval {
+  friend class IntervalTest;
+
  public:
   /// Default construction yields a zero-length interval.
   Interval() : Interval(0, 0, 0) {}
@@ -79,24 +81,6 @@ class Interval {
   }
   ///@}
 
-  /// @name Arithmetic operators
-  ///
-  /// Beware: Fractional multiplication similarly assumes 30-days months
-  /// and 24-hour days, and may lead to counterintuitive results.
-  ///@{
-  Interval operator-() const;
-  Interval& operator+=(Interval const&);
-  Interval& operator-=(Interval const& intvl) {
-    *this += -intvl;
-    return *this;
-  }
-  Interval& operator*=(double);
-  Interval& operator/=(double d) {
-    *this *= 1.0 / d;
-    return *this;
-  }
-  ///@}
-
   /// @name Conversion to a string using ISO8601 duration format.
   explicit operator std::string() const;
 
@@ -105,29 +89,38 @@ class Interval {
     return os << std::string(intvl);
   }
 
+  /// @name Negation
+  Interval operator-() const;
+
  private:
   Interval(std::int32_t months, std::int32_t days,
            std::chrono::nanoseconds offset)
       : months_(months), days_(days), offset_(offset) {}
 
+  static StatusOr<Interval> ParseISO8601Interval(absl::string_view str);
+  static StatusOr<Interval> ParsePostgreSqlInterval(absl::string_view str);
+
   friend Interval JustifyDays(Interval);
   friend Interval JustifyHours(Interval);
-  friend StatusOr<Timestamp> Add(Timestamp const&, Interval const&,
-                                 absl::string_view);
+  friend StatusOr<Interval> MakeInterval(absl::string_view);
+  friend class IntervalTest;
+
+  // Beware: Fractional multiplication similarly assumes 30-days months
+  // and 24-hour days, and may lead to counterintuitive results.
+  Interval& operator+=(Interval const&);
+  Interval& operator-=(Interval const& intvl) {
+    *this += -intvl;
+    return *this;
+  }
+  Interval& operator*=(double);
+  Interval operator+(Interval rhs) const { return Interval(*this) += rhs; }
+  Interval operator-(Interval rhs) const { return Interval(*this) -= rhs; }
+  Interval operator*(double rhs) const { return Interval(*this) *= rhs; }
 
   std::int32_t months_;
   std::int32_t days_;
   std::chrono::nanoseconds offset_;
 };
-
-/// @name Binary operators
-///@{
-inline Interval operator+(Interval lhs, Interval rhs) { return lhs += rhs; }
-inline Interval operator-(Interval lhs, Interval rhs) { return lhs -= rhs; }
-inline Interval operator*(Interval lhs, double rhs) { return lhs *= rhs; }
-inline Interval operator*(double lhs, Interval rhs) { return rhs *= lhs; }
-inline Interval operator/(Interval lhs, double rhs) { return lhs /= rhs; }
-///@}
 
 /**
  * Construct an `Interval` from a string. At least handles the format
@@ -152,23 +145,6 @@ Interval JustifyHours(Interval);
  * For example, maps "1 month -1 hour" to "29 days 23 hours".
  */
 Interval JustifyInterval(Interval);
-
-/**
- * Add the Interval to the Timestamp in the civil-time space defined by
- * the time zone. Saturates the Timestamp result upon overflow. Returns
- * an error status if the time zone cannot be loaded.
- */
-StatusOr<Timestamp> Add(Timestamp const&, Interval const&,
-                        absl::string_view time_zone);
-
-/**
- * Intervals constructed by subtracting two timestamps are partially
- * justified, returning a whole number of days plus any remainder. A
- * year/month value will never be present. Undefined on days overflow.
- * Returns an error status if the time zone cannot be loaded.
- */
-StatusOr<Interval> Diff(Timestamp const&, Timestamp const&,
-                        absl::string_view time_zone);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner
