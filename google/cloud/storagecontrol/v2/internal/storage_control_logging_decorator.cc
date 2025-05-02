@@ -175,6 +175,135 @@ StorageControlLogging::ListManagedFolders(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+StorageControlLogging::AsyncCreateAnywhereCache(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::storage::control::v2::CreateAnywhereCacheRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::storage::control::v2::CreateAnywhereCacheRequest const&
+                 request) {
+        return child_->AsyncCreateAnywhereCache(cq, std::move(context),
+                                                std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+StorageControlLogging::CreateAnywhereCache(
+    grpc::ClientContext& context, Options options,
+    google::storage::control::v2::CreateAnywhereCacheRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::storage::control::v2::CreateAnywhereCacheRequest const&
+                 request) {
+        return child_->CreateAnywhereCache(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+StorageControlLogging::AsyncUpdateAnywhereCache(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::storage::control::v2::UpdateAnywhereCacheRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::storage::control::v2::UpdateAnywhereCacheRequest const&
+                 request) {
+        return child_->AsyncUpdateAnywhereCache(cq, std::move(context),
+                                                std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+StorageControlLogging::UpdateAnywhereCache(
+    grpc::ClientContext& context, Options options,
+    google::storage::control::v2::UpdateAnywhereCacheRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::storage::control::v2::UpdateAnywhereCacheRequest const&
+                 request) {
+        return child_->UpdateAnywhereCache(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::storage::control::v2::AnywhereCache>
+StorageControlLogging::DisableAnywhereCache(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::control::v2::DisableAnywhereCacheRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::storage::control::v2::DisableAnywhereCacheRequest const&
+                 request) {
+        return child_->DisableAnywhereCache(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::storage::control::v2::AnywhereCache>
+StorageControlLogging::PauseAnywhereCache(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::control::v2::PauseAnywhereCacheRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::storage::control::v2::PauseAnywhereCacheRequest const&
+                 request) {
+        return child_->PauseAnywhereCache(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::storage::control::v2::AnywhereCache>
+StorageControlLogging::ResumeAnywhereCache(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::control::v2::ResumeAnywhereCacheRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::storage::control::v2::ResumeAnywhereCacheRequest const&
+                 request) {
+        return child_->ResumeAnywhereCache(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::storage::control::v2::AnywhereCache>
+StorageControlLogging::GetAnywhereCache(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::control::v2::GetAnywhereCacheRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::storage::control::v2::GetAnywhereCacheRequest const&
+                 request) {
+        return child_->GetAnywhereCache(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::storage::control::v2::ListAnywhereCachesResponse>
+StorageControlLogging::ListAnywhereCaches(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::control::v2::ListAnywhereCachesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::storage::control::v2::ListAnywhereCachesRequest const&
+                 request) {
+        return child_->ListAnywhereCaches(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 StorageControlLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

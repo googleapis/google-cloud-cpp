@@ -97,6 +97,51 @@ class StorageControlConnectionImpl
   StreamRange<google::storage::control::v2::ManagedFolder> ListManagedFolders(
       google::storage::control::v2::ListManagedFoldersRequest request) override;
 
+  future<StatusOr<google::storage::control::v2::AnywhereCache>>
+  CreateAnywhereCache(
+      google::storage::control::v2::CreateAnywhereCacheRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CreateAnywhereCache(
+      NoAwaitTag,
+      google::storage::control::v2::CreateAnywhereCacheRequest const& request)
+      override;
+
+  future<StatusOr<google::storage::control::v2::AnywhereCache>>
+  CreateAnywhereCache(google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::storage::control::v2::AnywhereCache>>
+  UpdateAnywhereCache(
+      google::storage::control::v2::UpdateAnywhereCacheRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UpdateAnywhereCache(
+      NoAwaitTag,
+      google::storage::control::v2::UpdateAnywhereCacheRequest const& request)
+      override;
+
+  future<StatusOr<google::storage::control::v2::AnywhereCache>>
+  UpdateAnywhereCache(google::longrunning::Operation const& operation) override;
+
+  StatusOr<google::storage::control::v2::AnywhereCache> DisableAnywhereCache(
+      google::storage::control::v2::DisableAnywhereCacheRequest const& request)
+      override;
+
+  StatusOr<google::storage::control::v2::AnywhereCache> PauseAnywhereCache(
+      google::storage::control::v2::PauseAnywhereCacheRequest const& request)
+      override;
+
+  StatusOr<google::storage::control::v2::AnywhereCache> ResumeAnywhereCache(
+      google::storage::control::v2::ResumeAnywhereCacheRequest const& request)
+      override;
+
+  StatusOr<google::storage::control::v2::AnywhereCache> GetAnywhereCache(
+      google::storage::control::v2::GetAnywhereCacheRequest const& request)
+      override;
+
+  StreamRange<google::storage::control::v2::AnywhereCache> ListAnywhereCaches(
+      google::storage::control::v2::ListAnywhereCachesRequest request) override;
+
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<storagecontrol_v2_internal::StorageControlStub> stub_;
