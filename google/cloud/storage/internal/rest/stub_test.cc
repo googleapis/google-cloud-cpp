@@ -180,6 +180,25 @@ TEST(RestStubTest, ListBuckets) {
               StatusIs(PermanentError().code(), PermanentError().message()));
 }
 
+TEST(RestStubTest, ListBucketsIncludesPageToken) {
+  auto mock = std::make_shared<MockRestClient>();
+  std::string expected_token = "test-page-token";
+  ListBucketsRequest request("test-project-id");
+  request.set_page_token(expected_token);
+
+  EXPECT_CALL(*mock,
+              Get(ExpectedContext(),
+                  ResultOf(
+                      "request includes pageToken query parameter",
+                      [](RestRequest const& r) { return r.parameters(); },
+                      Contains(Pair("pageToken", expected_token)))))
+      .WillOnce(Return(PermanentError()));
+
+  auto tested = std::make_unique<RestStub>(Options{}, mock, mock);
+  auto context = TestContext();
+  tested->ListBuckets(context, TestOptions(), request);
+}
+
 TEST(RestStubTest, CreateBucket) {
   auto mock = std::make_shared<MockRestClient>();
   EXPECT_CALL(*mock,
