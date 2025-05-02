@@ -161,7 +161,12 @@ void AutoRun(std::vector<std::string> const& argv) {
   ListJobs(client, {project_id});
 
   std::cout << "\nRunning CancelJob() example\n";
-  CancelJob(client, {project_id, job_id});
+  try {
+      CancelJob(client, {project_id, job_id});
+  } catch (google::cloud::Status const& ex) {
+      std::cerr << "INFO: CancelJob threw: " << ex.message()
+                << " (This might be expected if the job completed quickly or failed creation)" << std::endl;
+  }
 
   std::cout << "\nRunning DeleteJob() example\n";
   DeleteJob(client, {project_id, job_id});
