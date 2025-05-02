@@ -134,7 +134,8 @@ void AutoRun(std::vector<std::string> const& argv) {
   auto const project_id =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value();
   auto const target_bucket_name =
-      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME")
+      google::cloud::internal::GetEnv(
+          "GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME")
           .value();
 
   auto gen = google::cloud::internal::DefaultPRNG(std::random_device{}());
