@@ -134,14 +134,14 @@ void AutoRun(std::vector<std::string> const& argv) {
   auto const project_id =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value();
   auto const target_bucket_name =
-      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_TEST_BUCKET_NAME").value();
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_TEST_BUCKET_NAME")
+          .value();
 
   auto gen = google::cloud::internal::DefaultPRNG(std::random_device{}());
   auto const prefix = std::string{"storage-batch-operations-samples"};
   auto const alphanumeric = "abcdefghijklmnopqrstuvwxyz0123456789";
   auto const job_id =
-      prefix + "-" +
-      google::cloud::internal::Sample(gen, 32, alphanumeric);
+      prefix + "-" + google::cloud::internal::Sample(gen, 32, alphanumeric);
 
   std::string object_prefix = "sbo-test-objects/";
 
@@ -191,7 +191,10 @@ int main(int argc, char* argv[]) {
         std::move(name), std::move(adapter));
   };
   Example example({
-      make_entry("create-job", {"project-id", "job-id", "target-bucket-name", "object-prefix"}, CreateJob),
+      make_entry(
+          "create-job",
+          {"project-id", "job-id", "target-bucket-name", "object-prefix"},
+          CreateJob),
       make_entry("get-job", {"project-id", "job-id"}, GetJob),
       make_entry("list-jobs", {"project-id"}, ListJobs),
       make_entry("cancel-job", {"project-id", "job-id"}, CancelJob),
