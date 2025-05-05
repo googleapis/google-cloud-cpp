@@ -820,7 +820,7 @@ Status RedirectError(absl::string_view handle, absl::string_view token) {
     redirected.mutable_read_handle()->set_handle(std::string(handle));
     redirected.set_routing_token(std::string(token));
     auto details_proto = google::rpc::Status{};
-    details_proto.set_code(grpc::UNAVAILABLE);
+    details_proto.set_code(grpc::StatusCode::UNAVAILABLE);
     details_proto.set_message("redirect");
     details_proto.add_details()->PackFrom(redirected);
 
@@ -830,7 +830,7 @@ Status RedirectError(absl::string_view handle, absl::string_view token) {
   };
 
   return google::cloud::MakeStatusFromRpcError(
-      grpc::Status(grpc::UNAVAILABLE, "redirect", details()));
+      grpc::Status(grpc::StatusCode::UNAVAILABLE, "redirect", details()));
 }
 
 /// @test Verify that resuming a stream uses a handle and routing token.

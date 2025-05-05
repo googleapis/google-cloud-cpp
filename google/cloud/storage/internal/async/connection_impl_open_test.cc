@@ -95,7 +95,7 @@ Status RedirectError(absl::string_view handle, absl::string_view token) {
     redirected.mutable_read_handle()->set_handle(std::string(handle));
     redirected.set_routing_token(std::string(token));
     auto details_proto = google::rpc::Status{};
-    details_proto.set_code(grpc::ABORTED);
+    details_proto.set_code(grpc::StatusCode::ABORTED);
     details_proto.set_message("redirect");
     details_proto.add_details()->PackFrom(redirected);
 
@@ -105,7 +105,7 @@ Status RedirectError(absl::string_view handle, absl::string_view token) {
   };
 
   return google::cloud::MakeStatusFromRpcError(
-      grpc::Status(grpc::ABORTED, "redirect", make_details()));
+      grpc::Status(grpc::StatusCode::ABORTED, "redirect", make_details()));
 }
 
 // Verify we can open a stream, without retries, timeouts, or any other
