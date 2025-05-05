@@ -137,6 +137,109 @@ StorageControlAuth::ListManagedFolders(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+StorageControlAuth::AsyncCreateAnywhereCache(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::storage::control::v2::CreateAnywhereCacheRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncCreateAnywhereCache(cq, *std::move(context),
+                                               std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation>
+StorageControlAuth::CreateAnywhereCache(
+    grpc::ClientContext& context, Options options,
+    google::storage::control::v2::CreateAnywhereCacheRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateAnywhereCache(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+StorageControlAuth::AsyncUpdateAnywhereCache(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::storage::control::v2::UpdateAnywhereCacheRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncUpdateAnywhereCache(cq, *std::move(context),
+                                               std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation>
+StorageControlAuth::UpdateAnywhereCache(
+    grpc::ClientContext& context, Options options,
+    google::storage::control::v2::UpdateAnywhereCacheRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateAnywhereCache(context, options, request);
+}
+
+StatusOr<google::storage::control::v2::AnywhereCache>
+StorageControlAuth::DisableAnywhereCache(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::control::v2::DisableAnywhereCacheRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DisableAnywhereCache(context, options, request);
+}
+
+StatusOr<google::storage::control::v2::AnywhereCache>
+StorageControlAuth::PauseAnywhereCache(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::control::v2::PauseAnywhereCacheRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->PauseAnywhereCache(context, options, request);
+}
+
+StatusOr<google::storage::control::v2::AnywhereCache>
+StorageControlAuth::ResumeAnywhereCache(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::control::v2::ResumeAnywhereCacheRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ResumeAnywhereCache(context, options, request);
+}
+
+StatusOr<google::storage::control::v2::AnywhereCache>
+StorageControlAuth::GetAnywhereCache(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::control::v2::GetAnywhereCacheRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetAnywhereCache(context, options, request);
+}
+
+StatusOr<google::storage::control::v2::ListAnywhereCachesResponse>
+StorageControlAuth::ListAnywhereCaches(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::control::v2::ListAnywhereCachesRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListAnywhereCaches(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 StorageControlAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

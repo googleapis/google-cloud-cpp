@@ -175,6 +175,129 @@ StorageControlTracingStub::ListManagedFolders(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+StorageControlTracingStub::AsyncCreateAnywhereCache(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::storage::control::v2::CreateAnywhereCacheRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.storage.control.v2.StorageControl",
+                                     "CreateAnywhereCache");
+  span->SetAttribute("gl-cpp.request_id", request.request_id());
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncCreateAnywhereCache(cq, context, std::move(options),
+                                            request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+StorageControlTracingStub::CreateAnywhereCache(
+    grpc::ClientContext& context, Options options,
+    google::storage::control::v2::CreateAnywhereCacheRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.storage.control.v2.StorageControl",
+                                     "CreateAnywhereCache");
+  span->SetAttribute("gl-cpp.request_id", request.request_id());
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->CreateAnywhereCache(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+StorageControlTracingStub::AsyncUpdateAnywhereCache(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::storage::control::v2::UpdateAnywhereCacheRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.storage.control.v2.StorageControl",
+                                     "UpdateAnywhereCache");
+  span->SetAttribute("gl-cpp.request_id", request.request_id());
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncUpdateAnywhereCache(cq, context, std::move(options),
+                                            request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+StorageControlTracingStub::UpdateAnywhereCache(
+    grpc::ClientContext& context, Options options,
+    google::storage::control::v2::UpdateAnywhereCacheRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.storage.control.v2.StorageControl",
+                                     "UpdateAnywhereCache");
+  span->SetAttribute("gl-cpp.request_id", request.request_id());
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->UpdateAnywhereCache(context, options, request));
+}
+
+StatusOr<google::storage::control::v2::AnywhereCache>
+StorageControlTracingStub::DisableAnywhereCache(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::control::v2::DisableAnywhereCacheRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.storage.control.v2.StorageControl",
+                                     "DisableAnywhereCache");
+  span->SetAttribute("gl-cpp.request_id", request.request_id());
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->DisableAnywhereCache(context, options, request));
+}
+
+StatusOr<google::storage::control::v2::AnywhereCache>
+StorageControlTracingStub::PauseAnywhereCache(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::control::v2::PauseAnywhereCacheRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.storage.control.v2.StorageControl",
+                                     "PauseAnywhereCache");
+  span->SetAttribute("gl-cpp.request_id", request.request_id());
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->PauseAnywhereCache(context, options, request));
+}
+
+StatusOr<google::storage::control::v2::AnywhereCache>
+StorageControlTracingStub::ResumeAnywhereCache(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::control::v2::ResumeAnywhereCacheRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.storage.control.v2.StorageControl",
+                                     "ResumeAnywhereCache");
+  span->SetAttribute("gl-cpp.request_id", request.request_id());
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->ResumeAnywhereCache(context, options, request));
+}
+
+StatusOr<google::storage::control::v2::AnywhereCache>
+StorageControlTracingStub::GetAnywhereCache(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::control::v2::GetAnywhereCacheRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.storage.control.v2.StorageControl",
+                                     "GetAnywhereCache");
+  span->SetAttribute("gl-cpp.request_id", request.request_id());
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetAnywhereCache(context, options, request));
+}
+
+StatusOr<google::storage::control::v2::ListAnywhereCachesResponse>
+StorageControlTracingStub::ListAnywhereCaches(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::control::v2::ListAnywhereCachesRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.storage.control.v2.StorageControl",
+                                     "ListAnywhereCaches");
+  span->SetAttribute("gl-cpp.request_id", request.request_id());
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->ListAnywhereCaches(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
 StorageControlTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
