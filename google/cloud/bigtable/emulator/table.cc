@@ -23,7 +23,13 @@
 #include <absl/strings/str_format.h>
 #include <re2/re2.h>
 #include <chrono>
+#include <cstddef>
+#include <cstdint>
 #include <cstdlib>
+#include <exception>
+#include <memory>
+#include <mutex>
+#include <ratio>
 #include <type_traits>
 
 namespace google {
@@ -390,6 +396,85 @@ bool Table::IsDeleteProtected() const {
 
 bool Table::IsDeleteProtectedNoLock() const {
   return schema_.deletion_protection();
+}
+
+RowSampler Table::SampleRowKeys(
+    google::bigtable::v2::SampleRowKeysRequest const&) {
+  size_t row_index = 0;
+  size_t max_num_rows = 0;
+  std::map<std::string, ColumnFamilyRow>::const_iterator row_iterator;
+  std::map<std::string, ColumnFamilyRow>::const_iterator row_end;
+  bool table_is_empty = true;
+  size_t offset_bytes = 0;
+
+  std::once_flag once_flag;
+
+  auto next_sample = [&, this] {
+    std::call_once(once_flag, [this, &max_num_rows, &row_iterator, &row_end,
+                               &table_is_empty]() {
+      // Pick rows from just the largest column family since we are
+      // just sampling. However offsets will be estimated based on the
+      // size of the row across all column families.
+      for (auto const& cf : column_families_) {
+        if (cf.second->size() > max_num_rows) {
+          table_is_empty = false;
+          row_iterator = cf.second->begin();
+          row_end = cf.second->end();
+          max_num_rows = cf.second->size();
+        }
+      }
+    });
+
+    // The signal that there are no more rows.
+    if (table_is_empty || row_iterator == row_end) {
+      google::bigtable::v2::SampleRowKeysResponse resp;
+      resp.set_row_key("");
+      resp.set_offset_bytes(offset_bytes);
+
+      return resp;
+    }
+
+    for (auto& row = row_iterator; row_iterator != row_end;
+         row_index++, row_iterator++) {
+      // If there are any rows we need to return at least one
+      // row. Alwasy return the last one.
+      if (row_index == max_num_rows - 1) {
+        google::bigtable::v2::SampleRowKeysResponse resp;
+        resp.set_row_key(row->first);
+        resp.set_offset_bytes(offset_bytes);
+
+        offset_bytes += (row->first.size() + row->second.size());
+
+        return resp;
+      }
+
+      // Sample about one every 100 rows randomly.
+      if (std::rand() % 100 == 0) {
+        google::bigtable::v2::SampleRowKeysResponse resp;
+        resp.set_row_key(row->first);
+        resp.set_offset_bytes(offset_bytes);
+
+        offset_bytes += (row->first.size() + row->second.size());
+
+        return resp;
+      }
+
+      offset_bytes += (row->first.size() + row->second.size());
+    }
+
+    google::bigtable::v2::SampleRowKeysResponse resp;
+    resp.set_row_key("");
+    resp.set_offset_bytes(offset_bytes);
+    return resp;
+  };
+
+  // We acquire the table lock here (in the constructor), so that
+  // every time we call row_sampler.Next() we always hold the lock,
+  // and will continue to hold it until the destructor of RowSampler
+  // is called.
+  RowSampler row_sampler(this->get(), next_sample);
+
+  return row_sampler;
 }
 
 // NOLINTBEGIN(readability-convert-member-functions-to-static)

@@ -23,6 +23,7 @@
 #include <google/bigtable/admin/v2/table.pb.h>
 #include <google/bigtable/v2/data.pb.h>
 #include <chrono>
+#include <cstddef>
 #include <map>
 
 namespace google {
@@ -178,6 +179,20 @@ class ColumnFamilyRow {
     columns_.erase(column_it);
   }
 
+  size_t size() const {
+    size_t res = 0;
+
+    for (auto const& c : columns_) {
+      res += c.first.size();
+      for (auto const& cr : c.second) {
+        res += sizeof(cr.first);
+        res += cr.second.size();
+      }
+    }
+
+    return res;
+  };
+
  private:
   friend class ColumnFamily;
 
@@ -287,6 +302,8 @@ class ColumnFamily {
   void erase(std::map<std::string, ColumnFamilyRow>::iterator row_it) {
     rows_.erase(row_it);
   }
+
+  size_t size() const { return rows_.size(); }
 
  private:
   std::map<std::string, ColumnFamilyRow> rows_;

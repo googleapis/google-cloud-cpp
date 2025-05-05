@@ -31,11 +31,14 @@
 #include <map>
 #include <memory>
 #include <stack>
+#include <utility>
 
 namespace google {
 namespace cloud {
 namespace bigtable {
 namespace emulator {
+
+class RowSampler;
 
 /// Objects of this class represent Bigtable tables.
 class Table : public std::enable_shared_from_this<Table> {
@@ -68,12 +71,16 @@ class Table : public std::enable_shared_from_this<Table> {
     return column_families_.find(column_family);
   }
 
+  RowSampler SampleRowKeys(
+      const google::bigtable::v2::SampleRowKeysRequest&);
+
   std::shared_ptr<Table> get() { return shared_from_this(); }
 
  private:
   Table() = default;
   friend class RowSetIterator;
   friend class RowTransaction;
+  friend class RowSampler;
 
   template <typename MESSAGE>
   StatusOr<std::reference_wrapper<ColumnFamily>> FindColumnFamily(
@@ -137,6 +144,30 @@ class RowTransaction {
   std::shared_ptr<Table> table_;
   std::stack<absl::variant<DeleteValue, RestoreValue>> undo_;
   ::google::bigtable::v2::MutateRowRequest const& request_;
+};
+
+class RowSampler {
+ public:
+  explicit RowSampler(
+      std::shared_ptr<Table> table,
+      std::function<google::bigtable::v2::SampleRowKeysResponse()>
+          next_sample_closure) {
+    table_ = std::move(table);
+    next_sample_closure_ = std::move(next_sample_closure);
+
+    table_->mu_.lock();
+  };
+
+  google::bigtable::v2::SampleRowKeysResponse Next() {
+    return next_sample_closure_();
+  }
+
+  ~RowSampler() { table_->mu_.unlock(); };
+
+ private:
+  std::shared_ptr<Table> table_;
+  std::function<google::bigtable::v2::SampleRowKeysResponse()>
+      next_sample_closure_;
 };
 
 /**
