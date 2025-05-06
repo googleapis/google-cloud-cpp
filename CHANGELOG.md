@@ -4,6 +4,8 @@
 breaking changes in the upcoming 3.x release. This release is scheduled for
 2024-12 or 2025-01.
 
+## v2.38.0 - TBD
+
 ## v2.37.0 - 2025-05
 
 **BREAKING CHANGES**
