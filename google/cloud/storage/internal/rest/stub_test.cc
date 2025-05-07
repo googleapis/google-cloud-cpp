@@ -39,7 +39,6 @@ using ::testing::Contains;
 using ::testing::ElementsAre;
 using ::testing::Eq;
 using ::testing::HasSubstr;
-using ::testing::IsTrue;
 using ::testing::Matcher;
 using ::testing::Pair;
 using ::testing::ResultOf;
