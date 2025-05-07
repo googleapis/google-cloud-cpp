@@ -186,6 +186,7 @@ declare -A -r LIBRARIES=(
   ["managedidentities"]="@com_google_googleapis//google/cloud/managedidentities/v1:managedidentities_cc_grpc"
   ["managedkafka"]="@com_google_googleapis//google/cloud/managedkafka/v1:managedkafka_cc_grpc"
   ["memcache"]="@com_google_googleapis//google/cloud/memcache/v1:memcache_cc_grpc"
+  ["memorystore"]="@com_google_googleapis//google/cloud/memorystore/v1:memorystore_cc_grpc"
   ["metastore"]="$(
     printf ",%s" \
       "@com_google_googleapis//google/cloud/metastore/logging/v1:logging_cc_grpc" \
