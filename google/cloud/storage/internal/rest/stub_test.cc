@@ -40,6 +40,7 @@ using ::testing::ElementsAre;
 using ::testing::Eq;
 using ::testing::HasSubstr;
 using ::testing::Matcher;
+using ::testing::Not;
 using ::testing::Pair;
 using ::testing::ResultOf;
 using ::testing::Return;
@@ -216,17 +217,12 @@ TEST(RestStubTest, ListBucketsOmitsPageTokenWhenEmptyInRequest) {
   auto mock = std::make_shared<MockRestClient>();
   ListBucketsRequest request("test-project-id");
 
-  EXPECT_CALL(*mock, Get(ExpectedContext(),
-                         ResultOf(
-                             "request parameters do not contain 'pageToken'",
-                             [](RestRequest const& r) {
-                               return std::none_of(
-                                   r.parameters().begin(), r.parameters().end(),
-                                   [](auto const& param) {
-                                     return param.first == "pageToken";
-                                   });
-                             },
-                             ::testing::IsTrue())))
+  EXPECT_CALL(*mock,
+              Get(ExpectedContext(),
+                  ResultOf(
+                      "request parameters do not contain 'pageToken'",
+                      [](RestRequest const& r) { return r.parameters(); },
+                      Not(Contains(Pair("pageToken", _))))))
       .WillOnce(Return(PermanentError()));
 
   auto tested = std::make_unique<RestStub>(Options{}, mock, mock);
