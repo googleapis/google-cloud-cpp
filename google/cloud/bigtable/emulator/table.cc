@@ -418,12 +418,14 @@ RowSampler Table::SampleRowKeys(
       std::make_shared<SamplingContext>();
 
   auto next_sample = [=]() mutable {
-    // The first time the closure is called, initialize the row
-    // iterators. The sampler works by advancing the iterator by
-    // varying steps every time the closure it contains is called. We
-    // can't initialize the iterators before the closure is first
-    // called since we need to be holding the table lock first (in our
-    // scheme it is grabbed in the constructor of the sampler).
+    // The first time the closure is called, initialize the
+    // context. The sampler works by advancing the iterator by varying
+    // steps every time the closure it contains is called in the
+    // server RPC context or elsewhere. We can't initialize the
+    // iterators before the closure is first called since we need to
+    // be holding the table lock first (in our scheme it is grabbed in
+    // the constructor of the RowSampler and the lock is kept until
+    // the RowSampler is destroyed.)
     std::call_once(sampling_context->once_flag, [=]() {
       // Pick rows from just the largest column family since we are
       // just sampling. However offsets will be estimated based on the
