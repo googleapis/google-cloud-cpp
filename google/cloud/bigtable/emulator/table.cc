@@ -400,6 +400,9 @@ bool Table::IsDeleteProtectedNoLock() const {
 
 RowSampler Table::SampleRowKeys(
     google::bigtable::v2::SampleRowKeysRequest const&) {
+  // We pick the row key samples from just one column family (the
+  // largest).
+  std::string sample_src_cf;
   size_t row_index = 0;
   size_t max_num_rows = 0;
   std::map<std::string, ColumnFamilyRow>::const_iterator row_iterator;
@@ -410,14 +413,21 @@ RowSampler Table::SampleRowKeys(
   std::once_flag once_flag;
 
   auto next_sample = [&, this] {
+    // The first time the closure is called, initialize the row
+    // iterators. The sampler works by advancing the iterator by
+    // varying steps every time the closure it contains is called. We
+    // can't initialize the iterators before the closure is first
+    // called since we need to be holding the table lock first (in our
+    // scheme it is grabbed in the constructor of the sampler).
     std::call_once(once_flag, [this, &max_num_rows, &row_iterator, &row_end,
-                               &table_is_empty]() {
+                               &table_is_empty, &sample_src_cf]() {
       // Pick rows from just the largest column family since we are
       // just sampling. However offsets will be estimated based on the
       // size of the row across all column families.
       for (auto const& cf : column_families_) {
         if (cf.second->size() > max_num_rows) {
           table_is_empty = false;
+          sample_src_cf = cf.first;
           row_iterator = cf.second->begin();
           row_end = cf.second->end();
           max_num_rows = cf.second->size();
@@ -425,25 +435,46 @@ RowSampler Table::SampleRowKeys(
       }
     });
 
-    // The signal that there are no more rows.
+    // The signal that there are no more rows (an empty row key).
     if (table_is_empty || row_iterator == row_end) {
       google::bigtable::v2::SampleRowKeysResponse resp;
       resp.set_row_key("");
-      resp.set_offset_bytes(offset_bytes);
+      resp.set_offset_bytes(0);
 
       return resp;
     }
 
     for (auto& row = row_iterator; row_iterator != row_end;
          row_index++, row_iterator++) {
+
+      auto add_this_row_size_to_offset = [&, this] {
+        // First the offset due to the size of the row in the column
+        // family we are sampling.
+        offset_bytes += (row->first.size() + row->second.size());
+
+        // Then consider the size of the row data in other column families,
+        // if they contain the row.
+        for (auto const& cf : column_families_) {
+          if (cf.first == sample_src_cf) {
+            continue;
+          }
+
+          auto r = cf.second->find(row->first);
+          if (r != cf.second->end()) {
+            offset_bytes += (row->first.size() + r->second.size());
+          }
+        }
+
+      };
+
       // If there are any rows we need to return at least one
-      // row. Alwasy return the last one.
+      // row. Always return the last one.
       if (row_index == max_num_rows - 1) {
         google::bigtable::v2::SampleRowKeysResponse resp;
         resp.set_row_key(row->first);
         resp.set_offset_bytes(offset_bytes);
 
-        offset_bytes += (row->first.size() + row->second.size());
+        add_this_row_size_to_offset();
 
         return resp;
       }
@@ -454,12 +485,15 @@ RowSampler Table::SampleRowKeys(
         resp.set_row_key(row->first);
         resp.set_offset_bytes(offset_bytes);
 
-        offset_bytes += (row->first.size() + row->second.size());
+        add_this_row_size_to_offset();
 
         return resp;
       }
 
-      offset_bytes += (row->first.size() + row->second.size());
+      // This is a row we are not sampling, but we still need to
+      // account for its size for accurate offsets of subsequent
+      // sampled rows.
+      add_this_row_size_to_offset();
     }
 
     google::bigtable::v2::SampleRowKeysResponse resp;
@@ -477,7 +511,7 @@ RowSampler Table::SampleRowKeys(
   return row_sampler;
 }
 
-// NOLINTBEGIN(readability-convert-member-functions-to-static)
+// Nolintbegin(readability-convert-member-functions-to-static)
 Status RowTransaction::AddToCell(
     ::google::bigtable::v2::Mutation_AddToCell const& add_to_cell) {
   return UnimplementedError(
