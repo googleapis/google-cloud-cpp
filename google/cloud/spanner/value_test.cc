@@ -273,6 +273,15 @@ TEST(Value, BasicSemantics) {
     TestBasicSemantics(v);
   }
 
+  for (auto x : {Uuid()}) {
+    SCOPED_TRACE("Testing: google::cloud::spanner::Uuid " + std::string{x});
+    TestBasicSemantics(x);
+    TestBasicSemantics(std::vector<Uuid>(5, x));
+    std::vector<absl::optional<Uuid>> v(5, x);
+    v.resize(10);
+    TestBasicSemantics(v);
+  }
+
   for (auto x : {testing::Genre::POP, testing::Genre::JAZZ,
                  testing::Genre::FOLK, testing::Genre::ROCK}) {
     SCOPED_TRACE("Testing: ProtoEnum<testing::Genre> " +
@@ -949,6 +958,20 @@ TEST(Value, ProtoConversionInterval) {
   }
 }
 
+TEST(Value, ProtoConversionUuid) {
+  for (auto const& x : std::vector<Uuid>{
+           Uuid(),
+           Uuid(0x7bf8a7b819171919, 0x2625f208c5824254),
+           MakeUuid("{0b6ed04ca16dfc4652817f9978c13738}").value(),
+       }) {
+    Value const v(x);
+    auto const p = spanner_internal::ToProto(v);
+    EXPECT_EQ(v, spanner_internal::FromProto(p.first, p.second));
+    EXPECT_EQ(google::spanner::v1::TypeCode::UUID, p.first.code());
+    EXPECT_EQ(std::string{x}, p.second.string_value());
+  }
+}
+
 TEST(Value, ProtoConversionProtoEnum) {
   for (auto e : {testing::Genre::POP, testing::Genre::JAZZ,
                  testing::Genre::FOLK, testing::Genre::ROCK}) {
@@ -1296,6 +1319,24 @@ TEST(Value, GetBadInterval) {
   EXPECT_THAT(v.get<Interval>(), Not(IsOk()));
 }
 
+TEST(Value, GetBadUuid) {
+  Value v(Uuid{});
+  ClearProtoKind(v);
+  EXPECT_THAT(v.get<Uuid>(), Not(IsOk()));
+
+  SetProtoKind(v, google::protobuf::NULL_VALUE);
+  EXPECT_THAT(v.get<Uuid>(), Not(IsOk()));
+
+  SetProtoKind(v, true);
+  EXPECT_THAT(v.get<Uuid>(), Not(IsOk()));
+
+  SetProtoKind(v, 0.0);
+  EXPECT_THAT(v.get<Uuid>(), Not(IsOk()));
+
+  SetProtoKind(v, "blah");
+  EXPECT_THAT(v.get<Uuid>(), Not(IsOk()));
+}
+
 TEST(Value, GetBadProtoEnum) {
   Value v(ProtoEnum<testing::Genre>{});
   ClearProtoKind(v);
@@ -1475,6 +1516,7 @@ TEST(Value, OutputStream) {
       {Value(absl::CivilDay()), "1970-01-01", normal},
       {Value(Timestamp()), "1970-01-01T00:00:00Z", normal},
       {Value(Interval()), "P0D", normal},
+      {Value(Uuid()), "00000000-0000-0000-0000-000000000000", normal},
       {Value(ProtoEnum<testing::Genre>(testing::Genre::POP)),
        "google.cloud.spanner.testing.POP", normal},
       {Value(ProtoMessage<testing::SingerInfo>(singer)),
@@ -1509,6 +1551,7 @@ TEST(Value, OutputStream) {
       {MakeNullValue<absl::CivilDay>(), "NULL", normal},
       {MakeNullValue<Timestamp>(), "NULL", normal},
       {MakeNullValue<Interval>(), "NULL", normal},
+      {MakeNullValue<Uuid>(), "NULL", normal},
       {MakeNullValue<ProtoEnum<testing::Genre>>(), "NULL", normal},
       {MakeNullValue<ProtoMessage<testing::SingerInfo>>(), "NULL", normal},
 
@@ -1530,6 +1573,8 @@ TEST(Value, OutputStream) {
        normal},
       {Value(std::vector<Timestamp>{1}), "[1970-01-01T00:00:00Z]", normal},
       {Value(std::vector<Interval>{1}), "[P0D]", normal},
+      {Value(std::vector<Uuid>{1}), "[00000000-0000-0000-0000-000000000000]",
+       normal},
       {Value(std::vector<ProtoEnum<testing::Genre>>{testing::JAZZ,
                                                     testing::FOLK}),
        "[google.cloud.spanner.testing.JAZZ, google.cloud.spanner.testing.FOLK]",
@@ -1556,6 +1601,7 @@ TEST(Value, OutputStream) {
       {MakeNullValue<std::vector<absl::CivilDay>>(), "NULL", normal},
       {MakeNullValue<std::vector<Timestamp>>(), "NULL", normal},
       {MakeNullValue<std::vector<Interval>>(), "NULL", normal},
+      {MakeNullValue<std::vector<Uuid>>(), "NULL", normal},
       {MakeNullValue<std::vector<ProtoEnum<testing::Genre>>>(), "NULL", normal},
       {MakeNullValue<std::vector<ProtoMessage<testing::SingerInfo>>>(), "NULL",
        normal},
@@ -1709,6 +1755,11 @@ TEST(Value, OutputStreamMatchesT) {
   // Interval
   StreamMatchesValueStream(Interval());
   StreamMatchesValueStream(MakeInterval("P1Y2M3DT4H5M6.789S").value());
+
+  // Uuid
+  StreamMatchesValueStream(Uuid());
+  StreamMatchesValueStream(
+      MakeUuid("{0b6ed04ca16dfc4652817f9978c13738}").value());
 
   // ProtoEnum
   StreamMatchesValueStream(ProtoEnum<testing::Genre>());
