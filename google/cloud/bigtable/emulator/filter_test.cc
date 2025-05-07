@@ -79,7 +79,7 @@ class TestCell {
         value_(other.value_),
         view_(row_key_, column_family_, column_qualifier_, timestamp_, value_) {
   }
-  TestCell(TestCell&& other)
+  TestCell(TestCell&& other) noexcept
       : row_key_(std::move(other.row_key_)),
         column_family_(std::move(other.column_family_)),
         column_qualifier_(std::move(other.column_qualifier_)),
@@ -107,7 +107,7 @@ class TestCell {
 };
 
 std::ostream& operator<<(std::ostream& stream, TestCell const& test_cell) {
-  auto& cell_view = test_cell.AsCellView();
+  auto const& cell_view = test_cell.AsCellView();
   stream << "Cell(" << cell_view.row_key() << " " << cell_view.column_family()
          << ":" << cell_view.column_qualifier() << " @"
          << cell_view.timestamp().count() << "ms: " << cell_view.value() << ")";
@@ -116,7 +116,7 @@ std::ostream& operator<<(std::ostream& stream, TestCell const& test_cell) {
 
 TEST(CellStream, NextColumnNotSupportedNoMoreData) {
   std::vector<TestCell> cells{TestCell{"row1", "cf1", "col1", 0_ms, "val1"}};
-  std::vector<TestCell>::iterator cur_cell = cells.begin();
+  auto cur_cell = cells.begin();
 
   auto mock_impl = std::make_unique<MockStream>();
   EXPECT_CALL(*mock_impl, Next(NextMode::kColumn)).WillOnce(Return(false));
@@ -147,7 +147,7 @@ TEST(CellStream, NextColumnNotSupported) {
       TestCell{"row1", "cf2", "col2", 1_ms, "val6"},
       TestCell{"row2", "cf2", "col2", 0_ms, "val7"},  // row changed
       TestCell{"row2", "cf2", "col2", 1_ms, "val8"}};
-  std::vector<TestCell>::iterator cur_cell = cells.begin();
+  auto cur_cell = cells.begin();
 
   auto mock_impl = std::make_unique<MockStream>();
   EXPECT_CALL(*mock_impl, Next(NextMode::kColumn))
@@ -191,7 +191,7 @@ TEST(CellStream, NextRowNotSupported) {
       TestCell{"row1", "cf2", "col2", 1_ms, "val6"},
       TestCell{"row2", "cf2", "col2", 0_ms, "val7"},  // row changed
       TestCell{"row2", "cf2", "col2", 1_ms, "val8"}};
-  std::vector<TestCell>::iterator cur_cell = cells.begin();
+  auto cur_cell = cells.begin();
 
   auto mock_impl = std::make_unique<MockStream>();
   EXPECT_CALL(*mock_impl, Next(NextMode::kColumn))
@@ -235,7 +235,7 @@ TEST(CellStream, NextRowUnsupported) {
       TestCell{"row1", "cf2", "col2", 1_ms, "val6"},
       TestCell{"row2", "cf2", "col2", 0_ms, "val7"},  // row changed
       TestCell{"row2", "cf2", "col2", 1_ms, "val8"}};
-  std::vector<TestCell>::iterator cur_cell = cells.begin();
+  auto cur_cell = cells.begin();
 
   auto mock_impl = std::make_unique<MockStream>();
   EXPECT_CALL(*mock_impl, Next(NextMode::kRow)).WillRepeatedly(Return(false));
@@ -276,7 +276,7 @@ TEST(CellStream, NextRowAndColumnUnsupported) {
       TestCell{"row1", "cf2", "col2", 1_ms, "val6"},
       TestCell{"row2", "cf2", "col2", 0_ms, "val7"},  // row changed
       TestCell{"row2", "cf2", "col2", 1_ms, "val8"}};
-  std::vector<TestCell>::iterator cur_cell = cells.begin();
+  auto cur_cell = cells.begin();
 
   auto mock_impl = std::make_unique<MockStream>();
   EXPECT_CALL(*mock_impl, Next(NextMode::kRow)).WillRepeatedly(Return(false));
@@ -387,7 +387,7 @@ TEST(MergeCellStreams, OneStream) {
       TestCell{"row2", "cf2", "col2", 0_ms, "val7"},  // row changed
       TestCell{"row2", "cf2", "col2", 1_ms, "val8"}};
 
-  std::vector<TestCell>::iterator cur_cell = cells.begin();
+  auto cur_cell = cells.begin();
 
   auto mock_impl = std::make_unique<MockStream>();
   EXPECT_CALL(*mock_impl, Next(NextMode::kColumn)).WillOnce([&]() {
@@ -433,7 +433,7 @@ TEST(MergeCellStreams, OneStream) {
 }
 
 struct TestStreamData {
-  TestStreamData(std::vector<TestCell> data)
+  explicit TestStreamData(std::vector<TestCell> data)
       : cells(std::move(data)),
         cur_cell(cells.begin()),
         stream(std::make_unique<MockStream>()) {}
@@ -573,10 +573,10 @@ TEST(MergeCellStreams, AdvancingRowAdvancesAllRelevantStreams) {
   });
 
   std::vector<CellStream> streams;
-  streams.push_back(CellStream(std::move(stream_data_1.stream)));
-  streams.push_back(CellStream(std::move(stream_data_2.stream)));
-  streams.push_back(CellStream(std::move(stream_data_3.stream)));
-  streams.push_back(CellStream(std::move(stream_data_4.stream)));
+  streams.emplace_back(std::move(stream_data_1.stream));
+  streams.emplace_back(std::move(stream_data_2.stream));
+  streams.emplace_back(std::move(stream_data_3.stream));
+  streams.emplace_back(std::move(stream_data_4.stream));
   CellStream stream(std::make_unique<MergeCellStreams>(std::move(streams)));
 
   ASSERT_TRUE(stream.HasValue());
@@ -672,14 +672,13 @@ TEST(MergeCellStreams, AdvancingColumnAdvancesAllRelevantStreams) {
       });
 
   std::vector<CellStream> streams;
-  streams.push_back(CellStream(std::move(stream_data.stream)));
-  streams.push_back(
-      CellStream(std::move(stream_data_different_column_family.stream)));
-  streams.push_back(
-      CellStream(std::move(stream_data_different_column_qualifier.stream)));
-  streams.push_back(CellStream(std::move(stream_data_different_row.stream)));
-  streams.push_back(CellStream(
-      std::move(stream_data_same_column_different_timestamp.stream)));
+  streams.emplace_back(std::move(stream_data.stream));
+  streams.emplace_back(std::move(stream_data_different_column_family.stream));
+  streams.emplace_back(
+      std::move(stream_data_different_column_qualifier.stream));
+  streams.emplace_back(std::move(stream_data_different_row.stream));
+  streams.emplace_back(
+      std::move(stream_data_same_column_different_timestamp.stream));
   CellStream stream(std::make_unique<MergeCellStreams>(std::move(streams)));
 
   ASSERT_TRUE(stream.HasValue());
@@ -865,9 +864,6 @@ TEST_F(InvalidFilterProtoTest, InterleaveSinkFalse) {
 TEST(FilterTest, BlockAll) {
   RowFilter filter;
   filter.set_block_all_filter(true);
-
-  auto mock_impl = std::make_unique<MockStream>();
-  CellStream(std::move(mock_impl));
 
   auto maybe_stream = CreateFilter(
       filter, [] { return CellStream(std::make_unique<MockStream>()); });
@@ -1081,8 +1077,8 @@ TEST_F(FilterApplicationPropagation, PerRowOffset) {
   RowFilter filter;
   filter.set_cells_per_row_offset_filter(10);
 
-  for (auto& filter_type : {"family_name_regex", "column_regex", "column_range",
-                            "timestamp_range"}) {
+  for (auto const& filter_type : {"family_name_regex", "column_regex",
+                                  "column_range", "timestamp_range"}) {
     PropagationNotExpected(filter_type);
   }
 
@@ -1093,8 +1089,8 @@ TEST_F(FilterApplicationPropagation, PerRowLimit) {
   RowFilter filter;
   filter.set_cells_per_row_limit_filter(10);
 
-  for (auto& filter_type : {"family_name_regex", "column_regex", "column_range",
-                            "timestamp_range"}) {
+  for (auto const& filter_type : {"family_name_regex", "column_regex",
+                                  "column_range", "timestamp_range"}) {
     PropagationNotExpected(filter_type);
   }
 
@@ -1190,7 +1186,7 @@ class InternalFiltersAreApplied : public ::testing::Test {
       auto mock_impl = std::make_unique<MockStream>();
       EXPECT_CALL(*mock_impl, ApplyFilter)
           .WillOnce([onApply](InternalFilter const& internal_filter) -> bool {
-            auto maybe_regex = absl::get_if<Filter>(&internal_filter);
+            auto const* maybe_regex = absl::get_if<Filter>(&internal_filter);
             EXPECT_NE(nullptr, maybe_regex);
             onApply(*maybe_regex);
             return true;
