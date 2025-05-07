@@ -44,9 +44,12 @@ CBT_INSTANCE_ADMIN_EMULATOR_START=(
 source module /google/cloud/bigtable/tools/run_emulator_utils.sh
 
 cd "${BINARY_DIR}"
-start_emulators 8480 8490
+start_emulators 8888 8490
 
-ctest -R "^bigtable_" "${ctest_args[@]}"
+#gdb -ex run --args ctest "${ctest_args[@]}"
+#gdb --args ctest "${ctest_args[@]}"
+ctest "${ctest_args[@]}"
+
 exit_status=$?
 
 kill_emulators

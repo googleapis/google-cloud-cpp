@@ -446,7 +446,7 @@ RowSampler Table::SampleRowKeys(
         sampling_context->row_iterator == sampling_context->row_end) {
       google::bigtable::v2::SampleRowKeysResponse resp;
       resp.set_row_key("");
-      resp.set_offset_bytes(0);
+      resp.set_offset_bytes(sampling_context->offset_bytes);
 
       return resp;
     }
@@ -484,6 +484,14 @@ RowSampler Table::SampleRowKeys(
 
         add_this_row_size_to_offset();
 
+        // We are returning early (without letting the for loop
+        // control update the iterators) so ensure that we consider a
+        // new row next time, otherwise we will be stuck in an
+        // infinite loop (will never advance the row iterator past the
+        // end of the map).
+        sampling_context->row_index++;
+        sampling_context->row_iterator++;
+
         return resp;
       }
 
@@ -494,6 +502,10 @@ RowSampler Table::SampleRowKeys(
         resp.set_offset_bytes(sampling_context->offset_bytes);
 
         add_this_row_size_to_offset();
+
+        sampling_context->row_index++;
+        sampling_context->row_iterator++;
+
 
         return resp;
       }
