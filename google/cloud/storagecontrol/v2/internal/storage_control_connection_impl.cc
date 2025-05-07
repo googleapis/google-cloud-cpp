@@ -357,6 +357,311 @@ StorageControlConnectionImpl::ListManagedFolders(
       });
 }
 
+future<StatusOr<google::storage::control::v2::AnywhereCache>>
+StorageControlConnectionImpl::CreateAnywhereCache(
+    google::storage::control::v2::CreateAnywhereCacheRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  if (request_copy.request_id().empty()) {
+    request_copy.set_request_id(invocation_id_generator_->MakeInvocationId());
+  }
+  auto const idempotent =
+      idempotency_policy(*current)->CreateAnywhereCache(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::storage::control::v2::AnywhereCache>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::storage::control::v2::CreateAnywhereCacheRequest const&
+              request) {
+        return stub->AsyncCreateAnywhereCache(cq, std::move(context),
+                                              std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::storage::control::v2::AnywhereCache>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+StorageControlConnectionImpl::CreateAnywhereCache(
+    NoAwaitTag,
+    google::storage::control::v2::CreateAnywhereCacheRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateAnywhereCache(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::storage::control::v2::CreateAnywhereCacheRequest const&
+                 request) {
+        return stub_->CreateAnywhereCache(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::storage::control::v2::AnywhereCache>>
+StorageControlConnectionImpl::CreateAnywhereCache(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::storage::control::v2::
+                   CreateAnywhereCacheMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::storage::control::v2::AnywhereCache>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateAnywhereCache",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::storage::control::v2::AnywhereCache>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::storage::control::v2::AnywhereCache>,
+      polling_policy(*current), __func__);
+}
+
+future<StatusOr<google::storage::control::v2::AnywhereCache>>
+StorageControlConnectionImpl::UpdateAnywhereCache(
+    google::storage::control::v2::UpdateAnywhereCacheRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  if (request_copy.request_id().empty()) {
+    request_copy.set_request_id(invocation_id_generator_->MakeInvocationId());
+  }
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateAnywhereCache(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::storage::control::v2::AnywhereCache>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::storage::control::v2::UpdateAnywhereCacheRequest const&
+              request) {
+        return stub->AsyncUpdateAnywhereCache(cq, std::move(context),
+                                              std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::storage::control::v2::AnywhereCache>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+StorageControlConnectionImpl::UpdateAnywhereCache(
+    NoAwaitTag,
+    google::storage::control::v2::UpdateAnywhereCacheRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateAnywhereCache(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::storage::control::v2::UpdateAnywhereCacheRequest const&
+                 request) {
+        return stub_->UpdateAnywhereCache(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::storage::control::v2::AnywhereCache>>
+StorageControlConnectionImpl::UpdateAnywhereCache(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::storage::control::v2::
+                   UpdateAnywhereCacheMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::storage::control::v2::AnywhereCache>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateAnywhereCache",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::storage::control::v2::AnywhereCache>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::storage::control::v2::AnywhereCache>,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::storage::control::v2::AnywhereCache>
+StorageControlConnectionImpl::DisableAnywhereCache(
+    google::storage::control::v2::DisableAnywhereCacheRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  if (request_copy.request_id().empty()) {
+    request_copy.set_request_id(invocation_id_generator_->MakeInvocationId());
+  }
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DisableAnywhereCache(request_copy),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::storage::control::v2::DisableAnywhereCacheRequest const&
+                 request) {
+        return stub_->DisableAnywhereCache(context, options, request);
+      },
+      *current, request_copy, __func__);
+}
+
+StatusOr<google::storage::control::v2::AnywhereCache>
+StorageControlConnectionImpl::PauseAnywhereCache(
+    google::storage::control::v2::PauseAnywhereCacheRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  if (request_copy.request_id().empty()) {
+    request_copy.set_request_id(invocation_id_generator_->MakeInvocationId());
+  }
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->PauseAnywhereCache(request_copy),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::storage::control::v2::PauseAnywhereCacheRequest const&
+                 request) {
+        return stub_->PauseAnywhereCache(context, options, request);
+      },
+      *current, request_copy, __func__);
+}
+
+StatusOr<google::storage::control::v2::AnywhereCache>
+StorageControlConnectionImpl::ResumeAnywhereCache(
+    google::storage::control::v2::ResumeAnywhereCacheRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  if (request_copy.request_id().empty()) {
+    request_copy.set_request_id(invocation_id_generator_->MakeInvocationId());
+  }
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ResumeAnywhereCache(request_copy),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::storage::control::v2::ResumeAnywhereCacheRequest const&
+                 request) {
+        return stub_->ResumeAnywhereCache(context, options, request);
+      },
+      *current, request_copy, __func__);
+}
+
+StatusOr<google::storage::control::v2::AnywhereCache>
+StorageControlConnectionImpl::GetAnywhereCache(
+    google::storage::control::v2::GetAnywhereCacheRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  if (request_copy.request_id().empty()) {
+    request_copy.set_request_id(invocation_id_generator_->MakeInvocationId());
+  }
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetAnywhereCache(request_copy),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::storage::control::v2::GetAnywhereCacheRequest const&
+                 request) {
+        return stub_->GetAnywhereCache(context, options, request);
+      },
+      *current, request_copy, __func__);
+}
+
+StreamRange<google::storage::control::v2::AnywhereCache>
+StorageControlConnectionImpl::ListAnywhereCaches(
+    google::storage::control::v2::ListAnywhereCachesRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListAnywhereCaches(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::storage::control::v2::AnywhereCache>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<storagecontrol_v2::StorageControlRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::storage::control::v2::ListAnywhereCachesRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](
+                grpc::ClientContext& context, Options const& options,
+                google::storage::control::v2::ListAnywhereCachesRequest const&
+                    request) {
+              return stub->ListAnywhereCaches(context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::storage::control::v2::ListAnywhereCachesResponse r) {
+        std::vector<google::storage::control::v2::AnywhereCache> result(
+            r.anywhere_caches().size());
+        auto& messages = *r.mutable_anywhere_caches();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storagecontrol_v2_internal
 }  // namespace cloud

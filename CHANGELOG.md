@@ -4,7 +4,13 @@
 breaking changes in the upcoming 3.x release. This release is scheduled for
 2024-12 or 2025-01.
 
-## v2.37.0 - TBD
+## v2.38.0 - TBD
+
+## v2.37.0 - 2025-05
+
+**BREAKING CHANGES**
+
+Client library `resourcesettings` is being removed because the service has been turned down.
 
 ### New Libraries
 
@@ -20,9 +26,25 @@ the APIs in these libraries are stable, and are ready for production use.
 
 - [iam](/google/cloud/iam/README.md) - add v3 version of the library
 
-**BREAKING CHANGES**
+### [Spanner](/google/cloud/spanner/README.md)
 
-Client library `resourcesettings` is being removed because the service has been turned down.
+- feat(spanner): add spanner::Value support for TypeCode::INTERVAL ([#15094](https://github.com/googleapis/google-cloud-cpp/pull/15094))
+- feat(spanner): add ISO8601 duration support to spanner::Interval ([#15077](https://github.com/googleapis/google-cloud-cpp/pull/15077))
+- fix(spanner): update session bookkeeping for session NotFound ([#15009](https://github.com/googleapis/google-cloud-cpp/pull/15009))
+
+### [Storage](/google/cloud/storage/README.md)
+
+- feat(storage): Make absl::cord constructor public in write_payload.h ([#15113](https://github.com/googleapis/google-cloud-cpp/pull/15113))
+- feat(storage): Add bidiread and bidi appendable write to the async client. ([#15078](https://github.com/googleapis/google-cloud-cpp/pull/15078))
+- fix: fix bug with customheadersoption ([#15053](https://github.com/googleapis/google-cloud-cpp/pull/15053))
+
+### [Common Libraries](/google/cloud/README.md)
+
+- feat: add option to allow setting CURLOPT_INTERFACE ([#15044](https://github.com/googleapis/google-cloud-cpp/pull/15044))
+
+### [Google APIs interface definitions](https://github.com/googleapis/googleapis)
+
+- This release is based on definitions as of [2025-05-02T13:03:05-07:00](https://github.com/googleapis/googleapis/tree/079e5305050859d0e3a8c0768611283ee4863c07)
 
 ## v2.36.0 - 2025-03
 
