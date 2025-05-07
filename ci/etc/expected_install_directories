@@ -860,6 +860,10 @@
 ./include/google/cloud/memcache/v1
 ./include/google/cloud/memcache/v1/internal
 ./include/google/cloud/memcache/v1/mocks
+./include/google/cloud/memorystore
+./include/google/cloud/memorystore/v1
+./include/google/cloud/memorystore/v1/internal
+./include/google/cloud/memorystore/v1/mocks
 ./include/google/cloud/metastore
 ./include/google/cloud/metastore/v1
 ./include/google/cloud/metastore/v1/internal
@@ -1440,6 +1444,8 @@
 ./lib64/cmake/google_cloud_cpp_managedkafka_mocks
 ./lib64/cmake/google_cloud_cpp_memcache
 ./lib64/cmake/google_cloud_cpp_memcache_mocks
+./lib64/cmake/google_cloud_cpp_memorystore
+./lib64/cmake/google_cloud_cpp_memorystore_mocks
 ./lib64/cmake/google_cloud_cpp_metastore
 ./lib64/cmake/google_cloud_cpp_metastore_mocks
 ./lib64/cmake/google_cloud_cpp_migrationcenter
