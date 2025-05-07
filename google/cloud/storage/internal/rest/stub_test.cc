@@ -221,14 +221,13 @@ TEST(RestStubTest, ListBucketsOmitsPageTokenWhenEmptyInRequest) {
                          ResultOf(
                              "request parameters do not contain 'pageToken'",
                              [](RestRequest const& r) {
-                               for (auto const& param : r.parameters()) {
-                                 if (param.first == "pageToken") {
-                                   return false;
-                                 }
-                               }
-                               return true;
+                               return std::none_of(
+                                   r.parameters().begin(), r.parameters().end(),
+                                   [](auto const& param) {
+                                     return param.first == "pageToken";
+                                   });
                              },
-                             IsTrue())))
+                             ::testing::IsTrue())))
       .WillOnce(Return(PermanentError()));
 
   auto tested = std::make_unique<RestStub>(Options{}, mock, mock);
