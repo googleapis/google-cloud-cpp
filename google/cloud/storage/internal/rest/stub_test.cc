@@ -203,7 +203,7 @@ TEST(RestStubTest, ListBucketsIncludesPageTokenWhenPresentInRequest) {
   EXPECT_CALL(*mock,
               Get(ExpectedContext(),
                   ResultOf(
-                      "request parameters contain expected pageToken",
+                      "request parameters contain 'pageToken'",
                       [](RestRequest const& r) { return r.parameters(); },
                       Contains(Pair("pageToken", expected_token)))))
       .WillOnce(Return(PermanentError()));
