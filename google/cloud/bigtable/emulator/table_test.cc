@@ -77,6 +77,27 @@ TEST(FilteredTableStream, ColumnFamiliesAreFiltered) {
   EXPECT_EQ("row0 fam1:col0 @10ms: foo\n", DumpStream(stream));
 }
 
+TEST(FilteredTableStream, OnlyRightFamilyColumnsAreFiltered) {
+  using testing_util::chrono_literals::operator""_ms;
+
+  ColumnFamily fam1;
+  ColumnFamily fam2;
+  fam1.SetCell("row0", "col0", 10_ms, "foo");
+  fam2.SetCell("row0", "col0", 10_ms, "foo");
+  auto ffam1 = std::make_unique<FilteredColumnFamilyStream>(
+      fam1, "fam1", std::make_unique<StringRangeSet>(StringRangeSet::All()));
+  auto ffam2 = std::make_unique<FilteredColumnFamilyStream>(
+      fam2, "fam2", std::make_unique<StringRangeSet>(StringRangeSet::All()));
+  std::vector<std::unique_ptr<FilteredColumnFamilyStream>> fams;
+  fams.emplace_back(std::move(ffam1));
+  fams.emplace_back(std::move(ffam2));
+  FilteredTableStream stream(std::move(fams));
+
+  stream.ApplyFilter(
+      ColumnRange{"fam2", StringRangeSet::Range("a", false, "b", false)});
+  EXPECT_EQ("row0 fam1:col0 @10ms: foo\n", DumpStream(stream));
+}
+
 TEST(FilteredTableStream, OtherFiltersArePropagated) {
   using testing_util::chrono_literals::operator""_ms;
 
@@ -110,7 +131,7 @@ TEST(FilteredTableStream, OtherFiltersArePropagated) {
   EXPECT_TRUE(stream.ApplyFilter(ColumnRegex{qualifier_pattern}));
 
   EXPECT_TRUE(stream.ApplyFilter(
-      ColumnRange{StringRangeSet::Range("co", false, "com", false)}));
+      ColumnRange{"fam1", StringRangeSet::Range("co", false, "com", false)}));
 
   EXPECT_TRUE(stream.ApplyFilter(
       TimestampRange{TimestampRangeSet::Range(0_ms, 300_ms)}));

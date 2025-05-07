@@ -292,10 +292,10 @@ TEST(FilteredColumnFamilyStream, FilterByColumnRange) {
   fam.SetCell("row2", "col1", 300_ms, "foo");
   auto included_rows = std::make_shared<StringRangeSet>(StringRangeSet::All());
   FilteredColumnFamilyStream filtered_stream(fam, "cf1", included_rows);
+  filtered_stream.ApplyFilter(ColumnRange{
+      "dummy", StringRangeSet::Range("col1", false, "col4", false)});
   filtered_stream.ApplyFilter(
-      ColumnRange{StringRangeSet::Range("col1", false, "col4", false)});
-  filtered_stream.ApplyFilter(
-      ColumnRange{StringRangeSet::Range("col1", false, "col2", false)});
+      ColumnRange{"cf1", StringRangeSet::Range("col1", false, "col2", false)});
   EXPECT_EQ(R"""(
 row0 cf1:col1 @100ms: foo
 row0 cf1:col2 @200ms: foo
