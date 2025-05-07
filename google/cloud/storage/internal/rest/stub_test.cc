@@ -39,6 +39,7 @@ using ::testing::Contains;
 using ::testing::ElementsAre;
 using ::testing::Eq;
 using ::testing::HasSubstr;
+using ::testing::IsTrue;
 using ::testing::Matcher;
 using ::testing::Pair;
 using ::testing::ResultOf;
@@ -191,6 +192,48 @@ TEST(RestStubTest, CreateBucket) {
       tested->CreateBucket(context, TestOptions(), CreateBucketRequest());
   EXPECT_THAT(status,
               StatusIs(PermanentError().code(), PermanentError().message()));
+}
+
+TEST(RestStubTest, ListBucketsIncludesPageTokenWhenPresentInRequest) {
+  auto mock = std::make_shared<MockRestClient>();
+  std::string expected_token = "test-page-token";
+  ListBucketsRequest request("test-project-id");
+  request.set_page_token(expected_token);
+
+  EXPECT_CALL(*mock,
+              Get(ExpectedContext(),
+                  ResultOf(
+                      "request parameters contain expected pageToken",
+                      [](RestRequest const& r) { return r.parameters(); },
+                      Contains(Pair("pageToken", expected_token)))))
+      .WillOnce(Return(PermanentError()));
+
+  auto tested = std::make_unique<RestStub>(Options{}, mock, mock);
+  auto context = TestContext();
+  tested->ListBuckets(context, TestOptions(), request);
+}
+
+TEST(RestStubTest, ListBucketsOmitsPageTokenWhenEmptyInRequest) {
+  auto mock = std::make_shared<MockRestClient>();
+  ListBucketsRequest request("test-project-id");
+
+  EXPECT_CALL(*mock, Get(ExpectedContext(),
+                         ResultOf(
+                             "request parameters do not contain 'pageToken'",
+                             [](RestRequest const& r) {
+                               for (auto const& param : r.parameters()) {
+                                 if (param.first == "pageToken") {
+                                   return false;
+                                 }
+                               }
+                               return true;
+                             },
+                             IsTrue())))
+      .WillOnce(Return(PermanentError()));
+
+  auto tested = std::make_unique<RestStub>(Options{}, mock, mock);
+  auto context = TestContext();
+  tested->ListBuckets(context, TestOptions(), request);
 }
 
 TEST(RestStubTest, GetBucketMetadata) {
