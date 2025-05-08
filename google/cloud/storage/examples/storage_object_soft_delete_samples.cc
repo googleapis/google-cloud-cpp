@@ -149,7 +149,7 @@ void RunAll(std::vector<std::string> const& argv) {
   auto objects = ListSoftDeletedObjects(client, {bucket_name});
   if (objects.empty()) {
     throw std::runtime_error(
-        "Unexpectedly no live objects found in the bucket.");
+        "Unexpectedly no soft-deleted objects found in the bucket.");
   }
 
   std::cout << "\nRunning the ListSoftDeletedObjectVersions() example"
@@ -158,7 +158,7 @@ void RunAll(std::vector<std::string> const& argv) {
       ListSoftDeletedObjectVersions(client, {bucket_name, object_name});
   if (versions.empty()) {
     throw std::runtime_error(
-        "Unexpectedly no soft-deleted versions found in the bucket.");
+        "Unexpectedly no versions found of the soft-deleted object.");
   }
 
   std::cout << "\nRunning the RestoreSoftDeletedObject() example" << std::endl;
