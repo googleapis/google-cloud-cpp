@@ -3024,6 +3024,14 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+# Oracle database
+service {
+  service_proto_path: "google/cloud/oracledatabase/v1/oracledatabase.proto"
+  product_path: "google/cloud/oracledatabase/v1"
+  initial_copyright_year: "2025"
+  retryable_status_codes: ["kResourceExhausted", "kUnavailable", "kInternal", "kDeadlineExceeded"]
+}
+
 # Organization Policy
 service {
   service_proto_path: "google/cloud/orgpolicy/v2/orgpolicy.proto"
