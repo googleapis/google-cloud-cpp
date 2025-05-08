@@ -32,15 +32,22 @@ Options PopulateCommonOptions(Options opts, std::string const& endpoint_env_var,
                               std::string const& emulator_env_var,
                               std::string const& authority_env_var,
                               std::string default_endpoint) {
+  auto const starting_endpoint_option = FetchOption<EndpointOption>(opts);
+
+  // Determine default endpoint, applying any specified universe domain.
   auto e = GetEnv("GOOGLE_CLOUD_UNIVERSE_DOMAIN");
   if (e && !e->empty()) opts.set<UniverseDomainOption>(*std::move(e));
   default_endpoint = UniverseDomainEndpoint(std::move(default_endpoint), opts);
+
+  // Override the EndpointOption if its env var is set.
   if (!endpoint_env_var.empty()) {
     auto e = GetEnv(endpoint_env_var.c_str());
     if (e && !e->empty()) {
       opts.set<EndpointOption>(*std::move(e));
     }
   }
+
+  // Override EndpointOption and Credentials if emulator env var is set.
   if (!emulator_env_var.empty()) {
     auto e = GetEnv(emulator_env_var.c_str());
     if (e && !e->empty()) {
@@ -48,18 +55,30 @@ Options PopulateCommonOptions(Options opts, std::string const& endpoint_env_var,
       opts.set<UnifiedCredentialsOption>(MakeInsecureCredentials());
     }
   }
+
+  // If the EndpointOption was not set and its env vars is not set, use the
+  // default.
   if (!opts.has<EndpointOption>()) {
     opts.set<EndpointOption>(default_endpoint);
   }
 
+  // Override AuthorityOption if its env var is set.
   if (!authority_env_var.empty()) {
     auto e = GetEnv(authority_env_var.c_str());
     if (e && !e->empty()) {
       opts.set<AuthorityOption>(*std::move(e));
     }
   }
+
+  // Determine the default authority. With the advent of more common locational
+  // endpoints, we need to not simply default the authority to the global
+  // endpoint.
   if (!opts.has<AuthorityOption>()) {
-    opts.set<AuthorityOption>(std::move(default_endpoint));
+    if (starting_endpoint_option.has_value()) {
+      opts.set<AuthorityOption>(*starting_endpoint_option);
+    } else {
+      opts.set<AuthorityOption>(std::move(default_endpoint));
+    }
   }
 
   e = GetEnv("GOOGLE_CLOUD_CPP_USER_PROJECT");
