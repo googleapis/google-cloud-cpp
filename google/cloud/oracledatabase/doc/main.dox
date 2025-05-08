@@ -1,10 +1,10 @@
 /*!
 
-@mainpage Oracle Database@Google Cloud API C++ Client Library
+@mainpage Oracle Database Google Cloud API C++ Client Library
 
-An idiomatic C++ client library for the [Oracle Database@Google Cloud API][cloud-service-docs].
+An idiomatic C++ client library for the [Oracle Database Google Cloud API][cloud-service-docs].
 
-The Oracle Database@Google Cloud API provides a set of APIs to manage Oracle database services, such as Exadata and Autonomous Databases.
+The Oracle Database Google Cloud API provides a set of APIs to manage Oracle database services, such as Exadata and Autonomous Databases.
 
 While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
 [Semantic Versioning](https://semver.org/).
@@ -15,7 +15,7 @@ While this library is **GA**, please note that the Google Cloud C++ client libra
 
 The following shows the code that you'll run in the
 `google/cloud/oracledatabase/quickstart/` directory,
-which should give you a taste of the Oracle Database@Google Cloud API C++ client library API.
+which should give you a taste of the Oracle Database Google Cloud API C++ client library API.
 
 @snippet quickstart.cc all
 
