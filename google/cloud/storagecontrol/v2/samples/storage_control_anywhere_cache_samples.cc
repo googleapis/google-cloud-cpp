@@ -27,8 +27,9 @@ void CreateAnywhereCache(
     std::vector<std::string> const& argv) {
   // [START storage_control_create_anywhere_cache]
   namespace storagecontrol = google::cloud::storagecontrol_v2;
-  [](storagecontrol::StorageControlClient client, std::string bucket_name,
-     std::string cache_name, std::string zone_name) {
+  [](storagecontrol::StorageControlClient client,
+     std::string const& bucket_name, std::string const& cache_name,
+     std::string const& zone_name) {
     google::storage::control::v2::AnywhereCache cache;
     cache.set_name(cache_name);
     cache.set_zone(zone_name);
@@ -53,7 +54,8 @@ void GetAnywhereCache(
     std::vector<std::string> const& argv) {
   // [START storage_control_get_anywhere_cache]
   namespace storagecontrol = google::cloud::storagecontrol_v2;
-  [](storagecontrol::StorageControlClient client, std::string cache_name) {
+  [](storagecontrol::StorageControlClient client,
+     std::string const& cache_name) {
     auto anywhere_cache = client.GetAnywhereCache(cache_name);
     if (!anywhere_cache) throw std::move(anywhere_cache).status();
     std::cout << "Got anywhere cache: " << anywhere_cache->name() << "\n";
@@ -67,7 +69,8 @@ void ListAnywhereCaches(
     std::vector<std::string> const& argv) {
   // [START storage_control_list_anywhere_caches]
   namespace storagecontrol = google::cloud::storagecontrol_v2;
-  [](storagecontrol::StorageControlClient client, std::string bucket_name) {
+  [](storagecontrol::StorageControlClient client,
+     std::string const& bucket_name) {
     auto const parent = std::string{"projects/_/buckets/"} + bucket_name;
     for (auto anywhere_cache : client.ListAnywhereCaches(parent)) {
       if (!anywhere_cache) throw std::move(anywhere_cache).status();
@@ -83,8 +86,8 @@ void UpdateAnywhereCache(
     std::vector<std::string> const& argv) {
   // [START storage_control_update_anywhere_cache]
   namespace storagecontrol = google::cloud::storagecontrol_v2;
-  [](storagecontrol::StorageControlClient client, std::string cache_name,
-     std::string admission_policy) {
+  [](storagecontrol::StorageControlClient client, std::string const& cache_name,
+     std::string const& admission_policy) {
     google::storage::control::v2::AnywhereCache cache;
     google::protobuf::FieldMask field_mask;
     field_mask.add_paths("admission_policy");
@@ -106,7 +109,8 @@ void PauseAnywhereCache(
     std::vector<std::string> const& argv) {
   // [START storage_control_pause_anywhere_cache]
   namespace storagecontrol = google::cloud::storagecontrol_v2;
-  [](storagecontrol::StorageControlClient client, std::string cache_name) {
+  [](storagecontrol::StorageControlClient client,
+     std::string const& cache_name) {
     auto anywhere_cache = client.PauseAnywhereCache(cache_name);
     if (!anywhere_cache) throw std::move(anywhere_cache).status();
     std::cout << "Paused anywhere cache: " << anywhere_cache->name() << "\n";
@@ -120,7 +124,8 @@ void ResumeAnywhereCache(
     std::vector<std::string> const& argv) {
   // [START storage_control_resume_anywhere_cache]
   namespace storagecontrol = google::cloud::storagecontrol_v2;
-  [](storagecontrol::StorageControlClient client, std::string cache_name) {
+  [](storagecontrol::StorageControlClient client,
+     std::string const& cache_name) {
     auto anywhere_cache = client.ResumeAnywhereCache(cache_name);
     if (!anywhere_cache) throw std::move(anywhere_cache).status();
     std::cout << "Resumed anywhere cache: " << anywhere_cache->name() << "\n";
@@ -134,7 +139,8 @@ void DisableAnywhereCache(
     std::vector<std::string> const& argv) {
   // [START storage_control_disable_anywhere_cache]
   namespace storagecontrol = google::cloud::storagecontrol_v2;
-  [](storagecontrol::StorageControlClient client, std::string cache_name) {
+  [](storagecontrol::StorageControlClient client,
+     std::string const& cache_name) {
     auto anywhere_cache = client.DisableAnywhereCache(cache_name);
     if (!anywhere_cache) throw std::move(anywhere_cache).status();
     std::cout << "Disabled anywhere cache: " << anywhere_cache->name() << "\n";
