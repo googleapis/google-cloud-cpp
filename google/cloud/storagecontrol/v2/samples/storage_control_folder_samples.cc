@@ -158,7 +158,7 @@ void AutoRun(std::vector<std::string> const& argv) {
       std::chrono::system_clock::now() - std::chrono::hours(48);
   // This is the only example that cleans up stale folders. The examples run in
   // parallel (within a build and across the builds), having multiple examples
-  // doing the same cleanup is probably more gl than it is worth.
+  // doing the same cleanup is probably more trouble than it is worth.
   std::cout << "\nRemoving stale folders for examples" << std::endl;
   RemoveStaleFolders(client, bucket_name, prefix, create_time_limit);
 
