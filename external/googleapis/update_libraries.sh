@@ -210,6 +210,7 @@ declare -A -r LIBRARIES=(
       "@com_google_googleapis//google/cloud/notebooks/v2:notebooks_cc_grpc"
   )"
   ["optimization"]="@com_google_googleapis//google/cloud/optimization/v1:optimization_cc_grpc"
+  ["oracledatabase"]="@com_google_googleapis//google/cloud/oracledatabase/v1:oracledatabase_cc_grpc"
   ["orgpolicy"]="@com_google_googleapis//google/cloud/orgpolicy/v2:orgpolicy_cc_grpc"
   ["osconfig"]="$(
     printf ",%s" \

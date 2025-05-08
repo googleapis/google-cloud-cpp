@@ -1,0 +1,50 @@
+/*!
+
+@page oracledatabase-env Environment Variables
+
+A number of environment variables can be used to configure the behavior of
+the library. There are also functions to configure this behavior in code. The
+environment variables are convenient when troubleshooting problems.
+
+@section oracledatabase-env-endpoint Endpoint Overrides
+
+<!-- inject-endpoint-env-vars-start -->
+
+- `GOOGLE_CLOUD_CPP_ORACLE_DATABASE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "oracledatabase.googleapis.com")
+  used by `MakeOracleDatabaseConnection()`.
+
+<!-- inject-endpoint-env-vars-end -->
+
+@see google::cloud::EndpointOption
+
+@section oracledatabase-env-logging Logging
+
+`GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc`: turns on tracing for most gRPC
+calls. The library injects an additional Stub decorator that prints each gRPC
+request and response.  Unless you have configured your own logging backend,
+you should also set `GOOGLE_CLOUD_CPP_ENABLE_CLOG` to produce any output on
+the program's console.
+
+@see google::cloud::LoggingComponentsOption
+
+`GOOGLE_CLOUD_CPP_TRACING_OPTIONS=...`: modifies the behavior of gRPC tracing,
+including whether messages will be output on multiple lines, or whether
+string/bytes fields will be truncated.
+
+@see google::cloud::GrpcTracingOptionsOption
+
+`GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes`: turns on logging in the library, basically
+the library always "logs" but the logging infrastructure has no backend to
+actually print anything until the application sets a backend or they set this
+environment variable.
+
+@see google::cloud::LogBackend
+@see google::cloud::LogSink
+
+@section oracledatabase-env-project Setting the Default Project
+
+`GOOGLE_CLOUD_PROJECT=...`: is used in examples and integration tests to
+configure the GCP project. This has no effect in the library.
+
+*/

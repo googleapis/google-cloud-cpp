@@ -34,6 +34,8 @@ export GOOGLE_CLOUD_CPP_USER_PROJECT="${GOOGLE_CLOUD_PROJECT}"
 export GOOGLE_CLOUD_CPP_TEST_REGION="us-central1"
 # Some quickstart programs require a zone.
 export GOOGLE_CLOUD_CPP_TEST_ZONE="us-central1-a"
+# Some quickstart programs require the us east region.
+export GOOGLE_CLOUD_CPP_US_EAST_TEST_REGION="us-east4"
 # Some tests and quickstarts benefit from a region outside the US.
 export GOOGLE_CLOUD_CPP_NON_US_TEST_REGION="asia-southeast1"
 # Some tests and quickstarts need to specify a location as "global".

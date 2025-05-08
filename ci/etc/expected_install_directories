@@ -920,6 +920,10 @@
 ./include/google/cloud/optimization/v1
 ./include/google/cloud/optimization/v1/internal
 ./include/google/cloud/optimization/v1/mocks
+./include/google/cloud/oracledatabase
+./include/google/cloud/oracledatabase/v1
+./include/google/cloud/oracledatabase/v1/internal
+./include/google/cloud/oracledatabase/v1/mocks
 ./include/google/cloud/orchestration
 ./include/google/cloud/orchestration/airflow
 ./include/google/cloud/orchestration/airflow/service
@@ -1466,6 +1470,8 @@
 ./lib64/cmake/google_cloud_cpp_notebooks_mocks
 ./lib64/cmake/google_cloud_cpp_optimization
 ./lib64/cmake/google_cloud_cpp_optimization_mocks
+./lib64/cmake/google_cloud_cpp_oracledatabase
+./lib64/cmake/google_cloud_cpp_oracledatabase_mocks
 ./lib64/cmake/google_cloud_cpp_orgpolicy
 ./lib64/cmake/google_cloud_cpp_orgpolicy_mocks
 ./lib64/cmake/google_cloud_cpp_osconfig
