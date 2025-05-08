@@ -13,7 +13,7 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/oracledatabase/v1/ EDIT HERE _client.h"
+#include "google/cloud/oracledatabase/v1/oracle_database_client.h"
 #include "google/cloud/location.h"
 #include <iostream>
 
@@ -26,10 +26,10 @@ int main(int argc, char* argv[]) try {
   auto const location = google::cloud::Location(argv[1], argv[2]);
 
   namespace oracledatabase = ::google::cloud::oracledatabase_v1;
-  auto client = oracledatabase::ServiceClient(
-      oracledatabase::MakeServiceConnection());  // EDIT HERE
+  auto client = oracledatabase::OracleDatabaseClient(
+      oracledatabase::MakeOracleDatabaseConnection());
 
-  for (auto r : client.List /*EDIT HERE*/ (location.FullName())) {
+  for (auto r : client.ListCloudExadataInfrastructures(location.FullName())) {
     if (!r) throw std::move(r).status();
     std::cout << r->DebugString() << "\n";
   }
