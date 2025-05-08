@@ -112,29 +112,24 @@ void RunAll(std::vector<std::string> const& argv) {
   namespace gcs = ::google::cloud::storage;
 
   if (!argv.empty()) throw examples::Usage{"auto"};
+  std::cout << "\nSetup" << std::endl;
   examples::CheckEnvironmentVariablesAreSet({
       "GOOGLE_CLOUD_PROJECT",
-      "GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME",
   });
   auto const project_id =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value();
-  auto const bucket_name = google::cloud::internal::GetEnv(
-                               "GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME")
-                               .value();
-  std::cout << "\nSetup" << std::endl;
   auto client = gcs::Client();
-  auto const bucket_original_metadata = client.GetBucketMetadata(bucket_name);
-  std::cout << "Enabling soft-delete policy of the bucket.\n";
-  auto bucket_updated_metadata = client.UpdateBucket(
-      bucket_name, gcs::BucketMetadata()
-                       .set_versioning(gcs::BucketVersioning{true})
-                       .set_soft_delete_policy(gcs::BucketSoftDeletePolicy{
-                           std::chrono::seconds(7 * 24 * 3600)}));
-  if (!bucket_updated_metadata.ok()) {
-    std::cout << "Bucket update failed with status: "
-              << bucket_updated_metadata.status() << "\n";
-  }
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
+  auto const bucket_name = examples::MakeRandomBucketName(generator);
+  std::cout << "Creating a bucket having versioning and soft-delete enabled: "
+            << bucket_name << std::endl;
+  auto bucket = client.CreateBucket(
+      bucket_name,
+      gcs::BucketMetadata{}
+          .set_versioning(gcs::BucketVersioning{true})
+          .set_soft_delete_policy(
+              std::chrono::seconds(30 * std::chrono::hours(24))),
+      gcs::OverrideDefaultProject(project_id));
   auto object_name = examples::MakeRandomObjectName(generator, "object-");
   std::cout << "Inserting an object: " << object_name << std::endl;
   auto inserted_object_metadata =
@@ -146,17 +141,25 @@ void RunAll(std::vector<std::string> const& argv) {
   std::cout << "Deleting the object: " << object_name << std::endl;
   auto delete_object_status = client.DeleteObject(bucket_name, object_name);
   if (!delete_object_status.ok()) {
-    std::cout << "Object deletion failed with status: "
-              << delete_object_status << "\n";
+    std::cout << "Object deletion failed with status: " << delete_object_status
+              << "\n";
   }
 
   std::cout << "\nRunning the ListSoftDeletedObjects() example" << std::endl;
   auto objects = ListSoftDeletedObjects(client, {bucket_name});
+  if (objects.empty()) {
+    throw std::runtime_error(
+        "Unexpectedly no live objects found in the bucket.");
+  }
 
   std::cout << "\nRunning the ListSoftDeletedObjectVersions() example"
             << std::endl;
   auto versions =
       ListSoftDeletedObjectVersions(client, {bucket_name, object_name});
+  if (versions.empty()) {
+    throw std::runtime_error(
+        "Unexpectedly no soft-deleted versions found in the bucket.");
+  }
 
   std::cout << "\nRunning the RestoreSoftDeletedObject() example" << std::endl;
   RestoreSoftDeletedObject(
@@ -186,7 +189,13 @@ void RunAll(std::vector<std::string> const& argv) {
   } else {
     std::cout << "Soft-deleted copy of the object deleted successfully.\n";
   }
-  (void)client.UpdateBucket(bucket_name, bucket_original_metadata.value());
+  auto bucket_delete_status = client.DeleteBucket(bucket_name);
+  if (!bucket_delete_status.ok()) {
+    std::cout << "Bucket deletion failed with status: " << bucket_delete_status
+              << "\n";
+  } else {
+    std::cout << "Bucket deleted successfully.\n";
+  }
 }
 
 }  // namespace
