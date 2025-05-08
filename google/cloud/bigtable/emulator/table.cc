@@ -23,12 +23,14 @@
 #include <absl/strings/str_format.h>
 #include <re2/re2.h>
 #include <chrono>
+#include <climits>
 #include <cstddef>
 #include <cstdint>
 #include <cstdlib>
 #include <exception>
 #include <memory>
 #include <mutex>
+#include <random>
 #include <ratio>
 #include <type_traits>
 
@@ -412,6 +414,11 @@ RowSampler Table::SampleRowKeys(
     bool table_is_empty = true;
     size_t offset_bytes = 0;
     std::once_flag once_flag;
+
+    std::random_device rd;
+    std::mt19937 gen = std::mt19937(rd());
+    std::uniform_int_distribution<> distrib =
+        std::uniform_int_distribution<>(1, INT_MAX);
   };
 
   std::shared_ptr<SamplingContext> sampling_context =
@@ -496,7 +503,7 @@ RowSampler Table::SampleRowKeys(
       }
 
       // Sample about one every 100 rows randomly.
-      if (std::rand() % 100 == 0) {
+      if (sampling_context->distrib(sampling_context->gen) % 100 == 0) {
         google::bigtable::v2::SampleRowKeysResponse resp;
         resp.set_row_key(row->first);
         resp.set_offset_bytes(sampling_context->offset_bytes);
@@ -505,7 +512,6 @@ RowSampler Table::SampleRowKeys(
 
         sampling_context->row_index++;
         sampling_context->row_iterator++;
-
 
         return resp;
       }
