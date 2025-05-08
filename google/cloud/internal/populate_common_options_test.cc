@@ -15,6 +15,7 @@
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
+#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/credentials_impl.h"
 #include "google/cloud/internal/user_agent_prefix.h"
 #include "google/cloud/opentelemetry_options.h"
@@ -32,10 +33,13 @@ namespace {
 
 using ::google::cloud::testing_util::ScopedEnvironment;
 using ::google::cloud::testing_util::TestCredentialsVisitor;
+using ::testing::Combine;
 using ::testing::Contains;
+using ::testing::ConvertGenerator;
 using ::testing::ElementsAre;
 using ::testing::Eq;
 using ::testing::IsEmpty;
+using ::testing::Values;
 
 TEST(PopulateCommonOptions, Simple) {
   // Unset all the relevant environment variables.
@@ -94,55 +98,131 @@ TEST(PopulateCommonOptions, InsecureCredentialsWithEmulator) {
   EXPECT_EQ(v.name, "InsecureCredentialsConfig");
 }
 
-TEST(PopulateCommonOptions, EndpointAuthority) {
-  Options optionses[] = {
-      Options{},
-      Options{}.set<EndpointOption>("endpoint_option"),
-      Options{}.set<AuthorityOption>("authority_option"),
-      Options{}
-          .set<EndpointOption>("endpoint_option")
-          .set<AuthorityOption>("authority_option"),
-  };
-  absl::optional<std::string> endpoints[] = {absl::nullopt, "", "endpoint"};
-  absl::optional<std::string> emulators[] = {absl::nullopt, "", "emulator"};
-  absl::optional<std::string> authorities[] = {absl::nullopt, "", "authority"};
-  for (auto const& options : optionses) {
-    for (auto const& endpoint_env : endpoints) {
-      for (auto const& emulator_env : emulators) {
-        for (auto const& authority_env : authorities) {
-          ScopedEnvironment endpoint("SERVICE_ENDPOINT", endpoint_env);
-          ScopedEnvironment emulator("SERVICE_EMULATOR", emulator_env);
-          ScopedEnvironment authority("SERVICE_AUTHORITY", authority_env);
+struct EndpointAuthorityTestParam {
+  using TupleT =
+      std::tuple<Options, absl::optional<std::string>,
+                 absl::optional<std::string>, absl::optional<std::string>>;
+  explicit EndpointAuthorityTestParam(TupleT t)
+      : options(std::get<0>(t)),
+        endpoint(std::get<1>(t)),
+        emulator(std::get<2>(t)),
+        authority(std::get<3>(t)) {}
 
-          auto actual = PopulateCommonOptions(
-              options, "SERVICE_ENDPOINT", "SERVICE_EMULATOR",
-              "SERVICE_AUTHORITY", "default.googleapis.com");
-
-          ASSERT_TRUE(actual.has<EndpointOption>());
-          auto const& actual_endpoint = actual.get<EndpointOption>();
-          if (emulator_env.has_value() && !emulator_env->empty()) {
-            EXPECT_THAT(actual_endpoint, Eq(*emulator_env));
-          } else if (endpoint_env.has_value() && !endpoint_env->empty()) {
-            EXPECT_THAT(actual_endpoint, Eq(*endpoint_env));
-          } else if (options.has<EndpointOption>()) {
-            EXPECT_THAT(actual_endpoint, Eq(options.get<EndpointOption>()));
-          } else {
-            EXPECT_THAT(actual_endpoint, Eq("default.googleapis.com"));
-          }
-
-          ASSERT_TRUE(actual.has<AuthorityOption>());
-          auto const& actual_authority = actual.get<AuthorityOption>();
-          if (authority_env.has_value() && !authority_env->empty()) {
-            EXPECT_THAT(actual_authority, Eq(*authority_env));
-          } else if (options.has<AuthorityOption>()) {
-            EXPECT_THAT(actual_authority, Eq(options.get<AuthorityOption>()));
-          } else {
-            EXPECT_THAT(actual_authority, Eq("default.googleapis.com"));
-          }
-        }
-      }
+  std::string OptionsContained() const {
+    if (!options.has<EndpointOption>() && !options.has<AuthorityOption>()) {
+      return "empty";
     }
+    std::string s = "options_";
+    if (options.has<EndpointOption>()) {
+      s += "endpoint";
+    }
+    if (options.has<AuthorityOption>()) {
+      s += "authority";
+    }
+    return s;
   }
+
+  std::string TestName() const {
+    return absl::StrJoin(
+        {OptionsContained(), endpoint.has_value() ? *endpoint : "null",
+         emulator.has_value() ? *emulator : "null",
+         authority.has_value() ? *authority : "null"},
+        "_");
+  }
+
+  std::string DebugInfo() const {
+    std::string s = "\nOptions {";
+    if (options.has<EndpointOption>() && options.has<AuthorityOption>()) {
+      s += "EndpointOption, AuthorityOption";
+    } else if (options.has<EndpointOption>()) {
+      s += "EndpointOption";
+    } else if (options.has<AuthorityOption>()) {
+      s += "AuthorityOption";
+    } else {
+      s += "<empty>";
+    }
+    s += "}\n";
+    s += "Endpoint: " + (endpoint.has_value() ? *endpoint : "<null>") + "\n";
+    s += "Emulator: " + (emulator.has_value() ? *emulator : "<null>") + "\n";
+    s += "Authority: " + (authority.has_value() ? *authority : "<null>") + "\n";
+    return s;
+  }
+
+  Options options;
+  absl::optional<std::string> endpoint;
+  absl::optional<std::string> emulator;
+  absl::optional<std::string> authority;
+};
+
+std::ostream& operator<<(std::ostream& os,
+                         EndpointAuthorityTestParam const& p) {
+  return os << p.DebugInfo();
+}
+
+class EndpointAuthorityTest
+    : public ::testing::TestWithParam<EndpointAuthorityTestParam> {};
+
+TEST_P(EndpointAuthorityTest, PopulateCommonOptions) {
+  auto endpoint_env = GetParam().endpoint;
+  auto emulator_env = GetParam().emulator;
+  auto authority_env = GetParam().authority;
+  auto options = GetParam().options;
+
+  ScopedEnvironment endpoint("SERVICE_ENDPOINT", endpoint_env);
+  ScopedEnvironment emulator("SERVICE_EMULATOR", emulator_env);
+  ScopedEnvironment authority("SERVICE_AUTHORITY", authority_env);
+
+  auto actual =
+      PopulateCommonOptions(options, "SERVICE_ENDPOINT", "SERVICE_EMULATOR",
+                            "SERVICE_AUTHORITY", "default.googleapis.com");
+
+  ASSERT_TRUE(actual.has<EndpointOption>());
+  auto const& actual_endpoint = actual.get<EndpointOption>();
+  if (emulator_env.has_value() && !emulator_env->empty()) {
+    EXPECT_THAT(actual_endpoint, Eq(*emulator_env));
+  } else if (endpoint_env.has_value() && !endpoint_env->empty()) {
+    EXPECT_THAT(actual_endpoint, Eq(*endpoint_env));
+  } else if (options.has<EndpointOption>()) {
+    EXPECT_THAT(actual_endpoint, Eq(options.get<EndpointOption>()));
+  } else {
+    EXPECT_THAT(actual_endpoint, Eq("default.googleapis.com"));
+  }
+
+  ASSERT_TRUE(actual.has<AuthorityOption>());
+  auto const& actual_authority = actual.get<AuthorityOption>();
+  if (authority_env.has_value() && !authority_env->empty()) {
+    EXPECT_THAT(actual_authority, Eq(*authority_env));
+  } else if (options.has<AuthorityOption>()) {
+    EXPECT_THAT(actual_authority, Eq(options.get<AuthorityOption>()));
+  } else if (options.has<EndpointOption>()) {
+    EXPECT_THAT(actual_authority, Eq(options.get<EndpointOption>()));
+  } else {
+    EXPECT_THAT(actual_authority, Eq("default.googleapis.com"));
+  }
+}
+
+INSTANTIATE_TEST_SUITE_P(
+    Matrix, EndpointAuthorityTest,
+    ConvertGenerator<EndpointAuthorityTestParam::TupleT>(Combine(
+        Values(Options{}, Options{}.set<EndpointOption>("endpoint_option"),
+               Options{}.set<AuthorityOption>("authority_option"),
+               Options{}
+                   .set<EndpointOption>("endpoint_option")
+                   .set<AuthorityOption>("authority_option")),
+        Values(absl::nullopt, "", "endpoint"),
+        Values(absl::nullopt, "", "emulator"),
+        Values(absl::nullopt, "", "authority"))),
+    [](::testing::TestParamInfo<EndpointAuthorityTest::ParamType> const& t) {
+      return t.param.TestName();
+    });
+
+TEST(PopulateCommonOptions, LocationalEndpoint) {
+  auto options =
+      Options{}.set<EndpointOption>("locational-service.googleapis.com");
+  auto actual =
+      PopulateCommonOptions(options, {}, {}, {}, "service.googleapis.com");
+  EXPECT_EQ(actual.get<EndpointOption>(), "locational-service.googleapis.com");
+  EXPECT_EQ(actual.get<AuthorityOption>(), "locational-service.googleapis.com");
 }
 
 TEST(PopulateCommonOptions, UniverseDomain) {
