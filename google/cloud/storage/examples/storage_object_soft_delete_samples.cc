@@ -135,11 +135,6 @@ void RunAll(std::vector<std::string> const& argv) {
       client, {bucket_name, object_name, std::to_string(versions[0])});
 
   std::cout << "\nCleanup" << std::endl;
-  std::cout << "Disabling soft-delete policy of the bucket.\n";
-  auto bucket_metadata = client.UpdateBucket(
-      bucket_name, gcs::BucketMetadata().set_soft_delete_policy(
-                       gcs::BucketSoftDeletePolicy{std::chrono::seconds(0)}));
-  if (!bucket_metadata.ok()) throw std::move(bucket_metadata).status();
   auto object_delete_status = client.DeleteObject(bucket_name, object_name);
   if (!object_delete_status.ok()) throw object_delete_status;
   std::cout << "Object deleted successfully.\n";
