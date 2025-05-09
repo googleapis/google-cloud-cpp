@@ -42,6 +42,7 @@ storage_examples = [
     "storage_object_retention_samples.cc",
     "storage_object_rewrite_samples.cc",
     "storage_object_samples.cc",
+    "storage_object_soft_delete_samples.cc",
     "storage_object_versioning_samples.cc",
     "storage_policy_doc_samples.cc",
     "storage_public_object_samples.cc",
