@@ -26,62 +26,53 @@ using ::google::cloud::storage::ObjectMetadata;
 std::vector<ObjectMetadata> ListSoftDeletedObjects(
     google::cloud::storage::Client client,
     std::vector<std::string> const& argv) {
-  //! [list-soft-deleted objects]
+  //! [storage_list_soft_deleted_objects]
   namespace gcs = ::google::cloud::storage;
   return [](gcs::Client client, std::string const& bucket_name) {
     std::cout << "Listing soft-deleted objects in the bucket: " << bucket_name
               << "\n";
     std::vector<gcs::ObjectMetadata> objects;
     for (auto const& object_metadata :
-         client.ListObjects(bucket_name, gcs::Versions(true))) {
+         client.ListObjects(bucket_name, gcs::SoftDeleted(true))) {
       if (!object_metadata) throw std::move(object_metadata).status();
-      if (object_metadata->time_deleted() !=
-          std::chrono::time_point<std::chrono::system_clock>{}) {
-        std::cout << "Soft-deleted object" << (objects.size() + 1) << ": "
-                  << object_metadata->name() << "\n";
-        objects.push_back(*object_metadata);
-      }
+      std::cout << "Soft-deleted object" << (objects.size() + 1) << ": "
+                << object_metadata->name() << "\n";
+      objects.push_back(*object_metadata);
     }
     return objects;
   }
-  //! [list-soft-deleted objects]
+  //! [storage_list_soft_deleted_objects]
   (std::move(client), argv.at(0));
 }
 
 std::vector<int64_t> ListSoftDeletedObjectVersions(
     google::cloud::storage::Client client,
     std::vector<std::string> const& argv) {
-  //! [list-soft-deleted-object-versions]
+  //! [storage_list_soft_deleted_object_versions]
   namespace gcs = ::google::cloud::storage;
   return [](gcs::Client client, std::string const& bucket_name,
             std::string const& object_name) {
     std::vector<int64_t> versions;
     for (auto const& object_metadata :
-         client.ListObjects(bucket_name, gcs::Versions(true))) {
+         client.ListObjects(bucket_name, gcs::SoftDeleted(true))) {
       if (!object_metadata) throw std::move(object_metadata).status();
-      if (object_metadata->name() == object_name &&
-          object_metadata->time_deleted() !=
-              std::chrono::time_point<std::chrono::system_clock>{}) {
+      if (object_metadata->name() == object_name) {
         std::cout << "Version" << (versions.size() + 1)
                   << " of the soft-deleted object " << object_name << ": "
                   << object_metadata->generation() << "\n";
         versions.push_back(object_metadata->generation());
       }
     }
-    if (versions.empty()) {
-      std::cout << "No soft-deleted object found with name: " << object_name
-                << "\n";
-    }
     return versions;
   }
-  //! [list-soft-deleted-object-versions]
+  //! [storage_list_soft_deleted_object_versions]
   (std::move(client), argv.at(0), argv.at(1));
 }
 
 StatusOr<ObjectMetadata> RestoreSoftDeletedObject(
     google::cloud::storage::Client client,
     std::vector<std::string> const& argv) {
-  //! [restore-soft-deleted-object]
+  //! [storage_restore_object]
   namespace gcs = ::google::cloud::storage;
   return [](gcs::Client client, std::string const& bucket_name,
             std::string const& object_name, std::int64_t generation) {
@@ -92,10 +83,7 @@ StatusOr<ObjectMetadata> RestoreSoftDeletedObject(
       return object_metadata;
     }
     auto restored_object_metadata =
-        client
-            .RewriteObject(bucket_name, object_name, bucket_name, object_name,
-                           gcs::SourceGeneration(generation))
-            .Result();
+        client.RestoreObject(bucket_name, object_name, generation);
     if (!restored_object_metadata.ok())
       throw std::move(restored_object_metadata).status();
     std::cout << "Object successfully restored: "
@@ -103,7 +91,7 @@ StatusOr<ObjectMetadata> RestoreSoftDeletedObject(
               << " (generation: " << generation << ")\n";
     return restored_object_metadata;
   }
-  //! [restore-soft-deleted-object]
+  //! [storage_restore_object]
   (std::move(client), argv.at(0), argv.at(1), std::stoll(argv.at(2)));
 }
 
@@ -125,10 +113,8 @@ void RunAll(std::vector<std::string> const& argv) {
             << bucket_name << std::endl;
   auto bucket = client.CreateBucket(
       bucket_name,
-      gcs::BucketMetadata{}
-          .set_versioning(gcs::BucketVersioning{true})
-          .set_soft_delete_policy(
-              std::chrono::seconds(30 * std::chrono::hours(24))),
+      gcs::BucketMetadata{}.set_soft_delete_policy(
+          std::chrono::seconds(10 * std::chrono::hours(24))),
       gcs::OverrideDefaultProject(project_id));
   auto object_name = examples::MakeRandomObjectName(generator, "object-");
   std::cout << "Inserting an object: " << object_name << std::endl;
@@ -174,20 +160,12 @@ void RunAll(std::vector<std::string> const& argv) {
     std::cout << "Bucket update failed with status: "
               << updated_bucket_metadata.status() << "\n";
   }
-  auto live_obj_delete_status = client.DeleteObject(bucket_name, object_name);
-  if (!live_obj_delete_status.ok()) {
-    std::cout << "Live copy of the object deletion failed with status: "
-              << live_obj_delete_status << "\n";
+  auto obj_delete_status = client.DeleteObject(bucket_name, object_name);
+  if (!obj_delete_status.ok()) {
+    std::cout << "Object deletion failed with status: "
+              << obj_delete_status << "\n";
   } else {
-    std::cout << "Live copy of the object deleted successfully.\n";
-  }
-  auto non_live_obj_delete_status = client.DeleteObject(
-      bucket_name, object_name, gcs::Generation(versions[0]));
-  if (!non_live_obj_delete_status.ok()) {
-    std::cout << "Soft-deleted copy of the object deletion failed with status: "
-              << non_live_obj_delete_status << "\n";
-  } else {
-    std::cout << "Soft-deleted copy of the object deleted successfully.\n";
+    std::cout << "Object deleted successfully.\n";
   }
   auto bucket_delete_status = client.DeleteBucket(bucket_name);
   if (!bucket_delete_status.ok()) {
