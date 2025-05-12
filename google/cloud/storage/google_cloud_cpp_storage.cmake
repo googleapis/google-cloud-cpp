@@ -69,9 +69,6 @@ add_library(
     idempotency_policy.cc
     idempotency_policy.h
     include_folders_as_prefixes.h
-    internal/access_control_common.h
-    internal/access_control_common_parser.cc
-    internal/access_control_common_parser.h
     internal/access_token_credentials.cc
     internal/access_token_credentials.h
     internal/base64.cc
@@ -85,8 +82,6 @@ add_library(
     internal/bucket_metadata_parser.h
     internal/bucket_requests.cc
     internal/bucket_requests.h
-    internal/common_metadata.h
-    internal/common_metadata_parser.h
     internal/complex_option.h
     internal/compute_engine_util.cc
     internal/compute_engine_util.h
@@ -451,8 +446,6 @@ if (BUILD_TESTING)
         hashing_options_test.cc
         hmac_key_metadata_test.cc
         idempotency_policy_test.cc
-        internal/access_control_common_parser_test.cc
-        internal/access_control_common_test.cc
         internal/access_token_credentials_test.cc
         internal/base64_test.cc
         internal/bucket_acl_requests_test.cc
