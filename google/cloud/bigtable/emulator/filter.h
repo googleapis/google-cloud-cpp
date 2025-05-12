@@ -80,6 +80,7 @@ struct ColumnRegex {
 };
 /// Only return cells from columns which fall into `range`.
 struct ColumnRange {
+  std::string column_family;
   StringRangeSet::Range range;
 };
 /// Only return cells from timestamps which fall into `range`.

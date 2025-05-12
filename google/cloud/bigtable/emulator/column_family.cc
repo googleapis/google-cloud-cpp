@@ -180,7 +180,9 @@ class FilteredColumnFamilyStream::FilterApply {
   explicit FilterApply(FilteredColumnFamilyStream& parent) : parent_(parent) {}
 
   bool operator()(ColumnRange const& column_range) {
-    parent_.column_ranges_.Intersect(column_range.range);
+    if (column_range.column_family == parent_.column_family_name_) {
+      parent_.column_ranges_.Intersect(column_range.range);
+    }
     return true;
   }
 

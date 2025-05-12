@@ -88,13 +88,13 @@ void CellStream::EmulateNextRow() {
 template <typename FilterFunctor, typename StateResetFunctor>
 class PerRowStateFilter {
   static_assert(google::cloud::internal::is_invocable<StateResetFunctor>::value,
-                "StateResetFunctor must be invocable with no arguments");
+                "StateResetFunctor must be invocable with no arguments.");
   using State =
       std::decay_t<google::cloud::internal::invoke_result_t<StateResetFunctor>>;
   static_assert(std::is_default_constructible<State>::value,
-                "State must be default constructible");
+                "State must be default constructible.");
   static_assert(std::is_assignable<State&, State>::value,
-                "State must assignable");
+                "State must be assignable.");
   static_assert(std::is_same<google::cloud::internal::invoke_result_t<
                                  FilterFunctor, State&, CellView const&>,
                              absl::optional<NextMode>>::value,
@@ -245,7 +245,7 @@ class TrivialFilter : public AbstractCellStreamImpl {
       std::is_same<
           google::cloud::internal::invoke_result_t<Filter, CellView const&>,
           absl::optional<NextMode>>::value,
-      "Invalid filter return type");
+      "Invalid filter return type.");
 
  public:
   /**
@@ -392,7 +392,7 @@ bool MergeCellStreams::ApplyFilter(InternalFilter const& internal_filter) {
   assert(!initialized_);
   bool res = true;
   for (auto& stream : unfinished_streams_) {
-    res = res && stream->ApplyFilter(internal_filter);
+    res = stream->ApplyFilter(internal_filter) && res;
   }
   return res;
 }
@@ -423,12 +423,10 @@ bool MergeCellStreams::Next(NextMode mode) {
 
   std::pop_heap(unfinished_streams_.begin(), unfinished_streams_.end(),
                 CellStreamGreater());
-  std::vector<std::unique_ptr<CellStream>>::iterator first_to_advance =
-      std::prev(unfinished_streams_.end());
-  std::vector<std::unique_ptr<CellStream>>::iterator to_readd_begin =
-      first_to_advance;
+  auto first_to_advance = std::prev(unfinished_streams_.end());
+  auto to_readd_begin = first_to_advance;
 
-  auto all_streams_to_advance_removed_from_heap = [&] () {
+  auto all_streams_to_advance_removed_from_heap = [&]() {
     if (unfinished_streams_.begin() == to_readd_begin) {
       // All streams removed.
       return true;
@@ -507,7 +505,20 @@ class ConditionStream : public AbstractCellStreamImpl {
         true_stream_(std::move(true_stream)),
         false_stream_(std::move(false_stream)) {}
 
-  bool ApplyFilter(InternalFilter const&) override { return false; }
+  bool ApplyFilter(InternalFilter const& internal_filter) override {
+    bool res = true;
+    if (absl::holds_alternative<RowKeyRegex>(internal_filter)) {
+      // If we're skipping whole rows we may apply it to all four streams.
+      // If we fail to apply to `source_` or `predicate_stream` but succeed with
+      // both `false_stream` and `true_stream` we should still return true
+      // because the stream will not yield the unwanted cells.
+      source_.ApplyFilter(internal_filter);
+      predicate_stream_.ApplyFilter(internal_filter);
+    }
+    res = true_stream_.ApplyFilter(internal_filter) && res;
+    res = false_stream_.ApplyFilter(internal_filter) && res;
+    return res;
+  }
 
   bool HasValue() const override {
     InitializeIfNeeded();
@@ -804,7 +815,7 @@ StatusOr<CellStreamConstructor> CreateFilterImpl(
                                  family_name = std::move(family_name),
                                  range = *std::move(maybe_range)] {
       auto source = source_ctor();
-      if (source.ApplyFilter(ColumnRange{range})) {
+      if (source.ApplyFilter(ColumnRange{family_name, range})) {
         return source;
       }
       return MakeTrivialFilter(
@@ -1067,9 +1078,15 @@ StatusOr<CellStreamConstructor> CreateFilterImpl(
          predicate_stream_ctor = *std::move(maybe_predicate_stream_ctor),
          true_stream_ctor = *std::move(maybe_true_stream_ctor),
          false_stream_ctor = *std::move(maybe_false_stream_ctor)] {
+          // The test FilterApplicationPropagation.Condition relies on the
+          // order of creating those streams.
+          auto source = source_ctor();
+          auto predicate_stream = predicate_stream_ctor();
+          auto true_stream = true_stream_ctor();
+          auto false_stream = false_stream_ctor();
           return CellStream(std::make_unique<ConditionStream>(
-              source_ctor(), predicate_stream_ctor(), true_stream_ctor(),
-              false_stream_ctor()));
+              std::move(source), std::move(predicate_stream),
+              std::move(true_stream), std::move(false_stream)));
         };
     return res;
   }
