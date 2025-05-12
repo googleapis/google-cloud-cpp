@@ -74,8 +74,20 @@ class EmulatorService final : public btproto::Bigtable::Service {
 
   grpc::Status CheckAndMutateRow(
       grpc::ServerContext* /* context */,
-      btproto::CheckAndMutateRowRequest const* /* request */,
-      btproto::CheckAndMutateRowResponse* /* response */) override {
+      btproto::CheckAndMutateRowRequest const* request,
+      btproto::CheckAndMutateRowResponse* response) override {
+    auto maybe_table = cluster_->FindTable(request->table_name());
+    if (!maybe_table) {
+      return ToGrpcStatus(maybe_table.status());
+    }
+
+    auto maybe_response = (*maybe_table)->CheckAndMutateRow(*request);
+    if (!maybe_response.ok()) {
+      return ToGrpcStatus(maybe_response.status());
+    }
+
+    *response = std::move(maybe_response.value());
+
     return grpc::Status::OK;
   }
 

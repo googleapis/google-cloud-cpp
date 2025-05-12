@@ -55,6 +55,7 @@ if (BUILD_TESTING)
     set(bigtable_emulator_unit_tests
         # cmake-format: sort
         column_family_test.cc
+        conditional_mutations_test.cc
         filter_test.cc
         filtered_map_test.cc
         range_set_test.cc
