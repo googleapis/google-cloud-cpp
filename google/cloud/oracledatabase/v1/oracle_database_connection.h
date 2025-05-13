@@ -55,8 +55,6 @@ class OracleDatabaseRetryPolicy : public ::google::cloud::RetryPolicy {
  *
  * In this class the following status codes are treated as transient errors:
  * - [`kDeadlineExceeded`](@ref google::cloud::StatusCode)
- * - [`kInternal`](@ref google::cloud::StatusCode)
- * - [`kResourceExhausted`](@ref google::cloud::StatusCode)
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
 class OracleDatabaseLimitedErrorCountRetryPolicy
@@ -111,8 +109,6 @@ class OracleDatabaseLimitedErrorCountRetryPolicy
  *
  * In this class the following status codes are treated as transient errors:
  * - [`kDeadlineExceeded`](@ref google::cloud::StatusCode)
- * - [`kInternal`](@ref google::cloud::StatusCode)
- * - [`kResourceExhausted`](@ref google::cloud::StatusCode)
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
 class OracleDatabaseLimitedTimeRetryPolicy : public OracleDatabaseRetryPolicy {

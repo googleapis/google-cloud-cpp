@@ -32,8 +32,6 @@ struct OracleDatabaseRetryTraits {
   static bool IsPermanentFailure(google::cloud::Status const& status) {
     return status.code() != StatusCode::kOk &&
            status.code() != StatusCode::kDeadlineExceeded &&
-           status.code() != StatusCode::kInternal &&
-           status.code() != StatusCode::kResourceExhausted &&
            status.code() != StatusCode::kUnavailable;
   }
 };
