@@ -35,7 +35,7 @@ namespace oauth2 {
 // NOLINTNEXTLINE(readability-identifier-naming)
 enum class GOOGLE_CLOUD_CPP_DEPRECATED(
     "This enum will be removed shortly. Prefer using the unified credentials "
-    "documented in @ref guac") JwtSigningAlgorithms {
+    "documented in @ref guac.") JwtSigningAlgorithms {
   RS256
 };
 
@@ -46,7 +46,7 @@ enum class GOOGLE_CLOUD_CPP_DEPRECATED(
  */
 GOOGLE_CLOUD_CPP_DEPRECATED(
     "This constant will be removed shortly. Prefer using the unified "
-    "credentials documented in @ref guac")
+    "credentials documented in @ref guac.")
 constexpr std::chrono::seconds GoogleOAuthAccessTokenLifetime() {
   return std::chrono::seconds(3600);
 }
@@ -64,7 +64,7 @@ constexpr std::chrono::seconds GoogleOAuthAccessTokenLifetime() {
  */
 GOOGLE_CLOUD_CPP_DEPRECATED(
     "This constant will be removed shortly. Prefer using the unified "
-    "credentials documented in @ref guac")
+    "credentials documented in @ref guac.")
 constexpr std::chrono::seconds GoogleOAuthAccessTokenExpirationSlack() {
   return std::chrono::seconds(300);
 }
@@ -76,7 +76,7 @@ constexpr std::chrono::seconds GoogleOAuthAccessTokenExpirationSlack() {
  */
 GOOGLE_CLOUD_CPP_DEPRECATED(
     "This constant will be removed shortly. Prefer using the unified "
-    "credentials documented in @ref guac")
+    "credentials documented in @ref guac.")
 inline char const* GoogleOAuthRefreshEndpoint() {
   static constexpr char kEndpoint[] = "https://oauth2.googleapis.com/token";
   return kEndpoint;
@@ -89,7 +89,7 @@ inline char const* GoogleOAuthRefreshEndpoint() {
  */
 GOOGLE_CLOUD_CPP_DEPRECATED(
     "This constant will be removed shortly. Prefer using the unified "
-    "credentials documented in @ref guac")
+    "credentials documented in @ref guac.")
 inline char const* GoogleOAuthScopeCloudPlatform() {
   static constexpr char kScope[] =
       "https://www.googleapis.com/auth/cloud-platform";

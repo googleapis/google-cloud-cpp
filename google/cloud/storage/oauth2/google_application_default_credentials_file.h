@@ -34,7 +34,7 @@ namespace oauth2 {
  */
 GOOGLE_CLOUD_CPP_DEPRECATED(
     "This function will be removed shortly. Prefer using the unified "
-    "credentials documented in @ref guac")
+    "credentials documented in @ref guac.")
 char const* GoogleAdcEnvVar();
 
 /**
@@ -48,7 +48,7 @@ char const* GoogleAdcEnvVar();
  */
 GOOGLE_CLOUD_CPP_DEPRECATED(
     "This function will be removed shortly. Prefer using the unified "
-    "credentials documented in @ref guac")
+    "credentials documented in @ref guac.")
 std::string GoogleAdcFilePathFromEnvVarOrEmpty();
 
 /**
@@ -62,7 +62,7 @@ std::string GoogleAdcFilePathFromEnvVarOrEmpty();
  */
 GOOGLE_CLOUD_CPP_DEPRECATED(
     "This function will be removed shortly. Prefer using the unified "
-    "credentials documented in @ref guac")
+    "credentials documented in @ref guac.")
 std::string GoogleAdcFilePathFromWellKnownPathOrEmpty();
 
 /**
@@ -75,7 +75,7 @@ std::string GoogleAdcFilePathFromWellKnownPathOrEmpty();
  */
 GOOGLE_CLOUD_CPP_DEPRECATED(
     "This function will be removed shortly. Prefer using the unified "
-    "credentials documented in @ref guac")
+    "credentials documented in @ref guac.")
 char const* GoogleGcloudAdcFileEnvVar();
 
 /**
@@ -90,7 +90,7 @@ char const* GoogleGcloudAdcFileEnvVar();
  */
 GOOGLE_CLOUD_CPP_DEPRECATED(
     "This function will be removed shortly. Prefer using the unified "
-    "credentials documented in @ref guac")
+    "credentials documented in @ref guac.")
 char const* GoogleAdcHomeEnvVar();
 
 }  // namespace oauth2

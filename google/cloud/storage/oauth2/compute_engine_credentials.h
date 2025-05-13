@@ -106,7 +106,7 @@ class ComputeEngineCredentials;
 template <>
 class GOOGLE_CLOUD_CPP_DEPRECATED(
     "This class will be removed shortly. Prefer using the unified credentials "
-    "documented in @ref guac")
+    "documented in @ref guac.")
     ComputeEngineCredentials<storage::internal::CurlRequestBuilder,
                              std::chrono::system_clock> : public Credentials {
  public:
@@ -157,7 +157,7 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
 template <typename HttpRequestBuilderType, typename ClockType>
 class GOOGLE_CLOUD_CPP_DEPRECATED(
     "This class will be removed shortly. Prefer using the unified credentials "
-    "documented in @ref guac") ComputeEngineCredentials : public Credentials {
+    "documented in @ref guac.") ComputeEngineCredentials : public Credentials {
  public:
   explicit ComputeEngineCredentials() : ComputeEngineCredentials("default") {}
 
