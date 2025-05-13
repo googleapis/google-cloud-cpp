@@ -42,7 +42,8 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   RefreshingCredentialsWrapper();
 
   struct GOOGLE_CLOUD_CPP_DEPRECATED(
-      "This struct will be removed shortly. Prefer using the unified credentials "
+      "This struct will be removed shortly. Prefer using the unified "
+      "credentials "
       "documented in @ref guac") TemporaryToken {
     std::string token;
     std::chrono::system_clock::time_point expiration_time;
