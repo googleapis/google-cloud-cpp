@@ -106,7 +106,8 @@ class AuthorizedUserCredentials;
 
 /// @copydoc AuthorizedUserCredentials
 template <>
-class AuthorizedUserCredentials<storage::internal::CurlRequestBuilder,
+class GOOGLE_CLOUD_CPP_DEPRECATED(
+    "This class will be removed shortly") AuthorizedUserCredentials<storage::internal::CurlRequestBuilder,
                                 std::chrono::system_clock>
     : public Credentials {
  public:
@@ -138,7 +139,8 @@ class AuthorizedUserCredentials<storage::internal::CurlRequestBuilder,
 
 /// @copydoc AuthorizedUserCredentials
 template <typename HttpRequestBuilderType, typename ClockType>
-class AuthorizedUserCredentials : public Credentials {
+class GOOGLE_CLOUD_CPP_DEPRECATED(
+    "This class will be removed shortly") AuthorizedUserCredentials : public Credentials {
  public:
   explicit AuthorizedUserCredentials(AuthorizedUserCredentialsInfo info,
                                      ChannelOptions const& channel_options = {})

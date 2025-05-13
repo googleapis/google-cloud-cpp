@@ -44,7 +44,9 @@ namespace oauth2 {
  *
  * @deprecated Prefer using the unified credentials documented in @ref guac
  */
-class Credentials {
+class  GOOGLE_CLOUD_CPP_DEPRECATED(
+    "This class will be removed shortly. Prefer using the unified credentials "
+    "documented in @ref guac") Credentials {
  public:
   virtual ~Credentials() = default;
 

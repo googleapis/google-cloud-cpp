@@ -211,7 +211,8 @@ class ServiceAccountCredentials;
 
 /// @copydoc ServiceAccountCredentials
 template <>
-class ServiceAccountCredentials<storage::internal::CurlRequestBuilder,
+class GOOGLE_CLOUD_CPP_DEPRECATED(
+    "This class will be removed shortly") ServiceAccountCredentials<storage::internal::CurlRequestBuilder,
                                 std::chrono::system_clock>
     : public Credentials {
  public:
