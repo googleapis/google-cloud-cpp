@@ -89,6 +89,7 @@ service_dirs = [
     "region_url_maps/v1/",
     "region_zones/v1/",
     "regions/v1/",
+    "reservation_blocks/v1/",
     "reservations/v1/",
     "resource_policies/v1/",
     "routers/v1/",

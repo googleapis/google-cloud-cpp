@@ -69,6 +69,12 @@ IdentityAwareProxyAdminServiceConnection::UpdateIapSettings(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::cloud::iap::v1::ValidateIapAttributeExpressionResponse>
+IdentityAwareProxyAdminServiceConnection::ValidateIapAttributeExpression(
+    google::cloud::iap::v1::ValidateIapAttributeExpressionRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StreamRange<google::cloud::iap::v1::TunnelDestGroup>
 IdentityAwareProxyAdminServiceConnection::ListTunnelDestGroups(
     google::cloud::iap::v1::

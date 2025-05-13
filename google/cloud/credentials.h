@@ -17,7 +17,9 @@
 
 #include "google/cloud/common_options.h"
 #include "google/cloud/options.h"
+#include "google/cloud/ssl_certificate.h"
 #include "google/cloud/version.h"
+#include "absl/strings/string_view.h"
 #include <chrono>
 #include <memory>
 #include <string>
@@ -29,6 +31,41 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 class CredentialsVisitor;
 }  // namespace internal
+
+namespace experimental {
+/**
+ * Represents a Client SSL certificate used in mTLS authentication.
+ *
+ * Providing this option enables both PEER and HOST verification.
+ *
+ * @note This option is currently experimental and only works with services
+ *     using JSON/HTTP transport.
+ *
+ * @note Requires libcurl v7.71.0 or later.
+ */
+struct ClientSslCertificateOption {
+  using Type = SslCertificate;
+};
+
+/**
+ * Represents one or more certificates to be added to the CA store in lieu of
+ * using any CA certificates stored on the filesystem.
+ *
+ * @note This option is currently experimental and only works with OpenSSL and
+ *     services using JSON/HTTP transport.
+ *
+ * @note Specifying this option disables reading any certificates that may exist
+ *     on the filesystem.
+ *
+ * @note Requires libcurl v7.10.6 or later.
+ *
+ * @note Not supported on Windows.
+ */
+struct CAInMemoryOption {
+  using Type = std::vector<absl::string_view>;
+};
+
+}  // namespace experimental
 
 /**
  * An opaque representation of the authentication configuration.
@@ -430,10 +467,10 @@ struct CARootsFilePathOption {
 };
 
 /// A list of  options related to authentication.
-using UnifiedCredentialsOptionList =
-    OptionList<AccessTokenLifetimeOption, CARootsFilePathOption,
-               DelegatesOption, ScopesOption, LoggingComponentsOption,
-               UnifiedCredentialsOption>;
+using UnifiedCredentialsOptionList = OptionList<
+    AccessTokenLifetimeOption, CARootsFilePathOption, DelegatesOption,
+    ScopesOption, LoggingComponentsOption, UnifiedCredentialsOption,
+    experimental::ClientSslCertificateOption, experimental::CAInMemoryOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud

@@ -61,6 +61,10 @@ class ReservationsConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::reservations::v1::ListReservationsRequest
           request);
 
+  virtual google::cloud::Idempotency PerformMaintenance(
+      google::cloud::cpp::compute::reservations::v1::
+          PerformMaintenanceRequest const& request);
+
   virtual google::cloud::Idempotency Resize(
       google::cloud::cpp::compute::reservations::v1::ResizeRequest const&
           request);

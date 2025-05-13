@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/credentials_impl.h"
+#include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/testing_util/credentials.h"
 #include <gmock/gmock.h>
 
@@ -24,6 +25,7 @@ namespace {
 
 using ::google::cloud::testing_util::TestCredentialsVisitor;
 using ::testing::ElementsAre;
+using ::testing::Eq;
 using ::testing::IsEmpty;
 using ::testing::IsNull;
 
@@ -120,6 +122,42 @@ TEST(Credentials, ApiKeyCredentials) {
   CredentialsVisitor::dispatch(*credentials, visitor);
   EXPECT_EQ("ApiKeyConfig", visitor.name);
   EXPECT_EQ("api-key", visitor.api_key);
+}
+
+TEST(PopulateAuthOptions, EmptyOptions) {
+  auto result_options = PopulateAuthOptions(Options{});
+
+  EXPECT_THAT(result_options.get<ScopesOption>(),
+              ElementsAre("https://www.googleapis.com/auth/cloud-platform"));
+  EXPECT_THAT(result_options.get<AccessTokenLifetimeOption>(),
+              Eq(std::chrono::hours(1)));
+  EXPECT_THAT(result_options.get<LoggingComponentsOption>(),
+              Eq(DefaultTracingComponents()));
+}
+
+TEST(PopulateAuthOptions, ExistingNonIntersectingOptions) {
+  auto options = Options{}.set<EndpointOption>("my-endpoint");
+  auto result_options = PopulateAuthOptions(options);
+
+  EXPECT_THAT(result_options.get<EndpointOption>(), Eq("my-endpoint"));
+  EXPECT_THAT(result_options.get<ScopesOption>(),
+              ElementsAre("https://www.googleapis.com/auth/cloud-platform"));
+  EXPECT_THAT(result_options.get<AccessTokenLifetimeOption>(),
+              Eq(std::chrono::hours(1)));
+  EXPECT_THAT(result_options.get<LoggingComponentsOption>(),
+              Eq(DefaultTracingComponents()));
+}
+
+TEST(PopulateAuthOptions, ExistingIntersectingOptions) {
+  auto options = Options{}
+                     .set<ScopesOption>({"my-scope"})
+                     .set<LoggingComponentsOption>({"my-logging-component"});
+  auto result_options = PopulateAuthOptions(options);
+  EXPECT_THAT(result_options.get<ScopesOption>(), ElementsAre("my-scope"));
+  EXPECT_THAT(result_options.get<AccessTokenLifetimeOption>(),
+              Eq(std::chrono::hours(1)));
+  EXPECT_THAT(result_options.get<LoggingComponentsOption>(),
+              ElementsAre("my-logging-component"));
 }
 
 }  // namespace

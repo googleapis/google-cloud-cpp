@@ -20,6 +20,7 @@
 #include "google/cloud/internal/rest_client.h"
 #include "google/cloud/log.h"
 #include "google/cloud/testing_util/chrono_output.h"
+#include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/strings/match.h"
 #include "absl/strings/str_split.h"
@@ -226,14 +227,18 @@ TEST_F(RestClientIntegrationTest, PatchJsonContentType) {
 }
 
 TEST_F(RestClientIntegrationTest, AnythingPostNoContentType) {
-  options_.set<UnifiedCredentialsOption>(MakeInsecureCredentials());
+  testing_util::ScopedLog log;
+  options_.set<UnifiedCredentialsOption>(
+      MakeAccessTokenCredentials("my-token", std::chrono::system_clock::now()));
   auto client = MakeDefaultRestClient(url_, options_);
   RestRequest request;
   request.SetPath("anything");
+  request.AddHeader("Authorization", "test-value");
 
   absl::Span<char const> span = absl::MakeConstSpan(json_payload_);
   auto response_status = RetryRestRequest([&] {
     rest_internal::RestContext context;
+    context.AddHeader("authorization", "other-value");
     return client->Post(context, request, {span});
   });
   ASSERT_STATUS_OK(response_status);
@@ -269,6 +274,16 @@ TEST_F(RestClientIntegrationTest, AnythingPostNoContentType) {
   // to url-encoded for POST operations. The response from such a POST to
   // httpbin.org/anything considers the payload sent as a form, not a json.
   EXPECT_THAT(iter.value().begin().key(), Eq(json_payload_));
+
+  // Verify the other authorization headers that were added to the context and
+  // request are NOT used and are NOT merged into the authorization header
+  // added by the Credentials object.
+  EXPECT_THAT(
+      log.ExtractLines(),
+      AllOf(Contains(HasSubstr(
+                "Ignoring duplicate header: authorization: other-valu")),
+            Contains(HasSubstr(
+                "Ignoring duplicate header: authorization: test-value"))));
 }
 
 TEST_F(RestClientIntegrationTest, AnythingPostJsonContentType) {

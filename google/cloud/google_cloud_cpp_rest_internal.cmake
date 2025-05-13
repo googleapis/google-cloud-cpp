@@ -50,6 +50,8 @@ add_library(
     internal/external_account_token_source_file.h
     internal/external_account_token_source_url.cc
     internal/external_account_token_source_url.h
+    internal/http_header.cc
+    internal/http_header.h
     internal/http_payload.h
     internal/json_parsing.cc
     internal/json_parsing.h
@@ -144,6 +146,11 @@ if (WIN32)
     target_link_libraries(google_cloud_cpp_rest_internal PUBLIC ws2_32 bcrypt
                                                                 crypt32)
 else ()
+    # We already require OpenSSL for non-Windows platforms.
+    target_compile_definitions(
+        google_cloud_cpp_rest_internal
+        PUBLIC # Enable OpenSSL specific functionality.
+               GOOGLE_CLOUD_CPP_HAVE_OPENSSL)
     target_link_libraries(google_cloud_cpp_rest_internal PUBLIC OpenSSL::SSL
                                                                 OpenSSL::Crypto)
 endif ()
@@ -255,6 +262,7 @@ if (BUILD_TESTING)
         internal/external_account_token_source_aws_test.cc
         internal/external_account_token_source_file_test.cc
         internal/external_account_token_source_url_test.cc
+        internal/http_header_test.cc
         internal/json_parsing_test.cc
         internal/make_jwt_assertion_test.cc
         internal/oauth2_access_token_credentials_test.cc

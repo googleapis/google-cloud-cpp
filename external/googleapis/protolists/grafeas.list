@@ -13,6 +13,7 @@
 @com_google_googleapis//grafeas/v1:package.proto
 @com_google_googleapis//grafeas/v1:provenance.proto
 @com_google_googleapis//grafeas/v1:sbom.proto
+@com_google_googleapis//grafeas/v1:secret.proto
 @com_google_googleapis//grafeas/v1:severity.proto
 @com_google_googleapis//grafeas/v1:slsa_provenance.proto
 @com_google_googleapis//grafeas/v1:slsa_provenance_zero_two.proto

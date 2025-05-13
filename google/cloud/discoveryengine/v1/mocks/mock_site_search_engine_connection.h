@@ -241,6 +241,93 @@ class MockSiteSearchEngineServiceConnection
   /// using ::testing::_;
   /// using ::testing::Matcher;
   /// EXPECT_CALL(*mock,
+  /// CreateSitemap(Matcher<google::cloud::discoveryengine::v1::CreateSitemapRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::discoveryengine::v1::Sitemap>>,
+      CreateSitemap,
+      (google::cloud::discoveryengine::v1::CreateSitemapRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateSitemap(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateSitemap,
+      (NoAwaitTag,
+       google::cloud::discoveryengine::v1::CreateSitemapRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CreateSitemap(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::discoveryengine::v1::Sitemap>>,
+              CreateSitemap, (google::longrunning::Operation const& operation),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteSitemap(Matcher<google::cloud::discoveryengine::v1::DeleteSitemapRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::discoveryengine::v1::DeleteSitemapMetadata>>,
+      DeleteSitemap,
+      (google::cloud::discoveryengine::v1::DeleteSitemapRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteSitemap(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteSitemap,
+      (NoAwaitTag,
+       google::cloud::discoveryengine::v1::DeleteSitemapRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, DeleteSitemap(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::discoveryengine::v1::DeleteSitemapMetadata>>,
+      DeleteSitemap, (google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::discoveryengine::v1::FetchSitemapsResponse>,
+      FetchSitemaps,
+      (google::cloud::discoveryengine::v1::FetchSitemapsRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
   /// EnableAdvancedSiteSearch(Matcher<google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchRequest
   /// const&>(_)))
   /// @endcode

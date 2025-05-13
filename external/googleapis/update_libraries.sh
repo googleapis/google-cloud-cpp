@@ -91,6 +91,7 @@ declare -A -r LIBRARIES=(
       "@com_google_googleapis//google/cloud/certificatemanager/v1:certificatemanager_cc_grpc"
   )"
   ["channel"]="@com_google_googleapis//google/cloud/channel/v1:channel_cc_grpc"
+  ["chronicle"]="@com_google_googleapis//google/cloud/chronicle/v1:chronicle_cc_grpc"
   ["cloudbuild"]="$(
     printf ",%s" \
       "@com_google_googleapis//google/devtools/cloudbuild/v1:cloudbuild_cc_grpc" \
@@ -129,6 +130,7 @@ declare -A -r LIBRARIES=(
   ["datastream"]="@com_google_googleapis//google/cloud/datastream/v1:datastream_cc_grpc"
   ["deploy"]="@com_google_googleapis//google/cloud/deploy/v1:deploy_cc_grpc"
   ["developerconnect"]="@com_google_googleapis//google/cloud/developerconnect/v1:developerconnect_cc_grpc"
+  ["devicestreaming"]="@com_google_googleapis//google/cloud/devicestreaming/v1:devicestreaming_cc_grpc"
   ["dialogflow_es"]="@com_google_googleapis//google/cloud/dialogflow/v2:dialogflow_cc_grpc"
   ["dialogflow_cx"]="@com_google_googleapis//google/cloud/dialogflow/cx/v3:cx_cc_grpc"
   ["discoveryengine"]="@com_google_googleapis//google/cloud/discoveryengine/v1:discoveryengine_cc_grpc"
@@ -166,6 +168,7 @@ declare -A -r LIBRARIES=(
   ["grafeas"]="@com_google_googleapis//grafeas/v1:grafeas_cc_grpc"
   ["iam"]="@com_google_googleapis//google/iam/admin/v1:admin_cc_grpc"
   ["iam_v2"]="@com_google_googleapis//google/iam/v2:iam_cc_grpc"
+  ["iam_v3"]="@com_google_googleapis//google/iam/v3:iam_cc_grpc"
   ["iap"]="@com_google_googleapis//google/cloud/iap/v1:iap_cc_grpc"
   ["ids"]="@com_google_googleapis//google/cloud/ids/v1:ids_cc_grpc"
   ["kms"]="$(
@@ -183,6 +186,7 @@ declare -A -r LIBRARIES=(
   ["managedidentities"]="@com_google_googleapis//google/cloud/managedidentities/v1:managedidentities_cc_grpc"
   ["managedkafka"]="@com_google_googleapis//google/cloud/managedkafka/v1:managedkafka_cc_grpc"
   ["memcache"]="@com_google_googleapis//google/cloud/memcache/v1:memcache_cc_grpc"
+  ["memorystore"]="@com_google_googleapis//google/cloud/memorystore/v1:memorystore_cc_grpc"
   ["metastore"]="$(
     printf ",%s" \
       "@com_google_googleapis//google/cloud/metastore/logging/v1:logging_cc_grpc" \
@@ -286,6 +290,7 @@ declare -A -r LIBRARIES=(
   )"
   ["sql"]="@com_google_googleapis//google/cloud/sql/v1:sql_cc_proto"
   ["storage"]="@com_google_googleapis//google/storage/v2:storage_cc_grpc"
+  ["storagebatchoperations"]="@com_google_googleapis//google/cloud/storagebatchoperations/v1:storagebatchoperations_cc_grpc"
   ["storagecontrol"]="@com_google_googleapis//google/storage/control/v2:control_cc_grpc"
   ["storageinsights"]="@com_google_googleapis//google/cloud/storageinsights/v1:storageinsights_cc_grpc"
   ["storagetransfer"]="@com_google_googleapis//google/storagetransfer/v1:storagetransfer_cc_grpc"

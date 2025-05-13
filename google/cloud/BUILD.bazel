@@ -270,7 +270,9 @@ cc_library(
             "WIN32_LEAN_AND_MEAN",
             "_WIN32_WINNT=0x0A00",
         ],
-        "//conditions:default": [],
+        "//conditions:default": [
+            "GOOGLE_CLOUD_CPP_HAVE_OPENSSL",
+        ],
     }),
     visibility = ["//:__subpackages__"],
     deps = [

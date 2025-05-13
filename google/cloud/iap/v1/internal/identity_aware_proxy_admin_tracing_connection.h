@@ -55,6 +55,11 @@ class IdentityAwareProxyAdminServiceTracingConnection
   StatusOr<google::cloud::iap::v1::IapSettings> UpdateIapSettings(
       google::cloud::iap::v1::UpdateIapSettingsRequest const& request) override;
 
+  StatusOr<google::cloud::iap::v1::ValidateIapAttributeExpressionResponse>
+  ValidateIapAttributeExpression(
+      google::cloud::iap::v1::ValidateIapAttributeExpressionRequest const&
+          request) override;
+
   StreamRange<google::cloud::iap::v1::TunnelDestGroup> ListTunnelDestGroups(
       google::cloud::iap::v1::ListTunnelDestGroupsRequest request) override;
 

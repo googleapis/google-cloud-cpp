@@ -213,8 +213,8 @@ class IdentityAwareProxyAdminServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.iap.v1.GetIapSettingsRequest]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L361}
-  /// [google.cloud.iap.v1.IapSettings]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L385}
+  /// [google.cloud.iap.v1.GetIapSettingsRequest]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L371}
+  /// [google.cloud.iap.v1.IapSettings]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L395}
   ///
   // clang-format on
   StatusOr<google::cloud::iap::v1::IapSettings> GetIapSettings(
@@ -245,12 +245,45 @@ class IdentityAwareProxyAdminServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.iap.v1.IapSettings]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L385}
-  /// [google.cloud.iap.v1.UpdateIapSettingsRequest]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L369}
+  /// [google.cloud.iap.v1.IapSettings]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L395}
+  /// [google.cloud.iap.v1.UpdateIapSettingsRequest]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L379}
   ///
   // clang-format on
   StatusOr<google::cloud::iap::v1::IapSettings> UpdateIapSettings(
       google::cloud::iap::v1::UpdateIapSettingsRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Validates that a given CEL expression conforms to IAP restrictions.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.iap.v1.ValidateIapAttributeExpressionRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.iap.v1.ValidateIapAttributeExpressionResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.iap.v1.ValidateIapAttributeExpressionRequest]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L682}
+  /// [google.cloud.iap.v1.ValidateIapAttributeExpressionResponse]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L693}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::iap::v1::ValidateIapAttributeExpressionResponse>
+  ValidateIapAttributeExpression(
+      google::cloud::iap::v1::ValidateIapAttributeExpressionRequest const&
+          request,
       Options opts = {});
 
   // clang-format off
@@ -285,8 +318,8 @@ class IdentityAwareProxyAdminServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.iap.v1.ListTunnelDestGroupsRequest]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L239}
-  /// [google.cloud.iap.v1.TunnelDestGroup]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L339}
+  /// [google.cloud.iap.v1.ListTunnelDestGroupsRequest]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L247}
+  /// [google.cloud.iap.v1.TunnelDestGroup]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L347}
   ///
   // clang-format on
   StreamRange<google::cloud::iap::v1::TunnelDestGroup> ListTunnelDestGroups(
@@ -326,8 +359,8 @@ class IdentityAwareProxyAdminServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.iap.v1.ListTunnelDestGroupsRequest]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L239}
-  /// [google.cloud.iap.v1.TunnelDestGroup]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L339}
+  /// [google.cloud.iap.v1.ListTunnelDestGroupsRequest]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L247}
+  /// [google.cloud.iap.v1.TunnelDestGroup]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L347}
   ///
   // clang-format on
   StreamRange<google::cloud::iap::v1::TunnelDestGroup> ListTunnelDestGroups(
@@ -360,8 +393,8 @@ class IdentityAwareProxyAdminServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.iap.v1.CreateTunnelDestGroupRequest]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L277}
-  /// [google.cloud.iap.v1.TunnelDestGroup]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L339}
+  /// [google.cloud.iap.v1.CreateTunnelDestGroupRequest]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L285}
+  /// [google.cloud.iap.v1.TunnelDestGroup]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L347}
   ///
   // clang-format on
   StatusOr<google::cloud::iap::v1::TunnelDestGroup> CreateTunnelDestGroup(
@@ -392,8 +425,8 @@ class IdentityAwareProxyAdminServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.iap.v1.CreateTunnelDestGroupRequest]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L277}
-  /// [google.cloud.iap.v1.TunnelDestGroup]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L339}
+  /// [google.cloud.iap.v1.CreateTunnelDestGroupRequest]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L285}
+  /// [google.cloud.iap.v1.TunnelDestGroup]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L347}
   ///
   // clang-format on
   StatusOr<google::cloud::iap::v1::TunnelDestGroup> CreateTunnelDestGroup(
@@ -420,8 +453,8 @@ class IdentityAwareProxyAdminServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.iap.v1.GetTunnelDestGroupRequest]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L301}
-  /// [google.cloud.iap.v1.TunnelDestGroup]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L339}
+  /// [google.cloud.iap.v1.GetTunnelDestGroupRequest]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L309}
+  /// [google.cloud.iap.v1.TunnelDestGroup]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L347}
   ///
   // clang-format on
   StatusOr<google::cloud::iap::v1::TunnelDestGroup> GetTunnelDestGroup(
@@ -450,8 +483,8 @@ class IdentityAwareProxyAdminServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.iap.v1.GetTunnelDestGroupRequest]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L301}
-  /// [google.cloud.iap.v1.TunnelDestGroup]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L339}
+  /// [google.cloud.iap.v1.GetTunnelDestGroupRequest]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L309}
+  /// [google.cloud.iap.v1.TunnelDestGroup]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L347}
   ///
   // clang-format on
   StatusOr<google::cloud::iap::v1::TunnelDestGroup> GetTunnelDestGroup(
@@ -476,7 +509,7 @@ class IdentityAwareProxyAdminServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.iap.v1.DeleteTunnelDestGroupRequest]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L314}
+  /// [google.cloud.iap.v1.DeleteTunnelDestGroupRequest]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L322}
   ///
   // clang-format on
   Status DeleteTunnelDestGroup(std::string const& name, Options opts = {});
@@ -502,7 +535,7 @@ class IdentityAwareProxyAdminServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.iap.v1.DeleteTunnelDestGroupRequest]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L314}
+  /// [google.cloud.iap.v1.DeleteTunnelDestGroupRequest]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L322}
   ///
   // clang-format on
   Status DeleteTunnelDestGroup(
@@ -530,8 +563,8 @@ class IdentityAwareProxyAdminServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.iap.v1.TunnelDestGroup]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L339}
-  /// [google.cloud.iap.v1.UpdateTunnelDestGroupRequest]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L327}
+  /// [google.cloud.iap.v1.TunnelDestGroup]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L347}
+  /// [google.cloud.iap.v1.UpdateTunnelDestGroupRequest]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L335}
   ///
   // clang-format on
   StatusOr<google::cloud::iap::v1::TunnelDestGroup> UpdateTunnelDestGroup(
@@ -561,8 +594,8 @@ class IdentityAwareProxyAdminServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.iap.v1.TunnelDestGroup]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L339}
-  /// [google.cloud.iap.v1.UpdateTunnelDestGroupRequest]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L327}
+  /// [google.cloud.iap.v1.TunnelDestGroup]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L347}
+  /// [google.cloud.iap.v1.UpdateTunnelDestGroupRequest]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L335}
   ///
   // clang-format on
   StatusOr<google::cloud::iap::v1::TunnelDestGroup> UpdateTunnelDestGroup(

@@ -59,9 +59,10 @@ Status LoggingDecoratorGenerator::GenerateHeader() {
   HeaderLocalIncludes({vars("stub_header_path"),
                        "google/cloud/tracing_options.h",
                        "google/cloud/version.h"});
-  HeaderSystemIncludes(
-      {HasLongrunningMethod() ? "google/longrunning/operations.grpc.pb.h" : "",
-       "memory", "set", "string"});
+  HeaderProtobufGenCodeIncludes({HasLongrunningMethod()
+                                     ? "google/longrunning/operations.grpc.pb.h"
+                                     : ""});
+  HeaderSystemIncludes({"memory", "set", "string"});
 
   auto result = HeaderOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;
@@ -124,8 +125,8 @@ Status LoggingDecoratorGenerator::GenerateCc() {
            ? "google/cloud/internal/async_streaming_write_rpc_logging.h"
            : "",
        "google/cloud/status_or.h"});
-  CcSystemIncludes(
-      {vars("proto_grpc_header_path"), "memory", "set", "string", "utility"});
+  CcProtobufGenCodeIncludes({vars("proto_grpc_header_path")});
+  CcSystemIncludes({"memory", "set", "string", "utility"});
 
   auto result = CcOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;

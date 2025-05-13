@@ -261,7 +261,7 @@ class DocumentServiceClient {
   ///  Otherwise, an `ALREADY_EXISTS` error is returned.
   ///  @n
   ///  This field must conform to [RFC-1034](https://tools.ietf.org/html/rfc1034)
-  ///  standard with a length limit of 63 characters. Otherwise, an
+  ///  standard with a length limit of 128 characters. Otherwise, an
   ///  `INVALID_ARGUMENT` error is returned.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -279,7 +279,7 @@ class DocumentServiceClient {
   /// [google.cloud.discoveryengine.v1.CreateDocumentRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document_service.proto#L255}
   /// [google.cloud.discoveryengine.v1.CreateDocumentRequest.parent]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document_service.proto#L258}
   /// [google.cloud.discoveryengine.v1.Document]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document.proto#L36}
-  /// [google.cloud.discoveryengine.v1.Document.name]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document.proto#L107}
+  /// [google.cloud.discoveryengine.v1.Document.name]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document.proto#L111}
   ///
   // clang-format on
   StatusOr<google::cloud::discoveryengine::v1::Document> CreateDocument(
@@ -484,8 +484,8 @@ class DocumentServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.Document]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document.proto#L36}
-  /// [google.cloud.discoveryengine.v1.ImportDocumentsRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/import_config.proto#L493}
-  /// [google.cloud.discoveryengine.v1.ImportDocumentsResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/import_config.proto#L636}
+  /// [google.cloud.discoveryengine.v1.ImportDocumentsRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/import_config.proto#L505}
+  /// [google.cloud.discoveryengine.v1.ImportDocumentsResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/import_config.proto#L655}
   ///
   // clang-format on
   future<StatusOr<google::cloud::discoveryengine::v1::ImportDocumentsResponse>>
@@ -570,9 +570,9 @@ class DocumentServiceClient {
   /// [google.cloud.discoveryengine.v1.Document]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document.proto#L36}
   /// [google.cloud.discoveryengine.v1.DocumentService.GetDocument]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document_service.proto#L48}
   /// [google.cloud.discoveryengine.v1.DocumentService.ListDocuments]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document_service.proto#L59}
-  /// [google.cloud.discoveryengine.v1.PurgeDocumentsRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/purge_config.proto#L122}
-  /// [google.cloud.discoveryengine.v1.PurgeDocumentsRequest.force]: @googleapis_reference_link{google/cloud/discoveryengine/v1/purge_config.proto#L170}
-  /// [google.cloud.discoveryengine.v1.PurgeDocumentsResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/purge_config.proto#L177}
+  /// [google.cloud.discoveryengine.v1.PurgeDocumentsRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/purge_config.proto#L126}
+  /// [google.cloud.discoveryengine.v1.PurgeDocumentsRequest.force]: @googleapis_reference_link{google/cloud/discoveryengine/v1/purge_config.proto#L174}
+  /// [google.cloud.discoveryengine.v1.PurgeDocumentsResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/purge_config.proto#L181}
   ///
   // clang-format on
   future<StatusOr<google::cloud::discoveryengine::v1::PurgeDocumentsResponse>>

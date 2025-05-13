@@ -170,7 +170,7 @@ class TextToSpeechClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.texttospeech.v1.SynthesizeSpeechRequest]: @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L166}
-  /// [google.cloud.texttospeech.v1.SynthesizeSpeechResponse]: @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L399}
+  /// [google.cloud.texttospeech.v1.SynthesizeSpeechResponse]: @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L397}
   ///
   // clang-format on
   StatusOr<google::cloud::texttospeech::v1::SynthesizeSpeechResponse>
@@ -205,7 +205,7 @@ class TextToSpeechClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.texttospeech.v1.SynthesizeSpeechRequest]: @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L166}
-  /// [google.cloud.texttospeech.v1.SynthesizeSpeechResponse]: @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L399}
+  /// [google.cloud.texttospeech.v1.SynthesizeSpeechResponse]: @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L397}
   ///
   // clang-format on
   StatusOr<google::cloud::texttospeech::v1::SynthesizeSpeechResponse>
@@ -215,7 +215,7 @@ class TextToSpeechClient {
 
   // clang-format off
   ///
-  /// Performs bidirectional streaming speech synthesis: receive audio while
+  /// Performs bidirectional streaming speech synthesis: receives audio while
   /// sending text.
   ///
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -235,8 +235,8 @@ class TextToSpeechClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.texttospeech.v1.StreamingSynthesizeRequest]: @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L445}
-  /// [google.cloud.texttospeech.v1.StreamingSynthesizeResponse]: @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L462}
+  /// [google.cloud.texttospeech.v1.StreamingSynthesizeRequest]: @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L464}
+  /// [google.cloud.texttospeech.v1.StreamingSynthesizeResponse]: @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L481}
   ///
   // clang-format on
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<

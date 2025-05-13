@@ -126,10 +126,10 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "com_google_googleapis",
         urls = [
-            "https://github.com/googleapis/googleapis/archive/53ca65d540dd1a7cb4746687daa87208dc9ea437.tar.gz",
+            "https://github.com/googleapis/googleapis/archive/079e5305050859d0e3a8c0768611283ee4863c07.tar.gz",
         ],
-        sha256 = "2a7ba70873cad53f2ef12531000535db61baaa67f100321f038654f9f3565e36",
-        strip_prefix = "googleapis-53ca65d540dd1a7cb4746687daa87208dc9ea437",
+        sha256 = "0546bdba7815f7fedbb0fc5100d4f38390ee679304660fe78cd388c4484d869d",
+        strip_prefix = "googleapis-079e5305050859d0e3a8c0768611283ee4863c07",
         build_file = Label("//bazel:googleapis.BUILD"),
         # Scaffolding for patching googleapis after download. For example:
         #   patches = ["googleapis.patch"]
@@ -146,10 +146,10 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "com_google_protobuf",
         urls = [
-            "https://github.com/protocolbuffers/protobuf/archive/v29.3.tar.gz",
+            "https://github.com/protocolbuffers/protobuf/archive/v29.4.tar.gz",
         ],
-        sha256 = "008a11cc56f9b96679b4c285fd05f46d317d685be3ab524b2a310be0fbad987e",
-        strip_prefix = "protobuf-29.3",
+        sha256 = "6bd9dcc91b17ef25c26adf86db71c67ec02431dc92e9589eaf82e22889230496",
+        strip_prefix = "protobuf-29.4",
     )
 
     # Load BoringSSL. This could be automatically loaded by gRPC. But as of
@@ -233,10 +233,10 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "io_opentelemetry_cpp",
         urls = [
-            "https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.19.0.tar.gz",
+            "https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.20.0.tar.gz",
         ],
-        sha256 = "e0330194b72f2fe4c0ce3ece06b02dc4aa0ab491eb75bf42c6f5e283912e468c",
-        strip_prefix = "opentelemetry-cpp-1.19.0",
+        sha256 = "4b6eeb852f075133c21b95948017f13a3e21740e55b921d27e42970a47314297",
+        strip_prefix = "opentelemetry-cpp-1.20.0",
         repo_mapping = {
             "@curl": "@com_github_curl_curl",
             "@com_github_google_benchmark": "@com_github_benchmark",

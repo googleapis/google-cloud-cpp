@@ -129,9 +129,10 @@ Status MetadataDecoratorGenerator::GenerateHeader() {
   HeaderPrint("\n");
   HeaderLocalIncludes({vars("stub_header_path"), "google/cloud/options.h",
                        "google/cloud/version.h"});
-  HeaderSystemIncludes(
-      {HasLongrunningMethod() ? "google/longrunning/operations.grpc.pb.h" : "",
-       "map", "memory", "string"});
+  HeaderProtobufGenCodeIncludes({HasLongrunningMethod()
+                                     ? "google/longrunning/operations.grpc.pb.h"
+                                     : ""});
+  HeaderSystemIncludes({"map", "memory", "string"});
 
   auto result = HeaderOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;
@@ -190,8 +191,8 @@ Status MetadataDecoratorGenerator::GenerateCc() {
        HasExplicitRoutingMethod() ? "google/cloud/internal/routing_matcher.h"
                                   : "",
        "google/cloud/status_or.h", "google/cloud/internal/url_encode.h"});
-  CcSystemIncludes({vars("proto_grpc_header_path"), "memory", "string",
-                    "utility", "vector"});
+  CcProtobufGenCodeIncludes({vars("proto_grpc_header_path")});
+  CcSystemIncludes({"memory", "string", "utility", "vector"});
 
   auto result = CcOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;

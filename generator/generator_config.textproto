@@ -666,6 +666,42 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+# Chronicle
+service {
+  service_proto_path: "google/cloud/chronicle/v1/entity.proto"
+  product_path: "google/cloud/chronicle/v1"
+  initial_copyright_year: "2025"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/chronicle/v1/data_access_control.proto"
+  product_path: "google/cloud/chronicle/v1"
+  initial_copyright_year: "2025"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/chronicle/v1/instance.proto"
+  product_path: "google/cloud/chronicle/v1"
+  initial_copyright_year: "2025"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/chronicle/v1/rule.proto"
+  product_path: "google/cloud/chronicle/v1"
+  initial_copyright_year: "2025"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/chronicle/v1/reference_list.proto"
+  product_path: "google/cloud/chronicle/v1"
+  initial_copyright_year: "2025"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Cloud Build
 service {
   service_proto_path: "google/devtools/cloudbuild/v1/cloudbuild.proto"
@@ -1664,6 +1700,15 @@ discovery_products {
     generate_grpc_transport: false
   }
 
+  rest_services {
+    service_proto_path: "google/cloud/compute/reservation_blocks/v1/reservation_blocks.proto"
+    product_path: "google/cloud/compute/reservation_blocks/v1"
+    initial_copyright_year: "2025"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    generate_grpc_transport: false
+  }
+
   # update_discovery_doc.sh additions
 }
 
@@ -2006,6 +2051,14 @@ service {
   service_proto_path: "google/cloud/developerconnect/v1/developer_connect.proto"
   product_path: "google/cloud/developerconnect/v1"
   initial_copyright_year: "2024"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+# Device Streaming
+service {
+  service_proto_path: "google/cloud/devicestreaming/v1/service.proto"
+  product_path: "google/cloud/devicestreaming/v1"
+  initial_copyright_year: "2025"
   retryable_status_codes: ["kUnavailable"]
 }
 
@@ -2606,6 +2659,20 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+service {
+  service_proto_path: "google/iam/v3/policy_bindings_service.proto"
+  product_path: "google/cloud/iam/v3"
+  initial_copyright_year: "2025"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/iam/v3/principal_access_boundary_policies_service.proto"
+  product_path: "google/cloud/iam/v3"
+  initial_copyright_year: "2025"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Identity-Aware Proxy (IAP)
 service {
   service_proto_path: "google/cloud/iap/v1/service.proto"
@@ -2758,6 +2825,14 @@ service {
   product_path: "google/cloud/memcache/v1"
   forwarding_product_path: "google/cloud/memcache"
   initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+# Memorystore
+service {
+  service_proto_path: "google/cloud/memorystore/v1/memorystore.proto"
+  product_path: "google/cloud/memorystore/v1"
+  initial_copyright_year: "2025"
   retryable_status_codes: ["kUnavailable"]
 }
 
@@ -3712,6 +3787,14 @@ service {
     "CreateNotificationConfig",
     "ListNotificationConfigs"
   ]
+}
+
+# Storage Batch Operations
+service {
+  service_proto_path: "google/cloud/storagebatchoperations/v1/storage_batch_operations.proto"
+  product_path: "google/cloud/storagebatchoperations/v1"
+  initial_copyright_year: "2025"
+  retryable_status_codes: ["kUnavailable"]
 }
 
 # Storage Control

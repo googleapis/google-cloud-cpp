@@ -607,7 +607,7 @@ class DataplexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.Action]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L313}
+  /// [google.cloud.dataplex.v1.Action]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L315}
   /// [google.cloud.dataplex.v1.ListLakeActionsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L489}
   ///
   // clang-format on
@@ -646,7 +646,7 @@ class DataplexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.Action]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L313}
+  /// [google.cloud.dataplex.v1.Action]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L315}
   /// [google.cloud.dataplex.v1.ListLakeActionsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L489}
   ///
   // clang-format on
@@ -1168,7 +1168,7 @@ class DataplexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.Action]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L313}
+  /// [google.cloud.dataplex.v1.Action]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L315}
   /// [google.cloud.dataplex.v1.ListZoneActionsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L619}
   ///
   // clang-format on
@@ -1207,7 +1207,7 @@ class DataplexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.Action]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L313}
+  /// [google.cloud.dataplex.v1.Action]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L315}
   /// [google.cloud.dataplex.v1.ListZoneActionsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L619}
   ///
   // clang-format on
@@ -1250,7 +1250,7 @@ class DataplexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.Asset]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L503}
+  /// [google.cloud.dataplex.v1.Asset]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L505}
   /// [google.cloud.dataplex.v1.CreateAssetRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L650}
   ///
   // clang-format on
@@ -1305,7 +1305,7 @@ class DataplexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.Asset]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L503}
+  /// [google.cloud.dataplex.v1.Asset]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L505}
   /// [google.cloud.dataplex.v1.CreateAssetRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L650}
   ///
   // clang-format on
@@ -1368,7 +1368,7 @@ class DataplexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.Asset]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L503}
+  /// [google.cloud.dataplex.v1.Asset]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L505}
   /// [google.cloud.dataplex.v1.UpdateAssetRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L677}
   ///
   // clang-format on
@@ -1421,7 +1421,7 @@ class DataplexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.Asset]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L503}
+  /// [google.cloud.dataplex.v1.Asset]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L505}
   /// [google.cloud.dataplex.v1.UpdateAssetRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L677}
   ///
   // clang-format on
@@ -1601,7 +1601,7 @@ class DataplexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.Asset]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L503}
+  /// [google.cloud.dataplex.v1.Asset]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L505}
   /// [google.cloud.dataplex.v1.ListAssetsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L702}
   ///
   // clang-format on
@@ -1640,7 +1640,7 @@ class DataplexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.Asset]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L503}
+  /// [google.cloud.dataplex.v1.Asset]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L505}
   /// [google.cloud.dataplex.v1.ListAssetsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L702}
   ///
   // clang-format on
@@ -1667,7 +1667,7 @@ class DataplexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.Asset]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L503}
+  /// [google.cloud.dataplex.v1.Asset]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L505}
   /// [google.cloud.dataplex.v1.GetAssetRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L760}
   ///
   // clang-format on
@@ -1697,7 +1697,7 @@ class DataplexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.Asset]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L503}
+  /// [google.cloud.dataplex.v1.Asset]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L505}
   /// [google.cloud.dataplex.v1.GetAssetRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L760}
   ///
   // clang-format on
@@ -1733,7 +1733,7 @@ class DataplexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.Action]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L313}
+  /// [google.cloud.dataplex.v1.Action]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L315}
   /// [google.cloud.dataplex.v1.ListAssetActionsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L739}
   ///
   // clang-format on
@@ -1772,7 +1772,7 @@ class DataplexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.Action]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L313}
+  /// [google.cloud.dataplex.v1.Action]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L315}
   /// [google.cloud.dataplex.v1.ListAssetActionsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L739}
   ///
   // clang-format on

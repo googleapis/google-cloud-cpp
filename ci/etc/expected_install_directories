@@ -182,6 +182,10 @@
 ./include/google/cloud/channel/v1
 ./include/google/cloud/channel/v1/internal
 ./include/google/cloud/channel/v1/mocks
+./include/google/cloud/chronicle
+./include/google/cloud/chronicle/v1
+./include/google/cloud/chronicle/v1/internal
+./include/google/cloud/chronicle/v1/mocks
 ./include/google/cloud/cloudbuild
 ./include/google/cloud/cloudbuild/mocks
 ./include/google/cloud/cloudbuild/v1
@@ -512,6 +516,10 @@
 ./include/google/cloud/compute/regions/v1
 ./include/google/cloud/compute/regions/v1/internal
 ./include/google/cloud/compute/regions/v1/mocks
+./include/google/cloud/compute/reservation_blocks
+./include/google/cloud/compute/reservation_blocks/v1
+./include/google/cloud/compute/reservation_blocks/v1/internal
+./include/google/cloud/compute/reservation_blocks/v1/mocks
 ./include/google/cloud/compute/reservations
 ./include/google/cloud/compute/reservations/v1
 ./include/google/cloud/compute/reservations/v1/internal
@@ -698,6 +706,10 @@
 ./include/google/cloud/developerconnect/v1
 ./include/google/cloud/developerconnect/v1/internal
 ./include/google/cloud/developerconnect/v1/mocks
+./include/google/cloud/devicestreaming
+./include/google/cloud/devicestreaming/v1
+./include/google/cloud/devicestreaming/v1/internal
+./include/google/cloud/devicestreaming/v1/mocks
 ./include/google/cloud/dialogflow
 ./include/google/cloud/dialogflow/cx
 ./include/google/cloud/dialogflow/cx/v3
@@ -799,6 +811,9 @@
 ./include/google/cloud/iam/v2
 ./include/google/cloud/iam/v2/internal
 ./include/google/cloud/iam/v2/mocks
+./include/google/cloud/iam/v3
+./include/google/cloud/iam/v3/internal
+./include/google/cloud/iam/v3/mocks
 ./include/google/cloud/iap
 ./include/google/cloud/iap/mocks
 ./include/google/cloud/iap/v1
@@ -845,6 +860,10 @@
 ./include/google/cloud/memcache/v1
 ./include/google/cloud/memcache/v1/internal
 ./include/google/cloud/memcache/v1/mocks
+./include/google/cloud/memorystore
+./include/google/cloud/memorystore/v1
+./include/google/cloud/memorystore/v1/internal
+./include/google/cloud/memorystore/v1/mocks
 ./include/google/cloud/metastore
 ./include/google/cloud/metastore/v1
 ./include/google/cloud/metastore/v1/internal
@@ -1092,6 +1111,10 @@
 ./include/google/cloud/sql/v1/mocks
 ./include/google/cloud/storage
 ./include/google/cloud/storage/internal
+./include/google/cloud/storagebatchoperations
+./include/google/cloud/storagebatchoperations/v1
+./include/google/cloud/storagebatchoperations/v1/internal
+./include/google/cloud/storagebatchoperations/v1/mocks
 ./include/google/cloud/storagecontrol
 ./include/google/cloud/storagecontrol/v2
 ./include/google/cloud/storagecontrol/v2/internal
@@ -1240,6 +1263,7 @@
 ./include/google/iam/credentials/v1
 ./include/google/iam/v1
 ./include/google/iam/v2
+./include/google/iam/v3
 ./include/google/identity
 ./include/google/identity/accesscontextmanager
 ./include/google/identity/accesscontextmanager/v1
@@ -1321,6 +1345,8 @@
 ./lib64/cmake/google_cloud_cpp_certificatemanager_mocks
 ./lib64/cmake/google_cloud_cpp_channel
 ./lib64/cmake/google_cloud_cpp_channel_mocks
+./lib64/cmake/google_cloud_cpp_chronicle
+./lib64/cmake/google_cloud_cpp_chronicle_mocks
 ./lib64/cmake/google_cloud_cpp_cloudbuild
 ./lib64/cmake/google_cloud_cpp_cloudbuild_mocks
 ./lib64/cmake/google_cloud_cpp_cloudcontrolspartner
@@ -1364,6 +1390,8 @@
 ./lib64/cmake/google_cloud_cpp_deploy_mocks
 ./lib64/cmake/google_cloud_cpp_developerconnect
 ./lib64/cmake/google_cloud_cpp_developerconnect_mocks
+./lib64/cmake/google_cloud_cpp_devicestreaming
+./lib64/cmake/google_cloud_cpp_devicestreaming_mocks
 ./lib64/cmake/google_cloud_cpp_dialogflow_cx
 ./lib64/cmake/google_cloud_cpp_dialogflow_cx_mocks
 ./lib64/cmake/google_cloud_cpp_dialogflow_es
@@ -1416,6 +1444,8 @@
 ./lib64/cmake/google_cloud_cpp_managedkafka_mocks
 ./lib64/cmake/google_cloud_cpp_memcache
 ./lib64/cmake/google_cloud_cpp_memcache_mocks
+./lib64/cmake/google_cloud_cpp_memorystore
+./lib64/cmake/google_cloud_cpp_memorystore_mocks
 ./lib64/cmake/google_cloud_cpp_metastore
 ./lib64/cmake/google_cloud_cpp_metastore_mocks
 ./lib64/cmake/google_cloud_cpp_migrationcenter
@@ -1505,6 +1535,8 @@
 ./lib64/cmake/google_cloud_cpp_sql
 ./lib64/cmake/google_cloud_cpp_sql_mocks
 ./lib64/cmake/google_cloud_cpp_storage
+./lib64/cmake/google_cloud_cpp_storagebatchoperations
+./lib64/cmake/google_cloud_cpp_storagebatchoperations_mocks
 ./lib64/cmake/google_cloud_cpp_storagecontrol
 ./lib64/cmake/google_cloud_cpp_storagecontrol_mocks
 ./lib64/cmake/google_cloud_cpp_storageinsights

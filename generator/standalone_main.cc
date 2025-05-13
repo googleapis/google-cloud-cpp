@@ -196,10 +196,6 @@ google::cloud::Status GenerateProtosForRestProducts(
     google::protobuf::RepeatedPtrField<
         google::cloud::cpp::generator::DiscoveryDocumentDefinedProduct> const&
         rest_products) {
-  google::protobuf::RepeatedPtrField<
-      google::cloud::cpp::generator::ServiceConfiguration>
-      services;
-
   for (auto const& p : rest_products) {
     auto doc = google::cloud::generator_internal::GetDiscoveryDoc(
         p.discovery_document_url());

@@ -94,6 +94,56 @@ class StorageControlLogging : public StorageControlStub {
       google::storage::control::v2::ListManagedFoldersRequest const& request)
       override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateAnywhereCache(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::storage::control::v2::CreateAnywhereCacheRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CreateAnywhereCache(
+      grpc::ClientContext& context, Options options,
+      google::storage::control::v2::CreateAnywhereCacheRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateAnywhereCache(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::storage::control::v2::UpdateAnywhereCacheRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UpdateAnywhereCache(
+      grpc::ClientContext& context, Options options,
+      google::storage::control::v2::UpdateAnywhereCacheRequest const& request)
+      override;
+
+  StatusOr<google::storage::control::v2::AnywhereCache> DisableAnywhereCache(
+      grpc::ClientContext& context, Options const& options,
+      google::storage::control::v2::DisableAnywhereCacheRequest const& request)
+      override;
+
+  StatusOr<google::storage::control::v2::AnywhereCache> PauseAnywhereCache(
+      grpc::ClientContext& context, Options const& options,
+      google::storage::control::v2::PauseAnywhereCacheRequest const& request)
+      override;
+
+  StatusOr<google::storage::control::v2::AnywhereCache> ResumeAnywhereCache(
+      grpc::ClientContext& context, Options const& options,
+      google::storage::control::v2::ResumeAnywhereCacheRequest const& request)
+      override;
+
+  StatusOr<google::storage::control::v2::AnywhereCache> GetAnywhereCache(
+      grpc::ClientContext& context, Options const& options,
+      google::storage::control::v2::GetAnywhereCacheRequest const& request)
+      override;
+
+  StatusOr<google::storage::control::v2::ListAnywhereCachesResponse>
+  ListAnywhereCaches(
+      grpc::ClientContext& context, Options const& options,
+      google::storage::control::v2::ListAnywhereCachesRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,

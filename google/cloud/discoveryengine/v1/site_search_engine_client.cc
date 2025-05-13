@@ -248,6 +248,112 @@ SiteSearchEngineServiceClient::ListTargetSites(
   return connection_->ListTargetSites(std::move(request));
 }
 
+future<StatusOr<google::cloud::discoveryengine::v1::Sitemap>>
+SiteSearchEngineServiceClient::CreateSitemap(
+    std::string const& parent,
+    google::cloud::discoveryengine::v1::Sitemap const& sitemap, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::discoveryengine::v1::CreateSitemapRequest request;
+  request.set_parent(parent);
+  *request.mutable_sitemap() = sitemap;
+  return connection_->CreateSitemap(request);
+}
+
+StatusOr<google::longrunning::Operation>
+SiteSearchEngineServiceClient::CreateSitemap(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::discoveryengine::v1::Sitemap const& sitemap, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::discoveryengine::v1::CreateSitemapRequest request;
+  request.set_parent(parent);
+  *request.mutable_sitemap() = sitemap;
+  return connection_->CreateSitemap(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::discoveryengine::v1::Sitemap>>
+SiteSearchEngineServiceClient::CreateSitemap(
+    google::cloud::discoveryengine::v1::CreateSitemapRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateSitemap(request);
+}
+
+StatusOr<google::longrunning::Operation>
+SiteSearchEngineServiceClient::CreateSitemap(
+    NoAwaitTag,
+    google::cloud::discoveryengine::v1::CreateSitemapRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateSitemap(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::discoveryengine::v1::Sitemap>>
+SiteSearchEngineServiceClient::CreateSitemap(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateSitemap(operation);
+}
+
+future<StatusOr<google::cloud::discoveryengine::v1::DeleteSitemapMetadata>>
+SiteSearchEngineServiceClient::DeleteSitemap(std::string const& name,
+                                             Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::discoveryengine::v1::DeleteSitemapRequest request;
+  request.set_name(name);
+  return connection_->DeleteSitemap(request);
+}
+
+StatusOr<google::longrunning::Operation>
+SiteSearchEngineServiceClient::DeleteSitemap(NoAwaitTag,
+                                             std::string const& name,
+                                             Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::discoveryengine::v1::DeleteSitemapRequest request;
+  request.set_name(name);
+  return connection_->DeleteSitemap(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::discoveryengine::v1::DeleteSitemapMetadata>>
+SiteSearchEngineServiceClient::DeleteSitemap(
+    google::cloud::discoveryengine::v1::DeleteSitemapRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteSitemap(request);
+}
+
+StatusOr<google::longrunning::Operation>
+SiteSearchEngineServiceClient::DeleteSitemap(
+    NoAwaitTag,
+    google::cloud::discoveryengine::v1::DeleteSitemapRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteSitemap(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::discoveryengine::v1::DeleteSitemapMetadata>>
+SiteSearchEngineServiceClient::DeleteSitemap(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteSitemap(operation);
+}
+
+StatusOr<google::cloud::discoveryengine::v1::FetchSitemapsResponse>
+SiteSearchEngineServiceClient::FetchSitemaps(std::string const& parent,
+                                             Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::discoveryengine::v1::FetchSitemapsRequest request;
+  request.set_parent(parent);
+  return connection_->FetchSitemaps(request);
+}
+
+StatusOr<google::cloud::discoveryengine::v1::FetchSitemapsResponse>
+SiteSearchEngineServiceClient::FetchSitemaps(
+    google::cloud::discoveryengine::v1::FetchSitemapsRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->FetchSitemaps(request);
+}
+
 future<StatusOr<
     google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchResponse>>
 SiteSearchEngineServiceClient::EnableAdvancedSiteSearch(

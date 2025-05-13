@@ -406,6 +406,24 @@ void ServiceCodeGenerator::GenerateSystemIncludes(
   }
 }
 
+void ServiceCodeGenerator::HeaderProtobufGenCodeIncludes(
+    std::vector<std::string> const& pb_h_includes) {
+  if (pb_h_system_includes_) {
+    HeaderSystemIncludes(pb_h_includes);
+  } else {
+    HeaderLocalIncludes(pb_h_includes);
+  }
+}
+
+void ServiceCodeGenerator::CcProtobufGenCodeIncludes(
+    std::vector<std::string> const& pb_h_includes) {
+  if (pb_h_system_includes_) {
+    CcSystemIncludes(pb_h_includes);
+  } else {
+    CcLocalIncludes(pb_h_includes);
+  }
+}
+
 Status ServiceCodeGenerator::OpenNamespaces(
     Printer& p, NamespaceType ns_type, std::string const& product_path_var,
     std::string const& ns_documentation) {

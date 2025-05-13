@@ -706,6 +706,257 @@ TEST_F(AsyncClientIntegrationTest, ResumeRewriteFailure) {
   ASSERT_THAT(iteration, Not(IsOk()));
 }
 
+TEST_F(AsyncClientIntegrationTest, StartAppendableObjectUploadEmpty) {
+  if (!UsingEmulator()) GTEST_SKIP();
+  auto async = AsyncClient(TestOptions());
+  auto client = MakeIntegrationTestClient(true, TestOptions());
+  auto object_name = MakeRandomObjectName();
+
+  auto create =
+      client.CreateBucket(bucket_name(), storage::BucketMetadata{}
+                                             .set_location("us-west4")
+                                             .set_storage_class("RAPID"));
+  if (!create && create.status().code() != StatusCode::kAlreadyExists) {
+    GTEST_FAIL() << "cannot create bucket: " << create.status();
+  }
+  auto w =
+      async.StartAppendableObjectUpload(BucketName(bucket_name()), object_name)
+          .get();
+  ASSERT_STATUS_OK(w);
+  AsyncWriter writer;
+  AsyncToken token;
+  std::tie(writer, token) = *std::move(w);
+
+  auto metadata = writer.Finalize(std::move(token)).get();
+  ASSERT_STATUS_OK(metadata);
+  ScheduleForDelete(*metadata);
+
+  EXPECT_EQ(metadata->bucket(), BucketName(bucket_name()).FullName());
+  EXPECT_EQ(metadata->name(), object_name);
+  EXPECT_EQ(metadata->size(), 0);
+}
+
+TEST_F(AsyncClientIntegrationTest, StartAppendableObjectUploadMultiple) {
+  if (!UsingEmulator()) GTEST_SKIP();
+  auto async = AsyncClient(TestOptions());
+  auto client = MakeIntegrationTestClient(true, TestOptions());
+  auto object_name = MakeRandomObjectName();
+  // Create a small block to send over and over.
+  auto constexpr kBlockSize = 256 * 1024;
+  auto constexpr kBlockCount = 16;
+  auto const block = MakeRandomData(kBlockSize);
+
+  auto create =
+      client.CreateBucket(bucket_name(), storage::BucketMetadata{}
+                                             .set_location("us-west4")
+                                             .set_storage_class("RAPID"));
+  if (!create && create.status().code() != StatusCode::kAlreadyExists) {
+    GTEST_FAIL() << "cannot create bucket: " << create.status();
+  }
+  auto w =
+      async.StartAppendableObjectUpload(BucketName(bucket_name()), object_name)
+          .get();
+  ASSERT_STATUS_OK(w);
+  AsyncWriter writer;
+  AsyncToken token;
+  std::tie(writer, token) = *std::move(w);
+  for (int i = 0; i != kBlockCount; ++i) {
+    auto p = writer.Write(std::move(token), WritePayload(block)).get();
+    ASSERT_STATUS_OK(p);
+    token = *std::move(p);
+  }
+
+  auto metadata = writer.Finalize(std::move(token)).get();
+  ASSERT_STATUS_OK(metadata);
+  ScheduleForDelete(*metadata);
+
+  EXPECT_EQ(metadata->bucket(), BucketName(bucket_name()).FullName());
+  EXPECT_EQ(metadata->name(), object_name);
+  EXPECT_EQ(metadata->size(), kBlockCount * kBlockSize);
+}
+
+TEST_F(AsyncClientIntegrationTest, ResumeAppendableObjectUpload) {
+  // Skipping the test till we get the takeover feature on testbench.
+  GTEST_SKIP();
+  auto async = AsyncClient(TestOptions());
+  auto client = MakeIntegrationTestClient(true, TestOptions());
+  auto object_name = MakeRandomObjectName();
+  // Create a small block to send over and over.
+  auto constexpr kBlockSize = 256 * 1024;
+  auto constexpr kInitialBlockCount = 4;
+  auto constexpr kTotalBlockCount = 4 + kInitialBlockCount;
+  auto constexpr kDesiredSize = kBlockSize * kTotalBlockCount;
+  auto const block = MakeRandomData(kBlockSize);
+
+  auto create =
+      client.CreateBucket(bucket_name(), storage::BucketMetadata{}
+                                             .set_location("us-west4")
+                                             .set_storage_class("RAPID"));
+  if (!create && create.status().code() != StatusCode::kAlreadyExists) {
+    GTEST_FAIL() << "cannot create bucket: " << create.status();
+  }
+  auto w =
+      async.StartAppendableObjectUpload(BucketName(bucket_name()), object_name)
+          .get();
+  ASSERT_STATUS_OK(w);
+  AsyncWriter writer;
+  AsyncToken token;
+  std::tie(writer, token) = *std::move(w);
+
+  for (int i = 0; i != kInitialBlockCount - 1; ++i) {
+    auto p = writer.Write(std::move(token), WritePayload(block)).get();
+    ASSERT_STATUS_OK(p);
+    token = *std::move(p);
+  }
+
+  writer.Close();
+
+  // Reset the existing writer and resume the upload.
+  writer = AsyncWriter();
+
+  auto object_metadata = client.GetObjectMetadata(bucket_name(), object_name);
+  ASSERT_STATUS_OK(object_metadata);
+  auto m = *object_metadata;
+  auto generation = m.generation();
+
+  w = async
+          .ResumeAppendableObjectUpload(BucketName(bucket_name()), object_name,
+                                        generation)
+          .get();
+  ASSERT_STATUS_OK(w);
+  std::tie(writer, token) = *std::move(w);
+  auto const persisted = writer.PersistedState();
+  ASSERT_THAT(persisted, VariantWith<std::int64_t>(Le(kDesiredSize)));
+  // Cast to `int` because otherwise we need to write multiple casts below.
+  auto offset = static_cast<int>(absl::get<std::int64_t>(persisted));
+  if (offset % kBlockSize != 0) {
+    auto s = block.substr(offset % kBlockSize);
+    auto const size = s.size();
+    auto p = writer.Write(std::move(token), WritePayload(std::move(s))).get();
+    ASSERT_STATUS_OK(p);
+    offset += static_cast<int>(size);
+    token = *std::move(p);
+  }
+  while (offset < kDesiredSize) {
+    auto const n = std::min(kBlockSize, kDesiredSize - offset);
+    auto p =
+        writer.Write(std::move(token), WritePayload(block.substr(0, n))).get();
+    ASSERT_STATUS_OK(p);
+    offset += n;
+    token = *std::move(p);
+  }
+
+  auto metadata = writer.Finalize(std::move(token)).get();
+  ASSERT_STATUS_OK(metadata);
+  ScheduleForDelete(*metadata);
+
+  EXPECT_EQ(metadata->bucket(), BucketName(bucket_name()).FullName());
+  EXPECT_EQ(metadata->name(), object_name);
+  EXPECT_EQ(metadata->size(), kDesiredSize);
+}
+
+TEST_F(AsyncClientIntegrationTest, ResumeFinalizedAppendableObjectUpload) {
+  // Skipping the test till we get the takeover feature on testbench.
+  GTEST_SKIP();
+  auto async = AsyncClient(TestOptions());
+  auto client = MakeIntegrationTestClient(true, TestOptions());
+  auto object_name = MakeRandomObjectName();
+  // Create a small block to send over and over.
+  auto constexpr kBlockSize = static_cast<std::int64_t>(256 * 1024);
+  auto const block = MakeRandomData(kBlockSize);
+
+  auto create =
+      client.CreateBucket(bucket_name(), storage::BucketMetadata{}
+                                             .set_location("us-west4")
+                                             .set_storage_class("RAPID"));
+  if (!create && create.status().code() != StatusCode::kAlreadyExists) {
+    GTEST_FAIL() << "cannot create bucket: " << create.status();
+  }
+  auto w =
+      async.StartAppendableObjectUpload(BucketName(bucket_name()), object_name)
+          .get();
+  ASSERT_STATUS_OK(w);
+  AsyncWriter writer;
+  AsyncToken token;
+  std::tie(writer, token) = *std::move(w);
+
+  auto metadata = writer.Finalize(std::move(token), WritePayload(block)).get();
+  ASSERT_STATUS_OK(metadata);
+  ScheduleForDelete(*metadata);
+
+  EXPECT_EQ(metadata->bucket(), BucketName(bucket_name()).FullName());
+  EXPECT_EQ(metadata->name(), object_name);
+  EXPECT_EQ(metadata->size(), kBlockSize);
+
+  auto object_metadata = client.GetObjectMetadata(bucket_name(), object_name);
+  ASSERT_STATUS_OK(object_metadata);
+  auto m = *object_metadata;
+  auto generation = m.generation();
+
+  w = async
+          .ResumeAppendableObjectUpload(BucketName(bucket_name()), object_name,
+                                        generation)
+          .get();
+  ASSERT_STATUS_OK(w);
+  std::tie(writer, token) = *std::move(w);
+  EXPECT_FALSE(token.valid());
+  EXPECT_THAT(writer.PersistedState(), VariantWith<google::storage::v2::Object>(
+                                           IsProtoEqual(*metadata)));
+}
+
+TEST_F(AsyncClientIntegrationTest, Open) {
+  if (!UsingEmulator()) GTEST_SKIP();
+  auto async = AsyncClient(TestOptions());
+  auto client = MakeIntegrationTestClient(true, TestOptions());
+  auto object_name = MakeRandomObjectName();
+
+  auto create = client.CreateBucket(
+      bucket_name(), storage::BucketMetadata{}.set_location("us-west4"));
+  if (!create && create.status().code() != StatusCode::kAlreadyExists) {
+    GTEST_FAIL() << "cannot create bucket: " << create.status();
+  }
+
+  auto constexpr kSize = 8 * 1024;
+  auto constexpr kStride = 2 * kSize;
+
+  auto os = client.WriteObject(bucket_name(), object_name);
+  for (char c : {'0', '1', '2', '3', '4'}) {
+    os << std::string(kStride, c);
+  }
+  os.Close();
+  ASSERT_STATUS_OK(os.metadata());
+
+  auto spec = google::storage::v2::BidiReadObjectSpec{};
+  spec.set_bucket(BucketName(bucket_name()).FullName());
+  spec.set_object(object_name);
+  auto descriptor = async.Open(spec).get();
+  ASSERT_STATUS_OK(descriptor);
+
+  AsyncReader r0;
+  AsyncReader r1;
+  AsyncReader r2;
+  AsyncToken t0;
+  AsyncToken t1;
+  AsyncToken t2;
+  std::tie(r1, t1) = descriptor->Read(1 * kStride, kSize);
+  std::tie(r2, t2) = descriptor->Read(1 * kStride, kSize);
+  auto actual0 = std::string{};
+  std::tie(r0, t0) = descriptor->Read(0 * kStride, kSize);
+  while (t0.valid()) {
+    auto read = r0.Read(std::move(t0)).get();
+    ASSERT_STATUS_OK(read);
+    ReadPayload p;
+    AsyncToken t;
+    std::tie(p, t) = *std::move(read);
+    for (auto sv : p.contents()) actual0 += std::string(sv);
+    t0 = std::move(t);
+  }
+
+  EXPECT_EQ(actual0, std::string(kSize, '0'));
+  client.DeleteObject(bucket_name(), object_name,
+                      storage::Generation(os.metadata()->generation()));
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_experimental

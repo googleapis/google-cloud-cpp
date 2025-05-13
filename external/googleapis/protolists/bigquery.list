@@ -1,4 +1,5 @@
 @com_google_googleapis//google/cloud/bigquery/analyticshub/v1:analyticshub.proto
+@com_google_googleapis//google/cloud/bigquery/analyticshub/v1:pubsub.proto
 @com_google_googleapis//google/cloud/bigquery/biglake/v1:metastore.proto
 @com_google_googleapis//google/cloud/bigquery/connection/v1:connection.proto
 @com_google_googleapis//google/cloud/bigquery/datapolicies/v1:datapolicy.proto

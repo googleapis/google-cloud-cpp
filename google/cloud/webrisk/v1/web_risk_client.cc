@@ -116,6 +116,27 @@ WebRiskServiceClient::CreateSubmission(
 
 future<StatusOr<google::cloud::webrisk::v1::Submission>>
 WebRiskServiceClient::SubmitUri(
+    std::string const& parent,
+    google::cloud::webrisk::v1::Submission const& submission, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::webrisk::v1::SubmitUriRequest request;
+  request.set_parent(parent);
+  *request.mutable_submission() = submission;
+  return connection_->SubmitUri(request);
+}
+
+StatusOr<google::longrunning::Operation> WebRiskServiceClient::SubmitUri(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::webrisk::v1::Submission const& submission, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::webrisk::v1::SubmitUriRequest request;
+  request.set_parent(parent);
+  *request.mutable_submission() = submission;
+  return connection_->SubmitUri(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::webrisk::v1::Submission>>
+WebRiskServiceClient::SubmitUri(
     google::cloud::webrisk::v1::SubmitUriRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SubmitUri(request);

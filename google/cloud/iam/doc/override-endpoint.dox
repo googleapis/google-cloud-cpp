@@ -17,6 +17,8 @@ Follow these links to find examples for other \c *Client classes:
 - [\c iam_credentials_v1::IAMCredentialsClient](@ref iam_credentials_v1::IAMCredentialsClient-endpoint-snippet)
 - [\c iam_v1::IAMPolicyClient](@ref iam_v1::IAMPolicyClient-endpoint-snippet)
 - [\c iam_v2::PoliciesClient](@ref iam_v2::PoliciesClient-endpoint-snippet)
+- [\c iam_v3::PolicyBindingsClient](@ref iam_v3::PolicyBindingsClient-endpoint-snippet)
+- [\c iam_v3::PrincipalAccessBoundaryPoliciesClient](@ref iam_v3::PrincipalAccessBoundaryPoliciesClient-endpoint-snippet)
 
 <!-- inject-endpoint-snippet-end -->
 
@@ -45,6 +47,18 @@ Follow these links to find examples for other \c *Client classes:
 /*! @page iam_v2::PoliciesClient-endpoint-snippet Override iam_v2::PoliciesClient Endpoint Configuration
 
 @snippet google/cloud/iam/v2/samples/policies_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page iam_v3::PolicyBindingsClient-endpoint-snippet Override iam_v3::PolicyBindingsClient Endpoint Configuration
+
+@snippet google/cloud/iam/v3/samples/policy_bindings_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page iam_v3::PrincipalAccessBoundaryPoliciesClient-endpoint-snippet Override iam_v3::PrincipalAccessBoundaryPoliciesClient Endpoint Configuration
+
+@snippet google/cloud/iam/v3/samples/principal_access_boundary_policies_client_samples.cc set-client-endpoint
 
 */
 // <!-- inject-endpoint-pages-end -->

@@ -23,10 +23,13 @@
 @com_google_googleapis//google/cloud/discoveryengine/v1:purge_config.proto
 @com_google_googleapis//google/cloud/discoveryengine/v1:rank_service.proto
 @com_google_googleapis//google/cloud/discoveryengine/v1:recommendation_service.proto
+@com_google_googleapis//google/cloud/discoveryengine/v1:safety.proto
 @com_google_googleapis//google/cloud/discoveryengine/v1:schema.proto
 @com_google_googleapis//google/cloud/discoveryengine/v1:schema_service.proto
 @com_google_googleapis//google/cloud/discoveryengine/v1:search_service.proto
 @com_google_googleapis//google/cloud/discoveryengine/v1:search_tuning_service.proto
+@com_google_googleapis//google/cloud/discoveryengine/v1:serving_config.proto
+@com_google_googleapis//google/cloud/discoveryengine/v1:serving_config_service.proto
 @com_google_googleapis//google/cloud/discoveryengine/v1:session.proto
 @com_google_googleapis//google/cloud/discoveryengine/v1:site_search_engine.proto
 @com_google_googleapis//google/cloud/discoveryengine/v1:site_search_engine_service.proto

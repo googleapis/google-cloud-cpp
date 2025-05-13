@@ -14,6 +14,7 @@
 
 #include "google/cloud/internal/curl_impl.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/algorithm.h"
@@ -23,8 +24,10 @@
 #include "google/cloud/internal/rest_options.h"
 #include "google/cloud/internal/user_agent_prefix.h"
 #include "google/cloud/log.h"
+#include "google/cloud/rest_options.h"
 #include "absl/strings/match.h"
 #include "absl/strings/strip.h"
+#include <curl/easy.h>
 #include <algorithm>
 #include <sstream>
 #include <thread>
@@ -196,6 +199,12 @@ CurlImpl::CurlImpl(CurlHandle handle,
   proxy_ = CurlOptProxy(options);
   proxy_username_ = CurlOptProxyUsername(options);
   proxy_password_ = CurlOptProxyPassword(options);
+
+  if (options.has<experimental::ClientSslCertificateOption>()) {
+    client_ssl_cert_ = options.get<experimental::ClientSslCertificateOption>();
+  }
+
+  interface_ = CurlOptInterface(options);
 }
 
 CurlImpl::~CurlImpl() {
@@ -228,29 +237,70 @@ CurlImpl::~CurlImpl() {
   factory_->CleanupMultiHandle(std::move(multi_), HandleDisposition::kKeep);
 }
 
-void CurlImpl::SetHeader(std::string const& header) {
+void CurlImpl::SetHeader(HttpHeader header) {
   if (header.empty()) return;
 
   // The API for credentials is complicated, and the authorization
-  // header can be empty. See, for example, AnonymousCredentials.
-  if (header == "authorization: ") return;
+  // header can be empty, but we don't actually want to send it. See, for
+  // example, AnonymousCredentials.
+  if (header.IsSameKey("authorization") && header.EmptyValues()) {
+    return;
+  }
 
+  pending_request_headers_.push_back(std::move(header));
+}
+
+void CurlImpl::WriteHeader(std::string const& header) {
   auto* headers = curl_slist_append(request_headers_.get(), header.c_str());
   (void)request_headers_.release();  // Now owned by list, not us.
   request_headers_.reset(headers);
 }
 
-void CurlImpl::SetHeader(std::pair<std::string, std::string> const& header) {
-  SetHeader(absl::StrCat(header.first, ": ", header.second));
+void CurlImpl::MergeAndWriteHeaders(
+    std::function<void(HttpHeader const&)> const& write_fn) {
+  // There are some headers that we do not want to merge. These headers
+  // could have been added via custom user headers or due to bugs in the SDK.
+  static constexpr std::array<char const*, 2> kDoNotMergeHeaderKeys{
+      "authorization", "content-length"};
+  std::stable_sort(pending_request_headers_.begin(),
+                   pending_request_headers_.end());
+
+  auto current = pending_request_headers_.begin();
+  while (current != pending_request_headers_.end()) {
+    // If this is the last header, write it and stop.
+    if (current + 1 == pending_request_headers_.end()) {
+      write_fn(*current);
+      break;
+    }
+
+    // Look ahead to see if there is another header with the same key. If so,
+    // merge its values into this header until all headers of the same key are
+    // merged.
+    auto next = current + 1;
+    while (next != pending_request_headers_.end() &&
+           current->IsSameKey(*next)) {
+      if (internal::ContainsIf(
+              kDoNotMergeHeaderKeys,
+              [&current](char const* h) { return current->IsSameKey(h); })) {
+        GCP_LOG(WARNING) << "Ignoring duplicate header: "
+                         << next->DebugString();
+      } else {
+        current->MergeHeader(*next);
+      }
+      ++next;
+    }
+
+    // Write the merged (or not merged) header and proceed to the next header
+    // key.
+    write_fn(*current);
+    current = next;
+  }
 }
 
-void CurlImpl::SetHeaders(RestContext const& context,
-                          RestRequest const& request) {
-  for (auto const& header : context.headers()) {
-    SetHeader(std::make_pair(header.first, absl::StrJoin(header.second, ",")));
-  }
-  for (auto const& header : request.headers()) {
-    SetHeader(std::make_pair(header.first, absl::StrJoin(header.second, ",")));
+void CurlImpl::SetHeaders(
+    std::unordered_map<std::string, std::vector<std::string>> const& headers) {
+  for (auto const& header : headers) {
+    SetHeader(HttpHeader(header.first, header.second));
   }
 }
 
@@ -319,6 +369,48 @@ Status CurlImpl::MakeRequest(HttpMethod method, RestContext& context,
     status = handle_.SetOption(CURLOPT_PROXYPASSWORD, proxy_password_->c_str());
     if (!status.ok()) return OnTransferError(context, std::move(status));
   }
+  if (interface_) {
+    status = handle_.SetOption(CURLOPT_INTERFACE, interface_->c_str());
+    if (!status.ok()) return OnTransferError(context, std::move(status));
+  }
+
+  if (client_ssl_cert_.has_value()) {
+#if CURL_AT_LEAST_VERSION(7, 71, 0)
+    status = handle_.SetOption(CURLOPT_SSL_VERIFYPEER, 1L);
+    if (!status.ok()) return OnTransferError(context, std::move(status));
+    status = handle_.SetOption(CURLOPT_SSL_VERIFYHOST, 2L);
+    if (!status.ok()) return OnTransferError(context, std::move(status));
+
+    status = handle_.SetOption(CURLOPT_SSLCERTTYPE,
+                               experimental::SslCertificate::ToString(
+                                   client_ssl_cert_->ssl_certificate_type())
+                                   .c_str());
+    if (!status.ok()) return OnTransferError(context, std::move(status));
+
+    struct curl_blob ssl_cert_blob;
+    ssl_cert_blob.data =
+        const_cast<char*>(client_ssl_cert_->ssl_certificate().data());
+    ssl_cert_blob.len = client_ssl_cert_->ssl_certificate().length();
+    ssl_cert_blob.flags = CURL_BLOB_COPY;
+    status = handle_.SetOption(CURLOPT_SSLCERT_BLOB, &ssl_cert_blob);
+    if (!status.ok()) return OnTransferError(context, std::move(status));
+
+    struct curl_blob ssl_key_blob;
+    ssl_key_blob.data =
+        const_cast<char*>(client_ssl_cert_->ssl_private_key().data());
+    ssl_key_blob.len = client_ssl_cert_->ssl_private_key().length();
+    ssl_key_blob.flags = CURL_BLOB_COPY;
+    status = handle_.SetOption(CURLOPT_SSLKEY_BLOB, &ssl_key_blob);
+    if (!status.ok()) return OnTransferError(context, std::move(status));
+#else
+    return OnTransferError(
+        context,
+        internal::InvalidArgumentError(
+            "libcurl 7.71.0 or higher required to use ClientSslCertificate",
+            GCP_ERROR_INFO().WithMetadata("current_libcurl_version",
+                                          LIBCURL_VERSION)));
+#endif
+  }
 
   if (method == HttpMethod::kGet) {
     status = handle_.SetOption(CURLOPT_NOPROGRESS, 1L);
@@ -376,7 +468,12 @@ Status CurlImpl::MakeRequest(HttpMethod method, RestContext& context,
     if (!status.ok()) return OnTransferError(context, std::move(status));
     status = handle_.SetOption(CURLOPT_SEEKDATA, &writev_);
     if (!status.ok()) return OnTransferError(context, std::move(status));
-    SetHeader("Expect:");
+    // Adding an empty Expect header instructs libcurl never to attempt to
+    // insert an "Expect: 100-continue" header per its own logic. When libcurl
+    // adds this header/value pair it introduces another round trip before data
+    // is sent. Additionally, some webservers do not handle the 100-continue
+    // correctly causing the request to fail.
+    SetHeader(HttpHeader("Expect"));
     return MakeRequestImpl(context);
   }
 
@@ -487,6 +584,8 @@ Status CurlImpl::MakeRequestImpl(RestContext& context) {
   Status status;
   status = handle_.SetOption(CURLOPT_URL, url_.c_str());
   if (!status.ok()) return OnTransferError(context, std::move(status));
+  MergeAndWriteHeaders(
+      [this](HttpHeader const& h) { WriteHeader(std::string(h)); });
   status = handle_.SetOption(CURLOPT_HTTPHEADER, request_headers_.get());
   if (!status.ok()) return OnTransferError(context, std::move(status));
   status = handle_.SetOption(CURLOPT_USERAGENT, user_agent_.c_str());
@@ -784,6 +883,12 @@ absl::optional<std::string> CurlOptProxyPassword(Options const& options) {
   auto const& cfg = options.get<ProxyOption>();
   if (cfg.password().empty()) return absl::nullopt;
   return cfg.password();
+}
+
+absl::optional<std::string> CurlOptInterface(Options const& options) {
+  auto const& cfg = options.get<Interface>();
+  if (cfg.empty()) return absl::nullopt;
+  return cfg;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

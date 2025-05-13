@@ -115,6 +115,86 @@ StorageControlConnection::ListManagedFolders(
       StreamRange<google::storage::control::v2::ManagedFolder>>();
 }
 
+future<StatusOr<google::storage::control::v2::AnywhereCache>>
+StorageControlConnection::CreateAnywhereCache(
+    google::storage::control::v2::CreateAnywhereCacheRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::storage::control::v2::AnywhereCache>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+StorageControlConnection::CreateAnywhereCache(
+    NoAwaitTag,
+    google::storage::control::v2::CreateAnywhereCacheRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::storage::control::v2::AnywhereCache>>
+StorageControlConnection::CreateAnywhereCache(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::storage::control::v2::AnywhereCache>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::storage::control::v2::AnywhereCache>>
+StorageControlConnection::UpdateAnywhereCache(
+    google::storage::control::v2::UpdateAnywhereCacheRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::storage::control::v2::AnywhereCache>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+StorageControlConnection::UpdateAnywhereCache(
+    NoAwaitTag,
+    google::storage::control::v2::UpdateAnywhereCacheRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::storage::control::v2::AnywhereCache>>
+StorageControlConnection::UpdateAnywhereCache(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::storage::control::v2::AnywhereCache>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::storage::control::v2::AnywhereCache>
+StorageControlConnection::DisableAnywhereCache(
+    google::storage::control::v2::DisableAnywhereCacheRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::storage::control::v2::AnywhereCache>
+StorageControlConnection::PauseAnywhereCache(
+    google::storage::control::v2::PauseAnywhereCacheRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::storage::control::v2::AnywhereCache>
+StorageControlConnection::ResumeAnywhereCache(
+    google::storage::control::v2::ResumeAnywhereCacheRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::storage::control::v2::AnywhereCache>
+StorageControlConnection::GetAnywhereCache(
+    google::storage::control::v2::GetAnywhereCacheRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::storage::control::v2::AnywhereCache>
+StorageControlConnection::ListAnywhereCaches(
+    google::storage::control::v2::
+        ListAnywhereCachesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::storage::control::v2::AnywhereCache>>();
+}
+
 std::shared_ptr<StorageControlConnection> MakeStorageControlConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
