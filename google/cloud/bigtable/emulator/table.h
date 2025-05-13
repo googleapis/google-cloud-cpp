@@ -34,6 +34,7 @@
 #include <chrono>
 #include <map>
 #include <memory>
+#include <mutex>
 #include <stack>
 
 namespace google {
@@ -60,6 +61,14 @@ class Table : public std::enable_shared_from_this<Table> {
   StatusOr<google::bigtable::v2::CheckAndMutateRowResponse> CheckAndMutateRow(
       google::bigtable::v2::CheckAndMutateRowRequest const& request);
   Status MutateRow(google::bigtable::v2::MutateRowRequest const& request);
+  Status DoMutationsWithPossibleRollbackLocked(
+      std::string const& row_key,
+      google::protobuf::RepeatedPtrField<google::bigtable::v2::Mutation> const&
+          mutations) {
+    std::lock_guard<std::mutex> lock(mu_);
+
+    return DoMutationsWithPossibleRollback(row_key, mutations);
+  }
 
   Status ReadRows(google::bigtable::v2::ReadRowsRequest const& request,
                   RowStreamer& row_streamer) const;

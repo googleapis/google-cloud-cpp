@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_EMULATOR_TO_GRPC_STATUS_H
 
 #include "google/cloud/status.h"
+#include "google/rpc/status.pb.h"
 #include <grpcpp/support/status.h>
 
 namespace google {
@@ -26,6 +27,8 @@ namespace emulator {
 /// Convert a google::cloud::Status to grpc::Status.
 ::grpc::Status ToGrpcStatus(Status const& to_convert);
 
+// Convert a gooogle::cloud::Status to a google::rpc::Status
+::google::rpc::Status ToGoogleRPCStatus(Status const& to_convert);
 }  // namespace emulator
 }  // namespace bigtable
 }  // namespace cloud
