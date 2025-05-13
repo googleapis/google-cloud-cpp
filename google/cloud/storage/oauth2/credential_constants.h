@@ -32,10 +32,10 @@ namespace oauth2 {
  *
  * @deprecated Prefer using the unified credentials documented in @ref guac
  */
-// NOLINTNEXTLINE(readability-identifier-naming)
 enum class GOOGLE_CLOUD_CPP_DEPRECATED(
     "This enum will be removed shortly. Prefer using the unified credentials "
     "documented in @ref guac.") JwtSigningAlgorithms {
+  // NOLINTNEXTLINE(readability-identifier-naming)
   RS256
 };
 
