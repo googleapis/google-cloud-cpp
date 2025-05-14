@@ -93,11 +93,10 @@ Status SetCellsInMultipleRows(
   return Status();
 }
 
-Status HasCell(
-    std::shared_ptr<google::cloud::bigtable::emulator::Table>& table,
-    std::string const& column_family, std::string const& row_key,
-    std::string const& column_qualifier, int64_t timestamp_micros,
-    std::string const& value) {
+Status HasCell(std::shared_ptr<google::cloud::bigtable::emulator::Table>& table,
+               std::string const& column_family, std::string const& row_key,
+               std::string const& column_qualifier, int64_t timestamp_micros,
+               std::string const& value) {
   auto column_family_it = table->find(column_family);
   if (column_family_it == table->end()) {
     return NotFoundError(

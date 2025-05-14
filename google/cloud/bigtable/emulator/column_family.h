@@ -293,8 +293,7 @@ class ColumnFamily {
     return rows_.find(row_key);
   }
 
-  iterator erase(
-      std::map<std::string, ColumnFamilyRow>::iterator row_it) {
+  iterator erase(std::map<std::string, ColumnFamilyRow>::iterator row_it) {
     return rows_.erase(row_it);
   }
 

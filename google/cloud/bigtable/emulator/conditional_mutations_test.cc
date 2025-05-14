@@ -18,7 +18,7 @@ struct SetCellParams {
   std::string data;
 };
 
-StatusOr<std::shared_ptr<Table>> create_table(
+StatusOr<std::shared_ptr<Table>> CreateTable(
     std::string const& table_name, std::vector<std::string>& column_families) {
   ::google::bigtable::admin::v2::Table schema;
   schema.set_name(table_name);
@@ -30,11 +30,10 @@ StatusOr<std::shared_ptr<Table>> create_table(
   return Table::Create(schema);
 }
 
-Status has_cell(
-    std::shared_ptr<google::cloud::bigtable::emulator::Table>& table,
-    std::string const& column_family, std::string const& row_key,
-    std::string const& column_qualifier, int64_t timestamp_micros,
-    std::string const& value) {
+Status HasCell(std::shared_ptr<google::cloud::bigtable::emulator::Table>& table,
+               std::string const& column_family, std::string const& row_key,
+               std::string const& column_qualifier, int64_t timestamp_micros,
+               std::string const& value) {
   auto column_family_it = table->find(column_family);
   if (column_family_it == table->end()) {
     return NotFoundError(
@@ -80,7 +79,7 @@ Status has_cell(
   return Status();
 }
 
-Status set_cells(
+Status SetCells(
     std::shared_ptr<google::cloud::bigtable::emulator::Table>& table,
     std::string const& table_name, std::string const& row_key,
     std::vector<SetCellParams>& set_cell_params) {
@@ -110,7 +109,7 @@ TEST(ConditionalMutations, TestTrueMutations) {
   auto const* const false_mutation_value = "set by a false mutation";
 
   std::vector<std::string> column_families = {column_family_name};
-  auto maybe_table = create_table(table_name, column_families);
+  auto maybe_table = CreateTable(table_name, column_families);
 
   ASSERT_STATUS_OK(maybe_table);
   auto table = maybe_table.value();
@@ -136,10 +135,10 @@ TEST(ConditionalMutations, TestTrueMutations) {
 
   std::vector<SetCellParams> v = {
       {column_family_name, "column_2", 1000, "some_value"}};
-  ASSERT_STATUS_OK(set_cells(table, table_name, row_key, v));
-  ASSERT_STATUS_OK(has_cell(table, v[0].column_family_name, row_key,
-                            v[0].column_qualifier, v[0].timestamp_micros,
-                            v[0].data));
+  ASSERT_STATUS_OK(SetCells(table, table_name, row_key, v));
+  ASSERT_STATUS_OK(HasCell(table, v[0].column_family_name, row_key,
+                           v[0].column_qualifier, v[0].timestamp_micros,
+                           v[0].data));
 
   google::bigtable::v2::CheckAndMutateRowRequest cond_mut_with_pass_all;
 
@@ -156,15 +155,13 @@ TEST(ConditionalMutations, TestTrueMutations) {
 
   // pass_all_filter means that true_mutation should have succeeded,
   // so check for the true_mutation cell value e.t.c.
-  ASSERT_STATUS_OK(has_cell(table, column_family_name, row_key,
-                            column_qualifier, timestamp_micros,
-                            true_mutation_value));
+  ASSERT_STATUS_OK(HasCell(table, column_family_name, row_key, column_qualifier,
+                           timestamp_micros, true_mutation_value));
 
   // And just for good measure, ensure that false_mutation was not written.
-  ASSERT_EQ(false,
-            has_cell(table, column_family_name, row_key, column_qualifier,
-                     timestamp_micros, false_mutation_value)
-                .ok());
+  ASSERT_EQ(false, HasCell(table, column_family_name, row_key, column_qualifier,
+                           timestamp_micros, false_mutation_value)
+                       .ok());
 }
 
 TEST(ConditionalMutations, RejectInvalidRequest) {
@@ -177,7 +174,7 @@ TEST(ConditionalMutations, RejectInvalidRequest) {
   auto const* const false_mutation_value = "set by a false mutation";
 
   std::vector<std::string> column_families = {column_family_name};
-  auto maybe_table = create_table(table_name, column_families);
+  auto maybe_table = CreateTable(table_name, column_families);
 
   ASSERT_STATUS_OK(maybe_table);
   auto table = maybe_table.value();
