@@ -33,8 +33,8 @@ namespace oauth2 {
  * @deprecated Prefer using the unified credentials documented in @ref guac
  */
 GOOGLE_CLOUD_CPP_DEPRECATED(
-    "This function will be removed shortly. Prefer using the unified "
-    "credentials documented in @ref guac.")
+    "This function will be removed in v3.0.0 and later. Prefer using the "
+    "unified credentials documented in @ref guac.")
 char const* GoogleAdcEnvVar();
 
 /**
@@ -47,8 +47,8 @@ char const* GoogleAdcEnvVar();
  * @deprecated Prefer using the unified credentials documented in @ref guac
  */
 GOOGLE_CLOUD_CPP_DEPRECATED(
-    "This function will be removed shortly. Prefer using the unified "
-    "credentials documented in @ref guac.")
+    "This function will be removed in v3.0.0 and later. Prefer using the "
+    "unified credentials documented in @ref guac.")
 std::string GoogleAdcFilePathFromEnvVarOrEmpty();
 
 /**
@@ -61,8 +61,8 @@ std::string GoogleAdcFilePathFromEnvVarOrEmpty();
  * @deprecated Prefer using the unified credentials documented in @ref guac
  */
 GOOGLE_CLOUD_CPP_DEPRECATED(
-    "This function will be removed shortly. Prefer using the unified "
-    "credentials documented in @ref guac.")
+    "This function will be removed in v3.0.0 and later. Prefer using the "
+    "unified credentials documented in @ref guac.")
 std::string GoogleAdcFilePathFromWellKnownPathOrEmpty();
 
 /**
@@ -74,8 +74,8 @@ std::string GoogleAdcFilePathFromWellKnownPathOrEmpty();
  * @deprecated Prefer using the unified credentials documented in @ref guac
  */
 GOOGLE_CLOUD_CPP_DEPRECATED(
-    "This function will be removed shortly. Prefer using the unified "
-    "credentials documented in @ref guac.")
+    "This function will be removed in v3.0.0 and later. Prefer using the "
+    "unified credentials documented in @ref guac.")
 char const* GoogleGcloudAdcFileEnvVar();
 
 /**
@@ -89,8 +89,8 @@ char const* GoogleGcloudAdcFileEnvVar();
  * @deprecated Prefer using the unified credentials documented in @ref guac
  */
 GOOGLE_CLOUD_CPP_DEPRECATED(
-    "This function will be removed shortly. Prefer using the unified "
-    "credentials documented in @ref guac.")
+    "This function will be removed in v3.0.0 and later. Prefer using the "
+    "unified credentials documented in @ref guac.")
 char const* GoogleAdcHomeEnvVar();
 
 }  // namespace oauth2
