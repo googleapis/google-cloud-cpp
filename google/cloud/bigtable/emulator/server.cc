@@ -252,9 +252,18 @@ class EmulatorTableService final : public btadmin::BigtableTableAdmin::Service {
   }
 
   grpc::Status DropRowRange(grpc::ServerContext* /* context */,
-                            btadmin::DropRowRangeRequest const* /* request */,
+                            btadmin::DropRowRangeRequest const* request,
                             google::protobuf::Empty* /* response */) override {
-    // FIXME
+    auto maybe_table = cluster_->FindTable(request->name());
+    if (!maybe_table) {
+      return ToGrpcStatus(maybe_table.status());
+    }
+
+    auto status = (*maybe_table)->DropRowRange(*request);
+    if (!status.ok()) {
+      return ToGrpcStatus(status);
+    }
+
     return grpc::Status::OK;
   }
 

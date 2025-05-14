@@ -56,6 +56,7 @@ if (BUILD_TESTING)
         # cmake-format: sort
         column_family_test.cc
         conditional_mutations_test.cc
+        drop_row_range_test.cc
         filter_test.cc
         filtered_map_test.cc
         range_set_test.cc

@@ -85,6 +85,9 @@ class Table : public std::enable_shared_from_this<Table> {
 
   std::shared_ptr<Table> get() { return shared_from_this(); }
 
+  Status DropRowRange(
+      ::google::bigtable::admin::v2::DropRowRangeRequest const& request);
+
  private:
   Table() = default;
   friend class RowSetIterator;

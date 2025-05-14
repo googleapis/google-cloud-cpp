@@ -20,8 +20,10 @@
 #include "google/cloud/bigtable/internal/google_bytes_traits.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/protobuf/util/field_mask_util.h"
+#include <grpc/grpc_security_constants.h>
 #include <google/bigtable/v2/bigtable.pb.h>
 #include <google/bigtable/v2/data.pb.h>
+#include <absl/strings/match.h>
 #include <absl/strings/str_format.h>
 #include <absl/types/optional.h>
 #include <re2/re2.h>
@@ -490,6 +492,48 @@ bool Table::IsDeleteProtected() const {
 
 bool Table::IsDeleteProtectedNoLock() const {
   return schema_.deletion_protection();
+}
+
+Status Table::DropRowRange(
+    ::google::bigtable::admin::v2::DropRowRangeRequest const& request) {
+  std::lock_guard<std::mutex> lock(mu_);
+
+  if (!request.has_row_key_prefix() &&
+      !request.has_delete_all_data_from_table()) {
+    return InvalidArgumentError(
+        "Neither row prefix nor deleted all data from table is set",
+        GCP_ERROR_INFO().WithMetadata("DropRowRange request",
+                                      request.DebugString()));
+  }
+
+  if (request.has_delete_all_data_from_table()) {
+    for (auto& column_family : column_families_) {
+      column_family.second->clear();
+    }
+
+    return Status();
+  }
+
+  auto const& row_prefix = request.row_key_prefix();
+  if (row_prefix.empty()) {
+    return InvalidArgumentError(
+        "Row prefix provided is empty.",
+        GCP_ERROR_INFO().WithMetadata("DropRowRange request",
+                                      request.DebugString()));
+  }
+
+  for (auto& cf : column_families_) {
+    for (auto row_it = cf.second->lower_bound(row_prefix);
+         row_it != cf.second->end();) {
+      if (absl::StartsWith(row_it->first, row_prefix)) {
+        row_it = cf.second->erase(row_it);
+      } else {
+        break;
+      }
+    }
+  }
+
+  return Status();
 }
 
 // NOLINTBEGIN(readability-convert-member-functions-to-static)
