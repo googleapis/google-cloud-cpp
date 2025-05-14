@@ -35,6 +35,8 @@ excluded_rules=(
   # This sample uses HMAC keys, which are very limited in production (at most
   # 5 per service account). Disabled for now.
   "-//google/cloud/storage/examples:storage_service_account_samples"
+  # This sample can be very long running due to creation time of AnywhereCache
+  "-//google/cloud/storagecontrol:v2_samples_storage_control_anywhere_cache_samples"
 )
 
 io::log_h2 "Running the integration tests against prod"
