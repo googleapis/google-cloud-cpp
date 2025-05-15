@@ -188,6 +188,7 @@ GOOGLE_CLOUD_CPP_GA_LIBRARIES = [
     "notebooks",
     "oauth2",
     "optimization",
+    "oracledatabase",
     "orgpolicy",
     "osconfig",
     "oslogin",
