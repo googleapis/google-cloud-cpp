@@ -512,6 +512,12 @@ function (google_cloud_cpp_define_dependent_legacy_feature_options)
         OR (experimental-storage_grpc IN_LIST GOOGLE_CLOUD_CPP_ENABLE))
         set(GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC_DEFAULT ON)
     endif ()
+
+    # Emit a warning if the deprecated option is explicitly set
+    if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
+        message(WARNING "GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC is deprecated. Please use -DGOOGLE_CLOUD_CPP_ENABLE=storage_grpc instead.")
+    endif ()
+
     option(
         GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC
         "Enable compilation for the GCS gRPC plugin (EXPERIMENTAL).  Deprecated, prefer GOOGLE_CLOUD_CPP_ENABLE."
