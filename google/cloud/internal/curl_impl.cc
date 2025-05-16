@@ -369,6 +369,10 @@ Status CurlImpl::MakeRequest(HttpMethod method, RestContext& context,
     status = handle_.SetOption(CURLOPT_PROXYPASSWORD, proxy_password_->c_str());
     if (!status.ok()) return OnTransferError(context, std::move(status));
   }
+
+  status = handle_.SetOption(CURLOPT_NOPROXY, "metadata.google.internal");
+  if (!status.ok()) return OnTransferError(context, std::move(status));
+
   if (interface_) {
     status = handle_.SetOption(CURLOPT_INTERFACE, interface_->c_str());
     if (!status.ok()) return OnTransferError(context, std::move(status));
