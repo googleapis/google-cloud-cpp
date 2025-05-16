@@ -14,11 +14,9 @@
 
 #include "google/cloud/storage/grpc_plugin.h"
 #include "google/cloud/storage/internal/connection_factory.h"
-#include "google/cloud/storage/internal/generic_stub_factory.h"
 #include "google/cloud/storage/internal/grpc/default_options.h"
 #include "google/cloud/storage/internal/grpc/enable_metrics.h"
 #include "google/cloud/storage/internal/grpc/stub.h"
-#include "google/cloud/internal/getenv.h"
 #include <memory>
 #include <utility>
 
@@ -26,23 +24,9 @@ namespace google {
 namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace {
 
-// TODO(#13857) - stop using storage_experimental::GrpcPluginOption
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
-bool UseRest(Options const& options) {
-  using ::google::cloud::internal::GetEnv;
-  auto const config =
-      GetEnv("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG")
-          .value_or(options.get<storage_experimental::GrpcPluginOption>());
-  return config == "none";
-}
-#include "google/cloud/internal/diagnostics_pop.inc"
-
-}  // namespace
 
 google::cloud::storage::Client MakeGrpcClient(Options opts) {
-  if (UseRest(opts)) return google::cloud::storage::Client(std::move(opts));
   opts = google::cloud::storage_internal::DefaultOptionsGrpc(std::move(opts));
   storage_internal::EnableGrpcMetrics(opts);
   auto stub = std::make_unique<storage_internal::GrpcStub>(opts);
@@ -52,16 +36,6 @@ google::cloud::storage::Client MakeGrpcClient(Options opts) {
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
-
-namespace storage_experimental {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-google::cloud::storage::Client DefaultGrpcClient(Options opts) {
-  return google::cloud::storage::MakeGrpcClient(std::move(opts));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage_experimental
 
 }  // namespace cloud
 }  // namespace google
