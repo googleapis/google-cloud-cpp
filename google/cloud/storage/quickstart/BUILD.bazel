@@ -42,7 +42,6 @@ cc_binary(
         "quickstart_async.cc",
     ],
     deps = [
-        # TODO(#13857) - remove backwards compatibility shims
-        "@google_cloud_cpp//:experimental-storage_grpc",
+        "@google_cloud_cpp//:storage_grpc",
     ],
 )

@@ -60,7 +60,6 @@ TEST(GrpcPluginTest, GrpcUsesUploadBufferOptions) {
       client.raw_client()->options().get<storage::UploadBufferSizeOption>(),
       32 * 1024 * 1024L);
 }
-#include "google/cloud/internal/diagnostics_pop.inc"
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
