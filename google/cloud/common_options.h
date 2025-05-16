@@ -31,15 +31,43 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /**
  * Change the endpoint.
  *
- * In almost all cases a suitable default will be chosen automatically.
- * Applications may need to be changed to (1) test against a fake or simulator,
- * or (2) use a beta or EAP version of the service. When using a beta or EAP
- * version of the service, the AuthorityOption should also be set to the usual
- * hostname of the service.
+ * When this option is not set, the global service endpoint is used.
+ *
+ * When using a locational endpoint, this option should be set to the desired
+ * locational endpoint. When this option is set the `AuthorityOption` is
+ * defaulted to the same value as the `EndpointOption`.
+ *
+ * Endpoints may also need to be changed to test against a fake or simulator,
+ * or use a beta or EAP version of the service. When using a beta or EAP
+ * version of the service, the `AuthorityOption` should also be explicitly set
+ * by the user to the usual hostname of the service.
  *
  * @ingroup options
  */
 struct EndpointOption {
+  using Type = std::string;
+};
+
+/**
+ * Configure the "authority" attribute.
+ *
+ * For gRPC requests this is the `authority()` field in the
+ * `grpc::ClientContext`. This configures the :authority pseudo-header in the
+ * HTTP/2 request.
+ *     https://datatracker.ietf.org/doc/html/rfc7540#section-8.1.2.3
+ *
+ * For REST-based services using HTTP/1.1 or HTTP/1.0 this is the `Host` header.
+ *
+ * Setting this option to the empty string has no effect, i.e., no headers are
+ * set. This can be useful if you are not using Google's production environment.
+ *
+ * If the `EndpointOption` is set, the `AuthorityOption` is defaulted to the
+ * same value. This default value can be overridden by specifying both the
+ * `EndpointOption` and the `AuthorityOption`.
+ *
+ * @ingroup options
+ */
+struct AuthorityOption {
   using Type = std::string;
 };
 
@@ -124,25 +152,6 @@ struct QuotaUserOption {
  * @ingroup rest-options
  */
 struct UserIpOption {
-  using Type = std::string;
-};
-
-/**
- * Configure the "authority" attribute.
- *
- * For gRPC requests this is the `authority()` field in the
- * `grpc::ClientContext`. This configures the :authority pseudo-header in the
- * HTTP/2 request.
- *     https://datatracker.ietf.org/doc/html/rfc7540#section-8.1.2.3
- *
- * For REST-based services using HTTP/1.1 or HTTP/1.0 this is the `Host` header.
- *
- * Setting this option to the empty string has no effect, i.e., no headers are
- * set. This can be useful if you are not using Google's production environment.
- *
- * @ingroup options
- */
-struct AuthorityOption {
   using Type = std::string;
 };
 
