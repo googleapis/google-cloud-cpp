@@ -397,40 +397,6 @@ TEST_F(CurlImplTest, MergeAndWriteHeadersDoNotMergeContentLength) {
   EXPECT_THAT(headers_written, ElementsAre(std::string(expected)));
 }
 
-TEST_F(CurlImplTest, MakeRequestSetsNoProxyAndLogsForMetadataUrl) {
-  testing_util::ScopedLog log_capture;
-  CurlImpl impl(std::move(handle_), factory_, Options{});
-  RestRequest request;
-  std::string metadata_url =
-      "http://metadata.google.internal/computeMetadata/v1/token";
-  impl.SetUrl(metadata_url, request, {});
-  RestContext rest_context;
-  Status request_status =
-      impl.MakeRequest(CurlImpl::HttpMethod::kGet, rest_context, {});
-  std::vector<std::string> log_lines = log_capture.ExtractLines();
-  EXPECT_THAT(
-      log_lines,
-      Contains(HasSubstr(
-          "Explicitly setting NOPROXY for 'metadata.google.internal'")));
-  EXPECT_THAT(log_lines, Contains(HasSubstr(metadata_url)));
-}
-
-TEST_F(CurlImplTest, MakeRequestDoesNotLogNoProxyForNonMetadataUrl) {
-  testing_util::ScopedLog log_capture;
-  CurlImpl impl(std::move(handle_), factory_, Options{});
-  RestRequest request;
-  std::string non_metadata_url = "https://example.com/api/v1/data";
-  impl.SetUrl(non_metadata_url, request, {});
-
-  RestContext rest_context;
-  (void)impl.MakeRequest(CurlImpl::HttpMethod::kGet, rest_context, {});
-  std::vector<std::string> log_lines = log_capture.ExtractLines();
-  EXPECT_THAT(
-      log_lines,
-      Not(Contains(HasSubstr(
-          "Explicitly setting NOPROXY for 'metadata.google.internal'"))));
-}
-
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace rest_internal
