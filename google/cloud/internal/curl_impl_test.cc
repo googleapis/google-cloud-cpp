@@ -27,10 +27,8 @@ namespace rest_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-using ::testing::Contains;
 using ::testing::ElementsAre;
 using ::testing::Eq;
-using ::testing::HasSubstr;
 
 TEST(SpillBuffer, InitialState) {
   SpillBuffer sb;
