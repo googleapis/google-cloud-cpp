@@ -192,6 +192,9 @@ MethodCommentSubstitution substitutions[] = {
 
     // Sanitize substitution string indicator.
     {"$", "$$"},
+
+    // Remove continuation characters.
+    {"\\\n", "\n"},
 };
 
 }  // namespace

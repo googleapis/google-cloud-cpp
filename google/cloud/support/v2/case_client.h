@@ -95,8 +95,8 @@ class CaseServiceClient {
   ///
   /// ```shell
   /// case="projects/some-project/cases/16033687"
-  /// curl \
-  ///   --header "Authorization: Bearer $(gcloud auth print-access-token)" \
+  /// curl
+  ///   --header "Authorization: Bearer $(gcloud auth print-access-token)"
   ///   "https://cloudsupport.googleapis.com/v2/$case"
   /// ```
   ///
@@ -149,8 +149,8 @@ class CaseServiceClient {
   ///
   /// ```shell
   /// case="projects/some-project/cases/16033687"
-  /// curl \
-  ///   --header "Authorization: Bearer $(gcloud auth print-access-token)" \
+  /// curl
+  ///   --header "Authorization: Bearer $(gcloud auth print-access-token)"
   ///   "https://cloudsupport.googleapis.com/v2/$case"
   /// ```
   ///
@@ -213,8 +213,8 @@ class CaseServiceClient {
   ///
   /// ```shell
   /// parent="projects/some-project"
-  /// curl \
-  ///   --header "Authorization: Bearer $(gcloud auth print-access-token)" \
+  /// curl
+  ///   --header "Authorization: Bearer $(gcloud auth print-access-token)"
   ///   "https://cloudsupport.googleapis.com/v2/$parent/cases"
   /// ```
   ///
@@ -279,8 +279,8 @@ class CaseServiceClient {
   ///
   /// ```shell
   /// parent="projects/some-project"
-  /// curl \
-  ///   --header "Authorization: Bearer $(gcloud auth print-access-token)" \
+  /// curl
+  ///   --header "Authorization: Bearer $(gcloud auth print-access-token)"
   ///   "https://cloudsupport.googleapis.com/v2/$parent/cases"
   /// ```
   ///
@@ -346,8 +346,8 @@ class CaseServiceClient {
   ///
   /// ```shell
   /// parent="projects/some-project"
-  /// curl \
-  ///   --header "Authorization: Bearer $(gcloud auth print-access-token)" \
+  /// curl
+  ///   --header "Authorization: Bearer $(gcloud auth print-access-token)"
   ///   "https://cloudsupport.googleapis.com/v2/$parent/cases:search"
   /// ```
   ///
@@ -418,10 +418,10 @@ class CaseServiceClient {
   ///
   /// ```shell
   /// parent="projects/some-project"
-  /// curl \
-  ///   --request POST \
-  ///   --header "Authorization: Bearer $(gcloud auth print-access-token)" \
-  ///   --header 'Content-Type: application/json' \
+  /// curl
+  ///   --request POST
+  ///   --header "Authorization: Bearer $(gcloud auth print-access-token)"
+  ///   --header 'Content-Type: application/json'
   ///   --data '{
   ///     "display_name": "Test case created by me.",
   ///     "description": "a random test case, feel free to close",
@@ -436,7 +436,7 @@ class CaseServiceClient {
   ///     ],
   ///     "testCase": true,
   ///     "priority": "P3"
-  ///   }' \
+  ///   }'
   ///   "https://cloudsupport.googleapis.com/v2/$parent/cases"
   /// ```
   ///
@@ -504,10 +504,10 @@ class CaseServiceClient {
   ///
   /// ```shell
   /// parent="projects/some-project"
-  /// curl \
-  ///   --request POST \
-  ///   --header "Authorization: Bearer $(gcloud auth print-access-token)" \
-  ///   --header 'Content-Type: application/json' \
+  /// curl
+  ///   --request POST
+  ///   --header "Authorization: Bearer $(gcloud auth print-access-token)"
+  ///   --header 'Content-Type: application/json'
   ///   --data '{
   ///     "display_name": "Test case created by me.",
   ///     "description": "a random test case, feel free to close",
@@ -522,7 +522,7 @@ class CaseServiceClient {
   ///     ],
   ///     "testCase": true,
   ///     "priority": "P3"
-  ///   }' \
+  ///   }'
   ///   "https://cloudsupport.googleapis.com/v2/$parent/cases"
   /// ```
   ///
@@ -590,13 +590,13 @@ class CaseServiceClient {
   ///
   /// ```shell
   /// case="projects/some-project/cases/43595344"
-  /// curl \
-  ///   --request PATCH \
-  ///   --header "Authorization: Bearer $(gcloud auth print-access-token)" \
-  ///   --header "Content-Type: application/json" \
+  /// curl
+  ///   --request PATCH
+  ///   --header "Authorization: Bearer $(gcloud auth print-access-token)"
+  ///   --header "Content-Type: application/json"
   ///   --data '{
   ///     "priority": "P1"
-  ///   }' \
+  ///   }'
   ///   "https://cloudsupport.googleapis.com/v2/$case?updateMask=priority"
   /// ```
   ///
@@ -661,13 +661,13 @@ class CaseServiceClient {
   ///
   /// ```shell
   /// case="projects/some-project/cases/43595344"
-  /// curl \
-  ///   --request PATCH \
-  ///   --header "Authorization: Bearer $(gcloud auth print-access-token)" \
-  ///   --header "Content-Type: application/json" \
+  /// curl
+  ///   --request PATCH
+  ///   --header "Authorization: Bearer $(gcloud auth print-access-token)"
+  ///   --header "Content-Type: application/json"
   ///   --data '{
   ///     "priority": "P1"
-  ///   }' \
+  ///   }'
   ///   "https://cloudsupport.googleapis.com/v2/$case?updateMask=priority"
   /// ```
   ///
@@ -735,16 +735,16 @@ class CaseServiceClient {
   ///
   /// ```shell
   /// case="projects/some-project/cases/43595344"
-  /// curl \
-  ///   --request POST \
-  ///   --header "Authorization: Bearer $(gcloud auth print-access-token)" \
-  ///   --header "Content-Type: application/json" \
+  /// curl
+  ///   --request POST
+  ///   --header "Authorization: Bearer $(gcloud auth print-access-token)"
+  ///   --header "Content-Type: application/json"
   ///   --data '{
   ///     "escalation": {
   ///       "reason": "BUSINESS_IMPACT",
   ///       "justification": "This is a test escalation."
   ///     }
-  ///   }' \
+  ///   }'
   ///   "https://cloudsupport.googleapis.com/v2/$case:escalate"
   /// ```
   ///
@@ -808,9 +808,9 @@ class CaseServiceClient {
   ///
   /// ```shell
   /// case="projects/some-project/cases/43595344"
-  /// curl \
-  ///   --request POST \
-  ///   --header "Authorization: Bearer $(gcloud auth print-access-token)" \
+  /// curl
+  ///   --request POST
+  ///   --header "Authorization: Bearer $(gcloud auth print-access-token)"
   ///   "https://cloudsupport.googleapis.com/v2/$case:close"
   /// ```
   ///
@@ -876,8 +876,8 @@ class CaseServiceClient {
   /// cURL:
   ///
   /// ```shell
-  /// curl \
-  ///   --header "Authorization: Bearer $(gcloud auth print-access-token)" \
+  /// curl
+  ///   --header "Authorization: Bearer $(gcloud auth print-access-token)"
   ///   'https://cloudsupport.googleapis.com/v2/caseClassifications:search?query=display_name:"*Compute%20Engine*"'
   /// ```
   ///

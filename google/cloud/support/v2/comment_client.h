@@ -95,8 +95,8 @@ class CommentServiceClient {
   ///
   /// ```shell
   /// case="projects/some-project/cases/43595344"
-  /// curl \
-  ///   --header "Authorization: Bearer $(gcloud auth print-access-token)" \
+  /// curl
+  ///   --header "Authorization: Bearer $(gcloud auth print-access-token)"
   ///   "https://cloudsupport.googleapis.com/v2/$case/comments"
   /// ```
   ///
@@ -159,8 +159,8 @@ class CommentServiceClient {
   ///
   /// ```shell
   /// case="projects/some-project/cases/43595344"
-  /// curl \
-  ///   --header "Authorization: Bearer $(gcloud auth print-access-token)" \
+  /// curl
+  ///   --header "Authorization: Bearer $(gcloud auth print-access-token)"
   ///   "https://cloudsupport.googleapis.com/v2/$case/comments"
   /// ```
   ///
@@ -231,13 +231,13 @@ class CommentServiceClient {
   ///
   /// ```shell
   /// case="projects/some-project/cases/43591344"
-  /// curl \
-  ///   --request POST \
-  ///   --header "Authorization: Bearer $(gcloud auth print-access-token)" \
-  ///   --header 'Content-Type: application/json' \
+  /// curl
+  ///   --request POST
+  ///   --header "Authorization: Bearer $(gcloud auth print-access-token)"
+  ///   --header 'Content-Type: application/json'
   ///   --data '{
   ///     "body": "This is a test comment."
-  ///   }' \
+  ///   }'
   ///   "https://cloudsupport.googleapis.com/v2/$case/comments"
   /// ```
   ///
@@ -298,13 +298,13 @@ class CommentServiceClient {
   ///
   /// ```shell
   /// case="projects/some-project/cases/43591344"
-  /// curl \
-  ///   --request POST \
-  ///   --header "Authorization: Bearer $(gcloud auth print-access-token)" \
-  ///   --header 'Content-Type: application/json' \
+  /// curl
+  ///   --request POST
+  ///   --header "Authorization: Bearer $(gcloud auth print-access-token)"
+  ///   --header 'Content-Type: application/json'
   ///   --data '{
   ///     "body": "This is a test comment."
-  ///   }' \
+  ///   }'
   ///   "https://cloudsupport.googleapis.com/v2/$case/comments"
   /// ```
   ///
