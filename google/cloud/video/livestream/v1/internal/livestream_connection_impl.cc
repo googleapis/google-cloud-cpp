@@ -1243,6 +1243,348 @@ LivestreamServiceConnectionImpl::DeleteClip(
       polling_policy(*current), __func__);
 }
 
+future<StatusOr<google::cloud::video::livestream::v1::DvrSession>>
+LivestreamServiceConnectionImpl::CreateDvrSession(
+    google::cloud::video::livestream::v1::CreateDvrSessionRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateDvrSession(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::video::livestream::v1::DvrSession>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::video::livestream::v1::CreateDvrSessionRequest const&
+              request) {
+        return stub->AsyncCreateDvrSession(cq, std::move(context),
+                                           std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::video::livestream::v1::DvrSession>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+LivestreamServiceConnectionImpl::CreateDvrSession(
+    NoAwaitTag,
+    google::cloud::video::livestream::v1::CreateDvrSessionRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateDvrSession(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::video::livestream::v1::CreateDvrSessionRequest const&
+              request) {
+        return stub_->CreateDvrSession(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::video::livestream::v1::DvrSession>>
+LivestreamServiceConnectionImpl::CreateDvrSession(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::video::livestream::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::video::livestream::v1::DvrSession>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateDvrSession",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::video::livestream::v1::DvrSession>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::video::livestream::v1::DvrSession>,
+      polling_policy(*current), __func__);
+}
+
+StreamRange<google::cloud::video::livestream::v1::DvrSession>
+LivestreamServiceConnectionImpl::ListDvrSessions(
+    google::cloud::video::livestream::v1::ListDvrSessionsRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListDvrSessions(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::video::livestream::v1::DvrSession>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry =
+           std::shared_ptr<video_livestream_v1::LivestreamServiceRetryPolicy>(
+               retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::cloud::video::livestream::v1::ListDvrSessionsRequest const&
+              r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::video::livestream::v1::
+                       ListDvrSessionsRequest const& request) {
+              return stub->ListDvrSessions(context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::cloud::video::livestream::v1::ListDvrSessionsResponse r) {
+        std::vector<google::cloud::video::livestream::v1::DvrSession> result(
+            r.dvr_sessions().size());
+        auto& messages = *r.mutable_dvr_sessions();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+StatusOr<google::cloud::video::livestream::v1::DvrSession>
+LivestreamServiceConnectionImpl::GetDvrSession(
+    google::cloud::video::livestream::v1::GetDvrSessionRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetDvrSession(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::video::livestream::v1::GetDvrSessionRequest const&
+                 request) {
+        return stub_->GetDvrSession(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
+LivestreamServiceConnectionImpl::DeleteDvrSession(
+    google::cloud::video::livestream::v1::DeleteDvrSessionRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteDvrSession(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::video::livestream::v1::OperationMetadata>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::video::livestream::v1::DeleteDvrSessionRequest const&
+              request) {
+        return stub->AsyncDeleteDvrSession(cq, std::move(context),
+                                           std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::video::livestream::v1::OperationMetadata>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+LivestreamServiceConnectionImpl::DeleteDvrSession(
+    NoAwaitTag,
+    google::cloud::video::livestream::v1::DeleteDvrSessionRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteDvrSession(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::video::livestream::v1::DeleteDvrSessionRequest const&
+              request) {
+        return stub_->DeleteDvrSession(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
+LivestreamServiceConnectionImpl::DeleteDvrSession(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::video::livestream::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteDvrSession",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::video::livestream::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::video::livestream::v1::OperationMetadata>,
+      polling_policy(*current), __func__);
+}
+
+future<StatusOr<google::cloud::video::livestream::v1::DvrSession>>
+LivestreamServiceConnectionImpl::UpdateDvrSession(
+    google::cloud::video::livestream::v1::UpdateDvrSessionRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateDvrSession(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::video::livestream::v1::DvrSession>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::video::livestream::v1::UpdateDvrSessionRequest const&
+              request) {
+        return stub->AsyncUpdateDvrSession(cq, std::move(context),
+                                           std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::video::livestream::v1::DvrSession>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+LivestreamServiceConnectionImpl::UpdateDvrSession(
+    NoAwaitTag,
+    google::cloud::video::livestream::v1::UpdateDvrSessionRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateDvrSession(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::video::livestream::v1::UpdateDvrSessionRequest const&
+              request) {
+        return stub_->UpdateDvrSession(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::video::livestream::v1::DvrSession>>
+LivestreamServiceConnectionImpl::UpdateDvrSession(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::video::livestream::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::video::livestream::v1::DvrSession>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateDvrSession",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::video::livestream::v1::DvrSession>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::video::livestream::v1::DvrSession>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::video::livestream::v1::Asset>>
 LivestreamServiceConnectionImpl::CreateAsset(
     google::cloud::video::livestream::v1::CreateAssetRequest const& request) {

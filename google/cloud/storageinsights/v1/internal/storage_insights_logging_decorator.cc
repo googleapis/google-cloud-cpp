@@ -133,6 +133,205 @@ StorageInsightsLogging::GetReportDetail(
       context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::storageinsights::v1::ListDatasetConfigsResponse>
+StorageInsightsLogging::ListDatasetConfigs(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::storageinsights::v1::ListDatasetConfigsRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::storageinsights::v1::ListDatasetConfigsRequest const&
+              request) {
+        return child_->ListDatasetConfigs(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::storageinsights::v1::DatasetConfig>
+StorageInsightsLogging::GetDatasetConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::storageinsights::v1::GetDatasetConfigRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::storageinsights::v1::GetDatasetConfigRequest const&
+                 request) {
+        return child_->GetDatasetConfig(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+StorageInsightsLogging::AsyncCreateDatasetConfig(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::storageinsights::v1::CreateDatasetConfigRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::storageinsights::v1::CreateDatasetConfigRequest const&
+              request) {
+        return child_->AsyncCreateDatasetConfig(cq, std::move(context),
+                                                std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+StorageInsightsLogging::CreateDatasetConfig(
+    grpc::ClientContext& context, Options options,
+    google::cloud::storageinsights::v1::CreateDatasetConfigRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::storageinsights::v1::CreateDatasetConfigRequest const&
+              request) {
+        return child_->CreateDatasetConfig(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+StorageInsightsLogging::AsyncUpdateDatasetConfig(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::storageinsights::v1::UpdateDatasetConfigRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::storageinsights::v1::UpdateDatasetConfigRequest const&
+              request) {
+        return child_->AsyncUpdateDatasetConfig(cq, std::move(context),
+                                                std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+StorageInsightsLogging::UpdateDatasetConfig(
+    grpc::ClientContext& context, Options options,
+    google::cloud::storageinsights::v1::UpdateDatasetConfigRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::storageinsights::v1::UpdateDatasetConfigRequest const&
+              request) {
+        return child_->UpdateDatasetConfig(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+StorageInsightsLogging::AsyncDeleteDatasetConfig(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::storageinsights::v1::DeleteDatasetConfigRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::storageinsights::v1::DeleteDatasetConfigRequest const&
+              request) {
+        return child_->AsyncDeleteDatasetConfig(cq, std::move(context),
+                                                std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+StorageInsightsLogging::DeleteDatasetConfig(
+    grpc::ClientContext& context, Options options,
+    google::cloud::storageinsights::v1::DeleteDatasetConfigRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::storageinsights::v1::DeleteDatasetConfigRequest const&
+              request) {
+        return child_->DeleteDatasetConfig(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+StorageInsightsLogging::AsyncLinkDataset(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::storageinsights::v1::LinkDatasetRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::storageinsights::v1::LinkDatasetRequest const&
+                 request) {
+        return child_->AsyncLinkDataset(cq, std::move(context),
+                                        std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> StorageInsightsLogging::LinkDataset(
+    grpc::ClientContext& context, Options options,
+    google::cloud::storageinsights::v1::LinkDatasetRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::storageinsights::v1::LinkDatasetRequest const&
+                 request) {
+        return child_->LinkDataset(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+StorageInsightsLogging::AsyncUnlinkDataset(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::storageinsights::v1::UnlinkDatasetRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::storageinsights::v1::UnlinkDatasetRequest const&
+                 request) {
+        return child_->AsyncUnlinkDataset(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> StorageInsightsLogging::UnlinkDataset(
+    grpc::ClientContext& context, Options options,
+    google::cloud::storageinsights::v1::UnlinkDatasetRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::storageinsights::v1::UnlinkDatasetRequest const&
+                 request) {
+        return child_->UnlinkDataset(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 StorageInsightsLogging::ListLocations(
     grpc::ClientContext& context, Options const& options,
@@ -199,6 +398,41 @@ Status StorageInsightsLogging::CancelOperation(
         return child_->CancelOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+StorageInsightsLogging::AsyncGetOperation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::longrunning::GetOperationRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::longrunning::GetOperationRequest const& request) {
+        return child_->AsyncGetOperation(cq, std::move(context),
+                                         std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+future<Status> StorageInsightsLogging::AsyncCancelOperation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::longrunning::CancelOperationRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::longrunning::CancelOperationRequest const& request) {
+        return child_->AsyncCancelOperation(cq, std::move(context),
+                                            std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

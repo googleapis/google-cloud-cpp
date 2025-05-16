@@ -406,6 +406,122 @@ StorageControlClient::ListAnywhereCaches(
   return connection_->ListAnywhereCaches(std::move(request));
 }
 
+StatusOr<google::storage::control::v2::IntelligenceConfig>
+StorageControlClient::GetProjectIntelligenceConfig(std::string const& name,
+                                                   Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::storage::control::v2::GetProjectIntelligenceConfigRequest request;
+  request.set_name(name);
+  return connection_->GetProjectIntelligenceConfig(request);
+}
+
+StatusOr<google::storage::control::v2::IntelligenceConfig>
+StorageControlClient::GetProjectIntelligenceConfig(
+    google::storage::control::v2::GetProjectIntelligenceConfigRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetProjectIntelligenceConfig(request);
+}
+
+StatusOr<google::storage::control::v2::IntelligenceConfig>
+StorageControlClient::UpdateProjectIntelligenceConfig(
+    google::storage::control::v2::IntelligenceConfig const& intelligence_config,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::storage::control::v2::UpdateProjectIntelligenceConfigRequest request;
+  *request.mutable_intelligence_config() = intelligence_config;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateProjectIntelligenceConfig(request);
+}
+
+StatusOr<google::storage::control::v2::IntelligenceConfig>
+StorageControlClient::UpdateProjectIntelligenceConfig(
+    google::storage::control::v2::UpdateProjectIntelligenceConfigRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateProjectIntelligenceConfig(request);
+}
+
+StatusOr<google::storage::control::v2::IntelligenceConfig>
+StorageControlClient::GetFolderIntelligenceConfig(std::string const& name,
+                                                  Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::storage::control::v2::GetFolderIntelligenceConfigRequest request;
+  request.set_name(name);
+  return connection_->GetFolderIntelligenceConfig(request);
+}
+
+StatusOr<google::storage::control::v2::IntelligenceConfig>
+StorageControlClient::GetFolderIntelligenceConfig(
+    google::storage::control::v2::GetFolderIntelligenceConfigRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetFolderIntelligenceConfig(request);
+}
+
+StatusOr<google::storage::control::v2::IntelligenceConfig>
+StorageControlClient::UpdateFolderIntelligenceConfig(
+    google::storage::control::v2::IntelligenceConfig const& intelligence_config,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::storage::control::v2::UpdateFolderIntelligenceConfigRequest request;
+  *request.mutable_intelligence_config() = intelligence_config;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateFolderIntelligenceConfig(request);
+}
+
+StatusOr<google::storage::control::v2::IntelligenceConfig>
+StorageControlClient::UpdateFolderIntelligenceConfig(
+    google::storage::control::v2::UpdateFolderIntelligenceConfigRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateFolderIntelligenceConfig(request);
+}
+
+StatusOr<google::storage::control::v2::IntelligenceConfig>
+StorageControlClient::GetOrganizationIntelligenceConfig(std::string const& name,
+                                                        Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::storage::control::v2::GetOrganizationIntelligenceConfigRequest
+      request;
+  request.set_name(name);
+  return connection_->GetOrganizationIntelligenceConfig(request);
+}
+
+StatusOr<google::storage::control::v2::IntelligenceConfig>
+StorageControlClient::GetOrganizationIntelligenceConfig(
+    google::storage::control::v2::
+        GetOrganizationIntelligenceConfigRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetOrganizationIntelligenceConfig(request);
+}
+
+StatusOr<google::storage::control::v2::IntelligenceConfig>
+StorageControlClient::UpdateOrganizationIntelligenceConfig(
+    google::storage::control::v2::IntelligenceConfig const& intelligence_config,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::storage::control::v2::UpdateOrganizationIntelligenceConfigRequest
+      request;
+  *request.mutable_intelligence_config() = intelligence_config;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateOrganizationIntelligenceConfig(request);
+}
+
+StatusOr<google::storage::control::v2::IntelligenceConfig>
+StorageControlClient::UpdateOrganizationIntelligenceConfig(
+    google::storage::control::v2::
+        UpdateOrganizationIntelligenceConfigRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateOrganizationIntelligenceConfig(request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storagecontrol_v2
 }  // namespace cloud

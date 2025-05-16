@@ -59,6 +59,16 @@ struct StorageInsightsConnectionIdempotencyPolicyOption {
 };
 
 /**
+ * Use with `google::cloud::Options` to configure the long-running operations
+ * polling policy.
+ *
+ * @ingroup google-cloud-storageinsights-options
+ */
+struct StorageInsightsPollingPolicyOption {
+  using Type = std::shared_ptr<PollingPolicy>;
+};
+
+/**
  * The options applicable to StorageInsights.
  *
  * @ingroup google-cloud-storageinsights-options
@@ -66,6 +76,7 @@ struct StorageInsightsConnectionIdempotencyPolicyOption {
 using StorageInsightsPolicyOptionList =
     OptionList<StorageInsightsRetryPolicyOption,
                StorageInsightsBackoffPolicyOption,
+               StorageInsightsPollingPolicyOption,
                StorageInsightsConnectionIdempotencyPolicyOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

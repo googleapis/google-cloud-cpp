@@ -120,6 +120,171 @@ StorageInsightsTracingStub::GetReportDetail(
                            child_->GetReportDetail(context, options, request));
 }
 
+StatusOr<google::cloud::storageinsights::v1::ListDatasetConfigsResponse>
+StorageInsightsTracingStub::ListDatasetConfigs(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::storageinsights::v1::ListDatasetConfigsRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.storageinsights.v1.StorageInsights", "ListDatasetConfigs");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->ListDatasetConfigs(context, options, request));
+}
+
+StatusOr<google::cloud::storageinsights::v1::DatasetConfig>
+StorageInsightsTracingStub::GetDatasetConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::storageinsights::v1::GetDatasetConfigRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.storageinsights.v1.StorageInsights", "GetDatasetConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetDatasetConfig(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+StorageInsightsTracingStub::AsyncCreateDatasetConfig(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::storageinsights::v1::CreateDatasetConfigRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.storageinsights.v1.StorageInsights", "CreateDatasetConfig");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncCreateDatasetConfig(cq, context, std::move(options),
+                                            request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+StorageInsightsTracingStub::CreateDatasetConfig(
+    grpc::ClientContext& context, Options options,
+    google::cloud::storageinsights::v1::CreateDatasetConfigRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.storageinsights.v1.StorageInsights", "CreateDatasetConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->CreateDatasetConfig(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+StorageInsightsTracingStub::AsyncUpdateDatasetConfig(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::storageinsights::v1::UpdateDatasetConfigRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.storageinsights.v1.StorageInsights", "UpdateDatasetConfig");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncUpdateDatasetConfig(cq, context, std::move(options),
+                                            request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+StorageInsightsTracingStub::UpdateDatasetConfig(
+    grpc::ClientContext& context, Options options,
+    google::cloud::storageinsights::v1::UpdateDatasetConfigRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.storageinsights.v1.StorageInsights", "UpdateDatasetConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->UpdateDatasetConfig(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+StorageInsightsTracingStub::AsyncDeleteDatasetConfig(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::storageinsights::v1::DeleteDatasetConfigRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.storageinsights.v1.StorageInsights", "DeleteDatasetConfig");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncDeleteDatasetConfig(cq, context, std::move(options),
+                                            request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+StorageInsightsTracingStub::DeleteDatasetConfig(
+    grpc::ClientContext& context, Options options,
+    google::cloud::storageinsights::v1::DeleteDatasetConfigRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.storageinsights.v1.StorageInsights", "DeleteDatasetConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->DeleteDatasetConfig(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+StorageInsightsTracingStub::AsyncLinkDataset(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::storageinsights::v1::LinkDatasetRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.storageinsights.v1.StorageInsights", "LinkDataset");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncLinkDataset(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+StorageInsightsTracingStub::LinkDataset(
+    grpc::ClientContext& context, Options options,
+    google::cloud::storageinsights::v1::LinkDatasetRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.storageinsights.v1.StorageInsights", "LinkDataset");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->LinkDataset(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+StorageInsightsTracingStub::AsyncUnlinkDataset(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::storageinsights::v1::UnlinkDatasetRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.storageinsights.v1.StorageInsights", "UnlinkDataset");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncUnlinkDataset(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+StorageInsightsTracingStub::UnlinkDataset(
+    grpc::ClientContext& context, Options options,
+    google::cloud::storageinsights::v1::UnlinkDatasetRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.storageinsights.v1.StorageInsights", "UnlinkDataset");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->UnlinkDataset(context, options, request));
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 StorageInsightsTracingStub::ListLocations(
     grpc::ClientContext& context, Options const& options,
@@ -188,6 +353,34 @@ Status StorageInsightsTracingStub::CancelOperation(
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CancelOperation(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+StorageInsightsTracingStub::AsyncGetOperation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::longrunning::GetOperationRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+future<Status> StorageInsightsTracingStub::AsyncCancelOperation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
+                                     "CancelOperation");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f =
+      child_->AsyncCancelOperation(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

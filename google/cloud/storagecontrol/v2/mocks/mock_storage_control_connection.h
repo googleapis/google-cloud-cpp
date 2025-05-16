@@ -233,6 +233,44 @@ class MockStorageControlConnection
               ListAnywhereCaches,
               (google::storage::control::v2::ListAnywhereCachesRequest request),
               (override));
+
+  MOCK_METHOD(
+      StatusOr<google::storage::control::v2::IntelligenceConfig>,
+      GetProjectIntelligenceConfig,
+      (google::storage::control::v2::GetProjectIntelligenceConfigRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(StatusOr<google::storage::control::v2::IntelligenceConfig>,
+              UpdateProjectIntelligenceConfig,
+              (google::storage::control::v2::
+                   UpdateProjectIntelligenceConfigRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      StatusOr<google::storage::control::v2::IntelligenceConfig>,
+      GetFolderIntelligenceConfig,
+      (google::storage::control::v2::GetFolderIntelligenceConfigRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(StatusOr<google::storage::control::v2::IntelligenceConfig>,
+              UpdateFolderIntelligenceConfig,
+              (google::storage::control::v2::
+                   UpdateFolderIntelligenceConfigRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::storage::control::v2::IntelligenceConfig>,
+              GetOrganizationIntelligenceConfig,
+              (google::storage::control::v2::
+                   GetOrganizationIntelligenceConfigRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::storage::control::v2::IntelligenceConfig>,
+              UpdateOrganizationIntelligenceConfig,
+              (google::storage::control::v2::
+                   UpdateOrganizationIntelligenceConfigRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

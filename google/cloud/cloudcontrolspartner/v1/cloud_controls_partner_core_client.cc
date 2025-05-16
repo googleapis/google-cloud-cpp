@@ -173,6 +173,64 @@ CloudControlsPartnerCoreClient::GetPartner(
   return connection_->GetPartner(request);
 }
 
+StatusOr<google::cloud::cloudcontrolspartner::v1::Customer>
+CloudControlsPartnerCoreClient::CreateCustomer(
+    std::string const& parent,
+    google::cloud::cloudcontrolspartner::v1::Customer const& customer,
+    std::string const& customer_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cloudcontrolspartner::v1::CreateCustomerRequest request;
+  request.set_parent(parent);
+  *request.mutable_customer() = customer;
+  request.set_customer_id(customer_id);
+  return connection_->CreateCustomer(request);
+}
+
+StatusOr<google::cloud::cloudcontrolspartner::v1::Customer>
+CloudControlsPartnerCoreClient::CreateCustomer(
+    google::cloud::cloudcontrolspartner::v1::CreateCustomerRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateCustomer(request);
+}
+
+StatusOr<google::cloud::cloudcontrolspartner::v1::Customer>
+CloudControlsPartnerCoreClient::UpdateCustomer(
+    google::cloud::cloudcontrolspartner::v1::Customer const& customer,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cloudcontrolspartner::v1::UpdateCustomerRequest request;
+  *request.mutable_customer() = customer;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateCustomer(request);
+}
+
+StatusOr<google::cloud::cloudcontrolspartner::v1::Customer>
+CloudControlsPartnerCoreClient::UpdateCustomer(
+    google::cloud::cloudcontrolspartner::v1::UpdateCustomerRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateCustomer(request);
+}
+
+Status CloudControlsPartnerCoreClient::DeleteCustomer(std::string const& name,
+                                                      Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cloudcontrolspartner::v1::DeleteCustomerRequest request;
+  request.set_name(name);
+  return connection_->DeleteCustomer(request);
+}
+
+Status CloudControlsPartnerCoreClient::DeleteCustomer(
+    google::cloud::cloudcontrolspartner::v1::DeleteCustomerRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteCustomer(request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloudcontrolspartner_v1
 }  // namespace cloud

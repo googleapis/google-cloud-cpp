@@ -19,6 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGEINSIGHTS_V1_INTERNAL_STORAGE_INSIGHTS_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGEINSIGHTS_V1_INTERNAL_STORAGE_INSIGHTS_STUB_H
 
+#include "google/cloud/completion_queue.h"
+#include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
@@ -80,6 +82,82 @@ class StorageInsightsStub {
       google::cloud::storageinsights::v1::GetReportDetailRequest const&
           request) = 0;
 
+  virtual StatusOr<
+      google::cloud::storageinsights::v1::ListDatasetConfigsResponse>
+  ListDatasetConfigs(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::storageinsights::v1::ListDatasetConfigsRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::cloud::storageinsights::v1::DatasetConfig>
+  GetDatasetConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::storageinsights::v1::GetDatasetConfigRequest const&
+          request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateDatasetConfig(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::storageinsights::v1::CreateDatasetConfigRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> CreateDatasetConfig(
+      grpc::ClientContext& context, Options options,
+      google::cloud::storageinsights::v1::CreateDatasetConfigRequest const&
+          request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncUpdateDatasetConfig(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::storageinsights::v1::UpdateDatasetConfigRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> UpdateDatasetConfig(
+      grpc::ClientContext& context, Options options,
+      google::cloud::storageinsights::v1::UpdateDatasetConfigRequest const&
+          request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteDatasetConfig(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::storageinsights::v1::DeleteDatasetConfigRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> DeleteDatasetConfig(
+      grpc::ClientContext& context, Options options,
+      google::cloud::storageinsights::v1::DeleteDatasetConfigRequest const&
+          request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncLinkDataset(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::storageinsights::v1::LinkDatasetRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> LinkDataset(
+      grpc::ClientContext& context, Options options,
+      google::cloud::storageinsights::v1::LinkDatasetRequest const&
+          request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncUnlinkDataset(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::storageinsights::v1::UnlinkDatasetRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> UnlinkDataset(
+      grpc::ClientContext& context, Options options,
+      google::cloud::storageinsights::v1::UnlinkDatasetRequest const&
+          request) = 0;
+
   virtual StatusOr<google::cloud::location::ListLocationsResponse>
   ListLocations(
       grpc::ClientContext& context, Options const& options,
@@ -104,21 +182,33 @@ class StorageInsightsStub {
   virtual Status CancelOperation(
       grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::longrunning::GetOperationRequest const& request) = 0;
+
+  virtual future<Status> AsyncCancelOperation(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::longrunning::CancelOperationRequest const& request) = 0;
 };
 
 class DefaultStorageInsightsStub : public StorageInsightsStub {
  public:
-  explicit DefaultStorageInsightsStub(
+  DefaultStorageInsightsStub(
       std::unique_ptr<
           google::cloud::storageinsights::v1::StorageInsights::StubInterface>
           grpc_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface>
-          operations_stub,
       std::unique_ptr<google::cloud::location::Locations::StubInterface>
-          locations_stub)
+          locations_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface>
+          operations_stub)
       : grpc_stub_(std::move(grpc_stub)),
-        operations_stub_(std::move(operations_stub)),
-        locations_stub_(std::move(locations_stub)) {}
+        locations_stub_(std::move(locations_stub)),
+        operations_stub_(std::move(operations_stub)) {}
 
   StatusOr<google::cloud::storageinsights::v1::ListReportConfigsResponse>
   ListReportConfigs(
@@ -157,6 +247,77 @@ class DefaultStorageInsightsStub : public StorageInsightsStub {
       google::cloud::storageinsights::v1::GetReportDetailRequest const& request)
       override;
 
+  StatusOr<google::cloud::storageinsights::v1::ListDatasetConfigsResponse>
+  ListDatasetConfigs(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::storageinsights::v1::ListDatasetConfigsRequest const&
+          request) override;
+
+  StatusOr<google::cloud::storageinsights::v1::DatasetConfig> GetDatasetConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::storageinsights::v1::GetDatasetConfigRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateDatasetConfig(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::storageinsights::v1::CreateDatasetConfigRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> CreateDatasetConfig(
+      grpc::ClientContext& context, Options options,
+      google::cloud::storageinsights::v1::CreateDatasetConfigRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateDatasetConfig(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::storageinsights::v1::UpdateDatasetConfigRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateDatasetConfig(
+      grpc::ClientContext& context, Options options,
+      google::cloud::storageinsights::v1::UpdateDatasetConfigRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteDatasetConfig(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::storageinsights::v1::DeleteDatasetConfigRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteDatasetConfig(
+      grpc::ClientContext& context, Options options,
+      google::cloud::storageinsights::v1::DeleteDatasetConfigRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncLinkDataset(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::storageinsights::v1::LinkDatasetRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> LinkDataset(
+      grpc::ClientContext& context, Options options,
+      google::cloud::storageinsights::v1::LinkDatasetRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncUnlinkDataset(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::storageinsights::v1::UnlinkDatasetRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UnlinkDataset(
+      grpc::ClientContext& context, Options options,
+      google::cloud::storageinsights::v1::UnlinkDatasetRequest const& request)
+      override;
+
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
       grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
@@ -181,14 +342,26 @@ class DefaultStorageInsightsStub : public StorageInsightsStub {
       grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::longrunning::GetOperationRequest const& request) override;
+
+  future<Status> AsyncCancelOperation(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::longrunning::CancelOperationRequest const& request) override;
+
  private:
   std::unique_ptr<
       google::cloud::storageinsights::v1::StorageInsights::StubInterface>
       grpc_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface>
-      operations_stub_;
   std::unique_ptr<google::cloud::location::Locations::StubInterface>
       locations_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface>
+      operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

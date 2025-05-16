@@ -54,6 +54,21 @@ Idempotency AlloyDBAdminConnectionIdempotencyPolicy::UpdateCluster(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency AlloyDBAdminConnectionIdempotencyPolicy::ExportCluster(
+    google::cloud::alloydb::v1::ExportClusterRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency AlloyDBAdminConnectionIdempotencyPolicy::ImportCluster(
+    google::cloud::alloydb::v1::ImportClusterRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency AlloyDBAdminConnectionIdempotencyPolicy::UpgradeCluster(
+    google::cloud::alloydb::v1::UpgradeClusterRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency AlloyDBAdminConnectionIdempotencyPolicy::DeleteCluster(
     google::cloud::alloydb::v1::DeleteClusterRequest const&) {
   return Idempotency::kNonIdempotent;

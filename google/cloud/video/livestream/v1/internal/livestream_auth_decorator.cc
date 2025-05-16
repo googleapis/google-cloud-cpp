@@ -401,6 +401,118 @@ StatusOr<google::longrunning::Operation> LivestreamServiceAuth::DeleteClip(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+LivestreamServiceAuth::AsyncCreateDvrSession(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::video::livestream::v1::CreateDvrSessionRequest const&
+        request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncCreateDvrSession(cq, *std::move(context),
+                                            std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation>
+LivestreamServiceAuth::CreateDvrSession(
+    grpc::ClientContext& context, Options options,
+    google::cloud::video::livestream::v1::CreateDvrSessionRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateDvrSession(context, options, request);
+}
+
+StatusOr<google::cloud::video::livestream::v1::ListDvrSessionsResponse>
+LivestreamServiceAuth::ListDvrSessions(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::video::livestream::v1::ListDvrSessionsRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListDvrSessions(context, options, request);
+}
+
+StatusOr<google::cloud::video::livestream::v1::DvrSession>
+LivestreamServiceAuth::GetDvrSession(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::video::livestream::v1::GetDvrSessionRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetDvrSession(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+LivestreamServiceAuth::AsyncDeleteDvrSession(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::video::livestream::v1::DeleteDvrSessionRequest const&
+        request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncDeleteDvrSession(cq, *std::move(context),
+                                            std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation>
+LivestreamServiceAuth::DeleteDvrSession(
+    grpc::ClientContext& context, Options options,
+    google::cloud::video::livestream::v1::DeleteDvrSessionRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteDvrSession(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+LivestreamServiceAuth::AsyncUpdateDvrSession(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::video::livestream::v1::UpdateDvrSessionRequest const&
+        request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncUpdateDvrSession(cq, *std::move(context),
+                                            std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation>
+LivestreamServiceAuth::UpdateDvrSession(
+    grpc::ClientContext& context, Options options,
+    google::cloud::video::livestream::v1::UpdateDvrSessionRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateDvrSession(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 LivestreamServiceAuth::AsyncCreateAsset(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

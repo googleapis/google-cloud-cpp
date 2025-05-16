@@ -69,5 +69,7 @@ extend-ignore-identifiers-re = [
   "NAM4",
   # Metadata is mispelled in this proto message name found in
   # google/cloud/aiplatform/v1/vizier_service.proto
-  "CheckTrialEarlyStoppingStateMetatdata"
+  "CheckTrialEarlyStoppingStateMetatdata",
+  # google/cloud/support/v2/case_service.proto
+  "MURR"
 ]

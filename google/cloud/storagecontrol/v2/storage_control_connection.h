@@ -276,6 +276,36 @@ class StorageControlConnection {
   virtual StreamRange<google::storage::control::v2::AnywhereCache>
   ListAnywhereCaches(
       google::storage::control::v2::ListAnywhereCachesRequest request);
+
+  virtual StatusOr<google::storage::control::v2::IntelligenceConfig>
+  GetProjectIntelligenceConfig(
+      google::storage::control::v2::GetProjectIntelligenceConfigRequest const&
+          request);
+
+  virtual StatusOr<google::storage::control::v2::IntelligenceConfig>
+  UpdateProjectIntelligenceConfig(
+      google::storage::control::v2::
+          UpdateProjectIntelligenceConfigRequest const& request);
+
+  virtual StatusOr<google::storage::control::v2::IntelligenceConfig>
+  GetFolderIntelligenceConfig(
+      google::storage::control::v2::GetFolderIntelligenceConfigRequest const&
+          request);
+
+  virtual StatusOr<google::storage::control::v2::IntelligenceConfig>
+  UpdateFolderIntelligenceConfig(
+      google::storage::control::v2::UpdateFolderIntelligenceConfigRequest const&
+          request);
+
+  virtual StatusOr<google::storage::control::v2::IntelligenceConfig>
+  GetOrganizationIntelligenceConfig(
+      google::storage::control::v2::
+          GetOrganizationIntelligenceConfigRequest const& request);
+
+  virtual StatusOr<google::storage::control::v2::IntelligenceConfig>
+  UpdateOrganizationIntelligenceConfig(
+      google::storage::control::v2::
+          UpdateOrganizationIntelligenceConfigRequest const& request);
 };
 
 /**

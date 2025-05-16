@@ -414,6 +414,123 @@ LivestreamServiceTracingConnection::DeleteClip(
   return internal::EndSpan(std::move(span), child_->DeleteClip(operation));
 }
 
+future<StatusOr<google::cloud::video::livestream::v1::DvrSession>>
+LivestreamServiceTracingConnection::CreateDvrSession(
+    google::cloud::video::livestream::v1::CreateDvrSessionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "video_livestream_v1::LivestreamServiceConnection::CreateDvrSession");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateDvrSession(request));
+}
+
+StatusOr<google::longrunning::Operation>
+LivestreamServiceTracingConnection::CreateDvrSession(
+    NoAwaitTag,
+    google::cloud::video::livestream::v1::CreateDvrSessionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "video_livestream_v1::LivestreamServiceConnection::CreateDvrSession");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->CreateDvrSession(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::video::livestream::v1::DvrSession>>
+LivestreamServiceTracingConnection::CreateDvrSession(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "video_livestream_v1::LivestreamServiceConnection::CreateDvrSession");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateDvrSession(operation));
+}
+
+StreamRange<google::cloud::video::livestream::v1::DvrSession>
+LivestreamServiceTracingConnection::ListDvrSessions(
+    google::cloud::video::livestream::v1::ListDvrSessionsRequest request) {
+  auto span = internal::MakeSpan(
+      "video_livestream_v1::LivestreamServiceConnection::ListDvrSessions");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListDvrSessions(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::video::livestream::v1::DvrSession>(std::move(span),
+                                                        std::move(sr));
+}
+
+StatusOr<google::cloud::video::livestream::v1::DvrSession>
+LivestreamServiceTracingConnection::GetDvrSession(
+    google::cloud::video::livestream::v1::GetDvrSessionRequest const& request) {
+  auto span = internal::MakeSpan(
+      "video_livestream_v1::LivestreamServiceConnection::GetDvrSession");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetDvrSession(request));
+}
+
+future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
+LivestreamServiceTracingConnection::DeleteDvrSession(
+    google::cloud::video::livestream::v1::DeleteDvrSessionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "video_livestream_v1::LivestreamServiceConnection::DeleteDvrSession");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteDvrSession(request));
+}
+
+StatusOr<google::longrunning::Operation>
+LivestreamServiceTracingConnection::DeleteDvrSession(
+    NoAwaitTag,
+    google::cloud::video::livestream::v1::DeleteDvrSessionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "video_livestream_v1::LivestreamServiceConnection::DeleteDvrSession");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->DeleteDvrSession(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
+LivestreamServiceTracingConnection::DeleteDvrSession(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "video_livestream_v1::LivestreamServiceConnection::DeleteDvrSession");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteDvrSession(operation));
+}
+
+future<StatusOr<google::cloud::video::livestream::v1::DvrSession>>
+LivestreamServiceTracingConnection::UpdateDvrSession(
+    google::cloud::video::livestream::v1::UpdateDvrSessionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "video_livestream_v1::LivestreamServiceConnection::UpdateDvrSession");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateDvrSession(request));
+}
+
+StatusOr<google::longrunning::Operation>
+LivestreamServiceTracingConnection::UpdateDvrSession(
+    NoAwaitTag,
+    google::cloud::video::livestream::v1::UpdateDvrSessionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "video_livestream_v1::LivestreamServiceConnection::UpdateDvrSession");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->UpdateDvrSession(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::video::livestream::v1::DvrSession>>
+LivestreamServiceTracingConnection::UpdateDvrSession(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "video_livestream_v1::LivestreamServiceConnection::UpdateDvrSession");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateDvrSession(operation));
+}
+
 future<StatusOr<google::cloud::video::livestream::v1::Asset>>
 LivestreamServiceTracingConnection::CreateAsset(
     google::cloud::video::livestream::v1::CreateAssetRequest const& request) {

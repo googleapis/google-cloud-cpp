@@ -292,6 +292,279 @@ AlloyDBAdminConnectionImpl::UpdateCluster(
       polling_policy(*current), __func__);
 }
 
+future<StatusOr<google::cloud::alloydb::v1::ExportClusterResponse>>
+AlloyDBAdminConnectionImpl::ExportCluster(
+    google::cloud::alloydb::v1::ExportClusterRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->ExportCluster(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::alloydb::v1::ExportClusterResponse>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::alloydb::v1::ExportClusterRequest const& request) {
+        return stub->AsyncExportCluster(cq, std::move(context),
+                                        std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::alloydb::v1::ExportClusterResponse>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+AlloyDBAdminConnectionImpl::ExportCluster(
+    NoAwaitTag,
+    google::cloud::alloydb::v1::ExportClusterRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ExportCluster(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::alloydb::v1::ExportClusterRequest const& request) {
+        return stub_->ExportCluster(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::alloydb::v1::ExportClusterResponse>>
+AlloyDBAdminConnectionImpl::ExportCluster(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::alloydb::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::alloydb::v1::ExportClusterResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to ExportCluster",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::alloydb::v1::ExportClusterResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::alloydb::v1::ExportClusterResponse>,
+      polling_policy(*current), __func__);
+}
+
+future<StatusOr<google::cloud::alloydb::v1::ImportClusterResponse>>
+AlloyDBAdminConnectionImpl::ImportCluster(
+    google::cloud::alloydb::v1::ImportClusterRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->ImportCluster(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::alloydb::v1::ImportClusterResponse>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::alloydb::v1::ImportClusterRequest const& request) {
+        return stub->AsyncImportCluster(cq, std::move(context),
+                                        std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::alloydb::v1::ImportClusterResponse>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+AlloyDBAdminConnectionImpl::ImportCluster(
+    NoAwaitTag,
+    google::cloud::alloydb::v1::ImportClusterRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ImportCluster(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::alloydb::v1::ImportClusterRequest const& request) {
+        return stub_->ImportCluster(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::alloydb::v1::ImportClusterResponse>>
+AlloyDBAdminConnectionImpl::ImportCluster(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::alloydb::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::alloydb::v1::ImportClusterResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to ImportCluster",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::alloydb::v1::ImportClusterResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::alloydb::v1::ImportClusterResponse>,
+      polling_policy(*current), __func__);
+}
+
+future<StatusOr<google::cloud::alloydb::v1::UpgradeClusterResponse>>
+AlloyDBAdminConnectionImpl::UpgradeCluster(
+    google::cloud::alloydb::v1::UpgradeClusterRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpgradeCluster(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::alloydb::v1::UpgradeClusterResponse>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::alloydb::v1::UpgradeClusterRequest const& request) {
+        return stub->AsyncUpgradeCluster(cq, std::move(context),
+                                         std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::alloydb::v1::UpgradeClusterResponse>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+AlloyDBAdminConnectionImpl::UpgradeCluster(
+    NoAwaitTag,
+    google::cloud::alloydb::v1::UpgradeClusterRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpgradeCluster(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::alloydb::v1::UpgradeClusterRequest const& request) {
+        return stub_->UpgradeCluster(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::alloydb::v1::UpgradeClusterResponse>>
+AlloyDBAdminConnectionImpl::UpgradeCluster(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::alloydb::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::alloydb::v1::UpgradeClusterResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpgradeCluster",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::alloydb::v1::UpgradeClusterResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::alloydb::v1::UpgradeClusterResponse>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>>
 AlloyDBAdminConnectionImpl::DeleteCluster(
     google::cloud::alloydb::v1::DeleteClusterRequest const& request) {

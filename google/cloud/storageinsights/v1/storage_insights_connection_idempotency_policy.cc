@@ -69,6 +69,41 @@ Idempotency StorageInsightsConnectionIdempotencyPolicy::GetReportDetail(
   return Idempotency::kIdempotent;
 }
 
+Idempotency StorageInsightsConnectionIdempotencyPolicy::ListDatasetConfigs(
+    google::cloud::storageinsights::v1::ListDatasetConfigsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency StorageInsightsConnectionIdempotencyPolicy::GetDatasetConfig(
+    google::cloud::storageinsights::v1::GetDatasetConfigRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency StorageInsightsConnectionIdempotencyPolicy::CreateDatasetConfig(
+    google::cloud::storageinsights::v1::CreateDatasetConfigRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency StorageInsightsConnectionIdempotencyPolicy::UpdateDatasetConfig(
+    google::cloud::storageinsights::v1::UpdateDatasetConfigRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency StorageInsightsConnectionIdempotencyPolicy::DeleteDatasetConfig(
+    google::cloud::storageinsights::v1::DeleteDatasetConfigRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency StorageInsightsConnectionIdempotencyPolicy::LinkDataset(
+    google::cloud::storageinsights::v1::LinkDatasetRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency StorageInsightsConnectionIdempotencyPolicy::UnlinkDataset(
+    google::cloud::storageinsights::v1::UnlinkDatasetRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency StorageInsightsConnectionIdempotencyPolicy::ListLocations(
     google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;

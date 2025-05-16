@@ -242,8 +242,8 @@ class CloudControlsPartnerCoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cloudcontrolspartner.v1.Customer]: @googleapis_reference_link{google/cloud/cloudcontrolspartner/v1/customers.proto#L33}
-  /// [google.cloud.cloudcontrolspartner.v1.GetCustomerRequest]: @googleapis_reference_link{google/cloud/cloudcontrolspartner/v1/customers.proto#L96}
+  /// [google.cloud.cloudcontrolspartner.v1.Customer]: @googleapis_reference_link{google/cloud/cloudcontrolspartner/v1/customers.proto#L34}
+  /// [google.cloud.cloudcontrolspartner.v1.GetCustomerRequest]: @googleapis_reference_link{google/cloud/cloudcontrolspartner/v1/customers.proto#L121}
   ///
   // clang-format on
   StatusOr<google::cloud::cloudcontrolspartner::v1::Customer> GetCustomer(
@@ -272,8 +272,8 @@ class CloudControlsPartnerCoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cloudcontrolspartner.v1.Customer]: @googleapis_reference_link{google/cloud/cloudcontrolspartner/v1/customers.proto#L33}
-  /// [google.cloud.cloudcontrolspartner.v1.GetCustomerRequest]: @googleapis_reference_link{google/cloud/cloudcontrolspartner/v1/customers.proto#L96}
+  /// [google.cloud.cloudcontrolspartner.v1.Customer]: @googleapis_reference_link{google/cloud/cloudcontrolspartner/v1/customers.proto#L34}
+  /// [google.cloud.cloudcontrolspartner.v1.GetCustomerRequest]: @googleapis_reference_link{google/cloud/cloudcontrolspartner/v1/customers.proto#L121}
   ///
   // clang-format on
   StatusOr<google::cloud::cloudcontrolspartner::v1::Customer> GetCustomer(
@@ -309,8 +309,8 @@ class CloudControlsPartnerCoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cloudcontrolspartner.v1.Customer]: @googleapis_reference_link{google/cloud/cloudcontrolspartner/v1/customers.proto#L33}
-  /// [google.cloud.cloudcontrolspartner.v1.ListCustomersRequest]: @googleapis_reference_link{google/cloud/cloudcontrolspartner/v1/customers.proto#L57}
+  /// [google.cloud.cloudcontrolspartner.v1.Customer]: @googleapis_reference_link{google/cloud/cloudcontrolspartner/v1/customers.proto#L34}
+  /// [google.cloud.cloudcontrolspartner.v1.ListCustomersRequest]: @googleapis_reference_link{google/cloud/cloudcontrolspartner/v1/customers.proto#L62}
   ///
   // clang-format on
   StreamRange<google::cloud::cloudcontrolspartner::v1::Customer> ListCustomers(
@@ -348,8 +348,8 @@ class CloudControlsPartnerCoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cloudcontrolspartner.v1.Customer]: @googleapis_reference_link{google/cloud/cloudcontrolspartner/v1/customers.proto#L33}
-  /// [google.cloud.cloudcontrolspartner.v1.ListCustomersRequest]: @googleapis_reference_link{google/cloud/cloudcontrolspartner/v1/customers.proto#L57}
+  /// [google.cloud.cloudcontrolspartner.v1.Customer]: @googleapis_reference_link{google/cloud/cloudcontrolspartner/v1/customers.proto#L34}
+  /// [google.cloud.cloudcontrolspartner.v1.ListCustomersRequest]: @googleapis_reference_link{google/cloud/cloudcontrolspartner/v1/customers.proto#L62}
   ///
   // clang-format on
   StreamRange<google::cloud::cloudcontrolspartner::v1::Customer> ListCustomers(
@@ -614,6 +614,182 @@ class CloudControlsPartnerCoreClient {
   // clang-format on
   StatusOr<google::cloud::cloudcontrolspartner::v1::Partner> GetPartner(
       google::cloud::cloudcontrolspartner::v1::GetPartnerRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a new customer.
+  ///
+  /// @param parent  Required. Parent resource
+  ///  Format: `organizations/{organization}/locations/{location}`
+  /// @param customer  Required. The customer to create.
+  /// @param customer_id  Required. The customer id to use for the customer, which will become the
+  ///  final component of the customer's resource name. The specified value must
+  ///  be a valid Google cloud organization id.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.cloudcontrolspartner.v1.Customer])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.cloudcontrolspartner.v1.CreateCustomerRequest]: @googleapis_reference_link{google/cloud/cloudcontrolspartner/v1/customers.proto#L101}
+  /// [google.cloud.cloudcontrolspartner.v1.Customer]: @googleapis_reference_link{google/cloud/cloudcontrolspartner/v1/customers.proto#L34}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::cloudcontrolspartner::v1::Customer> CreateCustomer(
+      std::string const& parent,
+      google::cloud::cloudcontrolspartner::v1::Customer const& customer,
+      std::string const& customer_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a new customer.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.cloudcontrolspartner.v1.CreateCustomerRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.cloudcontrolspartner.v1.Customer])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.cloudcontrolspartner.v1.CreateCustomerRequest]: @googleapis_reference_link{google/cloud/cloudcontrolspartner/v1/customers.proto#L101}
+  /// [google.cloud.cloudcontrolspartner.v1.Customer]: @googleapis_reference_link{google/cloud/cloudcontrolspartner/v1/customers.proto#L34}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::cloudcontrolspartner::v1::Customer> CreateCustomer(
+      google::cloud::cloudcontrolspartner::v1::CreateCustomerRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Update details of a single customer
+  ///
+  /// @param customer  Required. The customer to update
+  ///  Format:
+  ///  `organizations/{organization}/locations/{location}/customers/{customer}`
+  /// @param update_mask  Optional. The list of fields to update
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.cloudcontrolspartner.v1.Customer])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.cloudcontrolspartner.v1.Customer]: @googleapis_reference_link{google/cloud/cloudcontrolspartner/v1/customers.proto#L34}
+  /// [google.cloud.cloudcontrolspartner.v1.UpdateCustomerRequest]: @googleapis_reference_link{google/cloud/cloudcontrolspartner/v1/customers.proto#L167}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::cloudcontrolspartner::v1::Customer> UpdateCustomer(
+      google::cloud::cloudcontrolspartner::v1::Customer const& customer,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Update details of a single customer
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.cloudcontrolspartner.v1.UpdateCustomerRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.cloudcontrolspartner.v1.Customer])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.cloudcontrolspartner.v1.Customer]: @googleapis_reference_link{google/cloud/cloudcontrolspartner/v1/customers.proto#L34}
+  /// [google.cloud.cloudcontrolspartner.v1.UpdateCustomerRequest]: @googleapis_reference_link{google/cloud/cloudcontrolspartner/v1/customers.proto#L167}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::cloudcontrolspartner::v1::Customer> UpdateCustomer(
+      google::cloud::cloudcontrolspartner::v1::UpdateCustomerRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Delete details of a single customer
+  ///
+  /// @param name  Required. name of the resource to be deleted
+  ///  format: name=organizations/*/locations/*/customers/*
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.cloudcontrolspartner.v1.DeleteCustomerRequest]: @googleapis_reference_link{google/cloud/cloudcontrolspartner/v1/customers.proto#L179}
+  ///
+  // clang-format on
+  Status DeleteCustomer(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Delete details of a single customer
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.cloudcontrolspartner.v1.DeleteCustomerRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.cloudcontrolspartner.v1.DeleteCustomerRequest]: @googleapis_reference_link{google/cloud/cloudcontrolspartner/v1/customers.proto#L179}
+  ///
+  // clang-format on
+  Status DeleteCustomer(
+      google::cloud::cloudcontrolspartner::v1::DeleteCustomerRequest const&
+          request,
       Options opts = {});
 
  private:

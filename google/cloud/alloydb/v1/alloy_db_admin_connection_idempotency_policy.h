@@ -51,6 +51,15 @@ class AlloyDBAdminConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency UpdateCluster(
       google::cloud::alloydb::v1::UpdateClusterRequest const& request);
 
+  virtual google::cloud::Idempotency ExportCluster(
+      google::cloud::alloydb::v1::ExportClusterRequest const& request);
+
+  virtual google::cloud::Idempotency ImportCluster(
+      google::cloud::alloydb::v1::ImportClusterRequest const& request);
+
+  virtual google::cloud::Idempotency UpgradeCluster(
+      google::cloud::alloydb::v1::UpgradeClusterRequest const& request);
+
   virtual google::cloud::Idempotency DeleteCluster(
       google::cloud::alloydb::v1::DeleteClusterRequest const& request);
 

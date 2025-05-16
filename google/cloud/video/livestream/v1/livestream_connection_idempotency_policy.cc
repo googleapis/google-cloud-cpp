@@ -134,6 +134,31 @@ Idempotency LivestreamServiceConnectionIdempotencyPolicy::DeleteClip(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency LivestreamServiceConnectionIdempotencyPolicy::CreateDvrSession(
+    google::cloud::video::livestream::v1::CreateDvrSessionRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency LivestreamServiceConnectionIdempotencyPolicy::ListDvrSessions(
+    google::cloud::video::livestream::v1::ListDvrSessionsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency LivestreamServiceConnectionIdempotencyPolicy::GetDvrSession(
+    google::cloud::video::livestream::v1::GetDvrSessionRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency LivestreamServiceConnectionIdempotencyPolicy::DeleteDvrSession(
+    google::cloud::video::livestream::v1::DeleteDvrSessionRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency LivestreamServiceConnectionIdempotencyPolicy::UpdateDvrSession(
+    google::cloud::video::livestream::v1::UpdateDvrSessionRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency LivestreamServiceConnectionIdempotencyPolicy::CreateAsset(
     google::cloud::video::livestream::v1::CreateAssetRequest const&) {
   return Idempotency::kNonIdempotent;

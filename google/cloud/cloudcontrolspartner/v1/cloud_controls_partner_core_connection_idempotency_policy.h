@@ -66,6 +66,18 @@ class CloudControlsPartnerCoreConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency GetPartner(
       google::cloud::cloudcontrolspartner::v1::GetPartnerRequest const&
           request);
+
+  virtual google::cloud::Idempotency CreateCustomer(
+      google::cloud::cloudcontrolspartner::v1::CreateCustomerRequest const&
+          request);
+
+  virtual google::cloud::Idempotency UpdateCustomer(
+      google::cloud::cloudcontrolspartner::v1::UpdateCustomerRequest const&
+          request);
+
+  virtual google::cloud::Idempotency DeleteCustomer(
+      google::cloud::cloudcontrolspartner::v1::DeleteCustomerRequest const&
+          request);
 };
 
 std::unique_ptr<CloudControlsPartnerCoreConnectionIdempotencyPolicy>

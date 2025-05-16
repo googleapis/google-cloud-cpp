@@ -504,6 +504,144 @@ class MockLivestreamServiceConnection
   /// using ::testing::_;
   /// using ::testing::Matcher;
   /// EXPECT_CALL(*mock,
+  /// CreateDvrSession(Matcher<google::cloud::video::livestream::v1::CreateDvrSessionRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::video::livestream::v1::DvrSession>>,
+      CreateDvrSession,
+      (google::cloud::video::livestream::v1::CreateDvrSessionRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateDvrSession(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateDvrSession,
+      (NoAwaitTag,
+       google::cloud::video::livestream::v1::CreateDvrSessionRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CreateDvrSession(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::video::livestream::v1::DvrSession>>,
+      CreateDvrSession, (google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
+      (StreamRange<google::cloud::video::livestream::v1::DvrSession>),
+      ListDvrSessions,
+      (google::cloud::video::livestream::v1::ListDvrSessionsRequest request),
+      (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::video::livestream::v1::DvrSession>,
+              GetDvrSession,
+              (google::cloud::video::livestream::v1::GetDvrSessionRequest const&
+                   request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteDvrSession(Matcher<google::cloud::video::livestream::v1::DeleteDvrSessionRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>,
+      DeleteDvrSession,
+      (google::cloud::video::livestream::v1::DeleteDvrSessionRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteDvrSession(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteDvrSession,
+      (NoAwaitTag,
+       google::cloud::video::livestream::v1::DeleteDvrSessionRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, DeleteDvrSession(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>,
+      DeleteDvrSession, (google::longrunning::Operation const& operation),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateDvrSession(Matcher<google::cloud::video::livestream::v1::UpdateDvrSessionRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::video::livestream::v1::DvrSession>>,
+      UpdateDvrSession,
+      (google::cloud::video::livestream::v1::UpdateDvrSessionRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateDvrSession(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateDvrSession,
+      (NoAwaitTag,
+       google::cloud::video::livestream::v1::UpdateDvrSessionRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, UpdateDvrSession(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::video::livestream::v1::DvrSession>>,
+      UpdateDvrSession, (google::longrunning::Operation const& operation),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
   /// CreateAsset(Matcher<google::cloud::video::livestream::v1::CreateAssetRequest
   /// const&>(_)))
   /// @endcode

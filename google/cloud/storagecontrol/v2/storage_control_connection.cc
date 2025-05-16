@@ -195,6 +195,46 @@ StorageControlConnection::ListAnywhereCaches(
       StreamRange<google::storage::control::v2::AnywhereCache>>();
 }
 
+StatusOr<google::storage::control::v2::IntelligenceConfig>
+StorageControlConnection::GetProjectIntelligenceConfig(
+    google::storage::control::v2::GetProjectIntelligenceConfigRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::storage::control::v2::IntelligenceConfig>
+StorageControlConnection::UpdateProjectIntelligenceConfig(
+    google::storage::control::v2::
+        UpdateProjectIntelligenceConfigRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::storage::control::v2::IntelligenceConfig>
+StorageControlConnection::GetFolderIntelligenceConfig(
+    google::storage::control::v2::GetFolderIntelligenceConfigRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::storage::control::v2::IntelligenceConfig>
+StorageControlConnection::UpdateFolderIntelligenceConfig(
+    google::storage::control::v2::
+        UpdateFolderIntelligenceConfigRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::storage::control::v2::IntelligenceConfig>
+StorageControlConnection::GetOrganizationIntelligenceConfig(
+    google::storage::control::v2::
+        GetOrganizationIntelligenceConfigRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::storage::control::v2::IntelligenceConfig>
+StorageControlConnection::UpdateOrganizationIntelligenceConfig(
+    google::storage::control::v2::
+        UpdateOrganizationIntelligenceConfigRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 std::shared_ptr<StorageControlConnection> MakeStorageControlConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

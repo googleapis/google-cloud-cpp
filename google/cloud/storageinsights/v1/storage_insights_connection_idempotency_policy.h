@@ -65,6 +65,31 @@ class StorageInsightsConnectionIdempotencyPolicy {
       google::cloud::storageinsights::v1::GetReportDetailRequest const&
           request);
 
+  virtual google::cloud::Idempotency ListDatasetConfigs(
+      google::cloud::storageinsights::v1::ListDatasetConfigsRequest request);
+
+  virtual google::cloud::Idempotency GetDatasetConfig(
+      google::cloud::storageinsights::v1::GetDatasetConfigRequest const&
+          request);
+
+  virtual google::cloud::Idempotency CreateDatasetConfig(
+      google::cloud::storageinsights::v1::CreateDatasetConfigRequest const&
+          request);
+
+  virtual google::cloud::Idempotency UpdateDatasetConfig(
+      google::cloud::storageinsights::v1::UpdateDatasetConfigRequest const&
+          request);
+
+  virtual google::cloud::Idempotency DeleteDatasetConfig(
+      google::cloud::storageinsights::v1::DeleteDatasetConfigRequest const&
+          request);
+
+  virtual google::cloud::Idempotency LinkDataset(
+      google::cloud::storageinsights::v1::LinkDatasetRequest const& request);
+
+  virtual google::cloud::Idempotency UnlinkDataset(
+      google::cloud::storageinsights::v1::UnlinkDatasetRequest const& request);
+
   virtual google::cloud::Idempotency ListLocations(
       google::cloud::location::ListLocationsRequest request);
 

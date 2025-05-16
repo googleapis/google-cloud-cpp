@@ -260,6 +260,56 @@ CloudControlsPartnerCoreConnectionImpl::GetPartner(
       *current, request, __func__);
 }
 
+StatusOr<google::cloud::cloudcontrolspartner::v1::Customer>
+CloudControlsPartnerCoreConnectionImpl::CreateCustomer(
+    google::cloud::cloudcontrolspartner::v1::CreateCustomerRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateCustomer(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::cloudcontrolspartner::v1::CreateCustomerRequest const&
+              request) {
+        return stub_->CreateCustomer(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StatusOr<google::cloud::cloudcontrolspartner::v1::Customer>
+CloudControlsPartnerCoreConnectionImpl::UpdateCustomer(
+    google::cloud::cloudcontrolspartner::v1::UpdateCustomerRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateCustomer(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::cloudcontrolspartner::v1::UpdateCustomerRequest const&
+              request) {
+        return stub_->UpdateCustomer(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+Status CloudControlsPartnerCoreConnectionImpl::DeleteCustomer(
+    google::cloud::cloudcontrolspartner::v1::DeleteCustomerRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteCustomer(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::cloudcontrolspartner::v1::DeleteCustomerRequest const&
+              request) {
+        return stub_->DeleteCustomer(context, options, request);
+      },
+      *current, request, __func__);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloudcontrolspartner_v1_internal
 }  // namespace cloud

@@ -87,6 +87,30 @@ class StorageControlConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency ListAnywhereCaches(
       google::storage::control::v2::ListAnywhereCachesRequest request);
+
+  virtual google::cloud::Idempotency GetProjectIntelligenceConfig(
+      google::storage::control::v2::GetProjectIntelligenceConfigRequest const&
+          request);
+
+  virtual google::cloud::Idempotency UpdateProjectIntelligenceConfig(
+      google::storage::control::v2::
+          UpdateProjectIntelligenceConfigRequest const& request);
+
+  virtual google::cloud::Idempotency GetFolderIntelligenceConfig(
+      google::storage::control::v2::GetFolderIntelligenceConfigRequest const&
+          request);
+
+  virtual google::cloud::Idempotency UpdateFolderIntelligenceConfig(
+      google::storage::control::v2::UpdateFolderIntelligenceConfigRequest const&
+          request);
+
+  virtual google::cloud::Idempotency GetOrganizationIntelligenceConfig(
+      google::storage::control::v2::
+          GetOrganizationIntelligenceConfigRequest const& request);
+
+  virtual google::cloud::Idempotency UpdateOrganizationIntelligenceConfig(
+      google::storage::control::v2::
+          UpdateOrganizationIntelligenceConfigRequest const& request);
 };
 
 std::unique_ptr<StorageControlConnectionIdempotencyPolicy>

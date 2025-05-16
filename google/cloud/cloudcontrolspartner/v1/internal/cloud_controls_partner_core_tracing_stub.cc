@@ -145,6 +145,47 @@ CloudControlsPartnerCoreTracingStub::GetPartner(
                            child_->GetPartner(context, options, request));
 }
 
+StatusOr<google::cloud::cloudcontrolspartner::v1::Customer>
+CloudControlsPartnerCoreTracingStub::CreateCustomer(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::cloudcontrolspartner::v1::CreateCustomerRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.cloudcontrolspartner.v1.CloudControlsPartnerCore",
+      "CreateCustomer");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->CreateCustomer(context, options, request));
+}
+
+StatusOr<google::cloud::cloudcontrolspartner::v1::Customer>
+CloudControlsPartnerCoreTracingStub::UpdateCustomer(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::cloudcontrolspartner::v1::UpdateCustomerRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.cloudcontrolspartner.v1.CloudControlsPartnerCore",
+      "UpdateCustomer");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->UpdateCustomer(context, options, request));
+}
+
+Status CloudControlsPartnerCoreTracingStub::DeleteCustomer(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::cloudcontrolspartner::v1::DeleteCustomerRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.cloudcontrolspartner.v1.CloudControlsPartnerCore",
+      "DeleteCustomer");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeleteCustomer(context, options, request));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<CloudControlsPartnerCoreStub>

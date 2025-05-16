@@ -209,6 +209,53 @@ class LivestreamServiceLogging : public LivestreamServiceStub {
       google::cloud::video::livestream::v1::DeleteClipRequest const& request)
       override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateDvrSession(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::video::livestream::v1::CreateDvrSessionRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> CreateDvrSession(
+      grpc::ClientContext& context, Options options,
+      google::cloud::video::livestream::v1::CreateDvrSessionRequest const&
+          request) override;
+
+  StatusOr<google::cloud::video::livestream::v1::ListDvrSessionsResponse>
+  ListDvrSessions(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::video::livestream::v1::ListDvrSessionsRequest const&
+          request) override;
+
+  StatusOr<google::cloud::video::livestream::v1::DvrSession> GetDvrSession(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::video::livestream::v1::GetDvrSessionRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteDvrSession(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::video::livestream::v1::DeleteDvrSessionRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteDvrSession(
+      grpc::ClientContext& context, Options options,
+      google::cloud::video::livestream::v1::DeleteDvrSessionRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateDvrSession(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::video::livestream::v1::UpdateDvrSessionRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateDvrSession(
+      grpc::ClientContext& context, Options options,
+      google::cloud::video::livestream::v1::UpdateDvrSessionRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncCreateAsset(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
