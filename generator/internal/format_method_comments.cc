@@ -190,6 +190,8 @@ MethodCommentSubstitution substitutions[] = {
     // Add Doxygen-style comments
     {"\n", "\n  ///"},
 
+    // Sanitize substitution string indicator.
+    {"$", "$$"},
 };
 
 }  // namespace

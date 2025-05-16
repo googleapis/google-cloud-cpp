@@ -87,9 +87,38 @@ class CaseServiceClient {
 
   // clang-format off
   ///
-  /// Retrieve the specified case.
+  /// Retrieve a case.
   ///
-  /// @param name  Required. The fully qualified name of a case to be retrieved.
+  /// EXAMPLES:
+  ///
+  /// cURL:
+  ///
+  /// ```shell
+  /// case="projects/some-project/cases/16033687"
+  /// curl \
+  ///   --header "Authorization: Bearer $(gcloud auth print-access-token)" \
+  ///   "https://cloudsupport.googleapis.com/v2/$case"
+  /// ```
+  ///
+  /// Python:
+  ///
+  /// ```python
+  /// import googleapiclient.discovery
+  ///
+  /// api_version = "v2"
+  /// supportApiService = googleapiclient.discovery.build(
+  ///     serviceName="cloudsupport",
+  ///     version=api_version,
+  ///     discoveryServiceUrl=f"https://cloudsupport.googleapis.com/$discovery/rest?version={api_version}",
+  /// )
+  ///
+  /// request = supportApiService.cases().get(
+  ///     name="projects/some-project/cases/43595344",
+  /// )
+  /// print(request.execute())
+  /// ```
+  ///
+  /// @param name  Required. The full name of a case to be retrieved.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -103,8 +132,8 @@ class CaseServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.support.v2.Case]: @googleapis_reference_link{google/cloud/support/v2/case.proto#L33}
-  /// [google.cloud.support.v2.GetCaseRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L143}
+  /// [google.cloud.support.v2.Case]: @googleapis_reference_link{google/cloud/support/v2/case.proto#L59}
+  /// [google.cloud.support.v2.GetCaseRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L424}
   ///
   // clang-format on
   StatusOr<google::cloud::support::v2::Case> GetCase(std::string const& name,
@@ -112,7 +141,36 @@ class CaseServiceClient {
 
   // clang-format off
   ///
-  /// Retrieve the specified case.
+  /// Retrieve a case.
+  ///
+  /// EXAMPLES:
+  ///
+  /// cURL:
+  ///
+  /// ```shell
+  /// case="projects/some-project/cases/16033687"
+  /// curl \
+  ///   --header "Authorization: Bearer $(gcloud auth print-access-token)" \
+  ///   "https://cloudsupport.googleapis.com/v2/$case"
+  /// ```
+  ///
+  /// Python:
+  ///
+  /// ```python
+  /// import googleapiclient.discovery
+  ///
+  /// api_version = "v2"
+  /// supportApiService = googleapiclient.discovery.build(
+  ///     serviceName="cloudsupport",
+  ///     version=api_version,
+  ///     discoveryServiceUrl=f"https://cloudsupport.googleapis.com/$discovery/rest?version={api_version}",
+  /// )
+  ///
+  /// request = supportApiService.cases().get(
+  ///     name="projects/some-project/cases/43595344",
+  /// )
+  /// print(request.execute())
+  /// ```
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -133,8 +191,8 @@ class CaseServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.support.v2.Case]: @googleapis_reference_link{google/cloud/support/v2/case.proto#L33}
-  /// [google.cloud.support.v2.GetCaseRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L143}
+  /// [google.cloud.support.v2.Case]: @googleapis_reference_link{google/cloud/support/v2/case.proto#L59}
+  /// [google.cloud.support.v2.GetCaseRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L424}
   ///
   // clang-format on
   StatusOr<google::cloud::support::v2::Case> GetCase(
@@ -143,14 +201,41 @@ class CaseServiceClient {
 
   // clang-format off
   ///
-  /// Retrieve all cases under the specified parent.
+  /// Retrieve all cases under a parent, but not its children.
   ///
-  /// Note: Listing cases under an Organization returns only the cases directly
-  /// parented by that organization. To retrieve all cases under an organization,
-  /// including cases parented by projects under that organization, use
-  /// `cases.search`.
+  /// For example, listing cases under an organization only returns the cases
+  /// that are directly parented by that organization. To retrieve cases
+  /// under an organization and its projects, use `cases.search`.
   ///
-  /// @param parent  Required. The fully qualified name of parent resource to list cases under.
+  /// EXAMPLES:
+  ///
+  /// cURL:
+  ///
+  /// ```shell
+  /// parent="projects/some-project"
+  /// curl \
+  ///   --header "Authorization: Bearer $(gcloud auth print-access-token)" \
+  ///   "https://cloudsupport.googleapis.com/v2/$parent/cases"
+  /// ```
+  ///
+  /// Python:
+  ///
+  /// ```python
+  /// import googleapiclient.discovery
+  ///
+  /// api_version = "v2"
+  /// supportApiService = googleapiclient.discovery.build(
+  ///     serviceName="cloudsupport",
+  ///     version=api_version,
+  ///     discoveryServiceUrl=f"https://cloudsupport.googleapis.com/$discovery/rest?version={api_version}",
+  /// )
+  ///
+  /// request =
+  ///   supportApiService.cases().list(parent="projects/some-project")
+  /// print(request.execute())
+  /// ```
+  ///
+  /// @param parent  Required. The name of a parent to list cases under.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -173,8 +258,8 @@ class CaseServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.support.v2.Case]: @googleapis_reference_link{google/cloud/support/v2/case.proto#L33}
-  /// [google.cloud.support.v2.ListCasesRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L169}
+  /// [google.cloud.support.v2.Case]: @googleapis_reference_link{google/cloud/support/v2/case.proto#L59}
+  /// [google.cloud.support.v2.ListCasesRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L449}
   ///
   // clang-format on
   StreamRange<google::cloud::support::v2::Case> ListCases(
@@ -182,12 +267,39 @@ class CaseServiceClient {
 
   // clang-format off
   ///
-  /// Retrieve all cases under the specified parent.
+  /// Retrieve all cases under a parent, but not its children.
   ///
-  /// Note: Listing cases under an Organization returns only the cases directly
-  /// parented by that organization. To retrieve all cases under an organization,
-  /// including cases parented by projects under that organization, use
-  /// `cases.search`.
+  /// For example, listing cases under an organization only returns the cases
+  /// that are directly parented by that organization. To retrieve cases
+  /// under an organization and its projects, use `cases.search`.
+  ///
+  /// EXAMPLES:
+  ///
+  /// cURL:
+  ///
+  /// ```shell
+  /// parent="projects/some-project"
+  /// curl \
+  ///   --header "Authorization: Bearer $(gcloud auth print-access-token)" \
+  ///   "https://cloudsupport.googleapis.com/v2/$parent/cases"
+  /// ```
+  ///
+  /// Python:
+  ///
+  /// ```python
+  /// import googleapiclient.discovery
+  ///
+  /// api_version = "v2"
+  /// supportApiService = googleapiclient.discovery.build(
+  ///     serviceName="cloudsupport",
+  ///     version=api_version,
+  ///     discoveryServiceUrl=f"https://cloudsupport.googleapis.com/$discovery/rest?version={api_version}",
+  /// )
+  ///
+  /// request =
+  ///   supportApiService.cases().list(parent="projects/some-project")
+  /// print(request.execute())
+  /// ```
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -217,8 +329,8 @@ class CaseServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.support.v2.Case]: @googleapis_reference_link{google/cloud/support/v2/case.proto#L33}
-  /// [google.cloud.support.v2.ListCasesRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L169}
+  /// [google.cloud.support.v2.Case]: @googleapis_reference_link{google/cloud/support/v2/case.proto#L59}
+  /// [google.cloud.support.v2.ListCasesRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L449}
   ///
   // clang-format on
   StreamRange<google::cloud::support::v2::Case> ListCases(
@@ -226,7 +338,35 @@ class CaseServiceClient {
 
   // clang-format off
   ///
-  /// Search cases using the specified query.
+  /// Search for cases using a query.
+  ///
+  /// EXAMPLES:
+  ///
+  /// cURL:
+  ///
+  /// ```shell
+  /// parent="projects/some-project"
+  /// curl \
+  ///   --header "Authorization: Bearer $(gcloud auth print-access-token)" \
+  ///   "https://cloudsupport.googleapis.com/v2/$parent/cases:search"
+  /// ```
+  ///
+  /// Python:
+  ///
+  /// ```python
+  /// import googleapiclient.discovery
+  ///
+  /// api_version = "v2"
+  /// supportApiService = googleapiclient.discovery.build(
+  ///     serviceName="cloudsupport",
+  ///     version=api_version,
+  ///     discoveryServiceUrl=f"https://cloudsupport.googleapis.com/$discovery/rest?version={api_version}",
+  /// )
+  /// request = supportApiService.cases().search(
+  ///     parent="projects/some-project", query="state=OPEN"
+  /// )
+  /// print(request.execute())
+  /// ```
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -256,8 +396,8 @@ class CaseServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.support.v2.Case]: @googleapis_reference_link{google/cloud/support/v2/case.proto#L33}
-  /// [google.cloud.support.v2.SearchCasesRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L218}
+  /// [google.cloud.support.v2.Case]: @googleapis_reference_link{google/cloud/support/v2/case.proto#L59}
+  /// [google.cloud.support.v2.SearchCasesRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L500}
   ///
   // clang-format on
   StreamRange<google::cloud::support::v2::Case> SearchCases(
@@ -266,12 +406,68 @@ class CaseServiceClient {
 
   // clang-format off
   ///
-  /// Create a new case and associate it with the given Google Cloud Resource.
-  /// The case object must have the following fields set: `display_name`,
-  /// `description`, `classification`, and `priority`.
+  /// Create a new case and associate it with a parent.
   ///
-  /// @param parent  Required. The name of the Google Cloud Resource under which the case should
-  ///  be created.
+  /// It must have the following fields set: `display_name`, `description`,
+  /// `classification`, and `priority`. If you're just testing the API and don't
+  /// want to route your case to an agent, set `testCase=true`.
+  ///
+  /// EXAMPLES:
+  ///
+  /// cURL:
+  ///
+  /// ```shell
+  /// parent="projects/some-project"
+  /// curl \
+  ///   --request POST \
+  ///   --header "Authorization: Bearer $(gcloud auth print-access-token)" \
+  ///   --header 'Content-Type: application/json' \
+  ///   --data '{
+  ///     "display_name": "Test case created by me.",
+  ///     "description": "a random test case, feel free to close",
+  ///     "classification": {
+  ///       "id":
+  ///       "100IK2AKCLHMGRJ9CDGMOCGP8DM6UTB4BT262T31BT1M2T31DHNMENPO6KS36CPJ786L2TBFEHGN6NPI64R3CDHN8880G08I1H3MURR7DHII0GRCDTQM8"
+  ///     },
+  ///     "time_zone": "-07:00",
+  ///     "subscriber_email_addresses": [
+  ///       "foo@domain.com",
+  ///       "bar@domain.com"
+  ///     ],
+  ///     "testCase": true,
+  ///     "priority": "P3"
+  ///   }' \
+  ///   "https://cloudsupport.googleapis.com/v2/$parent/cases"
+  /// ```
+  ///
+  /// Python:
+  ///
+  /// ```python
+  /// import googleapiclient.discovery
+  ///
+  /// api_version = "v2"
+  /// supportApiService = googleapiclient.discovery.build(
+  ///     serviceName="cloudsupport",
+  ///     version=api_version,
+  ///     discoveryServiceUrl=f"https://cloudsupport.googleapis.com/$discovery/rest?version={api_version}",
+  /// )
+  /// request = supportApiService.cases().create(
+  ///     parent="projects/some-project",
+  ///     body={
+  ///         "displayName": "A Test Case",
+  ///         "description": "This is a test case.",
+  ///         "testCase": True,
+  ///         "priority": "P2",
+  ///         "classification": {
+  ///             "id":
+  ///               "100IK2AKCLHMGRJ9CDGMOCGP8DM6UTB4BT262T31BT1M2T31DHNMENPO6KS36CPJ786L2TBFEHGN6NPI64R3CDHN8880G08I1H3MURR7DHII0GRCDTQM8"
+  ///         },
+  ///     },
+  /// )
+  /// print(request.execute())
+  /// ```
+  ///
+  /// @param parent  Required. The name of the parent under which the case should be created.
   /// @param case_  Required. The case to be created.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -286,8 +482,8 @@ class CaseServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.support.v2.Case]: @googleapis_reference_link{google/cloud/support/v2/case.proto#L33}
-  /// [google.cloud.support.v2.CreateCaseRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L154}
+  /// [google.cloud.support.v2.Case]: @googleapis_reference_link{google/cloud/support/v2/case.proto#L59}
+  /// [google.cloud.support.v2.CreateCaseRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L435}
   ///
   // clang-format on
   StatusOr<google::cloud::support::v2::Case> CreateCase(
@@ -296,9 +492,66 @@ class CaseServiceClient {
 
   // clang-format off
   ///
-  /// Create a new case and associate it with the given Google Cloud Resource.
-  /// The case object must have the following fields set: `display_name`,
-  /// `description`, `classification`, and `priority`.
+  /// Create a new case and associate it with a parent.
+  ///
+  /// It must have the following fields set: `display_name`, `description`,
+  /// `classification`, and `priority`. If you're just testing the API and don't
+  /// want to route your case to an agent, set `testCase=true`.
+  ///
+  /// EXAMPLES:
+  ///
+  /// cURL:
+  ///
+  /// ```shell
+  /// parent="projects/some-project"
+  /// curl \
+  ///   --request POST \
+  ///   --header "Authorization: Bearer $(gcloud auth print-access-token)" \
+  ///   --header 'Content-Type: application/json' \
+  ///   --data '{
+  ///     "display_name": "Test case created by me.",
+  ///     "description": "a random test case, feel free to close",
+  ///     "classification": {
+  ///       "id":
+  ///       "100IK2AKCLHMGRJ9CDGMOCGP8DM6UTB4BT262T31BT1M2T31DHNMENPO6KS36CPJ786L2TBFEHGN6NPI64R3CDHN8880G08I1H3MURR7DHII0GRCDTQM8"
+  ///     },
+  ///     "time_zone": "-07:00",
+  ///     "subscriber_email_addresses": [
+  ///       "foo@domain.com",
+  ///       "bar@domain.com"
+  ///     ],
+  ///     "testCase": true,
+  ///     "priority": "P3"
+  ///   }' \
+  ///   "https://cloudsupport.googleapis.com/v2/$parent/cases"
+  /// ```
+  ///
+  /// Python:
+  ///
+  /// ```python
+  /// import googleapiclient.discovery
+  ///
+  /// api_version = "v2"
+  /// supportApiService = googleapiclient.discovery.build(
+  ///     serviceName="cloudsupport",
+  ///     version=api_version,
+  ///     discoveryServiceUrl=f"https://cloudsupport.googleapis.com/$discovery/rest?version={api_version}",
+  /// )
+  /// request = supportApiService.cases().create(
+  ///     parent="projects/some-project",
+  ///     body={
+  ///         "displayName": "A Test Case",
+  ///         "description": "This is a test case.",
+  ///         "testCase": True,
+  ///         "priority": "P2",
+  ///         "classification": {
+  ///             "id":
+  ///               "100IK2AKCLHMGRJ9CDGMOCGP8DM6UTB4BT262T31BT1M2T31DHNMENPO6KS36CPJ786L2TBFEHGN6NPI64R3CDHN8880G08I1H3MURR7DHII0GRCDTQM8"
+  ///         },
+  ///     },
+  /// )
+  /// print(request.execute())
+  /// ```
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -319,8 +572,8 @@ class CaseServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.support.v2.Case]: @googleapis_reference_link{google/cloud/support/v2/case.proto#L33}
-  /// [google.cloud.support.v2.CreateCaseRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L154}
+  /// [google.cloud.support.v2.Case]: @googleapis_reference_link{google/cloud/support/v2/case.proto#L59}
+  /// [google.cloud.support.v2.CreateCaseRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L435}
   ///
   // clang-format on
   StatusOr<google::cloud::support::v2::Case> CreateCase(
@@ -329,17 +582,53 @@ class CaseServiceClient {
 
   // clang-format off
   ///
-  /// Update the specified case. Only a subset of fields can be updated.
+  /// Update a case. Only some fields can be updated.
   ///
-  /// @param case_  Required. The case object to update.
-  /// @param update_mask  A list of attributes of the case object that should be updated
-  ///  as part of this request. Supported values are `priority`, `display_name`,
-  ///  and `subscriber_email_addresses`. If no fields are specified, all supported
-  ///  fields are updated.
+  /// EXAMPLES:
+  ///
+  /// cURL:
+  ///
+  /// ```shell
+  /// case="projects/some-project/cases/43595344"
+  /// curl \
+  ///   --request PATCH \
+  ///   --header "Authorization: Bearer $(gcloud auth print-access-token)" \
+  ///   --header "Content-Type: application/json" \
+  ///   --data '{
+  ///     "priority": "P1"
+  ///   }' \
+  ///   "https://cloudsupport.googleapis.com/v2/$case?updateMask=priority"
+  /// ```
+  ///
+  /// Python:
+  ///
+  /// ```python
+  /// import googleapiclient.discovery
+  ///
+  /// api_version = "v2"
+  /// supportApiService = googleapiclient.discovery.build(
+  ///     serviceName="cloudsupport",
+  ///     version=api_version,
+  ///     discoveryServiceUrl=f"https://cloudsupport.googleapis.com/$discovery/rest?version={api_version}",
+  /// )
+  /// request = supportApiService.cases().patch(
+  ///     name="projects/some-project/cases/43112854",
+  ///     body={
+  ///         "displayName": "This is Now a New Title",
+  ///         "priority": "P2",
+  ///     },
+  /// )
+  /// print(request.execute())
+  /// ```
+  ///
+  /// @param case_  Required. The case to update.
+  /// @param update_mask  A list of attributes of the case that should be updated. Supported values
+  ///  are `priority`, `display_name`, and `subscriber_email_addresses`. If no
+  ///  fields are specified, all supported fields are updated.
   ///  @n
-  ///  WARNING: If you do not provide a field mask, then you might accidentally
-  ///  clear some fields. For example, if you leave the field mask empty and do
-  ///  not provide a value for `subscriber_email_addresses`, then
+  ///  Be careful - if you do not provide a field mask, then you might
+  ///  accidentally clear some fields. For example, if you leave the field mask
+  ///  empty and do not provide a value for `subscriber_email_addresses`, then
   ///  `subscriber_email_addresses` is updated to empty.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -354,8 +643,8 @@ class CaseServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.support.v2.Case]: @googleapis_reference_link{google/cloud/support/v2/case.proto#L33}
-  /// [google.cloud.support.v2.UpdateCaseRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L295}
+  /// [google.cloud.support.v2.Case]: @googleapis_reference_link{google/cloud/support/v2/case.proto#L59}
+  /// [google.cloud.support.v2.UpdateCaseRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L574}
   ///
   // clang-format on
   StatusOr<google::cloud::support::v2::Case> UpdateCase(
@@ -364,7 +653,44 @@ class CaseServiceClient {
 
   // clang-format off
   ///
-  /// Update the specified case. Only a subset of fields can be updated.
+  /// Update a case. Only some fields can be updated.
+  ///
+  /// EXAMPLES:
+  ///
+  /// cURL:
+  ///
+  /// ```shell
+  /// case="projects/some-project/cases/43595344"
+  /// curl \
+  ///   --request PATCH \
+  ///   --header "Authorization: Bearer $(gcloud auth print-access-token)" \
+  ///   --header "Content-Type: application/json" \
+  ///   --data '{
+  ///     "priority": "P1"
+  ///   }' \
+  ///   "https://cloudsupport.googleapis.com/v2/$case?updateMask=priority"
+  /// ```
+  ///
+  /// Python:
+  ///
+  /// ```python
+  /// import googleapiclient.discovery
+  ///
+  /// api_version = "v2"
+  /// supportApiService = googleapiclient.discovery.build(
+  ///     serviceName="cloudsupport",
+  ///     version=api_version,
+  ///     discoveryServiceUrl=f"https://cloudsupport.googleapis.com/$discovery/rest?version={api_version}",
+  /// )
+  /// request = supportApiService.cases().patch(
+  ///     name="projects/some-project/cases/43112854",
+  ///     body={
+  ///         "displayName": "This is Now a New Title",
+  ///         "priority": "P2",
+  ///     },
+  /// )
+  /// print(request.execute())
+  /// ```
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -385,8 +711,8 @@ class CaseServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.support.v2.Case]: @googleapis_reference_link{google/cloud/support/v2/case.proto#L33}
-  /// [google.cloud.support.v2.UpdateCaseRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L295}
+  /// [google.cloud.support.v2.Case]: @googleapis_reference_link{google/cloud/support/v2/case.proto#L59}
+  /// [google.cloud.support.v2.UpdateCaseRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L574}
   ///
   // clang-format on
   StatusOr<google::cloud::support::v2::Case> UpdateCase(
@@ -395,13 +721,55 @@ class CaseServiceClient {
 
   // clang-format off
   ///
-  /// Escalate a case. Escalating a case will initiate the Google Cloud Support
-  /// escalation management process.
+  /// Escalate a case, starting the Google Cloud Support escalation management
+  /// process.
   ///
-  /// This operation is only available to certain Customer Care tiers. Go to
+  /// This operation is only available for some support services. Go to
   /// https://cloud.google.com/support and look for 'Technical support
-  /// escalations' in the feature list to find out which tiers are able to
-  /// perform escalations.
+  /// escalations' in the feature list to find out which ones let you
+  /// do that.
+  ///
+  /// EXAMPLES:
+  ///
+  /// cURL:
+  ///
+  /// ```shell
+  /// case="projects/some-project/cases/43595344"
+  /// curl \
+  ///   --request POST \
+  ///   --header "Authorization: Bearer $(gcloud auth print-access-token)" \
+  ///   --header "Content-Type: application/json" \
+  ///   --data '{
+  ///     "escalation": {
+  ///       "reason": "BUSINESS_IMPACT",
+  ///       "justification": "This is a test escalation."
+  ///     }
+  ///   }' \
+  ///   "https://cloudsupport.googleapis.com/v2/$case:escalate"
+  /// ```
+  ///
+  /// Python:
+  ///
+  /// ```python
+  /// import googleapiclient.discovery
+  ///
+  /// api_version = "v2"
+  /// supportApiService = googleapiclient.discovery.build(
+  ///     serviceName="cloudsupport",
+  ///     version=api_version,
+  ///     discoveryServiceUrl=f"https://cloudsupport.googleapis.com/$discovery/rest?version={api_version}",
+  /// )
+  /// request = supportApiService.cases().escalate(
+  ///     name="projects/some-project/cases/43595344",
+  ///     body={
+  ///         "escalation": {
+  ///             "reason": "BUSINESS_IMPACT",
+  ///             "justification": "This is a test escalation.",
+  ///         },
+  ///     },
+  /// )
+  /// print(request.execute())
+  /// ```
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -422,8 +790,8 @@ class CaseServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.support.v2.Case]: @googleapis_reference_link{google/cloud/support/v2/case.proto#L33}
-  /// [google.cloud.support.v2.EscalateCaseRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L281}
+  /// [google.cloud.support.v2.Case]: @googleapis_reference_link{google/cloud/support/v2/case.proto#L59}
+  /// [google.cloud.support.v2.EscalateCaseRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L560}
   ///
   // clang-format on
   StatusOr<google::cloud::support::v2::Case> EscalateCase(
@@ -432,7 +800,36 @@ class CaseServiceClient {
 
   // clang-format off
   ///
-  /// Close the specified case.
+  /// Close a case.
+  ///
+  /// EXAMPLES:
+  ///
+  /// cURL:
+  ///
+  /// ```shell
+  /// case="projects/some-project/cases/43595344"
+  /// curl \
+  ///   --request POST \
+  ///   --header "Authorization: Bearer $(gcloud auth print-access-token)" \
+  ///   "https://cloudsupport.googleapis.com/v2/$case:close"
+  /// ```
+  ///
+  /// Python:
+  ///
+  /// ```python
+  /// import googleapiclient.discovery
+  ///
+  /// api_version = "v2"
+  /// supportApiService = googleapiclient.discovery.build(
+  ///     serviceName="cloudsupport",
+  ///     version=api_version,
+  ///     discoveryServiceUrl=f"https://cloudsupport.googleapis.com/$discovery/rest?version={api_version}",
+  /// )
+  /// request = supportApiService.cases().close(
+  ///     name="projects/some-project/cases/43595344"
+  /// )
+  /// print(request.execute())
+  /// ```
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -453,8 +850,8 @@ class CaseServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.support.v2.Case]: @googleapis_reference_link{google/cloud/support/v2/case.proto#L33}
-  /// [google.cloud.support.v2.CloseCaseRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L312}
+  /// [google.cloud.support.v2.Case]: @googleapis_reference_link{google/cloud/support/v2/case.proto#L59}
+  /// [google.cloud.support.v2.CloseCaseRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L590}
   ///
   // clang-format on
   StatusOr<google::cloud::support::v2::Case> CloseCase(
@@ -463,10 +860,42 @@ class CaseServiceClient {
 
   // clang-format off
   ///
-  /// Retrieve valid classifications to be used when creating a support case.
-  /// The classications are hierarchical, with each classification containing
-  /// all levels of the hierarchy, separated by " > ". For example "Technical
-  /// Issue > Compute > Compute Engine".
+  /// Retrieve valid classifications to use when creating a support case.
+  ///
+  /// Classifications are hierarchical. Each classification is a string
+  /// containing all levels of the hierarchy separated by `" > "`. For example,
+  /// `"Technical Issue > Compute > Compute Engine"`.
+  ///
+  /// Classification IDs returned by this endpoint are valid for at least six
+  /// months. When a classification is deactivated, this endpoint immediately
+  /// stops returning it. After six months, `case.create` requests using the
+  /// classification will fail.
+  ///
+  /// EXAMPLES:
+  ///
+  /// cURL:
+  ///
+  /// ```shell
+  /// curl \
+  ///   --header "Authorization: Bearer $(gcloud auth print-access-token)" \
+  ///   'https://cloudsupport.googleapis.com/v2/caseClassifications:search?query=display_name:"*Compute%20Engine*"'
+  /// ```
+  ///
+  /// Python:
+  ///
+  /// ```python
+  /// import googleapiclient.discovery
+  ///
+  /// supportApiService = googleapiclient.discovery.build(
+  ///     serviceName="cloudsupport",
+  ///     version="v2",
+  ///     discoveryServiceUrl=f"https://cloudsupport.googleapis.com/$discovery/rest?version=v2",
+  /// )
+  /// request = supportApiService.caseClassifications().search(
+  ///     query='display_name:"*Compute Engine*"'
+  /// )
+  /// print(request.execute())
+  /// ```
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -496,8 +925,8 @@ class CaseServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.support.v2.CaseClassification]: @googleapis_reference_link{google/cloud/support/v2/case.proto#L149}
-  /// [google.cloud.support.v2.SearchCaseClassificationsRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L323}
+  /// [google.cloud.support.v2.CaseClassification]: @googleapis_reference_link{google/cloud/support/v2/case.proto#L180}
+  /// [google.cloud.support.v2.SearchCaseClassificationsRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L601}
   ///
   // clang-format on
   StreamRange<google::cloud::support::v2::CaseClassification>

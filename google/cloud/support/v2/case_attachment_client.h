@@ -34,7 +34,7 @@ namespace support_v2 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ///
-/// A service to manage file attachment for Google Cloud support cases.
+/// A service to manage file attachments for Google Cloud support cases.
 ///
 /// @par Equality
 ///
@@ -90,10 +90,39 @@ class CaseAttachmentServiceClient {
 
   // clang-format off
   ///
-  /// Retrieve all attachments associated with a support case.
+  /// List all the attachments associated with a support case.
   ///
-  /// @param parent  Required. The resource name of Case object for which attachments should be
-  ///  listed.
+  /// EXAMPLES:
+  ///
+  /// cURL:
+  ///
+  /// ```shell
+  /// case="projects/some-project/cases/23598314"
+  /// curl \
+  ///   --header "Authorization: Bearer $(gcloud auth print-access-token)" \
+  ///   "https://cloudsupport.googleapis.com/v2/$case/attachments"
+  /// ```
+  ///
+  /// Python:
+  ///
+  /// ```python
+  /// import googleapiclient.discovery
+  ///
+  /// api_version = "v2"
+  /// supportApiService = googleapiclient.discovery.build(
+  ///     serviceName="cloudsupport",
+  ///     version=api_version,
+  ///     discoveryServiceUrl=f"https://cloudsupport.googleapis.com/$discovery/rest?version={api_version}",
+  /// )
+  /// request = (
+  ///     supportApiService.cases()
+  ///     .attachments()
+  ///     .list(parent="projects/some-project/cases/43595344")
+  /// )
+  /// print(request.execute())
+  /// ```
+  ///
+  /// @param parent  Required. The name of the case for which attachments should be listed.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -116,8 +145,8 @@ class CaseAttachmentServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.support.v2.Attachment]: @googleapis_reference_link{google/cloud/support/v2/attachment.proto#L33}
-  /// [google.cloud.support.v2.ListAttachmentsRequest]: @googleapis_reference_link{google/cloud/support/v2/attachment_service.proto#L53}
+  /// [google.cloud.support.v2.Attachment]: @googleapis_reference_link{google/cloud/support/v2/attachment.proto#L40}
+  /// [google.cloud.support.v2.ListAttachmentsRequest]: @googleapis_reference_link{google/cloud/support/v2/attachment_service.proto#L83}
   ///
   // clang-format on
   StreamRange<google::cloud::support::v2::Attachment> ListAttachments(
@@ -125,7 +154,37 @@ class CaseAttachmentServiceClient {
 
   // clang-format off
   ///
-  /// Retrieve all attachments associated with a support case.
+  /// List all the attachments associated with a support case.
+  ///
+  /// EXAMPLES:
+  ///
+  /// cURL:
+  ///
+  /// ```shell
+  /// case="projects/some-project/cases/23598314"
+  /// curl \
+  ///   --header "Authorization: Bearer $(gcloud auth print-access-token)" \
+  ///   "https://cloudsupport.googleapis.com/v2/$case/attachments"
+  /// ```
+  ///
+  /// Python:
+  ///
+  /// ```python
+  /// import googleapiclient.discovery
+  ///
+  /// api_version = "v2"
+  /// supportApiService = googleapiclient.discovery.build(
+  ///     serviceName="cloudsupport",
+  ///     version=api_version,
+  ///     discoveryServiceUrl=f"https://cloudsupport.googleapis.com/$discovery/rest?version={api_version}",
+  /// )
+  /// request = (
+  ///     supportApiService.cases()
+  ///     .attachments()
+  ///     .list(parent="projects/some-project/cases/43595344")
+  /// )
+  /// print(request.execute())
+  /// ```
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -155,8 +214,8 @@ class CaseAttachmentServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.support.v2.Attachment]: @googleapis_reference_link{google/cloud/support/v2/attachment.proto#L33}
-  /// [google.cloud.support.v2.ListAttachmentsRequest]: @googleapis_reference_link{google/cloud/support/v2/attachment_service.proto#L53}
+  /// [google.cloud.support.v2.Attachment]: @googleapis_reference_link{google/cloud/support/v2/attachment.proto#L40}
+  /// [google.cloud.support.v2.ListAttachmentsRequest]: @googleapis_reference_link{google/cloud/support/v2/attachment_service.proto#L83}
   ///
   // clang-format on
   StreamRange<google::cloud::support::v2::Attachment> ListAttachments(

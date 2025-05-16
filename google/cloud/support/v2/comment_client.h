@@ -87,10 +87,39 @@ class CommentServiceClient {
 
   // clang-format off
   ///
-  /// Retrieve all Comments associated with the Case object.
+  /// List all the comments associated with a case.
   ///
-  /// @param parent  Required. The resource name of Case object for which comments should be
-  ///  listed.
+  /// EXAMPLES:
+  ///
+  /// cURL:
+  ///
+  /// ```shell
+  /// case="projects/some-project/cases/43595344"
+  /// curl \
+  ///   --header "Authorization: Bearer $(gcloud auth print-access-token)" \
+  ///   "https://cloudsupport.googleapis.com/v2/$case/comments"
+  /// ```
+  ///
+  /// Python:
+  ///
+  /// ```python
+  /// import googleapiclient.discovery
+  ///
+  /// api_version = "v2"
+  /// supportApiService = googleapiclient.discovery.build(
+  ///     serviceName="cloudsupport",
+  ///     version=api_version,
+  ///     discoveryServiceUrl=f"https://cloudsupport.googleapis.com/$discovery/rest?version={api_version}",
+  /// )
+  /// request = (
+  ///     supportApiService.cases()
+  ///     .comments()
+  ///     .list(parent="projects/some-project/cases/43595344")
+  /// )
+  /// print(request.execute())
+  /// ```
+  ///
+  /// @param parent  Required. The name of the case for which to list comments.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -113,8 +142,8 @@ class CommentServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.support.v2.Comment]: @googleapis_reference_link{google/cloud/support/v2/comment.proto#L33}
-  /// [google.cloud.support.v2.ListCommentsRequest]: @googleapis_reference_link{google/cloud/support/v2/comment_service.proto#L66}
+  /// [google.cloud.support.v2.Comment]: @googleapis_reference_link{google/cloud/support/v2/comment.proto#L37}
+  /// [google.cloud.support.v2.ListCommentsRequest]: @googleapis_reference_link{google/cloud/support/v2/comment_service.proto#L135}
   ///
   // clang-format on
   StreamRange<google::cloud::support::v2::Comment> ListComments(
@@ -122,7 +151,37 @@ class CommentServiceClient {
 
   // clang-format off
   ///
-  /// Retrieve all Comments associated with the Case object.
+  /// List all the comments associated with a case.
+  ///
+  /// EXAMPLES:
+  ///
+  /// cURL:
+  ///
+  /// ```shell
+  /// case="projects/some-project/cases/43595344"
+  /// curl \
+  ///   --header "Authorization: Bearer $(gcloud auth print-access-token)" \
+  ///   "https://cloudsupport.googleapis.com/v2/$case/comments"
+  /// ```
+  ///
+  /// Python:
+  ///
+  /// ```python
+  /// import googleapiclient.discovery
+  ///
+  /// api_version = "v2"
+  /// supportApiService = googleapiclient.discovery.build(
+  ///     serviceName="cloudsupport",
+  ///     version=api_version,
+  ///     discoveryServiceUrl=f"https://cloudsupport.googleapis.com/$discovery/rest?version={api_version}",
+  /// )
+  /// request = (
+  ///     supportApiService.cases()
+  ///     .comments()
+  ///     .list(parent="projects/some-project/cases/43595344")
+  /// )
+  /// print(request.execute())
+  /// ```
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -152,8 +211,8 @@ class CommentServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.support.v2.Comment]: @googleapis_reference_link{google/cloud/support/v2/comment.proto#L33}
-  /// [google.cloud.support.v2.ListCommentsRequest]: @googleapis_reference_link{google/cloud/support/v2/comment_service.proto#L66}
+  /// [google.cloud.support.v2.Comment]: @googleapis_reference_link{google/cloud/support/v2/comment.proto#L37}
+  /// [google.cloud.support.v2.ListCommentsRequest]: @googleapis_reference_link{google/cloud/support/v2/comment_service.proto#L135}
   ///
   // clang-format on
   StreamRange<google::cloud::support::v2::Comment> ListComments(
@@ -162,11 +221,50 @@ class CommentServiceClient {
 
   // clang-format off
   ///
-  /// Add a new comment to the specified Case.
-  /// The comment object must have the following fields set: body.
+  /// Add a new comment to a case.
   ///
-  /// @param parent  Required. The resource name of Case to which this comment should be added.
-  /// @param comment  Required. The Comment object to be added to this Case.
+  /// The comment must have the following fields set: `body`.
+  ///
+  /// EXAMPLES:
+  ///
+  /// cURL:
+  ///
+  /// ```shell
+  /// case="projects/some-project/cases/43591344"
+  /// curl \
+  ///   --request POST \
+  ///   --header "Authorization: Bearer $(gcloud auth print-access-token)" \
+  ///   --header 'Content-Type: application/json' \
+  ///   --data '{
+  ///     "body": "This is a test comment."
+  ///   }' \
+  ///   "https://cloudsupport.googleapis.com/v2/$case/comments"
+  /// ```
+  ///
+  /// Python:
+  ///
+  /// ```python
+  /// import googleapiclient.discovery
+  ///
+  /// api_version = "v2"
+  /// supportApiService = googleapiclient.discovery.build(
+  ///     serviceName="cloudsupport",
+  ///     version=api_version,
+  ///     discoveryServiceUrl=f"https://cloudsupport.googleapis.com/$discovery/rest?version={api_version}",
+  /// )
+  /// request = (
+  ///     supportApiService.cases()
+  ///     .comments()
+  ///     .create(
+  ///         parent="projects/some-project/cases/43595344",
+  ///         body={"body": "This is a test comment."},
+  ///     )
+  /// )
+  /// print(request.execute())
+  /// ```
+  ///
+  /// @param parent  Required. The name of the case to which the comment should be added.
+  /// @param comment  Required. The comment to be added.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -180,8 +278,8 @@ class CommentServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.support.v2.Comment]: @googleapis_reference_link{google/cloud/support/v2/comment.proto#L33}
-  /// [google.cloud.support.v2.CreateCommentRequest]: @googleapis_reference_link{google/cloud/support/v2/comment_service.proto#L96}
+  /// [google.cloud.support.v2.Comment]: @googleapis_reference_link{google/cloud/support/v2/comment.proto#L37}
+  /// [google.cloud.support.v2.CreateCommentRequest]: @googleapis_reference_link{google/cloud/support/v2/comment_service.proto#L164}
   ///
   // clang-format on
   StatusOr<google::cloud::support::v2::Comment> CreateComment(
@@ -190,8 +288,47 @@ class CommentServiceClient {
 
   // clang-format off
   ///
-  /// Add a new comment to the specified Case.
-  /// The comment object must have the following fields set: body.
+  /// Add a new comment to a case.
+  ///
+  /// The comment must have the following fields set: `body`.
+  ///
+  /// EXAMPLES:
+  ///
+  /// cURL:
+  ///
+  /// ```shell
+  /// case="projects/some-project/cases/43591344"
+  /// curl \
+  ///   --request POST \
+  ///   --header "Authorization: Bearer $(gcloud auth print-access-token)" \
+  ///   --header 'Content-Type: application/json' \
+  ///   --data '{
+  ///     "body": "This is a test comment."
+  ///   }' \
+  ///   "https://cloudsupport.googleapis.com/v2/$case/comments"
+  /// ```
+  ///
+  /// Python:
+  ///
+  /// ```python
+  /// import googleapiclient.discovery
+  ///
+  /// api_version = "v2"
+  /// supportApiService = googleapiclient.discovery.build(
+  ///     serviceName="cloudsupport",
+  ///     version=api_version,
+  ///     discoveryServiceUrl=f"https://cloudsupport.googleapis.com/$discovery/rest?version={api_version}",
+  /// )
+  /// request = (
+  ///     supportApiService.cases()
+  ///     .comments()
+  ///     .create(
+  ///         parent="projects/some-project/cases/43595344",
+  ///         body={"body": "This is a test comment."},
+  ///     )
+  /// )
+  /// print(request.execute())
+  /// ```
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -212,8 +349,8 @@ class CommentServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.support.v2.Comment]: @googleapis_reference_link{google/cloud/support/v2/comment.proto#L33}
-  /// [google.cloud.support.v2.CreateCommentRequest]: @googleapis_reference_link{google/cloud/support/v2/comment_service.proto#L96}
+  /// [google.cloud.support.v2.Comment]: @googleapis_reference_link{google/cloud/support/v2/comment.proto#L37}
+  /// [google.cloud.support.v2.CreateCommentRequest]: @googleapis_reference_link{google/cloud/support/v2/comment_service.proto#L164}
   ///
   // clang-format on
   StatusOr<google::cloud::support::v2::Comment> CreateComment(

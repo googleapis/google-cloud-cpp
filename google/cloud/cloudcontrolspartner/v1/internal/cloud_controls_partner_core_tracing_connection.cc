@@ -130,6 +130,38 @@ CloudControlsPartnerCoreTracingConnection::GetPartner(
   return internal::EndSpan(*span, child_->GetPartner(request));
 }
 
+StatusOr<google::cloud::cloudcontrolspartner::v1::Customer>
+CloudControlsPartnerCoreTracingConnection::CreateCustomer(
+    google::cloud::cloudcontrolspartner::v1::CreateCustomerRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "cloudcontrolspartner_v1::CloudControlsPartnerCoreConnection::"
+      "CreateCustomer");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateCustomer(request));
+}
+
+StatusOr<google::cloud::cloudcontrolspartner::v1::Customer>
+CloudControlsPartnerCoreTracingConnection::UpdateCustomer(
+    google::cloud::cloudcontrolspartner::v1::UpdateCustomerRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "cloudcontrolspartner_v1::CloudControlsPartnerCoreConnection::"
+      "UpdateCustomer");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateCustomer(request));
+}
+
+Status CloudControlsPartnerCoreTracingConnection::DeleteCustomer(
+    google::cloud::cloudcontrolspartner::v1::DeleteCustomerRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "cloudcontrolspartner_v1::CloudControlsPartnerCoreConnection::"
+      "DeleteCustomer");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteCustomer(request));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<cloudcontrolspartner_v1::CloudControlsPartnerCoreConnection>

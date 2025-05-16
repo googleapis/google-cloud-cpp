@@ -147,6 +147,42 @@ class StorageControlStub {
       google::storage::control::v2::ListAnywhereCachesRequest const&
           request) = 0;
 
+  virtual StatusOr<google::storage::control::v2::IntelligenceConfig>
+  GetProjectIntelligenceConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::storage::control::v2::GetProjectIntelligenceConfigRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::storage::control::v2::IntelligenceConfig>
+  UpdateProjectIntelligenceConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::storage::control::v2::
+          UpdateProjectIntelligenceConfigRequest const& request) = 0;
+
+  virtual StatusOr<google::storage::control::v2::IntelligenceConfig>
+  GetFolderIntelligenceConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::storage::control::v2::GetFolderIntelligenceConfigRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::storage::control::v2::IntelligenceConfig>
+  UpdateFolderIntelligenceConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::storage::control::v2::UpdateFolderIntelligenceConfigRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::storage::control::v2::IntelligenceConfig>
+  GetOrganizationIntelligenceConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::storage::control::v2::
+          GetOrganizationIntelligenceConfigRequest const& request) = 0;
+
+  virtual StatusOr<google::storage::control::v2::IntelligenceConfig>
+  UpdateOrganizationIntelligenceConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::storage::control::v2::
+          UpdateOrganizationIntelligenceConfigRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -275,6 +311,42 @@ class DefaultStorageControlStub : public StorageControlStub {
       grpc::ClientContext& context, Options const& options,
       google::storage::control::v2::ListAnywhereCachesRequest const& request)
       override;
+
+  StatusOr<google::storage::control::v2::IntelligenceConfig>
+  GetProjectIntelligenceConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::storage::control::v2::GetProjectIntelligenceConfigRequest const&
+          request) override;
+
+  StatusOr<google::storage::control::v2::IntelligenceConfig>
+  UpdateProjectIntelligenceConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::storage::control::v2::
+          UpdateProjectIntelligenceConfigRequest const& request) override;
+
+  StatusOr<google::storage::control::v2::IntelligenceConfig>
+  GetFolderIntelligenceConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::storage::control::v2::GetFolderIntelligenceConfigRequest const&
+          request) override;
+
+  StatusOr<google::storage::control::v2::IntelligenceConfig>
+  UpdateFolderIntelligenceConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::storage::control::v2::UpdateFolderIntelligenceConfigRequest const&
+          request) override;
+
+  StatusOr<google::storage::control::v2::IntelligenceConfig>
+  GetOrganizationIntelligenceConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::storage::control::v2::
+          GetOrganizationIntelligenceConfigRequest const& request) override;
+
+  StatusOr<google::storage::control::v2::IntelligenceConfig>
+  UpdateOrganizationIntelligenceConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::storage::control::v2::
+          UpdateOrganizationIntelligenceConfigRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
