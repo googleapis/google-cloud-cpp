@@ -1,0 +1,25 @@
+/*!
+@page lustre-override-endpoint How to Override the Default Endpoint
+
+In some cases, you may need to override the default endpoint used by the client
+library. Use the
+[EndpointOption](@ref google::cloud::EndpointOption) when initializing the
+client library to change this default.
+
+<!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `lustre_v1::LustreClient`:
+
+@snippet lustre_client_samples.cc set-client-endpoint
+
+<!-- inject-endpoint-snippet-end -->
+
+*/
+
+// <!-- inject-endpoint-pages-start -->
+
+/*! @page lustre_v1::LustreClient-endpoint-snippet Override lustre_v1::LustreClient Endpoint Configuration
+
+@snippet google/cloud/lustre/v1/samples/lustre_client_samples.cc set-client-endpoint
+
+*/
+// <!-- inject-endpoint-pages-end -->

@@ -1,0 +1,14 @@
+{
+    "api_id": "lustre.googleapis.com",
+    "api_shortname": "lustre",
+    "client_documentation": "https://cloud.google.com/cpp/docs/reference/lustre/latest",
+    "distribution_name": "google-cloud-cpp",
+    "issue_tracker": "https://issuetracker.google.com/issues?q=componentid:1625664%20status=open",
+    "language": "cpp",
+    "library_type": "GAPIC_AUTO",
+    "name_pretty": "Google Cloud Managed Lustre API",
+    "product_documentation": "https://cloud.google.com/managed-lustre/docs",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-cpp",
+    "requires_billing": true
+}

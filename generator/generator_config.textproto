@@ -2802,6 +2802,14 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+# lustre
+service {
+  service_proto_path: "google/cloud/lustre/v1/lustre.proto"
+  product_path: "google/cloud/lustre/v1"
+  initial_copyright_year: "2025"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Managed Microsoft Active Directory (Managed Microsoft AD or Managed Identities)
 service {
   service_proto_path: "google/cloud/managedidentities/v1/managed_identities_service.proto"
