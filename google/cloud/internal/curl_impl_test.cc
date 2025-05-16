@@ -424,18 +424,11 @@ TEST_F(CurlImplTest, MakeRequestDoesNotLogNoProxyForNonMetadataUrl) {
 
   RestContext rest_context;
   (void)impl.MakeRequest(CurlImpl::HttpMethod::kGet, rest_context, {});
-
   std::vector<std::string> log_lines = log_capture.ExtractLines();
-
-  bool found_specific_noproxy_log = false;
-  for (auto const& line : log_lines) {
-    if (line.find("Explicitly setting NOPROXY") != std::string::npos &&
-        line.find("metadata.google.internal") != std::string::npos) {
-      found_specific_noproxy_log = true;
-      break;
-    }
-  }
-  EXPECT_FALSE(found_specific_noproxy_log);
+  EXPECT_THAT(
+      log_lines,
+      Not(Contains(HasSubstr(
+          "Explicitly setting NOPROXY for 'metadata.google.internal'"))));
 }
 
 }  // namespace
