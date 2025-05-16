@@ -369,6 +369,18 @@ Status CurlImpl::MakeRequest(HttpMethod method, RestContext& context,
     status = handle_.SetOption(CURLOPT_PROXYPASSWORD, proxy_password_->c_str());
     if (!status.ok()) return OnTransferError(context, std::move(status));
   }
+
+  if (absl::StartsWithIgnoreCase(this->url_,
+                                 "http://metadata.google.internal") ||
+      absl::StartsWithIgnoreCase(this->url_,
+                                 "https://metadata.google.internal")) {
+    status = handle_.SetOption(CURLOPT_NOPROXY, "metadata.google.internal");
+    if (!status.ok()) return OnTransferError(context, std::move(status));
+    GCP_LOG(INFO) << "Request to metadata server (" << this->url_
+                  << ") detected. Explicitly setting NOPROXY for "
+                     "'metadata.google.internal'.";
+  }
+
   if (interface_) {
     status = handle_.SetOption(CURLOPT_INTERFACE, interface_->c_str());
     if (!status.ok()) return OnTransferError(context, std::move(status));
