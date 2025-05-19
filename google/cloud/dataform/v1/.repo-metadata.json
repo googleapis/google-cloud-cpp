@@ -1,0 +1,14 @@
+{
+    "api_id": "dataform.googleapis.com",
+    "api_shortname": "dataform",
+    "client_documentation": "https://cloud.google.com/cpp/docs/reference/dataform/latest",
+    "distribution_name": "google-cloud-cpp",
+    "issue_tracker": "EDIT HERE: missing data",
+    "language": "cpp",
+    "library_type": "GAPIC_AUTO",
+    "name_pretty": "Dataform API",
+    "product_documentation": "EDIT HERE: missing data",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-cpp",
+    "requires_billing": true
+}
