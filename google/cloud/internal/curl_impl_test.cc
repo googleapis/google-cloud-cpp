@@ -14,10 +14,7 @@
 
 #include "google/cloud/internal/curl_impl.h"
 #include "google/cloud/common_options.h"
-#include "google/cloud/log.h"
 #include "google/cloud/rest_options.h"
-#include "google/cloud/testing_util/scoped_log.h"
-#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <vector>
 
