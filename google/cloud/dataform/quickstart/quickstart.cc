@@ -13,7 +13,7 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/dataform/v1/ EDIT HERE _client.h"
+#include "google/cloud/dataform/v1/dataform_client.h"
 #include "google/cloud/location.h"
 #include <iostream>
 
@@ -26,10 +26,9 @@ int main(int argc, char* argv[]) try {
   auto const location = google::cloud::Location(argv[1], argv[2]);
 
   namespace dataform = ::google::cloud::dataform_v1;
-  auto client =
-      dataform::ServiceClient(dataform::MakeServiceConnection());  // EDIT HERE
+  auto client = dataform::DataformClient(dataform::MakeDataformConnection());
 
-  for (auto r : client.List /*EDIT HERE*/ (location.FullName())) {
+  for (auto r : client.ListRepositories(location.FullName())) {
     if (!r) throw std::move(r).status();
     std::cout << r->DebugString() << "\n";
   }

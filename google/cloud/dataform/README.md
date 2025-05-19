@@ -19,7 +19,7 @@ this library.
 <!-- inject-quickstart-start -->
 
 ```cc
-#include "google/cloud/dataform/v1/ EDIT HERE _client.h"
+#include "google/cloud/dataform/v1/dataform_client.h"
 #include "google/cloud/location.h"
 #include <iostream>
 
@@ -32,10 +32,9 @@ int main(int argc, char* argv[]) try {
   auto const location = google::cloud::Location(argv[1], argv[2]);
 
   namespace dataform = ::google::cloud::dataform_v1;
-  auto client =
-      dataform::ServiceClient(dataform::MakeServiceConnection());  // EDIT HERE
+  auto client = dataform::DataformClient(dataform::MakeDataformConnection());
 
-  for (auto r : client.List /*EDIT HERE*/ (location.FullName())) {
+  for (auto r : client.ListRepositories(location.FullName())) {
     if (!r) throw std::move(r).status();
     std::cout << r->DebugString() << "\n";
   }
@@ -56,7 +55,6 @@ int main(int argc, char* argv[]) try {
   client library
 - Detailed header comments in our \[public `.h`\][source-link] files
 
-\[cloud-service-docs\]: https://cloud.google.com/dataform [EDIT HERE]
-\[doxygen-link\]: https://cloud.google.com/cpp/docs/reference/dataform/latest/
-\[source-link\]:
+\[cloud-service-docs\]: https://cloud.google.com/dataform/docs \[doxygen-link\]:
+https://cloud.google.com/cpp/docs/reference/dataform/latest/ \[source-link\]:
 https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/dataform
