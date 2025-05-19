@@ -42,6 +42,6 @@ application.
 - @ref dataform-env - describes environment variables that can configure the
   behavior of the library.
 
-[cloud-service-docs]: https://cloud.google.com/dataform [EDIT HERE]
+[cloud-service-docs]: https://cloud.google.com/dataform/docs
 
 */
