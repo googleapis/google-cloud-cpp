@@ -64,6 +64,7 @@ if (NOT GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
     return()
 endif ()
 
+find_package(google_cloud_cpp_storage_grpc CONFIG)
 add_executable(storage_quickstart_grpc "quickstart/quickstart_grpc.cc")
 target_link_libraries(storage_quickstart_grpc
                       PRIVATE google-cloud-cpp::storage_grpc)
