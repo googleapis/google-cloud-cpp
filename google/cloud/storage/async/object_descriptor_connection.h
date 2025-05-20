@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_ASYNC_OBJECT_DESCRIPTOR_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_ASYNC_OBJECT_DESCRIPTOR_CONNECTION_H
 
+#include "google/cloud/storage/async/reader.h"
 #include "google/cloud/storage/async/reader_connection.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
@@ -59,6 +60,8 @@ class ObjectDescriptorConnection {
    * Starts a new range read in the current descriptor.
    */
   virtual std::unique_ptr<AsyncReaderConnection> Read(ReadParams p) = 0;
+
+  virtual void MakeSubsequentStream() = 0;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
