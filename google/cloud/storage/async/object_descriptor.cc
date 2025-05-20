@@ -29,11 +29,10 @@ std::pair<AsyncReader, AsyncToken> ObjectDescriptor::Read(std::int64_t offset,
                                                           std::int64_t limit) {
   auto max_range =
       impl_->options().get<storage_experimental::MaximumRangeSizeOption>();
-  std::unique_ptr<storage_experimental::AsyncReaderConnection> reader;
   if (limit > max_range) {
     impl_->MakeSubsequentStream();
   }
-  reader = impl_->Read({offset, limit});
+  auto reader = impl_->Read({offset, limit});
   auto token = storage_internal::MakeAsyncToken(reader.get());
   return {AsyncReader(std::move(reader)), std::move(token)};
 }
