@@ -41,7 +41,7 @@ class ObjectDescriptorReaderTracing : public ObjectDescriptorReader {
   ~ObjectDescriptorReaderTracing() override = default;
 
   future<ObjectDescriptorReader::ReadResponse> Read() override {
-    auto span = internal::MakeSpan("storage::AsyncConnection::ReadObjectRange");
+    auto span = internal::MakeSpan("storage::AsyncConnection::ReadRange");
     internal::OTelScope scope(span);
     return ObjectDescriptorReader::Read().then(
         [span = std::move(span),
