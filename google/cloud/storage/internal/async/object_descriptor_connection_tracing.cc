@@ -13,6 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/async/object_descriptor_connection_tracing.h"
+#include "google/cloud/storage/async/object_descriptor.h"
+#include "google/cloud/storage/async/reader.h"
 #include "google/cloud/storage/async/reader_connection.h"
 #include "google/cloud/storage/internal/async/reader_connection_tracing.h"
 #include "google/cloud/internal/opentelemetry.h"
@@ -61,6 +63,10 @@ class AsyncObjectDescriptorConnectionTracing
                      {"read-length", p.length}});
     return MakeTracingReaderConnection(span_, std::move(result));
   }
+
+  void MakeSubsequentStream() override {
+    return impl_->MakeSubsequentStream();
+  };
 
  private:
   opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> span_;
