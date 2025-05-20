@@ -37,22 +37,46 @@ ObjectDescriptorImpl::ObjectDescriptorImpl(
     : resume_policy_(std::move(resume_policy)),
       make_stream_(std::move(make_stream)),
       read_object_spec_(std::move(read_object_spec)),
-      stream_(std::move(stream)),
-      options_(std::move(options)) {}
+      options_(std::move(options)),
+      active_stream_(0),
+      streams_{std::move(stream)} {}
 
-ObjectDescriptorImpl::~ObjectDescriptorImpl() { stream_->Cancel(); }
+ObjectDescriptorImpl::~ObjectDescriptorImpl() {
+  for (auto stream : streams_) {
+    stream->Cancel();
+  }
+}
 
 void ObjectDescriptorImpl::Start(
     google::storage::v2::BidiReadObjectResponse first_response) {
   OnRead(std::move(first_response));
 }
 
-void ObjectDescriptorImpl::Cancel() { stream_->Cancel(); }
+void ObjectDescriptorImpl::Cancel() {
+  for (auto stream : streams_) {
+    stream->Cancel();
+  }
+}
 
 absl::optional<google::storage::v2::Object> ObjectDescriptorImpl::metadata()
     const {
   std::unique_lock<std::mutex> lk(mu_);
   return metadata_;
+}
+
+void ObjectDescriptorImpl::MakeSubsequentStream() {
+  auto request = google::storage::v2::BidiReadObjectRequest{};
+
+  *request.mutable_read_object_spec() = read_object_spec_;
+  auto stream_result = make_stream_(std::move(request)).get();
+  auto stream = std::move(stream_result->stream);
+
+  std::unique_lock<std::mutex> lk(mu_);
+  active_stream_ = streams_.size();
+  streams_.push_back(std::move(stream));
+  lk.unlock();
+
+  Start(std::move(stream_result->first_response));
 }
 
 std::unique_ptr<storage_experimental::AsyncReaderConnection>
@@ -200,7 +224,7 @@ void ObjectDescriptorImpl::Resume(google::rpc::Status const& proto_status) {
 void ObjectDescriptorImpl::OnResume(StatusOr<OpenStreamResult> result) {
   if (!result) return OnFinish(std::move(result).status());
   std::unique_lock<std::mutex> lk(mu_);
-  stream_ = std::move(result->stream);
+  streams_[0] = std::move(result->stream);
   // TODO(#15105) - this should be done without release the lock.
   Flush(std::move(lk));
   OnRead(std::move(result->first_response));
