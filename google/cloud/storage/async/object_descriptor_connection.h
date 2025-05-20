@@ -15,7 +15,6 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_ASYNC_OBJECT_DESCRIPTOR_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_ASYNC_OBJECT_DESCRIPTOR_CONNECTION_H
 
-#include "google/cloud/storage/async/reader.h"
 #include "google/cloud/storage/async/reader_connection.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
