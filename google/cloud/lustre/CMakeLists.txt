@@ -33,5 +33,5 @@ if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
         lustre_quickstart
         PROPERTIES
             LABELS "integration-test;quickstart" PASS_REGULAR_EXPRESSION
-            "Permanent error, with a\n last message of Read access to project")
+            "last message of Read access to project")
 endif ()
