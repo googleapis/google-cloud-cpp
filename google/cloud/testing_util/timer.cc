@@ -38,7 +38,7 @@ Timer::Snapshot Timer::Sample() const {
            std::chrono::microseconds(tv.tv_usec);
   };
 
-  struct rusage now{};
+  struct rusage now {};
   (void)getrusage(RUsageWho(), &now);
   auto const utime = as_usec(now.ru_utime) - as_usec(start_usage_.ru_utime);
   auto const stime = as_usec(now.ru_stime) - as_usec(start_usage_.ru_stime);
@@ -57,7 +57,7 @@ std::string Timer::Annotations() const {
            std::chrono::microseconds(tv.tv_usec);
   };
 
-  struct rusage now{};
+  struct rusage now {};
   (void)getrusage(RUsageWho(), &now);
   auto utime = as_usec(now.ru_utime) - as_usec(start_usage_.ru_utime);
   auto stime = as_usec(now.ru_stime) - as_usec(start_usage_.ru_stime);
