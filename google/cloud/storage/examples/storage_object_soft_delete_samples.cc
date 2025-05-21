@@ -28,7 +28,7 @@ void ListSoftDeletedObjects(google::cloud::storage::Client client,
     std::cout << "Listing soft-deleted objects in the bucket: " << bucket_name
               << "\n";
     int object_count = 0;
-    for (auto const& object_metadata :
+    for (auto&& object_metadata :
          client.ListObjects(bucket_name, gcs::SoftDeleted(true))) {
       if (!object_metadata) throw std::move(object_metadata).status();
       std::cout << "Soft-deleted object" << ++object_count << ": "
@@ -46,7 +46,7 @@ void ListSoftDeletedObjectVersions(google::cloud::storage::Client client,
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& object_name) {
     int version_count = 0;
-    for (auto const& object_metadata :
+    for (auto&& object_metadata :
          client.ListObjects(bucket_name, gcs::SoftDeleted(true),
                             gcs::MatchGlob(object_name))) {
       if (!object_metadata) throw std::move(object_metadata).status();
@@ -105,7 +105,7 @@ void RunAll(std::vector<std::string> const& argv) {
   if (!insert_obj_metadata.ok()) throw std::move(insert_obj_metadata).status();
   std::cout << "Deleting the object: " << object_name << std::endl;
   auto obj_delete_status = client.DeleteObject(bucket_name, object_name);
-  if (!obj_delete_status.ok()) throw obj_delete_status;
+  if (!obj_delete_status.ok()) throw std::move(obj_delete_status);
 
   std::cout << "\nRunning the ListSoftDeletedObjects() example" << std::endl;
   ListSoftDeletedObjects(client, {bucket_name});
@@ -114,13 +114,11 @@ void RunAll(std::vector<std::string> const& argv) {
             << std::endl;
   ListSoftDeletedObjectVersions(client, {bucket_name, object_name});
 
-  std::int64_t generation = 0;
-  for (auto const& object_metadata : client.ListObjects(
-           bucket_name, gcs::SoftDeleted(true), gcs::MatchGlob(object_name))) {
-    if (!object_metadata) throw std::move(object_metadata).status();
-    generation = object_metadata->generation();
-    break;
-  }
+  auto objects = client.ListObjects(bucket_name, gcs::SoftDeleted(true),
+                                    gcs::MatchGlob(object_name));
+  auto object_metadata = objects.begin();
+  if (!*object_metadata) throw std::move(*object_metadata).status();
+  std::int64_t generation = (*object_metadata)->generation();
 
   std::cout << "\nRunning the RestoreSoftDeletedObject() example" << std::endl;
   RestoreSoftDeletedObject(
@@ -128,10 +126,10 @@ void RunAll(std::vector<std::string> const& argv) {
 
   std::cout << "\nCleanup" << std::endl;
   auto object_delete_status = client.DeleteObject(bucket_name, object_name);
-  if (!object_delete_status.ok()) throw object_delete_status;
+  if (!object_delete_status.ok()) throw std::move(object_delete_status);
   std::cout << "Object deleted successfully.\n";
   auto bucket_delete_status = client.DeleteBucket(bucket_name);
-  if (!bucket_delete_status.ok()) throw bucket_delete_status;
+  if (!bucket_delete_status.ok()) throw std::move(bucket_delete_status);
   std::cout << "Bucket deleted successfully.\n";
 }
 
