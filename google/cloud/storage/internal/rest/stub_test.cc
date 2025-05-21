@@ -40,6 +40,7 @@ using ::testing::ElementsAre;
 using ::testing::Eq;
 using ::testing::HasSubstr;
 using ::testing::Matcher;
+using ::testing::Not;
 using ::testing::Pair;
 using ::testing::ResultOf;
 using ::testing::Return;
@@ -191,6 +192,42 @@ TEST(RestStubTest, CreateBucket) {
       tested->CreateBucket(context, TestOptions(), CreateBucketRequest());
   EXPECT_THAT(status,
               StatusIs(PermanentError().code(), PermanentError().message()));
+}
+
+TEST(RestStubTest, ListBucketsIncludesPageTokenWhenPresentInRequest) {
+  auto mock = std::make_shared<MockRestClient>();
+  std::string expected_token = "test-page-token";
+  ListBucketsRequest request("test-project-id");
+  request.set_page_token(expected_token);
+
+  EXPECT_CALL(*mock,
+              Get(ExpectedContext(),
+                  ResultOf(
+                      "request parameters contain 'pageToken'",
+                      [](RestRequest const& r) { return r.parameters(); },
+                      Contains(Pair("pageToken", expected_token)))))
+      .WillOnce(Return(PermanentError()));
+
+  auto tested = std::make_unique<RestStub>(Options{}, mock, mock);
+  auto context = TestContext();
+  tested->ListBuckets(context, TestOptions(), request);
+}
+
+TEST(RestStubTest, ListBucketsOmitsPageTokenWhenEmptyInRequest) {
+  auto mock = std::make_shared<MockRestClient>();
+  ListBucketsRequest request("test-project-id");
+
+  EXPECT_CALL(*mock,
+              Get(ExpectedContext(),
+                  ResultOf(
+                      "request parameters do not contain 'pageToken'",
+                      [](RestRequest const& r) { return r.parameters(); },
+                      Not(Contains(Pair("pageToken", _))))))
+      .WillOnce(Return(PermanentError()));
+
+  auto tested = std::make_unique<RestStub>(Options{}, mock, mock);
+  auto context = TestContext();
+  tested->ListBuckets(context, TestOptions(), request);
 }
 
 TEST(RestStubTest, GetBucketMetadata) {

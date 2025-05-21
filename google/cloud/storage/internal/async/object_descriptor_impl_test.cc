@@ -1037,11 +1037,11 @@ Status PartialFailure(std::int64_t read_id) {
     auto error = google::storage::v2::BidiReadObjectError{};
     auto& range_error = *error.add_read_range_errors();
     range_error.set_read_id(read_id);
-    range_error.mutable_status()->set_code(grpc::INVALID_ARGUMENT);
+    range_error.mutable_status()->set_code(grpc::StatusCode::INVALID_ARGUMENT);
     range_error.mutable_status()->set_message("out of range read");
 
     auto details_proto = google::rpc::Status{};
-    details_proto.set_code(grpc::INVALID_ARGUMENT);
+    details_proto.set_code(grpc::StatusCode::INVALID_ARGUMENT);
     details_proto.set_message("some reads are out of range");
     details_proto.add_details()->PackFrom(error);
 
@@ -1051,7 +1051,7 @@ Status PartialFailure(std::int64_t read_id) {
   };
 
   return google::cloud::MakeStatusFromRpcError(
-      grpc::Status(grpc::INVALID_ARGUMENT, "redirect", details()));
+      grpc::Status(grpc::StatusCode::INVALID_ARGUMENT, "redirect", details()));
 }
 
 /// @test When the underlying stream fails with unrecoverable errors all ranges
