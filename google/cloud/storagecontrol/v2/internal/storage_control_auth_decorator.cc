@@ -239,6 +239,67 @@ StorageControlAuth::ListAnywhereCaches(
   return child_->ListAnywhereCaches(context, options, request);
 }
 
+StatusOr<google::storage::control::v2::IntelligenceConfig>
+StorageControlAuth::GetProjectIntelligenceConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::control::v2::GetProjectIntelligenceConfigRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetProjectIntelligenceConfig(context, options, request);
+}
+
+StatusOr<google::storage::control::v2::IntelligenceConfig>
+StorageControlAuth::UpdateProjectIntelligenceConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::control::v2::UpdateProjectIntelligenceConfigRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateProjectIntelligenceConfig(context, options, request);
+}
+
+StatusOr<google::storage::control::v2::IntelligenceConfig>
+StorageControlAuth::GetFolderIntelligenceConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::control::v2::GetFolderIntelligenceConfigRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetFolderIntelligenceConfig(context, options, request);
+}
+
+StatusOr<google::storage::control::v2::IntelligenceConfig>
+StorageControlAuth::UpdateFolderIntelligenceConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::control::v2::UpdateFolderIntelligenceConfigRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateFolderIntelligenceConfig(context, options, request);
+}
+
+StatusOr<google::storage::control::v2::IntelligenceConfig>
+StorageControlAuth::GetOrganizationIntelligenceConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::control::v2::
+        GetOrganizationIntelligenceConfigRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetOrganizationIntelligenceConfig(context, options, request);
+}
+
+StatusOr<google::storage::control::v2::IntelligenceConfig>
+StorageControlAuth::UpdateOrganizationIntelligenceConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::control::v2::
+        UpdateOrganizationIntelligenceConfigRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateOrganizationIntelligenceConfig(context, options,
+                                                      request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 StorageControlAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

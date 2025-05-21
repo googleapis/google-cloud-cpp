@@ -83,6 +83,137 @@ StorageInsightsConnection::GetReportDetail(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StreamRange<google::cloud::storageinsights::v1::DatasetConfig>
+StorageInsightsConnection::ListDatasetConfigs(
+    google::cloud::storageinsights::v1::
+        ListDatasetConfigsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::storageinsights::v1::DatasetConfig>>();
+}
+
+StatusOr<google::cloud::storageinsights::v1::DatasetConfig>
+StorageInsightsConnection::GetDatasetConfig(
+    google::cloud::storageinsights::v1::GetDatasetConfigRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::cloud::storageinsights::v1::DatasetConfig>>
+StorageInsightsConnection::CreateDatasetConfig(
+    google::cloud::storageinsights::v1::CreateDatasetConfigRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::storageinsights::v1::DatasetConfig>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+StorageInsightsConnection::CreateDatasetConfig(
+    NoAwaitTag,
+    google::cloud::storageinsights::v1::CreateDatasetConfigRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::storageinsights::v1::DatasetConfig>>
+StorageInsightsConnection::CreateDatasetConfig(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::storageinsights::v1::DatasetConfig>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::storageinsights::v1::DatasetConfig>>
+StorageInsightsConnection::UpdateDatasetConfig(
+    google::cloud::storageinsights::v1::UpdateDatasetConfigRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::storageinsights::v1::DatasetConfig>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+StorageInsightsConnection::UpdateDatasetConfig(
+    NoAwaitTag,
+    google::cloud::storageinsights::v1::UpdateDatasetConfigRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::storageinsights::v1::DatasetConfig>>
+StorageInsightsConnection::UpdateDatasetConfig(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::storageinsights::v1::DatasetConfig>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::storageinsights::v1::OperationMetadata>>
+StorageInsightsConnection::DeleteDatasetConfig(
+    google::cloud::storageinsights::v1::DeleteDatasetConfigRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::storageinsights::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+StorageInsightsConnection::DeleteDatasetConfig(
+    NoAwaitTag,
+    google::cloud::storageinsights::v1::DeleteDatasetConfigRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::storageinsights::v1::OperationMetadata>>
+StorageInsightsConnection::DeleteDatasetConfig(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::storageinsights::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::storageinsights::v1::LinkDatasetResponse>>
+StorageInsightsConnection::LinkDataset(
+    google::cloud::storageinsights::v1::LinkDatasetRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::storageinsights::v1::LinkDatasetResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> StorageInsightsConnection::LinkDataset(
+    NoAwaitTag, google::cloud::storageinsights::v1::LinkDatasetRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::storageinsights::v1::LinkDatasetResponse>>
+StorageInsightsConnection::LinkDataset(google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::storageinsights::v1::LinkDatasetResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::storageinsights::v1::OperationMetadata>>
+StorageInsightsConnection::UnlinkDataset(
+    google::cloud::storageinsights::v1::UnlinkDatasetRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::storageinsights::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+StorageInsightsConnection::UnlinkDataset(
+    NoAwaitTag,
+    google::cloud::storageinsights::v1::UnlinkDatasetRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::storageinsights::v1::OperationMetadata>>
+StorageInsightsConnection::UnlinkDataset(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::storageinsights::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StreamRange<google::cloud::location::Location>
 StorageInsightsConnection::ListLocations(
     google::cloud::location::

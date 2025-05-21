@@ -303,6 +303,94 @@ StorageControlLogging::ListAnywhereCaches(
       context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::storage::control::v2::IntelligenceConfig>
+StorageControlLogging::GetProjectIntelligenceConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::control::v2::GetProjectIntelligenceConfigRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::storage::control::v2::
+                 GetProjectIntelligenceConfigRequest const& request) {
+        return child_->GetProjectIntelligenceConfig(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::storage::control::v2::IntelligenceConfig>
+StorageControlLogging::UpdateProjectIntelligenceConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::control::v2::UpdateProjectIntelligenceConfigRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::storage::control::v2::
+                 UpdateProjectIntelligenceConfigRequest const& request) {
+        return child_->UpdateProjectIntelligenceConfig(context, options,
+                                                       request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::storage::control::v2::IntelligenceConfig>
+StorageControlLogging::GetFolderIntelligenceConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::control::v2::GetFolderIntelligenceConfigRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::storage::control::v2::
+                 GetFolderIntelligenceConfigRequest const& request) {
+        return child_->GetFolderIntelligenceConfig(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::storage::control::v2::IntelligenceConfig>
+StorageControlLogging::UpdateFolderIntelligenceConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::control::v2::UpdateFolderIntelligenceConfigRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::storage::control::v2::
+                 UpdateFolderIntelligenceConfigRequest const& request) {
+        return child_->UpdateFolderIntelligenceConfig(context, options,
+                                                      request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::storage::control::v2::IntelligenceConfig>
+StorageControlLogging::GetOrganizationIntelligenceConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::control::v2::
+        GetOrganizationIntelligenceConfigRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::storage::control::v2::
+                 GetOrganizationIntelligenceConfigRequest const& request) {
+        return child_->GetOrganizationIntelligenceConfig(context, options,
+                                                         request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::storage::control::v2::IntelligenceConfig>
+StorageControlLogging::UpdateOrganizationIntelligenceConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::control::v2::
+        UpdateOrganizationIntelligenceConfigRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::storage::control::v2::
+                 UpdateOrganizationIntelligenceConfigRequest const& request) {
+        return child_->UpdateOrganizationIntelligenceConfig(context, options,
+                                                            request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 StorageControlLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

@@ -125,7 +125,7 @@ class LivestreamServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.video.livestream.v1.Channel]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L128}
-  /// [google.cloud.video.livestream.v1.CreateChannelRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L447}
+  /// [google.cloud.video.livestream.v1.CreateChannelRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L505}
   ///
   // clang-format on
   future<StatusOr<google::cloud::video::livestream::v1::Channel>> CreateChannel(
@@ -181,7 +181,7 @@ class LivestreamServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.video.livestream.v1.Channel]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L128}
-  /// [google.cloud.video.livestream.v1.CreateChannelRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L447}
+  /// [google.cloud.video.livestream.v1.CreateChannelRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L505}
   ///
   // clang-format on
   future<StatusOr<google::cloud::video::livestream::v1::Channel>> CreateChannel(
@@ -245,7 +245,7 @@ class LivestreamServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.video.livestream.v1.Channel]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L128}
-  /// [google.cloud.video.livestream.v1.ListChannelsRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L482}
+  /// [google.cloud.video.livestream.v1.ListChannelsRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L540}
   ///
   // clang-format on
   StreamRange<google::cloud::video::livestream::v1::Channel> ListChannels(
@@ -284,7 +284,7 @@ class LivestreamServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.video.livestream.v1.Channel]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L128}
-  /// [google.cloud.video.livestream.v1.ListChannelsRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L482}
+  /// [google.cloud.video.livestream.v1.ListChannelsRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L540}
   ///
   // clang-format on
   StreamRange<google::cloud::video::livestream::v1::Channel> ListChannels(
@@ -311,7 +311,7 @@ class LivestreamServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.video.livestream.v1.Channel]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L128}
-  /// [google.cloud.video.livestream.v1.GetChannelRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L524}
+  /// [google.cloud.video.livestream.v1.GetChannelRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L582}
   ///
   // clang-format on
   StatusOr<google::cloud::video::livestream::v1::Channel> GetChannel(
@@ -341,7 +341,7 @@ class LivestreamServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.video.livestream.v1.Channel]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L128}
-  /// [google.cloud.video.livestream.v1.GetChannelRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L524}
+  /// [google.cloud.video.livestream.v1.GetChannelRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L582}
   ///
   // clang-format on
   StatusOr<google::cloud::video::livestream::v1::Channel> GetChannel(
@@ -374,8 +374,8 @@ class LivestreamServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.video.livestream.v1.DeleteChannelRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L536}
-  /// [google.cloud.video.livestream.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L1046}
+  /// [google.cloud.video.livestream.v1.DeleteChannelRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L594}
+  /// [google.cloud.video.livestream.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L1257}
   ///
   // clang-format on
   future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
@@ -425,8 +425,8 @@ class LivestreamServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.video.livestream.v1.DeleteChannelRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L536}
-  /// [google.cloud.video.livestream.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L1046}
+  /// [google.cloud.video.livestream.v1.DeleteChannelRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L594}
+  /// [google.cloud.video.livestream.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L1257}
   ///
   // clang-format on
   future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
@@ -509,7 +509,7 @@ class LivestreamServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.video.livestream.v1.Channel]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L128}
-  /// [google.cloud.video.livestream.v1.UpdateChannelRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L569}
+  /// [google.cloud.video.livestream.v1.UpdateChannelRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L627}
   ///
   // clang-format on
   future<StatusOr<google::cloud::video::livestream::v1::Channel>> UpdateChannel(
@@ -562,7 +562,7 @@ class LivestreamServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.video.livestream.v1.Channel]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L128}
-  /// [google.cloud.video.livestream.v1.UpdateChannelRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L569}
+  /// [google.cloud.video.livestream.v1.UpdateChannelRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L627}
   ///
   // clang-format on
   future<StatusOr<google::cloud::video::livestream::v1::Channel>> UpdateChannel(
@@ -624,8 +624,8 @@ class LivestreamServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.video.livestream.v1.ChannelOperationResponse]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L933}
-  /// [google.cloud.video.livestream.v1.StartChannelRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L612}
+  /// [google.cloud.video.livestream.v1.ChannelOperationResponse]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L992}
+  /// [google.cloud.video.livestream.v1.StartChannelRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L670}
   ///
   // clang-format on
   future<
@@ -678,8 +678,8 @@ class LivestreamServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.video.livestream.v1.ChannelOperationResponse]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L933}
-  /// [google.cloud.video.livestream.v1.StartChannelRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L612}
+  /// [google.cloud.video.livestream.v1.ChannelOperationResponse]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L992}
+  /// [google.cloud.video.livestream.v1.StartChannelRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L670}
   ///
   // clang-format on
   future<
@@ -745,8 +745,8 @@ class LivestreamServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.video.livestream.v1.ChannelOperationResponse]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L933}
-  /// [google.cloud.video.livestream.v1.StopChannelRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L639}
+  /// [google.cloud.video.livestream.v1.ChannelOperationResponse]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L992}
+  /// [google.cloud.video.livestream.v1.StopChannelRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L697}
   ///
   // clang-format on
   future<
@@ -799,8 +799,8 @@ class LivestreamServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.video.livestream.v1.ChannelOperationResponse]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L933}
-  /// [google.cloud.video.livestream.v1.StopChannelRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L639}
+  /// [google.cloud.video.livestream.v1.ChannelOperationResponse]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L992}
+  /// [google.cloud.video.livestream.v1.StopChannelRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L697}
   ///
   // clang-format on
   future<
@@ -869,7 +869,7 @@ class LivestreamServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.video.livestream.v1.CreateInputRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L666}
+  /// [google.cloud.video.livestream.v1.CreateInputRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L724}
   /// [google.cloud.video.livestream.v1.Input]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L36}
   ///
   // clang-format on
@@ -924,7 +924,7 @@ class LivestreamServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.video.livestream.v1.CreateInputRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L666}
+  /// [google.cloud.video.livestream.v1.CreateInputRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L724}
   /// [google.cloud.video.livestream.v1.Input]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L36}
   ///
   // clang-format on
@@ -989,7 +989,7 @@ class LivestreamServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.video.livestream.v1.Input]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L36}
-  /// [google.cloud.video.livestream.v1.ListInputsRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L701}
+  /// [google.cloud.video.livestream.v1.ListInputsRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L759}
   ///
   // clang-format on
   StreamRange<google::cloud::video::livestream::v1::Input> ListInputs(
@@ -1028,7 +1028,7 @@ class LivestreamServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.video.livestream.v1.Input]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L36}
-  /// [google.cloud.video.livestream.v1.ListInputsRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L701}
+  /// [google.cloud.video.livestream.v1.ListInputsRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L759}
   ///
   // clang-format on
   StreamRange<google::cloud::video::livestream::v1::Input> ListInputs(
@@ -1054,7 +1054,7 @@ class LivestreamServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.video.livestream.v1.GetInputRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L743}
+  /// [google.cloud.video.livestream.v1.GetInputRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L801}
   /// [google.cloud.video.livestream.v1.Input]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L36}
   ///
   // clang-format on
@@ -1084,7 +1084,7 @@ class LivestreamServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.video.livestream.v1.GetInputRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L743}
+  /// [google.cloud.video.livestream.v1.GetInputRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L801}
   /// [google.cloud.video.livestream.v1.Input]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L36}
   ///
   // clang-format on
@@ -1118,8 +1118,8 @@ class LivestreamServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.video.livestream.v1.DeleteInputRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L755}
-  /// [google.cloud.video.livestream.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L1046}
+  /// [google.cloud.video.livestream.v1.DeleteInputRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L813}
+  /// [google.cloud.video.livestream.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L1257}
   ///
   // clang-format on
   future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
@@ -1170,8 +1170,8 @@ class LivestreamServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.video.livestream.v1.DeleteInputRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L755}
-  /// [google.cloud.video.livestream.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L1046}
+  /// [google.cloud.video.livestream.v1.DeleteInputRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L813}
+  /// [google.cloud.video.livestream.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L1257}
   ///
   // clang-format on
   future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
@@ -1216,6 +1216,7 @@ class LivestreamServiceClient {
   /// @param update_mask  Field mask is used to specify the fields to be overwritten in the Input
   ///  resource by the update. You can only update the following fields:
   ///  @n
+  ///  * [`tier`](https://cloud.google.com/livestream/docs/reference/rest/v1/projects.locations.inputs#Tier)
   ///  * [`preprocessingConfig`](https://cloud.google.com/livestream/docs/reference/rest/v1/projects.locations.inputs#PreprocessingConfig)
   ///  * [`securityRules`](https://cloud.google.com/livestream/docs/reference/rest/v1/projects.locations.inputs#SecurityRule)
   ///  @n
@@ -1246,7 +1247,7 @@ class LivestreamServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.video.livestream.v1.Input]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L36}
-  /// [google.cloud.video.livestream.v1.UpdateInputRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L782}
+  /// [google.cloud.video.livestream.v1.UpdateInputRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L840}
   ///
   // clang-format on
   future<StatusOr<google::cloud::video::livestream::v1::Input>> UpdateInput(
@@ -1299,7 +1300,7 @@ class LivestreamServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.video.livestream.v1.Input]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L36}
-  /// [google.cloud.video.livestream.v1.UpdateInputRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L782}
+  /// [google.cloud.video.livestream.v1.UpdateInputRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L840}
   ///
   // clang-format on
   future<StatusOr<google::cloud::video::livestream::v1::Input>> UpdateInput(
@@ -1357,7 +1358,7 @@ class LivestreamServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.video.livestream.v1.CreateEventRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L817}
+  /// [google.cloud.video.livestream.v1.CreateEventRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L876}
   /// [google.cloud.video.livestream.v1.Event]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L472}
   ///
   // clang-format on
@@ -1389,7 +1390,7 @@ class LivestreamServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.video.livestream.v1.CreateEventRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L817}
+  /// [google.cloud.video.livestream.v1.CreateEventRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L876}
   /// [google.cloud.video.livestream.v1.Event]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L472}
   ///
   // clang-format on
@@ -1426,7 +1427,7 @@ class LivestreamServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.video.livestream.v1.Event]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L472}
-  /// [google.cloud.video.livestream.v1.ListEventsRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L852}
+  /// [google.cloud.video.livestream.v1.ListEventsRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L911}
   ///
   // clang-format on
   StreamRange<google::cloud::video::livestream::v1::Event> ListEvents(
@@ -1465,7 +1466,7 @@ class LivestreamServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.video.livestream.v1.Event]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L472}
-  /// [google.cloud.video.livestream.v1.ListEventsRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L852}
+  /// [google.cloud.video.livestream.v1.ListEventsRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L911}
   ///
   // clang-format on
   StreamRange<google::cloud::video::livestream::v1::Event> ListEvents(
@@ -1492,7 +1493,7 @@ class LivestreamServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.video.livestream.v1.Event]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L472}
-  /// [google.cloud.video.livestream.v1.GetEventRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L894}
+  /// [google.cloud.video.livestream.v1.GetEventRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L953}
   ///
   // clang-format on
   StatusOr<google::cloud::video::livestream::v1::Event> GetEvent(
@@ -1522,7 +1523,7 @@ class LivestreamServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.video.livestream.v1.Event]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L472}
-  /// [google.cloud.video.livestream.v1.GetEventRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L894}
+  /// [google.cloud.video.livestream.v1.GetEventRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L953}
   ///
   // clang-format on
   StatusOr<google::cloud::video::livestream::v1::Event> GetEvent(
@@ -1546,7 +1547,7 @@ class LivestreamServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.video.livestream.v1.DeleteEventRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L906}
+  /// [google.cloud.video.livestream.v1.DeleteEventRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L965}
   ///
   // clang-format on
   Status DeleteEvent(std::string const& name, Options opts = {});
@@ -1572,7 +1573,7 @@ class LivestreamServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.video.livestream.v1.DeleteEventRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L906}
+  /// [google.cloud.video.livestream.v1.DeleteEventRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L965}
   ///
   // clang-format on
   Status DeleteEvent(
@@ -1607,7 +1608,7 @@ class LivestreamServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.video.livestream.v1.Clip]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L608}
-  /// [google.cloud.video.livestream.v1.ListClipsRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L936}
+  /// [google.cloud.video.livestream.v1.ListClipsRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L995}
   ///
   // clang-format on
   StreamRange<google::cloud::video::livestream::v1::Clip> ListClips(
@@ -1646,7 +1647,7 @@ class LivestreamServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.video.livestream.v1.Clip]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L608}
-  /// [google.cloud.video.livestream.v1.ListClipsRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L936}
+  /// [google.cloud.video.livestream.v1.ListClipsRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L995}
   ///
   // clang-format on
   StreamRange<google::cloud::video::livestream::v1::Clip> ListClips(
@@ -1673,7 +1674,7 @@ class LivestreamServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.video.livestream.v1.Clip]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L608}
-  /// [google.cloud.video.livestream.v1.GetClipRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L972}
+  /// [google.cloud.video.livestream.v1.GetClipRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L1031}
   ///
   // clang-format on
   StatusOr<google::cloud::video::livestream::v1::Clip> GetClip(
@@ -1703,7 +1704,7 @@ class LivestreamServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.video.livestream.v1.Clip]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L608}
-  /// [google.cloud.video.livestream.v1.GetClipRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L972}
+  /// [google.cloud.video.livestream.v1.GetClipRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L1031}
   ///
   // clang-format on
   StatusOr<google::cloud::video::livestream::v1::Clip> GetClip(
@@ -1742,7 +1743,7 @@ class LivestreamServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.video.livestream.v1.Clip]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L608}
-  /// [google.cloud.video.livestream.v1.CreateClipRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L982}
+  /// [google.cloud.video.livestream.v1.CreateClipRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L1041}
   ///
   // clang-format on
   future<StatusOr<google::cloud::video::livestream::v1::Clip>> CreateClip(
@@ -1797,7 +1798,7 @@ class LivestreamServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.video.livestream.v1.Clip]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L608}
-  /// [google.cloud.video.livestream.v1.CreateClipRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L982}
+  /// [google.cloud.video.livestream.v1.CreateClipRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L1041}
   ///
   // clang-format on
   future<StatusOr<google::cloud::video::livestream::v1::Clip>> CreateClip(
@@ -1835,7 +1836,7 @@ class LivestreamServiceClient {
   // clang-format off
   ///
   /// Deletes the specified clip job resource. This method only deletes the clip
-  /// job and does not delete the VOD clip stored in the GCS.
+  /// job and does not delete the VOD clip stored in Cloud Storage.
   ///
   /// @param name  Required. The name of the clip resource, in the form of:
   ///  `projects/{project}/locations/{location}/channels/{channelId}/clips/{clipId}`.
@@ -1859,8 +1860,8 @@ class LivestreamServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.video.livestream.v1.DeleteClipRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L1018}
-  /// [google.cloud.video.livestream.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L1046}
+  /// [google.cloud.video.livestream.v1.DeleteClipRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L1077}
+  /// [google.cloud.video.livestream.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L1257}
   ///
   // clang-format on
   future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
@@ -1884,7 +1885,7 @@ class LivestreamServiceClient {
   // clang-format off
   ///
   /// Deletes the specified clip job resource. This method only deletes the clip
-  /// job and does not delete the VOD clip stored in the GCS.
+  /// job and does not delete the VOD clip stored in Cloud Storage.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1912,8 +1913,8 @@ class LivestreamServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.video.livestream.v1.DeleteClipRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L1018}
-  /// [google.cloud.video.livestream.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L1046}
+  /// [google.cloud.video.livestream.v1.DeleteClipRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L1077}
+  /// [google.cloud.video.livestream.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L1257}
   ///
   // clang-format on
   future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
@@ -1952,6 +1953,509 @@ class LivestreamServiceClient {
 
   // clang-format off
   ///
+  /// Creates a DVR session with the provided unique ID in the specified channel.
+  ///
+  /// @param parent  Required. The parent resource name, in the following form:
+  ///  `projects/{project}/locations/{location}/channels/{channelId}`.
+  /// @param dvr_session  Required. The resource being created
+  /// @param dvr_session_id  Required. Id of the requesting object in the following form:
+  ///  @n
+  ///  1. 1 character minimum, 63 characters maximum
+  ///  2. Only contains letters, digits, underscores, and hyphens
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.video.livestream.v1.DvrSession] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.livestream.v1.CreateDvrSessionRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L1153}
+  /// [google.cloud.video.livestream.v1.DvrSession]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L749}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::video::livestream::v1::DvrSession>>
+  CreateDvrSession(
+      std::string const& parent,
+      google::cloud::video::livestream::v1::DvrSession const& dvr_session,
+      std::string const& dvr_session_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateDvrSession
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateDvrSession(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::video::livestream::v1::DvrSession const& dvr_session,
+      std::string const& dvr_session_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a DVR session with the provided unique ID in the specified channel.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.video.livestream.v1.CreateDvrSessionRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.video.livestream.v1.DvrSession] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.livestream.v1.CreateDvrSessionRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L1153}
+  /// [google.cloud.video.livestream.v1.DvrSession]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L749}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::video::livestream::v1::DvrSession>>
+  CreateDvrSession(
+      google::cloud::video::livestream::v1::CreateDvrSessionRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateDvrSession
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateDvrSession(
+      NoAwaitTag,
+      google::cloud::video::livestream::v1::CreateDvrSessionRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateDvrSession
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::video::livestream::v1::DvrSession>>
+  CreateDvrSession(google::longrunning::Operation const& operation,
+                   Options opts = {});
+
+  // clang-format off
+  ///
+  /// Returns a list of all DVR sessions in the specified channel.
+  ///
+  /// @param parent  Required. Parent value for ListDvrSessionsRequest
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.video.livestream.v1.DvrSession], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.livestream.v1.DvrSession]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L749}
+  /// [google.cloud.video.livestream.v1.ListDvrSessionsRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L1105}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::video::livestream::v1::DvrSession> ListDvrSessions(
+      std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Returns a list of all DVR sessions in the specified channel.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.video.livestream.v1.ListDvrSessionsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.video.livestream.v1.DvrSession], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.livestream.v1.DvrSession]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L749}
+  /// [google.cloud.video.livestream.v1.ListDvrSessionsRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L1105}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::video::livestream::v1::DvrSession> ListDvrSessions(
+      google::cloud::video::livestream::v1::ListDvrSessionsRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Returns the specified DVR session.
+  ///
+  /// @param name  Required. Name of the resource, in the following form:
+  ///  `projects/{project}/locations/{location}/channels/{channelId}/dvrSessions/{dvrSessionId}`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.video.livestream.v1.DvrSession])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.livestream.v1.DvrSession]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L749}
+  /// [google.cloud.video.livestream.v1.GetDvrSessionRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L1141}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::video::livestream::v1::DvrSession> GetDvrSession(
+      std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Returns the specified DVR session.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.video.livestream.v1.GetDvrSessionRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.video.livestream.v1.DvrSession])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.livestream.v1.DvrSession]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L749}
+  /// [google.cloud.video.livestream.v1.GetDvrSessionRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L1141}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::video::livestream::v1::DvrSession> GetDvrSession(
+      google::cloud::video::livestream::v1::GetDvrSessionRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes the specified DVR session.
+  ///
+  /// @param name  Required. The name of the event resource, in the form of:
+  ///  `projects/{project}/locations/{location}/channels/{channelId}/dvrSessions/{dvrSessionId}`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.video.livestream.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.livestream.v1.DeleteDvrSessionRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L1192}
+  /// [google.cloud.video.livestream.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L1257}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
+  DeleteDvrSession(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteDvrSession
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteDvrSession(
+      NoAwaitTag, std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes the specified DVR session.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.video.livestream.v1.DeleteDvrSessionRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.video.livestream.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.livestream.v1.DeleteDvrSessionRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L1192}
+  /// [google.cloud.video.livestream.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L1257}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
+  DeleteDvrSession(
+      google::cloud::video::livestream::v1::DeleteDvrSessionRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteDvrSession
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteDvrSession(
+      NoAwaitTag,
+      google::cloud::video::livestream::v1::DeleteDvrSessionRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteDvrSession
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
+  DeleteDvrSession(google::longrunning::Operation const& operation,
+                   Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates the specified DVR session.
+  ///
+  /// @param dvr_session  Required. The DVR session resource to be updated.
+  /// @param update_mask  Required. Field mask is used to specify the fields to be overwritten in the
+  ///  DvrSession resource by the update. You can only update the following
+  ///  fields:
+  ///  @n
+  ///  * `dvrWindows`
+  ///  @n
+  ///  The fields specified in the update_mask are relative to the resource, not
+  ///  the full request. A field will be overwritten if it is in the mask.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.video.livestream.v1.DvrSession] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.livestream.v1.DvrSession]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L749}
+  /// [google.cloud.video.livestream.v1.UpdateDvrSessionRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L1222}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::video::livestream::v1::DvrSession>>
+  UpdateDvrSession(
+      google::cloud::video::livestream::v1::DvrSession const& dvr_session,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateDvrSession
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UpdateDvrSession(
+      NoAwaitTag,
+      google::cloud::video::livestream::v1::DvrSession const& dvr_session,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates the specified DVR session.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.video.livestream.v1.UpdateDvrSessionRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.video.livestream.v1.DvrSession] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.livestream.v1.DvrSession]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L749}
+  /// [google.cloud.video.livestream.v1.UpdateDvrSessionRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L1222}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::video::livestream::v1::DvrSession>>
+  UpdateDvrSession(
+      google::cloud::video::livestream::v1::UpdateDvrSessionRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateDvrSession
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UpdateDvrSession(
+      NoAwaitTag,
+      google::cloud::video::livestream::v1::UpdateDvrSessionRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateDvrSession
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::video::livestream::v1::DvrSession>>
+  UpdateDvrSession(google::longrunning::Operation const& operation,
+                   Options opts = {});
+
+  // clang-format off
+  ///
   /// Creates a Asset with the provided unique ID in the specified
   /// region.
   ///
@@ -1981,8 +2485,8 @@ class LivestreamServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.video.livestream.v1.Asset]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L721}
-  /// [google.cloud.video.livestream.v1.CreateAssetRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L336}
+  /// [google.cloud.video.livestream.v1.Asset]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L866}
+  /// [google.cloud.video.livestream.v1.CreateAssetRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L394}
   ///
   // clang-format on
   future<StatusOr<google::cloud::video::livestream::v1::Asset>> CreateAsset(
@@ -2037,8 +2541,8 @@ class LivestreamServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.video.livestream.v1.Asset]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L721}
-  /// [google.cloud.video.livestream.v1.CreateAssetRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L336}
+  /// [google.cloud.video.livestream.v1.Asset]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L866}
+  /// [google.cloud.video.livestream.v1.CreateAssetRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L394}
   ///
   // clang-format on
   future<StatusOr<google::cloud::video::livestream::v1::Asset>> CreateAsset(
@@ -2099,8 +2603,8 @@ class LivestreamServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.video.livestream.v1.DeleteAssetRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L371}
-  /// [google.cloud.video.livestream.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L1046}
+  /// [google.cloud.video.livestream.v1.DeleteAssetRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L429}
+  /// [google.cloud.video.livestream.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L1257}
   ///
   // clang-format on
   future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
@@ -2151,8 +2655,8 @@ class LivestreamServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.video.livestream.v1.DeleteAssetRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L371}
-  /// [google.cloud.video.livestream.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L1046}
+  /// [google.cloud.video.livestream.v1.DeleteAssetRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L429}
+  /// [google.cloud.video.livestream.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L1257}
   ///
   // clang-format on
   future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
@@ -2208,8 +2712,8 @@ class LivestreamServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.video.livestream.v1.Asset]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L721}
-  /// [google.cloud.video.livestream.v1.GetAssetRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L435}
+  /// [google.cloud.video.livestream.v1.Asset]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L866}
+  /// [google.cloud.video.livestream.v1.GetAssetRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L493}
   ///
   // clang-format on
   StatusOr<google::cloud::video::livestream::v1::Asset> GetAsset(
@@ -2238,8 +2742,8 @@ class LivestreamServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.video.livestream.v1.Asset]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L721}
-  /// [google.cloud.video.livestream.v1.GetAssetRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L435}
+  /// [google.cloud.video.livestream.v1.Asset]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L866}
+  /// [google.cloud.video.livestream.v1.GetAssetRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L493}
   ///
   // clang-format on
   StatusOr<google::cloud::video::livestream::v1::Asset> GetAsset(
@@ -2274,8 +2778,8 @@ class LivestreamServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.video.livestream.v1.Asset]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L721}
-  /// [google.cloud.video.livestream.v1.ListAssetsRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L398}
+  /// [google.cloud.video.livestream.v1.Asset]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L866}
+  /// [google.cloud.video.livestream.v1.ListAssetsRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L456}
   ///
   // clang-format on
   StreamRange<google::cloud::video::livestream::v1::Asset> ListAssets(
@@ -2313,8 +2817,8 @@ class LivestreamServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.video.livestream.v1.Asset]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L721}
-  /// [google.cloud.video.livestream.v1.ListAssetsRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L398}
+  /// [google.cloud.video.livestream.v1.Asset]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L866}
+  /// [google.cloud.video.livestream.v1.ListAssetsRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L456}
   ///
   // clang-format on
   StreamRange<google::cloud::video::livestream::v1::Asset> ListAssets(
@@ -2340,8 +2844,8 @@ class LivestreamServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.video.livestream.v1.GetPoolRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L1073}
-  /// [google.cloud.video.livestream.v1.Pool]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L893}
+  /// [google.cloud.video.livestream.v1.GetPoolRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L1285}
+  /// [google.cloud.video.livestream.v1.Pool]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L1038}
   ///
   // clang-format on
   StatusOr<google::cloud::video::livestream::v1::Pool> GetPool(
@@ -2370,8 +2874,8 @@ class LivestreamServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.video.livestream.v1.GetPoolRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L1073}
-  /// [google.cloud.video.livestream.v1.Pool]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L893}
+  /// [google.cloud.video.livestream.v1.GetPoolRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L1285}
+  /// [google.cloud.video.livestream.v1.Pool]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L1038}
   ///
   // clang-format on
   StatusOr<google::cloud::video::livestream::v1::Pool> GetPool(
@@ -2410,8 +2914,8 @@ class LivestreamServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.video.livestream.v1.Pool]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L893}
-  /// [google.cloud.video.livestream.v1.UpdatePoolRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L1083}
+  /// [google.cloud.video.livestream.v1.Pool]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L1038}
+  /// [google.cloud.video.livestream.v1.UpdatePoolRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L1295}
   ///
   // clang-format on
   future<StatusOr<google::cloud::video::livestream::v1::Pool>> UpdatePool(
@@ -2463,8 +2967,8 @@ class LivestreamServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.video.livestream.v1.Pool]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L893}
-  /// [google.cloud.video.livestream.v1.UpdatePoolRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L1083}
+  /// [google.cloud.video.livestream.v1.Pool]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L1038}
+  /// [google.cloud.video.livestream.v1.UpdatePoolRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L1295}
   ///
   // clang-format on
   future<StatusOr<google::cloud::video::livestream::v1::Pool>> UpdatePool(

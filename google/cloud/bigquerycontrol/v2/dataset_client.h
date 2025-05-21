@@ -313,7 +313,7 @@ class DatasetServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.bigquery.v2.Dataset]: @googleapis_reference_link{google/cloud/bigquery/v2/dataset.proto#L213}
-  /// [google.cloud.bigquery.v2.UndeleteDatasetRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/dataset.proto#L710}
+  /// [google.cloud.bigquery.v2.UndeleteDatasetRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/dataset.proto#L715}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::v2::Dataset> UndeleteDataset(
