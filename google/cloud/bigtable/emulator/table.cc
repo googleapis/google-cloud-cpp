@@ -16,11 +16,16 @@
 #include "google/cloud/bigtable/emulator/column_family.h"
 #include "google/cloud/bigtable/emulator/filter.h"
 #include "google/cloud/bigtable/emulator/filtered_map.h"
+#include "google/cloud/bigtable/emulator/range_set.h"
 #include "google/cloud/bigtable/internal/google_bytes_traits.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/protobuf/util/field_mask_util.h"
+#include <grpc/grpc_security_constants.h>
+#include <google/bigtable/v2/bigtable.pb.h>
 #include <google/bigtable/v2/data.pb.h>
+#include <absl/strings/match.h>
 #include <absl/strings/str_format.h>
+#include <absl/types/optional.h>
 #include <re2/re2.h>
 #include <chrono>
 #include <climits>
@@ -32,6 +37,8 @@
 #include <mutex>
 #include <random>
 #include <ratio>
+#include <memory>
+#include <mutex>
 #include <type_traits>
 
 namespace google {
@@ -228,14 +235,34 @@ StatusOr<std::reference_wrapper<ColumnFamily>> Table::FindColumnFamily(
 
 Status Table::MutateRow(google::bigtable::v2::MutateRowRequest const& request) {
   std::lock_guard<std::mutex> lock(mu_);
-  assert(request.table_name() == schema_.name());
 
-  RowTransaction row_transaction(this->get(), request);
+  return DoMutationsWithPossibleRollback(request.row_key(),
+                                         request.mutations());
+}
 
-  for (auto const& mutation : request.mutations()) {
+Status Table::DoMutationsWithPossibleRollback(
+    std::string const& row_key,
+    google::protobuf::RepeatedPtrField<google::bigtable::v2::Mutation> const&
+        mutations) {
+  RowTransaction row_transaction(this->get(), row_key);
+
+  for (auto const& mutation : mutations) {
     if (mutation.has_set_cell()) {
       auto const& set_cell = mutation.set_cell();
-      auto status = row_transaction.SetCell(set_cell);
+
+      absl::optional<std::chrono::milliseconds> timestamp_override =
+          absl::nullopt;
+
+      auto timestamp = std::chrono::duration_cast<std::chrono::milliseconds>(
+          std::chrono::microseconds(set_cell.timestamp_micros()));
+
+      if (timestamp <= std::chrono::milliseconds::zero()) {
+        timestamp = std::chrono::duration_cast<std::chrono::milliseconds>(
+            std::chrono::system_clock::now().time_since_epoch());
+        timestamp_override.emplace(std::move(timestamp));
+      }
+
+      auto status = row_transaction.SetCell(set_cell, timestamp_override);
       if (!status.ok()) {
         return status;
       }
@@ -277,6 +304,27 @@ Status Table::MutateRow(google::bigtable::v2::MutateRowRequest const& request) {
   row_transaction.commit();
 
   return Status();
+}
+
+StatusOr<CellStream> Table::CreateCellStream(
+    std::shared_ptr<StringRangeSet> range_set,
+    absl::optional<google::bigtable::v2::RowFilter> maybe_row_filter) const {
+  auto table_stream_ctor = [range_set = std::move(range_set), this] {
+    std::vector<std::unique_ptr<FilteredColumnFamilyStream>> per_cf_streams;
+    per_cf_streams.reserve(column_families_.size());
+    for (auto const& column_family : column_families_) {
+      per_cf_streams.emplace_back(std::make_unique<FilteredColumnFamilyStream>(
+          *column_family.second, column_family.first, range_set));
+    }
+    return CellStream(
+        std::make_unique<FilteredTableStream>(std::move(per_cf_streams)));
+  };
+
+  if (maybe_row_filter.has_value()) {
+    return CreateFilter(maybe_row_filter.value(), table_stream_ctor);
+  }
+
+  return table_stream_ctor();
 }
 
 bool FilteredTableStream::ApplyFilter(InternalFilter const& internal_filter) {
@@ -337,6 +385,68 @@ StatusOr<StringRangeSet> CreateStringRangeSet(
   return res;
 }
 
+StatusOr<google::bigtable::v2::CheckAndMutateRowResponse>
+Table::CheckAndMutateRow(
+    google::bigtable::v2::CheckAndMutateRowRequest const& request) {
+  std::lock_guard<std::mutex> lock(mu_);
+
+  auto const& row_key = request.row_key();
+  if (row_key.empty()) {
+    return InvalidArgumentError(
+        "row key required",
+        GCP_ERROR_INFO().WithMetadata("CheckAndMutateRowRequest",
+                                      request.DebugString()));
+  }
+
+  if (request.true_mutations_size() == 0 &&
+      request.false_mutations_size() == 0) {
+    return InvalidArgumentError(
+        "both true mutations and false mutations are empty",
+        GCP_ERROR_INFO().WithMetadata("CheckAndMutateRowRequest",
+                                      request.DebugString()));
+  }
+
+  auto range_set = std::make_shared<StringRangeSet>();
+  range_set->Sum(StringRangeSet::Range(row_key, false, row_key, false));
+
+  StatusOr<CellStream> maybe_stream;
+  if (request.has_predicate_filter()) {
+    maybe_stream =
+        CreateCellStream(range_set, std::move(request.predicate_filter()));
+  } else {
+    maybe_stream = CreateCellStream(range_set, absl::nullopt);
+  }
+
+  if (!maybe_stream) {
+    return maybe_stream.status();
+  }
+
+  bool a_cell_is_found = false;
+
+  CellStream& stream = *maybe_stream;
+  if (stream) {  // At least one cell/value found when filter is applied
+    a_cell_is_found = true;
+  }
+
+  Status status;
+  if (a_cell_is_found) {
+    status = DoMutationsWithPossibleRollback(request.row_key(),
+                                             request.true_mutations());
+  } else {
+    status = DoMutationsWithPossibleRollback(request.row_key(),
+                                             request.false_mutations());
+  }
+
+  if (!status.ok()) {
+    return status;
+  }
+
+  google::bigtable::v2::CheckAndMutateRowResponse success_response;
+  success_response.set_predicate_matched(a_cell_is_found);
+
+  return success_response;
+}
+
 Status Table::ReadRows(google::bigtable::v2::ReadRowsRequest const& request,
                        RowStreamer& row_streamer) const {
   std::shared_ptr<StringRangeSet> row_set;
@@ -350,22 +460,14 @@ Status Table::ReadRows(google::bigtable::v2::ReadRowsRequest const& request,
     row_set = std::make_shared<StringRangeSet>(StringRangeSet::All());
   }
   std::lock_guard<std::mutex> lock(mu_);
-  auto table_stream_ctor = [row_set = std::move(row_set), this] {
-    std::vector<std::unique_ptr<FilteredColumnFamilyStream>> per_cf_streams;
-    per_cf_streams.reserve(column_families_.size());
-    for (auto const& column_family : column_families_) {
-      per_cf_streams.emplace_back(std::make_unique<FilteredColumnFamilyStream>(
-          *column_family.second, column_family.first, row_set));
-    }
-    return CellStream(
-        std::make_unique<FilteredTableStream>(std::move(per_cf_streams)));
-  };
+
   StatusOr<CellStream> maybe_stream;
   if (request.has_filter()) {
-    maybe_stream = CreateFilter(request.filter(), table_stream_ctor);
+    maybe_stream = CreateCellStream(row_set, std::move(request.filter()));
   } else {
-    maybe_stream = table_stream_ctor();
+    maybe_stream = CreateCellStream(row_set, absl::nullopt);
   }
+
   if (!maybe_stream) {
     return maybe_stream.status();
   }
@@ -536,7 +638,49 @@ RowSampler Table::SampleRowKeys(
 
   return row_sampler;
 }
+
 // NOLINTEND(readability-function-cognitive-complexity)
+Status Table::DropRowRange(
+    ::google::bigtable::admin::v2::DropRowRangeRequest const& request) {
+  std::lock_guard<std::mutex> lock(mu_);
+
+  if (!request.has_row_key_prefix() &&
+      !request.has_delete_all_data_from_table()) {
+    return InvalidArgumentError(
+        "Neither row prefix nor deleted all data from table is set",
+        GCP_ERROR_INFO().WithMetadata("DropRowRange request",
+                                      request.DebugString()));
+  }
+
+  if (request.has_delete_all_data_from_table()) {
+    for (auto& column_family : column_families_) {
+      column_family.second->clear();
+    }
+
+    return Status();
+  }
+
+  auto const& row_prefix = request.row_key_prefix();
+  if (row_prefix.empty()) {
+    return InvalidArgumentError(
+        "Row prefix provided is empty.",
+        GCP_ERROR_INFO().WithMetadata("DropRowRange request",
+                                      request.DebugString()));
+  }
+
+  for (auto& cf : column_families_) {
+    for (auto row_it = cf.second->lower_bound(row_prefix);
+         row_it != cf.second->end();) {
+      if (absl::StartsWith(row_it->first, row_prefix)) {
+        row_it = cf.second->erase(row_it);
+      } else {
+        break;
+      }
+    }
+  }
+
+  return Status();
+}
 
 // NOLINTBEGIN(readability-convert-member-functions-to-static)
 Status RowTransaction::AddToCell(
@@ -565,7 +709,7 @@ Status RowTransaction::DeleteFromColumn(
   auto& column_family = maybe_column_family->get();
 
   auto deleted_cells = column_family.DeleteColumn(
-      request_.row_key(), delete_from_column.column_qualifier(),
+      row_key_, delete_from_column.column_qualifier(),
       delete_from_column.time_range());
 
   for (auto& cell : deleted_cells) {
@@ -581,7 +725,7 @@ Status RowTransaction::DeleteFromColumn(
 Status RowTransaction::DeleteFromRow() {
   bool row_existed;
   for (auto& column_family : table_->column_families_) {
-    auto deleted_columns = column_family.second->DeleteRow(request_.row_key());
+    auto deleted_columns = column_family.second->DeleteRow(row_key_);
 
     for (auto& column : deleted_columns) {
       for (auto& cell : column.second) {
@@ -598,9 +742,8 @@ Status RowTransaction::DeleteFromRow() {
     return Status();
   }
 
-  return NotFoundError(
-      "row not found in table",
-      GCP_ERROR_INFO().WithMetadata("row", request_.row_key()));
+  return NotFoundError("row not found in table",
+                       GCP_ERROR_INFO().WithMetadata("row", row_key_));
 }
 
 Status RowTransaction::DeleteFromFamily(
@@ -622,17 +765,17 @@ Status RowTransaction::DeleteFromFamily(
   }
 
   std::map<std::string, ColumnFamilyRow>::iterator column_family_row_it;
-  if (column_family_it->second->find(request_.row_key()) ==
+  if (column_family_it->second->find(row_key_) ==
       column_family_it->second->end()) {
     // The row does not exist
     return NotFoundError(
         "row key is not found in column family",
         GCP_ERROR_INFO()
-            .WithMetadata("row key", request_.row_key())
+            .WithMetadata("row key", row_key_)
             .WithMetadata("column family", column_family_it->first));
   }
 
-  auto deleted = column_family_it->second->DeleteRow(request_.row_key());
+  auto deleted = column_family_it->second->DeleteRow(row_key_);
   for (auto const& column : deleted) {
     for (auto const& cell : column.second) {
       RestoreValue restore_value{*column_family_it->second,
@@ -645,8 +788,12 @@ Status RowTransaction::DeleteFromFamily(
   return Status();
 }
 
+// timestamp_override, if provided, will be used instead of
+// set_cell.timestamp. The override is used to set the timestamp to
+// the server time in case a timestamp <= 0 is provided.
 Status RowTransaction::SetCell(
-    ::google::bigtable::v2::Mutation_SetCell const& set_cell) {
+    ::google::bigtable::v2::Mutation_SetCell const& set_cell,
+    absl::optional<std::chrono::milliseconds> timestamp_override) {
   auto maybe_column_family = table_->FindColumnFamily(set_cell);
   if (!maybe_column_family) {
     return maybe_column_family.status();
@@ -657,14 +804,12 @@ Status RowTransaction::SetCell(
   auto timestamp = std::chrono::duration_cast<std::chrono::milliseconds>(
       std::chrono::microseconds(set_cell.timestamp_micros()));
 
-  if (timestamp <= std::chrono::milliseconds::zero()) {
-    timestamp = std::chrono::duration_cast<std::chrono::milliseconds>(
-        std::chrono::system_clock::now().time_since_epoch());
+  if (timestamp_override.has_value()) {
+    timestamp = timestamp_override.value();
   }
 
-  auto maybe_old_value =
-      column_family.SetCell(request_.row_key(), set_cell.column_qualifier(),
-                            timestamp, set_cell.value());
+  auto maybe_old_value = column_family.SetCell(
+      row_key_, set_cell.column_qualifier(), timestamp, set_cell.value());
 
   if (!maybe_old_value) {
     DeleteValue delete_value{column_family,
@@ -681,7 +826,7 @@ Status RowTransaction::SetCell(
 }
 
 void RowTransaction::Undo() {
-  auto row_key = request_.row_key();
+  auto row_key = row_key_;
 
   while (!undo_.empty()) {
     auto op = undo_.top();

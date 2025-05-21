@@ -216,6 +216,7 @@ class ColumnFamily {
   ColumnFamily& operator=(ColumnFamily const&) = delete;
 
   using const_iterator = std::map<std::string, ColumnFamilyRow>::const_iterator;
+  using iterator = std::map<std::string, ColumnFamilyRow>::iterator;
 
   /**
    * Insert or update and existing cell at a given row, column and timestamp.
@@ -286,11 +287,19 @@ class ColumnFamily {
                                        std::chrono::milliseconds timestamp);
 
   const_iterator begin() const { return rows_.begin(); }
+  iterator begin() { return rows_.begin(); }
   const_iterator end() const { return rows_.end(); }
+  iterator end() { return rows_.end(); }
   const_iterator lower_bound(std::string const& row_key) const {
     return rows_.lower_bound(row_key);
   }
+  iterator lower_bound(std::string const& row_key) {
+    return rows_.lower_bound(row_key);
+  }
   const_iterator upper_bound(std::string const& row_key) const {
+    return rows_.upper_bound(row_key);
+  }
+  iterator upper_bound(std::string const& row_key) {
     return rows_.upper_bound(row_key);
   }
 
@@ -299,11 +308,12 @@ class ColumnFamily {
     return rows_.find(row_key);
   }
 
-  void erase(std::map<std::string, ColumnFamilyRow>::iterator row_it) {
-    rows_.erase(row_it);
+  iterator erase(std::map<std::string, ColumnFamilyRow>::iterator row_it) {
+    return rows_.erase(row_it);
   }
 
   size_t size() const { return rows_.size(); }
+  void clear() { rows_.clear(); }
 
  private:
   std::map<std::string, ColumnFamilyRow> rows_;

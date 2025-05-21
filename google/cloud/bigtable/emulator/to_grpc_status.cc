@@ -64,7 +64,7 @@ grpc::StatusCode MapStatusCode(google::cloud::StatusCode code) {
   }
 }
 
-::grpc::Status ToGrpcStatus(Status const& to_convert) {
+google::rpc::ErrorInfo ErrorInfoFromStatus(Status const& to_convert) {
   google::rpc::ErrorInfo error_info;
   error_info.set_reason(to_convert.error_info().reason());
   error_info.set_domain(to_convert.error_info().domain());
@@ -73,16 +73,39 @@ grpc::StatusCode MapStatusCode(google::cloud::StatusCode code) {
         md_name_value.second;
   }
 
+  return error_info;
+}
+
+google::rpc::Status RPCStatusFromStatusAndErrorInfo(
+    Status const& to_convert, google::rpc::ErrorInfo const& error_info) {
   google::rpc::Status rpc_status;
   rpc_status.set_code(static_cast<std::int32_t>(to_convert.code()));
   rpc_status.set_message(to_convert.message());
   auto& rpc_status_details = *rpc_status.add_details();
-  rpc_status_details.PackFrom(std::move(error_info));
+  rpc_status_details.PackFrom(error_info);
+
+  return rpc_status;
+}
+
+::grpc::Status ToGrpcStatus(Status const& to_convert) {
+  google::rpc::ErrorInfo error_info = ErrorInfoFromStatus(to_convert);
+
+  google::rpc::Status rpc_status =
+      RPCStatusFromStatusAndErrorInfo(to_convert, std::move(error_info));
 
   std::string serialized_rpc_status;
   rpc_status.SerializeToString(&serialized_rpc_status);
   return ::grpc::Status(MapStatusCode(to_convert.code()), to_convert.message(),
                         std::move(serialized_rpc_status));
+}
+
+::google::rpc::Status ToGoogleRPCStatus(Status const& to_convert) {
+  google::rpc::ErrorInfo error_info = ErrorInfoFromStatus(to_convert);
+
+  google::rpc::Status rpc_status =
+      RPCStatusFromStatusAndErrorInfo(to_convert, std::move(error_info));
+
+  return rpc_status;
 }
 
 }  // namespace emulator
