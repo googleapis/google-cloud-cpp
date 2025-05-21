@@ -52,6 +52,18 @@ Options StorageInsightsDefaultOptions(Options options) {
             std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
+  if (!options.has<storageinsights_v1::StorageInsightsPollingPolicyOption>()) {
+    options.set<storageinsights_v1::StorageInsightsPollingPolicyOption>(
+        GenericPollingPolicy<
+            storageinsights_v1::StorageInsightsRetryPolicyOption::Type,
+            storageinsights_v1::StorageInsightsBackoffPolicyOption::Type>(
+            options.get<storageinsights_v1::StorageInsightsRetryPolicyOption>()
+                ->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
+  }
   if (!options.has<storageinsights_v1::
                        StorageInsightsConnectionIdempotencyPolicyOption>()) {
     options.set<

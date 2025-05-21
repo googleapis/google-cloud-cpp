@@ -202,6 +202,53 @@ class LivestreamServiceTracingConnection
   future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
   DeleteClip(google::longrunning::Operation const& operation) override;
 
+  future<StatusOr<google::cloud::video::livestream::v1::DvrSession>>
+  CreateDvrSession(
+      google::cloud::video::livestream::v1::CreateDvrSessionRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> CreateDvrSession(
+      NoAwaitTag,
+      google::cloud::video::livestream::v1::CreateDvrSessionRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::video::livestream::v1::DvrSession>>
+  CreateDvrSession(google::longrunning::Operation const& operation) override;
+
+  StreamRange<google::cloud::video::livestream::v1::DvrSession> ListDvrSessions(
+      google::cloud::video::livestream::v1::ListDvrSessionsRequest request)
+      override;
+
+  StatusOr<google::cloud::video::livestream::v1::DvrSession> GetDvrSession(
+      google::cloud::video::livestream::v1::GetDvrSessionRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
+  DeleteDvrSession(
+      google::cloud::video::livestream::v1::DeleteDvrSessionRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteDvrSession(
+      NoAwaitTag,
+      google::cloud::video::livestream::v1::DeleteDvrSessionRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
+  DeleteDvrSession(google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::video::livestream::v1::DvrSession>>
+  UpdateDvrSession(
+      google::cloud::video::livestream::v1::UpdateDvrSessionRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateDvrSession(
+      NoAwaitTag,
+      google::cloud::video::livestream::v1::UpdateDvrSessionRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::video::livestream::v1::DvrSession>>
+  UpdateDvrSession(google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::video::livestream::v1::Asset>> CreateAsset(
       google::cloud::video::livestream::v1::CreateAssetRequest const& request)
       override;

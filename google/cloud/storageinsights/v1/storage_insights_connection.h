@@ -22,12 +22,16 @@
 #include "google/cloud/storageinsights/v1/internal/storage_insights_retry_traits.h"
 #include "google/cloud/storageinsights/v1/storage_insights_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
+#include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
 #include <google/cloud/storageinsights/v1/storageinsights.pb.h>
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
 namespace google {
@@ -214,6 +218,82 @@ class StorageInsightsConnection {
   GetReportDetail(
       google::cloud::storageinsights::v1::GetReportDetailRequest const&
           request);
+
+  virtual StreamRange<google::cloud::storageinsights::v1::DatasetConfig>
+  ListDatasetConfigs(
+      google::cloud::storageinsights::v1::ListDatasetConfigsRequest request);
+
+  virtual StatusOr<google::cloud::storageinsights::v1::DatasetConfig>
+  GetDatasetConfig(
+      google::cloud::storageinsights::v1::GetDatasetConfigRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::storageinsights::v1::DatasetConfig>>
+  CreateDatasetConfig(
+      google::cloud::storageinsights::v1::CreateDatasetConfigRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> CreateDatasetConfig(
+      NoAwaitTag,
+      google::cloud::storageinsights::v1::CreateDatasetConfigRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::storageinsights::v1::DatasetConfig>>
+  CreateDatasetConfig(google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::storageinsights::v1::DatasetConfig>>
+  UpdateDatasetConfig(
+      google::cloud::storageinsights::v1::UpdateDatasetConfigRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateDatasetConfig(
+      NoAwaitTag,
+      google::cloud::storageinsights::v1::UpdateDatasetConfigRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::storageinsights::v1::DatasetConfig>>
+  UpdateDatasetConfig(google::longrunning::Operation const& operation);
+
+  virtual future<
+      StatusOr<google::cloud::storageinsights::v1::OperationMetadata>>
+  DeleteDatasetConfig(
+      google::cloud::storageinsights::v1::DeleteDatasetConfigRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteDatasetConfig(
+      NoAwaitTag,
+      google::cloud::storageinsights::v1::DeleteDatasetConfigRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::storageinsights::v1::OperationMetadata>>
+  DeleteDatasetConfig(google::longrunning::Operation const& operation);
+
+  virtual future<
+      StatusOr<google::cloud::storageinsights::v1::LinkDatasetResponse>>
+  LinkDataset(
+      google::cloud::storageinsights::v1::LinkDatasetRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> LinkDataset(
+      NoAwaitTag,
+      google::cloud::storageinsights::v1::LinkDatasetRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::storageinsights::v1::LinkDatasetResponse>>
+  LinkDataset(google::longrunning::Operation const& operation);
+
+  virtual future<
+      StatusOr<google::cloud::storageinsights::v1::OperationMetadata>>
+  UnlinkDataset(
+      google::cloud::storageinsights::v1::UnlinkDatasetRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> UnlinkDataset(
+      NoAwaitTag,
+      google::cloud::storageinsights::v1::UnlinkDatasetRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::storageinsights::v1::OperationMetadata>>
+  UnlinkDataset(google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request);

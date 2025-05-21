@@ -662,6 +662,106 @@ StorageControlConnectionImpl::ListAnywhereCaches(
       });
 }
 
+StatusOr<google::storage::control::v2::IntelligenceConfig>
+StorageControlConnectionImpl::GetProjectIntelligenceConfig(
+    google::storage::control::v2::GetProjectIntelligenceConfigRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetProjectIntelligenceConfig(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::storage::control::v2::
+                 GetProjectIntelligenceConfigRequest const& request) {
+        return stub_->GetProjectIntelligenceConfig(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StatusOr<google::storage::control::v2::IntelligenceConfig>
+StorageControlConnectionImpl::UpdateProjectIntelligenceConfig(
+    google::storage::control::v2::UpdateProjectIntelligenceConfigRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateProjectIntelligenceConfig(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::storage::control::v2::
+                 UpdateProjectIntelligenceConfigRequest const& request) {
+        return stub_->UpdateProjectIntelligenceConfig(context, options,
+                                                      request);
+      },
+      *current, request, __func__);
+}
+
+StatusOr<google::storage::control::v2::IntelligenceConfig>
+StorageControlConnectionImpl::GetFolderIntelligenceConfig(
+    google::storage::control::v2::GetFolderIntelligenceConfigRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetFolderIntelligenceConfig(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::storage::control::v2::
+                 GetFolderIntelligenceConfigRequest const& request) {
+        return stub_->GetFolderIntelligenceConfig(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StatusOr<google::storage::control::v2::IntelligenceConfig>
+StorageControlConnectionImpl::UpdateFolderIntelligenceConfig(
+    google::storage::control::v2::UpdateFolderIntelligenceConfigRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateFolderIntelligenceConfig(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::storage::control::v2::
+                 UpdateFolderIntelligenceConfigRequest const& request) {
+        return stub_->UpdateFolderIntelligenceConfig(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StatusOr<google::storage::control::v2::IntelligenceConfig>
+StorageControlConnectionImpl::GetOrganizationIntelligenceConfig(
+    google::storage::control::v2::
+        GetOrganizationIntelligenceConfigRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetOrganizationIntelligenceConfig(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::storage::control::v2::
+                 GetOrganizationIntelligenceConfigRequest const& request) {
+        return stub_->GetOrganizationIntelligenceConfig(context, options,
+                                                        request);
+      },
+      *current, request, __func__);
+}
+
+StatusOr<google::storage::control::v2::IntelligenceConfig>
+StorageControlConnectionImpl::UpdateOrganizationIntelligenceConfig(
+    google::storage::control::v2::
+        UpdateOrganizationIntelligenceConfigRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateOrganizationIntelligenceConfig(
+          request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::storage::control::v2::
+                 UpdateOrganizationIntelligenceConfigRequest const& request) {
+        return stub_->UpdateOrganizationIntelligenceConfig(context, options,
+                                                           request);
+      },
+      *current, request, __func__);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storagecontrol_v2_internal
 }  // namespace cloud
