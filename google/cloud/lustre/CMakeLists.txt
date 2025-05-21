@@ -31,7 +31,6 @@ if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
             GOOGLE_CLOUD_CPP_TEST_ZONE)
     set_tests_properties(
         lustre_quickstart
-        PROPERTIES
-            LABELS "integration-test;quickstart" PASS_REGULAR_EXPRESSION
-            "last message of Read access to project")
+        PROPERTIES LABELS "integration-test;quickstart" PASS_REGULAR_EXPRESSION
+                   "last message of Read access to project")
 endif ()
