@@ -117,6 +117,93 @@ StatusOr<google::longrunning::Operation> AlloyDBAdminLogging::UpdateCluster(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+AlloyDBAdminLogging::AsyncExportCluster(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::alloydb::v1::ExportClusterRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::alloydb::v1::ExportClusterRequest const& request) {
+        return child_->AsyncExportCluster(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> AlloyDBAdminLogging::ExportCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::alloydb::v1::ExportClusterRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::alloydb::v1::ExportClusterRequest const& request) {
+        return child_->ExportCluster(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+AlloyDBAdminLogging::AsyncImportCluster(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::alloydb::v1::ImportClusterRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::alloydb::v1::ImportClusterRequest const& request) {
+        return child_->AsyncImportCluster(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> AlloyDBAdminLogging::ImportCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::alloydb::v1::ImportClusterRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::alloydb::v1::ImportClusterRequest const& request) {
+        return child_->ImportCluster(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+AlloyDBAdminLogging::AsyncUpgradeCluster(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::alloydb::v1::UpgradeClusterRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::alloydb::v1::UpgradeClusterRequest const& request) {
+        return child_->AsyncUpgradeCluster(cq, std::move(context),
+                                           std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> AlloyDBAdminLogging::UpgradeCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::alloydb::v1::UpgradeClusterRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::alloydb::v1::UpgradeClusterRequest const& request) {
+        return child_->UpgradeCluster(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 AlloyDBAdminLogging::AsyncDeleteCluster(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

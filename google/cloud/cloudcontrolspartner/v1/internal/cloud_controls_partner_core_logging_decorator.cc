@@ -149,6 +149,50 @@ CloudControlsPartnerCoreLogging::GetPartner(
       context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::cloudcontrolspartner::v1::Customer>
+CloudControlsPartnerCoreLogging::CreateCustomer(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::cloudcontrolspartner::v1::CreateCustomerRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::cloudcontrolspartner::v1::CreateCustomerRequest const&
+              request) {
+        return child_->CreateCustomer(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::cloudcontrolspartner::v1::Customer>
+CloudControlsPartnerCoreLogging::UpdateCustomer(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::cloudcontrolspartner::v1::UpdateCustomerRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::cloudcontrolspartner::v1::UpdateCustomerRequest const&
+              request) {
+        return child_->UpdateCustomer(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+Status CloudControlsPartnerCoreLogging::DeleteCustomer(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::cloudcontrolspartner::v1::DeleteCustomerRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::cloudcontrolspartner::v1::DeleteCustomerRequest const&
+              request) {
+        return child_->DeleteCustomer(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloudcontrolspartner_v1_internal
 }  // namespace cloud

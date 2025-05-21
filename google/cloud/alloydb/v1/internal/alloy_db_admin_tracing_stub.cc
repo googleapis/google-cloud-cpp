@@ -107,6 +107,83 @@ StatusOr<google::longrunning::Operation> AlloyDBAdminTracingStub::UpdateCluster(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+AlloyDBAdminTracingStub::AsyncExportCluster(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::alloydb::v1::ExportClusterRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.alloydb.v1.AlloyDBAdmin",
+                                     "ExportCluster");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncExportCluster(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation> AlloyDBAdminTracingStub::ExportCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::alloydb::v1::ExportClusterRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.alloydb.v1.AlloyDBAdmin",
+                                     "ExportCluster");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ExportCluster(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+AlloyDBAdminTracingStub::AsyncImportCluster(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::alloydb::v1::ImportClusterRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.alloydb.v1.AlloyDBAdmin",
+                                     "ImportCluster");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncImportCluster(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation> AlloyDBAdminTracingStub::ImportCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::alloydb::v1::ImportClusterRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.alloydb.v1.AlloyDBAdmin",
+                                     "ImportCluster");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ImportCluster(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+AlloyDBAdminTracingStub::AsyncUpgradeCluster(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::alloydb::v1::UpgradeClusterRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.alloydb.v1.AlloyDBAdmin",
+                                     "UpgradeCluster");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f =
+      child_->AsyncUpgradeCluster(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+AlloyDBAdminTracingStub::UpgradeCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::alloydb::v1::UpgradeClusterRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.alloydb.v1.AlloyDBAdmin",
+                                     "UpgradeCluster");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->UpgradeCluster(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
 AlloyDBAdminTracingStub::AsyncDeleteCluster(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

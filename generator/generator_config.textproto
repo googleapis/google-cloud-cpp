@@ -1833,6 +1833,14 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+# Data Form
+service {
+  service_proto_path: "google/cloud/dataform/v1/dataform.proto"
+  product_path: "google/cloud/dataform/v1"
+  initial_copyright_year: "2025"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Data Catalog
 service {
   service_proto_path: "google/cloud/datacatalog/v1/datacatalog.proto"
@@ -2836,6 +2844,14 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+# Memorystore
+service {
+  service_proto_path: "google/cloud/memorystore/v1/memorystore.proto"
+  product_path: "google/cloud/memorystore/v1"
+  initial_copyright_year: "2025"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Dataproc Metastore
 service {
   service_proto_path: "google/cloud/metastore/v1/metastore.proto"
@@ -3022,6 +3038,14 @@ service {
   forwarding_product_path: "google/cloud/optimization"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
+}
+
+# Oracle database
+service {
+  service_proto_path: "google/cloud/oracledatabase/v1/oracledatabase.proto"
+  product_path: "google/cloud/oracledatabase/v1"
+  initial_copyright_year: "2025"
+  retryable_status_codes: ["kUnavailable", "kDeadlineExceeded"]
 }
 
 # Organization Policy

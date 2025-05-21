@@ -109,6 +109,91 @@ AlloyDBAdminTracingConnection::UpdateCluster(
   return internal::EndSpan(std::move(span), child_->UpdateCluster(operation));
 }
 
+future<StatusOr<google::cloud::alloydb::v1::ExportClusterResponse>>
+AlloyDBAdminTracingConnection::ExportCluster(
+    google::cloud::alloydb::v1::ExportClusterRequest const& request) {
+  auto span =
+      internal::MakeSpan("alloydb_v1::AlloyDBAdminConnection::ExportCluster");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->ExportCluster(request));
+}
+
+StatusOr<google::longrunning::Operation>
+AlloyDBAdminTracingConnection::ExportCluster(
+    NoAwaitTag,
+    google::cloud::alloydb::v1::ExportClusterRequest const& request) {
+  auto span =
+      internal::MakeSpan("alloydb_v1::AlloyDBAdminConnection::ExportCluster");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span, child_->ExportCluster(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::alloydb::v1::ExportClusterResponse>>
+AlloyDBAdminTracingConnection::ExportCluster(
+    google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("alloydb_v1::AlloyDBAdminConnection::ExportCluster");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->ExportCluster(operation));
+}
+
+future<StatusOr<google::cloud::alloydb::v1::ImportClusterResponse>>
+AlloyDBAdminTracingConnection::ImportCluster(
+    google::cloud::alloydb::v1::ImportClusterRequest const& request) {
+  auto span =
+      internal::MakeSpan("alloydb_v1::AlloyDBAdminConnection::ImportCluster");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->ImportCluster(request));
+}
+
+StatusOr<google::longrunning::Operation>
+AlloyDBAdminTracingConnection::ImportCluster(
+    NoAwaitTag,
+    google::cloud::alloydb::v1::ImportClusterRequest const& request) {
+  auto span =
+      internal::MakeSpan("alloydb_v1::AlloyDBAdminConnection::ImportCluster");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span, child_->ImportCluster(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::alloydb::v1::ImportClusterResponse>>
+AlloyDBAdminTracingConnection::ImportCluster(
+    google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("alloydb_v1::AlloyDBAdminConnection::ImportCluster");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->ImportCluster(operation));
+}
+
+future<StatusOr<google::cloud::alloydb::v1::UpgradeClusterResponse>>
+AlloyDBAdminTracingConnection::UpgradeCluster(
+    google::cloud::alloydb::v1::UpgradeClusterRequest const& request) {
+  auto span =
+      internal::MakeSpan("alloydb_v1::AlloyDBAdminConnection::UpgradeCluster");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->UpgradeCluster(request));
+}
+
+StatusOr<google::longrunning::Operation>
+AlloyDBAdminTracingConnection::UpgradeCluster(
+    NoAwaitTag,
+    google::cloud::alloydb::v1::UpgradeClusterRequest const& request) {
+  auto span =
+      internal::MakeSpan("alloydb_v1::AlloyDBAdminConnection::UpgradeCluster");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->UpgradeCluster(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::alloydb::v1::UpgradeClusterResponse>>
+AlloyDBAdminTracingConnection::UpgradeCluster(
+    google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("alloydb_v1::AlloyDBAdminConnection::UpgradeCluster");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->UpgradeCluster(operation));
+}
+
 future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>>
 AlloyDBAdminTracingConnection::DeleteCluster(
     google::cloud::alloydb::v1::DeleteClusterRequest const& request) {
