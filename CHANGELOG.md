@@ -12,6 +12,7 @@ We are happy to announce the following GA libraries. Unless specifically noted,
 the APIs in these libraries are stable, and are ready for production use.
 
 - [Dataform API](/google/cloud/dataform/README.md)
+- [Google Cloud Managed Lustre API](/google/cloud/lustre/README.md)
 - [Memorystore API](/google/cloud/memorystore/README.md)
 - [Oracle Database@Google Cloud API](/google/cloud/oracledatabase/README.md)
 
@@ -30,7 +31,6 @@ the APIs in these libraries are stable, and are ready for production use.
 - [Storage Batch Operations API](/google/cloud/storagebatchoperations/README.md)
 - [Device Streaming API](/google/cloud/devicestreaming/README.md)
 - [Chronicle API](/google/cloud/chronicle/README.md)
-- [Google Cloud Managed Lustre API](/google/cloud/lustre/README.md)
 
 ### Updated Libraries
 
