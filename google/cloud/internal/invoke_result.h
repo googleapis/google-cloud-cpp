@@ -94,7 +94,7 @@ struct invoke_impl<MT B::*> {
    */
   template <class T, class... Args,
             std::enable_if_t<std::is_function<MT>::value, int> = 0>
-  static auto call(MT B::*f, T&& t, Args&&... a)
+  static auto call(MT B::* f, T&& t, Args&&... a)
       -> decltype((std::forward<T>(t).*f)(std::forward<Args>(a)...));
 };
 
