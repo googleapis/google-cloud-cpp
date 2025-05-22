@@ -119,7 +119,7 @@ class SslPoliciesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.ssl_policies.v1.AggregatedListSslPoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L125}
-  /// [google.cloud.cpp.compute.v1.SslPoliciesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_123.proto#L139}
+  /// [google.cloud.cpp.compute.v1.SslPoliciesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_126.proto#L139}
   ///
   // clang-format on
   StreamRange<std::pair<std::string,
@@ -162,7 +162,7 @@ class SslPoliciesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.ssl_policies.v1.AggregatedListSslPoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L125}
-  /// [google.cloud.cpp.compute.v1.SslPoliciesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_123.proto#L139}
+  /// [google.cloud.cpp.compute.v1.SslPoliciesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_126.proto#L139}
   ///
   // clang-format on
   StreamRange<std::pair<std::string,
@@ -316,7 +316,7 @@ class SslPoliciesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.ssl_policies.v1.GetSslPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L234}
-  /// [google.cloud.cpp.compute.v1.SslPolicy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_124.proto#L140}
+  /// [google.cloud.cpp.compute.v1.SslPolicy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_127.proto#L140}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::SslPolicy> GetSslPolicy(
@@ -348,7 +348,7 @@ class SslPoliciesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.ssl_policies.v1.GetSslPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L234}
-  /// [google.cloud.cpp.compute.v1.SslPolicy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_124.proto#L140}
+  /// [google.cloud.cpp.compute.v1.SslPolicy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_127.proto#L140}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::SslPolicy> GetSslPolicy(
@@ -506,7 +506,7 @@ class SslPoliciesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.ssl_policies.v1.ListSslPoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L340}
-  /// [google.cloud.cpp.compute.v1.SslPolicy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_124.proto#L140}
+  /// [google.cloud.cpp.compute.v1.SslPolicy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_127.proto#L140}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::SslPolicy> ListSslPolicies(
@@ -547,7 +547,7 @@ class SslPoliciesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.ssl_policies.v1.ListSslPoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L340}
-  /// [google.cloud.cpp.compute.v1.SslPolicy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_124.proto#L140}
+  /// [google.cloud.cpp.compute.v1.SslPolicy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_127.proto#L140}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::SslPolicy> ListSslPolicies(
@@ -576,7 +576,7 @@ class SslPoliciesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.ssl_policies.v1.ListAvailableFeaturesRequest]: @cloud_cpp_reference_link{google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L272}
-  /// [google.cloud.cpp.compute.v1.SslPoliciesListAvailableFeaturesResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_124.proto#L132}
+  /// [google.cloud.cpp.compute.v1.SslPoliciesListAvailableFeaturesResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_127.proto#L132}
   ///
   // clang-format on
   StatusOr<
@@ -609,7 +609,7 @@ class SslPoliciesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.ssl_policies.v1.ListAvailableFeaturesRequest]: @cloud_cpp_reference_link{google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L272}
-  /// [google.cloud.cpp.compute.v1.SslPoliciesListAvailableFeaturesResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_124.proto#L132}
+  /// [google.cloud.cpp.compute.v1.SslPoliciesListAvailableFeaturesResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_127.proto#L132}
   ///
   // clang-format on
   StatusOr<

@@ -27,8 +27,8 @@
 
 // IWYU pragma: begin_exports
 #include <google/cloud/compute/v1/internal/common_016.pb.h>
-#include <google/cloud/compute/v1/internal/common_088.pb.h>
-#include <google/cloud/compute/v1/internal/common_089.pb.h>
+#include <google/cloud/compute/v1/internal/common_091.pb.h>
+#include <google/cloud/compute/v1/internal/common_092.pb.h>
 // IWYU pragma: end_exports
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_GLOBAL_OPERATIONS_V1_GLOBAL_OPERATIONS_PROTO_EXPORT_H

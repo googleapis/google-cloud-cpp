@@ -31,11 +31,11 @@
 #include <google/cloud/compute/v1/internal/common_016.pb.h>
 #include <google/cloud/compute/v1/internal/common_020.pb.h>
 #include <google/cloud/compute/v1/internal/common_031.pb.h>
-#include <google/cloud/compute/v1/internal/common_099.pb.h>
-#include <google/cloud/compute/v1/internal/common_104.pb.h>
-#include <google/cloud/compute/v1/internal/common_105.pb.h>
-#include <google/cloud/compute/v1/internal/common_118.pb.h>
-#include <google/cloud/compute/v1/internal/common_141.pb.h>
+#include <google/cloud/compute/v1/internal/common_102.pb.h>
+#include <google/cloud/compute/v1/internal/common_107.pb.h>
+#include <google/cloud/compute/v1/internal/common_108.pb.h>
+#include <google/cloud/compute/v1/internal/common_121.pb.h>
+#include <google/cloud/compute/v1/internal/common_144.pb.h>
 // IWYU pragma: end_exports
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_DISKS_V1_REGION_DISKS_PROTO_EXPORT_H
