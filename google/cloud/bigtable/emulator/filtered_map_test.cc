@@ -25,6 +25,8 @@ namespace cloud {
 namespace bigtable {
 namespace emulator {
 
+using testing_util::chrono_literals::operator""_ms;
+
 bool const kOpen = true;
 bool const kClosed = false;
 
@@ -46,83 +48,85 @@ std::vector<std::string> Vec(std::initializer_list<char const*> const& v) {
   return res;
 }
 
-TEST(RangeFilteredMapView, NoFilter) {
+template <typename Map>
+std::vector<std::chrono::milliseconds> TSKeys(Map const& map) {
+  std::vector<std::chrono::milliseconds> res;
+  std::transform(map.begin(), map.end(), std::back_inserter(res),
+                 [](typename Map::const_iterator::value_type const& elem) {
+                   return elem.first;
+                 });
+  return res;
+}
+
+TEST(StringRangeFilteredMapView, NoFilter) {
   std::map<std::string, int> unfiltered{{"zero", 0}, {"one", 1}, {"two", 2}};
   auto filter = StringRangeSet::All();
-  RangeFilteredMapView<decltype(unfiltered), StringRangeSet> filtered(
-      unfiltered, filter);
+  StringRangeFilteredMapView<decltype(unfiltered)> filtered(unfiltered, filter);
   EXPECT_EQ(Vec({"zero", "one", "two"}), Keys(filtered));
 }
 
-TEST(RangeFilteredMapView, EmptyFilter) {
+TEST(StringRangeFilteredMapView, EmptyFilter) {
   std::map<std::string, int> unfiltered{{"zero", 0}, {"one", 1}, {"two", 2}};
   auto filter = StringRangeSet::Empty();
-  RangeFilteredMapView<decltype(unfiltered), StringRangeSet> filtered(
-      unfiltered, filter);
+  StringRangeFilteredMapView<decltype(unfiltered)> filtered(unfiltered, filter);
   EXPECT_EQ(Vec({}), Keys(filtered));
 }
 
-TEST(RangeFilteredMapView, OneOpen) {
+TEST(StringRangeFilteredMapView, OneOpen) {
   std::map<std::string, int> unfiltered{{"AA", 0},   {"AAA", 0}, {"AAAa", 0},
                                         {"AAAb", 0}, {"AAB", 0}, {"AAC", 0}};
   auto filter = StringRangeSet::Empty();
   filter.Sum(StringRangeSet::Range("AAA", kOpen, "AAB", kOpen));
-  RangeFilteredMapView<decltype(unfiltered), StringRangeSet> filtered(
-      unfiltered, filter);
+  StringRangeFilteredMapView<decltype(unfiltered)> filtered(unfiltered, filter);
   EXPECT_EQ(Vec({"AAAa", "AAAb"}), Keys(filtered));
 }
 
-TEST(RangeFilteredMapView, OneClosed) {
+TEST(StringRangeFilteredMapView, OneClosed) {
   std::map<std::string, int> unfiltered{{"AA", 0},   {"AAA", 0}, {"AAAa", 0},
                                         {"AAAb", 0}, {"AAB", 0}, {"AAC", 0}};
   auto filter = StringRangeSet::Empty();
   filter.Sum(StringRangeSet::Range("AAA", kClosed, "AAB", kClosed));
-  RangeFilteredMapView<decltype(unfiltered), StringRangeSet> filtered(
-      unfiltered, filter);
+  StringRangeFilteredMapView<decltype(unfiltered)> filtered(unfiltered, filter);
   EXPECT_EQ(Vec({"AAA", "AAAa", "AAAb", "AAB"}), Keys(filtered));
 }
 
-TEST(RangeFilteredMapView, NoEntriesAfterClosedFilter) {
+TEST(StringRangeFilteredMapView, NoEntriesAfterClosedFilter) {
   std::map<std::string, int> unfiltered{
       {"AA", 0}, {"AAA", 0}, {"AAAa", 0}, {"AAAb", 0}};
   auto filter = StringRangeSet::Empty();
   filter.Sum(StringRangeSet::Range("AAA", kClosed, "AAB", kClosed));
-  RangeFilteredMapView<decltype(unfiltered), StringRangeSet> filtered(
-      unfiltered, filter);
+  StringRangeFilteredMapView<decltype(unfiltered)> filtered(unfiltered, filter);
   EXPECT_EQ(Vec({"AAA", "AAAa", "AAAb"}), Keys(filtered));
 }
 
-TEST(RangeFilteredMapView, NoEntriesAfterOpenFilter) {
+TEST(StringRangeFilteredMapView, NoEntriesAfterOpenFilter) {
   std::map<std::string, int> unfiltered{
       {"AA", 0}, {"AAA", 0}, {"AAAa", 0}, {"AAAb", 0}};
   auto filter = StringRangeSet::Empty();
   filter.Sum(StringRangeSet::Range("AAA", kOpen, "AAB", kOpen));
-  RangeFilteredMapView<decltype(unfiltered), StringRangeSet> filtered(
-      unfiltered, filter);
+  StringRangeFilteredMapView<decltype(unfiltered)> filtered(unfiltered, filter);
   EXPECT_EQ(Vec({"AAAa", "AAAb"}), Keys(filtered));
 }
 
-TEST(RangeFilteredMapView, NoEntriesBeforeClosedFilter) {
+TEST(StringRangeFilteredMapView, NoEntriesBeforeClosedFilter) {
   std::map<std::string, int> unfiltered{
       {"AAA", 0}, {"AAAa", 0}, {"AAAb", 0}, {"AAB", 0}, {"AAC", 0}};
   auto filter = StringRangeSet::Empty();
   filter.Sum(StringRangeSet::Range("AAA", kClosed, "AAB", kClosed));
-  RangeFilteredMapView<decltype(unfiltered), StringRangeSet> filtered(
-      unfiltered, filter);
+  StringRangeFilteredMapView<decltype(unfiltered)> filtered(unfiltered, filter);
   EXPECT_EQ(Vec({"AAA", "AAAa", "AAAb", "AAB"}), Keys(filtered));
 }
 
-TEST(RangeFilteredMapView, NoEntriesBeforeOpenFilter) {
+TEST(StringRangeFilteredMapView, NoEntriesBeforeOpenFilter) {
   std::map<std::string, int> unfiltered{
       {"AAAa", 0}, {"AAAb", 0}, {"AAB", 0}, {"AAC", 0}};
   auto filter = StringRangeSet::Empty();
   filter.Sum(StringRangeSet::Range("AAA", kOpen, "AAB", kOpen));
-  RangeFilteredMapView<decltype(unfiltered), StringRangeSet> filtered(
-      unfiltered, filter);
+  StringRangeFilteredMapView<decltype(unfiltered)> filtered(unfiltered, filter);
   EXPECT_EQ(Vec({"AAAa", "AAAb"}), Keys(filtered));
 }
 
-TEST(RangeFilteredMapView, MultipleFilters) {
+TEST(StringRangeFilteredMapView, MultipleFilters) {
   std::map<std::string, int> unfiltered{
       {"AA", 0},   {"AAA", 0}, {"AAAa", 0}, {"AAAb", 0}, {"AAB", 0},
       {"AAC", 0},  {"BB", 0},  {"BBB", 0},  {"BBBb", 0}, {"CCCa", 0},
@@ -131,11 +135,69 @@ TEST(RangeFilteredMapView, MultipleFilters) {
   filter.Sum(StringRangeSet::Range("AAA", kOpen, "AAB", kClosed));
   filter.Sum(StringRangeSet::Range("BBB", kClosed, "BBC", kOpen));
   filter.Sum(StringRangeSet::Range("CCC", kClosed, "CCD", kOpen));
-  RangeFilteredMapView<decltype(unfiltered), StringRangeSet> filtered(
-      unfiltered, filter);
+  StringRangeFilteredMapView<decltype(unfiltered)> filtered(unfiltered, filter);
 
   EXPECT_EQ(Vec({"AAAa", "AAAb", "AAB", "BBB", "BBBb", "CCCa", "CCCb"}),
             Keys(filtered));
+}
+
+TEST(TimestampRangeFilteredMapView, NoFilter) {
+  std::map<std::chrono::milliseconds, int, std::greater<>> unfiltered{
+      {0_ms, 0}, {1_ms, 1}, {2_ms, 2}};
+  auto filter = TimestampRangeSet::All();
+  TimestampRangeFilteredMapView<decltype(unfiltered)> filtered(unfiltered,
+                                                               filter);
+  EXPECT_EQ(std::vector({2_ms, 1_ms, 0_ms}), TSKeys(filtered));
+}
+
+TEST(TimestampRangeFilteredMapView, EmptyFilter) {
+  std::map<std::chrono::milliseconds, int, std::greater<>> unfiltered{
+      {0_ms, 0}, {1_ms, 1}, {2_ms, 2}};
+  auto filter = TimestampRangeSet::Empty();
+  TimestampRangeFilteredMapView<decltype(unfiltered)> filtered(unfiltered,
+                                                               filter);
+  EXPECT_EQ(std::vector<std::chrono::milliseconds>({}), TSKeys(filtered));
+}
+
+TEST(TimestampRangeFilteredMapView, FiniteRange) {
+  std::map<std::chrono::milliseconds, int, std::greater<>> unfiltered{
+      {0_ms, 0}, {1_ms, 0}, {2_ms, 0}, {3_ms, 0}, {4_ms, 0}};
+  auto filter = TimestampRangeSet::Empty();
+  filter.Sum(TimestampRangeSet::Range(1_ms, 3_ms));
+  TimestampRangeFilteredMapView<decltype(unfiltered)> filtered(unfiltered,
+                                                               filter);
+  EXPECT_EQ(std::vector({2_ms, 1_ms}), TSKeys(filtered));
+}
+
+TEST(TimestampRangeFilteredMapView, InfiniteRange) {
+  std::map<std::chrono::milliseconds, int, std::greater<>> unfiltered{
+      {0_ms, 0}, {1_ms, 0}, {2_ms, 0}, {3_ms, 0}, {4_ms, 0}};
+  auto filter = TimestampRangeSet::Empty();
+  filter.Sum(TimestampRangeSet::Range(1_ms, 0_ms));
+  TimestampRangeFilteredMapView<decltype(unfiltered)> filtered(unfiltered,
+                                                               filter);
+  EXPECT_EQ(std::vector({4_ms, 3_ms, 2_ms, 1_ms}), TSKeys(filtered));
+}
+
+TEST(TimestampRangeFilteredMapView, MultipleFilters) {
+  std::chrono::milliseconds max_millis(std::numeric_limits<int64_t>::max());
+  std::map<std::chrono::milliseconds, int, std::greater<>> unfiltered{
+      {0_ms, 0},  {1_ms, 0},  {2_ms, 0},  {3_ms, 0},
+      {4_ms, 0},  {5_ms, 0},  {6_ms, 0},  {7_ms, 0},
+      {8_ms, 0},  {9_ms, 0},  {10_ms, 0}, {11_ms, 0},
+      {12_ms, 0}, {13_ms, 0}, {14_ms, 0}, {max_millis, 0},
+  };
+  auto filter = TimestampRangeSet::Empty();
+  filter.Sum(TimestampRangeSet::Range(1_ms, 3_ms));
+  filter.Sum(TimestampRangeSet::Range(3_ms, 5_ms));
+  filter.Sum(TimestampRangeSet::Range(6_ms, 8_ms));
+  filter.Sum(TimestampRangeSet::Range(10_ms, 12_ms));
+  filter.Sum(TimestampRangeSet::Range(13_ms, 0_ms));
+  TimestampRangeFilteredMapView<decltype(unfiltered)> filtered(unfiltered,
+                                                               filter);
+  EXPECT_EQ(std::vector({max_millis, 14_ms, 13_ms, 11_ms, 10_ms, 7_ms, 6_ms,
+                         4_ms, 3_ms, 2_ms, 1_ms}),
+            TSKeys(filtered));
 }
 
 TEST(RegexFiteredMapView, NoFilter) {
