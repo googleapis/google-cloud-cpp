@@ -858,6 +858,10 @@
 ./include/google/cloud/logging/v2
 ./include/google/cloud/logging/v2/internal
 ./include/google/cloud/logging/v2/mocks
+./include/google/cloud/lustre
+./include/google/cloud/lustre/v1
+./include/google/cloud/lustre/v1/internal
+./include/google/cloud/lustre/v1/mocks
 ./include/google/cloud/managedidentities
 ./include/google/cloud/managedidentities/mocks
 ./include/google/cloud/managedidentities/v1
@@ -1456,6 +1460,8 @@
 ./lib64/cmake/google_cloud_cpp_language_mocks
 ./lib64/cmake/google_cloud_cpp_logging
 ./lib64/cmake/google_cloud_cpp_logging_mocks
+./lib64/cmake/google_cloud_cpp_lustre
+./lib64/cmake/google_cloud_cpp_lustre_mocks
 ./lib64/cmake/google_cloud_cpp_managedidentities
 ./lib64/cmake/google_cloud_cpp_managedidentities_mocks
 ./lib64/cmake/google_cloud_cpp_managedkafka
