@@ -174,6 +174,7 @@ GOOGLE_CLOUD_CPP_GA_LIBRARIES = [
     "kms",
     "language",
     "logging",
+    "lustre",
     "managedidentities",
     "managedkafka",
     "memcache",

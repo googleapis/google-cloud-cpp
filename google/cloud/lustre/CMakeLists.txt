@@ -28,8 +28,9 @@ if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
         COMMAND
             cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
             $<TARGET_FILE:lustre_quickstart> GOOGLE_CLOUD_PROJECT
-            GOOGLE_CLOUD_CPP_TEST_REGION # EDIT HERE
-    )
-    set_tests_properties(lustre_quickstart
-                         PROPERTIES LABELS "integration-test;quickstart")
+            GOOGLE_CLOUD_CPP_TEST_ZONE)
+    set_tests_properties(
+        lustre_quickstart
+        PROPERTIES LABELS "integration-test;quickstart" PASS_REGULAR_EXPRESSION
+                   "last message of Read access to project")
 endif ()
