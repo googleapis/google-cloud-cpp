@@ -15,9 +15,7 @@
 #include "google/cloud/bigtable/emulator/table.h"
 #include "google/cloud/bigtable/emulator/column_family.h"
 #include "google/cloud/bigtable/emulator/filter.h"
-#include "google/cloud/bigtable/emulator/filtered_map.h"
 #include "google/cloud/bigtable/emulator/range_set.h"
-#include "google/cloud/bigtable/internal/google_bytes_traits.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/protobuf/util/field_mask_util.h"
 #include <grpc/grpc_security_constants.h>

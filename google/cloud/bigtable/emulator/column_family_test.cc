@@ -13,9 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/emulator/column_family.h"
-#include "google/cloud/bigtable/row_range.h"
 #include "google/cloud/testing_util/chrono_literals.h"
-#include "google/cloud/testing_util/is_proto_equal.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 
