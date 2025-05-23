@@ -753,7 +753,7 @@ TEST_F(PgDataTypeIntegrationTest, InsertAndQueryWithJson) {
   auto rows =
       client_->ExecuteQuery(SqlStatement("SELECT Id, JsonValue FROM DataTypes"
                                          "  WHERE Id = $1",
-                                         {{"p1", Value("Id-1")}}}));
+                                         {{"p1", Value("Id-1")}})));
   using RowType = std::tuple<std::string, absl::optional<JsonB>>;
   auto row = GetSingularRow(StreamOf<RowType>(rows));
   ASSERT_STATUS_OK(row);
