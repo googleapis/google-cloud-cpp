@@ -17,8 +17,6 @@
 """Automatically generated unit tests list - DO NOT EDIT."""
 
 service_dirs = [
-    "interconnect_groups/v1/",
-    "interconnect_attachment_groups/v1/",
     "accelerator_types/v1/",
     "addresses/v1/",
     "autoscalers/v1/",
@@ -46,7 +44,9 @@ service_dirs = [
     "instance_templates/v1/",
     "instances/v1/",
     "instant_snapshots/v1/",
+    "interconnect_attachment_groups/v1/",
     "interconnect_attachments/v1/",
+    "interconnect_groups/v1/",
     "interconnect_locations/v1/",
     "interconnect_remote_locations/v1/",
     "interconnects/v1/",
