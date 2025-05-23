@@ -25,6 +25,9 @@
 #include <cstdint>
 #include <string>
 #include <vector>
+#include <chrono>
+#include <ctime>
+using namespace std::chrono_literals;
 
 namespace google {
 namespace cloud {
@@ -535,7 +538,8 @@ TEST_F(DataTypeIntegrationTest, SelectIntervalFromTimestampDiff) {
           std::chrono::hours(1))};
   std::time_t now_seconds =
       std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
-  std::time_t one_hour_later_seconds = now_seconds + 3600;
+  // Use chrono_literals for 1 hour
+  std::time_t one_hour_later_seconds = now_seconds + std::chrono::duration_cast<std::chrono::seconds>(1h).count();
 
   std::vector<std::vector<Timestamp>> const data = {std::vector<Timestamp>{
       MakeTimestamp(MakeTime(now_seconds, 0)).value(),
@@ -749,7 +753,7 @@ TEST_F(PgDataTypeIntegrationTest, InsertAndQueryWithJson) {
   auto rows =
       client_->ExecuteQuery(SqlStatement("SELECT Id, JsonValue FROM DataTypes"
                                          "  WHERE Id = $1",
-                                         {{"p1", Value("Id-1")}}));
+                                         {{"p1", Value("Id-1")}}}));
   using RowType = std::tuple<std::string, absl::optional<JsonB>>;
   auto row = GetSingularRow(StreamOf<RowType>(rows));
   ASSERT_STATUS_OK(row);
