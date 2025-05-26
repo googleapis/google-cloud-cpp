@@ -514,7 +514,6 @@ StatusOr<CellStream> Table::GetSampledRowsCellStream(double pass_probability) {
   return maybe_stream;
 }
 
-// NOLINTEND(readability-function-cognitive-complexity)
 Status Table::DropRowRange(
     ::google::bigtable::admin::v2::DropRowRangeRequest const& request) {
   std::lock_guard<std::mutex> lock(mu_);
