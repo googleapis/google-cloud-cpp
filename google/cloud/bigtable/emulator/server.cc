@@ -56,28 +56,8 @@ class EmulatorService final : public btproto::Bigtable::Service {
 
   grpc::Status SampleRowKeys(
       grpc::ServerContext* /* context */,
-      btproto::SampleRowKeysRequest const* request,
-      grpc::ServerWriter<btproto::SampleRowKeysResponse>* writer) override {
-    auto maybe_table = cluster_->FindTable(request->table_name());
-    if (!maybe_table) {
-      return ToGrpcStatus(maybe_table.status());
-    }
-
-    auto row_sampler = maybe_table.value()->SampleRowKeys(*request);
-
-    while (true) {
-      auto sample = row_sampler.Next();
-
-      if (sample.row_key().empty()) {
-        auto opts = grpc::WriteOptions();
-        opts.set_last_message();
-        writer->WriteLast(std::move(sample), opts);
-        break;
-      }
-
-      writer->Write(std::move(sample));
-    }
-
+      btproto::SampleRowKeysRequest const* /* request */,
+      grpc::ServerWriter<btproto::SampleRowKeysResponse>* /* writer */) override {
     return grpc::Status::OK;
   }
 

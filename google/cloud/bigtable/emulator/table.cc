@@ -502,141 +502,18 @@ bool Table::IsDeleteProtectedNoLock() const {
   return schema_.deletion_protection();
 }
 
-// NOLINTBEGIN(readability-function-cognitive-complexity)
-RowSampler Table::SampleRowKeys(
-    google::bigtable::v2::SampleRowKeysRequest const&) {
-  struct SamplingContext {
-    // We pick the row key samples from just one column family (the
-    // largest).
-    std::string sample_src_cf;
-    size_t row_index = 0;
-    size_t max_num_rows = 0;
-    std::map<std::string, ColumnFamilyRow>::const_iterator row_iterator;
-    std::map<std::string, ColumnFamilyRow>::const_iterator row_end;
-    bool table_is_empty = true;
-    size_t offset_bytes = 0;
-    std::once_flag once_flag;
+StatusOr<CellStream> Table::GetSampledRowsCellStream(double pass_probabilty) {
+  auto row_set = std::make_shared<StringRangeSet>(StringRangeSet::All());
 
-    std::random_device rd;
-    std::mt19937 gen = std::mt19937(rd());
-    std::uniform_int_distribution<> distrib =
-        std::uniform_int_distribution<>(1, INT_MAX);
-  };
+  google::bigtable::v2::RowFilter sample_filter;
+  sample_filter.set_row_sample_filter(pass_probabilty);
 
-  std::shared_ptr<SamplingContext> sampling_context =
-      std::make_shared<SamplingContext>();
+  auto maybe_stream = CreateCellStream(row_set, sample_filter);
+  if (!maybe_stream) {
+    return maybe_stream.status();
+  }
 
-  auto next_sample = [=]() mutable {
-    // The first time the closure is called, initialize the
-    // context. The sampler works by advancing the iterator by varying
-    // steps every time the closure it contains is called in the
-    // server RPC context or elsewhere. We can't initialize the
-    // iterators before the closure is first called since we need to
-    // be holding the table lock first (in our scheme it is grabbed in
-    // the constructor of the RowSampler and the lock is kept until
-    // the RowSampler is destroyed.)
-    std::call_once(sampling_context->once_flag, [=]() {
-      // Pick rows from just the largest column family since we are
-      // just sampling. However offsets will be estimated based on the
-      // size of the row across all column families.
-      for (auto const& cf : column_families_) {
-        if (cf.second->size() > sampling_context->max_num_rows) {
-          sampling_context->table_is_empty = false;
-          sampling_context->sample_src_cf = cf.first;
-          sampling_context->row_iterator = cf.second->begin();
-          sampling_context->row_end = cf.second->end();
-          sampling_context->max_num_rows = cf.second->size();
-        }
-      }
-    });
-
-    // The signal that there are no more rows (an empty row key).
-    if (sampling_context->table_is_empty ||
-        sampling_context->row_iterator == sampling_context->row_end) {
-      google::bigtable::v2::SampleRowKeysResponse resp;
-      resp.set_row_key("");
-      resp.set_offset_bytes(sampling_context->offset_bytes);
-
-      return resp;
-    }
-
-    for (auto& row = sampling_context->row_iterator;
-         sampling_context->row_iterator != sampling_context->row_end;
-         sampling_context->row_index++, sampling_context->row_iterator++) {
-      auto add_this_row_size_to_offset = [=] {
-        // First the offset due to the size of the row in the column
-        // family we are sampling.
-        sampling_context->offset_bytes +=
-            (row->first.size() + row->second.size());
-
-        // Then consider the size of the row data in other column families,
-        // if they contain the row.
-        for (auto const& cf : column_families_) {
-          if (cf.first == sampling_context->sample_src_cf) {
-            continue;
-          }
-
-          auto r = cf.second->find(row->first);
-          if (r != cf.second->end()) {
-            sampling_context->offset_bytes +=
-                (row->first.size() + r->second.size());
-          }
-        }
-      };
-
-      // If there are any rows we need to return at least one
-      // row. Always return the last one.
-      if (sampling_context->row_index == sampling_context->max_num_rows - 1) {
-        google::bigtable::v2::SampleRowKeysResponse resp;
-        resp.set_row_key(row->first);
-        resp.set_offset_bytes(sampling_context->offset_bytes);
-
-        add_this_row_size_to_offset();
-
-        // We are returning early (without letting the for loop
-        // control update the iterators) so ensure that we consider a
-        // new row next time, otherwise we will be stuck in an
-        // infinite loop (will never advance the row iterator past the
-        // end of the map).
-        sampling_context->row_index++;
-        sampling_context->row_iterator++;
-
-        return resp;
-      }
-
-      // Sample about one every 100 rows randomly.
-      if (sampling_context->distrib(sampling_context->gen) % 100 == 0) {
-        google::bigtable::v2::SampleRowKeysResponse resp;
-        resp.set_row_key(row->first);
-        resp.set_offset_bytes(sampling_context->offset_bytes);
-
-        add_this_row_size_to_offset();
-
-        sampling_context->row_index++;
-        sampling_context->row_iterator++;
-
-        return resp;
-      }
-
-      // This is a row we are not sampling, but we still need to
-      // account for its size for accurate offsets of subsequent
-      // sampled rows.
-      add_this_row_size_to_offset();
-    }
-
-    google::bigtable::v2::SampleRowKeysResponse resp;
-    resp.set_row_key("");
-    resp.set_offset_bytes(sampling_context->offset_bytes);
-    return resp;
-  };
-
-  // We acquire the table lock here (in the constructor), so that
-  // every time we call row_sampler.Next() we always hold the lock,
-  // and will continue to hold it until the destructor of RowSampler
-  // is called.
-  RowSampler row_sampler(this->get(), next_sample);
-
-  return row_sampler;
+  return maybe_stream;
 }
 
 // NOLINTEND(readability-function-cognitive-complexity)
