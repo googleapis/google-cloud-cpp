@@ -58,8 +58,7 @@ class EmulatorService final : public btproto::Bigtable::Service {
   grpc::Status SampleRowKeys(
       grpc::ServerContext* /* context */,
       btproto::SampleRowKeysRequest const* request,
-      grpc::ServerWriter<btproto::SampleRowKeysResponse>* writer)
-      override {
+      grpc::ServerWriter<btproto::SampleRowKeysResponse>* writer) override {
     auto maybe_table = cluster_->FindTable(request->table_name());
     if (!maybe_table) {
       return ToGrpcStatus(maybe_table.status());
@@ -68,7 +67,8 @@ class EmulatorService final : public btproto::Bigtable::Service {
     auto& table = maybe_table.value();
 
     // Return ~ 1/100 rows.
-    auto maybe_stream = table->GetSampledRowsCellStream(static_cast<double>(1)/100);
+    auto maybe_stream =
+        table->GetSampledRowsCellStream(static_cast<double>(1) / 100);
     if (!maybe_stream) {
       return ToGrpcStatus(maybe_stream.status());
     }
@@ -97,7 +97,7 @@ class EmulatorService final : public btproto::Bigtable::Service {
 
     // We need to return at least one row if the table is not empty;
     if (!offset_bytes) {
-      for (auto & column_family_it : *table) {
+      for (auto& column_family_it : *table) {
         auto row_it = column_family_it.second->begin();
         if (row_it == column_family_it.second->end()) {
           // Empty column family
@@ -129,7 +129,6 @@ class EmulatorService final : public btproto::Bigtable::Service {
     auto opts = grpc::WriteOptions();
     opts.set_last_message();
     writer->WriteLast(std::move(resp), opts);
-
 
     return grpc::Status::OK;
   }
