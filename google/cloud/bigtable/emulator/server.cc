@@ -57,7 +57,8 @@ class EmulatorService final : public btproto::Bigtable::Service {
   grpc::Status SampleRowKeys(
       grpc::ServerContext* /* context */,
       btproto::SampleRowKeysRequest const* /* request */,
-      grpc::ServerWriter<btproto::SampleRowKeysResponse>* /* writer */) override {
+      grpc::ServerWriter<btproto::SampleRowKeysResponse>* /* writer */)
+      override {
     return grpc::Status::OK;
   }
 

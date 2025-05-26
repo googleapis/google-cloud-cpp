@@ -37,8 +37,6 @@
 #include <mutex>
 #include <random>
 #include <ratio>
-#include <memory>
-#include <mutex>
 #include <type_traits>
 
 namespace google {
@@ -502,11 +500,11 @@ bool Table::IsDeleteProtectedNoLock() const {
   return schema_.deletion_protection();
 }
 
-StatusOr<CellStream> Table::GetSampledRowsCellStream(double pass_probabilty) {
+StatusOr<CellStream> Table::GetSampledRowsCellStream(double pass_probability) {
   auto row_set = std::make_shared<StringRangeSet>(StringRangeSet::All());
 
   google::bigtable::v2::RowFilter sample_filter;
-  sample_filter.set_row_sample_filter(pass_probabilty);
+  sample_filter.set_row_sample_filter(pass_probability);
 
   auto maybe_stream = CreateCellStream(row_set, sample_filter);
   if (!maybe_stream) {

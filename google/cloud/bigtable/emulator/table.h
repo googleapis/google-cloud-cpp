@@ -86,7 +86,7 @@ class Table : public std::enable_shared_from_this<Table> {
     return column_families_.find(column_family);
   }
 
-  StatusOr<CellStream> GetSampledRowsCellStream(double pass_probabilty);
+  StatusOr<CellStream> GetSampledRowsCellStream(double pass_probability);
 
   std::shared_ptr<Table> get() { return shared_from_this(); }
 
