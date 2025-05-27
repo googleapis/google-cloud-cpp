@@ -27,6 +27,7 @@ namespace {
 
 using ::testing::Contains;
 using ::testing::ContainsRegex;
+using ::testing::Eq;
 using ::testing::UnorderedElementsAre;
 
 // Tests a generic option by setting it, then getting it.
@@ -68,6 +69,56 @@ TEST(TracingComponentsOption, BackwardsCompat) {
   auto o = Options{}.set<TracingComponentsOption>({"a", "b", "c"});
   EXPECT_THAT(o.get<LoggingComponentsOption>(),
               UnorderedElementsAre("a", "b", "c"));
+}
+
+TEST(MakeLocationalEndpointOptions, ParseLocationalEndpointArgument) {
+  Options actual;
+  actual = MakeLocationalEndpointOptions("us-central1-service.google.com");
+  EXPECT_THAT(actual.get<EndpointOption>(),
+              Eq("us-central1-service.google.com"));
+  EXPECT_THAT(actual.get<AuthorityOption>(),
+              Eq("us-central1-service.google.com"));
+
+  actual = MakeLocationalEndpointOptions(
+      "https://australia-southeast1-service.google.com");
+  EXPECT_THAT(actual.get<EndpointOption>(),
+              Eq("https://australia-southeast1-service.google.com"));
+  EXPECT_THAT(actual.get<AuthorityOption>(),
+              Eq("australia-southeast1-service.google.com"));
+
+  actual = MakeLocationalEndpointOptions(
+      "https://australia-southeast1-service.google.com:443");
+  EXPECT_THAT(actual.get<EndpointOption>(),
+              Eq("https://australia-southeast1-service.google.com:443"));
+  EXPECT_THAT(actual.get<AuthorityOption>(),
+              Eq("australia-southeast1-service.google.com"));
+
+  actual = MakeLocationalEndpointOptions(
+      "http://europe-central2-service.google.com");
+  EXPECT_THAT(actual.get<EndpointOption>(),
+              Eq("http://europe-central2-service.google.com"));
+  EXPECT_THAT(actual.get<AuthorityOption>(),
+              Eq("europe-central2-service.google.com"));
+}
+
+TEST(MakeLocationalEndpointOptions, ParseGlobalEndpointArgument) {
+  Options actual;
+  actual = MakeLocationalEndpointOptions("service.google.com");
+  EXPECT_THAT(actual.get<EndpointOption>(), Eq("service.google.com"));
+  EXPECT_THAT(actual.get<AuthorityOption>(), Eq("service.google.com"));
+
+  actual = MakeLocationalEndpointOptions("https://service.google.com");
+  EXPECT_THAT(actual.get<EndpointOption>(), Eq("https://service.google.com"));
+  EXPECT_THAT(actual.get<AuthorityOption>(), Eq("service.google.com"));
+
+  actual = MakeLocationalEndpointOptions("http://service.google.com");
+  EXPECT_THAT(actual.get<EndpointOption>(), Eq("http://service.google.com"));
+  EXPECT_THAT(actual.get<AuthorityOption>(), Eq("service.google.com"));
+
+  actual = MakeLocationalEndpointOptions("http://service.google.com:8080");
+  EXPECT_THAT(actual.get<EndpointOption>(),
+              Eq("http://service.google.com:8080"));
+  EXPECT_THAT(actual.get<AuthorityOption>(), Eq("service.google.com"));
 }
 
 }  // namespace

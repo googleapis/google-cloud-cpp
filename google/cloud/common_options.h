@@ -29,6 +29,18 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
+ * Create Options to use a locational service endpoint instead of the global
+ * service endpoint.
+ *
+ * Populates the EndpointOption with the provided `endpoint` and populates the
+ * AuthorityOption with the host found in `endpoint`.
+ *
+ * Option values can be overridden at runtime by setting the service specific
+ * environment variable per the service documentation.
+ */
+Options MakeLocationalEndpointOptions(std::string endpoint);
+
+/**
  * Change the endpoint.
  *
  * In almost all cases a suitable default will be chosen automatically.
@@ -37,9 +49,32 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * version of the service, the AuthorityOption should also be set to the usual
  * hostname of the service.
  *
+ * @note Setting only the EndpointOption results in the AuthorityOption set to
+ *     the global service endpoint, unless the AuthorityOption is also
+ *     explicitly set to some other value.
+ *
  * @ingroup options
  */
 struct EndpointOption {
+  using Type = std::string;
+};
+
+/**
+ * Configure the "authority" attribute.
+ *
+ * For gRPC requests this is the `authority()` field in the
+ * `grpc::ClientContext`. This configures the :authority pseudo-header in the
+ * HTTP/2 request.
+ *     https://datatracker.ietf.org/doc/html/rfc7540#section-8.1.2.3
+ *
+ * For REST-based services using HTTP/1.1 or HTTP/1.0 this is the `Host` header.
+ *
+ * Setting this option to the empty string has no effect, i.e., no headers are
+ * set. This can be useful if you are not using Google's production environment.
+ *
+ * @ingroup options
+ */
+struct AuthorityOption {
   using Type = std::string;
 };
 
@@ -124,25 +159,6 @@ struct QuotaUserOption {
  * @ingroup rest-options
  */
 struct UserIpOption {
-  using Type = std::string;
-};
-
-/**
- * Configure the "authority" attribute.
- *
- * For gRPC requests this is the `authority()` field in the
- * `grpc::ClientContext`. This configures the :authority pseudo-header in the
- * HTTP/2 request.
- *     https://datatracker.ietf.org/doc/html/rfc7540#section-8.1.2.3
- *
- * For REST-based services using HTTP/1.1 or HTTP/1.0 this is the `Host` header.
- *
- * Setting this option to the empty string has no effect, i.e., no headers are
- * set. This can be useful if you are not using Google's production environment.
- *
- * @ingroup options
- */
-struct AuthorityOption {
   using Type = std::string;
 };
 

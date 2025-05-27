@@ -34,6 +34,7 @@ add_library(
     access_token.cc
     access_token.h
     backoff_policy.h
+    common_options.cc
     common_options.h
     credentials.cc
     credentials.h

@@ -119,6 +119,7 @@ google_cloud_cpp_common_hdrs = [
 
 google_cloud_cpp_common_srcs = [
     "access_token.cc",
+    "common_options.cc",
     "credentials.cc",
     "internal/api_client_header.cc",
     "internal/auth_header_error.cc",
