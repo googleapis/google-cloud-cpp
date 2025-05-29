@@ -21,6 +21,7 @@
 #include "generator/integration_tests/golden/v1/golden_rest_only_options.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include <memory>
 #include <utility>
 
@@ -33,11 +34,11 @@ namespace {
 auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
-Options GoldenRestOnlyDefaultOptions(Options options) {
+Options GoldenRestOnlyDefaultOptions(std::string const& location, Options options) {
   options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_GOLDEN_REST_ONLY_ENDPOINT",
       "", "GOOGLE_CLOUD_CPP_GOLDEN_REST_ONLY_AUTHORITY",
-      "goldenrestonly.googleapis.com");
+      absl::StrCat(location, location.empty() ? "" : "-", "goldenrestonly.googleapis.com"));
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<golden_v1::GoldenRestOnlyRetryPolicyOption>()) {
     options.set<golden_v1::GoldenRestOnlyRetryPolicyOption>(
