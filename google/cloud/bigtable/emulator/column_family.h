@@ -179,20 +179,6 @@ class ColumnFamilyRow {
     columns_.erase(column_it);
   }
 
-  size_t size() const {
-    size_t res = 0;
-
-    for (auto const& c : columns_) {
-      res += c.first.size();
-      for (auto const& cr : c.second) {
-        res += sizeof(cr.first);
-        res += cr.second.size();
-      }
-    }
-
-    return res;
-  };
-
  private:
   friend class ColumnFamily;
 
@@ -312,7 +298,6 @@ class ColumnFamily {
     return rows_.erase(row_it);
   }
 
-  size_t size() const { return rows_.size(); }
   void clear() { rows_.clear(); }
 
  private:

@@ -45,11 +45,6 @@ namespace cloud {
 namespace bigtable {
 namespace emulator {
 
-struct CellStreamWithRowOffsets {
-  CellStream stream;
-  std::map<std::string, std::size_t> offset_map;
-};
-
 /// Objects of this class represent Bigtable tables.
 class Table : public std::enable_shared_from_this<Table> {
  public:
