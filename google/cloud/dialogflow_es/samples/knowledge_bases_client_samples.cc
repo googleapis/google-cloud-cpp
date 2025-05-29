@@ -42,7 +42,7 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
   //     https://cloud.google.com/vpc/docs/private-google-access
   auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>(
       "private.googleapis.com");
-  auto client = google::cloud::dialogflow_es::KnowledgeBasesClient(
+  auto vpc_client = google::cloud::dialogflow_es::KnowledgeBasesClient(
       google::cloud::dialogflow_es::MakeKnowledgeBasesConnection(options));
   //! [set-client-endpoint]
 }

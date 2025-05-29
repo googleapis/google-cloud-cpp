@@ -42,7 +42,7 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
   //     https://cloud.google.com/vpc/docs/private-google-access
   auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>(
       "private.googleapis.com");
-  auto client = google::cloud::bigquery_storage_v1::BigQueryWriteClient(
+  auto vpc_client = google::cloud::bigquery_storage_v1::BigQueryWriteClient(
       google::cloud::bigquery_storage_v1::MakeBigQueryWriteConnection(options));
   //! [set-client-endpoint]
 }

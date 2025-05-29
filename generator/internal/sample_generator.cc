@@ -69,12 +69,41 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
   if (!argv.empty()) {
     throw google::cloud::testing_util::Usage{"set-client-endpoint"};
   }
-  //! [set-client-endpoint]
+  //! [set-client-endpoint])""");
+  if (endpoint_location_style ==
+      ServiceConfiguration::LOCATION_OPTIONALLY_DEPENDENT) {
+    HeaderPrint(R"""(
+  // This service supports specifying a regional or locational endpoint prefix)""");
+    if (HasGenerateGrpcTransport()) {
+      HeaderPrint(R"""(
+  // when creating the $connection_class_name$.)""");
+    } else {
+      HeaderPrint(R"""(
+  // when creating the $connection_class_name$Rest.)""");
+    }
+    HeaderPrint(R"""(
+  // For example, to connect to "europe-central2-$service_endpoint$":
+  auto client = google::cloud::$product_namespace$::$client_class_name$()""");
+    if (IsExperimental()) HeaderPrint("ExperimentalTag{},");
+
+    if (HasGenerateGrpcTransport()) {
+      HeaderPrint(R"""(
+      google::cloud::$product_namespace$::Make$connection_class_name$()""");
+    } else {
+      HeaderPrint(R"""(
+      google::cloud::$product_namespace$::Make$connection_class_name$Rest()""");
+    }
+    if (IsExperimental()) HeaderPrint("ExperimentalTag{},");
+    HeaderPrint(R"""("europe-central2"));
+)""");
+  }
+
+  HeaderPrint(R"""(
   // This configuration is common with Private Google Access:
   //     https://cloud.google.com/vpc/docs/private-google-access
   auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>(
       "private.googleapis.com");
-  auto client = google::cloud::$product_namespace$::$client_class_name$()""");
+  auto vpc_client = google::cloud::$product_namespace$::$client_class_name$()""");
   if (IsExperimental()) HeaderPrint("ExperimentalTag{},");
   if (HasGenerateGrpcTransport()) {
     HeaderPrint(R"""(

@@ -21,13 +21,14 @@
 
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
+#include <string>
 
 namespace google {
 namespace cloud {
 namespace golden_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-Options GoldenRestOnlyDefaultOptions(Options options);
+Options GoldenRestOnlyDefaultOptions(std::string const& location, Options options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace golden_v1_internal

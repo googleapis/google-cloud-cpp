@@ -94,6 +94,12 @@ message ServiceConfiguration {
     // but were subsequently acknowledged to be "LOCATION_DEPENDENT".
     // Do not use for new services.
     LOCATION_DEPENDENT_COMPAT = 2;
+
+    // Some services support both global and location specific endpoints.
+    // This directs the generator to emit overloads for both:
+    //   `Make*Connection(Options options = {})`
+    //   `Make*Connection(std::string const& location, Options options = {})`
+    LOCATION_OPTIONALLY_DEPENDENT = 3;
   }
   EndpointLocationStyle endpoint_location_style = 15;
 

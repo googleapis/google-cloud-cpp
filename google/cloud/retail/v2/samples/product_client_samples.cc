@@ -44,7 +44,7 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
   //     https://cloud.google.com/vpc/docs/private-google-access
   auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>(
       "private.googleapis.com");
-  auto client = google::cloud::retail_v2::ProductServiceClient(
+  auto vpc_client = google::cloud::retail_v2::ProductServiceClient(
       google::cloud::retail_v2::MakeProductServiceConnection(options));
   //! [set-client-endpoint]
 }

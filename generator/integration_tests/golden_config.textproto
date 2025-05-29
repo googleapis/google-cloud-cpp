@@ -58,6 +58,7 @@ service {
   retryable_status_codes: [
     "kUnavailable"
   ]
+  endpoint_location_style: LOCATION_OPTIONALLY_DEPENDENT
 }
 
 service {

@@ -44,7 +44,7 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
   //     https://cloud.google.com/vpc/docs/private-google-access
   auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>(
       "private.googleapis.com");
-  auto client = google::cloud::gkemulticloud_v1::AwsClustersClient(
+  auto vpc_client = google::cloud::gkemulticloud_v1::AwsClustersClient(
       google::cloud::gkemulticloud_v1::MakeAwsClustersConnection("unused",
                                                                  options));
   //! [set-client-endpoint]

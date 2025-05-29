@@ -42,9 +42,10 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
   //     https://cloud.google.com/vpc/docs/private-google-access
   auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>(
       "private.googleapis.com");
-  auto client = google::cloud::bigquery_migration_v2::MigrationServiceClient(
-      google::cloud::bigquery_migration_v2::MakeMigrationServiceConnection(
-          options));
+  auto vpc_client =
+      google::cloud::bigquery_migration_v2::MigrationServiceClient(
+          google::cloud::bigquery_migration_v2::MakeMigrationServiceConnection(
+              options));
   //! [set-client-endpoint]
 }
 

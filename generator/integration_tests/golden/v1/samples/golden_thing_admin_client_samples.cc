@@ -44,7 +44,7 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
   //     https://cloud.google.com/vpc/docs/private-google-access
   auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>(
       "private.googleapis.com");
-  auto client = google::cloud::golden_v1::GoldenThingAdminClient(
+  auto vpc_client = google::cloud::golden_v1::GoldenThingAdminClient(
       google::cloud::golden_v1::MakeGoldenThingAdminConnection(options));
   //! [set-client-endpoint]
 }

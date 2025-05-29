@@ -44,7 +44,7 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
   //     https://cloud.google.com/vpc/docs/private-google-access
   auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>(
       "private.googleapis.com");
-  auto client = google::cloud::datafusion_v1::DataFusionClient(
+  auto vpc_client = google::cloud::datafusion_v1::DataFusionClient(
       google::cloud::datafusion_v1::MakeDataFusionConnection(options));
   //! [set-client-endpoint]
 }
