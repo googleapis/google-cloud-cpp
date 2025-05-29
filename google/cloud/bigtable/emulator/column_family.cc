@@ -24,11 +24,6 @@ namespace emulator {
 
 absl::optional<std::string> ColumnRow::SetCell(
     std::chrono::milliseconds timestamp, std::string const& value) {
-  if (timestamp <= std::chrono::milliseconds::zero()) {
-    timestamp = std::chrono::duration_cast<std::chrono::milliseconds>(
-        std::chrono::system_clock::now().time_since_epoch());
-  }
-
   absl::optional<std::string> ret = absl::nullopt;
   auto cell_it = cells_.find(timestamp);
   if (!(cell_it == cells_.end())) {

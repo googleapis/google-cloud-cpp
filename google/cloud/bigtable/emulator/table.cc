@@ -245,13 +245,16 @@ Status Table::DoMutationsWithPossibleRollback(
       absl::optional<std::chrono::milliseconds> timestamp_override =
           absl::nullopt;
 
-      auto timestamp = std::chrono::duration_cast<std::chrono::milliseconds>(
-          std::chrono::microseconds(set_cell.timestamp_micros()));
+      if (set_cell.timestamp_micros() < -1) {
+        return InvalidArgumentError(
+            "Timestamp micros cannot be < -1.",
+            GCP_ERROR_INFO().WithMetadata("mutation", mutation.DebugString()));
+      }
 
-      if (timestamp <= std::chrono::milliseconds::zero()) {
-        timestamp = std::chrono::duration_cast<std::chrono::milliseconds>(
-            std::chrono::system_clock::now().time_since_epoch());
-        timestamp_override.emplace(std::move(timestamp));
+      if (set_cell.timestamp_micros() == -1) {
+        timestamp_override.emplace(
+            std::chrono::duration_cast<std::chrono::milliseconds>(
+                std::chrono::system_clock::now().time_since_epoch()));
       }
 
       auto status = row_transaction.SetCell(set_cell, timestamp_override);
