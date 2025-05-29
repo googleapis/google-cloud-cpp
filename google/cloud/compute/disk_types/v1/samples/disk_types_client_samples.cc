@@ -42,7 +42,7 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
   //     https://cloud.google.com/vpc/docs/private-google-access
   auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>(
       "private.googleapis.com");
-  auto client = google::cloud::compute_disk_types_v1::DiskTypesClient(
+  auto vpc_client = google::cloud::compute_disk_types_v1::DiskTypesClient(
       google::cloud::compute_disk_types_v1::MakeDiskTypesConnectionRest(
           options));
   //! [set-client-endpoint]
