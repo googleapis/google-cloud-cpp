@@ -346,6 +346,122 @@ Status ManagedKafkaClient::DeleteConsumerGroup(
   return connection_->DeleteConsumerGroup(request);
 }
 
+StreamRange<google::cloud::managedkafka::v1::Acl> ManagedKafkaClient::ListAcls(
+    std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::managedkafka::v1::ListAclsRequest request;
+  request.set_parent(parent);
+  return connection_->ListAcls(request);
+}
+
+StreamRange<google::cloud::managedkafka::v1::Acl> ManagedKafkaClient::ListAcls(
+    google::cloud::managedkafka::v1::ListAclsRequest request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListAcls(std::move(request));
+}
+
+StatusOr<google::cloud::managedkafka::v1::Acl> ManagedKafkaClient::GetAcl(
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::managedkafka::v1::GetAclRequest request;
+  request.set_name(name);
+  return connection_->GetAcl(request);
+}
+
+StatusOr<google::cloud::managedkafka::v1::Acl> ManagedKafkaClient::GetAcl(
+    google::cloud::managedkafka::v1::GetAclRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetAcl(request);
+}
+
+StatusOr<google::cloud::managedkafka::v1::Acl> ManagedKafkaClient::CreateAcl(
+    std::string const& parent, google::cloud::managedkafka::v1::Acl const& acl,
+    std::string const& acl_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::managedkafka::v1::CreateAclRequest request;
+  request.set_parent(parent);
+  *request.mutable_acl() = acl;
+  request.set_acl_id(acl_id);
+  return connection_->CreateAcl(request);
+}
+
+StatusOr<google::cloud::managedkafka::v1::Acl> ManagedKafkaClient::CreateAcl(
+    google::cloud::managedkafka::v1::CreateAclRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateAcl(request);
+}
+
+StatusOr<google::cloud::managedkafka::v1::Acl> ManagedKafkaClient::UpdateAcl(
+    google::cloud::managedkafka::v1::Acl const& acl,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::managedkafka::v1::UpdateAclRequest request;
+  *request.mutable_acl() = acl;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateAcl(request);
+}
+
+StatusOr<google::cloud::managedkafka::v1::Acl> ManagedKafkaClient::UpdateAcl(
+    google::cloud::managedkafka::v1::UpdateAclRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateAcl(request);
+}
+
+Status ManagedKafkaClient::DeleteAcl(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::managedkafka::v1::DeleteAclRequest request;
+  request.set_name(name);
+  return connection_->DeleteAcl(request);
+}
+
+Status ManagedKafkaClient::DeleteAcl(
+    google::cloud::managedkafka::v1::DeleteAclRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteAcl(request);
+}
+
+StatusOr<google::cloud::managedkafka::v1::AddAclEntryResponse>
+ManagedKafkaClient::AddAclEntry(
+    std::string const& acl,
+    google::cloud::managedkafka::v1::AclEntry const& acl_entry, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::managedkafka::v1::AddAclEntryRequest request;
+  request.set_acl(acl);
+  *request.mutable_acl_entry() = acl_entry;
+  return connection_->AddAclEntry(request);
+}
+
+StatusOr<google::cloud::managedkafka::v1::AddAclEntryResponse>
+ManagedKafkaClient::AddAclEntry(
+    google::cloud::managedkafka::v1::AddAclEntryRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AddAclEntry(request);
+}
+
+StatusOr<google::cloud::managedkafka::v1::RemoveAclEntryResponse>
+ManagedKafkaClient::RemoveAclEntry(
+    std::string const& acl,
+    google::cloud::managedkafka::v1::AclEntry const& acl_entry, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::managedkafka::v1::RemoveAclEntryRequest request;
+  request.set_acl(acl);
+  *request.mutable_acl_entry() = acl_entry;
+  return connection_->RemoveAclEntry(request);
+}
+
+StatusOr<google::cloud::managedkafka::v1::RemoveAclEntryResponse>
+ManagedKafkaClient::RemoveAclEntry(
+    google::cloud::managedkafka::v1::RemoveAclEntryRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RemoveAclEntry(request);
+}
+
 StreamRange<google::cloud::location::Location>
 ManagedKafkaClient::ListLocations(
     google::cloud::location::ListLocationsRequest request, Options opts) {

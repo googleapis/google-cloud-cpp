@@ -223,6 +223,70 @@ Status ManagedKafkaTracingConnection::DeleteConsumerGroup(
   return internal::EndSpan(*span, child_->DeleteConsumerGroup(request));
 }
 
+StreamRange<google::cloud::managedkafka::v1::Acl>
+ManagedKafkaTracingConnection::ListAcls(
+    google::cloud::managedkafka::v1::ListAclsRequest request) {
+  auto span =
+      internal::MakeSpan("managedkafka_v1::ManagedKafkaConnection::ListAcls");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListAcls(std::move(request));
+  return internal::MakeTracedStreamRange<google::cloud::managedkafka::v1::Acl>(
+      std::move(span), std::move(sr));
+}
+
+StatusOr<google::cloud::managedkafka::v1::Acl>
+ManagedKafkaTracingConnection::GetAcl(
+    google::cloud::managedkafka::v1::GetAclRequest const& request) {
+  auto span =
+      internal::MakeSpan("managedkafka_v1::ManagedKafkaConnection::GetAcl");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetAcl(request));
+}
+
+StatusOr<google::cloud::managedkafka::v1::Acl>
+ManagedKafkaTracingConnection::CreateAcl(
+    google::cloud::managedkafka::v1::CreateAclRequest const& request) {
+  auto span =
+      internal::MakeSpan("managedkafka_v1::ManagedKafkaConnection::CreateAcl");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateAcl(request));
+}
+
+StatusOr<google::cloud::managedkafka::v1::Acl>
+ManagedKafkaTracingConnection::UpdateAcl(
+    google::cloud::managedkafka::v1::UpdateAclRequest const& request) {
+  auto span =
+      internal::MakeSpan("managedkafka_v1::ManagedKafkaConnection::UpdateAcl");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateAcl(request));
+}
+
+Status ManagedKafkaTracingConnection::DeleteAcl(
+    google::cloud::managedkafka::v1::DeleteAclRequest const& request) {
+  auto span =
+      internal::MakeSpan("managedkafka_v1::ManagedKafkaConnection::DeleteAcl");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteAcl(request));
+}
+
+StatusOr<google::cloud::managedkafka::v1::AddAclEntryResponse>
+ManagedKafkaTracingConnection::AddAclEntry(
+    google::cloud::managedkafka::v1::AddAclEntryRequest const& request) {
+  auto span = internal::MakeSpan(
+      "managedkafka_v1::ManagedKafkaConnection::AddAclEntry");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->AddAclEntry(request));
+}
+
+StatusOr<google::cloud::managedkafka::v1::RemoveAclEntryResponse>
+ManagedKafkaTracingConnection::RemoveAclEntry(
+    google::cloud::managedkafka::v1::RemoveAclEntryRequest const& request) {
+  auto span = internal::MakeSpan(
+      "managedkafka_v1::ManagedKafkaConnection::RemoveAclEntry");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->RemoveAclEntry(request));
+}
+
 StreamRange<google::cloud::location::Location>
 ManagedKafkaTracingConnection::ListLocations(
     google::cloud::location::ListLocationsRequest request) {

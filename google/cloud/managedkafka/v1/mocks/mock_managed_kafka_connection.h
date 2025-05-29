@@ -221,6 +221,41 @@ class MockManagedKafkaConnection
            request),
       (override));
 
+  MOCK_METHOD((StreamRange<google::cloud::managedkafka::v1::Acl>), ListAcls,
+              (google::cloud::managedkafka::v1::ListAclsRequest request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::managedkafka::v1::Acl>, GetAcl,
+              (google::cloud::managedkafka::v1::GetAclRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::managedkafka::v1::Acl>, CreateAcl,
+      (google::cloud::managedkafka::v1::CreateAclRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::managedkafka::v1::Acl>, UpdateAcl,
+      (google::cloud::managedkafka::v1::UpdateAclRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      Status, DeleteAcl,
+      (google::cloud::managedkafka::v1::DeleteAclRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::managedkafka::v1::AddAclEntryResponse>,
+      AddAclEntry,
+      (google::cloud::managedkafka::v1::AddAclEntryRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::managedkafka::v1::RemoveAclEntryResponse>,
+      RemoveAclEntry,
+      (google::cloud::managedkafka::v1::RemoveAclEntryRequest const& request),
+      (override));
+
   MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
               (google::cloud::location::ListLocationsRequest request),
               (override));
