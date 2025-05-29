@@ -72,7 +72,6 @@ using ::google::cloud::generator_internal::GenerateMetadata;
 using ::google::cloud::generator_internal::GenerateScaffold;
 using ::google::cloud::generator_internal::LibraryName;
 using ::google::cloud::generator_internal::LibraryPath;
-using ::google::cloud::generator_internal::LoadApiIndex;
 using ::google::cloud::generator_internal::SafeReplaceAll;
 using ::google::cloud::generator_internal::ScaffoldVars;
 using ::google::cloud::generator_internal::ServiceConfigYamlPath;
@@ -224,10 +223,9 @@ std::vector<std::future<google::cloud::Status>> GenerateCodeFromProtos(
                              : generator_args.golden_proto_path;
 
   std::vector<std::future<google::cloud::Status>> tasks;
-  auto const api_index = LoadApiIndex(generator_args.googleapis_proto_path);
   for (auto const& service : services) {
-    auto scaffold_vars = ScaffoldVars(yaml_root, api_index, service,
-                                      generator_args.experimental_scaffold);
+    auto scaffold_vars =
+        ScaffoldVars(yaml_root, service, generator_args.experimental_scaffold);
     auto const generate_scaffold =
         LibraryPath(service.product_path()) == generator_args.scaffold;
     if (generate_scaffold) {

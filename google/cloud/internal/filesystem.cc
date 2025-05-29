@@ -19,6 +19,7 @@
 #include <sys/stat.h>
 #if _WIN32
 #else
+#include <dirent.h>
 #include <fcntl.h>
 #endif  // _WIN32
 
@@ -194,6 +195,34 @@ std::string PathAppend(std::string const& directory, std::string const& path) {
   r.pop_back();
   r += path;
   return r;
+}
+
+std::vector<std::string> GetFileNames(std::string const& directory_path) {
+  std::vector<std::string> filenames;
+
+#ifndef _WIN32
+  DIR* dir = opendir(directory_path.c_str());
+  if (dir == nullptr) {
+    return filenames;
+  }
+
+  struct dirent* entry;
+  while ((entry = readdir(dir)) != nullptr) {
+    std::string const filename = entry->d_name;
+    if (filename == "." || filename == "..") {
+      continue;
+    }
+    std::string file_fullname = directory_path + "/";
+    file_fullname += filename;
+    auto s = status(file_fullname);
+    if (is_regular(s)) {
+      filenames.push_back(filename);
+    }
+  }
+  closedir(dir);
+#endif
+
+  return filenames;
 }
 
 }  // namespace internal

@@ -361,6 +361,25 @@ TEST(FilesystemTest, PathAppend) {
   }
 }
 
+#ifndef _WIN32
+TEST(FilesystemTest, GetFileNames) {
+  auto full_path1 = CreateRandomFileName();
+  std::ofstream(full_path1).close();
+  size_t separator_pos1 = full_path1.find_last_of('/');
+  std::string directory = full_path1.substr(0, separator_pos1);
+  std::string filename1 = full_path1.substr(separator_pos1 + 1);
+
+  auto full_path2 = CreateRandomFileName();
+  std::ofstream(full_path2).close();
+  size_t separator_pos2 = full_path2.find_last_of('/');
+  std::string filename2 = full_path2.substr(separator_pos2 + 1);
+
+  auto filenames = GetFileNames(directory);
+  EXPECT_THAT(filenames, ::testing::Contains(filename1));
+  EXPECT_THAT(filenames, ::testing::Contains(filename2));
+}
+#endif
+
 }  // namespace
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

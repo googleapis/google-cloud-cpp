@@ -62,20 +62,11 @@ std::string ServiceSubdirectory(std::string const& product_path);
 std::string OptionsGroup(std::string const& product_path);
 
 /**
- * Load the `api-index-v1.json` file stored in the googleapis repository.
- *
- * If this is not available, it returns a JSON object with an empty list of
- * APIs.
- */
-nlohmann::json LoadApiIndex(std::string const& googleapis_path);
-
-/**
  * Capture the information about @service as a set of "variables".
  *
- * This searches the API index file loaded in @p index for the details about
- * @p service and generates a map of "variables" representing that information.
- * If a service config YAML file is available, it loads some key information
- * from that file too.
+ * This searches the service yaml file under the @p service proto directory.
+ * If a service config YAML file is available, it loads information as a map
+ * from that file.
  *
  * @return a map with the variables needed to generate the build scaffold for
  *     @p service. We use a map (instead of a more idiomatic / safe `struct`),
@@ -83,7 +74,7 @@ nlohmann::json LoadApiIndex(std::string const& googleapis_path);
  *     engine.
  */
 std::map<std::string, std::string> ScaffoldVars(
-    std::string const& yaml_root, nlohmann::json const& index,
+    std::string const& yaml_root,
     google::cloud::cpp::generator::ServiceConfiguration const& service,
     bool experimental);
 
