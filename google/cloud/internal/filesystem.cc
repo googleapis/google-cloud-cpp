@@ -212,7 +212,8 @@ std::vector<std::string> GetFileNames(std::string const& directory_path) {
     if (filename == "." || filename == "..") {
       continue;
     }
-    std::string file_fullname = directory_path + "/" + filename;
+    std::string file_fullname = directory_path + "/";
+    file_fullname += filename;
     auto s = status(file_fullname);
     if (is_regular(s)) {
       filenames.push_back(filename);

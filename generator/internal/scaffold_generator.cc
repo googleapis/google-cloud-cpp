@@ -69,9 +69,31 @@ std::string FormatCloudServiceDocsLink(
                       "\n");
 }
 
+std::string ServiceConfigYamlName(
+    google::cloud::cpp::generator::ServiceConfiguration const& service,
+    std::string const& yaml_root,
+    std::string const& service_yaml_relative_path) {
+  std::string service_config_yaml_name;
+  if (!service.override_service_config_yaml_name().empty()) {
+    service_config_yaml_name = service.override_service_config_yaml_name();
+  } else {
+    auto const filenames = google::cloud::internal::GetFileNames(
+        absl::StrCat(yaml_root, "/", service_yaml_relative_path));
+
+    for (auto const& filename : filenames) {
+      if (absl::EndsWith(filename, ".yaml") &&
+          !absl::EndsWith(filename, "gapic.yaml")) {
+        service_config_yaml_name =
+            absl::StrCat(service_yaml_relative_path, "/", filename);
+        break;
+      }
+    }
+  }
+  return service_config_yaml_name;
+}
+
 }  // namespace
 
-auto constexpr kApiIndexFilename = "api-index-v1.json";
 auto constexpr kWorkspaceTemplate = "WORKSPACE.bazel";
 
 std::string LibraryName(std::string const& product_path) {
@@ -100,30 +122,8 @@ std::string SiteRoot(
   return LibraryName(service.product_path());
 }
 
-nlohmann::json LoadApiIndex(std::string const& googleapis_path) {
-  auto const api_index_path = googleapis_path + "/" + kApiIndexFilename;
-  auto status = google::cloud::internal::status(api_index_path);
-  if (!exists(status)) {
-    GCP_LOG(WARNING) << "Cannot find API index file (" << api_index_path << ")";
-    return {};
-  }
-  std::ifstream is(api_index_path);
-  auto index = nlohmann::json::parse(is, nullptr, false);
-  if (index.is_null()) {
-    GCP_LOG(WARNING) << "Cannot parse API index file (" << api_index_path
-                     << ")";
-    return nlohmann::json{{"apis", std::vector<nlohmann::json>{}}};
-  }
-  if (!index.contains("apis")) {
-    GCP_LOG(WARNING) << "Missing `apis` field in API index file ("
-                     << api_index_path << ")";
-    return nlohmann::json{{"apis", std::vector<nlohmann::json>{}}};
-  }
-  return index;
-}
-
 std::map<std::string, std::string> ScaffoldVars(
-    std::string const& yaml_root, nlohmann::json const& index,
+    std::string const& yaml_root,
     google::cloud::cpp::generator::ServiceConfiguration const& service,
     bool experimental) {
   std::map<std::string, std::string> vars;
@@ -148,42 +148,25 @@ std::map<std::string, std::string> ScaffoldVars(
                      "to change without notice.\n\nPlease,"
                    : "While this library is **GA**, please";
 
-  std::string service_proto_path = service.service_proto_path();
+  auto const& service_proto_path = service.service_proto_path();
   size_t last_slash_pos = service_proto_path.rfind('/');
   if (last_slash_pos == std::string::npos) {
     GCP_LOG(WARNING) << "Format of service_proto_path is invalid: "
                      << service_proto_path;
     return vars;
   }
-  std::string service_yaml_relative_path =
+  auto const service_yaml_relative_path =
       service_proto_path.substr(0, last_slash_pos);
-  std::string service_yaml_path = yaml_root + "/" + service_yaml_relative_path;
-  std::string service_yaml_fullname = "";
-  if (!service.override_service_config_yaml_name().empty()) {
-    service_yaml_fullname =
-        yaml_root + "/" + service.override_service_config_yaml_name();
-    vars.emplace("service_config_yaml_name",
-                 service.override_service_config_yaml_name());
-  } else {
-    auto filenames =
-        google::cloud::internal::GetFileNames(service_yaml_path);
-
-    for (auto const& filename : filenames) {
-      if (absl::EndsWith(filename, ".yaml") &&
-          !absl::EndsWith(filename, "gapic.yaml")) {
-        service_yaml_fullname = service_yaml_path + "/" + filename;
-        vars.emplace("service_config_yaml_name",
-                     service_yaml_relative_path + "/" + filename);
-        break;
-      }
-    }
-  }
-
-  if (service_yaml_fullname.empty()) {
+  auto const service_config_yaml_name =
+      ServiceConfigYamlName(service, yaml_root, service_yaml_relative_path);
+  if (service_config_yaml_name.empty()) {
     GCP_LOG(WARNING) << "Missing directory and/or YAML config file name for: "
-                     << service.service_proto_path();
+                     << service_proto_path;
     return vars;
   }
+  vars["service_config_yaml_name"] = service_config_yaml_name;
+  auto const service_yaml_fullname =
+      absl::StrCat(yaml_root, "/", service_config_yaml_name);
 
   // Try to load the service config YAML file. On failure just return the
   // existing vars.
@@ -216,9 +199,9 @@ std::map<std::string, std::string> ScaffoldVars(
   vars["description"] = "";
   auto documentation = config["documentation"];
   if (documentation.Type() == YAML::NodeType::Map) {
-    auto description = documentation["description"];
-    if (description.Type() == YAML::NodeType::Scalar) {
-      vars["description"] = description.as<std::string>();
+    auto summary = documentation["summary"];
+    if (summary.Type() == YAML::NodeType::Scalar) {
+      vars["description"] = summary.as<std::string>();
     }
   }
 
