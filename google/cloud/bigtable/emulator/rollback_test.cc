@@ -263,6 +263,16 @@ Status HasRow(std::shared_ptr<google::cloud::bigtable::emulator::Table>& table,
 // Test that SetCell does the right thing when it receives a zero or
 // negative timestamp, and that the cell created can be correctly
 // deleted if rollback occurs.
+//
+// In particular:
+//
+// Supplied with a timestamp of -1, it should store the current system time as
+// timestamp.
+//
+// Supplied with a timestamp of 0, it should store it as is.
+//
+// Supplied with a timestamp < -1, it should return an error and fail the entire
+// mutation chain.
 TEST(TransactonRollback, ZeroOrNegativeTimestampHandling) {
   ::google::bigtable::admin::v2::Table schema;
   ::google::bigtable::admin::v2::ColumnFamily column_family;
@@ -294,16 +304,11 @@ TEST(TransactonRollback, ZeroOrNegativeTimestampHandling) {
   auto column = status_or.value();
   ASSERT_EQ(1, column.size());
   for (auto const& cell : column) {
-    ASSERT_GT(cell.first.count(), 0);
+    ASSERT_EQ(cell.first.count(), 0);
     ASSERT_EQ(data, cell.second);
   }
 
-  // Test that a SetCell mutation with timestamp set to 0 can be
-  // correctly rolled back. In the following, the first mutation
-  // (timestamp 0) should succeed and the next one should fail. The
-  // condition after that should be that the first one (timestamp 0)
-  // should be rolled back so that a row with row_key_2 key should not
-  // exist when the MutateRow request returns.
+  // Test that a mutation with timestamp 0 can be rolled back.
   v.clear();
   v = {{column_family_name, column_qualifier, 0, data},
        {"non_existent_column_family_name_causes_tx_rollbaclk", column_qualifier,
@@ -312,6 +317,48 @@ TEST(TransactonRollback, ZeroOrNegativeTimestampHandling) {
   status = SetCells(table, table_name, row_key_2, v);
   ASSERT_NE(true, status.ok());
   ASSERT_FALSE(HasRow(table, column_family_name, row_key_2).ok());
+
+  // Test that a mutation with timestamp 0 succeeds and stores 0 as
+  // the timestamp.
+  v.clear();
+  v = {
+      {column_family_name, column_qualifier, 0, data},
+  };
+  auto const* const row_key_3 = "2";
+  status = SetCells(table, table_name, row_key_3, v);
+  ASSERT_STATUS_OK(status);
+  ASSERT_STATUS_OK(HasCell(table, v[0].column_family_name, row_key_3,
+                           v[0].column_qualifier, 0, v[0].data));
+
+  // Test that a mutation with timestamp < -1 fails
+  v.clear();
+  v = {
+      {column_family_name, column_qualifier, -2, data},
+  };
+  auto const* const row_key_4 = "3";
+  status = SetCells(table, table_name, row_key_4, v);
+  ASSERT_FALSE(status.ok());
+
+  // Test that a mutation with timestamp -1 suceeds and stores the
+  // system time.
+  v.clear();
+  v = {
+      {column_family_name, column_qualifier, -1, data},
+  };
+  auto const* const row_key_5 = "4";
+  auto system_time_ms_before = std::chrono::duration_cast<std::chrono::milliseconds>(
+      std::chrono::system_clock::now().time_since_epoch());
+  status = SetCells(table, table_name, row_key_5, v);
+  ASSERT_STATUS_OK(status);
+  auto column_or = GetColumn(
+      table, v[0].column_family_name, row_key_5, v[0].column_qualifier);
+  ASSERT_STATUS_OK(column_or.status());
+  auto col = column_or.value();
+  ASSERT_EQ(col.size(), 1);
+  auto cell_it = col.begin();
+  ASSERT_NE(cell_it, col.end());
+  ASSERT_EQ(cell_it->second, v[0].data);
+  ASSERT_GE(cell_it->first, system_time_ms_before);
 }
 
 // Does the SetCell mutation work to set a cell to a specific value?
