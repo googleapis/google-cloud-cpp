@@ -152,18 +152,18 @@ void AutoRun(std::vector<std::string> const& argv) {
 
   std::cout << "Executing GeminiGenerateFromTextInput sample:\n";
   GeminiGenerateFromTextInput(
-      {project_id, "us-central1", "gemini-1.5-flash-001",
+      {project_id, "us-central1", "gemini-2.0-flash-001",
        "What's a good name for a flower shop that specializes in selling "
        "bouquets of dried flowers?"});
 
   std::cout << "\nExecuting GeminiGenerateWithImage sample:\n";
-  GeminiGenerateWithImage({project_id, "us-central1", "gemini-1.5-flash-001",
+  GeminiGenerateWithImage({project_id, "us-central1", "gemini-2.0-flash-001",
                            "What's in this photo?", "image/png",
                            "gs://generativeai-downloads/images/scones.jpg"});
 
   std::cout << "\nExecuting GeminiVideoWithAudio sample:\n";
   GeminiVideoWithAudio(
-      {project_id, "us-central1", "gemini-1.5-flash-001",
+      {project_id, "us-central1", "gemini-2.0-flash-001",
        "Provide a description of the video.\n"
        "The description should also contain anything important which people "
        "say in the video.",
