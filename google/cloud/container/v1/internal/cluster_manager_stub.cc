@@ -438,6 +438,32 @@ DefaultClusterManagerStub::CheckAutopilotCompatibility(
   return response;
 }
 
+StatusOr<google::container::v1::ClusterUpgradeInfo>
+DefaultClusterManagerStub::FetchClusterUpgradeInfo(
+    grpc::ClientContext& context, Options const&,
+    google::container::v1::FetchClusterUpgradeInfoRequest const& request) {
+  google::container::v1::ClusterUpgradeInfo response;
+  auto status =
+      grpc_stub_->FetchClusterUpgradeInfo(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::container::v1::NodePoolUpgradeInfo>
+DefaultClusterManagerStub::FetchNodePoolUpgradeInfo(
+    grpc::ClientContext& context, Options const&,
+    google::container::v1::FetchNodePoolUpgradeInfoRequest const& request) {
+  google::container::v1::NodePoolUpgradeInfo response;
+  auto status =
+      grpc_stub_->FetchNodePoolUpgradeInfo(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace container_v1_internal
 }  // namespace cloud

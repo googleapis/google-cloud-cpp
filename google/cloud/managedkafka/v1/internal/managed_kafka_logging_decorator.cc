@@ -269,6 +269,88 @@ Status ManagedKafkaLogging::DeleteConsumerGroup(
       context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::managedkafka::v1::ListAclsResponse>
+ManagedKafkaLogging::ListAcls(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::managedkafka::v1::ListAclsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::managedkafka::v1::ListAclsRequest const& request) {
+        return child_->ListAcls(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::managedkafka::v1::Acl> ManagedKafkaLogging::GetAcl(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::managedkafka::v1::GetAclRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::managedkafka::v1::GetAclRequest const& request) {
+        return child_->GetAcl(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::managedkafka::v1::Acl> ManagedKafkaLogging::CreateAcl(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::managedkafka::v1::CreateAclRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::managedkafka::v1::CreateAclRequest const& request) {
+        return child_->CreateAcl(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::managedkafka::v1::Acl> ManagedKafkaLogging::UpdateAcl(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::managedkafka::v1::UpdateAclRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::managedkafka::v1::UpdateAclRequest const& request) {
+        return child_->UpdateAcl(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+Status ManagedKafkaLogging::DeleteAcl(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::managedkafka::v1::DeleteAclRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::managedkafka::v1::DeleteAclRequest const& request) {
+        return child_->DeleteAcl(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::managedkafka::v1::AddAclEntryResponse>
+ManagedKafkaLogging::AddAclEntry(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::managedkafka::v1::AddAclEntryRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::managedkafka::v1::AddAclEntryRequest const& request) {
+        return child_->AddAclEntry(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::managedkafka::v1::RemoveAclEntryResponse>
+ManagedKafkaLogging::RemoveAclEntry(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::managedkafka::v1::RemoveAclEntryRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::managedkafka::v1::RemoveAclEntryRequest const&
+                 request) {
+        return child_->RemoveAclEntry(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 ManagedKafkaLogging::ListLocations(
     grpc::ClientContext& context, Options const& options,
