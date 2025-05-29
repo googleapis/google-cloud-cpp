@@ -239,6 +239,7 @@ Status Table::MutateRow(google::bigtable::v2::MutateRowRequest const& request) {
                                          request.mutations());
 }
 
+// NOLINTBEGIN(readability-function-cognitive-complexity)
 Status Table::DoMutationsWithPossibleRollback(
     std::string const& row_key,
     google::protobuf::RepeatedPtrField<google::bigtable::v2::Mutation> const&
@@ -307,6 +308,7 @@ Status Table::DoMutationsWithPossibleRollback(
 
   return Status();
 }
+// NOLINTEND(readability-function-cognitive-complexity)
 
 StatusOr<CellStream> Table::CreateCellStream(
     std::shared_ptr<StringRangeSet> range_set,
@@ -594,7 +596,7 @@ Status Table::SampleRowKeys(
   // returned.
   //
   // In such a case, return the last row key.
-  if (!wrote_a_sample && row_offset_map.size() > 0) {
+  if (!wrote_a_sample && !row_offset_map.empty()) {
     auto it = std::prev(row_offset_map.end());
 
     google::bigtable::v2::SampleRowKeysResponse resp;
