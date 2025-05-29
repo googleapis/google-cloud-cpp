@@ -339,7 +339,7 @@ TEST(TransactonRollback, ZeroOrNegativeTimestampHandling) {
   status = SetCells(table, table_name, row_key_4, v);
   ASSERT_FALSE(status.ok());
 
-  // Test that a mutation with timestamp -1 suceeds and stores the
+  // Test that a mutation with timestamp -1 succeeds and stores the
   // system time.
   v.clear();
   v = {

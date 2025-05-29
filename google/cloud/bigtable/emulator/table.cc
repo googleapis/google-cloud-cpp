@@ -525,7 +525,7 @@ Status Table::SampleRowKeys(
   bool first_row = true;
 
   std::map<std::string, std::size_t> column_family_size_map;
-  std::map<std::string, std::size_t> column_qualifer_size_map;
+  std::map<std::string, std::size_t> column_qualifier_size_map;
   size_t timestamp_total_row_size = 0;
   size_t value_total_row_size = 0;
 
@@ -539,7 +539,7 @@ Status Table::SampleRowKeys(
         row_offset += cf.second;
       }
 
-      for (auto const& cq : column_qualifer_size_map) {
+      for (auto const& cq : column_qualifier_size_map) {
         row_offset += cq.second;
       }
 
@@ -554,14 +554,14 @@ Status Table::SampleRowKeys(
       first_row = false;
 
       column_family_size_map.clear();
-      column_qualifer_size_map.clear();
+      column_qualifier_size_map.clear();
       timestamp_total_row_size = 0;
       value_total_row_size = 0;
     }
 
     column_family_size_map.emplace(stream->column_family(),
                                    stream->column_family().size());
-    column_qualifer_size_map.emplace(stream->column_qualifier(),
+    column_qualifier_size_map.emplace(stream->column_qualifier(),
                                      stream->column_qualifier().size());
     timestamp_total_row_size += sizeof(stream->timestamp());
     value_total_row_size += stream->value().size();
