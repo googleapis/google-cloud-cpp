@@ -296,17 +296,16 @@ AsyncConnectionImpl::ReadObjectRange(ReadObjectParams p) {
 
 future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
 AsyncConnectionImpl::StartAppendableObjectUpload(AppendableUploadParams p) {
-  return AppendableObjectUploadImpl(std::move(p), AppendMode::kStart);
+  return AppendableObjectUploadImpl(std::move(p));
 }
 
 future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
 AsyncConnectionImpl::ResumeAppendableObjectUpload(AppendableUploadParams p) {
-  return AppendableObjectUploadImpl(std::move(p), AppendMode::kTakeover);
+  return AppendableObjectUploadImpl(std::move(p));
 }
 
 future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
-AsyncConnectionImpl::AppendableObjectUploadImpl(AppendableUploadParams p,
-                                                AppendMode mode) {
+AsyncConnectionImpl::AppendableObjectUploadImpl(AppendableUploadParams p) {
   auto current = internal::MakeImmutableOptions(std::move(p.options));
   auto request = std::move(p.request);
   std::int64_t persisted_size = 0;
@@ -329,9 +328,9 @@ AsyncConnectionImpl::AppendableObjectUploadImpl(AppendableUploadParams p,
   auto factory = WriteResultFactory(
       [stub = stub_, cq = cq_, retry = std::move(retry),
        // NOLINTNEXTLINE(bugprone-lambda-function-name)
-       backoff = std::move(backoff), current, function_name = __func__,
-       mode](google::storage::v2::BidiWriteObjectRequest req) {
-        auto call = [stub, request = std::move(req), mode](
+       backoff = std::move(backoff), current, function_name = __func__](
+          google::storage::v2::BidiWriteObjectRequest req) {
+        auto call = [stub, request = std::move(req)](
                         CompletionQueue& cq,
                         std::shared_ptr<grpc::ClientContext> context,
                         google::cloud::internal::ImmutableOptions options,
@@ -345,10 +344,10 @@ AsyncConnectionImpl::AppendableObjectUploadImpl(AppendableUploadParams p,
           auto per_write_timeout = start_timeout;
 
           // Apply the routing header
-          if (mode == AppendMode::kTakeover)
-            ApplyRoutingHeaders(*context, request.append_object_spec());
-          else
+          if (request.has_write_object_spec())
             ApplyRoutingHeaders(*context, request.write_object_spec());
+          else
+            ApplyRoutingHeaders(*context, request.append_object_spec());
 
           auto rpc = stub->AsyncBidiWriteObject(cq, std::move(context),
                                                 std::move(options));
