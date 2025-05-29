@@ -26,6 +26,7 @@
 #include <absl/strings/match.h>
 #include <absl/strings/str_format.h>
 #include <absl/types/optional.h>
+#include <grpcpp/support/sync_stream.h>
 #include <re2/re2.h>
 #include <chrono>
 #include <climits>
@@ -503,18 +504,117 @@ bool Table::IsDeleteProtectedNoLock() const {
   return schema_.deletion_protection();
 }
 
-StatusOr<CellStream> Table::GetSampledRowsCellStream(double pass_probability) {
-  auto row_set = std::make_shared<StringRangeSet>(StringRangeSet::All());
+Status Table::SampleRowKeys(
+    double pass_probability,
+    grpc::ServerWriter<google::bigtable::v2::SampleRowKeysResponse>* writer) {
+  std::lock_guard<std::mutex> lock(mu_);
+
+  // First, stream all rows and cells and compute the offsets.
+  auto all_rows_set = std::make_shared<StringRangeSet>(StringRangeSet::All());
+  auto maybe_all_rows_steam = CreateCellStream(all_rows_set, absl::nullopt);
+  if (!maybe_all_rows_steam) {
+    return maybe_all_rows_steam.status();
+  }
+
+  auto& stream = *maybe_all_rows_steam;
+
+  std::map<std::string, std::size_t> row_offset_map;
+  size_t row_offset = 0;
+
+  std::string current_row_key;
+  bool first_row = true;
+
+  std::map<std::string, std::size_t> column_family_size_map;
+  std::map<std::string, std::size_t> column_qualifer_size_map;
+  size_t timestamp_total_row_size = 0;
+  size_t value_total_row_size = 0;
+
+  for (; stream; ++stream) {
+    auto row_key = stream->row_key();
+
+    if ((row_key != current_row_key) || first_row) {
+      row_offset += current_row_key.size();
+
+      for (auto const& cf : column_family_size_map) {
+        row_offset += cf.second;
+      }
+
+      for (auto const& cq : column_qualifer_size_map) {
+        row_offset += cq.second;
+      }
+
+      row_offset += timestamp_total_row_size;
+      row_offset += value_total_row_size;
+
+      // The rows before this (row_key) have this size in total.
+      row_offset_map[row_key] = row_offset;
+
+      current_row_key = row_key;
+
+      first_row = false;
+
+      column_family_size_map.clear();
+      column_qualifer_size_map.clear();
+      timestamp_total_row_size = 0;
+      value_total_row_size = 0;
+    }
+
+    column_family_size_map.emplace(stream->column_family(),
+                                   stream->column_family().size());
+    column_qualifer_size_map.emplace(stream->column_qualifier(),
+                                     stream->column_qualifier().size());
+    timestamp_total_row_size += sizeof(stream->timestamp());
+    value_total_row_size += stream->value().size();
+  }
 
   google::bigtable::v2::RowFilter sample_filter;
   sample_filter.set_row_sample_filter(pass_probability);
 
-  auto maybe_stream = CreateCellStream(row_set, sample_filter);
+  auto maybe_stream = CreateCellStream(all_rows_set, sample_filter);
   if (!maybe_stream) {
     return maybe_stream.status();
   }
 
-  return maybe_stream;
+  auto& sampled_stream = *maybe_stream;
+
+  bool wrote_a_sample = false;
+
+  for (; sampled_stream; ++sampled_stream) {
+    google::bigtable::v2::SampleRowKeysResponse resp;
+    resp.set_row_key(sampled_stream->row_key());
+    resp.set_offset_bytes(row_offset_map[sampled_stream->row_key()]);
+
+    writer->Write(std::move(resp));
+
+    wrote_a_sample = true;
+  }
+
+  // Cloud bigtable client tests expect that, if they populated the
+  // table with at least one row, then at least one row sampele is
+  // returned.
+  //
+  // In such a case, return the last row key.
+  if (!wrote_a_sample && row_offset_map.size() > 0) {
+    auto it = std::prev(row_offset_map.end());
+
+    google::bigtable::v2::SampleRowKeysResponse resp;
+    resp.set_row_key(it->first);
+    resp.set_offset_bytes(it->second);
+  }
+
+  // Client code expects the last response to be an empty row key
+  // and moreover it also expects the offset for the last response
+  // to be more than every other offset.
+  google::bigtable::v2::SampleRowKeysResponse resp;
+  resp.set_row_key("");
+  // Client test code expects offset_bytes to be strictly
+  // increasing.
+  resp.set_offset_bytes(row_offset + 1);
+  auto opts = grpc::WriteOptions();
+  opts.set_last_message();
+  writer->WriteLast(std::move(resp), opts);
+
+  return Status();
 }
 
 Status Table::DropRowRange(

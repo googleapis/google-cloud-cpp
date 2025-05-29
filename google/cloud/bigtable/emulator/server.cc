@@ -66,71 +66,7 @@ class EmulatorService final : public btproto::Bigtable::Service {
 
     auto& table = maybe_table.value();
 
-    // Return ~ 1/100 rows.
-    auto maybe_stream =
-        table->GetSampledRowsCellStream(static_cast<double>(1) / 100);
-    if (!maybe_stream) {
-      return ToGrpcStatus(maybe_stream.status());
-    }
-
-    auto& stream = *maybe_stream;
-    size_t offset_bytes = 0;
-
-    for (; stream; ++stream) {
-      size_t row_size = 0;
-
-      row_size += stream->row_key().size();
-      row_size += stream->column_family().size();
-      row_size += stream->column_qualifier().size();
-      row_size += sizeof(stream->timestamp());
-      row_size += stream->value().size();
-
-      // This is an estimate
-      offset_bytes += (100 * row_size);
-
-      google::bigtable::v2::SampleRowKeysResponse resp;
-      resp.set_row_key(stream->row_key());
-      resp.set_offset_bytes(offset_bytes);
-
-      writer->Write(std::move(resp));
-    }
-
-    // We need to return at least one row if the table is not empty;
-    if (!offset_bytes) {
-      for (auto& column_family_it : *table) {
-        auto row_it = column_family_it.second->begin();
-        if (row_it == column_family_it.second->end()) {
-          // Empty column family
-          continue;
-        }
-
-        // We have a row
-        offset_bytes += row_it->first.size();
-        offset_bytes += row_it->second.size();
-
-        google::bigtable::v2::SampleRowKeysResponse resp;
-        resp.set_row_key(row_it->first);
-        resp.set_offset_bytes(offset_bytes);
-
-        writer->Write(std::move(resp));
-
-        break;
-      }
-    }
-
-    // Client code expects the last response to be an empty row key
-    // and moreover it also expects the offset for the last response
-    // to be more than every other offset.
-    google::bigtable::v2::SampleRowKeysResponse resp;
-    resp.set_row_key("");
-    // Client test code expects offset_bytes to be strictly
-    // increasing.
-    resp.set_offset_bytes(offset_bytes + 1);
-    auto opts = grpc::WriteOptions();
-    opts.set_last_message();
-    writer->WriteLast(std::move(resp), opts);
-
-    return grpc::Status::OK;
+    return ToGrpcStatus(table->SampleRowKeys(0.0001, writer));
   }
 
   grpc::Status MutateRow(grpc::ServerContext* /* context */,

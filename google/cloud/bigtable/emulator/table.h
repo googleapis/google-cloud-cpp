@@ -32,10 +32,12 @@
 #include <google/protobuf/util/time_util.h>
 #include <absl/types/optional.h>
 #include <chrono>
+#include <cstddef>
 #include <map>
 #include <memory>
 #include <mutex>
 #include <stack>
+#include <string>
 #include <utility>
 
 namespace google {
@@ -43,7 +45,10 @@ namespace cloud {
 namespace bigtable {
 namespace emulator {
 
-class RowSampler;
+struct CellStreamWithRowOffsets {
+  CellStream stream;
+  std::map<std::string, std::size_t> offset_map;
+};
 
 /// Objects of this class represent Bigtable tables.
 class Table : public std::enable_shared_from_this<Table> {
@@ -86,7 +91,7 @@ class Table : public std::enable_shared_from_this<Table> {
     return column_families_.find(column_family);
   }
 
-  StatusOr<CellStream> GetSampledRowsCellStream(double pass_probability);
+  Status SampleRowKeys(double pass_probability, grpc::ServerWriter<google::bigtable::v2::SampleRowKeysResponse>* writer);
 
   std::shared_ptr<Table> get() { return shared_from_this(); }
 
