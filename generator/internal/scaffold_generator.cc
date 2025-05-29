@@ -127,23 +127,7 @@ std::map<std::string, std::string> ScaffoldVars(
     google::cloud::cpp::generator::ServiceConfiguration const& service,
     bool experimental) {
   std::map<std::string, std::string> vars;
-  for (auto const& api : index["apis"]) {
-    if (!api.contains("directory")) continue;
-    auto const directory = api["directory"].get<std::string>() + "/";
-    if (!absl::StartsWith(service.service_proto_path(), directory)) continue;
-    vars.emplace("id", api.value("id", ""));
-    vars.emplace("title", api.value("title", ""));
-    vars.emplace("description", api.value("description", ""));
-    vars.emplace("directory", api.value("directory", ""));
-    vars.emplace("service_config_yaml_name",
-                 absl::StrCat(api.value("directory", ""), "/",
-                              api.value("configFile", "")));
-    vars.emplace("nameInServiceConfig", api.value("nameInServiceConfig", ""));
-  }
-  if (!service.override_service_config_yaml_name().empty()) {
-    vars.emplace("service_config_yaml_name",
-                 service.override_service_config_yaml_name());
-  }
+
   auto const library = LibraryName(service.product_path());
   vars["copyright_year"] = service.initial_copyright_year();
   vars["library"] = library;
@@ -164,9 +148,38 @@ std::map<std::string, std::string> ScaffoldVars(
                      "to change without notice.\n\nPlease,"
                    : "While this library is **GA**, please";
 
-  // Find out if the service config YAML is configured.
-  auto path = ServiceConfigYamlPath(yaml_root, vars);
-  if (path.empty()) {
+  std::string service_proto_path = service.service_proto_path();
+  size_t last_slash_pos = service_proto_path.rfind('/');
+  if (last_slash_pos == std::string::npos) {
+    GCP_LOG(WARNING) << "Format of service_proto_path is invalid: "
+                     << service_proto_path;
+    return vars;
+  }
+  std::string service_yaml_relative_path =
+      service_proto_path.substr(0, last_slash_pos);
+  std::string service_yaml_path = yaml_root + "/" + service_yaml_relative_path;
+  std::string service_yaml_fullname = "";
+  if (!service.override_service_config_yaml_name().empty()) {
+    service_yaml_fullname =
+        yaml_root + "/" + service.override_service_config_yaml_name();
+    vars.emplace("service_config_yaml_name",
+                 service.override_service_config_yaml_name());
+  } else {
+    auto filenames =
+        google::cloud::internal::GetFileNames(service_yaml_path);
+
+    for (auto const& filename : filenames) {
+      if (absl::EndsWith(filename, ".yaml") &&
+          !absl::EndsWith(filename, "gapic.yaml")) {
+        service_yaml_fullname = service_yaml_path + "/" + filename;
+        vars.emplace("service_config_yaml_name",
+                     service_yaml_relative_path + "/" + filename);
+        break;
+      }
+    }
+  }
+
+  if (service_yaml_fullname.empty()) {
     GCP_LOG(WARNING) << "Missing directory and/or YAML config file name for: "
                      << service.service_proto_path();
     return vars;
@@ -174,19 +187,47 @@ std::map<std::string, std::string> ScaffoldVars(
 
   // Try to load the service config YAML file. On failure just return the
   // existing vars.
-  auto status = google::cloud::internal::status(path);
+  auto status = google::cloud::internal::status(service_yaml_fullname);
   if (!exists(status)) {
-    GCP_LOG(WARNING) << "Cannot find YAML service config file (" << path
+    GCP_LOG(WARNING) << "Cannot find YAML service config file ("
+                     << service_yaml_fullname
                      << ") for: " << service.service_proto_path();
     return vars;
   }
-  auto config = YAML::LoadFile(path);
+  auto config = YAML::LoadFile(service_yaml_fullname);
   if (config.Type() != YAML::NodeType::Map) {
-    GCP_LOG(WARNING) << "Error loading YAML config file (" << path
+    GCP_LOG(WARNING) << "Error loading YAML config file ("
+                     << service_yaml_fullname
                      << ") for: " << service.service_proto_path()
                      << "  error=" << config.Type();
     return vars;
   }
+
+  vars["directory"] = service_yaml_relative_path;
+  vars.emplace("id", absl::StrJoin(
+                         absl::StrSplit(service_yaml_relative_path, '/'), "."));
+
+  vars["title"] = "";
+  auto title = config["title"];
+  if (title.Type() == YAML::NodeType::Scalar) {
+    vars["title"] = title.as<std::string>();
+  }
+
+  vars["description"] = "";
+  auto documentation = config["documentation"];
+  if (documentation.Type() == YAML::NodeType::Map) {
+    auto description = documentation["description"];
+    if (description.Type() == YAML::NodeType::Scalar) {
+      vars["description"] = description.as<std::string>();
+    }
+  }
+
+  vars["nameInServiceConfig"] = "";
+  auto name = config["name"];
+  if (name.Type() == YAML::NodeType::Scalar) {
+    vars["nameInServiceConfig"] = name.as<std::string>();
+  }
+
   auto publishing = config["publishing"];
   // This error is too common at the moment. Most libraries lack a
   // 'publishing' section.

@@ -361,6 +361,13 @@ TEST(FilesystemTest, PathAppend) {
   }
 }
 
+#ifndef _WIN32
+TEST(FilesystemTest, GetFileNames) {
+  auto path = CreateRandomFileName();
+  std::cout << path << std::endl;
+}
+#endif
+
 }  // namespace
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

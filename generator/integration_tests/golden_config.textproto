@@ -58,6 +58,7 @@ service {
   retryable_status_codes: [
     "kUnavailable"
   ]
+  override_service_config_yaml_name: "generator/integration_tests/test2.yaml"
 }
 
 service {
@@ -82,4 +83,5 @@ service {
   retryable_status_codes: [
     "kUnavailable"
   ]
+  override_service_config_yaml_name: "generator/integration_tests/test_deprecated.yaml"
 }
