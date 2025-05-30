@@ -43,7 +43,8 @@ export BAZEL_VC="${VCINSTALLDIR}"
 io::log_h1 "Starting Build"
 TIMEFORMAT="==> 🕑 bazel test done in %R seconds"
 time {
-  io::run bazelisk "${args[@]}" test "${test_args[@]}" --test_tag_filters=-integration-test -- //google/cloud:status_test //google/cloud/storage/tests:storage_include_test-default //google/cloud/storage/tests:storage_include_test-grpc-metadata "$@"
+  io::run bazelisk "${args[@]}" test "${test_args[@]}" --test_tag_filters=-integration-test -- //google/cloud:status_test "$@"
+  io::run bazelisk "${args[@]}" test "${test_args[@]}" -- //google/cloud/storage/tests:storage_include_test-default //google/cloud/storage/tests:storage_include_test-grpc-metadata
 }
 
 if [[ "${EXECUTE_INTEGRATION_TESTS}" == "true" ]]; then
