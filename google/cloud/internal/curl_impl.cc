@@ -371,8 +371,8 @@ Status CurlImpl::MakeRequest(HttpMethod method, RestContext& context,
   }
 
 #if CURL_AT_LEAST_VERSION(7, 19, 4)
-  status = handle_.SetOption(CURLOPT_NOPROXY, "metadata.google.internal");
-  if (!status.ok()) return OnTransferError(context, std::move(status));
+//  status = handle_.SetOption(CURLOPT_NOPROXY, "metadata.google.internal");
+//  if (!status.ok()) return OnTransferError(context, std::move(status));
 #endif
 
   if (interface_) {
