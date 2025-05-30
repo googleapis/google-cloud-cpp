@@ -170,7 +170,7 @@ class TextToSpeechClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.texttospeech.v1.SynthesizeSpeechRequest]: @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L166}
-  /// [google.cloud.texttospeech.v1.SynthesizeSpeechResponse]: @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L397}
+  /// [google.cloud.texttospeech.v1.SynthesizeSpeechResponse]: @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L424}
   ///
   // clang-format on
   StatusOr<google::cloud::texttospeech::v1::SynthesizeSpeechResponse>
@@ -205,7 +205,7 @@ class TextToSpeechClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.texttospeech.v1.SynthesizeSpeechRequest]: @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L166}
-  /// [google.cloud.texttospeech.v1.SynthesizeSpeechResponse]: @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L397}
+  /// [google.cloud.texttospeech.v1.SynthesizeSpeechResponse]: @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L424}
   ///
   // clang-format on
   StatusOr<google::cloud::texttospeech::v1::SynthesizeSpeechResponse>
@@ -235,8 +235,8 @@ class TextToSpeechClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.texttospeech.v1.StreamingSynthesizeRequest]: @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L464}
-  /// [google.cloud.texttospeech.v1.StreamingSynthesizeResponse]: @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L481}
+  /// [google.cloud.texttospeech.v1.StreamingSynthesizeRequest]: @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L495}
+  /// [google.cloud.texttospeech.v1.StreamingSynthesizeResponse]: @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L512}
   ///
   // clang-format on
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<

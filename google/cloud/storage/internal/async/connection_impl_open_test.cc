@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/mocks/mock_async_streaming_read_write_rpc.h"
+#include "google/cloud/storage/async/retry_policy.h"
 #include "google/cloud/storage/internal/async/connection_impl.h"
 #include "google/cloud/storage/internal/async/default_options.h"
 #include "google/cloud/storage/internal/grpc/ctype_cord_workaround.h"
@@ -67,8 +68,9 @@ auto TestOptions(Options options = {}) {
           // By default, disable resumes, most tests are simpler without them.
           .set<storage_experimental::ResumePolicyOption>(
               storage_experimental::LimitedErrorCountResumePolicy(0))
-          .set<storage::RetryPolicyOption>(
-              storage::LimitedErrorCountRetryPolicy(kRetryAttempts).clone())
+          .set<storage_experimental::AsyncRetryPolicyOption>(
+              storage_experimental::LimitedErrorCountRetryPolicy(kRetryAttempts)
+                  .clone())
           .set<storage::BackoffPolicyOption>(
               storage::ExponentialBackoffPolicy(ms(1), ms(2), 2.0).clone()));
   return DefaultOptionsAsync(std::move(options));
@@ -93,7 +95,7 @@ Status RedirectError(absl::string_view handle, absl::string_view token) {
     redirected.mutable_read_handle()->set_handle(std::string(handle));
     redirected.set_routing_token(std::string(token));
     auto details_proto = google::rpc::Status{};
-    details_proto.set_code(grpc::UNAVAILABLE);
+    details_proto.set_code(grpc::StatusCode::ABORTED);
     details_proto.set_message("redirect");
     details_proto.add_details()->PackFrom(redirected);
 
@@ -103,7 +105,7 @@ Status RedirectError(absl::string_view handle, absl::string_view token) {
   };
 
   return google::cloud::MakeStatusFromRpcError(
-      grpc::Status(grpc::UNAVAILABLE, "redirect", make_details()));
+      grpc::Status(grpc::StatusCode::ABORTED, "redirect", make_details()));
 }
 
 // Verify we can open a stream, without retries, timeouts, or any other
@@ -307,7 +309,7 @@ TEST(AsyncConnectionImplTest, HandleRedirectErrors) {
     next.first.set_value();
   }
 
-  ASSERT_THAT(pending.get(), StatusIs(StatusCode::kUnavailable));
+  ASSERT_THAT(pending.get(), StatusIs(StatusCode::kAborted));
 }
 
 TEST(AsyncConnectionImplTest, StopOnPermanentError) {

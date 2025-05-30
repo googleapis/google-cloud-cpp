@@ -116,7 +116,8 @@ class AsyncConnection {
   virtual future<StatusOr<ReadPayload>> ReadObjectRange(ReadObjectParams p) = 0;
 
   /**
-   * A thin wrapper around the `WriteObject()` parameters for appendable object
+   * A thin wrapper around the `StartAppendableObjectUpload()` parameters for
+   * appendable object
    */
   struct AppendableUploadParams {
     /// The bucket name and object name for the new object.

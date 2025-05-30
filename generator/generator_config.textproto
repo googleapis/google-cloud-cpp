@@ -1709,6 +1709,24 @@ discovery_products {
     generate_grpc_transport: false
   }
 
+  rest_services {
+    service_proto_path: "google/cloud/compute/interconnect_attachment_groups/v1/interconnect_attachment_groups.proto"
+    product_path: "google/cloud/compute/interconnect_attachment_groups/v1"
+    initial_copyright_year: "2025"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/interconnect_groups/v1/interconnect_groups.proto"
+    product_path: "google/cloud/compute/interconnect_groups/v1"
+    initial_copyright_year: "2025"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    generate_grpc_transport: false
+  }
+
   # update_discovery_doc.sh additions
 }
 
@@ -1830,6 +1848,14 @@ service {
   service_proto_path: "google/cloud/contentwarehouse/v1/synonymset_service.proto"
   product_path: "google/cloud/contentwarehouse/v1"
   initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+# Data Form
+service {
+  service_proto_path: "google/cloud/dataform/v1/dataform.proto"
+  product_path: "google/cloud/dataform/v1"
+  initial_copyright_year: "2025"
   retryable_status_codes: ["kUnavailable"]
 }
 
@@ -2802,6 +2828,14 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+# lustre
+service {
+  service_proto_path: "google/cloud/lustre/v1/lustre.proto"
+  product_path: "google/cloud/lustre/v1"
+  initial_copyright_year: "2025"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Managed Microsoft Active Directory (Managed Microsoft AD or Managed Identities)
 service {
   service_proto_path: "google/cloud/managedidentities/v1/managed_identities_service.proto"
@@ -2825,6 +2859,14 @@ service {
   product_path: "google/cloud/memcache/v1"
   forwarding_product_path: "google/cloud/memcache"
   initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+# Memorystore
+service {
+  service_proto_path: "google/cloud/memorystore/v1/memorystore.proto"
+  product_path: "google/cloud/memorystore/v1"
+  initial_copyright_year: "2025"
   retryable_status_codes: ["kUnavailable"]
 }
 
@@ -3014,6 +3056,14 @@ service {
   forwarding_product_path: "google/cloud/optimization"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
+}
+
+# Oracle database
+service {
+  service_proto_path: "google/cloud/oracledatabase/v1/oracledatabase.proto"
+  product_path: "google/cloud/oracledatabase/v1"
+  initial_copyright_year: "2025"
+  retryable_status_codes: ["kUnavailable", "kDeadlineExceeded"]
 }
 
 # Organization Policy

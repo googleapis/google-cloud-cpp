@@ -111,6 +111,35 @@ CloudControlsPartnerCoreAuth::GetPartner(
   return child_->GetPartner(context, options, request);
 }
 
+StatusOr<google::cloud::cloudcontrolspartner::v1::Customer>
+CloudControlsPartnerCoreAuth::CreateCustomer(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::cloudcontrolspartner::v1::CreateCustomerRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateCustomer(context, options, request);
+}
+
+StatusOr<google::cloud::cloudcontrolspartner::v1::Customer>
+CloudControlsPartnerCoreAuth::UpdateCustomer(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::cloudcontrolspartner::v1::UpdateCustomerRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateCustomer(context, options, request);
+}
+
+Status CloudControlsPartnerCoreAuth::DeleteCustomer(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::cloudcontrolspartner::v1::DeleteCustomerRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteCustomer(context, options, request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloudcontrolspartner_v1_internal
 }  // namespace cloud

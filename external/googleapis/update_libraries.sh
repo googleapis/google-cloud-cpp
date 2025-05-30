@@ -114,6 +114,11 @@ declare -A -r LIBRARIES=(
       "@com_google_googleapis//google/cloud/datacatalog/v1:datacatalog_cc_grpc" \
       "@com_google_googleapis//google/cloud/datacatalog/lineage/v1:lineage_cc_grpc"
   )"
+  ["dataform"]="$(
+    printf ",%s" \
+      "@com_google_googleapis//google/cloud/dataform/v1:dataform_cc_grpc" \
+      "@com_google_googleapis//google/cloud/dataform/logging/v1:logging_cc_grpc"
+  )"
   ["datafusion"]="@com_google_googleapis//google/cloud/datafusion/v1:datafusion_cc_grpc"
   ["datamigration"]="$(
     printf ",%s" \
@@ -183,9 +188,11 @@ declare -A -r LIBRARIES=(
   )"
   ["logging_type"]="@com_google_googleapis//google/logging/type:type_cc_grpc"
   ["logging"]="@com_google_googleapis//google/logging/v2:logging_cc_grpc"
+  ["lustre"]="@com_google_googleapis//google/cloud/lustre/v1:lustre_cc_grpc"
   ["managedidentities"]="@com_google_googleapis//google/cloud/managedidentities/v1:managedidentities_cc_grpc"
   ["managedkafka"]="@com_google_googleapis//google/cloud/managedkafka/v1:managedkafka_cc_grpc"
   ["memcache"]="@com_google_googleapis//google/cloud/memcache/v1:memcache_cc_grpc"
+  ["memorystore"]="@com_google_googleapis//google/cloud/memorystore/v1:memorystore_cc_grpc"
   ["metastore"]="$(
     printf ",%s" \
       "@com_google_googleapis//google/cloud/metastore/logging/v1:logging_cc_grpc" \
@@ -209,6 +216,7 @@ declare -A -r LIBRARIES=(
       "@com_google_googleapis//google/cloud/notebooks/v2:notebooks_cc_grpc"
   )"
   ["optimization"]="@com_google_googleapis//google/cloud/optimization/v1:optimization_cc_grpc"
+  ["oracledatabase"]="@com_google_googleapis//google/cloud/oracledatabase/v1:oracledatabase_cc_grpc"
   ["orgpolicy"]="@com_google_googleapis//google/cloud/orgpolicy/v2:orgpolicy_cc_grpc"
   ["osconfig"]="$(
     printf ",%s" \

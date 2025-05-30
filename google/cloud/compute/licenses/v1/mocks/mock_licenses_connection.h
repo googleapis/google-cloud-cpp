@@ -161,6 +161,49 @@ class MockLicensesConnection : public compute_licenses_v1::LicensesConnection {
       (google::cloud::cpp::compute::licenses::v1::
            TestIamPermissionsRequest const& request),
       (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateLicense(Matcher<google::cloud::cpp::compute::licenses::v1::UpdateLicenseRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+      UpdateLicense,
+      (google::cloud::cpp::compute::licenses::v1::UpdateLicenseRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateLicense(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, UpdateLicense,
+      (NoAwaitTag,
+       google::cloud::cpp::compute::licenses::v1::UpdateLicenseRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateLicense(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              UpdateLicense,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

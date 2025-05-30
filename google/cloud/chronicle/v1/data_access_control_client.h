@@ -447,7 +447,7 @@ class DataAccessControlServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.chronicle.v1.CreateDataAccessScopeRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/data_access_control.proto#L254}
-  /// [google.cloud.chronicle.v1.DataAccessScope]: @googleapis_reference_link{google/cloud/chronicle/v1/data_access_control.proto#L407}
+  /// [google.cloud.chronicle.v1.DataAccessScope]: @googleapis_reference_link{google/cloud/chronicle/v1/data_access_control.proto#L404}
   ///
   // clang-format on
   StatusOr<google::cloud::chronicle::v1::DataAccessScope> CreateDataAccessScope(
@@ -484,7 +484,7 @@ class DataAccessControlServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.chronicle.v1.CreateDataAccessScopeRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/data_access_control.proto#L254}
-  /// [google.cloud.chronicle.v1.DataAccessScope]: @googleapis_reference_link{google/cloud/chronicle/v1/data_access_control.proto#L407}
+  /// [google.cloud.chronicle.v1.DataAccessScope]: @googleapis_reference_link{google/cloud/chronicle/v1/data_access_control.proto#L404}
   ///
   // clang-format on
   StatusOr<google::cloud::chronicle::v1::DataAccessScope> CreateDataAccessScope(
@@ -511,7 +511,7 @@ class DataAccessControlServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.chronicle.v1.DataAccessScope]: @googleapis_reference_link{google/cloud/chronicle/v1/data_access_control.proto#L407}
+  /// [google.cloud.chronicle.v1.DataAccessScope]: @googleapis_reference_link{google/cloud/chronicle/v1/data_access_control.proto#L404}
   /// [google.cloud.chronicle.v1.GetDataAccessScopeRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/data_access_control.proto#L275}
   ///
   // clang-format on
@@ -541,7 +541,7 @@ class DataAccessControlServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.chronicle.v1.DataAccessScope]: @googleapis_reference_link{google/cloud/chronicle/v1/data_access_control.proto#L407}
+  /// [google.cloud.chronicle.v1.DataAccessScope]: @googleapis_reference_link{google/cloud/chronicle/v1/data_access_control.proto#L404}
   /// [google.cloud.chronicle.v1.GetDataAccessScopeRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/data_access_control.proto#L275}
   ///
   // clang-format on
@@ -577,7 +577,7 @@ class DataAccessControlServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.chronicle.v1.DataAccessScope]: @googleapis_reference_link{google/cloud/chronicle/v1/data_access_control.proto#L407}
+  /// [google.cloud.chronicle.v1.DataAccessScope]: @googleapis_reference_link{google/cloud/chronicle/v1/data_access_control.proto#L404}
   /// [google.cloud.chronicle.v1.ListDataAccessScopesRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/data_access_control.proto#L288}
   ///
   // clang-format on
@@ -616,7 +616,7 @@ class DataAccessControlServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.chronicle.v1.DataAccessScope]: @googleapis_reference_link{google/cloud/chronicle/v1/data_access_control.proto#L407}
+  /// [google.cloud.chronicle.v1.DataAccessScope]: @googleapis_reference_link{google/cloud/chronicle/v1/data_access_control.proto#L404}
   /// [google.cloud.chronicle.v1.ListDataAccessScopesRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/data_access_control.proto#L288}
   ///
   // clang-format on
@@ -652,7 +652,7 @@ class DataAccessControlServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.chronicle.v1.DataAccessScope]: @googleapis_reference_link{google/cloud/chronicle/v1/data_access_control.proto#L407}
+  /// [google.cloud.chronicle.v1.DataAccessScope]: @googleapis_reference_link{google/cloud/chronicle/v1/data_access_control.proto#L404}
   /// [google.cloud.chronicle.v1.UpdateDataAccessScopeRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/data_access_control.proto#L330}
   ///
   // clang-format on
@@ -683,7 +683,7 @@ class DataAccessControlServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.chronicle.v1.DataAccessScope]: @googleapis_reference_link{google/cloud/chronicle/v1/data_access_control.proto#L407}
+  /// [google.cloud.chronicle.v1.DataAccessScope]: @googleapis_reference_link{google/cloud/chronicle/v1/data_access_control.proto#L404}
   /// [google.cloud.chronicle.v1.UpdateDataAccessScopeRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/data_access_control.proto#L330}
   ///
   // clang-format on

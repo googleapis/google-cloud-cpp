@@ -126,6 +126,27 @@ LicensesRestMetadata::TestIamPermissions(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+LicensesRestMetadata::AsyncUpdateLicense(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::licenses::v1::UpdateLicenseRequest const&
+        request) {
+  SetMetadata(*rest_context, *options);
+  return child_->AsyncUpdateLicense(cq, std::move(rest_context),
+                                    std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+LicensesRestMetadata::UpdateLicense(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::licenses::v1::UpdateLicenseRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->UpdateLicense(rest_context, options, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 LicensesRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,

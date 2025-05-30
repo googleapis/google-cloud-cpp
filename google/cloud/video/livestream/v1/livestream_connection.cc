@@ -343,6 +343,92 @@ LivestreamServiceConnection::DeleteClip(google::longrunning::Operation const&) {
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+future<StatusOr<google::cloud::video::livestream::v1::DvrSession>>
+LivestreamServiceConnection::CreateDvrSession(
+    google::cloud::video::livestream::v1::CreateDvrSessionRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::video::livestream::v1::DvrSession>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+LivestreamServiceConnection::CreateDvrSession(
+    NoAwaitTag,
+    google::cloud::video::livestream::v1::CreateDvrSessionRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::video::livestream::v1::DvrSession>>
+LivestreamServiceConnection::CreateDvrSession(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::video::livestream::v1::DvrSession>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StreamRange<google::cloud::video::livestream::v1::DvrSession>
+LivestreamServiceConnection::ListDvrSessions(
+    google::cloud::video::livestream::v1::
+        ListDvrSessionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::video::livestream::v1::DvrSession>>();
+}
+
+StatusOr<google::cloud::video::livestream::v1::DvrSession>
+LivestreamServiceConnection::GetDvrSession(
+    google::cloud::video::livestream::v1::GetDvrSessionRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
+LivestreamServiceConnection::DeleteDvrSession(
+    google::cloud::video::livestream::v1::DeleteDvrSessionRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+LivestreamServiceConnection::DeleteDvrSession(
+    NoAwaitTag,
+    google::cloud::video::livestream::v1::DeleteDvrSessionRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
+LivestreamServiceConnection::DeleteDvrSession(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::video::livestream::v1::DvrSession>>
+LivestreamServiceConnection::UpdateDvrSession(
+    google::cloud::video::livestream::v1::UpdateDvrSessionRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::video::livestream::v1::DvrSession>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+LivestreamServiceConnection::UpdateDvrSession(
+    NoAwaitTag,
+    google::cloud::video::livestream::v1::UpdateDvrSessionRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::video::livestream::v1::DvrSession>>
+LivestreamServiceConnection::UpdateDvrSession(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::video::livestream::v1::DvrSession>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::video::livestream::v1::Asset>>
 LivestreamServiceConnection::CreateAsset(
     google::cloud::video::livestream::v1::CreateAssetRequest const&) {

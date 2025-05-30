@@ -57,7 +57,7 @@ class ObjectDescriptorReaderTracing : public ObjectDescriptorReader {
                 "gl-cpp.read-range",
                 {{/*sc::kRpcMessageType=*/"rpc.message.type", "RECEIVED"},
                  {sc::kThreadId, internal::CurrentThreadId()},
-                 {"message.size", payload.size()}});
+                 {"message.size", static_cast<std::uint32_t>(payload.size())}});
           } else {
             span->AddEvent(
                 "gl-cpp.read-range",

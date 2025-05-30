@@ -60,15 +60,16 @@ TEST(ObjectDescriptorReaderTracing, Read) {
 
   auto actual = reader->Read().get();
   auto spans = span_catcher->GetSpans();
-  EXPECT_THAT(spans, ElementsAre(AllOf(
-                         SpanNamed("storage::AsyncConnection::ReadObjectRange"),
-                         SpanHasEvents(AllOf(
-                             EventNamed("gl-cpp.read-range"),
-                             SpanEventAttributesAre(
-                                 OTelAttribute<std::size_t>("message.size", 10),
-                                 OTelAttribute<std::string>(sc::kThreadId, _),
-                                 OTelAttribute<std::string>("rpc.message.type",
-                                                            "RECEIVED")))))));
+  EXPECT_THAT(
+      spans, ElementsAre(
+                 AllOf(SpanNamed("storage::AsyncConnection::ReadObjectRange"),
+                       SpanHasEvents(AllOf(
+                           EventNamed("gl-cpp.read-range"),
+                           SpanEventAttributesAre(
+                               OTelAttribute<std::uint32_t>("message.size", 10),
+                               OTelAttribute<std::string>(sc::kThreadId, _),
+                               OTelAttribute<std::string>("rpc.message.type",
+                                                          "RECEIVED")))))));
 }
 
 TEST(ObjectDescriptorReaderTracing, ReadError) {

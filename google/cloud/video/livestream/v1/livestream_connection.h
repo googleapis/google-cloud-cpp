@@ -345,6 +345,56 @@ class LivestreamServiceConnection {
       StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
   DeleteClip(google::longrunning::Operation const& operation);
 
+  virtual future<StatusOr<google::cloud::video::livestream::v1::DvrSession>>
+  CreateDvrSession(
+      google::cloud::video::livestream::v1::CreateDvrSessionRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> CreateDvrSession(
+      NoAwaitTag,
+      google::cloud::video::livestream::v1::CreateDvrSessionRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::video::livestream::v1::DvrSession>>
+  CreateDvrSession(google::longrunning::Operation const& operation);
+
+  virtual StreamRange<google::cloud::video::livestream::v1::DvrSession>
+  ListDvrSessions(
+      google::cloud::video::livestream::v1::ListDvrSessionsRequest request);
+
+  virtual StatusOr<google::cloud::video::livestream::v1::DvrSession>
+  GetDvrSession(
+      google::cloud::video::livestream::v1::GetDvrSessionRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
+  DeleteDvrSession(
+      google::cloud::video::livestream::v1::DeleteDvrSessionRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteDvrSession(
+      NoAwaitTag,
+      google::cloud::video::livestream::v1::DeleteDvrSessionRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
+  DeleteDvrSession(google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::video::livestream::v1::DvrSession>>
+  UpdateDvrSession(
+      google::cloud::video::livestream::v1::UpdateDvrSessionRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateDvrSession(
+      NoAwaitTag,
+      google::cloud::video::livestream::v1::UpdateDvrSessionRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::video::livestream::v1::DvrSession>>
+  UpdateDvrSession(google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::video::livestream::v1::Asset>>
   CreateAsset(
       google::cloud::video::livestream::v1::CreateAssetRequest const& request);

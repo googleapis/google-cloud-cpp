@@ -602,7 +602,7 @@ class NetAppClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.netapp.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/netapp/v1/cloud_netapp_service.proto#L766}
-  /// [google.cloud.netapp.v1.ValidateDirectoryServiceRequest]: @googleapis_reference_link{google/cloud/netapp/v1/storage_pool.proto#L266}
+  /// [google.cloud.netapp.v1.ValidateDirectoryServiceRequest]: @googleapis_reference_link{google/cloud/netapp/v1/storage_pool.proto#L277}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
@@ -3668,7 +3668,7 @@ class NetAppClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.netapp.v1.BackupVault]: @googleapis_reference_link{google/cloud/netapp/v1/backup_vault.proto#L33}
-  /// [google.cloud.netapp.v1.CreateBackupVaultRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup_vault.proto#L133}
+  /// [google.cloud.netapp.v1.CreateBackupVaultRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup_vault.proto#L220}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::BackupVault>> CreateBackupVault(
@@ -3723,7 +3723,7 @@ class NetAppClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.netapp.v1.BackupVault]: @googleapis_reference_link{google/cloud/netapp/v1/backup_vault.proto#L33}
-  /// [google.cloud.netapp.v1.CreateBackupVaultRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup_vault.proto#L133}
+  /// [google.cloud.netapp.v1.CreateBackupVaultRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup_vault.proto#L220}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::BackupVault>> CreateBackupVault(
@@ -3778,7 +3778,7 @@ class NetAppClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.netapp.v1.BackupVault]: @googleapis_reference_link{google/cloud/netapp/v1/backup_vault.proto#L33}
-  /// [google.cloud.netapp.v1.GetBackupVaultRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup_vault.proto#L82}
+  /// [google.cloud.netapp.v1.GetBackupVaultRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup_vault.proto#L169}
   ///
   // clang-format on
   StatusOr<google::cloud::netapp::v1::BackupVault> GetBackupVault(
@@ -3808,7 +3808,7 @@ class NetAppClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.netapp.v1.BackupVault]: @googleapis_reference_link{google/cloud/netapp/v1/backup_vault.proto#L33}
-  /// [google.cloud.netapp.v1.GetBackupVaultRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup_vault.proto#L82}
+  /// [google.cloud.netapp.v1.GetBackupVaultRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup_vault.proto#L169}
   ///
   // clang-format on
   StatusOr<google::cloud::netapp::v1::BackupVault> GetBackupVault(
@@ -3845,7 +3845,7 @@ class NetAppClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.netapp.v1.BackupVault]: @googleapis_reference_link{google/cloud/netapp/v1/backup_vault.proto#L33}
-  /// [google.cloud.netapp.v1.ListBackupVaultsRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup_vault.proto#L94}
+  /// [google.cloud.netapp.v1.ListBackupVaultsRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup_vault.proto#L181}
   ///
   // clang-format on
   StreamRange<google::cloud::netapp::v1::BackupVault> ListBackupVaults(
@@ -3884,7 +3884,7 @@ class NetAppClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.netapp.v1.BackupVault]: @googleapis_reference_link{google/cloud/netapp/v1/backup_vault.proto#L33}
-  /// [google.cloud.netapp.v1.ListBackupVaultsRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup_vault.proto#L94}
+  /// [google.cloud.netapp.v1.ListBackupVaultsRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup_vault.proto#L181}
   ///
   // clang-format on
   StreamRange<google::cloud::netapp::v1::BackupVault> ListBackupVaults(
@@ -3922,7 +3922,7 @@ class NetAppClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.netapp.v1.BackupVault]: @googleapis_reference_link{google/cloud/netapp/v1/backup_vault.proto#L33}
-  /// [google.cloud.netapp.v1.UpdateBackupVaultRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup_vault.proto#L167}
+  /// [google.cloud.netapp.v1.UpdateBackupVaultRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup_vault.proto#L254}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::BackupVault>> UpdateBackupVault(
@@ -3975,7 +3975,7 @@ class NetAppClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.netapp.v1.BackupVault]: @googleapis_reference_link{google/cloud/netapp/v1/backup_vault.proto#L33}
-  /// [google.cloud.netapp.v1.UpdateBackupVaultRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup_vault.proto#L167}
+  /// [google.cloud.netapp.v1.UpdateBackupVaultRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup_vault.proto#L254}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::BackupVault>> UpdateBackupVault(
@@ -4036,7 +4036,7 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.netapp.v1.DeleteBackupVaultRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup_vault.proto#L155}
+  /// [google.cloud.netapp.v1.DeleteBackupVaultRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup_vault.proto#L242}
   /// [google.cloud.netapp.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/netapp/v1/cloud_netapp_service.proto#L766}
   ///
   // clang-format on
@@ -4087,7 +4087,7 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.netapp.v1.DeleteBackupVaultRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup_vault.proto#L155}
+  /// [google.cloud.netapp.v1.DeleteBackupVaultRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup_vault.proto#L242}
   /// [google.cloud.netapp.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/netapp/v1/cloud_netapp_service.proto#L766}
   ///
   // clang-format on
@@ -4161,7 +4161,7 @@ class NetAppClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.netapp.v1.Backup]: @googleapis_reference_link{google/cloud/netapp/v1/backup.proto#L33}
-  /// [google.cloud.netapp.v1.CreateBackupRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup.proto#L196}
+  /// [google.cloud.netapp.v1.CreateBackupRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup.proto#L218}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::Backup>> CreateBackup(
@@ -4219,7 +4219,7 @@ class NetAppClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.netapp.v1.Backup]: @googleapis_reference_link{google/cloud/netapp/v1/backup.proto#L33}
-  /// [google.cloud.netapp.v1.CreateBackupRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup.proto#L196}
+  /// [google.cloud.netapp.v1.CreateBackupRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup.proto#L218}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::Backup>> CreateBackup(
@@ -4273,7 +4273,7 @@ class NetAppClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.netapp.v1.Backup]: @googleapis_reference_link{google/cloud/netapp/v1/backup.proto#L33}
-  /// [google.cloud.netapp.v1.GetBackupRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup.proto#L186}
+  /// [google.cloud.netapp.v1.GetBackupRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup.proto#L208}
   ///
   // clang-format on
   StatusOr<google::cloud::netapp::v1::Backup> GetBackup(std::string const& name,
@@ -4303,7 +4303,7 @@ class NetAppClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.netapp.v1.Backup]: @googleapis_reference_link{google/cloud/netapp/v1/backup.proto#L33}
-  /// [google.cloud.netapp.v1.GetBackupRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup.proto#L186}
+  /// [google.cloud.netapp.v1.GetBackupRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup.proto#L208}
   ///
   // clang-format on
   StatusOr<google::cloud::netapp::v1::Backup> GetBackup(
@@ -4346,7 +4346,7 @@ class NetAppClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.netapp.v1.Backup]: @googleapis_reference_link{google/cloud/netapp/v1/backup.proto#L33}
-  /// [google.cloud.netapp.v1.ListBackupsRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup.proto#L136}
+  /// [google.cloud.netapp.v1.ListBackupsRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup.proto#L158}
   ///
   // clang-format on
   StreamRange<google::cloud::netapp::v1::Backup> ListBackups(
@@ -4385,7 +4385,7 @@ class NetAppClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.netapp.v1.Backup]: @googleapis_reference_link{google/cloud/netapp/v1/backup.proto#L33}
-  /// [google.cloud.netapp.v1.ListBackupsRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup.proto#L136}
+  /// [google.cloud.netapp.v1.ListBackupsRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup.proto#L158}
   ///
   // clang-format on
   StreamRange<google::cloud::netapp::v1::Backup> ListBackups(
@@ -4417,7 +4417,7 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.netapp.v1.DeleteBackupRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup.proto#L218}
+  /// [google.cloud.netapp.v1.DeleteBackupRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup.proto#L240}
   /// [google.cloud.netapp.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/netapp/v1/cloud_netapp_service.proto#L766}
   ///
   // clang-format on
@@ -4469,7 +4469,7 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.netapp.v1.DeleteBackupRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup.proto#L218}
+  /// [google.cloud.netapp.v1.DeleteBackupRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup.proto#L240}
   /// [google.cloud.netapp.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/netapp/v1/cloud_netapp_service.proto#L766}
   ///
   // clang-format on
@@ -4535,7 +4535,7 @@ class NetAppClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.netapp.v1.Backup]: @googleapis_reference_link{google/cloud/netapp/v1/backup.proto#L33}
-  /// [google.cloud.netapp.v1.UpdateBackupRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup.proto#L228}
+  /// [google.cloud.netapp.v1.UpdateBackupRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup.proto#L250}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::Backup>> UpdateBackup(
@@ -4588,7 +4588,7 @@ class NetAppClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.netapp.v1.Backup]: @googleapis_reference_link{google/cloud/netapp/v1/backup.proto#L33}
-  /// [google.cloud.netapp.v1.UpdateBackupRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup.proto#L228}
+  /// [google.cloud.netapp.v1.UpdateBackupRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup.proto#L250}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::Backup>> UpdateBackup(

@@ -155,6 +155,262 @@ StorageInsightsClient::GetReportDetail(
   return connection_->GetReportDetail(request);
 }
 
+StreamRange<google::cloud::storageinsights::v1::DatasetConfig>
+StorageInsightsClient::ListDatasetConfigs(std::string const& parent,
+                                          Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::storageinsights::v1::ListDatasetConfigsRequest request;
+  request.set_parent(parent);
+  return connection_->ListDatasetConfigs(request);
+}
+
+StreamRange<google::cloud::storageinsights::v1::DatasetConfig>
+StorageInsightsClient::ListDatasetConfigs(
+    google::cloud::storageinsights::v1::ListDatasetConfigsRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListDatasetConfigs(std::move(request));
+}
+
+StatusOr<google::cloud::storageinsights::v1::DatasetConfig>
+StorageInsightsClient::GetDatasetConfig(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::storageinsights::v1::GetDatasetConfigRequest request;
+  request.set_name(name);
+  return connection_->GetDatasetConfig(request);
+}
+
+StatusOr<google::cloud::storageinsights::v1::DatasetConfig>
+StorageInsightsClient::GetDatasetConfig(
+    google::cloud::storageinsights::v1::GetDatasetConfigRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetDatasetConfig(request);
+}
+
+future<StatusOr<google::cloud::storageinsights::v1::DatasetConfig>>
+StorageInsightsClient::CreateDatasetConfig(
+    std::string const& parent,
+    google::cloud::storageinsights::v1::DatasetConfig const& dataset_config,
+    std::string const& dataset_config_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::storageinsights::v1::CreateDatasetConfigRequest request;
+  request.set_parent(parent);
+  *request.mutable_dataset_config() = dataset_config;
+  request.set_dataset_config_id(dataset_config_id);
+  return connection_->CreateDatasetConfig(request);
+}
+
+StatusOr<google::longrunning::Operation>
+StorageInsightsClient::CreateDatasetConfig(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::storageinsights::v1::DatasetConfig const& dataset_config,
+    std::string const& dataset_config_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::storageinsights::v1::CreateDatasetConfigRequest request;
+  request.set_parent(parent);
+  *request.mutable_dataset_config() = dataset_config;
+  request.set_dataset_config_id(dataset_config_id);
+  return connection_->CreateDatasetConfig(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::storageinsights::v1::DatasetConfig>>
+StorageInsightsClient::CreateDatasetConfig(
+    google::cloud::storageinsights::v1::CreateDatasetConfigRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateDatasetConfig(request);
+}
+
+StatusOr<google::longrunning::Operation>
+StorageInsightsClient::CreateDatasetConfig(
+    NoAwaitTag,
+    google::cloud::storageinsights::v1::CreateDatasetConfigRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateDatasetConfig(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::storageinsights::v1::DatasetConfig>>
+StorageInsightsClient::CreateDatasetConfig(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateDatasetConfig(operation);
+}
+
+future<StatusOr<google::cloud::storageinsights::v1::DatasetConfig>>
+StorageInsightsClient::UpdateDatasetConfig(
+    google::cloud::storageinsights::v1::DatasetConfig const& dataset_config,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::storageinsights::v1::UpdateDatasetConfigRequest request;
+  *request.mutable_dataset_config() = dataset_config;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateDatasetConfig(request);
+}
+
+StatusOr<google::longrunning::Operation>
+StorageInsightsClient::UpdateDatasetConfig(
+    NoAwaitTag,
+    google::cloud::storageinsights::v1::DatasetConfig const& dataset_config,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::storageinsights::v1::UpdateDatasetConfigRequest request;
+  *request.mutable_dataset_config() = dataset_config;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateDatasetConfig(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::storageinsights::v1::DatasetConfig>>
+StorageInsightsClient::UpdateDatasetConfig(
+    google::cloud::storageinsights::v1::UpdateDatasetConfigRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateDatasetConfig(request);
+}
+
+StatusOr<google::longrunning::Operation>
+StorageInsightsClient::UpdateDatasetConfig(
+    NoAwaitTag,
+    google::cloud::storageinsights::v1::UpdateDatasetConfigRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateDatasetConfig(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::storageinsights::v1::DatasetConfig>>
+StorageInsightsClient::UpdateDatasetConfig(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateDatasetConfig(operation);
+}
+
+future<StatusOr<google::cloud::storageinsights::v1::OperationMetadata>>
+StorageInsightsClient::DeleteDatasetConfig(std::string const& name,
+                                           Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::storageinsights::v1::DeleteDatasetConfigRequest request;
+  request.set_name(name);
+  return connection_->DeleteDatasetConfig(request);
+}
+
+StatusOr<google::longrunning::Operation>
+StorageInsightsClient::DeleteDatasetConfig(NoAwaitTag, std::string const& name,
+                                           Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::storageinsights::v1::DeleteDatasetConfigRequest request;
+  request.set_name(name);
+  return connection_->DeleteDatasetConfig(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::storageinsights::v1::OperationMetadata>>
+StorageInsightsClient::DeleteDatasetConfig(
+    google::cloud::storageinsights::v1::DeleteDatasetConfigRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteDatasetConfig(request);
+}
+
+StatusOr<google::longrunning::Operation>
+StorageInsightsClient::DeleteDatasetConfig(
+    NoAwaitTag,
+    google::cloud::storageinsights::v1::DeleteDatasetConfigRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteDatasetConfig(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::storageinsights::v1::OperationMetadata>>
+StorageInsightsClient::DeleteDatasetConfig(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteDatasetConfig(operation);
+}
+
+future<StatusOr<google::cloud::storageinsights::v1::LinkDatasetResponse>>
+StorageInsightsClient::LinkDataset(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::storageinsights::v1::LinkDatasetRequest request;
+  request.set_name(name);
+  return connection_->LinkDataset(request);
+}
+
+StatusOr<google::longrunning::Operation> StorageInsightsClient::LinkDataset(
+    NoAwaitTag, std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::storageinsights::v1::LinkDatasetRequest request;
+  request.set_name(name);
+  return connection_->LinkDataset(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::storageinsights::v1::LinkDatasetResponse>>
+StorageInsightsClient::LinkDataset(
+    google::cloud::storageinsights::v1::LinkDatasetRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->LinkDataset(request);
+}
+
+StatusOr<google::longrunning::Operation> StorageInsightsClient::LinkDataset(
+    NoAwaitTag,
+    google::cloud::storageinsights::v1::LinkDatasetRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->LinkDataset(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::storageinsights::v1::LinkDatasetResponse>>
+StorageInsightsClient::LinkDataset(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->LinkDataset(operation);
+}
+
+future<StatusOr<google::cloud::storageinsights::v1::OperationMetadata>>
+StorageInsightsClient::UnlinkDataset(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::storageinsights::v1::UnlinkDatasetRequest request;
+  request.set_name(name);
+  return connection_->UnlinkDataset(request);
+}
+
+StatusOr<google::longrunning::Operation> StorageInsightsClient::UnlinkDataset(
+    NoAwaitTag, std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::storageinsights::v1::UnlinkDatasetRequest request;
+  request.set_name(name);
+  return connection_->UnlinkDataset(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::storageinsights::v1::OperationMetadata>>
+StorageInsightsClient::UnlinkDataset(
+    google::cloud::storageinsights::v1::UnlinkDatasetRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UnlinkDataset(request);
+}
+
+StatusOr<google::longrunning::Operation> StorageInsightsClient::UnlinkDataset(
+    NoAwaitTag,
+    google::cloud::storageinsights::v1::UnlinkDatasetRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UnlinkDataset(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::storageinsights::v1::OperationMetadata>>
+StorageInsightsClient::UnlinkDataset(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UnlinkDataset(operation);
+}
+
 StreamRange<google::cloud::location::Location>
 StorageInsightsClient::ListLocations(
     google::cloud::location::ListLocationsRequest request, Options opts) {

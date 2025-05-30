@@ -96,9 +96,9 @@ class StorageBatchOperationsClient {
 
   // clang-format off
   ///
-  /// Lists Jobs in a given project and location.
+  /// Lists Jobs in a given project.
   ///
-  /// @param parent  Required. Format: projects/{project_id}/locations/{location_id} .
+  /// @param parent  Required. Format: projects/{project_id}/locations/global.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -130,7 +130,7 @@ class StorageBatchOperationsClient {
 
   // clang-format off
   ///
-  /// Lists Jobs in a given project and location.
+  /// Lists Jobs in a given project.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -173,7 +173,7 @@ class StorageBatchOperationsClient {
   /// Gets a batch job.
   ///
   /// @param name  Required. `name` of the job to retrieve.
-  ///  Format: projects/{project_id}/locations/{location_id}/jobs/{job_id} .
+  ///  Format: projects/{project_id}/locations/global/jobs/{job_id} .
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -353,7 +353,7 @@ class StorageBatchOperationsClient {
   /// Deletes a batch job.
   ///
   /// @param name  Required. The `name` of the job to delete.
-  ///  Format: projects/{project_id}/locations/{location_id}/jobs/{job_id} .
+  ///  Format: projects/{project_id}/locations/global/jobs/{job_id} .
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [`Status`] object. If the request failed, the
@@ -404,7 +404,7 @@ class StorageBatchOperationsClient {
   /// Cancels a batch job.
   ///
   /// @param name  Required. The `name` of the job to cancel.
-  ///  Format: projects/{project_id}/locations/{location_id}/jobs/{job_id}.
+  ///  Format: projects/{project_id}/locations/global/jobs/{job_id}.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type

@@ -62,6 +62,10 @@ class LicensesConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency TestIamPermissions(
       google::cloud::cpp::compute::licenses::v1::
           TestIamPermissionsRequest const& request);
+
+  virtual google::cloud::Idempotency UpdateLicense(
+      google::cloud::cpp::compute::licenses::v1::UpdateLicenseRequest const&
+          request);
 };
 
 std::unique_ptr<LicensesConnectionIdempotencyPolicy>

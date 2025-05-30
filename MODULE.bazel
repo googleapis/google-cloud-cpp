@@ -55,12 +55,12 @@ bazel_dep(name = "grpc", version = "1.71.0", repo_name = "com_github_grpc_grpc")
 bazel_dep(name = "googleapis", version = "0.0.0", repo_name = "com_google_googleapis")
 archive_override(
     module_name = "googleapis",
-    integrity = "sha256-ldObPg6nqf4R4qabGFmsLUYaneNFVsbJ1AH/o91uFBg=",
+    integrity = "sha256-OHTWAJ0o922Gd7uy6uBV6wUmuWq2OY5zeRI0tWLAbr0=",
     patch_strip = 1,
     patches = ["//bazel:googleapis.modules.patch"],
-    strip_prefix = "googleapis-113746270b58d12303e1e4f5eb01bc822aa7d68d",
+    strip_prefix = "googleapis-c1af7f23f557e8690a9e16bc41b1a2fae43e9a3e",
     urls = [
-        "https://github.com/googleapis/googleapis/archive/113746270b58d12303e1e4f5eb01bc822aa7d68d.tar.gz",
+        "https://github.com/googleapis/googleapis/archive/c1af7f23f557e8690a9e16bc41b1a2fae43e9a3e.tar.gz",
     ],
 )
 

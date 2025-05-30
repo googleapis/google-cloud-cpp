@@ -2160,7 +2160,7 @@ class BigtableInstanceAdminClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.bigtable.admin.v2.CreateMaterializedViewRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L1013}
-  /// [google.bigtable.admin.v2.MaterializedView]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L488}
+  /// [google.bigtable.admin.v2.MaterializedView]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L491}
   ///
   // clang-format on
   future<StatusOr<google::bigtable::admin::v2::MaterializedView>>
@@ -2216,7 +2216,7 @@ class BigtableInstanceAdminClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.bigtable.admin.v2.CreateMaterializedViewRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L1013}
-  /// [google.bigtable.admin.v2.MaterializedView]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L488}
+  /// [google.bigtable.admin.v2.MaterializedView]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L491}
   ///
   // clang-format on
   future<StatusOr<google::bigtable::admin::v2::MaterializedView>>
@@ -2274,7 +2274,7 @@ class BigtableInstanceAdminClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.bigtable.admin.v2.GetMaterializedViewRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L1046}
-  /// [google.bigtable.admin.v2.MaterializedView]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L488}
+  /// [google.bigtable.admin.v2.MaterializedView]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L491}
   ///
   // clang-format on
   StatusOr<google::bigtable::admin::v2::MaterializedView> GetMaterializedView(
@@ -2304,7 +2304,7 @@ class BigtableInstanceAdminClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.bigtable.admin.v2.GetMaterializedViewRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L1046}
-  /// [google.bigtable.admin.v2.MaterializedView]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L488}
+  /// [google.bigtable.admin.v2.MaterializedView]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L491}
   ///
   // clang-format on
   StatusOr<google::bigtable::admin::v2::MaterializedView> GetMaterializedView(
@@ -2341,7 +2341,7 @@ class BigtableInstanceAdminClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.bigtable.admin.v2.ListMaterializedViewsRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L1059}
-  /// [google.bigtable.admin.v2.MaterializedView]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L488}
+  /// [google.bigtable.admin.v2.MaterializedView]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L491}
   ///
   // clang-format on
   StreamRange<google::bigtable::admin::v2::MaterializedView>
@@ -2380,7 +2380,7 @@ class BigtableInstanceAdminClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.bigtable.admin.v2.ListMaterializedViewsRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L1059}
-  /// [google.bigtable.admin.v2.MaterializedView]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L488}
+  /// [google.bigtable.admin.v2.MaterializedView]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L491}
   ///
   // clang-format on
   StreamRange<google::bigtable::admin::v2::MaterializedView>
@@ -2418,7 +2418,7 @@ class BigtableInstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.MaterializedView]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L488}
+  /// [google.bigtable.admin.v2.MaterializedView]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L491}
   /// [google.bigtable.admin.v2.UpdateMaterializedViewRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L1093}
   ///
   // clang-format on
@@ -2473,7 +2473,7 @@ class BigtableInstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.MaterializedView]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L488}
+  /// [google.bigtable.admin.v2.MaterializedView]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L491}
   /// [google.bigtable.admin.v2.UpdateMaterializedViewRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L1093}
   ///
   // clang-format on

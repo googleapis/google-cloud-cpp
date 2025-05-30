@@ -94,6 +94,89 @@ Idempotency StorageControlConnectionIdempotencyPolicy::ListManagedFolders(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency StorageControlConnectionIdempotencyPolicy::CreateAnywhereCache(
+    google::storage::control::v2::CreateAnywhereCacheRequest const& request) {
+  if (!request.request_id().empty()) return Idempotency::kIdempotent;
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency StorageControlConnectionIdempotencyPolicy::UpdateAnywhereCache(
+    google::storage::control::v2::UpdateAnywhereCacheRequest const& request) {
+  if (!request.request_id().empty()) return Idempotency::kIdempotent;
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency StorageControlConnectionIdempotencyPolicy::DisableAnywhereCache(
+    google::storage::control::v2::DisableAnywhereCacheRequest const& request) {
+  if (!request.request_id().empty()) return Idempotency::kIdempotent;
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency StorageControlConnectionIdempotencyPolicy::PauseAnywhereCache(
+    google::storage::control::v2::PauseAnywhereCacheRequest const& request) {
+  if (!request.request_id().empty()) return Idempotency::kIdempotent;
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency StorageControlConnectionIdempotencyPolicy::ResumeAnywhereCache(
+    google::storage::control::v2::ResumeAnywhereCacheRequest const& request) {
+  if (!request.request_id().empty()) return Idempotency::kIdempotent;
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency StorageControlConnectionIdempotencyPolicy::GetAnywhereCache(
+    google::storage::control::v2::GetAnywhereCacheRequest const& request) {
+  if (!request.request_id().empty()) return Idempotency::kIdempotent;
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency StorageControlConnectionIdempotencyPolicy::ListAnywhereCaches(
+    google::storage::control::v2::ListAnywhereCachesRequest
+        request) {  // NOLINT
+  if (!request.request_id().empty()) return Idempotency::kIdempotent;
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
+StorageControlConnectionIdempotencyPolicy::GetProjectIntelligenceConfig(
+    google::storage::control::v2::GetProjectIntelligenceConfigRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency
+StorageControlConnectionIdempotencyPolicy::UpdateProjectIntelligenceConfig(
+    google::storage::control::v2::
+        UpdateProjectIntelligenceConfigRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
+StorageControlConnectionIdempotencyPolicy::GetFolderIntelligenceConfig(
+    google::storage::control::v2::GetFolderIntelligenceConfigRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency
+StorageControlConnectionIdempotencyPolicy::UpdateFolderIntelligenceConfig(
+    google::storage::control::v2::
+        UpdateFolderIntelligenceConfigRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
+StorageControlConnectionIdempotencyPolicy::GetOrganizationIntelligenceConfig(
+    google::storage::control::v2::
+        GetOrganizationIntelligenceConfigRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency
+StorageControlConnectionIdempotencyPolicy::UpdateOrganizationIntelligenceConfig(
+    google::storage::control::v2::
+        UpdateOrganizationIntelligenceConfigRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<StorageControlConnectionIdempotencyPolicy>
 MakeDefaultStorageControlConnectionIdempotencyPolicy() {
   return std::make_unique<StorageControlConnectionIdempotencyPolicy>();
