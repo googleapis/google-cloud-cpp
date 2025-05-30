@@ -12,17 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-createTime: '2021-04-09T18:15:49.856898769Z'
 filename: ci/cloudbuild/cloudbuild.yaml
 github:
   name: google-cloud-cpp
   owner: googleapis
   pullRequest:
-    branch: ^main$
+    branch: prepare-for-v3.0.0
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
-id: 94aaedf9-cbc3-4b7b-b571-a6281587d358
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: quickstart-cmake-pr
+name: prepare-for-v3-0-0-quickstart-cmake-pr
 substitutions:
   _BUILD_NAME: quickstart-cmake
   _DISTRO: ubuntu-focal

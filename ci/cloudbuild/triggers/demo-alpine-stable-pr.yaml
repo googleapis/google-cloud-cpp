@@ -12,18 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-createTime: '2022-06-24T18:22:53.925960095Z'
 filename: ci/cloudbuild/cloudbuild.yaml
 github:
   name: google-cloud-cpp
   owner: googleapis
   pullRequest:
-    branch: ^main$
+    branch: prepare-for-v3.0.0
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
-id: 85f2a500-3643-4ac3-96be-4b824a69762f
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: demo-alpine-stable-pr
-resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/85f2a500-3643-4ac3-96be-4b824a69762f
+name: prepare-for-v3-0-0-demo-alpine-stable-pr
 substitutions:
   _BUILD_NAME: demo-install
   _DISTRO: demo-alpine-stable

@@ -12,17 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-createTime: '2023-09-09T16:23:55.750964253Z'
 filename: ci/cloudbuild/cloudbuild.yaml
 github:
   name: google-cloud-cpp
   owner: googleapis
   push:
-    branch: ^main$
-id: 6e1b6108-8b51-4751-ba8c-59dd82c062dc
+    branch: prepare-for-v3.0.0
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: demo-debian-bookworm-ci
-resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/6e1b6108-8b51-4751-ba8c-59dd82c062dc
+name: prepare-for-v3-0-0-demo-debian-bookworm-ci
 substitutions:
   _BUILD_NAME: demo-install
   _DISTRO: demo-debian-bookworm
