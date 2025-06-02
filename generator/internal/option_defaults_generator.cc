@@ -141,8 +141,13 @@ auto constexpr kBackoffScaling = 2.0;
           R"""(      absl::StrCat(location, "-", "$service_endpoint$"));)""");
       break;
     case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:
-    case ServiceConfiguration::LOCATION_OPTIONALLY_DEPENDENT:
       CcPrint(R"""(      absl::StrCat(location, )"""
+              R"""(location.empty() ? "" : "-", "$service_endpoint$"));)""");
+      break;
+    case ServiceConfiguration::LOCATION_OPTIONALLY_DEPENDENT:
+      CcPrint(R"""(      // optional location tag for generating docs
+)"""
+              R"""(      absl::StrCat(location, )"""
               R"""(location.empty() ? "" : "-", "$service_endpoint$"));)""");
       break;
     default:
