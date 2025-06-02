@@ -33,6 +33,7 @@
 #include <google/cloud/resourcemanager/v3/tag_holds.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <string>
 
 namespace google {
 namespace cloud {
@@ -232,8 +233,18 @@ class TagHoldsConnection {
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
+ * @param location Sets the prefix for the default `EndpointOption` value.
  * @param options (optional) Configure the `TagHoldsConnection` created by
  * this function.
+ */
+std::shared_ptr<TagHoldsConnection> MakeTagHoldsConnection(
+    std::string const& location, Options options = {});
+
+/**
+ * A factory function to construct an object of type `TagHoldsConnection`.
+ *
+ * This overload of `MakeTagHoldsConnection` does not require a location
+ * argument, creating a connection to the global service endpoint.
  */
 std::shared_ptr<TagHoldsConnection> MakeTagHoldsConnection(
     Options options = {});

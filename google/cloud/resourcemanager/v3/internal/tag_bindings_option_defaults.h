@@ -21,13 +21,14 @@
 
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
+#include <string>
 
 namespace google {
 namespace cloud {
 namespace resourcemanager_v3_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-Options TagBindingsDefaultOptions(Options options);
+Options TagBindingsDefaultOptions(std::string const& location, Options options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace resourcemanager_v3_internal

@@ -19,6 +19,7 @@
 #include "google/cloud/resourcemanager/v3/internal/tag_bindings_option_defaults.h"
 #include "google/cloud/resourcemanager/v3/tag_bindings_connection.h"
 #include "google/cloud/resourcemanager/v3/tag_bindings_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
@@ -33,11 +34,14 @@ namespace {
 auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
-Options TagBindingsDefaultOptions(Options options) {
+Options TagBindingsDefaultOptions(std::string const& location,
+                                  Options options) {
   options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_TAG_BINDINGS_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_TAG_BINDINGS_AUTHORITY",
-      "cloudresourcemanager.googleapis.com");
+      // optional location tag for generating docs
+      absl::StrCat(location, location.empty() ? "" : "-",
+                   "cloudresourcemanager.googleapis.com"));
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<resourcemanager_v3::TagBindingsRetryPolicyOption>()) {
     options.set<resourcemanager_v3::TagBindingsRetryPolicyOption>(
