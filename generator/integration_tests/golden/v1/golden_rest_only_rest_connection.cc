@@ -35,12 +35,12 @@ namespace golden_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<GoldenRestOnlyConnection> MakeGoldenRestOnlyConnectionRest(
-    Options options) {
+    std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
       UnifiedCredentialsOptionList, rest_internal::TargetApiVersionOption,
       GoldenRestOnlyPolicyOptionList>(options, __func__);
   options = golden_v1_internal::GoldenRestOnlyDefaultOptions(
-      std::move(options));
+      location, std::move(options));
   auto background = std::make_unique<
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
   auto stub = golden_v1_internal::CreateDefaultGoldenRestOnlyRestStub(
@@ -49,6 +49,11 @@ std::shared_ptr<GoldenRestOnlyConnection> MakeGoldenRestOnlyConnectionRest(
       std::make_shared<
           golden_v1_internal::GoldenRestOnlyRestConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));
+}
+
+std::shared_ptr<GoldenRestOnlyConnection> MakeGoldenRestOnlyConnectionRest(
+    Options options) {
+  return MakeGoldenRestOnlyConnectionRest(std::string{}, std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
