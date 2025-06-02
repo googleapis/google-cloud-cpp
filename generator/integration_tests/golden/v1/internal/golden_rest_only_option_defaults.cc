@@ -38,6 +38,7 @@ Options GoldenRestOnlyDefaultOptions(std::string const& location, Options option
   options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_GOLDEN_REST_ONLY_ENDPOINT",
       "", "GOOGLE_CLOUD_CPP_GOLDEN_REST_ONLY_AUTHORITY",
+      // optional location tag for generating docs
       absl::StrCat(location, location.empty() ? "" : "-", "goldenrestonly.googleapis.com"));
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<golden_v1::GoldenRestOnlyRetryPolicyOption>()) {

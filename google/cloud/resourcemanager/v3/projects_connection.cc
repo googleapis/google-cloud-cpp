@@ -190,12 +190,13 @@ StatusOr<google::longrunning::Operation> ProjectsConnection::GetOperation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-std::shared_ptr<ProjectsConnection> MakeProjectsConnection(Options options) {
+std::shared_ptr<ProjectsConnection> MakeProjectsConnection(
+    std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  UnifiedCredentialsOptionList,
                                  ProjectsPolicyOptionList>(options, __func__);
-  options =
-      resourcemanager_v3_internal::ProjectsDefaultOptions(std::move(options));
+  options = resourcemanager_v3_internal::ProjectsDefaultOptions(
+      location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = resourcemanager_v3_internal::CreateDefaultProjectsStub(
@@ -203,6 +204,10 @@ std::shared_ptr<ProjectsConnection> MakeProjectsConnection(Options options) {
   return resourcemanager_v3_internal::MakeProjectsTracingConnection(
       std::make_shared<resourcemanager_v3_internal::ProjectsConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));
+}
+
+std::shared_ptr<ProjectsConnection> MakeProjectsConnection(Options options) {
+  return MakeProjectsConnection(std::string{}, std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

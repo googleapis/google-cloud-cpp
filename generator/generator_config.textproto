@@ -3302,6 +3302,7 @@ service {
   forwarding_product_path: "google/cloud/resourcemanager"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_OPTIONALLY_DEPENDENT
 }
 
 service {
@@ -3310,6 +3311,7 @@ service {
   forwarding_product_path: "google/cloud/resourcemanager"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_OPTIONALLY_DEPENDENT
 }
 
 service {
@@ -3318,6 +3320,7 @@ service {
   forwarding_product_path: "google/cloud/resourcemanager"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_OPTIONALLY_DEPENDENT
 }
 
 service {
@@ -3325,6 +3328,7 @@ service {
   product_path: "google/cloud/resourcemanager/v3"
   initial_copyright_year: "2023"
   retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_OPTIONALLY_DEPENDENT
 }
 
 service {
@@ -3332,6 +3336,7 @@ service {
   product_path: "google/cloud/resourcemanager/v3"
   initial_copyright_year: "2023"
   retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_OPTIONALLY_DEPENDENT
 }
 
 service {
@@ -3339,6 +3344,7 @@ service {
   product_path: "google/cloud/resourcemanager/v3"
   initial_copyright_year: "2023"
   retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_OPTIONALLY_DEPENDENT
 }
 
 service {
@@ -3346,6 +3352,7 @@ service {
   product_path: "google/cloud/resourcemanager/v3"
   initial_copyright_year: "2023"
   retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_OPTIONALLY_DEPENDENT
 }
 
 # Retail

@@ -190,12 +190,13 @@ StatusOr<google::longrunning::Operation> FoldersConnection::GetOperation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-std::shared_ptr<FoldersConnection> MakeFoldersConnection(Options options) {
+std::shared_ptr<FoldersConnection> MakeFoldersConnection(
+    std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  UnifiedCredentialsOptionList,
                                  FoldersPolicyOptionList>(options, __func__);
-  options =
-      resourcemanager_v3_internal::FoldersDefaultOptions(std::move(options));
+  options = resourcemanager_v3_internal::FoldersDefaultOptions(
+      location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = resourcemanager_v3_internal::CreateDefaultFoldersStub(
@@ -203,6 +204,10 @@ std::shared_ptr<FoldersConnection> MakeFoldersConnection(Options options) {
   return resourcemanager_v3_internal::MakeFoldersTracingConnection(
       std::make_shared<resourcemanager_v3_internal::FoldersConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));
+}
+
+std::shared_ptr<FoldersConnection> MakeFoldersConnection(Options options) {
+  return MakeFoldersConnection(std::string{}, std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
