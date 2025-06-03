@@ -27,7 +27,7 @@ absl::optional<google::storage::v2::Object> ObjectDescriptor::metadata() const {
 
 std::pair<AsyncReader, AsyncToken> ObjectDescriptor::Read(std::int64_t offset,
                                                           std::int64_t limit) {
-  auto max_range =
+  std::int64_t max_range =
       impl_->options().get<storage_experimental::MaximumRangeSizeOption>();
   if (limit > max_range) {
     impl_->MakeSubsequentStream();
