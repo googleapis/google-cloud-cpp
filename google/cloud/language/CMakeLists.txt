@@ -31,6 +31,11 @@ if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     set_tests_properties(
         language_quickstart
         PROPERTIES
-            LABELS "integration-test;quickstart" ENVIRONMENT
+            LABELS
+            "integration-test;quickstart"
+            # TODO(#15191): remove the regex once the service recovers
+            PASS_REGULAR_EXPRESSION
+            "Internal error encountered"
+            ENVIRONMENT
             GOOGLE_CLOUD_CPP_USER_PROJECT=$ENV{GOOGLE_CLOUD_CPP_USER_PROJECT})
 endif ()
