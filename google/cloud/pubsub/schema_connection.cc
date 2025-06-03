@@ -113,12 +113,13 @@ SchemaServiceConnection::TestIamPermissions(
 }
 
 std::shared_ptr<SchemaServiceConnection> MakeSchemaServiceConnection(
-    Options options) {
+    std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  UnifiedCredentialsOptionList,
                                  SchemaServicePolicyOptionList>(options,
                                                                 __func__);
-  options = pubsub_internal::SchemaServiceDefaultOptions(std::move(options));
+  options = pubsub_internal::SchemaServiceDefaultOptions(location,
+                                                         std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub =
@@ -126,6 +127,11 @@ std::shared_ptr<SchemaServiceConnection> MakeSchemaServiceConnection(
   return pubsub_internal::MakeSchemaServiceTracingConnection(
       std::make_shared<pubsub_internal::SchemaServiceConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));
+}
+
+std::shared_ptr<SchemaServiceConnection> MakeSchemaServiceConnection(
+    Options options) {
+  return MakeSchemaServiceConnection(std::string{}, std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -45,9 +45,13 @@ std::size_t DefaultThreadCount() {
   return n == 0 ? kDefaultThreadCount : n;
 }
 
-Options DefaultCommonOptions(Options opts) {
+Options DefaultCommonOptions(std::string const& location, Options opts) {
   opts = internal::PopulateCommonOptions(
-      std::move(opts), "", "PUBSUB_EMULATOR_HOST", "", "pubsub.googleapis.com");
+      std::move(opts), "", "PUBSUB_EMULATOR_HOST", "",
+      // optional location tag for generating docs
+      absl::StrCat(location, location.empty() ? "" : "-",
+                   "pubsub.googleapis.com"));
+
   opts = internal::PopulateGrpcOptions(std::move(opts));
 
   if (!opts.has<GrpcNumChannelsOption>()) {
@@ -72,6 +76,15 @@ Options DefaultCommonOptions(Options opts) {
   num_channels = (std::max)(num_channels, 1);
 
   return opts;
+}
+
+Options DefaultCommonOptions(Options opts) {
+  return DefaultCommonOptions("", std::move(opts));
+}
+
+Options DefaultPublisherOptions(std::string const& location, Options opts) {
+  return DefaultCommonOptions(location,
+                              DefaultPublisherOptionsOnly(std::move(opts)));
 }
 
 Options DefaultPublisherOptions(Options opts) {
@@ -115,6 +128,11 @@ Options DefaultPublisherOptionsOnly(Options opts) {
   }
 
   return opts;
+}
+
+Options DefaultSubscriberOptions(std::string const& location, Options opts) {
+  return DefaultCommonOptions(location,
+                              DefaultSubscriberOptionsOnly(std::move(opts)));
 }
 
 Options DefaultSubscriberOptions(Options opts) {
