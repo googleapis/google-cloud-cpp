@@ -51,6 +51,7 @@ Status OptionDefaultsGenerator::GenerateHeader() {
   switch (endpoint_location_style) {
     case ServiceConfiguration::LOCATION_DEPENDENT:
     case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:
+    case ServiceConfiguration::LOCATION_OPTIONALLY_DEPENDENT:
       HeaderSystemIncludes({"string"});
       break;
     default:
@@ -64,6 +65,7 @@ Status OptionDefaultsGenerator::GenerateHeader() {
   switch (endpoint_location_style) {
     case ServiceConfiguration::LOCATION_DEPENDENT:
     case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:
+    case ServiceConfiguration::LOCATION_OPTIONALLY_DEPENDENT:
       HeaderPrint("std::string const& location, ");
       break;
     default:
@@ -97,6 +99,7 @@ Status OptionDefaultsGenerator::GenerateCc() {
   switch (endpoint_location_style) {
     case ServiceConfiguration::LOCATION_DEPENDENT:
     case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:
+    case ServiceConfiguration::LOCATION_OPTIONALLY_DEPENDENT:
       CcLocalIncludes({"google/cloud/internal/absl_str_cat_quiet.h"});
       break;
     default:
@@ -121,6 +124,7 @@ auto constexpr kBackoffScaling = 2.0;
   switch (endpoint_location_style) {
     case ServiceConfiguration::LOCATION_DEPENDENT:
     case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:
+    case ServiceConfiguration::LOCATION_OPTIONALLY_DEPENDENT:
       CcPrint("std::string const& location, ");
       break;
     default:
@@ -138,6 +142,12 @@ auto constexpr kBackoffScaling = 2.0;
       break;
     case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:
       CcPrint(R"""(      absl::StrCat(location, )"""
+              R"""(location.empty() ? "" : "-", "$service_endpoint$"));)""");
+      break;
+    case ServiceConfiguration::LOCATION_OPTIONALLY_DEPENDENT:
+      CcPrint(R"""(      // optional location tag for generating docs
+)"""
+              R"""(      absl::StrCat(location, )"""
               R"""(location.empty() ? "" : "-", "$service_endpoint$"));)""");
       break;
     default:

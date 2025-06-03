@@ -64,8 +64,10 @@ while IFS= read -r -d $'\0' option_defaults_cc; do
   variable=$(grep -om1 "${variable_re}" "${option_defaults_cc}")
   endpoint_re='"[^"]*?\.googleapis\.com"'
   endpoint=$(grep -Pom1 "${endpoint_re}" "${option_defaults_cc}")
-  if grep -q 'location,' "${option_defaults_cc}"; then
-    endpoint="\"<location>-${endpoint:1:-1}\""
+  if ! grep -q 'optional location tag' "${option_defaults_cc}"; then
+    if grep -q 'location,' "${option_defaults_cc}"; then
+      endpoint="\"<location>-${endpoint:1:-1}\""
+    fi
   fi
   make_connection_re='Make.*?Connection()'
   make_connection=$(grep -Pom1 "${make_connection_re}" "${connection_h}")

@@ -42,7 +42,7 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
   //     https://cloud.google.com/vpc/docs/private-google-access
   auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>(
       "private.googleapis.com");
-  auto client = google::cloud::pubsub_admin::TopicAdminClient(
+  auto vpc_client = google::cloud::pubsub_admin::TopicAdminClient(
       google::cloud::pubsub_admin::MakeTopicAdminConnection(options));
   //! [set-client-endpoint]
 }
