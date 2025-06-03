@@ -109,8 +109,8 @@ class ObjectDescriptorImpl
 
   std::unordered_map<std::int64_t, std::shared_ptr<ReadRange>> active_ranges_;
   Options options_;
+  std::int64_t active_stream_ = 0;
   std::vector<std::shared_ptr<OpenStream>> streams_ = {};
-  int active_stream_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
