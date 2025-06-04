@@ -104,6 +104,41 @@ Idempotency ManagedKafkaConnectionIdempotencyPolicy::DeleteConsumerGroup(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency ManagedKafkaConnectionIdempotencyPolicy::ListAcls(
+    google::cloud::managedkafka::v1::ListAclsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency ManagedKafkaConnectionIdempotencyPolicy::GetAcl(
+    google::cloud::managedkafka::v1::GetAclRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency ManagedKafkaConnectionIdempotencyPolicy::CreateAcl(
+    google::cloud::managedkafka::v1::CreateAclRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency ManagedKafkaConnectionIdempotencyPolicy::UpdateAcl(
+    google::cloud::managedkafka::v1::UpdateAclRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency ManagedKafkaConnectionIdempotencyPolicy::DeleteAcl(
+    google::cloud::managedkafka::v1::DeleteAclRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency ManagedKafkaConnectionIdempotencyPolicy::AddAclEntry(
+    google::cloud::managedkafka::v1::AddAclEntryRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency ManagedKafkaConnectionIdempotencyPolicy::RemoveAclEntry(
+    google::cloud::managedkafka::v1::RemoveAclEntryRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency ManagedKafkaConnectionIdempotencyPolicy::ListLocations(
     google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
