@@ -17,6 +17,7 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/connection_options.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
