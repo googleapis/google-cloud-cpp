@@ -32,7 +32,7 @@ using ::google::cloud::pubsub::examples::RandomTopicId;
 
 void PublisherSetEndpoint(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::testing_util;
-  if (argv.size() != 3) {
+  if (argv.size() != 2) {
     throw examples::Usage{"publisher-set-endpoint <project-id> <topic-id>"};
   }
   //! [publisher-set-endpoint]
