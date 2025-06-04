@@ -28,6 +28,8 @@ mapfile -t args < <(bazel::common_args)
 mapfile -t test_args < <(bazel::test_args)
 mapfile -t msvc_args < <(bazel::msvc_args)
 test_args+=("${msvc_args[@]}")
+# TODO(15193): remove this workaround once the libcurl option issue is resolved.
+test_args+=("--copt=-DGOOGLE_CLOUD_CPP_WINDOWS_BAZEL_CI_WORKAROUND")
 if [[ $# -gt 1 ]]; then
   test_args+=("--compilation_mode=${1}")
   shift
@@ -60,3 +62,10 @@ if [[ "${EXECUTE_INTEGRATION_TESTS}" == "true" ]]; then
     }
   fi
 fi
+
+io::log_h1 "Starting Clean Build of include tests"
+TIMEFORMAT="==> 🕑 bazel test done in %R seconds"
+time {
+  io::run bazelisk clean --expunge
+  io::run bazelisk "${args[@]}" test "${test_args[@]}" --cache_test_results=no -- //google/cloud/storage/tests:storage_include_test-default //google/cloud/storage/tests:storage_include_test-grpc-metadata
+}
