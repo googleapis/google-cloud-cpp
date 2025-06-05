@@ -55,6 +55,7 @@ Status ConnectionRestGenerator::GenerateHeader() {
   switch (endpoint_location_style) {
     case ServiceConfiguration::LOCATION_DEPENDENT:
     case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:
+    case ServiceConfiguration::LOCATION_OPTIONALLY_DEPENDENT:
       HeaderSystemIncludes({"string"});
       break;
     default:
@@ -88,6 +89,7 @@ Status ConnectionRestGenerator::GenerateHeader() {
   switch (endpoint_location_style) {
     case ServiceConfiguration::LOCATION_DEPENDENT:
     case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:
+    case ServiceConfiguration::LOCATION_OPTIONALLY_DEPENDENT:
       HeaderPrint(R"""(
  * @param location Sets the prefix for the default `EndpointOption` value.)""");
       break;
@@ -115,6 +117,19 @@ std::shared_ptr<$connection_class_name$> Make$connection_class_name$Rest(
     Options options = {});
 )""");
       break;
+    case ServiceConfiguration::LOCATION_OPTIONALLY_DEPENDENT:
+      HeaderPrint(R"""(
+/**
+ * A factory function to construct an object of type `$connection_class_name$`.
+ *
+ * This overload of `Make$connection_class_name$Rest` does not require a location
+ * argument, creating a connection to the global service endpoint.
+ */
+std::shared_ptr<$connection_class_name$> Make$connection_class_name$Rest(
+    Options options = {});
+)""");
+      break;
+
     default:
       break;
   }
@@ -163,6 +178,7 @@ std::shared_ptr<$connection_class_name$> Make$connection_class_name$Rest(
   switch (endpoint_location_style) {
     case ServiceConfiguration::LOCATION_DEPENDENT:
     case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:
+    case ServiceConfiguration::LOCATION_OPTIONALLY_DEPENDENT:
       CcPrint("location, ");
       break;
     default:
@@ -183,10 +199,11 @@ std::shared_ptr<$connection_class_name$> Make$connection_class_name$Rest(
 
   switch (endpoint_location_style) {
     case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:
+    case ServiceConfiguration::LOCATION_OPTIONALLY_DEPENDENT:
       CcPrint(R"""(
 std::shared_ptr<$connection_class_name$> Make$connection_class_name$Rest(
     Options options) {
-  return Make$connection_class_name$(std::string{}, std::move(options));
+  return Make$connection_class_name$Rest(std::string{}, std::move(options));
 }
 )""");
       break;
@@ -205,6 +222,7 @@ std::string ConnectionRestGenerator::ConnectionFactoryFunctionArguments()
   switch (EndpointLocationStyle()) {
     case ServiceConfiguration::LOCATION_DEPENDENT:
     case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:
+    case ServiceConfiguration::LOCATION_OPTIONALLY_DEPENDENT:
       args += "std::string const& location, ";
       break;
     default:

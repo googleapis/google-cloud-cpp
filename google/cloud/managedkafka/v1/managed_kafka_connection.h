@@ -257,6 +257,29 @@ class ManagedKafkaConnection {
       google::cloud::managedkafka::v1::DeleteConsumerGroupRequest const&
           request);
 
+  virtual StreamRange<google::cloud::managedkafka::v1::Acl> ListAcls(
+      google::cloud::managedkafka::v1::ListAclsRequest request);
+
+  virtual StatusOr<google::cloud::managedkafka::v1::Acl> GetAcl(
+      google::cloud::managedkafka::v1::GetAclRequest const& request);
+
+  virtual StatusOr<google::cloud::managedkafka::v1::Acl> CreateAcl(
+      google::cloud::managedkafka::v1::CreateAclRequest const& request);
+
+  virtual StatusOr<google::cloud::managedkafka::v1::Acl> UpdateAcl(
+      google::cloud::managedkafka::v1::UpdateAclRequest const& request);
+
+  virtual Status DeleteAcl(
+      google::cloud::managedkafka::v1::DeleteAclRequest const& request);
+
+  virtual StatusOr<google::cloud::managedkafka::v1::AddAclEntryResponse>
+  AddAclEntry(
+      google::cloud::managedkafka::v1::AddAclEntryRequest const& request);
+
+  virtual StatusOr<google::cloud::managedkafka::v1::RemoveAclEntryResponse>
+  RemoveAclEntry(
+      google::cloud::managedkafka::v1::RemoveAclEntryRequest const& request);
+
   virtual StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request);
 
