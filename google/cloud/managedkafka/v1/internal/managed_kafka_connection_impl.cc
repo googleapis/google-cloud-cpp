@@ -566,6 +566,125 @@ Status ManagedKafkaConnectionImpl::DeleteConsumerGroup(
       *current, request, __func__);
 }
 
+StreamRange<google::cloud::managedkafka::v1::Acl>
+ManagedKafkaConnectionImpl::ListAcls(
+    google::cloud::managedkafka::v1::ListAclsRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListAcls(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::managedkafka::v1::Acl>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<managedkafka_v1::ManagedKafkaRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::cloud::managedkafka::v1::ListAclsRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::managedkafka::v1::ListAclsRequest const&
+                       request) {
+              return stub->ListAcls(context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::cloud::managedkafka::v1::ListAclsResponse r) {
+        std::vector<google::cloud::managedkafka::v1::Acl> result(
+            r.acls().size());
+        auto& messages = *r.mutable_acls();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+StatusOr<google::cloud::managedkafka::v1::Acl>
+ManagedKafkaConnectionImpl::GetAcl(
+    google::cloud::managedkafka::v1::GetAclRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetAcl(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::managedkafka::v1::GetAclRequest const& request) {
+        return stub_->GetAcl(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StatusOr<google::cloud::managedkafka::v1::Acl>
+ManagedKafkaConnectionImpl::CreateAcl(
+    google::cloud::managedkafka::v1::CreateAclRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateAcl(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::managedkafka::v1::CreateAclRequest const& request) {
+        return stub_->CreateAcl(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StatusOr<google::cloud::managedkafka::v1::Acl>
+ManagedKafkaConnectionImpl::UpdateAcl(
+    google::cloud::managedkafka::v1::UpdateAclRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateAcl(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::managedkafka::v1::UpdateAclRequest const& request) {
+        return stub_->UpdateAcl(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+Status ManagedKafkaConnectionImpl::DeleteAcl(
+    google::cloud::managedkafka::v1::DeleteAclRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteAcl(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::managedkafka::v1::DeleteAclRequest const& request) {
+        return stub_->DeleteAcl(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StatusOr<google::cloud::managedkafka::v1::AddAclEntryResponse>
+ManagedKafkaConnectionImpl::AddAclEntry(
+    google::cloud::managedkafka::v1::AddAclEntryRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->AddAclEntry(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::managedkafka::v1::AddAclEntryRequest const& request) {
+        return stub_->AddAclEntry(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StatusOr<google::cloud::managedkafka::v1::RemoveAclEntryResponse>
+ManagedKafkaConnectionImpl::RemoveAclEntry(
+    google::cloud::managedkafka::v1::RemoveAclEntryRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->RemoveAclEntry(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::managedkafka::v1::RemoveAclEntryRequest const&
+                 request) {
+        return stub_->RemoveAclEntry(context, options, request);
+      },
+      *current, request, __func__);
+}
+
 StreamRange<google::cloud::location::Location>
 ManagedKafkaConnectionImpl::ListLocations(
     google::cloud::location::ListLocationsRequest request) {

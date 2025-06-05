@@ -81,18 +81,23 @@ std::shared_ptr<SubscriberConnection> MakeSubscriberConnection(
 }
 
 std::shared_ptr<SubscriberConnection> MakeSubscriberConnection(
-    Subscription subscription, Options opts) {
+    std::string const& location, Subscription subscription, Options opts) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  UnifiedCredentialsOptionList, PolicyOptionList,
                                  SubscriberOptionList>(opts, __func__);
   opts = internal::MergeOptions(
       std::move(opts),
       Options{}.set<SubscriptionOption>(std::move(subscription)));
-  opts = pubsub_internal::DefaultSubscriberOptions(std::move(opts));
+  opts = pubsub_internal::DefaultSubscriberOptions(location, std::move(opts));
   auto background = internal::MakeBackgroundThreadsFactory(opts)();
   auto stub =
       pubsub_internal::MakeRoundRobinSubscriberStub(background->cq(), opts);
   return ConnectionFromDecoratedStub(std::move(stub), std::move(opts));
+}
+
+std::shared_ptr<SubscriberConnection> MakeSubscriberConnection(
+    Subscription subscription, Options opts) {
+  return MakeSubscriberConnection("", std::move(subscription), std::move(opts));
 }
 
 std::shared_ptr<SubscriberConnection> MakeSubscriberConnection(

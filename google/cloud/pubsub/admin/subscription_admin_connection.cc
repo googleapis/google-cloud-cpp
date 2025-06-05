@@ -126,13 +126,13 @@ SubscriptionAdminConnection::TestIamPermissions(
 }
 
 std::shared_ptr<SubscriptionAdminConnection> MakeSubscriptionAdminConnection(
-    Options options) {
+    std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  UnifiedCredentialsOptionList,
                                  SubscriptionAdminPolicyOptionList>(options,
                                                                     __func__);
   options = pubsub_admin_internal::SubscriptionAdminDefaultOptions(
-      std::move(options));
+      location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = pubsub_admin_internal::CreateDefaultSubscriptionAdminStub(
@@ -140,6 +140,11 @@ std::shared_ptr<SubscriptionAdminConnection> MakeSubscriptionAdminConnection(
   return pubsub_admin_internal::MakeSubscriptionAdminTracingConnection(
       std::make_shared<pubsub_admin_internal::SubscriptionAdminConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));
+}
+
+std::shared_ptr<SubscriptionAdminConnection> MakeSubscriptionAdminConnection(
+    Options options) {
+  return MakeSubscriptionAdminConnection(std::string{}, std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

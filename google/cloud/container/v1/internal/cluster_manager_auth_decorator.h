@@ -184,6 +184,16 @@ class ClusterManagerAuth : public ClusterManagerStub {
       google::container::v1::CheckAutopilotCompatibilityRequest const& request)
       override;
 
+  StatusOr<google::container::v1::ClusterUpgradeInfo> FetchClusterUpgradeInfo(
+      grpc::ClientContext& context, Options const& options,
+      google::container::v1::FetchClusterUpgradeInfoRequest const& request)
+      override;
+
+  StatusOr<google::container::v1::NodePoolUpgradeInfo> FetchNodePoolUpgradeInfo(
+      grpc::ClientContext& context, Options const& options,
+      google::container::v1::FetchNodePoolUpgradeInfoRequest const& request)
+      override;
+
  private:
   std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;
   std::shared_ptr<ClusterManagerStub> child_;
