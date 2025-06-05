@@ -53,10 +53,18 @@ library.
 /**
 @page pubsub-endpoint-example Override the default endpoint
 
-In some cases, you may need to override the default endpoint used by the client
-library. Use the `google::cloud::EndpointOption` when initializing the client
-library to change this default.  For example, this will override the default
-endpoint for `google::cloud::pubsub::Publisher`:
+The default endpoint is the global endpoint: "pubsub.googleapis.com".
+
+In some cases, you may need to point the client and a regional or locational
+endpoint, typically designated by some prefix applied to the service name (e.g.
+"europe-central2-pubsub.googleapis.com". This can be accomplished by using the
+`MakePublisherConnection` overload which accepts a `location` parameter.
+
+In rare cases, you may need to override the global endpoint used by the client
+library. This typically occurs in testing or Private Google Access cases. Use
+the `google::cloud::EndpointOption` when initializing the client library to
+change this default.  For example, this will override the default endpoint for
+`google::cloud::pubsub::Publisher`:
 
 @snippet client_samples.cc publisher-set-endpoint
 

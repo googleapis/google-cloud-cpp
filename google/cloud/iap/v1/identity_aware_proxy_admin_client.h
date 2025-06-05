@@ -276,8 +276,8 @@ class IdentityAwareProxyAdminServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.iap.v1.ValidateIapAttributeExpressionRequest]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L682}
-  /// [google.cloud.iap.v1.ValidateIapAttributeExpressionResponse]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L693}
+  /// [google.cloud.iap.v1.ValidateIapAttributeExpressionRequest]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L684}
+  /// [google.cloud.iap.v1.ValidateIapAttributeExpressionResponse]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L695}
   ///
   // clang-format on
   StatusOr<google::cloud::iap::v1::ValidateIapAttributeExpressionResponse>

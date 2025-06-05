@@ -108,8 +108,6 @@ class AsyncConnectionImpl
     return shared_from_this();
   }
 
-  enum class AppendMode { kStart, kTakeover };
-
   future<StatusOr<google::storage::v2::StartResumableWriteResponse>>
   StartResumableWrite(internal::ImmutableOptions current,
                       google::storage::v2::StartResumableWriteRequest request);
@@ -143,7 +141,7 @@ class AsyncConnectionImpl
       std::int64_t persisted_size);
 
   future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
-  AppendableObjectUploadImpl(AppendableUploadParams p, AppendMode mode);
+  AppendableObjectUploadImpl(AppendableUploadParams p);
 
   CompletionQueue cq_;
   std::shared_ptr<GrpcChannelRefresh> refresh_;

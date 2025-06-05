@@ -40,7 +40,7 @@ bazel_dep(name = "yaml-cpp", version = "0.8.0", dev_dependency = True, repo_name
 bazel_dep(name = "pugixml", version = "1.15", dev_dependency = True, repo_name = "com_github_zeux_pugixml")
 
 # Our `curl.BUILD` file uses these.
-bazel_dep(name = "zlib", version = "1.3.1.bcr.5")
+bazel_dep(name = "zlib", version = "1.3.1.bcr.6")
 bazel_dep(name = "c-ares", version = "1.19.1.bcr.1", repo_name = "com_github_cares_cares")
 
 # Pin this to fix a break in bazel/deps-cache.py
@@ -55,12 +55,12 @@ python.toolchain(
 bazel_dep(name = "googleapis", version = "0.0.0", repo_name = "com_google_googleapis")
 archive_override(
     module_name = "googleapis",
-    integrity = "sha256-OHTWAJ0o922Gd7uy6uBV6wUmuWq2OY5zeRI0tWLAbr0=",
+    integrity = "sha256-dbNAPWReES2GP4DBbsnaAboV0eIBKO6o9loY7ujl1lA=",
     patch_strip = 1,
     patches = ["//bazel:googleapis.modules.patch"],
-    strip_prefix = "googleapis-c1af7f23f557e8690a9e16bc41b1a2fae43e9a3e",
+    strip_prefix = "googleapis-ea40277431fb821fd5a9b1eb8227535846388770",
     urls = [
-        "https://github.com/googleapis/googleapis/archive/c1af7f23f557e8690a9e16bc41b1a2fae43e9a3e.tar.gz",
+        "https://github.com/googleapis/googleapis/archive/ea40277431fb821fd5a9b1eb8227535846388770.tar.gz",
     ],
 )
 
