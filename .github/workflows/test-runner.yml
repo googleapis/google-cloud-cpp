@@ -9,7 +9,7 @@ on:
   # branches we can disable builds (to speed up the testing) or add new ones,
   # without impacting the rest of the team.
   push:
-    branches: [ 'v[2-9]**', 'ci-gha**' ]
+    branches: [ 'v[2-9]**', 'ci-gha**', 'prepare-for-v3.0.0' ]
   # Start the build in the context of the target branch. This is considered
   # "safe", as the workflow files are already committed. These types of builds
   # have access to the secrets in the build, which we need to use the remote
