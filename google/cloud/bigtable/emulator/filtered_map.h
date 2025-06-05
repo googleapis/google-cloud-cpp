@@ -206,10 +206,10 @@ class TimestampRangeFilteredMapView {
         typename Map::const_iterator unfiltered_pos,
         typename std::set<typename TimestampRangeSet::Range,
                           typename TimestampRangeSet::Range::StartLess>::
-            const_reverse_iterator filter_pos)
+            const_reverse_iterator const& filter_pos)
         : parent_(std::cref(parent)),
           unfiltered_pos_(std::move(unfiltered_pos)),
-          filter_pos_(std::move(filter_pos)) {
+          filter_pos_(filter_pos) {
       AdvanceToNextRange();
       EnsureIteratorValid();
     }

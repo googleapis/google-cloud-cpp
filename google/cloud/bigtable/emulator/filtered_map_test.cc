@@ -144,7 +144,8 @@ TEST(TimestampRangeFilteredMapView, NoFilter) {
   auto filter = TimestampRangeSet::All();
   TimestampRangeFilteredMapView<decltype(unfiltered)> filtered(unfiltered,
                                                                filter);
-  EXPECT_EQ(std::vector({2_ms, 1_ms, 0_ms}), TSKeys(filtered));
+  EXPECT_EQ(std::vector<std::chrono::milliseconds>({2_ms, 1_ms, 0_ms}),
+            TSKeys(filtered));
 }
 
 TEST(TimestampRangeFilteredMapView, EmptyFilter) {
@@ -163,7 +164,8 @@ TEST(TimestampRangeFilteredMapView, FiniteRange) {
   filter.Sum(TimestampRangeSet::Range(1_ms, 3_ms));
   TimestampRangeFilteredMapView<decltype(unfiltered)> filtered(unfiltered,
                                                                filter);
-  EXPECT_EQ(std::vector({2_ms, 1_ms}), TSKeys(filtered));
+  EXPECT_EQ(std::vector<std::chrono::milliseconds>({2_ms, 1_ms}),
+            TSKeys(filtered));
 }
 
 TEST(TimestampRangeFilteredMapView, InfiniteRange) {
@@ -173,7 +175,8 @@ TEST(TimestampRangeFilteredMapView, InfiniteRange) {
   filter.Sum(TimestampRangeSet::Range(1_ms, 0_ms));
   TimestampRangeFilteredMapView<decltype(unfiltered)> filtered(unfiltered,
                                                                filter);
-  EXPECT_EQ(std::vector({4_ms, 3_ms, 2_ms, 1_ms}), TSKeys(filtered));
+  EXPECT_EQ(std::vector<std::chrono::milliseconds>({4_ms, 3_ms, 2_ms, 1_ms}),
+            TSKeys(filtered));
 }
 
 TEST(TimestampRangeFilteredMapView, MultipleFilters) {
@@ -192,8 +195,9 @@ TEST(TimestampRangeFilteredMapView, MultipleFilters) {
   filter.Sum(TimestampRangeSet::Range(13_ms, 0_ms));
   TimestampRangeFilteredMapView<decltype(unfiltered)> filtered(unfiltered,
                                                                filter);
-  EXPECT_EQ(std::vector({max_millis, 14_ms, 13_ms, 11_ms, 10_ms, 7_ms, 6_ms,
-                         4_ms, 3_ms, 2_ms, 1_ms}),
+  EXPECT_EQ(std::vector<std::chrono::milliseconds>({max_millis, 14_ms, 13_ms,
+                                                    11_ms, 10_ms, 7_ms, 6_ms,
+                                                    4_ms, 3_ms, 2_ms, 1_ms}),
             TSKeys(filtered));
 }
 

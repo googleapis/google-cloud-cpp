@@ -95,9 +95,7 @@ class ColumnRow {
     return cells_.find(timestamp);
   }
 
-  void erase(const_iterator timestamp_it) {
-    cells_.erase(timestamp_it);
-  }
+  void erase(const_iterator timestamp_it) { cells_.erase(timestamp_it); }
 
  private:
   // Note the order - the iterator return the freshest cells first.
@@ -371,11 +369,10 @@ class FilteredColumnFamilyStream : public AbstractCellStreamImpl {
   mutable TimestampRangeSet timestamp_ranges_;
 
   RegexFiteredMapView<StringRangeFilteredMapView<ColumnFamily>> rows_;
-  mutable absl::optional<RegexFiteredMapView<
-      StringRangeFilteredMapView<ColumnFamilyRow>>>
+  mutable absl::optional<
+      RegexFiteredMapView<StringRangeFilteredMapView<ColumnFamilyRow>>>
       columns_;
-  mutable absl::optional<TimestampRangeFilteredMapView<ColumnRow>>
-      cells_;
+  mutable absl::optional<TimestampRangeFilteredMapView<ColumnRow>> cells_;
 
   // If row_it_ == rows_.end() we've reached the end.
   // We maintain the following invariant:

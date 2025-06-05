@@ -42,9 +42,12 @@ std::vector<Cell> ColumnRow::DeleteTimeRange(
   if (maybe_end_micros.value_or(0) == 0) {
     maybe_end_micros.reset();
   }
-  for (auto cell_it = maybe_end_micros ?
-           upper_bound(std::chrono::duration_cast<std::chrono::milliseconds>(
-               std::chrono::microseconds(*maybe_end_micros))) : begin();
+  for (auto cell_it =
+           maybe_end_micros
+               ? upper_bound(
+                     std::chrono::duration_cast<std::chrono::milliseconds>(
+                         std::chrono::microseconds(*maybe_end_micros)))
+               : begin();
        cell_it != cells_.end() &&
        cell_it->first >= std::chrono::duration_cast<std::chrono::milliseconds>(
                              std::chrono::microseconds(
