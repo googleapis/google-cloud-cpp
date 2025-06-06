@@ -16,6 +16,7 @@
 
 set(service_dirs
     # cmake-format: sort
+    "reservation_sub_blocks/v1/"
     "accelerator_types/v1/"
     "addresses/v1/"
     "autoscalers/v1/"
