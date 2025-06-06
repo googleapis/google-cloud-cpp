@@ -38,12 +38,9 @@ using ::google::cloud::storage::testing::MockAsyncBidiWriteObjectStream;
 using ::google::cloud::storage::testing::canonical_errors::PermanentError;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
 using ::google::cloud::testing_util::AsyncSequencer;
-using ::google::cloud::testing_util::IsOkAndHolds;
-using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::TextFormat;
 using ::testing::_;
-using ::testing::VariantWith;
 
 using AsyncBidiWriteObjectStream = ::google::cloud::AsyncStreamingReadWriteRpc<
     google::storage::v2::BidiWriteObjectRequest,
