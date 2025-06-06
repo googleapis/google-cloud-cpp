@@ -207,10 +207,10 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "com_github_nlohmann_json",
         urls = [
-            "https://github.com/nlohmann/json/archive/v3.11.3.tar.gz",
+            "https://github.com/nlohmann/json/archive/v3.12.0.tar.gz",
         ],
-        sha256 = "0d8ef5af7f9794e3263480193c491549b2ba6cc74bb018906202ada498a79406",
-        strip_prefix = "json-3.11.3",
+        sha256 = "4b92eb0c06d10683f7447ce9406cb97cd4b453be18d7279320f7b2f025c10187",
+        strip_prefix = "json-3.12.0",
     )
 
     # Load google/crc32c, a library to efficiently compute CRC32C checksums.
