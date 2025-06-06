@@ -26,7 +26,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_DISK_TYPES_V1_DISK_TYPES_PROTO_EXPORT_H
 
 // IWYU pragma: begin_exports
-#include <google/cloud/compute/v1/internal/common_022.pb.h>
+#include <google/cloud/compute/v1/internal/common_023.pb.h>
 #include <google/cloud/compute/v1/internal/common_026.pb.h>
 #include <google/cloud/compute/v1/internal/common_027.pb.h>
 // IWYU pragma: end_exports

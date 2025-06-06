@@ -31,7 +31,7 @@
 #include <google/cloud/compute/v1/internal/common_031.pb.h>
 #include <google/cloud/compute/v1/internal/common_084.pb.h>
 #include <google/cloud/compute/v1/internal/common_108.pb.h>
-#include <google/cloud/compute/v1/internal/common_144.pb.h>
+#include <google/cloud/compute/v1/internal/common_145.pb.h>
 // IWYU pragma: end_exports
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_NETWORK_ATTACHMENTS_V1_NETWORK_ATTACHMENTS_PROTO_EXPORT_H

@@ -587,8 +587,8 @@ g::future<IterationResult> Upload(Configuration const& cfg,
 }
 
 template <typename F, typename... Args>
-auto Launch(F&& function,
-            Args&&... a) -> g::future<std::invoke_result_t<F, Args...>> {
+auto Launch(F&& function, Args&&... a)
+    -> g::future<std::invoke_result_t<F, Args...>> {
   using R = std::invoke_result_t<F, Args...>;
   g::promise<R> p;
   auto f = p.get_future();
