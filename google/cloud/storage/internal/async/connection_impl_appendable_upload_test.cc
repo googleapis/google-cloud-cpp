@@ -276,7 +276,6 @@ TEST_F(AsyncConnectionImplAppendableTest, ResumeAppendableObjectUploadSuccess) {
   // Verify the persisted state is correctly reported.
   EXPECT_EQ(absl::get<std::int64_t>(writer->PersistedState()), kPersistedSize);
 
-  // Write some more data.
   auto w1 = writer->Write(storage_experimental::WritePayload("some more data"));
   next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Write(data)");
