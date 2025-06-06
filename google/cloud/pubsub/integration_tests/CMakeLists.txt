@@ -24,6 +24,7 @@ function (google_cloud_cpp_pubsub_define_integration_tests)
     set(pubsub_client_integration_tests
         # cmake-format: sort
         blocking_publisher_integration_test.cc
+        generated_subscription_admin_integration_test.cc
         publisher_integration_test.cc
         subscriber_integration_test.cc
         subscription_admin_integration_test.cc

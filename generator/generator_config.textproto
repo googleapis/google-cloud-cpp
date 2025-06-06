@@ -3177,6 +3177,7 @@ service {
     "Publish"
   ]
   omit_repo_metadata: true
+  endpoint_location_style: LOCATION_OPTIONALLY_DEPENDENT
 }
 
 # Cloud Pub/Sub Generated Admin API
@@ -3199,6 +3200,7 @@ service {
   service_name_mapping { key: "Subscriber" value: "SubscriptionAdmin"}
   service_name_to_comment { key: "TopicAdmin" value: " A service to manipulate topics."}
   service_name_to_comment { key: "SubscriptionAdmin" value: " A service to manipulate subscriptions."}
+  endpoint_location_style: LOCATION_OPTIONALLY_DEPENDENT
 }
 
 service {
@@ -3207,6 +3209,7 @@ service {
   initial_copyright_year: "2023"
   retryable_status_codes: ["kUnavailable"]
   emulator_endpoint_env_var: "PUBSUB_EMULATOR_HOST"
+  endpoint_location_style: LOCATION_OPTIONALLY_DEPENDENT
 }
 
 # Pub/Sub Lite
@@ -3302,6 +3305,7 @@ service {
   forwarding_product_path: "google/cloud/resourcemanager"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_OPTIONALLY_DEPENDENT
 }
 
 service {
@@ -3310,6 +3314,7 @@ service {
   forwarding_product_path: "google/cloud/resourcemanager"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_OPTIONALLY_DEPENDENT
 }
 
 service {
@@ -3318,6 +3323,7 @@ service {
   forwarding_product_path: "google/cloud/resourcemanager"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_OPTIONALLY_DEPENDENT
 }
 
 service {
@@ -3325,6 +3331,7 @@ service {
   product_path: "google/cloud/resourcemanager/v3"
   initial_copyright_year: "2023"
   retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_OPTIONALLY_DEPENDENT
 }
 
 service {
@@ -3332,6 +3339,7 @@ service {
   product_path: "google/cloud/resourcemanager/v3"
   initial_copyright_year: "2023"
   retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_OPTIONALLY_DEPENDENT
 }
 
 service {
@@ -3339,6 +3347,7 @@ service {
   product_path: "google/cloud/resourcemanager/v3"
   initial_copyright_year: "2023"
   retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_OPTIONALLY_DEPENDENT
 }
 
 service {
@@ -3346,6 +3355,7 @@ service {
   product_path: "google/cloud/resourcemanager/v3"
   initial_copyright_year: "2023"
   retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_OPTIONALLY_DEPENDENT
 }
 
 # Retail

@@ -24,7 +24,7 @@ bazel_dep(name = "platforms", version = "0.0.11")
 bazel_dep(name = "bazel_skylib", version = "1.7.1")
 bazel_dep(name = "rules_cc", version = "0.1.1")
 bazel_dep(name = "abseil-cpp", version = "20250127.1", repo_name = "abseil-cpp")
-bazel_dep(name = "protobuf", version = "30.2", repo_name = "com_google_protobuf")
+bazel_dep(name = "protobuf", version = "31.1", repo_name = "com_google_protobuf")
 bazel_dep(name = "boringssl", version = "0.0.0-20230215-5c22014")
 bazel_dep(name = "nlohmann_json", version = "3.11.3", repo_name = "com_github_nlohmann_json")
 bazel_dep(name = "curl", version = "8.8.0.bcr.3", repo_name = "com_github_curl_curl")
@@ -39,11 +39,11 @@ bazel_dep(name = "yaml-cpp", version = "0.8.0", dev_dependency = True, repo_name
 bazel_dep(name = "pugixml", version = "1.15", dev_dependency = True, repo_name = "com_github_zeux_pugixml")
 
 # Our `curl.BUILD` file uses these.
-bazel_dep(name = "zlib", version = "1.3.1.bcr.5")
+bazel_dep(name = "zlib", version = "1.3.1.bcr.6")
 bazel_dep(name = "c-ares", version = "1.19.1.bcr.1", repo_name = "com_github_cares_cares")
 
 # Pin this to fix a break in bazel/deps-cache.py
-bazel_dep(name = "protoc-gen-validate", version = "1.2.1", dev_dependency = True, repo_name = "com_envoyproxy_protoc_gen_validate")
+bazel_dep(name = "protoc-gen-validate", version = "1.2.1.bcr.1", dev_dependency = True, repo_name = "com_envoyproxy_protoc_gen_validate")
 
 python = use_extension("@rules_python//python/extensions:python.bzl", "python")
 python.toolchain(
@@ -55,12 +55,12 @@ bazel_dep(name = "grpc", version = "1.71.0", repo_name = "com_github_grpc_grpc")
 bazel_dep(name = "googleapis", version = "0.0.0", repo_name = "com_google_googleapis")
 archive_override(
     module_name = "googleapis",
-    integrity = "sha256-OHTWAJ0o922Gd7uy6uBV6wUmuWq2OY5zeRI0tWLAbr0=",
+    integrity = "sha256-dbNAPWReES2GP4DBbsnaAboV0eIBKO6o9loY7ujl1lA=",
     patch_strip = 1,
     patches = ["//bazel:googleapis.modules.patch"],
-    strip_prefix = "googleapis-c1af7f23f557e8690a9e16bc41b1a2fae43e9a3e",
+    strip_prefix = "googleapis-ea40277431fb821fd5a9b1eb8227535846388770",
     urls = [
-        "https://github.com/googleapis/googleapis/archive/c1af7f23f557e8690a9e16bc41b1a2fae43e9a3e.tar.gz",
+        "https://github.com/googleapis/googleapis/archive/ea40277431fb821fd5a9b1eb8227535846388770.tar.gz",
     ],
 )
 

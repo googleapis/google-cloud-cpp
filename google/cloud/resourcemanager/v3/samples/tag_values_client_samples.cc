@@ -40,11 +40,19 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
     throw google::cloud::testing_util::Usage{"set-client-endpoint"};
   }
   //! [set-client-endpoint]
+  // This service supports specifying a regional or locational endpoint prefix
+  // when creating the TagValuesConnection.
+  // For example, to connect to
+  // "europe-central2-cloudresourcemanager.googleapis.com":
+  auto client = google::cloud::resourcemanager_v3::TagValuesClient(
+      google::cloud::resourcemanager_v3::MakeTagValuesConnection(
+          "europe-central2"));
+
   // This configuration is common with Private Google Access:
   //     https://cloud.google.com/vpc/docs/private-google-access
   auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>(
       "private.googleapis.com");
-  auto client = google::cloud::resourcemanager_v3::TagValuesClient(
+  auto vpc_client = google::cloud::resourcemanager_v3::TagValuesClient(
       google::cloud::resourcemanager_v3::MakeTagValuesConnection(options));
   //! [set-client-endpoint]
 }

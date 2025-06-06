@@ -504,6 +504,40 @@ ClusterManagerClient::CheckAutopilotCompatibility(
   return connection_->CheckAutopilotCompatibility(request);
 }
 
+StatusOr<google::container::v1::ClusterUpgradeInfo>
+ClusterManagerClient::FetchClusterUpgradeInfo(std::string const& name,
+                                              Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::container::v1::FetchClusterUpgradeInfoRequest request;
+  request.set_name(name);
+  return connection_->FetchClusterUpgradeInfo(request);
+}
+
+StatusOr<google::container::v1::ClusterUpgradeInfo>
+ClusterManagerClient::FetchClusterUpgradeInfo(
+    google::container::v1::FetchClusterUpgradeInfoRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->FetchClusterUpgradeInfo(request);
+}
+
+StatusOr<google::container::v1::NodePoolUpgradeInfo>
+ClusterManagerClient::FetchNodePoolUpgradeInfo(std::string const& name,
+                                               Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::container::v1::FetchNodePoolUpgradeInfoRequest request;
+  request.set_name(name);
+  return connection_->FetchNodePoolUpgradeInfo(request);
+}
+
+StatusOr<google::container::v1::NodePoolUpgradeInfo>
+ClusterManagerClient::FetchNodePoolUpgradeInfo(
+    google::container::v1::FetchNodePoolUpgradeInfoRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->FetchNodePoolUpgradeInfo(request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace container_v1
 }  // namespace cloud

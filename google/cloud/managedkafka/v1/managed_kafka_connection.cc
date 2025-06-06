@@ -171,6 +171,48 @@ Status ManagedKafkaConnection::DeleteConsumerGroup(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StreamRange<google::cloud::managedkafka::v1::Acl>
+ManagedKafkaConnection::ListAcls(
+    google::cloud::managedkafka::v1::
+        ListAclsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::managedkafka::v1::Acl>>();
+}
+
+StatusOr<google::cloud::managedkafka::v1::Acl> ManagedKafkaConnection::GetAcl(
+    google::cloud::managedkafka::v1::GetAclRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::managedkafka::v1::Acl>
+ManagedKafkaConnection::CreateAcl(
+    google::cloud::managedkafka::v1::CreateAclRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::managedkafka::v1::Acl>
+ManagedKafkaConnection::UpdateAcl(
+    google::cloud::managedkafka::v1::UpdateAclRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+Status ManagedKafkaConnection::DeleteAcl(
+    google::cloud::managedkafka::v1::DeleteAclRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::managedkafka::v1::AddAclEntryResponse>
+ManagedKafkaConnection::AddAclEntry(
+    google::cloud::managedkafka::v1::AddAclEntryRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::managedkafka::v1::RemoveAclEntryResponse>
+ManagedKafkaConnection::RemoveAclEntry(
+    google::cloud::managedkafka::v1::RemoveAclEntryRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StreamRange<google::cloud::location::Location>
 ManagedKafkaConnection::ListLocations(
     google::cloud::location::

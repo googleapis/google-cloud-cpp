@@ -122,6 +122,36 @@ class ManagedKafkaStub {
       google::cloud::managedkafka::v1::DeleteConsumerGroupRequest const&
           request) = 0;
 
+  virtual StatusOr<google::cloud::managedkafka::v1::ListAclsResponse> ListAcls(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::managedkafka::v1::ListAclsRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::managedkafka::v1::Acl> GetAcl(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::managedkafka::v1::GetAclRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::managedkafka::v1::Acl> CreateAcl(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::managedkafka::v1::CreateAclRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::managedkafka::v1::Acl> UpdateAcl(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::managedkafka::v1::UpdateAclRequest const& request) = 0;
+
+  virtual Status DeleteAcl(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::managedkafka::v1::DeleteAclRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::managedkafka::v1::AddAclEntryResponse>
+  AddAclEntry(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::managedkafka::v1::AddAclEntryRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::managedkafka::v1::RemoveAclEntryResponse>
+  RemoveAclEntry(grpc::ClientContext& context, Options const& options,
+                 google::cloud::managedkafka::v1::RemoveAclEntryRequest const&
+                     request) = 0;
+
   virtual StatusOr<google::cloud::location::ListLocationsResponse>
   ListLocations(
       grpc::ClientContext& context, Options const& options,
@@ -263,6 +293,38 @@ class DefaultManagedKafkaStub : public ManagedKafkaStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::managedkafka::v1::DeleteConsumerGroupRequest const&
           request) override;
+
+  StatusOr<google::cloud::managedkafka::v1::ListAclsResponse> ListAcls(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::managedkafka::v1::ListAclsRequest const& request) override;
+
+  StatusOr<google::cloud::managedkafka::v1::Acl> GetAcl(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::managedkafka::v1::GetAclRequest const& request) override;
+
+  StatusOr<google::cloud::managedkafka::v1::Acl> CreateAcl(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::managedkafka::v1::CreateAclRequest const& request)
+      override;
+
+  StatusOr<google::cloud::managedkafka::v1::Acl> UpdateAcl(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::managedkafka::v1::UpdateAclRequest const& request)
+      override;
+
+  Status DeleteAcl(grpc::ClientContext& context, Options const& options,
+                   google::cloud::managedkafka::v1::DeleteAclRequest const&
+                       request) override;
+
+  StatusOr<google::cloud::managedkafka::v1::AddAclEntryResponse> AddAclEntry(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::managedkafka::v1::AddAclEntryRequest const& request)
+      override;
+
+  StatusOr<google::cloud::managedkafka::v1::RemoveAclEntryResponse>
+  RemoveAclEntry(grpc::ClientContext& context, Options const& options,
+                 google::cloud::managedkafka::v1::RemoveAclEntryRequest const&
+                     request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
       grpc::ClientContext& context, Options const& options,

@@ -159,6 +159,14 @@ class ClusterManagerConnectionImpl
       google::container::v1::CheckAutopilotCompatibilityRequest const& request)
       override;
 
+  StatusOr<google::container::v1::ClusterUpgradeInfo> FetchClusterUpgradeInfo(
+      google::container::v1::FetchClusterUpgradeInfoRequest const& request)
+      override;
+
+  StatusOr<google::container::v1::NodePoolUpgradeInfo> FetchNodePoolUpgradeInfo(
+      google::container::v1::FetchNodePoolUpgradeInfoRequest const& request)
+      override;
+
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<container_v1_internal::ClusterManagerStub> stub_;
