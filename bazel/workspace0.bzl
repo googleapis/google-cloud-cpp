@@ -181,13 +181,13 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "com_github_grpc_grpc",
         urls = [
-            "https://github.com/grpc/grpc/archive/v1.71.0.tar.gz",
+            "https://github.com/grpc/grpc/archive/v1.72.1.tar.gz",
         ],
         repo_mapping = {
             "@com_google_absl": "@abseil-cpp",
         },
-        sha256 = "0d631419e54ec5b29def798623ee3bf5520dac77abeab3284ef7027ec2363f91",
-        strip_prefix = "grpc-1.71.0",
+        sha256 = "8caafd69b78c514410962abd32b17981cc97cf72f09ae763395bb57b8fa0a320",
+        strip_prefix = "grpc-1.72.1",
     )
 
     # We use the cc_proto_library() rule from @com_google_protobuf, which
