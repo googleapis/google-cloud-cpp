@@ -49,8 +49,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *     gRPC-based clients. If you need to pick one dynamically a simple
  *     `if()` statement or ternary expression can do the job.
  */
-struct [[deprecated("use storage::Client() or storage::MakeGrpcClient()")]]
-GrpcPluginOption {
+struct [[deprecated(
+    "use storage::Client() or storage::MakeGrpcClient()")]] GrpcPluginOption {
   using Type = std::string;
 };
 

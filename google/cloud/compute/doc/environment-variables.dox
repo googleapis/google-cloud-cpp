@@ -326,6 +326,10 @@ environment variables are convenient when troubleshooting problems.
   `EndpointOption` (which defaults to "compute.googleapis.com")
   used by `MakeReservationBlocksConnection()`.
 
+- `GOOGLE_CLOUD_CPP_RESERVATION_SUB_BLOCKS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeReservationSubBlocksConnection()`.
+
 - `GOOGLE_CLOUD_CPP_RESOURCE_POLICIES_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "compute.googleapis.com")
   used by `MakeResourcePoliciesConnection()`.
