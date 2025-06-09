@@ -40,7 +40,6 @@ using ::google::cloud::storage::testing::canonical_errors::TransientError;
 using ::google::cloud::testing_util::AsyncSequencer;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::TextFormat;
-using ::testing::_;
 
 using AsyncBidiWriteObjectStream = ::google::cloud::AsyncStreamingReadWriteRpc<
     google::storage::v2::BidiWriteObjectRequest,
