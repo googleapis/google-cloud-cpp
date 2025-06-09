@@ -125,7 +125,7 @@ class PersistentResourceServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.CreatePersistentResourceRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/persistent_resource_service.proto#L120}
-  /// [google.cloud.aiplatform.v1.PersistentResource]: @googleapis_reference_link{google/cloud/aiplatform/v1/persistent_resource.proto#L38}
+  /// [google.cloud.aiplatform.v1.PersistentResource]: @googleapis_reference_link{google/cloud/aiplatform/v1/persistent_resource.proto#L39}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>
@@ -183,7 +183,7 @@ class PersistentResourceServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.CreatePersistentResourceRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/persistent_resource_service.proto#L120}
-  /// [google.cloud.aiplatform.v1.PersistentResource]: @googleapis_reference_link{google/cloud/aiplatform/v1/persistent_resource.proto#L38}
+  /// [google.cloud.aiplatform.v1.PersistentResource]: @googleapis_reference_link{google/cloud/aiplatform/v1/persistent_resource.proto#L39}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>
@@ -243,7 +243,7 @@ class PersistentResourceServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.GetPersistentResourceRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/persistent_resource_service.proto#L171}
-  /// [google.cloud.aiplatform.v1.PersistentResource]: @googleapis_reference_link{google/cloud/aiplatform/v1/persistent_resource.proto#L38}
+  /// [google.cloud.aiplatform.v1.PersistentResource]: @googleapis_reference_link{google/cloud/aiplatform/v1/persistent_resource.proto#L39}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::PersistentResource>
@@ -273,7 +273,7 @@ class PersistentResourceServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.GetPersistentResourceRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/persistent_resource_service.proto#L171}
-  /// [google.cloud.aiplatform.v1.PersistentResource]: @googleapis_reference_link{google/cloud/aiplatform/v1/persistent_resource.proto#L38}
+  /// [google.cloud.aiplatform.v1.PersistentResource]: @googleapis_reference_link{google/cloud/aiplatform/v1/persistent_resource.proto#L39}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::PersistentResource>
@@ -311,7 +311,7 @@ class PersistentResourceServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.ListPersistentResourcesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/persistent_resource_service.proto#L185}
-  /// [google.cloud.aiplatform.v1.PersistentResource]: @googleapis_reference_link{google/cloud/aiplatform/v1/persistent_resource.proto#L38}
+  /// [google.cloud.aiplatform.v1.PersistentResource]: @googleapis_reference_link{google/cloud/aiplatform/v1/persistent_resource.proto#L39}
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::PersistentResource>
@@ -350,7 +350,7 @@ class PersistentResourceServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.ListPersistentResourcesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/persistent_resource_service.proto#L185}
-  /// [google.cloud.aiplatform.v1.PersistentResource]: @googleapis_reference_link{google/cloud/aiplatform/v1/persistent_resource.proto#L38}
+  /// [google.cloud.aiplatform.v1.PersistentResource]: @googleapis_reference_link{google/cloud/aiplatform/v1/persistent_resource.proto#L39}
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::PersistentResource>
@@ -507,7 +507,7 @@ class PersistentResourceServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.PersistentResource]: @googleapis_reference_link{google/cloud/aiplatform/v1/persistent_resource.proto#L38}
+  /// [google.cloud.aiplatform.v1.PersistentResource]: @googleapis_reference_link{google/cloud/aiplatform/v1/persistent_resource.proto#L39}
   /// [google.cloud.aiplatform.v1.UpdatePersistentResourceRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/persistent_resource_service.proto#L232}
   ///
   // clang-format on
@@ -564,7 +564,7 @@ class PersistentResourceServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.PersistentResource]: @googleapis_reference_link{google/cloud/aiplatform/v1/persistent_resource.proto#L38}
+  /// [google.cloud.aiplatform.v1.PersistentResource]: @googleapis_reference_link{google/cloud/aiplatform/v1/persistent_resource.proto#L39}
   /// [google.cloud.aiplatform.v1.UpdatePersistentResourceRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/persistent_resource_service.proto#L232}
   ///
   // clang-format on
@@ -631,7 +631,7 @@ class PersistentResourceServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.PersistentResource]: @googleapis_reference_link{google/cloud/aiplatform/v1/persistent_resource.proto#L38}
+  /// [google.cloud.aiplatform.v1.PersistentResource]: @googleapis_reference_link{google/cloud/aiplatform/v1/persistent_resource.proto#L39}
   /// [google.cloud.aiplatform.v1.RebootPersistentResourceRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/persistent_resource_service.proto#L249}
   ///
   // clang-format on
@@ -682,7 +682,7 @@ class PersistentResourceServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.PersistentResource]: @googleapis_reference_link{google/cloud/aiplatform/v1/persistent_resource.proto#L38}
+  /// [google.cloud.aiplatform.v1.PersistentResource]: @googleapis_reference_link{google/cloud/aiplatform/v1/persistent_resource.proto#L39}
   /// [google.cloud.aiplatform.v1.RebootPersistentResourceRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/persistent_resource_service.proto#L249}
   ///
   // clang-format on
