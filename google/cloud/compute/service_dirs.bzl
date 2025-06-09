@@ -17,7 +17,6 @@
 """Automatically generated unit tests list - DO NOT EDIT."""
 
 service_dirs = [
-    "reservation_sub_blocks/v1/",
     "accelerator_types/v1/",
     "addresses/v1/",
     "autoscalers/v1/",
@@ -93,6 +92,7 @@ service_dirs = [
     "region_zones/v1/",
     "regions/v1/",
     "reservation_blocks/v1/",
+    "reservation_sub_blocks/v1/",
     "reservations/v1/",
     "resource_policies/v1/",
     "routers/v1/",
