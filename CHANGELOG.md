@@ -4,7 +4,7 @@
 breaking changes in the upcoming 3.x release. This release is scheduled for
 2024-12 or 2025-01.
 
-## v2.38.0 - TBD
+## v2.38.0 - 2025-06
 
 ### New Libraries
 
@@ -15,6 +15,31 @@ the APIs in these libraries are stable, and are ready for production use.
 - [Google Cloud Managed Lustre API](/google/cloud/lustre/README.md)
 - [Memorystore API](/google/cloud/memorystore/README.md)
 - [Oracle Database@Google Cloud API](/google/cloud/oracledatabase/README.md)
+
+### [Pub/Sub](/google/cloud/pubsub/README.md)
+
+- feat(pubsub): add MakeConnection overloads to support regional and locational endpoints ([#15190](https://github.com/googleapis/google-cloud-cpp/pull/15190))
+
+### [Storage](/google/cloud/storage/README.md)
+
+- fix(storage): make sure to send append_object_spec when retrying ([#15160](https://github.com/googleapis/google-cloud-cpp/pull/15160))
+- samples(storage): add the bucket soft delete related tags ([#15154](https://github.com/googleapis/google-cloud-cpp/pull/15154))
+- fix: fix 1000+ buckets pagination issue ([#15112](https://github.com/googleapis/google-cloud-cpp/pull/15112))
+- samples(storage): add samples for soft delete objects ([#15133](https://github.com/googleapis/google-cloud-cpp/pull/15133))
+
+### [Common Libraries](/google/cloud/README.md)
+
+- feat(resourcemanager): add Connection factory function for regional endpoints ([#15189](https://github.com/googleapis/google-cloud-cpp/pull/15189))
+- fix: update model version in aiplatform samples ([#15183](https://github.com/googleapis/google-cloud-cpp/pull/15183))
+- feat(lustre): generate library ([#15167](https://github.com/googleapis/google-cloud-cpp/pull/15167))
+- feat(dataform): generate library ([#15151](https://github.com/googleapis/google-cloud-cpp/pull/15151))
+- samples(storagecontrol): add samples for anywhere cache ([#15134](https://github.com/googleapis/google-cloud-cpp/pull/15134))
+- feat(oracledatabase): generate library ([#15135](https://github.com/googleapis/google-cloud-cpp/pull/15135))
+- feat(memorystore): generate library ([#15132](https://github.com/googleapis/google-cloud-cpp/pull/15132))
+
+### [Google APIs interface definitions](https://github.com/googleapis/googleapis)
+
+- This release is based on definitions as of [2025-06-04T16:36:46-07:00](https://github.com/googleapis/googleapis/tree/de157ca34fa487ce248eb9130293d630b501e4ad)
 
 ## v2.37.0 - 2025-05
 
