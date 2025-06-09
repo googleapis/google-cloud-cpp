@@ -29,7 +29,7 @@ the APIs in these libraries are stable, and are ready for production use.
 
 - feat(resourcemanager): add Connection factory function for regional endpoints ([#15189](https://github.com/googleapis/google-cloud-cpp/pull/15189))
 - samples(storagecontrol): add samples for anywhere cache ([#15134](https://github.com/googleapis/google-cloud-cpp/pull/15134))
-- fix: Bypass proxy for GCE metadata server requests 
+- fix: Bypass proxy for GCE metadata server requests
 
 ### [Google APIs interface definitions](https://github.com/googleapis/googleapis)
 
