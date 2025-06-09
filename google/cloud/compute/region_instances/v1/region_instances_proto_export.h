@@ -30,7 +30,7 @@
 #include <google/cloud/compute/v1/internal/common_003.pb.h>
 #include <google/cloud/compute/v1/internal/common_015.pb.h>
 #include <google/cloud/compute/v1/internal/common_016.pb.h>
-#include <google/cloud/compute/v1/internal/common_020.pb.h>
+#include <google/cloud/compute/v1/internal/common_021.pb.h>
 #include <google/cloud/compute/v1/internal/common_029.pb.h>
 #include <google/cloud/compute/v1/internal/common_033.pb.h>
 #include <google/cloud/compute/v1/internal/common_081.pb.h>

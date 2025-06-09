@@ -115,6 +115,40 @@ DisksRestLogging::BulkInsert(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+DisksRestLogging::AsyncBulkSetLabels(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::disks::v1::BulkSetLabelsRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> rest_context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::cpp::compute::disks::v1::BulkSetLabelsRequest const&
+                 request) {
+        return child_->AsyncBulkSetLabels(cq, std::move(rest_context),
+                                          std::move(options), request);
+      },
+      cq, std::move(rest_context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DisksRestLogging::BulkSetLabels(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::disks::v1::BulkSetLabelsRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::disks::v1::BulkSetLabelsRequest const&
+                 request) {
+        return child_->BulkSetLabels(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DisksRestLogging::AsyncCreateSnapshot(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,

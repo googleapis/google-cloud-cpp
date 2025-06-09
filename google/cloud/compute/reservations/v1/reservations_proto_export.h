@@ -34,10 +34,10 @@
 #include <google/cloud/compute/v1/internal/common_031.pb.h>
 #include <google/cloud/compute/v1/internal/common_048.pb.h>
 #include <google/cloud/compute/v1/internal/common_111.pb.h>
-#include <google/cloud/compute/v1/internal/common_119.pb.h>
-#include <google/cloud/compute/v1/internal/common_144.pb.h>
+#include <google/cloud/compute/v1/internal/common_120.pb.h>
 #include <google/cloud/compute/v1/internal/common_145.pb.h>
-#include <google/cloud/compute/v1/internal/common_151.pb.h>
+#include <google/cloud/compute/v1/internal/common_146.pb.h>
+#include <google/cloud/compute/v1/internal/common_152.pb.h>
 // IWYU pragma: end_exports
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_RESERVATIONS_V1_RESERVATIONS_PROTO_EXPORT_H

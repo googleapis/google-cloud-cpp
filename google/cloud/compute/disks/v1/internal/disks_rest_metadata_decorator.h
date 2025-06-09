@@ -75,6 +75,20 @@ class DisksRestMetadata : public DisksRestStub {
       override;
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncBulkSetLabels(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::disks::v1::BulkSetLabelsRequest const&
+          request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> BulkSetLabels(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::disks::v1::BulkSetLabelsRequest const&
+          request) override;
+
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncCreateSnapshot(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,

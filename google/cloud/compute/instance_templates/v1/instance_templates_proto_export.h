@@ -30,7 +30,7 @@
 #include <google/cloud/compute/v1/internal/common_003.pb.h>
 #include <google/cloud/compute/v1/internal/common_007.pb.h>
 #include <google/cloud/compute/v1/internal/common_016.pb.h>
-#include <google/cloud/compute/v1/internal/common_020.pb.h>
+#include <google/cloud/compute/v1/internal/common_021.pb.h>
 #include <google/cloud/compute/v1/internal/common_024.pb.h>
 #include <google/cloud/compute/v1/internal/common_029.pb.h>
 #include <google/cloud/compute/v1/internal/common_031.pb.h>
@@ -38,7 +38,7 @@
 #include <google/cloud/compute/v1/internal/common_047.pb.h>
 #include <google/cloud/compute/v1/internal/common_065.pb.h>
 #include <google/cloud/compute/v1/internal/common_081.pb.h>
-#include <google/cloud/compute/v1/internal/common_144.pb.h>
+#include <google/cloud/compute/v1/internal/common_145.pb.h>
 // IWYU pragma: end_exports
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_INSTANCE_TEMPLATES_V1_INSTANCE_TEMPLATES_PROTO_EXPORT_H

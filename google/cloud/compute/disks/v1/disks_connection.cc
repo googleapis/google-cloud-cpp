@@ -94,6 +94,30 @@ DisksConnection::BulkInsert(google::cloud::cpp::compute::v1::Operation const&) {
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+DisksConnection::BulkSetLabels(
+    google::cloud::cpp::compute::disks::v1::BulkSetLabelsRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DisksConnection::BulkSetLabels(
+    NoAwaitTag,
+    google::cloud::cpp::compute::disks::v1::BulkSetLabelsRequest const&) {
+  return StatusOr<google::cloud::cpp::compute::v1::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+DisksConnection::BulkSetLabels(
+    google::cloud::cpp::compute::v1::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DisksConnection::CreateSnapshot(
     google::cloud::cpp::compute::disks::v1::CreateSnapshotRequest const&) {
   return google::cloud::make_ready_future<
