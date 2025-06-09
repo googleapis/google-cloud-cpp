@@ -28,12 +28,8 @@ the APIs in these libraries are stable, and are ready for production use.
 ### [Common Libraries](/google/cloud/README.md)
 
 - feat(resourcemanager): add Connection factory function for regional endpoints ([#15189](https://github.com/googleapis/google-cloud-cpp/pull/15189))
-- fix: update model version in aiplatform samples ([#15183](https://github.com/googleapis/google-cloud-cpp/pull/15183))
-- feat(lustre): generate library ([#15167](https://github.com/googleapis/google-cloud-cpp/pull/15167))
-- feat(dataform): generate library ([#15151](https://github.com/googleapis/google-cloud-cpp/pull/15151))
 - samples(storagecontrol): add samples for anywhere cache ([#15134](https://github.com/googleapis/google-cloud-cpp/pull/15134))
-- feat(oracledatabase): generate library ([#15135](https://github.com/googleapis/google-cloud-cpp/pull/15135))
-- feat(memorystore): generate library ([#15132](https://github.com/googleapis/google-cloud-cpp/pull/15132))
+- fix: Bypass proxy for GCE metadata server requests 
 
 ### [Google APIs interface definitions](https://github.com/googleapis/googleapis)
 
