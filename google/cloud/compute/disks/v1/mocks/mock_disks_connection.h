@@ -143,6 +143,49 @@ class MockDisksConnection : public compute_disks_v1::DisksConnection {
   /// using ::testing::_;
   /// using ::testing::Matcher;
   /// EXPECT_CALL(*mock,
+  /// BulkSetLabels(Matcher<google::cloud::cpp::compute::disks::v1::BulkSetLabelsRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+      BulkSetLabels,
+      (google::cloud::cpp::compute::disks::v1::BulkSetLabelsRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, BulkSetLabels(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, BulkSetLabels,
+      (NoAwaitTag,
+       google::cloud::cpp::compute::disks::v1::BulkSetLabelsRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// BulkSetLabels(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              BulkSetLabels,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
   /// CreateSnapshot(Matcher<google::cloud::cpp::compute::disks::v1::CreateSnapshotRequest
   /// const&>(_)))
   /// @endcode

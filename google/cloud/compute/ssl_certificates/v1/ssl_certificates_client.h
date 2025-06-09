@@ -119,7 +119,7 @@ class SslCertificatesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.ssl_certificates.v1.AggregatedListSslCertificatesRequest]: @cloud_cpp_reference_link{google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L100}
-  /// [google.cloud.cpp.compute.v1.SslCertificatesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_125.proto#L137}
+  /// [google.cloud.cpp.compute.v1.SslCertificatesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_126.proto#L137}
   ///
   // clang-format on
   StreamRange<std::pair<
@@ -162,7 +162,7 @@ class SslCertificatesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.ssl_certificates.v1.AggregatedListSslCertificatesRequest]: @cloud_cpp_reference_link{google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L100}
-  /// [google.cloud.cpp.compute.v1.SslCertificatesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_125.proto#L137}
+  /// [google.cloud.cpp.compute.v1.SslCertificatesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_126.proto#L137}
   ///
   // clang-format on
   StreamRange<std::pair<
@@ -312,7 +312,7 @@ class SslCertificatesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.ssl_certificates.v1.GetSslCertificateRequest]: @cloud_cpp_reference_link{google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L208}
-  /// [google.cloud.cpp.compute.v1.SslCertificate]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_124.proto#L39}
+  /// [google.cloud.cpp.compute.v1.SslCertificate]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_125.proto#L39}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::SslCertificate> GetSslCertificate(
@@ -344,7 +344,7 @@ class SslCertificatesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.ssl_certificates.v1.GetSslCertificateRequest]: @cloud_cpp_reference_link{google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L208}
-  /// [google.cloud.cpp.compute.v1.SslCertificate]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_124.proto#L39}
+  /// [google.cloud.cpp.compute.v1.SslCertificate]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_125.proto#L39}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::SslCertificate> GetSslCertificate(
@@ -507,7 +507,7 @@ class SslCertificatesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.ssl_certificates.v1.ListSslCertificatesRequest]: @cloud_cpp_reference_link{google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L245}
-  /// [google.cloud.cpp.compute.v1.SslCertificate]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_124.proto#L39}
+  /// [google.cloud.cpp.compute.v1.SslCertificate]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_125.proto#L39}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::SslCertificate>
@@ -548,7 +548,7 @@ class SslCertificatesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.ssl_certificates.v1.ListSslCertificatesRequest]: @cloud_cpp_reference_link{google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L245}
-  /// [google.cloud.cpp.compute.v1.SslCertificate]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_124.proto#L39}
+  /// [google.cloud.cpp.compute.v1.SslCertificate]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_125.proto#L39}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::SslCertificate>

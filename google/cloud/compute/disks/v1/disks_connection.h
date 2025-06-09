@@ -214,6 +214,19 @@ class DisksConnection {
   BulkInsert(google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  BulkSetLabels(
+      google::cloud::cpp::compute::disks::v1::BulkSetLabelsRequest const&
+          request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> BulkSetLabels(
+      NoAwaitTag,
+      google::cloud::cpp::compute::disks::v1::BulkSetLabelsRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  BulkSetLabels(google::cloud::cpp::compute::v1::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   CreateSnapshot(
       google::cloud::cpp::compute::disks::v1::CreateSnapshotRequest const&
           request);

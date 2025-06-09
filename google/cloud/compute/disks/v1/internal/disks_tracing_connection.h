@@ -71,6 +71,18 @@ class DisksTracingConnection : public compute_disks_v1::DisksConnection {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> BulkInsert(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> BulkSetLabels(
+      google::cloud::cpp::compute::disks::v1::BulkSetLabelsRequest const&
+          request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> BulkSetLabels(
+      NoAwaitTag,
+      google::cloud::cpp::compute::disks::v1::BulkSetLabelsRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> BulkSetLabels(
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> CreateSnapshot(
       google::cloud::cpp::compute::disks::v1::CreateSnapshotRequest const&
           request) override;

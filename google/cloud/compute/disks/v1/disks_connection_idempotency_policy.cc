@@ -49,6 +49,11 @@ Idempotency DisksConnectionIdempotencyPolicy::BulkInsert(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency DisksConnectionIdempotencyPolicy::BulkSetLabels(
+    google::cloud::cpp::compute::disks::v1::BulkSetLabelsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency DisksConnectionIdempotencyPolicy::CreateSnapshot(
     google::cloud::cpp::compute::disks::v1::CreateSnapshotRequest const&) {
   return Idempotency::kNonIdempotent;

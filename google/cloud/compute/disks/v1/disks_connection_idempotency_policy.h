@@ -47,6 +47,10 @@ class DisksConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency BulkInsert(
       google::cloud::cpp::compute::disks::v1::BulkInsertRequest const& request);
 
+  virtual google::cloud::Idempotency BulkSetLabels(
+      google::cloud::cpp::compute::disks::v1::BulkSetLabelsRequest const&
+          request);
+
   virtual google::cloud::Idempotency CreateSnapshot(
       google::cloud::cpp::compute::disks::v1::CreateSnapshotRequest const&
           request);

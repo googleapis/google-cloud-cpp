@@ -91,6 +91,7 @@ Follow these links to find examples for other \c *Client classes:
 - [\c compute_region_zones_v1::RegionZonesClient](@ref compute_region_zones_v1::RegionZonesClient-service-account-snippet)
 - [\c compute_regions_v1::RegionsClient](@ref compute_regions_v1::RegionsClient-service-account-snippet)
 - [\c compute_reservation_blocks_v1::ReservationBlocksClient](@ref compute_reservation_blocks_v1::ReservationBlocksClient-service-account-snippet)
+- [\c compute_reservation_sub_blocks_v1::ReservationSubBlocksClient](@ref compute_reservation_sub_blocks_v1::ReservationSubBlocksClient-service-account-snippet)
 - [\c compute_reservations_v1::ReservationsClient](@ref compute_reservations_v1::ReservationsClient-service-account-snippet)
 - [\c compute_resource_policies_v1::ResourcePoliciesClient](@ref compute_resource_policies_v1::ResourcePoliciesClient-service-account-snippet)
 - [\c compute_routers_v1::RoutersClient](@ref compute_routers_v1::RoutersClient-service-account-snippet)
@@ -599,6 +600,12 @@ guide for more details.
 /*! @page compute_reservation_blocks_v1::ReservationBlocksClient-service-account-snippet Override compute_reservation_blocks_v1::ReservationBlocksClient Authentication Defaults
 
 @snippet google/cloud/compute/reservation_blocks/v1/samples/reservation_blocks_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_reservation_sub_blocks_v1::ReservationSubBlocksClient-service-account-snippet Override compute_reservation_sub_blocks_v1::ReservationSubBlocksClient Authentication Defaults
+
+@snippet google/cloud/compute/reservation_sub_blocks/v1/samples/reservation_sub_blocks_client_samples.cc with-service-account
 
 */
 

@@ -32,7 +32,7 @@
 #include <google/cloud/compute/v1/internal/common_066.pb.h>
 #include <google/cloud/compute/v1/internal/common_107.pb.h>
 #include <google/cloud/compute/v1/internal/common_108.pb.h>
-#include <google/cloud/compute/v1/internal/common_144.pb.h>
+#include <google/cloud/compute/v1/internal/common_145.pb.h>
 // IWYU pragma: end_exports
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_INSTANT_SNAPSHOTS_V1_REGION_INSTANT_SNAPSHOTS_PROTO_EXPORT_H

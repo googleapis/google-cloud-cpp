@@ -88,6 +88,27 @@ DisksRestMetadata::BulkInsert(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+DisksRestMetadata::AsyncBulkSetLabels(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::disks::v1::BulkSetLabelsRequest const&
+        request) {
+  SetMetadata(*rest_context, *options);
+  return child_->AsyncBulkSetLabels(cq, std::move(rest_context),
+                                    std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DisksRestMetadata::BulkSetLabels(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::disks::v1::BulkSetLabelsRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->BulkSetLabels(rest_context, options, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DisksRestMetadata::AsyncCreateSnapshot(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,

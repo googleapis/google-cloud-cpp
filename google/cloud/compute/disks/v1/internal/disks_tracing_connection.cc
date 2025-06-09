@@ -109,6 +109,36 @@ DisksTracingConnection::BulkInsert(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+DisksTracingConnection::BulkSetLabels(
+    google::cloud::cpp::compute::disks::v1::BulkSetLabelsRequest const&
+        request) {
+  auto span =
+      internal::MakeSpan("compute_disks_v1::DisksConnection::BulkSetLabels");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->BulkSetLabels(request));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DisksTracingConnection::BulkSetLabels(
+    NoAwaitTag,
+    google::cloud::cpp::compute::disks::v1::BulkSetLabelsRequest const&
+        request) {
+  auto span =
+      internal::MakeSpan("compute_disks_v1::DisksConnection::BulkSetLabels");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span, child_->BulkSetLabels(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+DisksTracingConnection::BulkSetLabels(
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("compute_disks_v1::DisksConnection::BulkSetLabels");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->BulkSetLabels(operation));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DisksTracingConnection::CreateSnapshot(
     google::cloud::cpp::compute::disks::v1::CreateSnapshotRequest const&
         request) {

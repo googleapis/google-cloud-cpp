@@ -27,10 +27,10 @@
 
 // IWYU pragma: begin_exports
 #include <google/cloud/compute/v1/internal/common_016.pb.h>
-#include <google/cloud/compute/v1/internal/common_128.pb.h>
-#include <google/cloud/compute/v1/internal/common_135.pb.h>
+#include <google/cloud/compute/v1/internal/common_129.pb.h>
 #include <google/cloud/compute/v1/internal/common_136.pb.h>
-#include <google/cloud/compute/v1/internal/common_146.pb.h>
+#include <google/cloud/compute/v1/internal/common_137.pb.h>
+#include <google/cloud/compute/v1/internal/common_147.pb.h>
 // IWYU pragma: end_exports
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_TARGET_HTTPS_PROXIES_V1_TARGET_HTTPS_PROXIES_PROTO_EXPORT_H
