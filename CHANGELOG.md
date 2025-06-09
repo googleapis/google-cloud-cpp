@@ -23,7 +23,6 @@ the APIs in these libraries are stable, and are ready for production use.
 ### [Storage](/google/cloud/storage/README.md)
 
 - samples(storage): add the bucket soft delete related tags ([#15154](https://github.com/googleapis/google-cloud-cpp/pull/15154))
-- fix: fix 1000+ buckets pagination issue ([#15112](https://github.com/googleapis/google-cloud-cpp/pull/15112))
 - samples(storage): add samples for soft delete objects ([#15133](https://github.com/googleapis/google-cloud-cpp/pull/15133))
 
 ### [Common Libraries](/google/cloud/README.md)
