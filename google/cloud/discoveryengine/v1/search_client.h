@@ -119,7 +119,7 @@ class SearchServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.SearchRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/search_service.proto#L91}
-  /// [google.cloud.discoveryengine.v1.SearchResponse.SearchResult]: @googleapis_reference_link{google/cloud/discoveryengine/v1/search_service.proto#L1079}
+  /// [google.cloud.discoveryengine.v1.SearchResponse.SearchResult]: @googleapis_reference_link{google/cloud/discoveryengine/v1/search_service.proto#L1085}
   ///
   // clang-format on
   StreamRange<google::cloud::discoveryengine::v1::SearchResponse::SearchResult>
@@ -171,7 +171,7 @@ class SearchServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.SearchRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/search_service.proto#L91}
-  /// [google.cloud.discoveryengine.v1.SearchResponse.SearchResult]: @googleapis_reference_link{google/cloud/discoveryengine/v1/search_service.proto#L1079}
+  /// [google.cloud.discoveryengine.v1.SearchResponse.SearchResult]: @googleapis_reference_link{google/cloud/discoveryengine/v1/search_service.proto#L1085}
   /// [google.cloud.discoveryengine.v1.SearchService.Search]: @googleapis_reference_link{google/cloud/discoveryengine/v1/search_service.proto#L44}
   ///
   // clang-format on
