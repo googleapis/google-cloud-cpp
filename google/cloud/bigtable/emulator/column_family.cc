@@ -88,8 +88,8 @@ std::vector<Cell> ColumnFamilyRow::DeleteColumn(
 }
 
 absl::optional<Cell> ColumnFamilyRow::DeleteTimeStamp(
-    std::string const& column_qulifier, std::chrono::milliseconds timestamp) {
-  auto column_it = columns_.find(column_qulifier);
+    std::string const& column_qualifier, std::chrono::milliseconds timestamp) {
+  auto column_it = columns_.find(column_qualifier);
   if (column_it == columns_.end()) {
     return absl::nullopt;
   }
@@ -155,14 +155,14 @@ std::vector<Cell> ColumnFamily::DeleteColumn(
 }
 
 absl::optional<Cell> ColumnFamily::DeleteTimeStamp(
-    std::string const& row_key, std::string const& column_qulifier,
+    std::string const& row_key, std::string const& column_qualifier,
     std::chrono::milliseconds timestamp) {
   auto row_it = rows_.find(row_key);
   if (row_it == rows_.end()) {
     return absl::nullopt;
   }
 
-  auto ret = row_it->second.DeleteTimeStamp(column_qulifier, timestamp);
+  auto ret = row_it->second.DeleteTimeStamp(column_qualifier, timestamp);
   if (!row_it->second.HasColumns()) {
     rows_.erase(row_it);
   }
