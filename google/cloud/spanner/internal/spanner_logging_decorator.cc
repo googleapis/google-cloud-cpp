@@ -224,6 +224,24 @@ SpannerLogging::BatchWrite(
       std::move(context), options, request, __func__, tracing_options_);
 }
 
+future<StatusOr<google::spanner::v1::Session>>
+SpannerLogging::AsyncCreateSession(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::spanner::v1::CreateSessionRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::spanner::v1::CreateSessionRequest const& request) {
+        return child_->AsyncCreateSession(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
 future<StatusOr<google::spanner::v1::BatchCreateSessionsResponse>>
 SpannerLogging::AsyncBatchCreateSessions(
     google::cloud::CompletionQueue& cq,

@@ -21,7 +21,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 SessionHolder MakeDissociatedSessionHolder(std::string session_name) {
   return SessionHolder(
-      new Session(std::move(session_name), /*channel=*/nullptr),
+      new Session(std::move(session_name), Session::Mode::kDisassociated),
       std::default_delete<Session>());
 }
 

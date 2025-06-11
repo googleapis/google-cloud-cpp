@@ -167,9 +167,13 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
     --num_waiting_for_session_;
   }
 
-  Status CreateMultiplexedSession();  // LOCKS_EXCLUDED(mu_)
-  StatusOr<std::string> CreateMultiplexedSession(
-      std::shared_ptr<SpannerStub>) const;
+  Status CreateMultiplexedSession(
+      std::unique_lock<std::mutex>& lk);  // EXCLUSIVE_LOCKS_REQUIRED(mu_)
+  Status CreateMultiplexedSessionSync(std::shared_ptr<SpannerStub>);
+  future<StatusOr<google::spanner::v1::Session>> CreateMultiplexedSessionAsync(
+      std::shared_ptr<SpannerStub>);
+  Status HandleMultiplexedCreateSessionDone(
+      StatusOr<google::spanner::v1::Session> response);
   bool HasValidMultiplexedSession(std::unique_lock<std::mutex> const&) const;
 
   Status Grow(std::unique_lock<std::mutex>& lk, int sessions_to_create,
@@ -208,6 +212,10 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
       std::shared_ptr<Channel> const& channel,
       StatusOr<google::spanner::v1::BatchCreateSessionsResponse> response);
 
+  void ScheduleMultiplexedBackgroundWork(std::chrono::seconds relative_time);
+  void DoMultiplexedBackgroundWork();
+  void ReplaceMultiplexedSession();
+
   void ScheduleBackgroundWork(std::chrono::seconds relative_time);
   void DoBackgroundWork();
   void MaintainPoolSize();
@@ -243,6 +251,7 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
   Session::Clock::time_point last_use_time_lower_bound_ =
       clock_->Now();  // GUARDED_BY(mu_)
 
+  future<void> current_multiplexed_timer_;
   future<void> current_timer_;
 
   // `channels_` is guaranteed to be non-empty and will not be resized after
