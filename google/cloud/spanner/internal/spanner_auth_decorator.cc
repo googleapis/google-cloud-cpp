@@ -149,6 +149,25 @@ SpannerAuth::BatchWrite(std::shared_ptr<grpc::ClientContext> context,
   return child_->BatchWrite(std::move(context), options, request);
 }
 
+future<StatusOr<google::spanner::v1::Session>> SpannerAuth::AsyncCreateSession(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::spanner::v1::CreateSessionRequest const& request) {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(StatusOr<google::spanner::v1::Session>(
+              std::move(context).status()));
+        }
+        return child->AsyncCreateSession(cq, *std::move(context),
+                                         std::move(options), request);
+      });
+}
+
 future<StatusOr<google::spanner::v1::BatchCreateSessionsResponse>>
 SpannerAuth::AsyncBatchCreateSessions(
     google::cloud::CompletionQueue& cq,
