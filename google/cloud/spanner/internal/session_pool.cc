@@ -140,9 +140,8 @@ void SessionPool::ScheduleMultiplexedBackgroundWork(
   std::weak_ptr<SessionPool> pool = shared_from_this();
   current_multiplexed_timer_ =
       cq_.MakeRelativeTimer(relative_time)
-          .then([pool](
-                    future<StatusOr<std::chrono::system_clock::time_point>>
-                        result) {
+          .then([pool](future<StatusOr<std::chrono::system_clock::time_point>>
+                           result) {
             if (result.get().ok()) {
               if (auto shared_pool = pool.lock()) {
                 shared_pool->DoMultiplexedBackgroundWork();
