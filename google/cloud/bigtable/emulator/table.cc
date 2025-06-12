@@ -232,6 +232,7 @@ Status Table::MutateRow(google::bigtable::v2::MutateRowRequest const& request) {
                                          request.mutations());
 }
 
+// NOLINTBEGIN(readability-function-cognitive-complexity)
 Status Table::DoMutationsWithPossibleRollback(
     std::string const& row_key,
     google::protobuf::RepeatedPtrField<google::bigtable::v2::Mutation> const&
@@ -300,6 +301,7 @@ Status Table::DoMutationsWithPossibleRollback(
 
   return Status();
 }
+// NOLINTEND(readability-function-cognitive-complexity)
 
 StatusOr<CellStream> Table::CreateCellStream(
     std::shared_ptr<StringRangeSet> range_set,
@@ -556,7 +558,6 @@ Table::ReadModifyWriteRow(
   return std::move(maybe_response.value());
 }
 
-
 // NOLINTBEGIN(readability-convert-member-functions-to-static)
 Status RowTransaction::AddToCell(
     ::google::bigtable::v2::Mutation_AddToCell const& add_to_cell) {
@@ -726,7 +727,8 @@ void ProcessReadModifyWriteResult(
   // Record the cell in our local mini table here to use in
   // assembling a row of changed cells for return.
   tmp_families[rule.family_name()].SetCell(row_key, rule.column_qualifier(),
-                                           result.timestamp, std::move(result.value));
+                                           result.timestamp,
+                                           std::move(result.value));
 }
 
 // NOLINTBEGIN(readability-function-cognitive-complexity)

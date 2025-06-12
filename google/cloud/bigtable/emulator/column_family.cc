@@ -57,8 +57,7 @@ StatusOr<ReadModifyWriteCellResult> ColumnRow::ReadModifyWrite(
   auto latest_it = latest(cells_);
 
   auto maybe_old_value =
-      google::cloud::internal::DecodeBigEndian<std::int64_t>(
-          latest_it->second);
+      google::cloud::internal::DecodeBigEndian<std::int64_t>(latest_it->second);
   if (!maybe_old_value) {
     return maybe_old_value.status();
   }

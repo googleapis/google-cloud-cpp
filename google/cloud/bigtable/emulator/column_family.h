@@ -71,11 +71,9 @@ class ColumnRow {
   ColumnRow(ColumnRow const&) = delete;
   ColumnRow& operator=(ColumnRow const&) = delete;
 
-
   StatusOr<ReadModifyWriteCellResult> ReadModifyWrite(std::int64_t inc_value);
 
   ReadModifyWriteCellResult ReadModifyWrite(std::string const& append_value);
-
 
   /**
    * Insert or update and existing cell at a given timestamp.
@@ -113,8 +111,7 @@ class ColumnRow {
   bool HasCells() const { return !cells_.empty(); }
   using const_iterator =
       std::map<std::chrono::milliseconds, std::string>::const_iterator;
-  using iterator =
-      std::map<std::chrono::milliseconds, std::string>::iterator;
+  using iterator = std::map<std::chrono::milliseconds, std::string>::iterator;
   const_iterator begin() const { return cells_.begin(); }
   const_iterator end() const { return cells_.end(); }
   iterator begin() { return cells_.begin(); }

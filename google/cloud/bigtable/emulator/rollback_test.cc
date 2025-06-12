@@ -346,12 +346,13 @@ TEST(TransactonRollback, ZeroOrNegativeTimestampHandling) {
       {column_family_name, column_qualifier, -1, data},
   };
   auto const* const row_key_5 = "4";
-  auto system_time_ms_before = std::chrono::duration_cast<std::chrono::milliseconds>(
-      std::chrono::system_clock::now().time_since_epoch());
+  auto system_time_ms_before =
+      std::chrono::duration_cast<std::chrono::milliseconds>(
+          std::chrono::system_clock::now().time_since_epoch());
   status = SetCells(table, table_name, row_key_5, v);
   ASSERT_STATUS_OK(status);
-  auto column_or = GetColumn(
-      table, v[0].column_family_name, row_key_5, v[0].column_qualifier);
+  auto column_or = GetColumn(table, v[0].column_family_name, row_key_5,
+                             v[0].column_qualifier);
   ASSERT_STATUS_OK(column_or.status());
   auto col = column_or.value();
   ASSERT_EQ(col.size(), 1);
