@@ -101,7 +101,6 @@ class ObjectDescriptorImpl
 
   mutable std::mutex mu_;
   google::storage::v2::BidiReadObjectSpec read_object_spec_;
-  std::shared_ptr<OpenStream> stream_;
   absl::optional<google::storage::v2::Object> metadata_;
   std::int64_t read_id_generator_ = 0;
   bool write_pending_ = false;
