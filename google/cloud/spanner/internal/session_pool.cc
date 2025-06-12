@@ -63,11 +63,27 @@ SessionPool::SessionPool(spanner::Database db,
           opts_.get<spanner::SessionPoolMaxSessionsPerChannelOption>() *
           static_cast<int>(stubs.size())),
       random_generator_(std::random_device()()),
+      multiplexed_session_replacement_interval_(
+          opts_.has<
+              spanner_internal::MultiplexedSessionReplacementIntervalOption>()
+              ? opts_.get<spanner_internal::
+                              MultiplexedSessionReplacementIntervalOption>()
+              : std::chrono::hours(24 * 7)),
+      multiplexed_session_background_interval_(
+          opts_.has<spanner_internal::
+                        MultiplexedSessionBackgroundWorkIntervalOption>()
+              ? opts_.get<spanner_internal::
+                              MultiplexedSessionBackgroundWorkIntervalOption>()
+              : std::chrono::minutes(10)),
       channels_(stubs.size()) {
   if (stubs.empty()) {
     google::cloud::internal::ThrowInvalidArgument(
         "SessionPool requires a non-empty set of stubs");
   }
+
+  multiplexed_session_ = internal::NotFoundError(
+      "no multiplexed session is currently available; try again later",
+      GCP_ERROR_INFO());
 
   for (auto i = 0U; i < stubs.size(); ++i) {
     channels_[i] = std::make_shared<Channel>(std::move(stubs[i]));
@@ -81,7 +97,7 @@ void SessionPool::Initialize() {
   if (opts_.has<spanner_experimental::EnableMultiplexedSessionOption>()) {
     std::unique_lock<std::mutex> lk(mu_);
     CreateMultiplexedSession(lk);
-    ScheduleMultiplexedBackgroundWork(std::chrono::minutes(10));
+    ScheduleMultiplexedBackgroundWork(multiplexed_session_background_interval_);
   } else {
     auto const min_sessions =
         opts_.get<spanner::SessionPoolMinSessionsOption>();
@@ -124,8 +140,9 @@ void SessionPool::ScheduleMultiplexedBackgroundWork(
   std::weak_ptr<SessionPool> pool = shared_from_this();
   current_multiplexed_timer_ =
       cq_.MakeRelativeTimer(relative_time)
-          .then([pool](future<StatusOr<std::chrono::system_clock::time_point>>
-                           result) {
+          .then([pool](
+                    future<StatusOr<std::chrono::system_clock::time_point>>
+                        result) {
             if (result.get().ok()) {
               if (auto shared_pool = pool.lock()) {
                 shared_pool->DoMultiplexedBackgroundWork();
@@ -135,13 +152,11 @@ void SessionPool::ScheduleMultiplexedBackgroundWork(
 }
 
 void SessionPool::ReplaceMultiplexedSession() {
-  constexpr auto kMultiplexedSessionRefreshInterval =
-      std::chrono::hours(7 * 24);
   auto now = clock_->Now();
-  auto refresh_limit = now - kMultiplexedSessionRefreshInterval;
+  auto refresh_limit = now - multiplexed_session_replacement_interval_;
   std::unique_lock<std::mutex> lk(mu_);
   if (create_calls_in_progress_ == 0 &&
-      multiplexed_session_->creation_time() <= refresh_limit) {
+      (*multiplexed_session_)->creation_time() <= refresh_limit) {
     ++create_calls_in_progress_;
     auto stub = GetStub(std::move(lk));
     std::weak_ptr<SessionPool> pool = shared_from_this();
@@ -157,7 +172,7 @@ void SessionPool::ReplaceMultiplexedSession() {
 
 void SessionPool::DoMultiplexedBackgroundWork() {
   ReplaceMultiplexedSession();
-  ScheduleMultiplexedBackgroundWork(std::chrono::minutes(10));
+  ScheduleMultiplexedBackgroundWork(multiplexed_session_background_interval_);
 }
 
 void SessionPool::ScheduleBackgroundWork(std::chrono::seconds relative_time) {
@@ -256,13 +271,12 @@ Status SessionPool::HandleMultiplexedCreateSessionDone(
   std::unique_lock<std::mutex> lk(mu_);
   --create_calls_in_progress_;
   if (!response.ok()) {
+    multiplexed_session_ = response.status();
     return response.status();
   }
 
-  // Swap new Multiplexed Session with existing one.
-  auto session = std::make_shared<Session>(response->name(),
-                                           Session::Mode::kMultiplexed, clock_);
-  swap(multiplexed_session_, session);
+  multiplexed_session_ = std::make_shared<Session>(
+      response->name(), Session::Mode::kMultiplexed, clock_);
   return {};
 }
 
@@ -320,15 +334,16 @@ SessionPool::CreateMultiplexedSessionAsync(std::shared_ptr<SpannerStub> stub) {
               internal::ImmutableOptions options,
               google::spanner::v1::CreateSessionRequest const& request) {
         RouteToLeader(*context);  // always for CreateSession()
-        return stub->AsyncCreateSession(cq, context, std::move(options),
-                                        request);
+        return stub->AsyncCreateSession(cq, std::move(context),
+                                        std::move(options), request);
       },
       internal::SaveCurrentOptions(), std::move(request), __func__);
 }
 
 bool SessionPool::HasValidMultiplexedSession(
     std::unique_lock<std::mutex> const&) const {
-  return multiplexed_session_ && !multiplexed_session_->is_bad();
+  return multiplexed_session_.ok() && *multiplexed_session_ &&
+         !(*multiplexed_session_)->is_bad();
 }
 
 /*
@@ -437,14 +452,18 @@ StatusOr<SessionHolder> SessionPool::Allocate(bool dissociate_from_pool) {
 StatusOr<SessionHolder> SessionPool::Multiplexed() {
   if (opts_.has<spanner_experimental::EnableMultiplexedSessionOption>()) {
     std::unique_lock<std::mutex> lk(mu_);
+    // If we encountered an error when attempting to create the multiplexed
+    // session return it here.
+    if (!multiplexed_session_.ok()) {
+      return multiplexed_session_.status();
+    }
     // If we don't have a multiplexed session (yet), we should be in the process
     // of creating one.
     if (!HasValidMultiplexedSession(lk)) {
-      return internal::NotFoundError(
-          "no multiplexed session is currently available; try again later",
-          GCP_ERROR_INFO());
+      return internal::InternalError("multiplexed session is invalid",
+                                     GCP_ERROR_INFO());
     }
-    return multiplexed_session_;
+    return *multiplexed_session_;
   }
   return internal::FailedPreconditionError(
       "multiplexed sessions are not enabled", GCP_ERROR_INFO());

@@ -170,27 +170,6 @@ TEST_F(SessionPoolTest, Multiplexed) {
   EXPECT_EQ((*session)->session_name(), "multiplexed");
 }
 
-TEST_F(SessionPoolTest, MultiplexedFallback) {
-  // Falling back from Multiplexed to SessionPool is not supported. Update
-  // this test accordingly.
-  GTEST_SKIP();
-  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
-  auto db = spanner::Database("project", "instance", "database");
-  EXPECT_CALL(*mock, CreateSession)
-      .WillRepeatedly(
-          Return(ByMove(Status(StatusCode::kInternal, "init failure"))));
-  EXPECT_CALL(*mock, BatchCreateSessions)
-      .WillOnce(Return(ByMove(MakeSessionsResponse({"session1"}))));
-  EXPECT_CALL(*mock, AsyncDeleteSession(_, _, _, SessionNameIs("session1")))
-      .WillOnce(Return(make_ready_future(Status{})));
-
-  google::cloud::internal::AutomaticallyCreatedBackgroundThreads threads;
-  auto pool = MakeTestSessionPool(db, {mock}, threads.cq());
-  auto session = pool->Multiplexed();
-  ASSERT_STATUS_OK(session);
-  EXPECT_EQ((*session)->session_name(), "session1");
-}
-
 TEST_F(SessionPoolTest, MultiplexedAllocateRouteToLeader) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("project", "instance", "database");
@@ -272,17 +251,6 @@ TEST_F(SessionPoolTest, MultiplexedAllocateNoRouteToLeader) {
 TEST_F(SessionPoolTest, AllocateNoRouteToLeader) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("project", "instance", "database");
-  //  EXPECT_CALL(
-  //      *mock,
-  //      CreateSession(_, _, AllOf(DatabaseIs(db.FullName()),
-  //      IsMultiplexed()))) .WillOnce([this](grpc::ClientContext& context,
-  //      Options const&,
-  //                       google::spanner::v1::CreateSessionRequest const&) {
-  //        EXPECT_THAT(GetMetadata(context),
-  //                    AnyOf(Contains(Pair(kRouteToLeader, "false")),
-  //                          Not(Contains(Pair(kRouteToLeader, _)))));
-  //        return MakeMultiplexedSession("multiplexed");
-  //      });
   EXPECT_CALL(*mock,
               BatchCreateSessions(
                   _, _, AllOf(DatabaseIs(db.FullName()), SessionCountIs(42))))
@@ -293,9 +261,6 @@ TEST_F(SessionPoolTest, AllocateNoRouteToLeader) {
                           Not(Contains(Pair(kRouteToLeader, _)))));
         return MakeSessionsResponse({"session1"});
       });
-  //  EXPECT_CALL(*mock, AsyncDeleteSession(_, _, _,
-  //  SessionNameIs("multiplexed")))
-  //      .WillOnce(Return(make_ready_future(Status{})));
   EXPECT_CALL(*mock, AsyncDeleteSession(_, _, _, SessionNameIs("session1")))
       .WillOnce(Return(make_ready_future(Status{})));
 
@@ -349,12 +314,25 @@ TEST_F(SessionPoolTest, ReleaseBadSession) {
   }
 }
 
-TEST_F(SessionPoolTest, CreateError) {
+TEST_F(SessionPoolTest, MultiplexedCreateError) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("project", "instance", "database");
   EXPECT_CALL(*mock, CreateSession)
       .WillRepeatedly(
           Return(ByMove(Status(StatusCode::kInternal, "init failure"))));
+
+  google::cloud::internal::AutomaticallyCreatedBackgroundThreads threads;
+  auto pool = MakeTestSessionPool(
+      db, {mock}, threads.cq(),
+      Options{}.set<spanner_experimental::EnableMultiplexedSessionOption>({}));
+  auto session = pool->Multiplexed();
+  EXPECT_THAT(session,
+              StatusIs(StatusCode::kInternal, HasSubstr("init failure")));
+}
+
+TEST_F(SessionPoolTest, CreateError) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+  auto db = spanner::Database("project", "instance", "database");
   EXPECT_CALL(*mock, BatchCreateSessions)
       .WillOnce(Return(ByMove(Status(StatusCode::kInternal, "init failure"))))
       .WillOnce(Return(ByMove(Status(StatusCode::kInternal, "some failure"))));
@@ -770,7 +748,89 @@ TEST_F(SessionPoolTest, GetStubForStublessSession) {
   EXPECT_EQ(pool->GetStub(*session), mock);
 }
 
-TEST_F(SessionPoolTest, MultilpexedSessionRefresh) { GTEST_SKIP(); }
+TEST_F(SessionPoolTest, MultilpexedSessionReplacementSuccess) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+  auto db = spanner::Database("project", "instance", "database");
+  EXPECT_CALL(
+      *mock,
+      CreateSession(_, _, AllOf(DatabaseIs(db.FullName()), IsMultiplexed())))
+      .WillOnce(Return(ByMove(MakeMultiplexedSession({"multiplexed1"}))));
+  EXPECT_CALL(*mock, AsyncCreateSession(_, _, _, _))
+      .WillOnce(Return(make_ready_future(StatusOr<google::spanner::v1::Session>(
+          MakeMultiplexedSession({"multiplexed2"})))));
+
+  auto impl = std::make_shared<FakeCompletionQueueImpl>();
+  auto background_interval =
+      std::chrono::duration_cast<std::chrono::minutes>(std::chrono::seconds(1));
+  auto replacement_interval =
+      std::chrono::duration_cast<std::chrono::hours>(std::chrono::seconds(2));
+  auto clock = std::make_shared<FakeSteadyClock>();
+  auto pool = MakeTestSessionPool(
+      db, {mock}, CompletionQueue(impl),
+      Options{}
+          .set<SessionPoolClockOption>(clock)
+          .set<MultiplexedSessionBackgroundWorkIntervalOption>(
+              background_interval)
+          .set<MultiplexedSessionReplacementIntervalOption>(
+              replacement_interval)
+          .set<spanner_experimental::EnableMultiplexedSessionOption>({}));
+
+  auto s1 = pool->Multiplexed();
+  ASSERT_STATUS_OK(s1);
+  EXPECT_EQ((*s1)->session_name(), "multiplexed1");
+
+  clock->AdvanceTime(background_interval);
+  impl->SimulateCompletion(true);
+
+  auto s2 = pool->Multiplexed();
+  ASSERT_STATUS_OK(s2);
+  EXPECT_EQ((*s2)->session_name(), "multiplexed2");
+
+  // Cancel all pending operations, satisfying any remaining futures.
+  impl->SimulateCompletion(false);
+}
+
+TEST_F(SessionPoolTest, MultilpexedSessionReplacementRpcPermanentFailure) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+  auto db = spanner::Database("project", "instance", "database");
+  EXPECT_CALL(
+      *mock,
+      CreateSession(_, _, AllOf(DatabaseIs(db.FullName()), IsMultiplexed())))
+      .WillOnce(Return(ByMove(MakeMultiplexedSession({"multiplexed1"}))));
+  EXPECT_CALL(*mock, AsyncCreateSession(_, _, _, _))
+      .WillOnce(Return(make_ready_future(StatusOr<google::spanner::v1::Session>(
+          Status(StatusCode::kResourceExhausted, "retry policy exhausted")))));
+
+  auto impl = std::make_shared<FakeCompletionQueueImpl>();
+  auto background_interval =
+      std::chrono::duration_cast<std::chrono::minutes>(std::chrono::seconds(1));
+  auto replacement_interval =
+      std::chrono::duration_cast<std::chrono::hours>(std::chrono::seconds(2));
+  auto clock = std::make_shared<FakeSteadyClock>();
+  auto pool = MakeTestSessionPool(
+      db, {mock}, CompletionQueue(impl),
+      Options{}
+          .set<SessionPoolClockOption>(clock)
+          .set<MultiplexedSessionBackgroundWorkIntervalOption>(
+              background_interval)
+          .set<MultiplexedSessionReplacementIntervalOption>(
+              replacement_interval)
+          .set<spanner_experimental::EnableMultiplexedSessionOption>({}));
+
+  auto s1 = pool->Multiplexed();
+  ASSERT_STATUS_OK(s1);
+  EXPECT_EQ((*s1)->session_name(), "multiplexed1");
+
+  clock->AdvanceTime(background_interval);
+  impl->SimulateCompletion(true);
+
+  auto s2 = pool->Multiplexed();
+  ASSERT_STATUS_OK(s2);
+  EXPECT_EQ((*s2)->session_name(), "multiplexed1");
+
+  // Cancel all pending operations, satisfying any remaining futures.
+  impl->SimulateCompletion(false);
+}
 
 TEST_F(SessionPoolTest, SessionRefresh) {
   auto mock = std::make_shared<StrictMock<spanner_testing::MockSpannerStub>>();
@@ -843,11 +903,6 @@ TEST_F(SessionPoolTest, SessionRefresh) {
   // `std::abort()`. On real programs, shutting down the completion queue
   // will have the same effect.
   impl->SimulateCompletion(false);
-}
-
-TEST_F(SessionPoolTest, MultiplexedSessionRefreshNotFound) {
-  // This isn't supposed to happen, but we need to handle it if it does.
-  GTEST_SKIP();
 }
 
 TEST_F(SessionPoolTest, SessionRefreshNotFound) {

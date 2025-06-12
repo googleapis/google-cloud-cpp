@@ -51,6 +51,17 @@ struct SessionPoolClockOption {
   using Type = std::shared_ptr<Session::Clock>;
 };
 
+// Frequency of when the existing multiplexed sessions is replaced with a new
+// multiplexed sessions.
+struct MultiplexedSessionReplacementIntervalOption {
+  using Type = std::chrono::hours;
+};
+
+// Frequency of when background work is performed.
+struct MultiplexedSessionBackgroundWorkIntervalOption {
+  using Type = std::chrono::minutes;
+};
+
 class SessionPool;
 
 /**
@@ -236,10 +247,12 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
   std::shared_ptr<Session::Clock> clock_;
   int const max_pool_size_;
   std::mt19937 random_generator_;
+  std::chrono::hours multiplexed_session_replacement_interval_;
+  std::chrono::minutes multiplexed_session_background_interval_;
 
   mutable std::mutex mu_;
   std::condition_variable cond_;
-  SessionHolder multiplexed_session_;               // GUARDED_BY(mu_)
+  StatusOr<SessionHolder> multiplexed_session_;     // GUARDED_BY(mu_)
   std::vector<std::unique_ptr<Session>> sessions_;  // GUARDED_BY(mu_)
   // total_sessions_ tracks the number of sessions in the pool, a.k.a.
   // sessions_.size(), plus the sessions that have been allocated.
