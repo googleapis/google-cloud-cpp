@@ -98,9 +98,10 @@ ReadModifyWriteCellResult ColumnRow::ReadModifyWrite(
   // order, at which point we can just pick the first element.
   auto latest_it = latest(cells_);
 
+  auto value = latest_it->second + append_value;
+
   if (latest_it->first < system_ms) {
     // We need to add a cell with the current system timestamp
-    auto value = latest_it->second + append_value;
     cells_[system_ms] = value;
 
     return ReadModifyWriteCellResult{system_ms, std::move(value),
@@ -108,7 +109,6 @@ ReadModifyWriteCellResult ColumnRow::ReadModifyWrite(
   }
 
   // Latest timestamp is >= system time. Overwrite latest timestamp
-  auto value = latest_it->second + append_value;
   auto old_value = std::move(latest_it->second);
   latest_it->second = value;
 
