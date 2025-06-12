@@ -42,7 +42,7 @@ ObjectDescriptorImpl::ObjectDescriptorImpl(
       streams_{std::move(stream)} {}
 
 ObjectDescriptorImpl::~ObjectDescriptorImpl() {
-  for (auto stream : streams_) {
+  for (auto const& stream : streams_) {
     stream->Cancel();
   }
 }
@@ -53,7 +53,7 @@ void ObjectDescriptorImpl::Start(
 }
 
 void ObjectDescriptorImpl::Cancel() {
-  for (auto stream : streams_) {
+  for (auto const& stream : streams_) {
     stream->Cancel();
   }
 }
