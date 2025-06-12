@@ -21,12 +21,23 @@ namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 void EnsureFirstMessageAppendObjectSpec(
-    google::storage::v2::BidiWriteObjectRequest& request) {
-  if (request.has_write_object_spec()) {
-    auto spec = request.write_object_spec();
-    auto& append_object_spec = *request.mutable_append_object_spec();
-    append_object_spec.set_bucket(spec.resource().bucket());
-    append_object_spec.set_object(spec.resource().name());
+    google::storage::v2::BidiWriteObjectRequest& request,
+    google::rpc::Status const& rpc_status) {
+  for (auto const& any : rpc_status.details()) {
+    google::storage::v2::BidiWriteObjectRedirectedError error =
+        google::storage::v2::BidiWriteObjectRedirectedError{};
+    if (!any.UnpackTo(&error)) continue;
+    if (!error.has_write_handle()) continue;
+    if (request.has_write_object_spec()) {
+      auto spec = request.write_object_spec();
+      auto& append_object_spec = *request.mutable_append_object_spec();
+      append_object_spec.set_bucket(spec.resource().bucket());
+      append_object_spec.set_object(spec.resource().name());
+      append_object_spec.set_if_metageneration_match(
+          spec.if_metageneration_match());
+      append_object_spec.set_if_metageneration_not_match(
+          spec.if_metageneration_not_match());
+    }
   }
 }
 

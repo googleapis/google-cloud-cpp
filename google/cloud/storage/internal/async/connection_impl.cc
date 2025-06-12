@@ -360,9 +360,11 @@ AsyncConnectionImpl::AppendableObjectUploadImpl(AppendableUploadParams p) {
             open.reset();
             auto response = f.get();
             if (!response) {
-              EnsureFirstMessageAppendObjectSpec(request);
+              google::rpc::Status grpc_status =
+                  ExtractGrpcStatus(response.status());
+              EnsureFirstMessageAppendObjectSpec(request, grpc_status);
               ApplyWriteRedirectErrors(*request.mutable_append_object_spec(),
-                                       ExtractGrpcStatus(response.status()));
+                                       grpc_status);
             }
             return response;
           });
