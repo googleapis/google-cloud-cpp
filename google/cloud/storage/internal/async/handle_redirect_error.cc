@@ -23,10 +23,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 void EnsureFirstMessageAppendObjectSpec(
     google::storage::v2::BidiWriteObjectRequest& request,
     google::rpc::Status const& rpc_status) {
-  for (auto const& rpc_status_detail : rpc_status.details()) {
+  for (auto const& any : rpc_status.details()) {
     google::storage::v2::BidiWriteObjectRedirectedError error =
         google::storage::v2::BidiWriteObjectRedirectedError{};
-    if (!rpc_status_detail.UnpackTo(&error)) continue;
+    if (!any.UnpackTo(&error)) continue;
     if (!error.has_write_handle()) continue;
     if (request.has_write_object_spec()) {
       auto spec = request.write_object_spec();
