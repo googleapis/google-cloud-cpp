@@ -13,14 +13,108 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/emulator/column_family.h"
+#include "google/cloud/internal/big_endian.h"
 #include <absl/types/optional.h>
 #include <chrono>
+#include <cstdint>
 #include <map>
 
 namespace google {
 namespace cloud {
 namespace bigtable {
 namespace emulator {
+
+// FIXME: Workaround our current incorrect ordering of
+// timestamps. Remove when that is fixed and they are in decreasing
+// order, at which point we can just pick the first element.
+std::map<std::chrono::milliseconds, std::string>::iterator latest(
+    std::map<std::chrono::milliseconds, std::string>& cells_not_empty) {
+  assert(!cells_not_empty.empty());
+
+  auto first_it = cells_not_empty.begin();
+  auto last_it = std::prev(cells_not_empty.end());
+  auto latest_it = first_it->first >= last_it->first ? first_it : last_it;
+
+  return latest_it;
+}
+
+StatusOr<ReadModifyWriteCellResult> ColumnRow::ReadModifyWrite(
+    std::int64_t inc_value) {
+  auto system_ms = std::chrono::duration_cast<std::chrono::milliseconds>(
+      std::chrono::system_clock::now().time_since_epoch());
+
+  if (cells_.empty()) {
+    std::string value = google::cloud::internal::EncodeBigEndian(inc_value);
+    cells_[system_ms] = value;
+
+    return ReadModifyWriteCellResult{system_ms, std::move(value),
+                                     absl::nullopt};
+  }
+
+  // FIXME: Workaround our current incorrect ordering of
+  // timestamps. Remove when that is fixed and they are in decreasing
+  // order, at which point we can just pick the first element.
+  auto latest_it = latest(cells_);
+
+  auto maybe_old_value =
+      google::cloud::internal::DecodeBigEndian<std::int64_t>(
+          latest_it->second);
+  if (!maybe_old_value) {
+    return maybe_old_value.status();
+  }
+
+  auto value = google::cloud::internal::EncodeBigEndian(
+      inc_value + maybe_old_value.value());
+
+  if (latest_it->first < system_ms) {
+    // We need to add a cell with the current system timestamp
+    cells_[system_ms] = value;
+
+    return ReadModifyWriteCellResult{system_ms, std::move(value),
+                                     absl::nullopt};
+  }
+
+  // Latest timestamp is >= system time. Overwrite latest timestamp
+  auto old_value = std::move(latest_it->second);
+  latest_it->second = value;
+
+  return ReadModifyWriteCellResult{latest_it->first, std::move(value),
+                                   std::move(old_value)};
+}
+
+ReadModifyWriteCellResult ColumnRow::ReadModifyWrite(
+    std::string const& append_value) {
+  auto system_ms = std::chrono::duration_cast<std::chrono::milliseconds>(
+      std::chrono::system_clock::now().time_since_epoch());
+  if (cells_.empty()) {
+    cells_[system_ms] = append_value;
+
+    return ReadModifyWriteCellResult{system_ms, std::move(append_value),
+                                     absl::nullopt};
+  }
+
+  // FIXME: Workaround our current incorrect ordering of
+  // timestamps. Remove when that is fixed and they are in decreasing
+  // order, at which point we can just pick the first element.
+  auto latest_it = latest(cells_);
+
+  if (latest_it->first < system_ms) {
+    // We need to add a cell with the current system timestamp
+    auto value = latest_it->second + append_value;
+    cells_[system_ms] = value;
+
+    return ReadModifyWriteCellResult{system_ms, std::move(value),
+                                     absl::nullopt};
+  }
+
+  // Latest timestamp is >= system time. Overwrite latest timestamp
+  auto value = latest_it->second + append_value;
+  auto old_value = std::move(latest_it->second);
+  latest_it->second = value;
+
+  return ReadModifyWriteCellResult{latest_it->first, value,
+                                   std::move(old_value)};
+}
 
 absl::optional<std::string> ColumnRow::SetCell(
     std::chrono::milliseconds timestamp, std::string const& value) {

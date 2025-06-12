@@ -72,6 +72,11 @@ class Table : public std::enable_shared_from_this<Table> {
 
   Status ReadRows(google::bigtable::v2::ReadRowsRequest const& request,
                   RowStreamer& row_streamer) const;
+
+  StatusOr<::google::bigtable::v2::ReadModifyWriteRowResponse>
+  ReadModifyWriteRow(
+      google::bigtable::v2::ReadModifyWriteRowRequest const& request);
+
   std::map<std::string, std::shared_ptr<ColumnFamily>>::iterator begin() {
     return column_families_.begin();
   }
@@ -158,6 +163,10 @@ class RowTransaction {
       ::google::bigtable::v2::Mutation_DeleteFromFamily const&
           delete_from_family);
   Status DeleteFromRow();
+
+  StatusOr<::google::bigtable::v2::ReadModifyWriteRowResponse>
+  ReadModifyWriteRow(
+      google::bigtable::v2::ReadModifyWriteRowRequest const& request);
 
  private:
   void Undo();

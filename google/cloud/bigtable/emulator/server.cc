@@ -136,8 +136,20 @@ class EmulatorService final : public btproto::Bigtable::Service {
 
   grpc::Status ReadModifyWriteRow(
       grpc::ServerContext* /* context */,
-      btproto::ReadModifyWriteRowRequest const* /* request */,
-      btproto::ReadModifyWriteRowResponse* /* response */) override {
+      btproto::ReadModifyWriteRowRequest const* request,
+      btproto::ReadModifyWriteRowResponse* response) override {
+    auto maybe_table = cluster_->FindTable(request->table_name());
+    if (!maybe_table) {
+      return ToGrpcStatus(maybe_table.status());
+    }
+
+    auto maybe_response = (*maybe_table)->ReadModifyWriteRow(*request);
+    if (!maybe_response) {
+      return ToGrpcStatus(maybe_response.status());
+    }
+
+    *response = std::move(maybe_response.value());
+
     return grpc::Status::OK;
   }
 
