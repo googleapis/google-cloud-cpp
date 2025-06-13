@@ -62,7 +62,7 @@ TEST(ObjectDescriptorReaderTracing, Read) {
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(
       spans, ElementsAre(
-                 AllOf(SpanNamed("storage::AsyncConnection::ReadObjectRange"),
+                 AllOf(SpanNamed("storage::AsyncConnection::ReadRange"),
                        SpanHasEvents(AllOf(
                            EventNamed("gl-cpp.read-range"),
                            SpanEventAttributesAre(
@@ -84,7 +84,7 @@ TEST(ObjectDescriptorReaderTracing, ReadError) {
   EXPECT_THAT(
       spans,
       ElementsAre(AllOf(
-          SpanNamed("storage::AsyncConnection::ReadObjectRange"),
+          SpanNamed("storage::AsyncConnection::ReadRange"),
           SpanHasAttributes(
               OTelAttribute<std::string>("gl-cpp.status_code", "NOT_FOUND")),
           SpanHasEvents(AllOf(EventNamed("gl-cpp.read-range"),

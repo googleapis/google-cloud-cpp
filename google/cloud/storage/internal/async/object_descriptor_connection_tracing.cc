@@ -61,6 +61,10 @@ class AsyncObjectDescriptorConnectionTracing
     return result;
   }
 
+  void MakeSubsequentStream() override {
+    return impl_->MakeSubsequentStream();
+  };
+
  private:
   opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> span_;
   std::shared_ptr<storage_experimental::ObjectDescriptorConnection> impl_;
