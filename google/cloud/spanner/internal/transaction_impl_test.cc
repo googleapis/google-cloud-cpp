@@ -119,26 +119,18 @@ class Client {
                      StatusOr<TransactionSelector>& selector,
                      TransactionContext& ctx);
 
-  std::shared_ptr<SpannerStub> GetStub() {
-    std::unique_lock<std::mutex> lock(stub_mu_);
-//    std::cout << std::this_thread::get_id() << ":" << __func__ << std::endl;
-    auto stub = *next_stub_;
-    next_stub_++;
-    return stub;
-  }
+  std::shared_ptr<SpannerStub> GetStub() { return *next_stub_++; }
 
   Mode mode_;
   spanner::Timestamp read_timestamp_;
   std::string session_id_;
   std::string txn_id_;
   absl::optional<std::shared_ptr<SpannerStub>> expected_stub_;
+  std::array<std::shared_ptr<SpannerStub>, 3>::iterator next_stub_;
+  std::array<std::shared_ptr<SpannerStub>, 3> stubs_;
   std::mutex mu_;
   std::int64_t begin_seqno_{0};  // GUARDED_BY(mu_)
   int valid_visits_;             // GUARDED_BY(mu_)
-  std::mutex stub_mu_;
-  std::array<std::shared_ptr<SpannerStub>, 3>::iterator
-      next_stub_;  // GUARDED_BY(stub_mu_)
-  std::array<std::shared_ptr<SpannerStub>, 3> stubs_;
 };
 
 bool Client::NoSelector(StatusOr<TransactionSelector>& selector) {
@@ -190,11 +182,8 @@ bool Client::SelectorHasBegin(SessionHolder& session,
     case Mode::kReadSucceeds:
       // `begin` -> `id`, calls now parallelized
       session = MakeDissociatedSessionHolder(session_id_);
-      {
-        std::unique_lock<std::mutex> lock(mu_);
-        ctx.stub = GetStub();
-        selector->set_id(txn_id_);
-      }
+      ctx.stub = GetStub();
+      selector->set_id(txn_id_);
       break;
     case Mode::kReadFailsAndTxnRemainsBegin:
       // leave as `begin`, calls stay serialized
@@ -210,19 +199,12 @@ bool Client::SelectorHasBegin(SessionHolder& session,
 void Client::SelectorHasId(SessionHolder& session,
                            StatusOr<TransactionSelector>& selector,
                            TransactionContext& ctx) {
-  std::unique_lock<std::mutex> lock(mu_);
   if (selector->id() == txn_id_) {
     EXPECT_THAT(session, NotNull());
     EXPECT_EQ(session_id_, session->session_name());
-    EXPECT_TRUE(ctx.stub.has_value());
-          if (expected_stub_.has_value()) {
-//    if (expected_stub_.has_value() && ctx.stub.has_value()) {
-      EXPECT_EQ(expected_stub_, *(ctx.stub));
-    } else {
-      EXPECT_FALSE(ctx.stub.has_value());
-    }
+    EXPECT_THAT(expected_stub_, ::testing::Optional(ctx.stub));
 
-//    std::unique_lock<std::mutex> lock(mu_);
+    std::unique_lock<std::mutex> lock(mu_);
     switch (mode_) {
       case Mode::kReadSucceeds:  // non-initial visits valid
         if (valid_visits_ != 0 && ctx.seqno > begin_seqno_) ++valid_visits_;
@@ -270,7 +252,7 @@ int MultiThreadedRead(int n_threads, Client* client, std::time_t read_time,
   auto read_timestamp =
       spanner::MakeTimestamp(std::chrono::system_clock::from_time_t(read_time))
           .value();
-  client->Reset(read_timestamp, session_id, txn_id, stub);
+  client->Reset(read_timestamp, session_id, txn_id, std::move(stub));
 
   spanner::Transaction::ReadOnlyOptions opts(read_timestamp);
   spanner::Transaction txn(opts);

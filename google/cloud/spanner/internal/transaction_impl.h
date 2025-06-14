@@ -102,40 +102,14 @@ class TransactionImpl {
     TransactionContext ctx{route_to_leader_, tag_, 0, absl::nullopt};
     {
       std::unique_lock<std::mutex> lock(mu_);
-      std::string state = "DONE";
-      if (state_ == State::kBegin) {
-        state = "BEGIN";
-      } else if (state_ == State::kPending) {
-        state = "PENDING";
-      }
-//      std::cout << std::this_thread::get_id() << ":" << __func__
-//                << ": " << state << " create ctx; txn_id="
-//                << (selector_.ok() ? selector_->id() : "null") << "; stub="
-//                << (stub_.has_value() ? std::to_string((uintptr_t)stub_->get())
-//                                      : "nil")
-//                << std::endl;
       ctx.seqno = ++seqno_;  // what about overflow?
-//      std::cout << std::this_thread::get_id() << ":" << __func__ << ": wait" << std::endl;
       cond_.wait(lock, [this] { return state_ != State::kPending; });
-      if (state_ == State::kDone) {
-//        std::cout << std::this_thread::get_id() << ":" << __func__ << ": after wait DONE use existing stub_; txn_id="
-//                  << (selector_.ok() ? selector_->id() : "null") << "; stub="
-//                  << (stub_.has_value()
-//                          ? std::to_string((uintptr_t)stub_->get())
-//                          : "nil")
-//                  << std::endl;
       ctx.stub = stub_;
-
+      if (state_ == State::kDone) {
         lock.unlock();
         return f(session_, selector_, ctx);
       }
       state_ = State::kPending;
-//      std::cout << std::this_thread::get_id() << ":" << __func__
-//                << ": after wait PENDING txn_id="
-//                << (selector_.ok() ? selector_->id() : "null") << "; stub="
-//                << (stub_.has_value() ? std::to_string((uintptr_t)stub_->get())
-//                                      : "nil")
-//                << std::endl;
     }
     // selector_->has_begin(), but only one visitor active at a time.
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
@@ -145,18 +119,10 @@ class TransactionImpl {
       bool done = false;
       {
         std::lock_guard<std::mutex> lock(mu_);
+        stub_ = ctx.stub;
         state_ =
             selector_ && selector_->has_begin() ? State::kBegin : State::kDone;
         done = (state_ == State::kDone);
-        stub_ = ctx.stub;
-//        std::cout << std::this_thread::get_id() << ":" << __func__ << ": "
-//                  << (done ? "DONE" : "NOT DONE")
-//                  << " update stub_ from ctx.stub; txn_id="
-//                  << (selector_.ok() ? selector_->id() : "null") << "; stub="
-//                  << (stub_.has_value()
-//                          ? std::to_string((uintptr_t)stub_->get())
-//                          : "nil")
-//                  << std::endl;
       }
       if (done) {
         cond_.notify_all();
