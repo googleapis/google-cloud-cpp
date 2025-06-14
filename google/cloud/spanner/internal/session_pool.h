@@ -20,6 +20,7 @@
 #include "google/cloud/spanner/internal/channel.h"
 #include "google/cloud/spanner/internal/session.h"
 #include "google/cloud/spanner/internal/spanner_stub.h"
+#include "google/cloud/spanner/internal/transaction_impl.h"
 #include "google/cloud/spanner/retry_policy.h"
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/backoff_policy.h"
@@ -125,6 +126,8 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
    * Return a `SpannerStub` to be used when making calls using `session`.
    */
   std::shared_ptr<SpannerStub> GetStub(Session const& session);
+  std::shared_ptr<SpannerStub> GetStub(Session const& session,
+                                       TransactionContext& context);
 
   /**
    * Returns the number of sessions in the session pool plus the number of

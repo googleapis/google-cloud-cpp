@@ -469,13 +469,27 @@ StatusOr<SessionHolder> SessionPool::Multiplexed() {
 }
 
 std::shared_ptr<SpannerStub> SessionPool::GetStub(Session const& session) {
-  auto const& channel = session.channel();
-  if (channel) return channel->stub;
+  std::cout << __func__ << std::endl;
+  if (!session.is_disassociated() && !session.is_multiplexed()) {
+    auto const& channel = session.channel();
+    if (channel) return channel->stub;
+  }
 
   // Multiplexed sessions, or sessions that were created for partitioned
   // Reads/Queries, do not have their own channel/stub, so return a stub
   // to use by round-robining between the channels.
   return GetStub(std::unique_lock<std::mutex>(mu_));
+}
+
+// In order to maintain transaction/channel affinity, we leverage the
+// TransactionContext to make sure we use the same stub for the life of the
+// transaction.
+std::shared_ptr<SpannerStub> SessionPool::GetStub(Session const& session,
+                                                  TransactionContext& context) {
+  std::cout << __func__ << ": with context" << std::endl;
+  if (context.stub.has_value()) return *(context.stub);
+  context.stub = GetStub(session);
+  return *context.stub;
 }
 
 int SessionPool::total_sessions() const {
