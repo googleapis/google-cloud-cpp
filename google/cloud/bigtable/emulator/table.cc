@@ -661,6 +661,23 @@ Status Table::DropRowRange(
   return Status();
 }
 
+StatusOr<::google::bigtable::v2::ReadModifyWriteRowResponse>
+Table::ReadModifyWriteRow(
+    google::bigtable::v2::ReadModifyWriteRowRequest const& request) {
+  std::lock_guard<std::mutex> lock(mu_);
+
+  RowTransaction row_transaction(this->get(), request.row_key());
+
+  auto maybe_response = row_transaction.ReadModifyWriteRow(request);
+  if (!maybe_response) {
+    return maybe_response.status();
+  }
+
+  row_transaction.commit();
+
+  return std::move(maybe_response.value());
+}
+
 // NOLINTBEGIN(readability-convert-member-functions-to-static)
 Status RowTransaction::AddToCell(
     ::google::bigtable::v2::Mutation_AddToCell const& add_to_cell) {
@@ -803,6 +820,110 @@ Status RowTransaction::SetCell(
 
   return Status();
 }
+
+// ProcessReadModifyWriteRuleResult records the result of a
+// ReadModifyWriteRule computation for possible undo in the undo log
+// and also updates the tmp_families temporary table (containing only
+// one row) with the modified cell for later return.
+void ProcessReadModifyWriteResult(
+    ColumnFamily& column_family, std::string const& row_key,
+    std::stack<absl::variant<DeleteValue, RestoreValue>>& undo,
+    google::bigtable::v2::ReadModifyWriteRule const& rule,
+    ReadModifyWriteCellResult& result,
+    std::map<std::string, ColumnFamily>& tmp_families) {
+  if (result.maybe_old_value.has_value()) {
+    // We overwrote a cell, we need to record a RestoreValue in the undo log
+    RestoreValue restore_value{column_family, rule.column_qualifier(),
+                               result.timestamp,
+                               std::move(result.maybe_old_value.value())};
+    undo.emplace(std::move(restore_value));
+  } else {
+    // We created a new cell -- we would need to delete it in any rollback
+    DeleteValue delete_value{column_family, rule.column_qualifier(),
+                             result.timestamp};
+    undo.emplace(std::move(delete_value));
+  }
+
+  // Record the cell in our local mini table here to use in
+  // assembling a row of changed cells for return.
+  tmp_families[rule.family_name()].SetCell(row_key, rule.column_qualifier(),
+                                           result.timestamp,
+                                           std::move(result.value));
+}
+
+// NOLINTBEGIN(readability-function-cognitive-complexity)
+StatusOr<::google::bigtable::v2::ReadModifyWriteRowResponse>
+RowTransaction::ReadModifyWriteRow(
+    google::bigtable::v2::ReadModifyWriteRowRequest const& request) {
+  if (row_key_.empty()) {
+    return InvalidArgumentError(
+        "row key not set",
+        GCP_ERROR_INFO().WithMetadata("request", request.DebugString()));
+  }
+
+  // tmp_families is a small one row mini table used to accumulate
+  // changed cells efficiently for later return in the row returned by
+  // the RPC.
+  std::map<std::string, ColumnFamily> tmp_families;
+
+  for (auto const& rule : request.rules()) {
+    auto maybe_column_family = table_->FindColumnFamily(rule);
+    if (!maybe_column_family) {
+      return maybe_column_family.status();
+    }
+
+    auto& column_family = maybe_column_family->get();
+    if (rule.has_append_value()) {
+      auto result = column_family.ReadModifyWrite(
+          row_key_, rule.column_qualifier(), rule.append_value());
+
+      ProcessReadModifyWriteResult(column_family, row_key_, undo_, rule, result,
+                                   tmp_families);
+
+    } else if (rule.has_increment_amount()) {
+      auto maybe_result = column_family.ReadModifyWrite(
+          row_key_, rule.column_qualifier(), rule.increment_amount());
+      if (!maybe_result) {
+        return maybe_result.status();
+      }
+
+      auto& result = maybe_result.value();
+
+      ProcessReadModifyWriteResult(column_family, row_key_, undo_, rule, result,
+                                   tmp_families);
+
+    } else {
+      return InvalidArgumentError(
+          "either append value or increment amount must be set",
+          GCP_ERROR_INFO().WithMetadata("rule", rule.DebugString()));
+    }
+  }
+
+  // Now assemble the returned value.
+  google::bigtable::v2::ReadModifyWriteRowResponse resp;
+  auto* row = resp.mutable_row();
+
+  for (auto& fam : tmp_families) {
+    auto* family = row->add_families();
+    family->set_name(fam.first);
+    for (auto& row : fam.second) {
+      for (auto const& cfr : row.second) {
+        auto* col = family->add_columns();
+        col->set_qualifier(cfr.first);
+        for (auto const& cr : cfr.second) {
+          auto* cell = col->add_cells();
+          cell->set_timestamp_micros(
+              std::chrono::duration_cast<std::chrono::microseconds>(cr.first)
+                  .count());
+          cell->set_value(std::move(cr.second));
+        }
+      }
+    }
+  }
+
+  return resp;
+}
+// NOLINTEND(readability-function-cognitive-complexity)
 
 void RowTransaction::Undo() {
   auto row_key = row_key_;
