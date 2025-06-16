@@ -68,7 +68,7 @@ class ConnectionImpl : public spanner::Connection {
 
  private:
   Status PrepareSession(SessionHolder& session,
-                        bool dissociate_from_pool = false);
+                        Session::Mode mode = Session::Mode::kPooled);
 
   StatusOr<google::spanner::v1::Transaction> BeginTransaction(
       SessionHolder& session, google::spanner::v1::TransactionOptions options,

@@ -110,6 +110,14 @@ using SessionHolder = std::shared_ptr<Session>;
  */
 SessionHolder MakeDissociatedSessionHolder(std::string session_name);
 
+/**
+ * Returns a `SessionHolder` for a new `Session` that is not associated with
+ * any pool; it just deletes the `Session`. This is for use with Multiplexed
+ * Sessions that do not require a pool.
+ */
+SessionHolder MakeMultiplexedSessionHolder(
+    std::string session_name, std::shared_ptr<Session::Clock> clock);
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner_internal
 }  // namespace cloud

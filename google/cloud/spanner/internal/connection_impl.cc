@@ -479,13 +479,13 @@ spanner::BatchedCommitResultStream ConnectionImpl::BatchWrite(
  * an error if `session` is empty and no `Session` can be allocated.
  */
 Status ConnectionImpl::PrepareSession(SessionHolder& session,
-                                      bool dissociate_from_pool) {
+                                      Session::Mode mode) {
   if (!session) {
     StatusOr<SessionHolder> session_or;
     if (opts_.has<spanner_experimental::EnableMultiplexedSessionOption>()) {
-      session_or = session_pool_->Multiplexed();
+      session_or = session_pool_->Multiplexed(mode);
     } else {
-      session_or = session_pool_->Allocate(dissociate_from_pool);
+      session_or = session_pool_->Allocate(mode);
     }
 
     if (!session_or) {
@@ -517,7 +517,7 @@ StatusOr<google::spanner::v1::Transaction> ConnectionImpl::BeginTransaction(
   begin.mutable_request_options()->set_transaction_tag(ctx.tag);
 
   std::shared_ptr<SpannerStub> stub;
-  if (opts_.has<spanner_experimental::EnableMultiplexedSessionOption>()) {
+  if (session->is_multiplexed()) {
     stub = session_pool_->GetStub(*session, ctx);
   } else {
     stub = session_pool_->GetStub(*session);
@@ -586,7 +586,7 @@ spanner::RowStream ConnectionImpl::ReadImpl(
   // Capture a copy of `stub` to ensure the `shared_ptr<>` remains valid through
   // the lifetime of the lambda.
   std::shared_ptr<SpannerStub> stub;
-  if (opts_.has<spanner_experimental::EnableMultiplexedSessionOption>()) {
+  if (session->is_multiplexed()) {
     stub = session_pool_->GetStub(*session, ctx);
   } else {
     stub = session_pool_->GetStub(*session);
@@ -657,7 +657,7 @@ StatusOr<std::vector<spanner::ReadPartition>> ConnectionImpl::PartitionReadImpl(
 
   // Since the session may be sent to other machines, it should not be returned
   // to the pool when the Transaction is destroyed.
-  auto prepare_status = PrepareSession(session, /*dissociate_from_pool=*/true);
+  auto prepare_status = PrepareSession(session, Session::Mode::kDisassociated);
   if (!prepare_status.ok()) {
     return prepare_status;
   }
@@ -674,7 +674,7 @@ StatusOr<std::vector<spanner::ReadPartition>> ConnectionImpl::PartitionReadImpl(
   *request.mutable_partition_options() = ToProto(partition_options);
 
   std::shared_ptr<SpannerStub> stub;
-  if (opts_.has<spanner_experimental::EnableMultiplexedSessionOption>()) {
+  if (session->is_multiplexed()) {
     stub = session_pool_->GetStub(*session, ctx);
   } else {
     stub = session_pool_->GetStub(*session);
@@ -828,7 +828,7 @@ ResultType ConnectionImpl::CommonQueryImpl(
   // through the lifetime of the lambda. Note that the local variables are a
   // reference to avoid increasing refcounts twice, but the capture is by value.
   std::shared_ptr<SpannerStub> stub;
-  if (opts_.has<spanner_experimental::EnableMultiplexedSessionOption>()) {
+  if (session->is_multiplexed()) {
     stub = session_pool_->GetStub(*session, ctx);
   } else {
     stub = session_pool_->GetStub(*session);
@@ -913,7 +913,7 @@ StatusOr<ResultType> ConnectionImpl::CommonDmlImpl(
   // through the lifetime of the lambda. Note that the local variables are a
   // reference to avoid increasing refcounts twice, but the capture is by value.
   std::shared_ptr<SpannerStub> stub;
-  if (opts_.has<spanner_experimental::EnableMultiplexedSessionOption>()) {
+  if (session->is_multiplexed()) {
     stub = session_pool_->GetStub(*session, ctx);
   } else {
     stub = session_pool_->GetStub(*session);
@@ -990,7 +990,7 @@ ConnectionImpl::PartitionQueryImpl(
 
   // Since the session may be sent to other machines, it should not be returned
   // to the pool when the Transaction is destroyed.
-  auto prepare_status = PrepareSession(session, /*dissociate_from_pool=*/true);
+  auto prepare_status = PrepareSession(session, Session::Mode::kDisassociated);
   if (!prepare_status.ok()) {
     return prepare_status;
   }
@@ -1006,7 +1006,7 @@ ConnectionImpl::PartitionQueryImpl(
   *request.mutable_partition_options() = ToProto(params.partition_options);
 
   std::shared_ptr<SpannerStub> stub;
-  if (opts_.has<spanner_experimental::EnableMultiplexedSessionOption>()) {
+  if (session->is_multiplexed()) {
     stub = session_pool_->GetStub(*session, ctx);
   } else {
     stub = session_pool_->GetStub(*session);
@@ -1088,7 +1088,7 @@ StatusOr<spanner::BatchDmlResult> ConnectionImpl::ExecuteBatchDmlImpl(
 
   auto const& current = internal::CurrentOptions();
   std::shared_ptr<SpannerStub> stub;
-  if (opts_.has<spanner_experimental::EnableMultiplexedSessionOption>()) {
+  if (session->is_multiplexed()) {
     stub = session_pool_->GetStub(*session, ctx);
   } else {
     stub = session_pool_->GetStub(*session);
@@ -1240,7 +1240,7 @@ StatusOr<spanner::CommitResult> ConnectionImpl::CommitImpl(
 
   auto const& current = internal::CurrentOptions();
   std::shared_ptr<SpannerStub> stub;
-  if (opts_.has<spanner_experimental::EnableMultiplexedSessionOption>()) {
+  if (session->is_multiplexed()) {
     stub = session_pool_->GetStub(*session, ctx);
   } else {
     stub = session_pool_->GetStub(*session);
@@ -1299,7 +1299,7 @@ Status ConnectionImpl::RollbackImpl(
   request.set_session(session->session_name());
   request.set_transaction_id(s->id());
   std::shared_ptr<SpannerStub> stub;
-  if (opts_.has<spanner_experimental::EnableMultiplexedSessionOption>()) {
+  if (session->is_multiplexed()) {
     stub = session_pool_->GetStub(*session, ctx);
   } else {
     stub = session_pool_->GetStub(*session);
