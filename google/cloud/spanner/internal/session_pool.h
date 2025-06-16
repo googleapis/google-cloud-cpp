@@ -20,6 +20,7 @@
 #include "google/cloud/spanner/internal/channel.h"
 #include "google/cloud/spanner/internal/session.h"
 #include "google/cloud/spanner/internal/spanner_stub.h"
+#include "google/cloud/spanner/internal/transaction_impl.h"
 #include "google/cloud/spanner/retry_policy.h"
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/backoff_policy.h"
@@ -49,6 +50,17 @@ struct SessionPoolFriendForTest;
 // point to facility unit testing.
 struct SessionPoolClockOption {
   using Type = std::shared_ptr<Session::Clock>;
+};
+
+// Frequency of when the existing multiplexed sessions is replaced with a new
+// multiplexed sessions.
+struct MultiplexedSessionReplacementIntervalOption {
+  using Type = std::chrono::hours;
+};
+
+// Frequency of when background work is performed.
+struct MultiplexedSessionBackgroundWorkIntervalOption {
+  using Type = std::chrono::minutes;
 };
 
 class SessionPool;
@@ -94,7 +106,7 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
    * @return a `SessionHolder` on success (which is guaranteed not to be
    * `nullptr`), or an error.
    */
-  StatusOr<SessionHolder> Allocate(bool dissociate_from_pool = false);
+  StatusOr<SessionHolder> Allocate(Session::Mode mode = Session::Mode::kPooled);
 
   /**
    * Returns the multiplexed session, which allows an unbounded number of
@@ -108,12 +120,15 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
    * @return a `SessionHolder` on success (which is guaranteed not to be
    * `nullptr`), or an error.
    */
-  StatusOr<SessionHolder> Multiplexed();
+  StatusOr<SessionHolder> Multiplexed(
+      Session::Mode mode = Session::Mode::kMultiplexed);
 
   /**
    * Return a `SpannerStub` to be used when making calls using `session`.
    */
   std::shared_ptr<SpannerStub> GetStub(Session const& session);
+  std::shared_ptr<SpannerStub> GetStub(Session const& session,
+                                       TransactionContext& context);
 
   /**
    * Returns the number of sessions in the session pool plus the number of
@@ -150,7 +165,7 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
 
   // Allocate a session from the pool.
   StatusOr<SessionHolder> Allocate(std::unique_lock<std::mutex>,
-                                   bool dissociate_from_pool);
+                                   Session::Mode mode);
 
   // Returns a stub to use by round-robining between the channels.
   std::shared_ptr<SpannerStub> GetStub(std::unique_lock<std::mutex>);
@@ -167,9 +182,13 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
     --num_waiting_for_session_;
   }
 
-  Status CreateMultiplexedSession();  // LOCKS_EXCLUDED(mu_)
-  StatusOr<std::string> CreateMultiplexedSession(
-      std::shared_ptr<SpannerStub>) const;
+  Status CreateMultiplexedSession(
+      std::unique_lock<std::mutex>& lk);  // EXCLUSIVE_LOCKS_REQUIRED(mu_)
+  Status CreateMultiplexedSessionSync(std::shared_ptr<SpannerStub>);
+  future<StatusOr<google::spanner::v1::Session>> CreateMultiplexedSessionAsync(
+      std::shared_ptr<SpannerStub>);
+  Status HandleMultiplexedCreateSessionDone(
+      StatusOr<google::spanner::v1::Session> response);
   bool HasValidMultiplexedSession(std::unique_lock<std::mutex> const&) const;
 
   Status Grow(std::unique_lock<std::mutex>& lk, int sessions_to_create,
@@ -188,7 +207,7 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
                            int num_sessions);  // LOCKS_EXCLUDED(mu_)
 
   SessionHolder MakeSessionHolder(std::unique_ptr<Session> session,
-                                  bool dissociate_from_pool);
+                                  Session::Mode mode);
 
   friend struct SessionPoolFriendForTest;  // To test Async*()
   // Asynchronous calls used to maintain the pool.
@@ -207,6 +226,10 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
   Status HandleBatchCreateSessionsDone(
       std::shared_ptr<Channel> const& channel,
       StatusOr<google::spanner::v1::BatchCreateSessionsResponse> response);
+
+  void ScheduleMultiplexedBackgroundWork(std::chrono::seconds relative_time);
+  void DoMultiplexedBackgroundWork();
+  void ReplaceMultiplexedSession();
 
   void ScheduleBackgroundWork(std::chrono::seconds relative_time);
   void DoBackgroundWork();
@@ -228,10 +251,12 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
   std::shared_ptr<Session::Clock> clock_;
   int const max_pool_size_;
   std::mt19937 random_generator_;
+  std::chrono::hours multiplexed_session_replacement_interval_;
+  std::chrono::minutes multiplexed_session_background_interval_;
 
   mutable std::mutex mu_;
   std::condition_variable cond_;
-  SessionHolder multiplexed_session_;               // GUARDED_BY(mu_)
+  StatusOr<SessionHolder> multiplexed_session_;     // GUARDED_BY(mu_)
   std::vector<std::unique_ptr<Session>> sessions_;  // GUARDED_BY(mu_)
   // total_sessions_ tracks the number of sessions in the pool, a.k.a.
   // sessions_.size(), plus the sessions that have been allocated.
@@ -243,6 +268,7 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
   Session::Clock::time_point last_use_time_lower_bound_ =
       clock_->Now();  // GUARDED_BY(mu_)
 
+  future<void> current_multiplexed_timer_;
   future<void> current_timer_;
 
   // `channels_` is guaranteed to be non-empty and will not be resized after
