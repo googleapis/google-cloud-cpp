@@ -75,7 +75,7 @@ TEST(EnsureFirstMessageAppendObjectSpec, Success) {
   ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
       R"pb(
         write_object_spec {
-          resource { bucket: "projects/_/buckets/b", name: "o"  }
+          resource { bucket: "projects/_/buckets/b", name: "o" }
           if_metageneration_match: 1
           if_metageneration_not_match: 1
         }
@@ -123,8 +123,6 @@ TEST(EnsureFirstMessageAppendObjectSpec, WriteHandleIsNotSet) {
   EXPECT_TRUE(request.has_write_object_spec());
   EXPECT_FALSE(request.has_append_object_spec());
 }
-
-
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

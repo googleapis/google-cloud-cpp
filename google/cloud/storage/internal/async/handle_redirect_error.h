@@ -26,7 +26,8 @@ namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 void EnsureFirstMessageAppendObjectSpec(
-    google::storage::v2::BidiWriteObjectRequest& request, google::rpc::Status const& rpc_status);
+    google::storage::v2::BidiWriteObjectRequest& request,
+    google::rpc::Status const& rpc_status);
 
 google::rpc::Status ExtractGrpcStatus(Status const& status);
 
