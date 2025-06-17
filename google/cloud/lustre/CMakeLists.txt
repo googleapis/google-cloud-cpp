@@ -25,10 +25,8 @@ if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     google_cloud_cpp_add_common_options(lustre_quickstart)
     add_test(
         NAME lustre_quickstart
-        COMMAND
-            cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
-            $<TARGET_FILE:lustre_quickstart> GOOGLE_CLOUD_PROJECT
-            GOOGLE_CLOUD_CPP_TEST_ZONE)
+        COMMAND cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
+                $<TARGET_FILE:lustre_quickstart> GOOGLE_CLOUD_PROJECT)
     set_tests_properties(lustre_quickstart
                          PROPERTIES LABELS "integration-test;quickstart")
 endif ()
