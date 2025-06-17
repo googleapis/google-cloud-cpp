@@ -18,12 +18,12 @@
 // google/cloud/compute/region_network_endpoint_groups/v1/region_network_endpoint_groups.proto
 
 #include "google/cloud/compute/region_network_endpoint_groups/v1/internal/region_network_endpoint_groups_rest_stub.h"
+#include "google/cloud/compute/region_network_endpoint_groups/v1/region_network_endpoint_groups.pb.h"
+#include "google/cloud/compute/region_operations/v1/region_operations.pb.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/rest_stub_helpers.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/compute/region_network_endpoint_groups/v1/region_network_endpoint_groups.pb.h>
-#include <google/cloud/compute/region_operations/v1/region_operations.pb.h>
 #include <memory>
 #include <utility>
 

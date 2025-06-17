@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_POLICYTROUBLESHOOTER_V1_IAM_CHECKER_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_POLICYTROUBLESHOOTER_V1_IAM_CHECKER_CONNECTION_H
 
+#include "google/cloud/policytroubleshooter/v1/checker.pb.h"
 #include "google/cloud/policytroubleshooter/v1/iam_checker_connection_idempotency_policy.h"
 #include "google/cloud/policytroubleshooter/v1/internal/iam_checker_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
@@ -26,7 +27,6 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/cloud/policytroubleshooter/v1/checker.pb.h>
 #include <memory>
 
 namespace google {

@@ -21,13 +21,13 @@
 
 #include "google/cloud/orgpolicy/v2/internal/org_policy_retry_traits.h"
 #include "google/cloud/orgpolicy/v2/org_policy_connection_idempotency_policy.h"
+#include "google/cloud/orgpolicy/v2/orgpolicy.pb.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/orgpolicy/v2/orgpolicy.pb.h>
 #include <memory>
 
 namespace google {

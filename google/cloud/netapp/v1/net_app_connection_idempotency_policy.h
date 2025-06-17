@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETAPP_V1_NET_APP_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETAPP_V1_NET_APP_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/location/locations.grpc.pb.h"
+#include "google/cloud/netapp/v1/cloud_netapp_service.grpc.pb.h"
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include <google/cloud/location/locations.grpc.pb.h>
-#include <google/cloud/netapp/v1/cloud_netapp_service.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 
 namespace google {

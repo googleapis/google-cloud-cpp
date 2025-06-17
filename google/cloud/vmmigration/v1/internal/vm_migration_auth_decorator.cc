@@ -17,7 +17,7 @@
 // source: google/cloud/vmmigration/v1/vmmigration.proto
 
 #include "google/cloud/vmmigration/v1/internal/vm_migration_auth_decorator.h"
-#include <google/cloud/vmmigration/v1/vmmigration.grpc.pb.h>
+#include "google/cloud/vmmigration/v1/vmmigration.grpc.pb.h"
 #include <memory>
 #include <utility>
 

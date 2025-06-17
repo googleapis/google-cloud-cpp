@@ -19,7 +19,7 @@
 #include "google/cloud/pubsub/internal/schema_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/pubsub/v1/schema.grpc.pb.h>
+#include "google/pubsub/v1/schema.grpc.pb.h"
 #include <memory>
 #include <utility>
 

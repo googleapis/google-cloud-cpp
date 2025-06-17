@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FUNCTIONS_V1_CLOUD_FUNCTIONS_CONNECTION_H
 
 #include "google/cloud/functions/v1/cloud_functions_connection_idempotency_policy.h"
+#include "google/cloud/functions/v1/functions.pb.h"
 #include "google/cloud/functions/v1/internal/cloud_functions_retry_traits.h"
+#include "google/cloud/functions/v1/operations.pb.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
@@ -30,9 +32,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/functions/v1/functions.pb.h>
-#include <google/cloud/functions/v1/operations.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 
 namespace google {

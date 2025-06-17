@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_SESSIONS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_SESSIONS_CONNECTION_H
 
+#include "google/cloud/dialogflow/v2/session.pb.h"
 #include "google/cloud/dialogflow_es/internal/sessions_retry_traits.h"
 #include "google/cloud/dialogflow_es/sessions_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
@@ -28,7 +29,6 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/dialogflow/v2/session.pb.h>
 #include <memory>
 #include <string>
 

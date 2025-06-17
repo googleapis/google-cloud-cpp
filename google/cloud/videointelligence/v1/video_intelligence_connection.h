@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VIDEOINTELLIGENCE_V1_VIDEO_INTELLIGENCE_CONNECTION_H
 
 #include "google/cloud/videointelligence/v1/internal/video_intelligence_retry_traits.h"
+#include "google/cloud/videointelligence/v1/video_intelligence.pb.h"
 #include "google/cloud/videointelligence/v1/video_intelligence_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
@@ -29,8 +30,7 @@
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/cloud/videointelligence/v1/video_intelligence.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 
 namespace google {

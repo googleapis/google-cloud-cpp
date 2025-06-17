@@ -26,7 +26,7 @@
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <map>
 #include <memory>
 #include <string>
@@ -520,7 +520,7 @@ class PipelineServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.CreatePipelineJobRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_service.proto#L340}
-  /// [google.cloud.aiplatform.v1.PipelineJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_job.proto#L45}
+  /// [google.cloud.aiplatform.v1.PipelineJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_job.proto#L46}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::PipelineJob> CreatePipelineJob(
@@ -552,7 +552,7 @@ class PipelineServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.CreatePipelineJobRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_service.proto#L340}
-  /// [google.cloud.aiplatform.v1.PipelineJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_job.proto#L45}
+  /// [google.cloud.aiplatform.v1.PipelineJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_job.proto#L46}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::PipelineJob> CreatePipelineJob(
@@ -580,7 +580,7 @@ class PipelineServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.GetPipelineJobRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_service.proto#L364}
-  /// [google.cloud.aiplatform.v1.PipelineJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_job.proto#L45}
+  /// [google.cloud.aiplatform.v1.PipelineJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_job.proto#L46}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::PipelineJob> GetPipelineJob(
@@ -610,7 +610,7 @@ class PipelineServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.GetPipelineJobRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_service.proto#L364}
-  /// [google.cloud.aiplatform.v1.PipelineJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_job.proto#L45}
+  /// [google.cloud.aiplatform.v1.PipelineJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_job.proto#L46}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::PipelineJob> GetPipelineJob(
@@ -646,7 +646,7 @@ class PipelineServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.ListPipelineJobsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_service.proto#L378}
-  /// [google.cloud.aiplatform.v1.PipelineJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_job.proto#L45}
+  /// [google.cloud.aiplatform.v1.PipelineJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_job.proto#L46}
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::PipelineJob> ListPipelineJobs(
@@ -685,7 +685,7 @@ class PipelineServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.ListPipelineJobsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_service.proto#L378}
-  /// [google.cloud.aiplatform.v1.PipelineJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_job.proto#L45}
+  /// [google.cloud.aiplatform.v1.PipelineJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_job.proto#L46}
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::PipelineJob> ListPipelineJobs(
@@ -970,8 +970,8 @@ class PipelineServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.CancelPipelineJobRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_service.proto#L514}
-  /// [google.cloud.aiplatform.v1.PipelineJob.error]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_job.proto#L141}
-  /// [google.cloud.aiplatform.v1.PipelineJob.state]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_job.proto#L134}
+  /// [google.cloud.aiplatform.v1.PipelineJob.error]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_job.proto#L142}
+  /// [google.cloud.aiplatform.v1.PipelineJob.state]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_job.proto#L135}
   /// [google.cloud.aiplatform.v1.PipelineService.GetPipelineJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_service.proto#L122}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
@@ -1012,8 +1012,8 @@ class PipelineServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.CancelPipelineJobRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_service.proto#L514}
-  /// [google.cloud.aiplatform.v1.PipelineJob.error]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_job.proto#L141}
-  /// [google.cloud.aiplatform.v1.PipelineJob.state]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_job.proto#L134}
+  /// [google.cloud.aiplatform.v1.PipelineJob.error]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_job.proto#L142}
+  /// [google.cloud.aiplatform.v1.PipelineJob.state]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_job.proto#L135}
   /// [google.cloud.aiplatform.v1.PipelineService.GetPipelineJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_service.proto#L122}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///

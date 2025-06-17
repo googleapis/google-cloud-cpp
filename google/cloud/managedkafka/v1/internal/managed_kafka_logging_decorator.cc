@@ -17,9 +17,9 @@
 // source: google/cloud/managedkafka/v1/managed_kafka.proto
 
 #include "google/cloud/managedkafka/v1/internal/managed_kafka_logging_decorator.h"
+#include "google/cloud/managedkafka/v1/managed_kafka.grpc.pb.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/managedkafka/v1/managed_kafka.grpc.pb.h>
 #include <memory>
 #include <set>
 #include <string>

@@ -17,7 +17,7 @@
 // source: google/cloud/translate/v3/translation_service.proto
 
 #include "google/cloud/translate/v3/internal/translation_auth_decorator.h"
-#include <google/cloud/translate/v3/translation_service.grpc.pb.h>
+#include "google/cloud/translate/v3/translation_service.grpc.pb.h"
 #include <memory>
 #include <utility>
 

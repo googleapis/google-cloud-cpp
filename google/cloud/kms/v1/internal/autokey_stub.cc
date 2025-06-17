@@ -17,10 +17,10 @@
 // source: google/cloud/kms/v1/autokey.proto
 
 #include "google/cloud/kms/v1/internal/autokey_stub.h"
+#include "google/cloud/kms/v1/autokey.grpc.pb.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/kms/v1/autokey.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>
 

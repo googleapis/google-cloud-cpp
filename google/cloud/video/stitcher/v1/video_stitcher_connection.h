@@ -21,6 +21,7 @@
 
 #include "google/cloud/video/stitcher/v1/internal/video_stitcher_retry_traits.h"
 #include "google/cloud/video/stitcher/v1/video_stitcher_connection_idempotency_policy.h"
+#include "google/cloud/video/stitcher/v1/video_stitcher_service.pb.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
@@ -30,8 +31,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/video/stitcher/v1/video_stitcher_service.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 
 namespace google {

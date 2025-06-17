@@ -17,6 +17,7 @@
 // source: google/cloud/chronicle/v1/entity.proto
 
 #include "google/cloud/chronicle/v1/internal/entity_stub_factory.h"
+#include "google/cloud/chronicle/v1/entity.grpc.pb.h"
 #include "google/cloud/chronicle/v1/internal/entity_auth_decorator.h"
 #include "google/cloud/chronicle/v1/internal/entity_logging_decorator.h"
 #include "google/cloud/chronicle/v1/internal/entity_metadata_decorator.h"
@@ -28,8 +29,7 @@
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-#include <google/cloud/chronicle/v1/entity.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>
 

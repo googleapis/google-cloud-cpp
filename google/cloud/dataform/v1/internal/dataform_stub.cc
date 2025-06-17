@@ -17,9 +17,9 @@
 // source: google/cloud/dataform/v1/dataform.proto
 
 #include "google/cloud/dataform/v1/internal/dataform_stub.h"
+#include "google/cloud/dataform/v1/dataform.grpc.pb.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/dataform/v1/dataform.grpc.pb.h>
 #include <memory>
 #include <utility>
 

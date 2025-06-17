@@ -22,7 +22,7 @@
 #include "google/cloud/monitoring/metricsscope/v1/internal/metrics_scopes_stub.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <set>
 #include <string>

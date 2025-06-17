@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_MIGRATION_V2_MIGRATION_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_MIGRATION_V2_MIGRATION_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/bigquery/migration/v2/migration_service.grpc.pb.h"
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include <google/cloud/bigquery/migration/v2/migration_service.grpc.pb.h>
 #include <memory>
 
 namespace google {

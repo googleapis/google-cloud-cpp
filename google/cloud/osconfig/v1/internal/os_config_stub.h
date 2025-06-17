@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OSCONFIG_V1_INTERNAL_OS_CONFIG_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OSCONFIG_V1_INTERNAL_OS_CONFIG_STUB_H
 
+#include "google/cloud/osconfig/v1/osconfig_service.grpc.pb.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/cloud/osconfig/v1/osconfig_service.grpc.pb.h>
 #include <memory>
 #include <utility>
 

@@ -17,7 +17,7 @@
 // source: google/cloud/metastore/v1/metastore_federation.proto
 
 #include "google/cloud/metastore/v1/internal/dataproc_metastore_federation_auth_decorator.h"
-#include <google/cloud/metastore/v1/metastore_federation.grpc.pb.h>
+#include "google/cloud/metastore/v1/metastore_federation.grpc.pb.h"
 #include <memory>
 #include <utility>
 

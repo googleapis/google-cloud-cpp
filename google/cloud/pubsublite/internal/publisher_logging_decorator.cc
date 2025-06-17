@@ -17,10 +17,10 @@
 // source: google/cloud/pubsublite/v1/publisher.proto
 
 #include "google/cloud/pubsublite/internal/publisher_logging_decorator.h"
+#include "google/cloud/pubsublite/v1/publisher.grpc.pb.h"
 #include "google/cloud/internal/async_read_write_stream_logging.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/pubsublite/v1/publisher.grpc.pb.h>
 #include <memory>
 #include <set>
 #include <string>

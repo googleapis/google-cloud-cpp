@@ -17,9 +17,9 @@
 // source: google/cloud/billing/v1/cloud_billing.proto
 
 #include "google/cloud/billing/v1/internal/cloud_billing_stub.h"
+#include "google/cloud/billing/v1/cloud_billing.grpc.pb.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/billing/v1/cloud_billing.grpc.pb.h>
 #include <memory>
 #include <utility>
 
