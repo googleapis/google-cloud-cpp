@@ -55,6 +55,22 @@
 
 namespace google {
 namespace cloud {
+namespace spanner_experimental {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+/**
+ * Option for `google::cloud::Options` to use MultiplexedSessions in lieu of
+ * pooled sessions.
+ *
+ * @ingroup google-cloud-spanner-options
+ */
+struct EnableMultiplexedSessionOption {
+  using Type = absl::monostate;
+};
+
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace spanner_experimental
+
 namespace spanner {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
@@ -111,6 +127,11 @@ struct RouteToLeaderOption {
 /**
  * Option for `google::cloud::Options` to set the database role used for
  * session creation.
+ *
+ * When used in combination with Multiplexed Sessions, the database role applies
+ * to all operations performed using that spanner::Connection. To perform
+ * operations with a different database role, using Multiplexed Sessions, a
+ * separate spanner::Connection is required.
  *
  * @ingroup google-cloud-spanner-options
  */

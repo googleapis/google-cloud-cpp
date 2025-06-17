@@ -51,6 +51,17 @@ struct SessionPoolClockOption {
   using Type = std::shared_ptr<Session::Clock>;
 };
 
+// Frequency of when the existing multiplexed sessions is replaced with a new
+// multiplexed sessions.
+struct MultiplexedSessionReplacementIntervalOption {
+  using Type = std::chrono::hours;
+};
+
+// Frequency of when background work is performed.
+struct MultiplexedSessionBackgroundWorkIntervalOption {
+  using Type = std::chrono::minutes;
+};
+
 class SessionPool;
 
 /**
@@ -167,10 +178,13 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
     --num_waiting_for_session_;
   }
 
-  Status CreateMultiplexedSession();  // LOCKS_EXCLUDED(mu_)
-  StatusOr<std::string> CreateMultiplexedSession(
-      std::shared_ptr<SpannerStub>) const;
-  bool HasValidMultiplexedSession(std::unique_lock<std::mutex> const&) const;
+  Status CreateMultiplexedSession(
+      std::unique_lock<std::mutex>& lk);  // EXCLUSIVE_LOCKS_REQUIRED(mu_)
+  Status CreateMultiplexedSessionSync(std::shared_ptr<SpannerStub>);
+  future<StatusOr<google::spanner::v1::Session>> CreateMultiplexedSessionAsync(
+      std::shared_ptr<SpannerStub>);
+  Status HandleMultiplexedCreateSessionDone(
+      StatusOr<google::spanner::v1::Session> response);
 
   Status Grow(std::unique_lock<std::mutex>& lk, int sessions_to_create,
               WaitForSessionAllocation wait);  // EXCLUSIVE_LOCKS_REQUIRED(mu_)
@@ -208,6 +222,10 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
       std::shared_ptr<Channel> const& channel,
       StatusOr<google::spanner::v1::BatchCreateSessionsResponse> response);
 
+  void ScheduleMultiplexedBackgroundWork(std::chrono::seconds relative_time);
+  void DoMultiplexedBackgroundWork();
+  void ReplaceMultiplexedSession();
+
   void ScheduleBackgroundWork(std::chrono::seconds relative_time);
   void DoBackgroundWork();
   void MaintainPoolSize();
@@ -228,10 +246,12 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
   std::shared_ptr<Session::Clock> clock_;
   int const max_pool_size_;
   std::mt19937 random_generator_;
+  std::chrono::hours multiplexed_session_replacement_interval_;
+  std::chrono::minutes multiplexed_session_background_interval_;
 
   mutable std::mutex mu_;
   std::condition_variable cond_;
-  SessionHolder multiplexed_session_;               // GUARDED_BY(mu_)
+  StatusOr<SessionHolder> multiplexed_session_;     // GUARDED_BY(mu_)
   std::vector<std::unique_ptr<Session>> sessions_;  // GUARDED_BY(mu_)
   // total_sessions_ tracks the number of sessions in the pool, a.k.a.
   // sessions_.size(), plus the sessions that have been allocated.
@@ -243,6 +263,7 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
   Session::Clock::time_point last_use_time_lower_bound_ =
       clock_->Now();  // GUARDED_BY(mu_)
 
+  future<void> current_multiplexed_timer_;
   future<void> current_timer_;
 
   // `channels_` is guaranteed to be non-empty and will not be resized after
