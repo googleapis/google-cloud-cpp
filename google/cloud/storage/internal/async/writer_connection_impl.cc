@@ -234,8 +234,7 @@ future<StatusOr<std::int64_t>> AsyncWriterConnectionImpl::OnQuery(
             "Expected error in Finish() after non-ok Read()"))
         .then([this](auto g) {
           auto result = g.get();
-          google::rpc::Status grpc_status =
-                  ExtractGrpcStatus(result);
+          google::rpc::Status grpc_status = ExtractGrpcStatus(result);
           EnsureFirstMessageAppendObjectSpec(request_, grpc_status);
           ApplyWriteRedirectErrors(*request_.mutable_append_object_spec(),
                                    grpc_status);
