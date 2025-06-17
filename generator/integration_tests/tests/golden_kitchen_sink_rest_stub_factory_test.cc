@@ -13,10 +13,10 @@
 // limitations under the License.
 
 #include "generator/integration_tests/golden/v1/internal/golden_kitchen_sink_rest_stub_factory.h"
+#include "generator/integration_tests/test.pb.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include "generator/integration_tests/test.pb.h"
 #include <gmock/gmock.h>
 #include <memory>
 

@@ -108,7 +108,7 @@ class JobServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.CreateCustomJobRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/job_service.proto#L467}
-  /// [google.cloud.aiplatform.v1.CustomJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/custom_job.proto#L43}
+  /// [google.cloud.aiplatform.v1.CustomJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/custom_job.proto#L42}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::CustomJob> CreateCustomJob(
@@ -141,7 +141,7 @@ class JobServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.CreateCustomJobRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/job_service.proto#L467}
-  /// [google.cloud.aiplatform.v1.CustomJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/custom_job.proto#L43}
+  /// [google.cloud.aiplatform.v1.CustomJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/custom_job.proto#L42}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::CustomJob> CreateCustomJob(
@@ -168,7 +168,7 @@ class JobServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.CustomJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/custom_job.proto#L43}
+  /// [google.cloud.aiplatform.v1.CustomJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/custom_job.proto#L42}
   /// [google.cloud.aiplatform.v1.GetCustomJobRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/job_service.proto#L483}
   ///
   // clang-format on
@@ -198,7 +198,7 @@ class JobServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.CustomJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/custom_job.proto#L43}
+  /// [google.cloud.aiplatform.v1.CustomJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/custom_job.proto#L42}
   /// [google.cloud.aiplatform.v1.GetCustomJobRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/job_service.proto#L483}
   ///
   // clang-format on
@@ -234,7 +234,7 @@ class JobServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.CustomJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/custom_job.proto#L43}
+  /// [google.cloud.aiplatform.v1.CustomJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/custom_job.proto#L42}
   /// [google.cloud.aiplatform.v1.ListCustomJobsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/job_service.proto#L497}
   ///
   // clang-format on
@@ -273,7 +273,7 @@ class JobServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.CustomJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/custom_job.proto#L43}
+  /// [google.cloud.aiplatform.v1.CustomJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/custom_job.proto#L42}
   /// [google.cloud.aiplatform.v1.ListCustomJobsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/job_service.proto#L497}
   ///
   // clang-format on
@@ -428,8 +428,8 @@ class JobServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.CancelCustomJobRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/job_service.proto#L573}
-  /// [google.cloud.aiplatform.v1.CustomJob.error]: @googleapis_reference_link{google/cloud/aiplatform/v1/custom_job.proto#L83}
-  /// [google.cloud.aiplatform.v1.CustomJob.state]: @googleapis_reference_link{google/cloud/aiplatform/v1/custom_job.proto#L61}
+  /// [google.cloud.aiplatform.v1.CustomJob.error]: @googleapis_reference_link{google/cloud/aiplatform/v1/custom_job.proto#L82}
+  /// [google.cloud.aiplatform.v1.CustomJob.state]: @googleapis_reference_link{google/cloud/aiplatform/v1/custom_job.proto#L60}
   /// [google.cloud.aiplatform.v1.JobService.GetCustomJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/job_service.proto#L61}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
@@ -470,8 +470,8 @@ class JobServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.CancelCustomJobRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/job_service.proto#L573}
-  /// [google.cloud.aiplatform.v1.CustomJob.error]: @googleapis_reference_link{google/cloud/aiplatform/v1/custom_job.proto#L83}
-  /// [google.cloud.aiplatform.v1.CustomJob.state]: @googleapis_reference_link{google/cloud/aiplatform/v1/custom_job.proto#L61}
+  /// [google.cloud.aiplatform.v1.CustomJob.error]: @googleapis_reference_link{google/cloud/aiplatform/v1/custom_job.proto#L82}
+  /// [google.cloud.aiplatform.v1.CustomJob.state]: @googleapis_reference_link{google/cloud/aiplatform/v1/custom_job.proto#L60}
   /// [google.cloud.aiplatform.v1.JobService.GetCustomJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/job_service.proto#L61}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///

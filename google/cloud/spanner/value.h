@@ -34,8 +34,8 @@
 #include "absl/time/civil_time.h"
 #include "absl/types/optional.h"
 #include "google/protobuf/struct.pb.h"
-#include <google/protobuf/util/message_differencer.h>
 #include "google/spanner/v1/type.pb.h"
+#include <google/protobuf/util/message_differencer.h>
 #include <ostream>
 #include <string>
 #include <tuple>

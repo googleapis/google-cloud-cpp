@@ -20,8 +20,8 @@
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/strings/str_split.h"
-#include <google/protobuf/compiler/importer.h>
 #include "google/protobuf/descriptor.pb.h"
+#include <google/protobuf/compiler/importer.h>
 #include <google/protobuf/descriptor_database.h>
 #include <google/protobuf/io/zero_copy_stream_impl_lite.h>
 #include <google/protobuf/text_format.h>

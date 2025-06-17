@@ -519,7 +519,7 @@ class ConversationalSearchServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.AnswerQueryRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L495}
-  /// [google.cloud.discoveryengine.v1.AnswerQueryResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L1018}
+  /// [google.cloud.discoveryengine.v1.AnswerQueryResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L1015}
   ///
   // clang-format on
   StatusOr<google::cloud::discoveryengine::v1::AnswerQueryResponse> AnswerQuery(
@@ -556,7 +556,7 @@ class ConversationalSearchServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.AnswerQueryRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L495}
-  /// [google.cloud.discoveryengine.v1.AnswerQueryResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L1018}
+  /// [google.cloud.discoveryengine.v1.AnswerQueryResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L1015}
   ///
   // clang-format on
   StreamRange<google::cloud::discoveryengine::v1::AnswerQueryResponse>
@@ -584,7 +584,7 @@ class ConversationalSearchServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.Answer]: @googleapis_reference_link{google/cloud/discoveryengine/v1/answer.proto#L35}
-  /// [google.cloud.discoveryengine.v1.GetAnswerRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L1040}
+  /// [google.cloud.discoveryengine.v1.GetAnswerRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L1037}
   ///
   // clang-format on
   StatusOr<google::cloud::discoveryengine::v1::Answer> GetAnswer(
@@ -614,7 +614,7 @@ class ConversationalSearchServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.Answer]: @googleapis_reference_link{google/cloud/discoveryengine/v1/answer.proto#L35}
-  /// [google.cloud.discoveryengine.v1.GetAnswerRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L1040}
+  /// [google.cloud.discoveryengine.v1.GetAnswerRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L1037}
   ///
   // clang-format on
   StatusOr<google::cloud::discoveryengine::v1::Answer> GetAnswer(
@@ -644,7 +644,7 @@ class ConversationalSearchServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.CreateSessionRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L1052}
+  /// [google.cloud.discoveryengine.v1.CreateSessionRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L1049}
   /// [google.cloud.discoveryengine.v1.Session]: @googleapis_reference_link{google/cloud/discoveryengine/v1/session.proto#L34}
   ///
   // clang-format on
@@ -679,7 +679,7 @@ class ConversationalSearchServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.CreateSessionRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L1052}
+  /// [google.cloud.discoveryengine.v1.CreateSessionRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L1049}
   /// [google.cloud.discoveryengine.v1.Session]: @googleapis_reference_link{google/cloud/discoveryengine/v1/session.proto#L34}
   ///
   // clang-format on
@@ -707,7 +707,7 @@ class ConversationalSearchServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.DeleteSessionRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L1082}
+  /// [google.cloud.discoveryengine.v1.DeleteSessionRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L1079}
   /// [google.cloud.discoveryengine.v1.Session]: @googleapis_reference_link{google/cloud/discoveryengine/v1/session.proto#L34}
   ///
   // clang-format on
@@ -737,7 +737,7 @@ class ConversationalSearchServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.DeleteSessionRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L1082}
+  /// [google.cloud.discoveryengine.v1.DeleteSessionRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L1079}
   /// [google.cloud.discoveryengine.v1.Session]: @googleapis_reference_link{google/cloud/discoveryengine/v1/session.proto#L34}
   ///
   // clang-format on
@@ -776,7 +776,7 @@ class ConversationalSearchServiceClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.Session]: @googleapis_reference_link{google/cloud/discoveryengine/v1/session.proto#L34}
   /// [google.cloud.discoveryengine.v1.Session.name]: @googleapis_reference_link{google/cloud/discoveryengine/v1/session.proto#L76}
-  /// [google.cloud.discoveryengine.v1.UpdateSessionRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L1067}
+  /// [google.cloud.discoveryengine.v1.UpdateSessionRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L1064}
   ///
   // clang-format on
   StatusOr<google::cloud::discoveryengine::v1::Session> UpdateSession(
@@ -811,7 +811,7 @@ class ConversationalSearchServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.Session]: @googleapis_reference_link{google/cloud/discoveryengine/v1/session.proto#L34}
-  /// [google.cloud.discoveryengine.v1.UpdateSessionRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L1067}
+  /// [google.cloud.discoveryengine.v1.UpdateSessionRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L1064}
   ///
   // clang-format on
   StatusOr<google::cloud::discoveryengine::v1::Session> UpdateSession(
@@ -837,7 +837,7 @@ class ConversationalSearchServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.GetSessionRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L1094}
+  /// [google.cloud.discoveryengine.v1.GetSessionRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L1091}
   /// [google.cloud.discoveryengine.v1.Session]: @googleapis_reference_link{google/cloud/discoveryengine/v1/session.proto#L34}
   ///
   // clang-format on
@@ -867,7 +867,7 @@ class ConversationalSearchServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.GetSessionRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L1094}
+  /// [google.cloud.discoveryengine.v1.GetSessionRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L1091}
   /// [google.cloud.discoveryengine.v1.Session]: @googleapis_reference_link{google/cloud/discoveryengine/v1/session.proto#L34}
   ///
   // clang-format on
@@ -904,7 +904,7 @@ class ConversationalSearchServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.ListSessionsRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L1110}
+  /// [google.cloud.discoveryengine.v1.ListSessionsRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L1107}
   /// [google.cloud.discoveryengine.v1.Session]: @googleapis_reference_link{google/cloud/discoveryengine/v1/session.proto#L34}
   ///
   // clang-format on
@@ -944,7 +944,7 @@ class ConversationalSearchServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.ListSessionsRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L1110}
+  /// [google.cloud.discoveryengine.v1.ListSessionsRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L1107}
   /// [google.cloud.discoveryengine.v1.Session]: @googleapis_reference_link{google/cloud/discoveryengine/v1/session.proto#L34}
   ///
   // clang-format on

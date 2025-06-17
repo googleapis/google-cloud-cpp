@@ -16,9 +16,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_DEFAULT_PUBLISH_MESSAGE_TRANSFORMER_H
 
 #include "google/cloud/pubsub/message.h"
+#include "google/cloud/pubsublite/v1/common.pb.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include "google/cloud/pubsublite/v1/common.pb.h"
 
 namespace google {
 namespace cloud {

@@ -17,8 +17,8 @@
 #include "google/cloud/tracing_options.h"
 #include "google/iam/v1/policy.pb.h"
 #include "google/protobuf/duration.pb.h"
-#include <google/protobuf/text_format.h>
 #include "google/protobuf/timestamp.pb.h"
+#include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 
 namespace google {

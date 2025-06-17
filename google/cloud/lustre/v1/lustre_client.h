@@ -118,7 +118,7 @@ class LustreClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.lustre.v1.Instance]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L31}
-  /// [google.cloud.lustre.v1.ListInstancesRequest]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L119}
+  /// [google.cloud.lustre.v1.ListInstancesRequest]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L120}
   ///
   // clang-format on
   StreamRange<google::cloud::lustre::v1::Instance> ListInstances(
@@ -157,7 +157,7 @@ class LustreClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.lustre.v1.Instance]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L31}
-  /// [google.cloud.lustre.v1.ListInstancesRequest]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L119}
+  /// [google.cloud.lustre.v1.ListInstancesRequest]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L120}
   ///
   // clang-format on
   StreamRange<google::cloud::lustre::v1::Instance> ListInstances(
@@ -183,7 +183,7 @@ class LustreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.lustre.v1.GetInstanceRequest]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L160}
+  /// [google.cloud.lustre.v1.GetInstanceRequest]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L161}
   /// [google.cloud.lustre.v1.Instance]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L31}
   ///
   // clang-format on
@@ -213,7 +213,7 @@ class LustreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.lustre.v1.GetInstanceRequest]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L160}
+  /// [google.cloud.lustre.v1.GetInstanceRequest]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L161}
   /// [google.cloud.lustre.v1.Instance]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L31}
   ///
   // clang-format on
@@ -255,7 +255,7 @@ class LustreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.lustre.v1.CreateInstanceRequest]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L170}
+  /// [google.cloud.lustre.v1.CreateInstanceRequest]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L171}
   /// [google.cloud.lustre.v1.Instance]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L31}
   ///
   // clang-format on
@@ -310,7 +310,7 @@ class LustreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.lustre.v1.CreateInstanceRequest]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L170}
+  /// [google.cloud.lustre.v1.CreateInstanceRequest]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L171}
   /// [google.cloud.lustre.v1.Instance]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L31}
   ///
   // clang-format on
@@ -380,7 +380,7 @@ class LustreClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.lustre.v1.Instance]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L31}
-  /// [google.cloud.lustre.v1.UpdateInstanceRequest]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L212}
+  /// [google.cloud.lustre.v1.UpdateInstanceRequest]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L213}
   ///
   // clang-format on
   future<StatusOr<google::cloud::lustre::v1::Instance>> UpdateInstance(
@@ -433,7 +433,7 @@ class LustreClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.lustre.v1.Instance]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L31}
-  /// [google.cloud.lustre.v1.UpdateInstanceRequest]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L212}
+  /// [google.cloud.lustre.v1.UpdateInstanceRequest]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L213}
   ///
   // clang-format on
   future<StatusOr<google::cloud::lustre::v1::Instance>> UpdateInstance(
@@ -494,8 +494,8 @@ class LustreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.lustre.v1.DeleteInstanceRequest]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L247}
-  /// [google.cloud.lustre.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L275}
+  /// [google.cloud.lustre.v1.DeleteInstanceRequest]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L248}
+  /// [google.cloud.lustre.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L276}
   ///
   // clang-format on
   future<StatusOr<google::cloud::lustre::v1::OperationMetadata>> DeleteInstance(
@@ -545,8 +545,8 @@ class LustreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.lustre.v1.DeleteInstanceRequest]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L247}
-  /// [google.cloud.lustre.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L275}
+  /// [google.cloud.lustre.v1.DeleteInstanceRequest]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L248}
+  /// [google.cloud.lustre.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L276}
   ///
   // clang-format on
   future<StatusOr<google::cloud::lustre::v1::OperationMetadata>> DeleteInstance(
@@ -585,8 +585,7 @@ class LustreClient {
   ///
   /// Imports data from Cloud Storage to a Managed Lustre instance.
   ///
-  /// @param name  Required. The name of the Managed Lustre instance in the format
-  ///  `projects/{project}/locations/{location}/instances/{instance}`.
+  /// @param name  Required. Name of the resource.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO
@@ -608,7 +607,7 @@ class LustreClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.lustre.v1.ImportDataRequest]: @googleapis_reference_link{google/cloud/lustre/v1/transfer.proto#L43}
-  /// [google.cloud.lustre.v1.ImportDataResponse]: @googleapis_reference_link{google/cloud/lustre/v1/transfer.proto#L127}
+  /// [google.cloud.lustre.v1.ImportDataResponse]: @googleapis_reference_link{google/cloud/lustre/v1/transfer.proto#L119}
   ///
   // clang-format on
   future<StatusOr<google::cloud::lustre::v1::ImportDataResponse>> ImportData(
@@ -660,7 +659,7 @@ class LustreClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.lustre.v1.ImportDataRequest]: @googleapis_reference_link{google/cloud/lustre/v1/transfer.proto#L43}
-  /// [google.cloud.lustre.v1.ImportDataResponse]: @googleapis_reference_link{google/cloud/lustre/v1/transfer.proto#L127}
+  /// [google.cloud.lustre.v1.ImportDataResponse]: @googleapis_reference_link{google/cloud/lustre/v1/transfer.proto#L119}
   ///
   // clang-format on
   future<StatusOr<google::cloud::lustre::v1::ImportDataResponse>> ImportData(
@@ -724,8 +723,8 @@ class LustreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.lustre.v1.ExportDataRequest]: @googleapis_reference_link{google/cloud/lustre/v1/transfer.proto#L83}
-  /// [google.cloud.lustre.v1.ExportDataResponse]: @googleapis_reference_link{google/cloud/lustre/v1/transfer.proto#L124}
+  /// [google.cloud.lustre.v1.ExportDataRequest]: @googleapis_reference_link{google/cloud/lustre/v1/transfer.proto#L80}
+  /// [google.cloud.lustre.v1.ExportDataResponse]: @googleapis_reference_link{google/cloud/lustre/v1/transfer.proto#L116}
   ///
   // clang-format on
   future<StatusOr<google::cloud::lustre::v1::ExportDataResponse>> ExportData(

@@ -18,6 +18,14 @@
 # Use host-OS-specific config lines from bazelrc files.
 build --enable_platform_specific_config=true
 
+build --features=external_include_paths
+
+build --per_file_copt=grpc+//@-Wno-private-header
+build --copt=-Wno-private-header
+build --cxxopt=-Wno-private-header
+build --host_copt=-Wno-private-header
+build --host_cxxopt=-Wno-private-header
+
 # The project requires C++ >= 17.
 build:linux --cxxopt=-std=c++17
 build:macos --cxxopt=-std=c++17
@@ -72,6 +80,8 @@ build:sanitizer --strip=never
 build:sanitizer --copt=-Og
 build:sanitizer --copt=-g
 build:sanitizer --copt=-fno-omit-frame-pointer
+build:sanitizer --features=external_include_paths
+
 
 # --config asan: Address Sanitizer
 build:asan --config=sanitizer
@@ -104,6 +114,8 @@ build:ubsan --copt=-DCURL_STRICTER
 build:ubsan --linkopt=-fsanitize=undefined
 build:ubsan --linkopt=-fsanitize-link-c++-runtime
 build:ubsan --action_env=UBSAN_OPTIONS=halt_on_error=1:print_stacktrace=1
+build:ubsan --features=external_include_paths
+
 
 # --config xsan: Runs misc. sanitizers that aren't covered elsewhere.
 build:xsan --config=sanitizer

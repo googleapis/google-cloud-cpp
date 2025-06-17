@@ -16,8 +16,8 @@
 #include "google/cloud/internal/status_payload_keys.h"
 #include "absl/types/optional.h"
 #include "google/protobuf/any.pb.h"
-#include <google/protobuf/text_format.h>
 #include "google/rpc/error_details.pb.h"
+#include <google/protobuf/text_format.h>
 
 namespace google {
 namespace cloud {
