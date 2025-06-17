@@ -16,7 +16,7 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include <generator/integration_tests/test.pb.h>
+#include "generator/integration_tests/test.pb.h"
 #include <gmock/gmock.h>
 #include <memory>
 

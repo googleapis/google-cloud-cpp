@@ -18,7 +18,7 @@
 #include "google/cloud/pubsublite/internal/service.h"
 #include "google/cloud/future.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/pubsublite/v1/common.pb.h>
+#include "google/cloud/pubsublite/v1/common.pb.h"
 
 namespace google {
 namespace cloud {

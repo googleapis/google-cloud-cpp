@@ -23,7 +23,7 @@
 #include "google/cloud/testing_util/integration_test.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/version.h"
-#include <google/cloud/pubsublite/v1/admin.pb.h>
+#include "google/cloud/pubsublite/v1/admin.pb.h"
 #include <gmock/gmock.h>
 #include <regex>
 

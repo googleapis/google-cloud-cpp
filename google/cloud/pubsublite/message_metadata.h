@@ -20,7 +20,7 @@
 #include "google/cloud/version.h"
 #include "absl/strings/numbers.h"
 #include "absl/strings/str_split.h"
-#include <google/cloud/pubsublite/v1/publisher.pb.h>
+#include "google/cloud/pubsublite/v1/publisher.pb.h"
 #include <utility>
 
 namespace google {

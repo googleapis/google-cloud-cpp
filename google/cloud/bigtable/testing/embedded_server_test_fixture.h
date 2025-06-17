@@ -18,7 +18,7 @@
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/bigtable/table_admin.h"
 #include "google/cloud/bigtable/testing/inprocess_data_client.h"
-#include <google/bigtable/v2/bigtable.grpc.pb.h>
+#include "google/bigtable/v2/bigtable.grpc.pb.h"
 #include <gtest/gtest.h>
 #include <string>
 #include <thread>

@@ -15,7 +15,7 @@
 #include "google/cloud/spanner/keys.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include <google/protobuf/text_format.h>
-#include <google/spanner/v1/keys.pb.h>
+#include "google/spanner/v1/keys.pb.h"
 #include <gmock/gmock.h>
 #include <cstdint>
 #include <type_traits>

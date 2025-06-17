@@ -25,7 +25,7 @@
 #include "absl/strings/string_view.h"
 #include <google/protobuf/text_format.h>
 #include <google/protobuf/util/message_differencer.h>
-#include <google/storage/v2/storage.pb.h>
+#include "google/storage/v2/storage.pb.h"
 #include <gmock/gmock.h>
 
 namespace google {

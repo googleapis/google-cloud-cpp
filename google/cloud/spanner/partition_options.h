@@ -19,7 +19,7 @@
 #include "google/cloud/optional.h"
 #include "google/cloud/options.h"
 #include "absl/types/optional.h"
-#include <google/spanner/v1/spanner.pb.h>
+#include "google/spanner/v1/spanner.pb.h"
 #include <cstdint>
 
 namespace google {

@@ -19,7 +19,7 @@
 #include "google/cloud/spanner/version.h"
 #include <google/protobuf/util/field_mask_util.h>
 #include <google/protobuf/util/message_differencer.h>
-#include <google/spanner/admin/instance/v1/spanner_instance_admin.pb.h>
+#include "google/spanner/admin/instance/v1/spanner_instance_admin.pb.h"
 #include <map>
 #include <string>
 

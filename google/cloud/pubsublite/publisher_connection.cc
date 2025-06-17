@@ -31,7 +31,7 @@
 #include "google/cloud/internal/base64_transforms.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
-#include <google/protobuf/struct.pb.h>
+#include "google/protobuf/struct.pb.h"
 #include <functional>
 
 namespace google {

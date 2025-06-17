@@ -19,8 +19,8 @@
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/log.h"
 #include "absl/types/variant.h"
-#include <google/cloud/extended_operations.pb.h>
-#include <google/longrunning/operations.pb.h>
+#include "google/cloud/extended_operations.pb.h"
+#include "google/longrunning/operations.pb.h"
 #include <string>
 
 using ::google::protobuf::Descriptor;
