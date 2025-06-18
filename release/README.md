@@ -274,6 +274,7 @@ You can find the `GOOGLEAPIS_SHA512` from your release PR. For example, in
 
 ```shell
 GOOGLEAPIS_SHA512=...
+sed -i "/REPO googleapis\/googleapis/ {n; s/REF .*/REF ${GOOGLEAPIS_SHA512}/}" ports/google-cloud-cpp/portfile.cmake
 SHA512=($(curl -fSsL https://github.com/googleapis/googleapis/archive/${GOOGLEAPIS_SHA512}.tar.gz | sha512sum))
 sed -i "/REPO googleapis\/googleapis/ {n; n; s/SHA512 .*/SHA512 ${SHA512[0]}/}" ports/google-cloud-cpp/portfile.cmake
 ```
