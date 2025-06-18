@@ -70,6 +70,60 @@ TEST(ApplyRedirectErrors, NoRedirect) {
   EXPECT_TRUE(spec.routing_token().empty());
 }
 
+TEST(EnsureFirstMessageAppendObjectSpec, Success) {
+  google::storage::v2::BidiWriteObjectRequest request;
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+      R"pb(
+        write_object_spec {
+          resource { bucket: "projects/_/buckets/b", name: "o" }
+          if_metageneration_match: 1
+          if_metageneration_not_match: 1
+        }
+      )pb",
+      &request));
+
+  google::rpc::Status rpc_status;
+  google::storage::v2::BidiWriteObjectRedirectedError redirect;
+  redirect.mutable_write_handle();
+  rpc_status.add_details()->PackFrom(redirect);
+
+  EnsureFirstMessageAppendObjectSpec(request, rpc_status);
+
+  EXPECT_FALSE(request.has_write_object_spec());
+  EXPECT_TRUE(request.has_append_object_spec());
+
+  auto const& append_spec = request.append_object_spec();
+  EXPECT_EQ(append_spec.bucket(), "projects/_/buckets/b");
+  EXPECT_EQ(append_spec.object(), "o");
+
+  EXPECT_FALSE(append_spec.has_write_handle());
+  EXPECT_TRUE(append_spec.routing_token().empty());
+  EXPECT_EQ(append_spec.if_metageneration_match(), 1);
+  EXPECT_EQ(append_spec.if_metageneration_not_match(), 1);
+  EXPECT_EQ(append_spec.generation(), 0);
+}
+
+TEST(EnsureFirstMessageAppendObjectSpec, WriteHandleIsNotSet) {
+  google::storage::v2::BidiWriteObjectRequest request;
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+      R"pb(
+        write_object_spec {
+          resource { bucket: "projects/_/buckets/b", name: "o" }
+        }
+      )pb",
+      &request));
+
+  google::rpc::Status rpc_status;
+  google::storage::v2::BidiWriteObjectRedirectedError redirect;
+  redirect.set_generation(1234);
+  rpc_status.add_details()->PackFrom(redirect);
+
+  EnsureFirstMessageAppendObjectSpec(request, rpc_status);
+
+  EXPECT_TRUE(request.has_write_object_spec());
+  EXPECT_FALSE(request.has_append_object_spec());
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
