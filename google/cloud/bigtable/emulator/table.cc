@@ -38,6 +38,7 @@
 #include <mutex>
 #include <random>
 #include <ratio>
+#include <string>
 #include <type_traits>
 
 namespace google {
@@ -851,7 +852,35 @@ void ProcessReadModifyWriteResult(
                                            std::move(result.value));
 }
 
-// NOLINTBEGIN(readability-function-cognitive-complexity)
+google::bigtable::v2::ReadModifyWriteRowResponse
+FamiliesToReadModifyWriteResponse(
+    std::string const& row_key,
+    std::map<std::string, ColumnFamily> const& families) {
+  google::bigtable::v2::ReadModifyWriteRowResponse resp;
+  auto* row = resp.mutable_row();
+  row->set_key(row_key);
+
+  for (auto const& fam : families) {
+    auto* family = row->add_families();
+    family->set_name(fam.first);
+    for (auto const& r : fam.second) {
+      for (auto const& cfr : r.second) {
+        auto* col = family->add_columns();
+        col->set_qualifier(cfr.first);
+        for (auto const& cr : cfr.second) {
+          auto* cell = col->add_cells();
+          cell->set_timestamp_micros(
+              std::chrono::duration_cast<std::chrono::microseconds>(cr.first)
+                  .count());
+          cell->set_value(std::move(cr.second));
+        }
+      }
+    }
+  }
+
+  return resp;
+}
+
 StatusOr<::google::bigtable::v2::ReadModifyWriteRowResponse>
 RowTransaction::ReadModifyWriteRow(
     google::bigtable::v2::ReadModifyWriteRowRequest const& request) {
@@ -900,30 +929,8 @@ RowTransaction::ReadModifyWriteRow(
   }
 
   // Now assemble the returned value.
-  google::bigtable::v2::ReadModifyWriteRowResponse resp;
-  auto* row = resp.mutable_row();
-
-  for (auto& fam : tmp_families) {
-    auto* family = row->add_families();
-    family->set_name(fam.first);
-    for (auto& row : fam.second) {
-      for (auto const& cfr : row.second) {
-        auto* col = family->add_columns();
-        col->set_qualifier(cfr.first);
-        for (auto const& cr : cfr.second) {
-          auto* cell = col->add_cells();
-          cell->set_timestamp_micros(
-              std::chrono::duration_cast<std::chrono::microseconds>(cr.first)
-                  .count());
-          cell->set_value(std::move(cr.second));
-        }
-      }
-    }
-  }
-
-  return resp;
+  return FamiliesToReadModifyWriteResponse(row_key_, tmp_families);
 }
-// NOLINTEND(readability-function-cognitive-complexity)
 
 void RowTransaction::Undo() {
   auto row_key = row_key_;

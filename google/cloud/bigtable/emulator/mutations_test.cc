@@ -15,6 +15,7 @@
 #include "google/cloud/bigtable/emulator/column_family.h"
 #include "google/cloud/bigtable/emulator/row_streamer.h"
 #include "google/cloud/bigtable/emulator/table.h"
+#include "google/cloud/internal/big_endian.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
@@ -26,6 +27,7 @@
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
 #include <google/bigtable/v2/bigtable.pb.h>
 #include <google/bigtable/v2/data.pb.h>
+#include <google/protobuf/text_format.h>
 #include <absl/strings/str_format.h>
 #include <gtest/gtest.h>
 #include <chrono>
@@ -37,6 +39,7 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 namespace emulator {
+using ::google::protobuf::TextFormat;
 using std::string;
 
 struct SetCellParams {
@@ -866,6 +869,479 @@ TEST(TransactionRollback, DeleteFromRowBasicFunction) {
   ASSERT_EQ(false, HasColumn(table, second_column_family_name, row_key,
                              column_qualifier)
                        .ok());
+}
+
+StatusOr<google::bigtable::v2::Column> GetColumn(
+    google::bigtable::v2::ReadModifyWriteRowResponse const& resp,
+    std::string const& row_key, int family_index, std::string const& qual) {
+  if (!resp.has_row()) {
+    return NotFoundError(
+        "response has no row",
+        GCP_ERROR_INFO().WithMetadata("response message", resp.DebugString()));
+  }
+
+  if (resp.row().key() != row_key) {
+    return InvalidArgumentError(
+        "row key does not match",
+        GCP_ERROR_INFO().WithMetadata(row_key, resp.row().key()));
+  }
+
+  if (family_index < 0) {
+    return InvalidArgumentError(
+        "supplied family index < 0",
+        GCP_ERROR_INFO().WithMetadata("family_index",
+                                      absl::StrFormat("%d", family_index)));
+  }
+
+  if (family_index > resp.row().families_size() - 1) {
+    return internal::InvalidArgumentError(
+        "supplied family index is out of range",
+        GCP_ERROR_INFO().WithMetadata("family index",
+                                      absl::StrFormat("%d", family_index)));
+  }
+
+  // Check that column families and column qualifiers in the response
+  // are neither empty nor repeated.
+  std::set<std::string> families;
+  for (int i = 0; i < resp.row().families_size(); i++) {
+    auto ret = families.emplace(resp.row().families(i).name());
+    // The family name should not be empty and should not be
+    // repeated. Neither should the column qualifiers be empty or
+    // repeated.
+    if (ret.first->empty() || !ret.second) {
+      return internal::InvalidArgumentError(
+          "empty or repeated family name",
+          GCP_ERROR_INFO().WithMetadata("ReadModifyWriteRowResponse",
+                                        resp.DebugString()));
+    }
+
+    std::set<std::string> column_qualifiers;
+    for (auto const& col : resp.row().families(i).columns()) {
+      auto ret = column_qualifiers.emplace(col.qualifier());
+      if (ret.first->empty() || !ret.second) {
+        return internal::InvalidArgumentError(
+            "empty or repeated column qualifier",
+            GCP_ERROR_INFO().WithMetadata("ReadModifyWriteRowResponse",
+                                          resp.DebugString()));
+      }
+    }
+  }
+
+  for (auto const& col : resp.row().families(family_index).columns()) {
+    if (col.qualifier() == qual) {
+      return col;
+    }
+  }
+
+  return NotFoundError("column not found",
+                       GCP_ERROR_INFO().WithMetadata("qualifier", qual));
+}
+
+// Test that ReadModifyWrite does the correct thing when the row
+// and/or the column is unset (it should introduce new cells with the
+// timestamp of current system time and assume the missing values are
+// 0 or an empty string).
+TEST(ReadModifyWrite, Unsetcase) {
+  auto const* const table_name = "projects/test/instances/test/tables/test";
+
+  std::vector<std::string> column_families = {"column_family"};
+  auto maybe_table = CreateTable(table_name, column_families);
+
+  ASSERT_STATUS_OK(maybe_table);
+  auto& table = maybe_table.value();
+
+  auto constexpr kRMWText = R"pb(
+    table_name: "projects/test/instances/test/tables/test"
+    row_key: "0"
+    rules:
+    [ {
+      family_name: "column_family"
+      column_qualifier: "column_1"
+      increment_amount: 1
+    }
+      , {
+        family_name: "column_family"
+        column_qualifier: "column_2"
+        append_value: "a string"
+      }]
+  )pb";
+
+  google::bigtable::v2::ReadModifyWriteRowRequest request;
+  ASSERT_TRUE(TextFormat::ParseFromString(kRMWText, &request));
+
+  auto system_time_ms_before =
+      std::chrono::duration_cast<std::chrono::milliseconds>(
+          std::chrono::system_clock::now().time_since_epoch());
+
+  auto maybe_response = table->ReadModifyWriteRow(request);
+  ASSERT_STATUS_OK(maybe_response);
+
+  auto& response = maybe_response.value();
+  ASSERT_EQ(response.row().key(), "0");
+  ASSERT_EQ(response.row().families_size(), 1);
+  ASSERT_EQ(response.row().families(0).name(), "column_family");
+  ASSERT_EQ(response.row().families(0).columns_size(), 2);
+
+  auto maybe_column = GetColumn(response, "0", 0, "column_1");
+  ASSERT_STATUS_OK(maybe_column);
+  auto& col = maybe_column.value();
+  ASSERT_EQ(col.cells_size(), 1);
+  ASSERT_GE(std::chrono::duration_cast<std::chrono::milliseconds>(
+                std::chrono::microseconds(col.cells(0).timestamp_micros())),
+            system_time_ms_before);
+  ASSERT_EQ(col.cells(0).value(),
+            internal::EncodeBigEndian(static_cast<std::int64_t>(1)));
+
+  auto maybe_column_2 = GetColumn(response, "0", 0, "column_2");
+  ASSERT_STATUS_OK(maybe_column_2);
+  col = maybe_column_2.value();
+  ASSERT_EQ(col.cells_size(), 1);
+  ASSERT_GE(std::chrono::duration_cast<std::chrono::milliseconds>(
+                std::chrono::microseconds(col.cells(0).timestamp_micros())),
+            system_time_ms_before);
+  ASSERT_EQ(col.cells(0).value(), "a string");
+
+  auto maybe_cells = GetColumn(table, "column_family", "0", "column_1");
+  ASSERT_STATUS_OK(maybe_cells);
+  auto& cells = maybe_cells.value();
+  ASSERT_EQ(cells.size(), 1);
+  auto cell_it = cells.begin();
+  ASSERT_GE(cell_it->first, system_time_ms_before);
+  ASSERT_EQ(cell_it->second,
+            internal::EncodeBigEndian(static_cast<std::int64_t>(1)));
+
+  auto maybe_cells_2 = GetColumn(table, "column_family", "0", "column_2");
+  ASSERT_STATUS_OK(maybe_cells_2);
+  cells = maybe_cells_2.value();
+  ASSERT_EQ(cells.size(), 1);
+  cell_it = cells.begin();
+  ASSERT_GE(cell_it->first, system_time_ms_before);
+  ASSERT_EQ(cell_it->second, "a string");
+}
+
+// Test that the RPC does the right thing when the latest cell in the
+// column has a newer timestamp than system time. In particular, it
+// should update the latest cell with a new value (and not create a
+// new cell). This also tests that the RPC chooses the latest cell to
+// update (and will catch bugs in cell ordering).
+TEST(ReadModifyWrite, SetAndNewerTimestampCase) {
+  auto const* const table_name = "projects/test/instances/test/tables/test";
+
+  std::vector<std::string> column_families = {"column_family"};
+  auto maybe_table = CreateTable(table_name, column_families);
+
+  ASSERT_STATUS_OK(maybe_table);
+  auto& table = maybe_table.value();
+
+  auto usecs_in_day = (static_cast<std::int64_t>(24) * 60 * 60 * 1000 * 1000);
+
+  auto far_future_us = (std::chrono::duration_cast<std::chrono::milliseconds>(
+                            std::chrono::system_clock::now().time_since_epoch())
+                            .count() *
+                        1000) +
+                       usecs_in_day;
+  ASSERT_GT(far_future_us,
+            std::chrono::duration_cast<std::chrono::microseconds>(
+                std::chrono::system_clock::now().time_since_epoch())
+                .count());
+
+  auto far_future_us_latest = far_future_us + 1000;
+
+  std::vector<SetCellParams> p = {
+      {"column_family", "column_1", far_future_us, "older"},
+      {"column_family", "column_1", far_future_us_latest, "latest"},
+      {"column_family", "column_2", far_future_us,
+       internal::EncodeBigEndian(static_cast<std::int64_t>(100))},
+      {"column_family", "column_2", far_future_us_latest,
+       internal::EncodeBigEndian(static_cast<std::int64_t>(200))},
+  };
+
+  auto status = SetCells(table, table_name, "0", p);
+  ASSERT_STATUS_OK(status);
+
+  auto constexpr kRMWText = R"pb(
+    table_name: "projects/test/instances/test/tables/test"
+    row_key: "0"
+    rules:
+    [ {
+      family_name: "column_family"
+      column_qualifier: "column_1"
+      append_value: "_with_suffix"
+    }
+      , {
+        family_name: "column_family"
+        column_qualifier: "column_2"
+        increment_amount: 1
+      }]
+  )pb";
+
+  google::bigtable::v2::ReadModifyWriteRowRequest request;
+  ASSERT_TRUE(TextFormat::ParseFromString(kRMWText, &request));
+
+  auto maybe_response = table->ReadModifyWriteRow(request);
+  ASSERT_STATUS_OK(maybe_response);
+
+  auto& response = maybe_response.value();
+  ASSERT_EQ(response.row().key(), "0");
+  ASSERT_EQ(response.row().families_size(), 1);
+  ASSERT_EQ(response.row().families(0).name(), "column_family");
+  ASSERT_EQ(response.row().families(0).columns_size(), 2);
+
+  auto maybe_column = GetColumn(response, "0", 0, "column_1");
+  ASSERT_STATUS_OK(maybe_column);
+  auto& col = maybe_column.value();
+  ASSERT_EQ(col.cells_size(), 1);
+  ASSERT_EQ(col.cells(0).timestamp_micros(), far_future_us_latest);
+  ASSERT_EQ(col.cells(0).value(), "latest_with_suffix");
+
+  auto maybe_column_2 = GetColumn(response, "0", 0, "column_2");
+  ASSERT_STATUS_OK(maybe_column_2);
+  col = maybe_column_2.value();
+  ASSERT_EQ(col.cells_size(), 1);
+  ASSERT_EQ(col.cells(0).timestamp_micros(), far_future_us_latest);
+  ASSERT_EQ(col.cells(0).value(),
+            internal::EncodeBigEndian(static_cast<std::int64_t>(201)));
+
+  ASSERT_STATUS_OK(
+      HasCell(table, "column_family", "0", "column_1", far_future_us, "older"));
+  ASSERT_STATUS_OK(HasCell(table, "column_family", "0", "column_1",
+                           far_future_us_latest, "latest_with_suffix"));
+
+  ASSERT_STATUS_OK(
+      HasCell(table, "column_family", "0", "column_2", far_future_us,
+              internal::EncodeBigEndian(static_cast<std::int64_t>(100))));
+  ASSERT_STATUS_OK(
+      HasCell(table, "column_family", "0", "column_2", far_future_us_latest,
+              internal::EncodeBigEndian(static_cast<std::int64_t>(201))));
+}
+
+// Test that the RPC does the right thing when the latest cell in the
+// column has an older timestamp than system time. In particular, a
+// new cell with the current system time should be added to the cell
+// to contain the value after adding or appending.
+TEST(ReadModifyWrite, SetAndOlderTimestampCase) {
+  auto const* const table_name = "projects/test/instances/test/tables/test";
+
+  std::vector<std::string> column_families = {"column_family"};
+  auto maybe_table = CreateTable(table_name, column_families);
+
+  ASSERT_STATUS_OK(maybe_table);
+  auto& table = maybe_table.value();
+
+  auto usecs_in_day = (static_cast<std::int64_t>(24) * 60 * 60 * 1000 * 1000);
+
+  auto far_past_us = (std::chrono::duration_cast<std::chrono::milliseconds>(
+                          std::chrono::system_clock::now().time_since_epoch())
+                          .count() *
+                      1000) -
+                     usecs_in_day;
+  ASSERT_LT(far_past_us,
+            std::chrono::duration_cast<std::chrono::microseconds>(
+                std::chrono::system_clock::now().time_since_epoch())
+                .count());
+  auto far_past_us_oldest = far_past_us - 1000;
+
+  std::vector<SetCellParams> p = {
+      {"column_family", "column_1", far_past_us, "old"},
+      {"column_family", "column_1", far_past_us_oldest, "oldest"},
+      {"column_family", "column_2", far_past_us,
+       internal::EncodeBigEndian(static_cast<std::int64_t>(100))},
+      {"column_family", "column_2", far_past_us_oldest,
+       internal::EncodeBigEndian(static_cast<std::int64_t>(200))},
+  };
+
+  auto status = SetCells(table, table_name, "0", p);
+  ASSERT_STATUS_OK(status);
+
+  auto constexpr kRMWText = R"pb(
+    table_name: "projects/test/instances/test/tables/test"
+    row_key: "0"
+    rules:
+    [ {
+      family_name: "column_family"
+      column_qualifier: "column_1"
+      append_value: "_with_suffix"
+    }
+      , {
+        family_name: "column_family"
+        column_qualifier: "column_2"
+        increment_amount: 1
+      }]
+  )pb";
+
+  google::bigtable::v2::ReadModifyWriteRowRequest request;
+  ASSERT_TRUE(TextFormat::ParseFromString(kRMWText, &request));
+
+  auto system_time_us_before =
+      std::chrono::duration_cast<std::chrono::milliseconds>(
+          std::chrono::system_clock::now().time_since_epoch())
+          .count() *
+      1000;
+
+  auto maybe_response = table->ReadModifyWriteRow(request);
+  ASSERT_STATUS_OK(maybe_response);
+
+  auto& response = maybe_response.value();
+  ASSERT_EQ(response.row().key(), "0");
+  ASSERT_EQ(response.row().families_size(), 1);
+  ASSERT_EQ(response.row().families(0).name(), "column_family");
+  ASSERT_EQ(response.row().families(0).columns_size(), 2);
+
+  auto maybe_column = GetColumn(response, "0", 0, "column_1");
+  ASSERT_STATUS_OK(maybe_column);
+  auto& col = maybe_column.value();
+  ASSERT_EQ(col.cells_size(), 1);
+  ASSERT_GE(col.cells(0).timestamp_micros(), system_time_us_before);
+  ASSERT_EQ(col.cells(0).value(), "old_with_suffix");
+
+  auto maybe_column_2 = GetColumn(response, "0", 0, "column_2");
+  ASSERT_STATUS_OK(maybe_column_2);
+  auto& integer_col = maybe_column_2.value();
+  ASSERT_EQ(integer_col.cells_size(), 1);
+  ASSERT_GE(integer_col.cells(0).timestamp_micros(), system_time_us_before);
+  ASSERT_EQ(integer_col.cells(0).value(),
+            internal::EncodeBigEndian(static_cast<std::int64_t>(101)));
+
+  ASSERT_STATUS_OK(
+      HasCell(table, "column_family", "0", "column_1", far_past_us, "old"));
+  ASSERT_STATUS_OK(HasCell(table, "column_family", "0", "column_1",
+                           far_past_us_oldest, "oldest"));
+  ASSERT_STATUS_OK(HasCell(table, "column_family", "0", "column_1",
+                           col.cells(0).timestamp_micros(), "old_with_suffix"));
+
+  ASSERT_STATUS_OK(
+      HasCell(table, "column_family", "0", "column_2", far_past_us,
+              internal::EncodeBigEndian(static_cast<std::int64_t>(100))));
+  ASSERT_STATUS_OK(
+      HasCell(table, "column_family", "0", "column_2", far_past_us_oldest,
+              internal::EncodeBigEndian(static_cast<std::int64_t>(200))));
+  ASSERT_STATUS_OK(
+      HasCell(table, "column_family", "0", "column_2",
+              integer_col.cells(0).timestamp_micros(),
+              internal::EncodeBigEndian(static_cast<std::int64_t>(101))));
+}
+
+// Test that the RPC does the right thing when the latest cell in the
+// column has a newer timestamp than system time, and we need to roll
+// back. In particular the changes to the latest cell should be rolled
+// back.
+TEST(ReadModifyWrite, RollbackNewerTimestamp) {
+  auto const* const table_name = "projects/test/instances/test/tables/test";
+
+  std::vector<std::string> column_families = {"column_family"};
+  auto maybe_table = CreateTable(table_name, column_families);
+
+  ASSERT_STATUS_OK(maybe_table);
+  auto& table = maybe_table.value();
+
+  auto usecs_in_day = (static_cast<std::int64_t>(24) * 60 * 60 * 1000 * 1000);
+
+  auto far_future_us = (std::chrono::duration_cast<std::chrono::milliseconds>(
+                            std::chrono::system_clock::now().time_since_epoch())
+                            .count() *
+                        1000) +
+                       usecs_in_day;
+
+  ASSERT_GT(far_future_us,
+            std::chrono::duration_cast<std::chrono::microseconds>(
+                std::chrono::system_clock::now().time_since_epoch())
+                .count());
+
+  std::vector<SetCellParams> p = {
+      {"column_family", "column_1", far_future_us, "prefix"},
+  };
+
+  auto status = SetCells(table, table_name, "0", p);
+  ASSERT_STATUS_OK(status);
+
+  // The rules are evaluated in order. In this case, the 2nd rule
+  // refers to a column family that does not exist and should trigger
+  // a rollback.
+  auto constexpr kRMWText = R"pb(
+    table_name: "projects/test/instances/test/tables/test"
+    row_key: "0"
+    rules:
+    [ {
+      family_name: "column_family"
+      column_qualifier: "column_1"
+      append_value: "_with_suffix"
+    }
+      , {
+        family_name: "does_not_exist"
+        column_qualifier: "column_2"
+        increment_amount: 1
+      }]
+  )pb";
+
+  google::bigtable::v2::ReadModifyWriteRowRequest request;
+  ASSERT_TRUE(TextFormat::ParseFromString(kRMWText, &request));
+
+  auto maybe_response = table->ReadModifyWriteRow(request);
+  ASSERT_EQ(false, maybe_response.ok());
+
+  ASSERT_STATUS_OK(HasCell(table, "column_family", "0", "column_1",
+                           far_future_us, "prefix"));
+}
+
+// Test that the RPC does the right thing when the latest cell in the
+// column has a older timestamp than system time, and we need to roll
+// back. In particular, the added cell should be deleted (no
+// additional cell should be available after the failed transaction).
+TEST(ReadModifyWrite, RollbackOlderTimestamp) {
+  auto const* const table_name = "projects/test/instances/test/tables/test";
+
+  std::vector<std::string> column_families = {"column_family"};
+  auto maybe_table = CreateTable(table_name, column_families);
+
+  ASSERT_STATUS_OK(maybe_table);
+  auto& table = maybe_table.value();
+
+  auto usecs_in_day = (static_cast<std::int64_t>(24) * 60 * 60 * 1000 * 1000);
+
+  auto far_past_us = (std::chrono::duration_cast<std::chrono::milliseconds>(
+                          std::chrono::system_clock::now().time_since_epoch())
+                          .count() *
+                      1000) -
+                     usecs_in_day;
+  ASSERT_LT(far_past_us,
+            std::chrono::duration_cast<std::chrono::microseconds>(
+                std::chrono::system_clock::now().time_since_epoch())
+                .count());
+
+  std::vector<SetCellParams> p = {
+      {"column_family", "column_1", far_past_us, "old"},
+  };
+
+  auto status = SetCells(table, table_name, "0", p);
+  ASSERT_STATUS_OK(status);
+
+  // The rules are evaluated in order. In this case, the 2nd rule
+  // refers to a column family that does not exist and should trigger
+  // a rollback.
+  auto constexpr kRMWText = R"pb(
+    table_name: "projects/test/instances/test/tables/test"
+    row_key: "0"
+    rules:
+    [ {
+      family_name: "column_family"
+      column_qualifier: "column_1"
+      append_value: "_with_suffix"
+    }
+      , {
+        family_name: "does_not_exist"
+        column_qualifier: "column_2"
+        increment_amount: 1
+      }]
+  )pb";
+
+  google::bigtable::v2::ReadModifyWriteRowRequest request;
+  ASSERT_TRUE(TextFormat::ParseFromString(kRMWText, &request));
+
+  auto maybe_response = table->ReadModifyWriteRow(request);
+  ASSERT_EQ(false, maybe_response.ok());
+
+  ASSERT_STATUS_OK(
+      HasCell(table, "column_family", "0", "column_1", far_past_us, "old"));
 }
 
 }  // namespace emulator
