@@ -91,7 +91,9 @@ class Table : public std::enable_shared_from_this<Table> {
     return column_families_.find(column_family);
   }
 
-  Status SampleRowKeys(double pass_probability, grpc::ServerWriter<google::bigtable::v2::SampleRowKeysResponse>* writer);
+  Status SampleRowKeys(
+      double pass_probability,
+      grpc::ServerWriter<google::bigtable::v2::SampleRowKeysResponse>* writer);
 
   std::shared_ptr<Table> get() { return shared_from_this(); }
 

@@ -565,7 +565,7 @@ Status Table::SampleRowKeys(
     column_family_size_map.emplace(stream->column_family(),
                                    stream->column_family().size());
     column_qualifier_size_map.emplace(stream->column_qualifier(),
-                                     stream->column_qualifier().size());
+                                      stream->column_qualifier().size());
     timestamp_total_row_size += sizeof(stream->timestamp());
     value_total_row_size += stream->value().size();
   }
