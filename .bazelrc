@@ -80,7 +80,7 @@ build:sanitizer --strip=never
 build:sanitizer --copt=-Og
 build:sanitizer --copt=-g
 build:sanitizer --copt=-fno-omit-frame-pointer
-build:sanitizer --features=external_include_paths
+#build:sanitizer --features=external_include_paths
 
 
 # --config asan: Address Sanitizer
@@ -114,7 +114,7 @@ build:ubsan --copt=-DCURL_STRICTER
 build:ubsan --linkopt=-fsanitize=undefined
 build:ubsan --linkopt=-fsanitize-link-c++-runtime
 build:ubsan --action_env=UBSAN_OPTIONS=halt_on_error=1:print_stacktrace=1
-build:ubsan --features=external_include_paths
+#build:ubsan --features=external_include_paths
 
 
 # --config xsan: Runs misc. sanitizers that aren't covered elsewhere.
