@@ -17,10 +17,10 @@
 // source: google/cloud/tpu/v1/cloud_tpu.proto
 
 #include "google/cloud/tpu/v1/internal/tpu_stub.h"
+#include "google/cloud/tpu/v1/cloud_tpu.grpc.pb.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/tpu/v1/cloud_tpu.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>
 

@@ -17,7 +17,7 @@
 // source: google/cloud/contentwarehouse/v1/document_schema_service.proto
 
 #include "google/cloud/contentwarehouse/v1/internal/document_schema_auth_decorator.h"
-#include <google/cloud/contentwarehouse/v1/document_schema_service.grpc.pb.h>
+#include "google/cloud/contentwarehouse/v1/document_schema_service.grpc.pb.h"
 #include <memory>
 #include <utility>
 

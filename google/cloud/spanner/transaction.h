@@ -19,7 +19,7 @@
 #include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/spanner/version.h"
 #include "absl/types/optional.h"
-#include <google/spanner/v1/transaction.pb.h>
+#include "google/spanner/v1/transaction.pb.h"
 #include <chrono>
 #include <memory>
 #include <string>

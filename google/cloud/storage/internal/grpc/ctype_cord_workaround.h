@@ -18,7 +18,7 @@
 #include "google/cloud/internal/type_traits.h"
 #include "google/cloud/version.h"
 #include "absl/strings/cord.h"
-#include <google/storage/v2/storage.pb.h>
+#include "google/storage/v2/storage.pb.h"
 #include <string>
 #include <type_traits>
 

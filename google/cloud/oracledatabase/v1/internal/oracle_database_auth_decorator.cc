@@ -17,7 +17,7 @@
 // source: google/cloud/oracledatabase/v1/oracledatabase.proto
 
 #include "google/cloud/oracledatabase/v1/internal/oracle_database_auth_decorator.h"
-#include <google/cloud/oracledatabase/v1/oracledatabase.grpc.pb.h>
+#include "google/cloud/oracledatabase/v1/oracledatabase.grpc.pb.h"
 #include <memory>
 #include <utility>
 

@@ -17,7 +17,7 @@
 // source: google/cloud/financialservices/v1/service.proto
 
 #include "google/cloud/financialservices/v1/internal/aml_auth_decorator.h"
-#include <google/cloud/financialservices/v1/service.grpc.pb.h>
+#include "google/cloud/financialservices/v1/service.grpc.pb.h"
 #include <memory>
 #include <utility>
 

@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LUSTRE_V1_LUSTRE_CONNECTION_H
 
 #include "google/cloud/lustre/v1/internal/lustre_retry_traits.h"
+#include "google/cloud/lustre/v1/lustre.pb.h"
 #include "google/cloud/lustre/v1/lustre_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
@@ -30,8 +31,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/lustre/v1/lustre.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 
 namespace google {

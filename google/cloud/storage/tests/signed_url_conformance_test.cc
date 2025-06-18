@@ -24,7 +24,7 @@
 #include "google/cloud/terminate_handler.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include <google/cloud/storage/tests/conformance_tests.pb.h>
+#include "protos/google/cloud/storage/tests/conformance_tests.pb.h"
 #include <google/protobuf/util/json_util.h>
 #include <gmock/gmock.h>
 #include <algorithm>

@@ -17,7 +17,7 @@
 // source: grafeas/v1/grafeas.proto
 
 #include "google/cloud/containeranalysis/v1/internal/grafeas_auth_decorator.h"
-#include <grafeas/v1/grafeas.grpc.pb.h>
+#include "grafeas/v1/grafeas.grpc.pb.h"
 #include <memory>
 #include <utility>
 

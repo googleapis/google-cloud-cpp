@@ -17,7 +17,7 @@
 // source: google/cloud/binaryauthorization/v1/service.proto
 
 #include "google/cloud/binaryauthorization/v1/internal/binauthz_management_service_v1_auth_decorator.h"
-#include <google/cloud/binaryauthorization/v1/service.grpc.pb.h>
+#include "google/cloud/binaryauthorization/v1/service.grpc.pb.h"
 #include <memory>
 #include <utility>
 

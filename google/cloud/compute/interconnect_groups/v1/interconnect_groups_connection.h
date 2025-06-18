@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_INTERCONNECT_GROUPS_V1_INTERCONNECT_GROUPS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_INTERCONNECT_GROUPS_V1_INTERCONNECT_GROUPS_CONNECTION_H
 
+#include "google/cloud/compute/interconnect_groups/v1/interconnect_groups.pb.h"
 #include "google/cloud/compute/interconnect_groups/v1/interconnect_groups_connection_idempotency_policy.h"
 #include "google/cloud/compute/interconnect_groups/v1/internal/interconnect_groups_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
@@ -30,7 +31,6 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/interconnect_groups/v1/interconnect_groups.pb.h>
 #include <memory>
 
 namespace google {

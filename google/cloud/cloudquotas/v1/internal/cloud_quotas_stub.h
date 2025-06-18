@@ -22,7 +22,7 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/api/cloudquotas/v1/cloudquotas.grpc.pb.h>
+#include "google/api/cloudquotas/v1/cloudquotas.grpc.pb.h"
 #include <memory>
 #include <utility>
 

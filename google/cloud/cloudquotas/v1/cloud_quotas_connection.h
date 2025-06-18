@@ -27,7 +27,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/api/cloudquotas/v1/cloudquotas.pb.h>
+#include "google/api/cloudquotas/v1/cloudquotas.pb.h"
 #include <memory>
 
 namespace google {

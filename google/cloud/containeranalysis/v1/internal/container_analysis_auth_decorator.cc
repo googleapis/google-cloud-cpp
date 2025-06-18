@@ -17,7 +17,7 @@
 // source: google/devtools/containeranalysis/v1/containeranalysis.proto
 
 #include "google/cloud/containeranalysis/v1/internal/container_analysis_auth_decorator.h"
-#include <google/devtools/containeranalysis/v1/containeranalysis.grpc.pb.h>
+#include "google/devtools/containeranalysis/v1/containeranalysis.grpc.pb.h"
 #include <memory>
 #include <utility>
 

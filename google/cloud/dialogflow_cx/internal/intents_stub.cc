@@ -17,10 +17,10 @@
 // source: google/cloud/dialogflow/cx/v3/intent.proto
 
 #include "google/cloud/dialogflow_cx/internal/intents_stub.h"
+#include "google/cloud/dialogflow/cx/v3/intent.grpc.pb.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/dialogflow/cx/v3/intent.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>
 

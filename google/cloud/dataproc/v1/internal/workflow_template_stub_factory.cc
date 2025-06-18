@@ -22,15 +22,15 @@
 #include "google/cloud/dataproc/v1/internal/workflow_template_metadata_decorator.h"
 #include "google/cloud/dataproc/v1/internal/workflow_template_stub.h"
 #include "google/cloud/dataproc/v1/internal/workflow_template_tracing_stub.h"
+#include "google/cloud/dataproc/v1/workflow_templates.grpc.pb.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-#include <google/cloud/dataproc/v1/workflow_templates.grpc.pb.h>
-#include <google/iam/v1/iam_policy.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/iam/v1/iam_policy.grpc.pb.h"
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>
 

@@ -17,7 +17,7 @@
 // source: google/cloud/chronicle/v1/reference_list.proto
 
 #include "google/cloud/chronicle/v1/internal/reference_list_auth_decorator.h"
-#include <google/cloud/chronicle/v1/reference_list.grpc.pb.h>
+#include "google/cloud/chronicle/v1/reference_list.grpc.pb.h"
 #include <memory>
 #include <utility>
 

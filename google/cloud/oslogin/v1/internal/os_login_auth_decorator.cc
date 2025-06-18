@@ -17,7 +17,7 @@
 // source: google/cloud/oslogin/v1/oslogin.proto
 
 #include "google/cloud/oslogin/v1/internal/os_login_auth_decorator.h"
-#include <google/cloud/oslogin/v1/oslogin.grpc.pb.h>
+#include "google/cloud/oslogin/v1/oslogin.grpc.pb.h"
 #include <memory>
 #include <utility>
 

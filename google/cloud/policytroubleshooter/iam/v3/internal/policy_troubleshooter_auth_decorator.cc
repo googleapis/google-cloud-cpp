@@ -17,7 +17,7 @@
 // source: google/cloud/policytroubleshooter/iam/v3/troubleshooter.proto
 
 #include "google/cloud/policytroubleshooter/iam/v3/internal/policy_troubleshooter_auth_decorator.h"
-#include <google/cloud/policytroubleshooter/iam/v3/troubleshooter.grpc.pb.h>
+#include "google/cloud/policytroubleshooter/iam/v3/troubleshooter.grpc.pb.h"
 #include <memory>
 #include <utility>
 

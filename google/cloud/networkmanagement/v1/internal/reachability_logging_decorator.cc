@@ -17,9 +17,9 @@
 // source: google/cloud/networkmanagement/v1/reachability.proto
 
 #include "google/cloud/networkmanagement/v1/internal/reachability_logging_decorator.h"
+#include "google/cloud/networkmanagement/v1/reachability.grpc.pb.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/networkmanagement/v1/reachability.grpc.pb.h>
 #include <memory>
 #include <set>
 #include <string>

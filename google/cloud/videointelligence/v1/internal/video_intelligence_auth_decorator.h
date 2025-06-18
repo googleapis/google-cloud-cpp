@@ -22,7 +22,7 @@
 #include "google/cloud/videointelligence/v1/internal/video_intelligence_stub.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <set>
 #include <string>

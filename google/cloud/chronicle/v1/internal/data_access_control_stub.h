@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CHRONICLE_V1_INTERNAL_DATA_ACCESS_CONTROL_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CHRONICLE_V1_INTERNAL_DATA_ACCESS_CONTROL_STUB_H
 
+#include "google/cloud/chronicle/v1/data_access_control.grpc.pb.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/cloud/chronicle/v1/data_access_control.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>
 

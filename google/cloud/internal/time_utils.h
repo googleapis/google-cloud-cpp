@@ -17,8 +17,8 @@
 
 #include "google/cloud/version.h"
 #include "absl/time/time.h"
-#include <google/protobuf/duration.pb.h>
-#include <google/protobuf/timestamp.pb.h>
+#include "google/protobuf/duration.pb.h"
+#include "google/protobuf/timestamp.pb.h"
 #include <chrono>
 
 namespace google {

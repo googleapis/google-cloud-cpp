@@ -19,8 +19,8 @@
 #include "google/cloud/spanner/admin/internal/instance_admin_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/longrunning/operations.grpc.pb.h>
-#include <google/spanner/admin/instance/v1/spanner_instance_admin.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
+#include "google/spanner/admin/instance/v1/spanner_instance_admin.grpc.pb.h"
 #include <memory>
 #include <utility>
 

@@ -17,10 +17,10 @@
 // source: google/cloud/parallelstore/v1/parallelstore.proto
 
 #include "google/cloud/parallelstore/v1/internal/parallelstore_stub.h"
+#include "google/cloud/parallelstore/v1/parallelstore.grpc.pb.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/parallelstore/v1/parallelstore.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>
 

@@ -27,7 +27,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/monitoring/dashboard/v1/dashboards_service.pb.h>
+#include "google/monitoring/dashboard/v1/dashboards_service.pb.h"
 #include <memory>
 
 namespace google {

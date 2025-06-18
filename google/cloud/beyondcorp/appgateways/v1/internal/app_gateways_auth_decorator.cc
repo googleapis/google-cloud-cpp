@@ -17,7 +17,7 @@
 // source: google/cloud/beyondcorp/appgateways/v1/app_gateways_service.proto
 
 #include "google/cloud/beyondcorp/appgateways/v1/internal/app_gateways_auth_decorator.h"
-#include <google/cloud/beyondcorp/appgateways/v1/app_gateways_service.grpc.pb.h>
+#include "google/cloud/beyondcorp/appgateways/v1/app_gateways_service.grpc.pb.h"
 #include <memory>
 #include <utility>
 

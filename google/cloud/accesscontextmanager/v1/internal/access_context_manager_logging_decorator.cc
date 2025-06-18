@@ -19,7 +19,7 @@
 #include "google/cloud/accesscontextmanager/v1/internal/access_context_manager_logging_decorator.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
-#include <google/identity/accesscontextmanager/v1/access_context_manager.grpc.pb.h>
+#include "google/identity/accesscontextmanager/v1/access_context_manager.grpc.pb.h"
 #include <memory>
 #include <set>
 #include <string>

@@ -17,9 +17,9 @@
 // source: google/cloud/dataproc/v1/session_templates.proto
 
 #include "google/cloud/dataproc/v1/internal/session_template_controller_stub.h"
+#include "google/cloud/dataproc/v1/session_templates.grpc.pb.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/dataproc/v1/session_templates.grpc.pb.h>
 #include <memory>
 #include <utility>
 

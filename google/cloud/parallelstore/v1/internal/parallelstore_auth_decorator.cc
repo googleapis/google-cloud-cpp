@@ -17,7 +17,7 @@
 // source: google/cloud/parallelstore/v1/parallelstore.proto
 
 #include "google/cloud/parallelstore/v1/internal/parallelstore_auth_decorator.h"
-#include <google/cloud/parallelstore/v1/parallelstore.grpc.pb.h>
+#include "google/cloud/parallelstore/v1/parallelstore.grpc.pb.h"
 #include <memory>
 #include <utility>
 

@@ -17,9 +17,9 @@
 // source: google/cloud/run/v2/service.proto
 
 #include "google/cloud/run/v2/internal/services_logging_decorator.h"
+#include "google/cloud/run/v2/service.grpc.pb.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/run/v2/service.grpc.pb.h>
 #include <memory>
 #include <set>
 #include <string>

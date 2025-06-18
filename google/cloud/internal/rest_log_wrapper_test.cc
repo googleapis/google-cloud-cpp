@@ -16,8 +16,8 @@
 #include "google/cloud/internal/rest_context.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/tracing_options.h"
-#include <google/protobuf/duration.pb.h>
-#include <google/protobuf/timestamp.pb.h>
+#include "google/protobuf/duration.pb.h"
+#include "google/protobuf/timestamp.pb.h"
 #include <gmock/gmock.h>
 
 namespace google {

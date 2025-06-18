@@ -17,20 +17,20 @@
 // source: google/cloud/dialogflow/cx/v3/changelog.proto
 
 #include "google/cloud/dialogflow_cx/internal/changelogs_stub_factory.h"
+#include "google/cloud/dialogflow/cx/v3/changelog.grpc.pb.h"
 #include "google/cloud/dialogflow_cx/internal/changelogs_auth_decorator.h"
 #include "google/cloud/dialogflow_cx/internal/changelogs_logging_decorator.h"
 #include "google/cloud/dialogflow_cx/internal/changelogs_metadata_decorator.h"
 #include "google/cloud/dialogflow_cx/internal/changelogs_stub.h"
 #include "google/cloud/dialogflow_cx/internal/changelogs_tracing_stub.h"
+#include "google/cloud/location/locations.grpc.pb.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-#include <google/cloud/dialogflow/cx/v3/changelog.grpc.pb.h>
-#include <google/cloud/location/locations.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>
 

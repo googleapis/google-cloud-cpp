@@ -19,7 +19,7 @@
 #include "google/cloud/storage/version.h"
 #include "google/cloud/options.h"
 #include "absl/strings/string_view.h"
-#include <google/storage/v2/storage.pb.h>
+#include "google/storage/v2/storage.pb.h"
 
 namespace google {
 namespace cloud {

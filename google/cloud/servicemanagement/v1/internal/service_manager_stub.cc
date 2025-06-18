@@ -19,8 +19,8 @@
 #include "google/cloud/servicemanagement/v1/internal/service_manager_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/api/servicemanagement/v1/servicemanager.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/api/servicemanagement/v1/servicemanager.grpc.pb.h"
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>
 

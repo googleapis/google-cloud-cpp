@@ -17,9 +17,9 @@
 // source: google/cloud/translate/v3/translation_service.proto
 
 #include "google/cloud/translate/v3/internal/translation_logging_decorator.h"
+#include "google/cloud/translate/v3/translation_service.grpc.pb.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/translate/v3/translation_service.grpc.pb.h>
 #include <memory>
 #include <set>
 #include <string>

@@ -17,9 +17,9 @@
 // source: google/cloud/batch/v1/batch.proto
 
 #include "google/cloud/batch/v1/internal/batch_logging_decorator.h"
+#include "google/cloud/batch/v1/batch.grpc.pb.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/batch/v1/batch.grpc.pb.h>
 #include <memory>
 #include <set>
 #include <string>

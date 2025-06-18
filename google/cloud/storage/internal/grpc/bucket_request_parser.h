@@ -17,7 +17,7 @@
 
 #include "google/cloud/storage/internal/bucket_requests.h"
 #include "google/cloud/storage/version.h"
-#include <google/storage/v2/storage.pb.h>
+#include "google/storage/v2/storage.pb.h"
 
 namespace google {
 namespace cloud {

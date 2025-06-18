@@ -17,7 +17,7 @@
 // source: google/cloud/discoveryengine/v1/site_search_engine_service.proto
 
 #include "google/cloud/discoveryengine/v1/internal/site_search_engine_auth_decorator.h"
-#include <google/cloud/discoveryengine/v1/site_search_engine_service.grpc.pb.h>
+#include "google/cloud/discoveryengine/v1/site_search_engine_service.grpc.pb.h"
 #include <memory>
 #include <utility>
 

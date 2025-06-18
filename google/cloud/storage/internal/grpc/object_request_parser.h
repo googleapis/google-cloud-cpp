@@ -18,7 +18,7 @@
 #include "google/cloud/storage/internal/storage_connection.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/rpc_metadata.h"
-#include <google/storage/v2/storage.pb.h>
+#include "google/storage/v2/storage.pb.h"
 #include <grpcpp/grpcpp.h>
 
 namespace google {

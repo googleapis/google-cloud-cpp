@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SUPPORT_V2_CASE_ATTACHMENT_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SUPPORT_V2_CASE_ATTACHMENT_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/support/v2/attachment_service.grpc.pb.h"
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include <google/cloud/support/v2/attachment_service.grpc.pb.h>
 #include <memory>
 
 namespace google {

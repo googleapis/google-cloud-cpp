@@ -17,8 +17,8 @@
 #include "google/cloud/spanner/internal/database_admin_metadata.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/log.h"
-#include <google/longrunning/operations.grpc.pb.h>
-#include <google/spanner/admin/database/v1/spanner_database_admin.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
+#include "google/spanner/admin/database/v1/spanner_database_admin.grpc.pb.h"
 #include <grpcpp/grpcpp.h>
 
 namespace google {

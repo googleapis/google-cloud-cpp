@@ -19,7 +19,7 @@
 #include "google/cloud/containeranalysis/v1/internal/grafeas_logging_decorator.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
-#include <grafeas/v1/grafeas.grpc.pb.h>
+#include "grafeas/v1/grafeas.grpc.pb.h"
 #include <memory>
 #include <set>
 #include <string>

@@ -24,7 +24,7 @@
 #include "google/cloud/internal/streaming_read_rpc_logging.h"
 #include "google/cloud/internal/streaming_write_rpc_logging.h"
 #include "google/cloud/status_or.h"
-#include <google/storage/v2/storage.grpc.pb.h>
+#include "google/storage/v2/storage.grpc.pb.h"
 #include <memory>
 #include <set>
 #include <string>

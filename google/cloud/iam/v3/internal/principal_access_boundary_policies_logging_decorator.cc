@@ -19,7 +19,7 @@
 #include "google/cloud/iam/v3/internal/principal_access_boundary_policies_logging_decorator.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
-#include <google/iam/v3/principal_access_boundary_policies_service.grpc.pb.h>
+#include "google/iam/v3/principal_access_boundary_policies_service.grpc.pb.h"
 #include <memory>
 #include <set>
 #include <string>

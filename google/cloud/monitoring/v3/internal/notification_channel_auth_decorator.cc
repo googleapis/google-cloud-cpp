@@ -17,7 +17,7 @@
 // source: google/monitoring/v3/notification_service.proto
 
 #include "google/cloud/monitoring/v3/internal/notification_channel_auth_decorator.h"
-#include <google/monitoring/v3/notification_service.grpc.pb.h>
+#include "google/monitoring/v3/notification_service.grpc.pb.h"
 #include <memory>
 #include <utility>
 

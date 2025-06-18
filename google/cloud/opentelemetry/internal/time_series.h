@@ -17,9 +17,9 @@
 
 #include "google/cloud/version.h"
 #include "absl/types/optional.h"
-#include <google/api/metric.pb.h>
-#include <google/api/monitored_resource.pb.h>
-#include <google/monitoring/v3/metric_service.pb.h>
+#include "google/api/metric.pb.h"
+#include "google/api/monitored_resource.pb.h"
+#include "google/monitoring/v3/metric_service.pb.h"
 #include <opentelemetry/sdk/metrics/metric_reader.h>
 #include <opentelemetry/sdk/resource/resource.h>
 #include <functional>

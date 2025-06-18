@@ -20,11 +20,11 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_RESERVATION_BLOCKS_V1_INTERNAL_RESERVATION_BLOCKS_REST_METADATA_DECORATOR_H
 
 #include "google/cloud/compute/reservation_blocks/v1/internal/reservation_blocks_rest_stub.h"
+#include "google/cloud/compute/reservation_blocks/v1/reservation_blocks.pb.h"
+#include "google/cloud/compute/zone_operations/v1/zone_operations.pb.h"
 #include "google/cloud/future.h"
 #include "google/cloud/rest_options.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/reservation_blocks/v1/reservation_blocks.pb.h>
-#include <google/cloud/compute/zone_operations/v1/zone_operations.pb.h>
 #include <memory>
 #include <string>
 

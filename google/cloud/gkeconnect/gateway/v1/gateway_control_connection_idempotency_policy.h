@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKECONNECT_GATEWAY_V1_GATEWAY_CONTROL_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKECONNECT_GATEWAY_V1_GATEWAY_CONTROL_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/gkeconnect/gateway/v1/control.pb.h"
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include <google/cloud/gkeconnect/gateway/v1/control.pb.h>
 #include <memory>
 
 namespace google {

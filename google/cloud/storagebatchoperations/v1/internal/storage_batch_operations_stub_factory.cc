@@ -17,20 +17,20 @@
 // source: google/cloud/storagebatchoperations/v1/storage_batch_operations.proto
 
 #include "google/cloud/storagebatchoperations/v1/internal/storage_batch_operations_stub_factory.h"
+#include "google/cloud/location/locations.grpc.pb.h"
 #include "google/cloud/storagebatchoperations/v1/internal/storage_batch_operations_auth_decorator.h"
 #include "google/cloud/storagebatchoperations/v1/internal/storage_batch_operations_logging_decorator.h"
 #include "google/cloud/storagebatchoperations/v1/internal/storage_batch_operations_metadata_decorator.h"
 #include "google/cloud/storagebatchoperations/v1/internal/storage_batch_operations_stub.h"
 #include "google/cloud/storagebatchoperations/v1/internal/storage_batch_operations_tracing_stub.h"
+#include "google/cloud/storagebatchoperations/v1/storage_batch_operations.grpc.pb.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-#include <google/cloud/location/locations.grpc.pb.h>
-#include <google/cloud/storagebatchoperations/v1/storage_batch_operations.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>
 

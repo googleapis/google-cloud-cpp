@@ -24,7 +24,7 @@
 #include "google/cloud/internal/absl_str_replace_quiet.h"
 #include "google/cloud/log.h"
 #include "absl/strings/string_view.h"
-#include <google/longrunning/operations.pb.h>
+#include "google/longrunning/operations.pb.h"
 #include <google/protobuf/descriptor.h>
 #include <cstddef>
 #include <iterator>

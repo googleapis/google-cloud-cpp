@@ -20,7 +20,7 @@
 #include "google/cloud/storage/internal/hash_function_impl.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/opentelemetry.h"
-#include <google/rpc/status.pb.h>
+#include "google/rpc/status.pb.h"
 #include <memory>
 #include <utility>
 

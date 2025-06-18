@@ -17,13 +17,13 @@
 #include "google/cloud/pubsublite/endpoint.h"
 #include "google/cloud/pubsublite/options.h"
 #include "google/cloud/pubsublite/publisher_connection.h"
+#include "google/cloud/pubsublite/v1/admin.pb.h"
 #include "google/cloud/internal/format_time_point.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/integration_test.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/version.h"
-#include <google/cloud/pubsublite/v1/admin.pb.h>
 #include <gmock/gmock.h>
 #include <regex>
 

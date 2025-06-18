@@ -17,9 +17,9 @@
 // source: google/cloud/notebooks/v1/managed_service.proto
 
 #include "google/cloud/notebooks/v1/internal/managed_notebook_logging_decorator.h"
+#include "google/cloud/notebooks/v1/managed_service.grpc.pb.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/notebooks/v1/managed_service.grpc.pb.h>
 #include <memory>
 #include <set>
 #include <string>

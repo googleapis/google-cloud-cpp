@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VISION_V1_IMAGE_ANNOTATOR_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VISION_V1_IMAGE_ANNOTATOR_CONNECTION_H
 
+#include "google/cloud/vision/v1/image_annotator.pb.h"
 #include "google/cloud/vision/v1/image_annotator_connection_idempotency_policy.h"
 #include "google/cloud/vision/v1/internal/image_annotator_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
@@ -29,8 +30,7 @@
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/cloud/vision/v1/image_annotator.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 
 namespace google {

@@ -22,7 +22,7 @@
 #include "google/cloud/future.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/status.h"
-#include <google/pubsub/v1/pubsub.pb.h>
+#include "google/pubsub/v1/pubsub.pb.h"
 #include <deque>
 #include <functional>
 #include <mutex>

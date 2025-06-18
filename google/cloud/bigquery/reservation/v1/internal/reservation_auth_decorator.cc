@@ -17,7 +17,7 @@
 // source: google/cloud/bigquery/reservation/v1/reservation.proto
 
 #include "google/cloud/bigquery/reservation/v1/internal/reservation_auth_decorator.h"
-#include <google/cloud/bigquery/reservation/v1/reservation.grpc.pb.h>
+#include "google/cloud/bigquery/reservation/v1/reservation.grpc.pb.h"
 #include <memory>
 #include <utility>
 

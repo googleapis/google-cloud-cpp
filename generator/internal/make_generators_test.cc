@@ -17,9 +17,9 @@
 #include "generator/testing/error_collectors.h"
 #include "generator/testing/fake_source_tree.h"
 #include "generator/testing/printer_mocks.h"
+#include "google/protobuf/descriptor.pb.h"
 #include <google/protobuf/compiler/importer.h>
 #include <google/protobuf/descriptor.h>
-#include <google/protobuf/descriptor.pb.h>
 #include <gmock/gmock.h>
 
 namespace google {

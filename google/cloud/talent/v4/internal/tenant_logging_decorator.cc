@@ -17,9 +17,9 @@
 // source: google/cloud/talent/v4/tenant_service.proto
 
 #include "google/cloud/talent/v4/internal/tenant_logging_decorator.h"
+#include "google/cloud/talent/v4/tenant_service.grpc.pb.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/talent/v4/tenant_service.grpc.pb.h>
 #include <memory>
 #include <set>
 #include <string>

@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ORGPOLICY_V2_ORG_POLICY_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ORGPOLICY_V2_ORG_POLICY_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/orgpolicy/v2/orgpolicy.grpc.pb.h"
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include <google/cloud/orgpolicy/v2/orgpolicy.grpc.pb.h>
 #include <memory>
 
 namespace google {

@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ESSENTIALCONTACTS_V1_ESSENTIAL_CONTACTS_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ESSENTIALCONTACTS_V1_ESSENTIAL_CONTACTS_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/essentialcontacts/v1/service.grpc.pb.h"
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include <google/cloud/essentialcontacts/v1/service.grpc.pb.h>
 #include <memory>
 
 namespace google {

@@ -17,10 +17,10 @@
 // source: google/cloud/workstations/v1/workstations.proto
 
 #include "google/cloud/workstations/v1/internal/workstations_stub.h"
+#include "google/cloud/workstations/v1/workstations.grpc.pb.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/workstations/v1/workstations.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>
 

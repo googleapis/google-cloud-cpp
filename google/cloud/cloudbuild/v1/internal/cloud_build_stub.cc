@@ -19,8 +19,8 @@
 #include "google/cloud/cloudbuild/v1/internal/cloud_build_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/devtools/cloudbuild/v1/cloudbuild.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/devtools/cloudbuild/v1/cloudbuild.grpc.pb.h"
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>
 

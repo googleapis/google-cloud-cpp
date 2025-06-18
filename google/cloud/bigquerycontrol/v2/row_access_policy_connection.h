@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERYCONTROL_V2_ROW_ACCESS_POLICY_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERYCONTROL_V2_ROW_ACCESS_POLICY_CONNECTION_H
 
+#include "google/cloud/bigquery/v2/row_access_policy.pb.h"
 #include "google/cloud/bigquerycontrol/v2/internal/row_access_policy_retry_traits.h"
 #include "google/cloud/bigquerycontrol/v2/row_access_policy_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
@@ -27,7 +28,6 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/bigquery/v2/row_access_policy.pb.h>
 #include <memory>
 
 namespace google {

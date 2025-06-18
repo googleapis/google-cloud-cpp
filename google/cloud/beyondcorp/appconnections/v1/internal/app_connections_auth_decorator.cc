@@ -18,7 +18,7 @@
 // google/cloud/beyondcorp/appconnections/v1/app_connections_service.proto
 
 #include "google/cloud/beyondcorp/appconnections/v1/internal/app_connections_auth_decorator.h"
-#include <google/cloud/beyondcorp/appconnections/v1/app_connections_service.grpc.pb.h>
+#include "google/cloud/beyondcorp/appconnections/v1/app_connections_service.grpc.pb.h"
 #include <memory>
 #include <utility>
 

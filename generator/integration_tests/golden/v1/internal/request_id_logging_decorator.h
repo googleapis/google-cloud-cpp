@@ -22,7 +22,7 @@
 #include "generator/integration_tests/golden/v1/internal/request_id_stub.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <set>
 #include <string>

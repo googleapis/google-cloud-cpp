@@ -22,7 +22,7 @@
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/url_encode.h"
 #include "google/cloud/status_or.h"
-#include <grafeas/v1/grafeas.grpc.pb.h>
+#include "grafeas/v1/grafeas.grpc.pb.h"
 #include <memory>
 #include <string>
 #include <utility>

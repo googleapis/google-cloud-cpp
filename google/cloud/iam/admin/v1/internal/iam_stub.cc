@@ -19,7 +19,7 @@
 #include "google/cloud/iam/admin/v1/internal/iam_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/iam/admin/v1/iam.grpc.pb.h>
+#include "google/iam/admin/v1/iam.grpc.pb.h"
 #include <memory>
 #include <utility>
 

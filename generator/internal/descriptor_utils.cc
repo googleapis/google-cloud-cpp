@@ -35,10 +35,10 @@
 #include "absl/strings/str_split.h"
 #include "absl/strings/strip.h"
 #include "absl/types/variant.h"
-#include <google/api/annotations.pb.h>
-#include <google/api/http.pb.h>
-#include <google/api/routing.pb.h>
-#include <google/longrunning/operations.pb.h>
+#include "google/api/annotations.pb.h"
+#include "google/api/http.pb.h"
+#include "google/api/routing.pb.h"
+#include "google/longrunning/operations.pb.h"
 #include <google/protobuf/compiler/code_generator.h>
 #include <google/protobuf/compiler/cpp/names.h>
 #include <regex>

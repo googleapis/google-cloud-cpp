@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONFIDENTIALCOMPUTING_V1_INTERNAL_CONFIDENTIAL_COMPUTING_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONFIDENTIALCOMPUTING_V1_INTERNAL_CONFIDENTIAL_COMPUTING_STUB_H
 
+#include "google/cloud/confidentialcomputing/v1/service.grpc.pb.h"
+#include "google/cloud/location/locations.grpc.pb.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/cloud/confidentialcomputing/v1/service.grpc.pb.h>
-#include <google/cloud/location/locations.grpc.pb.h>
 #include <memory>
 #include <utility>
 

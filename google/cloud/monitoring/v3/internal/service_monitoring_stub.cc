@@ -19,7 +19,7 @@
 #include "google/cloud/monitoring/v3/internal/service_monitoring_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/monitoring/v3/service_service.grpc.pb.h>
+#include "google/monitoring/v3/service_service.grpc.pb.h"
 #include <memory>
 #include <utility>
 

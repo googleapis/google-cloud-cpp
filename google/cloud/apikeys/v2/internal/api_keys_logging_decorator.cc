@@ -19,7 +19,7 @@
 #include "google/cloud/apikeys/v2/internal/api_keys_logging_decorator.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
-#include <google/api/apikeys/v2/apikeys.grpc.pb.h>
+#include "google/api/apikeys/v2/apikeys.grpc.pb.h"
 #include <memory>
 #include <set>
 #include <string>

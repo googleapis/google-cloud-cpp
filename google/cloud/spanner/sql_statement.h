@@ -18,7 +18,7 @@
 #include "google/cloud/spanner/value.h"
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/status_or.h"
-#include <google/spanner/v1/spanner.pb.h>
+#include "google/spanner/v1/spanner.pb.h"
 #include <string>
 #include <unordered_map>
 #include <vector>

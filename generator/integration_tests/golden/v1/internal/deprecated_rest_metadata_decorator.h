@@ -23,7 +23,7 @@
 #include "google/cloud/future.h"
 #include "google/cloud/rest_options.h"
 #include "google/cloud/version.h"
-#include <generator/integration_tests/test_deprecated.pb.h>
+#include "generator/integration_tests/test_deprecated.pb.h"
 #include <memory>
 #include <string>
 

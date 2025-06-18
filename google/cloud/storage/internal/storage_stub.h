@@ -29,7 +29,7 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/storage/v2/storage.grpc.pb.h>
+#include "google/storage/v2/storage.grpc.pb.h"
 #include <memory>
 #include <utility>
 

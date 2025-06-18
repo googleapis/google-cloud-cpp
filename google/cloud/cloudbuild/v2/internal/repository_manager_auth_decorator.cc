@@ -17,7 +17,7 @@
 // source: google/devtools/cloudbuild/v2/repositories.proto
 
 #include "google/cloud/cloudbuild/v2/internal/repository_manager_auth_decorator.h"
-#include <google/devtools/cloudbuild/v2/repositories.grpc.pb.h>
+#include "google/devtools/cloudbuild/v2/repositories.grpc.pb.h"
 #include <memory>
 #include <utility>
 

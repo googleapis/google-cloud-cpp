@@ -19,12 +19,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERYCONTROL_V2_INTERNAL_ROW_ACCESS_POLICY_REST_LOGGING_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERYCONTROL_V2_INTERNAL_ROW_ACCESS_POLICY_REST_LOGGING_DECORATOR_H
 
+#include "google/cloud/bigquery/v2/row_access_policy.pb.h"
 #include "google/cloud/bigquerycontrol/v2/internal/row_access_policy_rest_stub.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/rest_context.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
-#include <google/cloud/bigquery/v2/row_access_policy.pb.h>
 #include <memory>
 #include <set>
 #include <string>

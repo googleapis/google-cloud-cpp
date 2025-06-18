@@ -17,7 +17,7 @@
 // source: google/cloud/timeseriesinsights/v1/timeseries_insights.proto
 
 #include "google/cloud/timeseriesinsights/v1/internal/timeseries_insights_controller_auth_decorator.h"
-#include <google/cloud/timeseriesinsights/v1/timeseries_insights.grpc.pb.h>
+#include "google/cloud/timeseriesinsights/v1/timeseries_insights.grpc.pb.h"
 #include <memory>
 #include <utility>
 

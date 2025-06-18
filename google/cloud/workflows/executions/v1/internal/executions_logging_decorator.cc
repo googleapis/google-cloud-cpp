@@ -17,9 +17,9 @@
 // source: google/cloud/workflows/executions/v1/executions.proto
 
 #include "google/cloud/workflows/executions/v1/internal/executions_logging_decorator.h"
+#include "google/cloud/workflows/executions/v1/executions.grpc.pb.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/workflows/executions/v1/executions.grpc.pb.h>
 #include <memory>
 #include <set>
 #include <string>

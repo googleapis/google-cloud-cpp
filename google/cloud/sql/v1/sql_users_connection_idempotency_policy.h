@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_SQL_USERS_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_SQL_USERS_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/sql/v1/cloud_sql_users.pb.h"
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include <google/cloud/sql/v1/cloud_sql_users.pb.h>
 #include <memory>
 
 namespace google {

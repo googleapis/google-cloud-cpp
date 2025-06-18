@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_KMS_INVENTORY_V1_INTERNAL_KEY_DASHBOARD_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_KMS_INVENTORY_V1_INTERNAL_KEY_DASHBOARD_STUB_H
 
+#include "google/cloud/kms/inventory/v1/key_dashboard_service.grpc.pb.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/cloud/kms/inventory/v1/key_dashboard_service.grpc.pb.h>
 #include <memory>
 #include <utility>
 

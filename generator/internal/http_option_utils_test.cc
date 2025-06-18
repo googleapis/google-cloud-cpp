@@ -15,8 +15,8 @@
 #include "generator/internal/http_option_utils.h"
 #include "generator/testing/error_collectors.h"
 #include "generator/testing/fake_source_tree.h"
-#include <google/api/annotations.pb.h>
-#include <google/protobuf/descriptor.pb.h>
+#include "google/api/annotations.pb.h"
+#include "google/protobuf/descriptor.pb.h"
 #include <google/protobuf/descriptor_database.h>
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>

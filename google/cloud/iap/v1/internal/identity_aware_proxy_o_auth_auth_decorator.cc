@@ -17,7 +17,7 @@
 // source: google/cloud/iap/v1/service.proto
 
 #include "google/cloud/iap/v1/internal/identity_aware_proxy_o_auth_auth_decorator.h"
-#include <google/cloud/iap/v1/service.grpc.pb.h>
+#include "google/cloud/iap/v1/service.grpc.pb.h"
 #include <memory>
 #include <utility>
 

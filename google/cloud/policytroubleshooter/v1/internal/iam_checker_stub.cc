@@ -17,9 +17,9 @@
 // source: google/cloud/policytroubleshooter/v1/checker.proto
 
 #include "google/cloud/policytroubleshooter/v1/internal/iam_checker_stub.h"
+#include "google/cloud/policytroubleshooter/v1/checker.grpc.pb.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/policytroubleshooter/v1/checker.grpc.pb.h>
 #include <memory>
 #include <utility>
 

@@ -19,7 +19,7 @@
 #include "google/cloud/containeranalysis/v1/internal/grafeas_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <grafeas/v1/grafeas.grpc.pb.h>
+#include "grafeas/v1/grafeas.grpc.pb.h"
 #include <memory>
 #include <utility>
 

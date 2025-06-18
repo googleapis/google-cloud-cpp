@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETWORKSERVICES_V1_DEP_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETWORKSERVICES_V1_DEP_CONNECTION_H
 
+#include "google/cloud/networkservices/v1/dep.pb.h"
 #include "google/cloud/networkservices/v1/dep_connection_idempotency_policy.h"
 #include "google/cloud/networkservices/v1/internal/dep_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
@@ -30,8 +31,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/networkservices/v1/dep.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 
 namespace google {

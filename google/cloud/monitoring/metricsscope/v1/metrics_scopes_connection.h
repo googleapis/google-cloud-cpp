@@ -29,8 +29,8 @@
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
-#include <google/monitoring/metricsscope/v1/metrics_scopes.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
+#include "google/monitoring/metricsscope/v1/metrics_scopes.pb.h"
 #include <memory>
 
 namespace google {

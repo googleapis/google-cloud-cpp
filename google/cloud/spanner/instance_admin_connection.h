@@ -23,7 +23,7 @@
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/options.h"
-#include <google/spanner/admin/instance/v1/spanner_instance_admin.pb.h>
+#include "google/spanner/admin/instance/v1/spanner_instance_admin.pb.h"
 #include <map>
 #include <string>
 #include <vector>

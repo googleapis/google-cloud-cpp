@@ -21,6 +21,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_BACKEND_SERVICES_V1_REGION_BACKEND_SERVICES_CONNECTION_H
 
 #include "google/cloud/compute/region_backend_services/v1/internal/region_backend_services_retry_traits.h"
+#include "google/cloud/compute/region_backend_services/v1/region_backend_services.pb.h"
 #include "google/cloud/compute/region_backend_services/v1/region_backend_services_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
@@ -31,7 +32,6 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/region_backend_services/v1/region_backend_services.pb.h>
 #include <memory>
 
 namespace google {

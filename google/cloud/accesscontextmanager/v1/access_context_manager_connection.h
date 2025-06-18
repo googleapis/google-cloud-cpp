@@ -30,8 +30,8 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/identity/accesscontextmanager/v1/access_context_manager.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/identity/accesscontextmanager/v1/access_context_manager.pb.h"
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 
 namespace google {

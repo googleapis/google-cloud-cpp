@@ -17,7 +17,7 @@
 // source: google/spanner/v1/spanner.proto
 
 #include "google/cloud/spanner/internal/spanner_auth_decorator.h"
-#include <google/spanner/v1/spanner.grpc.pb.h>
+#include "google/spanner/v1/spanner.grpc.pb.h"
 #include <memory>
 #include <utility>
 

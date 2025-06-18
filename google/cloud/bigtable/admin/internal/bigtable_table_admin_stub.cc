@@ -19,8 +19,8 @@
 #include "google/cloud/bigtable/admin/internal/bigtable_table_admin_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/bigtable/admin/v2/bigtable_table_admin.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/bigtable/admin/v2/bigtable_table_admin.grpc.pb.h"
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>
 

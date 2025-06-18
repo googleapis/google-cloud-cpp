@@ -17,7 +17,7 @@
 // source: google/cloud/dialogflow/cx/v3/transition_route_group.proto
 
 #include "google/cloud/dialogflow_cx/internal/transition_route_groups_auth_decorator.h"
-#include <google/cloud/dialogflow/cx/v3/transition_route_group.grpc.pb.h>
+#include "google/cloud/dialogflow/cx/v3/transition_route_group.grpc.pb.h"
 #include <memory>
 #include <utility>
 

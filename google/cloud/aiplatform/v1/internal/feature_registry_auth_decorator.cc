@@ -17,7 +17,7 @@
 // source: google/cloud/aiplatform/v1/feature_registry_service.proto
 
 #include "google/cloud/aiplatform/v1/internal/feature_registry_auth_decorator.h"
-#include <google/cloud/aiplatform/v1/feature_registry_service.grpc.pb.h>
+#include "google/cloud/aiplatform/v1/feature_registry_service.grpc.pb.h"
 #include <memory>
 #include <utility>
 

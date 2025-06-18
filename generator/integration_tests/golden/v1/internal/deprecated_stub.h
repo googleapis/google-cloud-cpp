@@ -22,7 +22,7 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <generator/integration_tests/test_deprecated.grpc.pb.h>
+#include "generator/integration_tests/test_deprecated.grpc.pb.h"
 #include <memory>
 #include <utility>
 

@@ -17,7 +17,7 @@
 // source: google/cloud/dialogflow/v2/fulfillment.proto
 
 #include "google/cloud/dialogflow_es/internal/fulfillments_auth_decorator.h"
-#include <google/cloud/dialogflow/v2/fulfillment.grpc.pb.h>
+#include "google/cloud/dialogflow/v2/fulfillment.grpc.pb.h"
 #include <memory>
 #include <utility>
 

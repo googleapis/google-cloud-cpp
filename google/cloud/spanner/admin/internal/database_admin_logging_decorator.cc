@@ -19,7 +19,7 @@
 #include "google/cloud/spanner/admin/internal/database_admin_logging_decorator.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
-#include <google/spanner/admin/database/v1/spanner_database_admin.grpc.pb.h>
+#include "google/spanner/admin/database/v1/spanner_database_admin.grpc.pb.h"
 #include <memory>
 #include <set>
 #include <string>

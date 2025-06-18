@@ -15,8 +15,8 @@
 #include "google/cloud/internal/debug_string_status.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/tracing_options.h"
-#include <google/rpc/error_details.pb.h>
-#include <google/rpc/status.pb.h>
+#include "google/rpc/error_details.pb.h"
+#include "google/rpc/status.pb.h"
 #include <gmock/gmock.h>
 
 namespace google {

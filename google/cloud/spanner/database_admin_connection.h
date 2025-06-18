@@ -29,7 +29,7 @@
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/options.h"
 #include "absl/types/optional.h"
-#include <google/spanner/admin/database/v1/spanner_database_admin.pb.h>
+#include "google/spanner/admin/database/v1/spanner_database_admin.pb.h"
 #include <chrono>
 #include <string>
 #include <vector>

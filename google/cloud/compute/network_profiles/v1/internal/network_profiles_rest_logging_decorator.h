@@ -20,11 +20,11 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_NETWORK_PROFILES_V1_INTERNAL_NETWORK_PROFILES_REST_LOGGING_DECORATOR_H
 
 #include "google/cloud/compute/network_profiles/v1/internal/network_profiles_rest_stub.h"
+#include "google/cloud/compute/network_profiles/v1/network_profiles.pb.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/rest_context.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/network_profiles/v1/network_profiles.pb.h>
 #include <memory>
 #include <set>
 #include <string>

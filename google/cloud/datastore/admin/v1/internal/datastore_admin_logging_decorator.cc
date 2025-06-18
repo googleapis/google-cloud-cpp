@@ -19,7 +19,7 @@
 #include "google/cloud/datastore/admin/v1/internal/datastore_admin_logging_decorator.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
-#include <google/datastore/admin/v1/datastore_admin.grpc.pb.h>
+#include "google/datastore/admin/v1/datastore_admin.grpc.pb.h"
 #include <memory>
 #include <set>
 #include <string>

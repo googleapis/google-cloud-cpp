@@ -26,7 +26,7 @@
 #include "absl/strings/str_format.h"
 #include "absl/strings/str_split.h"
 #include "absl/types/optional.h"
-#include <google/api/annotations.pb.h>
+#include "google/api/annotations.pb.h"
 #include <google/protobuf/compiler/cpp/names.h>
 #include <google/protobuf/descriptor.h>
 #include <regex>

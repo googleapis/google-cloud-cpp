@@ -28,7 +28,7 @@
 #include "google/cloud/background_threads.h"
 #include "google/cloud/internal/group_options.h"
 #include "google/cloud/status_or.h"
-#include <google/storage/v2/storage.pb.h>
+#include "google/storage/v2/storage.pb.h"
 #include <memory>
 #include <string>
 #include <utility>

@@ -17,9 +17,9 @@
 // source: google/cloud/confidentialcomputing/v1/service.proto
 
 #include "google/cloud/confidentialcomputing/v1/internal/confidential_computing_stub.h"
+#include "google/cloud/confidentialcomputing/v1/service.grpc.pb.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/confidentialcomputing/v1/service.grpc.pb.h>
 #include <memory>
 #include <utility>
 

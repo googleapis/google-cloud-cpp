@@ -17,12 +17,12 @@
 // source: google/cloud/vmwareengine/v1/vmwareengine.proto
 
 #include "google/cloud/vmwareengine/v1/internal/vmware_engine_metadata_decorator.h"
+#include "google/cloud/vmwareengine/v1/vmwareengine.grpc.pb.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/url_encode.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/vmwareengine/v1/vmwareengine.grpc.pb.h>
 #include <memory>
 #include <string>
 #include <utility>

@@ -16,7 +16,7 @@
 #include "google/cloud/bigtable/admin/bigtable_table_admin_client.h"
 #include "google/cloud/bigtable/wait_for_consistency.h"
 #include "google/cloud/internal/time_utils.h"
-#include <google/protobuf/duration.pb.h>
+#include "google/protobuf/duration.pb.h"
 #include <sstream>
 
 namespace btadmin = ::google::bigtable::admin::v2;

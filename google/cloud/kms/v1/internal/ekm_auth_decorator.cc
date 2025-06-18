@@ -17,7 +17,7 @@
 // source: google/cloud/kms/v1/ekm_service.proto
 
 #include "google/cloud/kms/v1/internal/ekm_auth_decorator.h"
-#include <google/cloud/kms/v1/ekm_service.grpc.pb.h>
+#include "google/cloud/kms/v1/ekm_service.grpc.pb.h"
 #include <memory>
 #include <utility>
 

@@ -20,11 +20,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_INTERCONNECT_LOCATIONS_V1_INTERNAL_INTERCONNECT_LOCATIONS_REST_METADATA_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_INTERCONNECT_LOCATIONS_V1_INTERNAL_INTERCONNECT_LOCATIONS_REST_METADATA_DECORATOR_H
 
+#include "google/cloud/compute/interconnect_locations/v1/interconnect_locations.pb.h"
 #include "google/cloud/compute/interconnect_locations/v1/internal/interconnect_locations_rest_stub.h"
 #include "google/cloud/future.h"
 #include "google/cloud/rest_options.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/interconnect_locations/v1/interconnect_locations.pb.h>
 #include <memory>
 #include <string>
 

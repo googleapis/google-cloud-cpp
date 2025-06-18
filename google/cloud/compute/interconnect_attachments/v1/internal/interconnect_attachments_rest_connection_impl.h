@@ -25,13 +25,13 @@
 #include "google/cloud/compute/interconnect_attachments/v1/interconnect_attachments_options.h"
 #include "google/cloud/compute/interconnect_attachments/v1/internal/interconnect_attachments_rest_stub.h"
 #include "google/cloud/compute/interconnect_attachments/v1/internal/interconnect_attachments_retry_traits.h"
+#include "google/cloud/compute/region_operations/v1/region_operations.pb.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/region_operations/v1/region_operations.pb.h>
 #include <memory>
 
 namespace google {

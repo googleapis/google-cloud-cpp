@@ -17,7 +17,7 @@
 // source: generator/integration_tests/test_deprecated.proto
 
 #include "generator/integration_tests/golden/v1/internal/deprecated_auth_decorator.h"
-#include <generator/integration_tests/test_deprecated.grpc.pb.h>
+#include "generator/integration_tests/test_deprecated.grpc.pb.h"
 #include <memory>
 #include <utility>
 

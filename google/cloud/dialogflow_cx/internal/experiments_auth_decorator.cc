@@ -17,7 +17,7 @@
 // source: google/cloud/dialogflow/cx/v3/experiment.proto
 
 #include "google/cloud/dialogflow_cx/internal/experiments_auth_decorator.h"
-#include <google/cloud/dialogflow/cx/v3/experiment.grpc.pb.h>
+#include "google/cloud/dialogflow/cx/v3/experiment.grpc.pb.h"
 #include <memory>
 #include <utility>
 

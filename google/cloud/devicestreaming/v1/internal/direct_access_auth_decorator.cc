@@ -17,8 +17,8 @@
 // source: google/cloud/devicestreaming/v1/service.proto
 
 #include "google/cloud/devicestreaming/v1/internal/direct_access_auth_decorator.h"
+#include "google/cloud/devicestreaming/v1/service.grpc.pb.h"
 #include "google/cloud/internal/async_read_write_stream_auth.h"
-#include <google/cloud/devicestreaming/v1/service.grpc.pb.h>
 #include <memory>
 #include <utility>
 

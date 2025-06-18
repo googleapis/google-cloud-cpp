@@ -19,7 +19,7 @@
 #include "google/cloud/servicecontrol/v2/internal/service_controller_logging_decorator.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
-#include <google/api/servicecontrol/v2/service_controller.grpc.pb.h>
+#include "google/api/servicecontrol/v2/service_controller.grpc.pb.h"
 #include <memory>
 #include <set>
 #include <string>

@@ -25,7 +25,7 @@
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/protobuf/duration.pb.h>
+#include "google/protobuf/duration.pb.h"
 #include <memory>
 #include <string>
 

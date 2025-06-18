@@ -19,7 +19,7 @@
 #include "google/cloud/datastore/v1/internal/datastore_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/datastore/v1/datastore.grpc.pb.h>
+#include "google/datastore/v1/datastore.grpc.pb.h"
 #include <memory>
 #include <utility>
 

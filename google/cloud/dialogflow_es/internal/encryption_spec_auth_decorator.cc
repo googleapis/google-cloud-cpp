@@ -17,7 +17,7 @@
 // source: google/cloud/dialogflow/v2/encryption_spec.proto
 
 #include "google/cloud/dialogflow_es/internal/encryption_spec_auth_decorator.h"
-#include <google/cloud/dialogflow/v2/encryption_spec.grpc.pb.h>
+#include "google/cloud/dialogflow/v2/encryption_spec.grpc.pb.h"
 #include <memory>
 #include <utility>
 

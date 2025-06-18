@@ -17,7 +17,7 @@
 // source: google/cloud/datacatalog/v1/datacatalog.proto
 
 #include "google/cloud/datacatalog/v1/internal/data_catalog_auth_decorator.h"
-#include <google/cloud/datacatalog/v1/datacatalog.grpc.pb.h>
+#include "google/cloud/datacatalog/v1/datacatalog.grpc.pb.h"
 #include <memory>
 #include <utility>
 

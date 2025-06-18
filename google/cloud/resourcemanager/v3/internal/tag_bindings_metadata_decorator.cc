@@ -17,12 +17,12 @@
 // source: google/cloud/resourcemanager/v3/tag_bindings.proto
 
 #include "google/cloud/resourcemanager/v3/internal/tag_bindings_metadata_decorator.h"
+#include "google/cloud/resourcemanager/v3/tag_bindings.grpc.pb.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/url_encode.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/resourcemanager/v3/tag_bindings.grpc.pb.h>
 #include <memory>
 #include <string>
 #include <utility>

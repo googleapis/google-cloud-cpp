@@ -17,9 +17,9 @@
 // source: google/cloud/redis/v1/cloud_redis.proto
 
 #include "google/cloud/redis/v1/internal/cloud_redis_logging_decorator.h"
+#include "google/cloud/redis/v1/cloud_redis.grpc.pb.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/redis/v1/cloud_redis.grpc.pb.h>
 #include <memory>
 #include <set>
 #include <string>

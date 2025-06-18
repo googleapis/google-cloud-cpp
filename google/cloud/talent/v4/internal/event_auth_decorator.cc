@@ -17,7 +17,7 @@
 // source: google/cloud/talent/v4/event_service.proto
 
 #include "google/cloud/talent/v4/internal/event_auth_decorator.h"
-#include <google/cloud/talent/v4/event_service.grpc.pb.h>
+#include "google/cloud/talent/v4/event_service.grpc.pb.h"
 #include <memory>
 #include <utility>
 

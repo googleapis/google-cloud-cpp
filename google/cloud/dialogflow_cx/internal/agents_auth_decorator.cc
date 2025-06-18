@@ -17,7 +17,7 @@
 // source: google/cloud/dialogflow/cx/v3/agent.proto
 
 #include "google/cloud/dialogflow_cx/internal/agents_auth_decorator.h"
-#include <google/cloud/dialogflow/cx/v3/agent.grpc.pb.h>
+#include "google/cloud/dialogflow/cx/v3/agent.grpc.pb.h"
 #include <memory>
 #include <utility>
 

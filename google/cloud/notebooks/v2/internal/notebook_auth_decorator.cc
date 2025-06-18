@@ -17,7 +17,7 @@
 // source: google/cloud/notebooks/v2/service.proto
 
 #include "google/cloud/notebooks/v2/internal/notebook_auth_decorator.h"
-#include <google/cloud/notebooks/v2/service.grpc.pb.h>
+#include "google/cloud/notebooks/v2/service.grpc.pb.h"
 #include <memory>
 #include <utility>
 

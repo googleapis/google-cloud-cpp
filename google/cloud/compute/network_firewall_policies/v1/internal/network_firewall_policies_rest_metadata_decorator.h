@@ -20,12 +20,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_NETWORK_FIREWALL_POLICIES_V1_INTERNAL_NETWORK_FIREWALL_POLICIES_REST_METADATA_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_NETWORK_FIREWALL_POLICIES_V1_INTERNAL_NETWORK_FIREWALL_POLICIES_REST_METADATA_DECORATOR_H
 
+#include "google/cloud/compute/global_operations/v1/global_operations.pb.h"
 #include "google/cloud/compute/network_firewall_policies/v1/internal/network_firewall_policies_rest_stub.h"
+#include "google/cloud/compute/network_firewall_policies/v1/network_firewall_policies.pb.h"
 #include "google/cloud/future.h"
 #include "google/cloud/rest_options.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/global_operations/v1/global_operations.pb.h>
-#include <google/cloud/compute/network_firewall_policies/v1/network_firewall_policies.pb.h>
 #include <memory>
 #include <string>
 

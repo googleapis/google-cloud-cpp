@@ -22,14 +22,14 @@
 #include "google/cloud/chronicle/v1/internal/reference_list_metadata_decorator.h"
 #include "google/cloud/chronicle/v1/internal/reference_list_stub.h"
 #include "google/cloud/chronicle/v1/internal/reference_list_tracing_stub.h"
+#include "google/cloud/chronicle/v1/reference_list.grpc.pb.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-#include <google/cloud/chronicle/v1/reference_list.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>
 

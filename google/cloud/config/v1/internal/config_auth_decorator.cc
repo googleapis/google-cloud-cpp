@@ -17,7 +17,7 @@
 // source: google/cloud/config/v1/config.proto
 
 #include "google/cloud/config/v1/internal/config_auth_decorator.h"
-#include <google/cloud/config/v1/config.grpc.pb.h>
+#include "google/cloud/config/v1/config.grpc.pb.h"
 #include <memory>
 #include <utility>
 

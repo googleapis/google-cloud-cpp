@@ -17,12 +17,12 @@
 // source: google/cloud/redis/v1/cloud_redis.proto
 
 #include "google/cloud/redis/v1/internal/cloud_redis_metadata_decorator.h"
+#include "google/cloud/redis/v1/cloud_redis.grpc.pb.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/url_encode.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/redis/v1/cloud_redis.grpc.pb.h>
 #include <memory>
 #include <string>
 #include <utility>

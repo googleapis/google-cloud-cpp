@@ -17,7 +17,7 @@
 // source: google/cloud/datafusion/v1/datafusion.proto
 
 #include "google/cloud/datafusion/v1/internal/data_fusion_auth_decorator.h"
-#include <google/cloud/datafusion/v1/datafusion.grpc.pb.h>
+#include "google/cloud/datafusion/v1/datafusion.grpc.pb.h"
 #include <memory>
 #include <utility>
 

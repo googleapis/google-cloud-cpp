@@ -17,7 +17,7 @@
 // source: google/cloud/datastream/v1/datastream.proto
 
 #include "google/cloud/datastream/v1/internal/datastream_auth_decorator.h"
-#include <google/cloud/datastream/v1/datastream.grpc.pb.h>
+#include "google/cloud/datastream/v1/datastream.grpc.pb.h"
 #include <memory>
 #include <utility>
 

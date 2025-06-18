@@ -17,7 +17,7 @@
 // source: google/cloud/managedkafka/v1/managed_kafka.proto
 
 #include "google/cloud/managedkafka/v1/internal/managed_kafka_auth_decorator.h"
-#include <google/cloud/managedkafka/v1/managed_kafka.grpc.pb.h>
+#include "google/cloud/managedkafka/v1/managed_kafka.grpc.pb.h"
 #include <memory>
 #include <utility>
 

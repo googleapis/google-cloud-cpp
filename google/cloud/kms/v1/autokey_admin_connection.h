@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_KMS_V1_AUTOKEY_ADMIN_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_KMS_V1_AUTOKEY_ADMIN_CONNECTION_H
 
+#include "google/cloud/kms/v1/autokey_admin.pb.h"
 #include "google/cloud/kms/v1/autokey_admin_connection_idempotency_policy.h"
 #include "google/cloud/kms/v1/internal/autokey_admin_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
@@ -27,7 +28,6 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/kms/v1/autokey_admin.pb.h>
 #include <memory>
 
 namespace google {

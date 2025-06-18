@@ -17,7 +17,7 @@
 // source: generator/integration_tests/test.proto
 
 #include "generator/integration_tests/golden/v1/internal/golden_thing_admin_auth_decorator.h"
-#include <generator/integration_tests/test.grpc.pb.h>
+#include "generator/integration_tests/test.grpc.pb.h"
 #include <memory>
 #include <utility>
 

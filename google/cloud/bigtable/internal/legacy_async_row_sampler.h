@@ -25,7 +25,7 @@
 #include "google/cloud/future_generic.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
-#include <google/bigtable/v2/bigtable.pb.h>
+#include "google/bigtable/v2/bigtable.pb.h"
 #include <atomic>
 #include <memory>
 #include <string>
