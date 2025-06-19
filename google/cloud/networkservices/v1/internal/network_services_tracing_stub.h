@@ -343,6 +343,18 @@ class NetworkServicesTracingStub : public NetworkServicesStub {
       google::cloud::networkservices::v1::CreateServiceBindingRequest const&
           request) override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateServiceBinding(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networkservices::v1::UpdateServiceBindingRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateServiceBinding(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networkservices::v1::UpdateServiceBindingRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteServiceBinding(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -400,6 +412,77 @@ class NetworkServicesTracingStub : public NetworkServicesStub {
       grpc::ClientContext& context, Options options,
       google::cloud::networkservices::v1::DeleteMeshRequest const& request)
       override;
+
+  StatusOr<google::cloud::networkservices::v1::ListServiceLbPoliciesResponse>
+  ListServiceLbPolicies(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::networkservices::v1::ListServiceLbPoliciesRequest const&
+          request) override;
+
+  StatusOr<google::cloud::networkservices::v1::ServiceLbPolicy>
+  GetServiceLbPolicy(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::networkservices::v1::GetServiceLbPolicyRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateServiceLbPolicy(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networkservices::v1::CreateServiceLbPolicyRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> CreateServiceLbPolicy(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networkservices::v1::CreateServiceLbPolicyRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateServiceLbPolicy(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networkservices::v1::UpdateServiceLbPolicyRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateServiceLbPolicy(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networkservices::v1::UpdateServiceLbPolicyRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteServiceLbPolicy(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networkservices::v1::DeleteServiceLbPolicyRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteServiceLbPolicy(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networkservices::v1::DeleteServiceLbPolicyRequest const&
+          request) override;
+
+  StatusOr<google::cloud::networkservices::v1::GatewayRouteView>
+  GetGatewayRouteView(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::networkservices::v1::GetGatewayRouteViewRequest const&
+          request) override;
+
+  StatusOr<google::cloud::networkservices::v1::MeshRouteView> GetMeshRouteView(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::networkservices::v1::GetMeshRouteViewRequest const&
+          request) override;
+
+  StatusOr<google::cloud::networkservices::v1::ListGatewayRouteViewsResponse>
+  ListGatewayRouteViews(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::networkservices::v1::ListGatewayRouteViewsRequest const&
+          request) override;
+
+  StatusOr<google::cloud::networkservices::v1::ListMeshRouteViewsResponse>
+  ListMeshRouteViews(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::networkservices::v1::ListMeshRouteViewsRequest const&
+          request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
       grpc::ClientContext& context, Options const& options,

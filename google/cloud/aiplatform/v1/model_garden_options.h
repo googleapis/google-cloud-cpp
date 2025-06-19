@@ -59,6 +59,16 @@ struct ModelGardenServiceConnectionIdempotencyPolicyOption {
 };
 
 /**
+ * Use with `google::cloud::Options` to configure the long-running operations
+ * polling policy.
+ *
+ * @ingroup google-cloud-aiplatform-options
+ */
+struct ModelGardenServicePollingPolicyOption {
+  using Type = std::shared_ptr<PollingPolicy>;
+};
+
+/**
  * The options applicable to ModelGardenService.
  *
  * @ingroup google-cloud-aiplatform-options
@@ -66,6 +76,7 @@ struct ModelGardenServiceConnectionIdempotencyPolicyOption {
 using ModelGardenServicePolicyOptionList =
     OptionList<ModelGardenServiceRetryPolicyOption,
                ModelGardenServiceBackoffPolicyOption,
+               ModelGardenServicePollingPolicyOption,
                ModelGardenServiceConnectionIdempotencyPolicyOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

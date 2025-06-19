@@ -44,6 +44,27 @@ ModelGardenServiceConnection::GetPublisherModel(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+future<StatusOr<google::cloud::aiplatform::v1::DeployResponse>>
+ModelGardenServiceConnection::Deploy(
+    google::cloud::aiplatform::v1::DeployRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::aiplatform::v1::DeployResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> ModelGardenServiceConnection::Deploy(
+    NoAwaitTag, google::cloud::aiplatform::v1::DeployRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::DeployResponse>>
+ModelGardenServiceConnection::Deploy(google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::aiplatform::v1::DeployResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StreamRange<google::cloud::location::Location>
 ModelGardenServiceConnection::ListLocations(
     google::cloud::location::

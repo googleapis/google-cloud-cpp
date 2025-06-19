@@ -21,10 +21,12 @@
 
 #include "google/cloud/aiplatform/v1/model_garden_connection.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include <google/longrunning/operations.grpc.pb.h>
 #include <map>
 #include <memory>
 #include <string>
@@ -108,7 +110,7 @@ class ModelGardenServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.GetPublisherModelRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/model_garden_service.proto#L66}
+  /// [google.cloud.aiplatform.v1.GetPublisherModelRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/model_garden_service.proto#L82}
   /// [google.cloud.aiplatform.v1.PublisherModel]: @googleapis_reference_link{google/cloud/aiplatform/v1/publisher_model.proto#L33}
   ///
   // clang-format on
@@ -138,13 +140,78 @@ class ModelGardenServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.GetPublisherModelRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/model_garden_service.proto#L66}
+  /// [google.cloud.aiplatform.v1.GetPublisherModelRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/model_garden_service.proto#L82}
   /// [google.cloud.aiplatform.v1.PublisherModel]: @googleapis_reference_link{google/cloud/aiplatform/v1/publisher_model.proto#L33}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::PublisherModel> GetPublisherModel(
       google::cloud::aiplatform::v1::GetPublisherModelRequest const& request,
       Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deploys a model to a new endpoint.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.aiplatform.v1.DeployRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.aiplatform.v1.DeployResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.aiplatform.v1.DeployRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/model_garden_service.proto#L110}
+  /// [google.cloud.aiplatform.v1.DeployResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/model_garden_service.proto#L210}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::aiplatform::v1::DeployResponse>> Deploy(
+      google::cloud::aiplatform::v1::DeployRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief Deploy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> Deploy(
+      NoAwaitTag, google::cloud::aiplatform::v1::DeployRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief Deploy
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::aiplatform::v1::DeployResponse>> Deploy(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///

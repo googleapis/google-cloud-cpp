@@ -895,6 +895,48 @@ class MockNetworkServicesConnection
   /// using ::testing::_;
   /// using ::testing::Matcher;
   /// EXPECT_CALL(*mock,
+  /// UpdateServiceBinding(Matcher<google::cloud::networkservices::v1::UpdateServiceBindingRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::networkservices::v1::ServiceBinding>>,
+      UpdateServiceBinding,
+      (google::cloud::networkservices::v1::UpdateServiceBindingRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateServiceBinding(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateServiceBinding,
+      (NoAwaitTag,
+       google::cloud::networkservices::v1::UpdateServiceBindingRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateServiceBinding(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::networkservices::v1::ServiceBinding>>,
+      UpdateServiceBinding, (google::longrunning::Operation const& operation),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
   /// DeleteServiceBinding(Matcher<google::cloud::networkservices::v1::DeleteServiceBindingRequest
   /// const&>(_)))
   /// @endcode
@@ -1055,6 +1097,173 @@ class MockNetworkServicesConnection
   MOCK_METHOD(
       future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>,
       DeleteMesh, (google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
+      (StreamRange<google::cloud::networkservices::v1::ServiceLbPolicy>),
+      ListServiceLbPolicies,
+      (google::cloud::networkservices::v1::ListServiceLbPoliciesRequest
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::networkservices::v1::ServiceLbPolicy>,
+      GetServiceLbPolicy,
+      (google::cloud::networkservices::v1::GetServiceLbPolicyRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateServiceLbPolicy(Matcher<google::cloud::networkservices::v1::CreateServiceLbPolicyRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::networkservices::v1::ServiceLbPolicy>>,
+      CreateServiceLbPolicy,
+      (google::cloud::networkservices::v1::CreateServiceLbPolicyRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateServiceLbPolicy(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateServiceLbPolicy,
+      (NoAwaitTag,
+       google::cloud::networkservices::v1::CreateServiceLbPolicyRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateServiceLbPolicy(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::networkservices::v1::ServiceLbPolicy>>,
+      CreateServiceLbPolicy, (google::longrunning::Operation const& operation),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateServiceLbPolicy(Matcher<google::cloud::networkservices::v1::UpdateServiceLbPolicyRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::networkservices::v1::ServiceLbPolicy>>,
+      UpdateServiceLbPolicy,
+      (google::cloud::networkservices::v1::UpdateServiceLbPolicyRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateServiceLbPolicy(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateServiceLbPolicy,
+      (NoAwaitTag,
+       google::cloud::networkservices::v1::UpdateServiceLbPolicyRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateServiceLbPolicy(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::networkservices::v1::ServiceLbPolicy>>,
+      UpdateServiceLbPolicy, (google::longrunning::Operation const& operation),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteServiceLbPolicy(Matcher<google::cloud::networkservices::v1::DeleteServiceLbPolicyRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>,
+      DeleteServiceLbPolicy,
+      (google::cloud::networkservices::v1::DeleteServiceLbPolicyRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteServiceLbPolicy(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteServiceLbPolicy,
+      (NoAwaitTag,
+       google::cloud::networkservices::v1::DeleteServiceLbPolicyRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteServiceLbPolicy(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>,
+      DeleteServiceLbPolicy, (google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::networkservices::v1::GatewayRouteView>,
+      GetGatewayRouteView,
+      (google::cloud::networkservices::v1::GetGatewayRouteViewRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::networkservices::v1::MeshRouteView>,
+      GetMeshRouteView,
+      (google::cloud::networkservices::v1::GetMeshRouteViewRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      (StreamRange<google::cloud::networkservices::v1::GatewayRouteView>),
+      ListGatewayRouteViews,
+      (google::cloud::networkservices::v1::ListGatewayRouteViewsRequest
+           request),
+      (override));
+
+  MOCK_METHOD(
+      (StreamRange<google::cloud::networkservices::v1::MeshRouteView>),
+      ListMeshRouteViews,
+      (google::cloud::networkservices::v1::ListMeshRouteViewsRequest request),
       (override));
 
   MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
