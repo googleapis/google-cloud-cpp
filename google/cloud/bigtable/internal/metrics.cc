@@ -1,0 +1,209 @@
+// Copyright 2025 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+#include "google/cloud/bigtable/internal/metrics.h"
+#include "google/cloud/bigtable/table_resource.h"
+#include "google/cloud/opentelemetry/monitoring_exporter.h"
+#include "google/cloud/common_options.h"
+#include <opentelemetry/context/runtime_context.h>
+#include <opentelemetry/sdk/metrics/export/periodic_exporting_metric_reader.h>
+#include <opentelemetry/sdk/metrics/export/periodic_exporting_metric_reader_factory.h>
+#include <opentelemetry/sdk/metrics/meter_context_factory.h>
+#include <opentelemetry/sdk/metrics/meter_provider_factory.h>
+// #include <google/api/monitored_resource.pb.h>
+
+namespace google {
+namespace cloud {
+namespace bigtable_internal {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+LabelMap IntoMap(MetricLabels labels) {
+  // Annoyingly, we need to split the table resource name into its components.
+  // TODO : we need to handle errors, although the client should never give us
+  // bad input.
+  auto tr = bigtable::MakeTableResource(labels.table_name);
+  auto const& instance = tr->instance();
+
+  return {
+      {"method", labels.method},
+      {"streaming", labels.streaming},
+      {"client_name", labels.client_name},
+      {"client_uid", labels.client_uid},
+      {"project_id", instance.project_id()},
+      {"instance", instance.instance_id()},
+      {"table", tr->table_id()},
+      {"app_profile", labels.app_profile},
+      {"cluster", labels.cluster},
+      {"zone", labels.zone},
+      {"status", labels.status},
+  };
+}
+
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+namespace {
+
+class OTelMetrics : public Metrics {
+ public:
+  OTelMetrics();
+  //~OTelMetrics() override = default;
+
+  void RecordAttemptLatency(double value,
+                            MetricLabels const& labels) const override {
+    auto context = opentelemetry::context::RuntimeContext::GetCurrent();
+    attempt_latencies_->Record(value, IntoMap(labels), context);
+  }
+  void RecordOperationLatency(double value,
+                              MetricLabels const& labels) const override {
+    auto context = opentelemetry::context::RuntimeContext::GetCurrent();
+    operation_latencies_->Record(value, IntoMap(labels), context);
+  }
+
+ private:
+  // The exporter is in here somewhere.
+  std::shared_ptr<opentelemetry::metrics::MeterProvider> provider_;
+
+  // The meters.
+  std::shared_ptr<opentelemetry::metrics::Histogram<double>> attempt_latencies_;
+  std::shared_ptr<opentelemetry::metrics::Histogram<double>>
+      operation_latencies_;
+  // TODO : consider making meters for the global metric provider, if one is
+  // set.
+};
+
+OTelMetrics::OTelMetrics() {
+  // TODO : what is the project? I assume we get it from the request.
+  auto project = Project("cloud-cpp-testing-resources");
+
+  // Hardcode the monitored resource override, for now.
+  // TODO : support dynamic MRs.
+  auto monitored_resource = google::api::MonitoredResource{};
+  monitored_resource.set_type("bigtable_client_raw");
+  auto& labels = *monitored_resource.mutable_labels();
+  labels["project_id"] = "cloud-cpp-testing-resources";
+  labels["instance"] = "test-instance";
+  labels["cluster"] = "test-instance-c1";
+  labels["table"] = "endurance";
+  labels["zone"] = "us-central1-f";
+
+  auto o =
+      Options{}
+          .set<LoggingComponentsOption>({"rpc"})
+          .set<otel::ServiceTimeSeriesOption>(true)
+          // NOTE : we need a different option for dynamic MRs.
+          .set<otel::MonitoredResourceOption>(std::move(monitored_resource))
+          .set<otel::MetricNameFormatterOption>([](auto name) {
+            return "bigtable.googleapis.com/internal/client/" + name;
+          });
+  auto exporter =
+      otel::MakeMonitoringExporter(std::move(project), std::move(o));
+  auto options =
+      opentelemetry::sdk::metrics::PeriodicExportingMetricReaderOptions{};
+  // Empirically, it seems like 30s is the minimum.
+  options.export_interval_millis = std::chrono::seconds(30);
+  options.export_timeout_millis = std::chrono::seconds(1);
+
+  auto reader =
+      opentelemetry::sdk::metrics::PeriodicExportingMetricReaderFactory::Create(
+          std::move(exporter), options);
+
+  auto context = opentelemetry::sdk::metrics::MeterContextFactory::Create(
+      std::make_unique<opentelemetry::sdk::metrics::ViewRegistry>(),
+      // NOTE : this skips OTel's built in resource detection which is more
+      // confusing than helpful. (The default is {{"service_name",
+      // "unknown_service" }}). And after #14930, this gets copied into our
+      // resource labels. oh god why.
+      opentelemetry::sdk::resource::Resource::GetEmpty());
+  context->AddMetricReader(std::move(reader));
+  provider_ = opentelemetry::sdk::metrics::MeterProviderFactory::Create(
+      std::move(context));
+
+  auto meter = provider_->GetMeter("bigtable", "");
+  attempt_latencies_ = meter->CreateDoubleHistogram("attempt_latencies");
+  operation_latencies_ = meter->CreateDoubleHistogram("operation_latencies");
+}
+}  // namespace
+
+std::shared_ptr<Metrics> MakeMetrics() {
+  return std::make_shared<OTelMetrics>();
+}
+
+std::shared_ptr<std::vector<std::shared_ptr<Metric>>> MakeMetricCollection() {
+  auto m = std::make_shared<std::vector<std::shared_ptr<Metric>>>();
+
+  // TODO : what is the project? I assume we get it from the request.
+  auto project = Project("cloud-cpp-testing-resources");
+
+  // Hardcode the monitored resource override, for now.
+  // TODO : support dynamic MRs.
+  auto monitored_resource = google::api::MonitoredResource{};
+  monitored_resource.set_type("bigtable_client_raw");
+  auto& labels = *monitored_resource.mutable_labels();
+  labels["project_id"] = "cloud-cpp-testing-resources";
+  labels["instance"] = "test-instance";
+  labels["cluster"] = "test-cluster";
+  labels["table"] = "endurance";
+  labels["zone"] = "us-east4-a";
+
+  auto o =
+      Options{}
+          .set<LoggingComponentsOption>({"rpc"})
+          .set<otel::ServiceTimeSeriesOption>(true)
+          // NOTE : we need a different option for dynamic MRs.
+          .set<otel::MonitoredResourceOption>(std::move(monitored_resource))
+          .set<otel::MetricNameFormatterOption>([](auto name) {
+            return "bigtable.googleapis.com/internal/client/" + name;
+          });
+  auto exporter =
+      otel::MakeMonitoringExporter(std::move(project), std::move(o));
+  auto options =
+      opentelemetry::sdk::metrics::PeriodicExportingMetricReaderOptions{};
+  // Empirically, it seems like 30s is the minimum.
+  options.export_interval_millis = std::chrono::seconds(30);
+  options.export_timeout_millis = std::chrono::seconds(1);
+
+  auto reader =
+      opentelemetry::sdk::metrics::PeriodicExportingMetricReaderFactory::Create(
+          std::move(exporter), options);
+
+  auto context = opentelemetry::sdk::metrics::MeterContextFactory::Create(
+      std::make_unique<opentelemetry::sdk::metrics::ViewRegistry>(),
+      // NOTE : this skips OTel's built in resource detection which is more
+      // confusing than helpful. (The default is {{"service_name",
+      // "unknown_service" }}). And after #14930, this gets copied into our
+      // resource labels. oh god why.
+      opentelemetry::sdk::resource::Resource::GetEmpty());
+  context->AddMetricReader(std::move(reader));
+  std::shared_ptr<opentelemetry::metrics::MeterProvider> provider =
+      opentelemetry::sdk::metrics::MeterProviderFactory::Create(
+          std::move(context));
+
+  m->push_back(std::make_shared<AttemptLatency>("bigtable", "", provider));
+  m->push_back(std::make_shared<OperationLatency>("bigtable", "", provider));
+  m->push_back(std::make_shared<RetryCount>("bigtable", "", provider));
+
+  return m;
+}
+
+Metric::~Metric() = default;
+
+#else
+
+std::shared_ptr<Metrics> MakeMetrics() { return std::make_shared<Metrics>(); }
+
+#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace bigtable_internal
+}  // namespace cloud
+}  // namespace google

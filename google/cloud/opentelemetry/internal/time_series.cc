@@ -86,6 +86,12 @@ google::api::Metric ToMetric(
     for (auto& c : key) {
       if (!std::isalnum(c)) c = '_';
     }
+    // TODO : Add an option and use it to filter the labels. For now we do it by
+    // hand.
+    auto skip = std::set<std::string>{
+        "zone", "cluster", "instance", "table", "project_id",
+    };
+    if (skip.count(key) == 1) return;
     labels[std::move(key)] = AsString(value);
   };
 

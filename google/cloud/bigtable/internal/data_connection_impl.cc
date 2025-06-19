@@ -80,13 +80,19 @@ bigtable::Row TransformReadModifyWriteRowResponse(
   return bigtable::Row(std::move(*row.mutable_key()), std::move(cells));
 }
 
+// TODO : generate a real UID. This would clash with other processes.
+int client_uid = 0;
+
 DataConnectionImpl::DataConnectionImpl(
     std::unique_ptr<BackgroundThreads> background,
     std::shared_ptr<BigtableStub> stub,
-    std::shared_ptr<MutateRowsLimiter> limiter, Options options)
+    std::shared_ptr<MutateRowsLimiter> limiter,
+    std::shared_ptr<Metrics> metrics, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
       limiter_(std::move(limiter)),
+      metrics_(std::move(metrics)),
+      client_uid_(std::to_string(++client_uid)),
       options_(internal::MergeOptions(std::move(options),
                                       DataConnection::options())) {}
 
@@ -105,7 +111,9 @@ Status DataConnectionImpl::Apply(std::string const& table_name,
         return idempotent_policy->is_idempotent(m);
       });
 
-  RetryContext retry_context;
+  RetryContext retry_context(metrics_, client_uid_, "MutateRow", "false",
+                             table_name, app_profile_id(*current));
+
   auto sor = google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       is_idempotent ? Idempotency::kIdempotent : Idempotency::kNonIdempotent,
@@ -118,6 +126,7 @@ Status DataConnectionImpl::Apply(std::string const& table_name,
         return s;
       },
       *current, request, __func__);
+  retry_context.OnDone(sor.status());
   if (!sor) return std::move(sor).status();
   return Status{};
 }

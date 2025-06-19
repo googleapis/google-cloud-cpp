@@ -46,6 +46,8 @@ std::shared_ptr<grpc::Channel> CreateGrpcChannel(
   return auth.CreateChannel(options.get<EndpointOption>(), std::move(args));
 }
 
+// TODO : CSM might have a feature flag here in order to receive the identifying
+// trailers, or the server_latencies data.
 std::string FeaturesMetadata() {
   static auto const* const kFeatures = new auto([] {
     google::bigtable::v2::FeatureFlags proto;

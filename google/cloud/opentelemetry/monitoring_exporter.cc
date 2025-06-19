@@ -14,6 +14,7 @@
 
 #include "google/cloud/opentelemetry/monitoring_exporter.h"
 #include "google/cloud/monitoring/v3/metric_client.h"
+#include "google/cloud/monitoring/v3/metric_connection.h"
 #include "google/cloud/opentelemetry/internal/time_series.h"
 #include "google/cloud/internal/noexcept_action.h"
 #include "google/cloud/log.h"
@@ -110,6 +111,13 @@ class MonitoringExporter final
   absl::optional<google::api::MonitoredResource> mr_proto_;
 };
 }  // namespace
+
+std::unique_ptr<opentelemetry::sdk::metrics::PushMetricExporter>
+MakeMonitoringExporter(Project project, Options options) {
+  return MakeMonitoringExporter(
+      std::move(project), monitoring_v3::MakeMetricServiceConnection(options),
+      std::move(options));
+}
 
 std::unique_ptr<opentelemetry::sdk::metrics::PushMetricExporter>
 MakeMonitoringExporter(

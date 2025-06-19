@@ -193,6 +193,8 @@ add_library(
     internal/legacy_row_reader.h
     internal/logging_data_client.cc
     internal/logging_data_client.h
+    internal/metrics.cc
+    internal/metrics.h
     internal/mutate_rows_limiter.cc
     internal/mutate_rows_limiter.h
     internal/prefix_range_end.cc

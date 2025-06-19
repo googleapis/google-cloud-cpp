@@ -170,10 +170,12 @@ std::shared_ptr<DataConnection> MakeDataConnection(Options options) {
                                                     background->cq(), options);
   auto limiter =
       bigtable_internal::MakeMutateRowsLimiter(background->cq(), options);
+  // TODO : only create if metrics are enabled.
+  auto metrics = bigtable_internal::MakeMetrics();
   std::shared_ptr<DataConnection> conn =
       std::make_shared<bigtable_internal::DataConnectionImpl>(
           std::move(background), std::move(stub), std::move(limiter),
-          std::move(options));
+          std::move(metrics), std::move(options));
   if (google::cloud::internal::TracingEnabled(conn->options())) {
     conn = bigtable_internal::MakeDataTracingConnection(std::move(conn));
   }

@@ -76,6 +76,9 @@ struct MonitoredResourceOption {
 };
 
 std::unique_ptr<opentelemetry::sdk::metrics::PushMetricExporter>
+MakeMonitoringExporter(Project project, Options options = {});
+
+std::unique_ptr<opentelemetry::sdk::metrics::PushMetricExporter>
 MakeMonitoringExporter(
     Project project,
     std::shared_ptr<monitoring_v3::MetricServiceConnection> conn,

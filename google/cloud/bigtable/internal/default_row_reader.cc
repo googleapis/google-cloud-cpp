@@ -100,6 +100,10 @@ absl::variant<Status, bigtable::Row> DefaultRowReader::Advance() {
   while (true) {
     auto variant = AdvanceOrFail();
     if (absl::holds_alternative<bigtable::Row>(variant)) {
+      if (first_response_) {
+        first_response_ = false;
+        retry_context_.FirstResponse(*context_);
+      }
       return absl::get<bigtable::Row>(std::move(variant));
     }
 
