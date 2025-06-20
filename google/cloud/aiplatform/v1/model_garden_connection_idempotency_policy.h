@@ -43,6 +43,9 @@ class ModelGardenServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency GetPublisherModel(
       google::cloud::aiplatform::v1::GetPublisherModelRequest const& request);
 
+  virtual google::cloud::Idempotency Deploy(
+      google::cloud::aiplatform::v1::DeployRequest const& request);
+
   virtual google::cloud::Idempotency ListLocations(
       google::cloud::location::ListLocationsRequest request);
 

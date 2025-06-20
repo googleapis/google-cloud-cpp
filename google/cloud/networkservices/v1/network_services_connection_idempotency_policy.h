@@ -151,6 +151,10 @@ class NetworkServicesConnectionIdempotencyPolicy {
       google::cloud::networkservices::v1::CreateServiceBindingRequest const&
           request);
 
+  virtual google::cloud::Idempotency UpdateServiceBinding(
+      google::cloud::networkservices::v1::UpdateServiceBindingRequest const&
+          request);
+
   virtual google::cloud::Idempotency DeleteServiceBinding(
       google::cloud::networkservices::v1::DeleteServiceBindingRequest const&
           request);
@@ -169,6 +173,39 @@ class NetworkServicesConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency DeleteMesh(
       google::cloud::networkservices::v1::DeleteMeshRequest const& request);
+
+  virtual google::cloud::Idempotency ListServiceLbPolicies(
+      google::cloud::networkservices::v1::ListServiceLbPoliciesRequest request);
+
+  virtual google::cloud::Idempotency GetServiceLbPolicy(
+      google::cloud::networkservices::v1::GetServiceLbPolicyRequest const&
+          request);
+
+  virtual google::cloud::Idempotency CreateServiceLbPolicy(
+      google::cloud::networkservices::v1::CreateServiceLbPolicyRequest const&
+          request);
+
+  virtual google::cloud::Idempotency UpdateServiceLbPolicy(
+      google::cloud::networkservices::v1::UpdateServiceLbPolicyRequest const&
+          request);
+
+  virtual google::cloud::Idempotency DeleteServiceLbPolicy(
+      google::cloud::networkservices::v1::DeleteServiceLbPolicyRequest const&
+          request);
+
+  virtual google::cloud::Idempotency GetGatewayRouteView(
+      google::cloud::networkservices::v1::GetGatewayRouteViewRequest const&
+          request);
+
+  virtual google::cloud::Idempotency GetMeshRouteView(
+      google::cloud::networkservices::v1::GetMeshRouteViewRequest const&
+          request);
+
+  virtual google::cloud::Idempotency ListGatewayRouteViews(
+      google::cloud::networkservices::v1::ListGatewayRouteViewsRequest request);
+
+  virtual google::cloud::Idempotency ListMeshRouteViews(
+      google::cloud::networkservices::v1::ListMeshRouteViewsRequest request);
 
   virtual google::cloud::Idempotency ListLocations(
       google::cloud::location::ListLocationsRequest request);

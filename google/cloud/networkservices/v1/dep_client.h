@@ -508,7 +508,7 @@ class DepServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.networkservices.v1.DeleteLbTrafficExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L505}
-  /// [google.cloud.networkservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkservices/v1/common.proto#L31}
+  /// [google.cloud.networkservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkservices/v1/common.proto#L48}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
@@ -559,7 +559,7 @@ class DepServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.networkservices.v1.DeleteLbTrafficExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L505}
-  /// [google.cloud.networkservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkservices/v1/common.proto#L31}
+  /// [google.cloud.networkservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkservices/v1/common.proto#L48}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
@@ -1017,7 +1017,7 @@ class DepServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.networkservices.v1.DeleteLbRouteExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L728}
-  /// [google.cloud.networkservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkservices/v1/common.proto#L31}
+  /// [google.cloud.networkservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkservices/v1/common.proto#L48}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
@@ -1068,7 +1068,7 @@ class DepServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.networkservices.v1.DeleteLbRouteExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L728}
-  /// [google.cloud.networkservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkservices/v1/common.proto#L31}
+  /// [google.cloud.networkservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkservices/v1/common.proto#L48}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>

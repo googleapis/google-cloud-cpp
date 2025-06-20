@@ -3,7 +3,7 @@
     "api_shortname": "parallelstore",
     "client_documentation": "https://cloud.google.com/cpp/docs/reference/parallelstore/latest",
     "distribution_name": "google-cloud-cpp",
-    "issue_tracker": "https://issuetracker.google.com/issues?q=componentid:1181190%20status=open",
+    "issue_tracker": "https://issuetracker.google.com/issues?q=componentid:1605177%20status=open",
     "language": "cpp",
     "library_type": "GAPIC_AUTO",
     "name_pretty": "Parallelstore API",

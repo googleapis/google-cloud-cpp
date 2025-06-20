@@ -39,6 +39,11 @@ Idempotency ModelGardenServiceConnectionIdempotencyPolicy::GetPublisherModel(
   return Idempotency::kIdempotent;
 }
 
+Idempotency ModelGardenServiceConnectionIdempotencyPolicy::Deploy(
+    google::cloud::aiplatform::v1::DeployRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency ModelGardenServiceConnectionIdempotencyPolicy::ListLocations(
     google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
