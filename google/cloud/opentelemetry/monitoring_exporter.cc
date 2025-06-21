@@ -47,7 +47,10 @@ class MonitoringExporter final
         client_(std::move(conn)),
         formatter_(options.get<MetricNameFormatterOption>()),
         use_service_time_series_(options.get<ServiceTimeSeriesOption>()),
-        mr_proto_(internal::FetchOption<MonitoredResourceOption>(options)) {}
+        mr_proto_(internal::FetchOption<MonitoredResourceOption>(options)),
+        mr_factory_(options.has<MonitoredResourceFactoryOption>()
+                        ? options.get<MonitoredResourceFactoryOption>()
+                        : nullptr) {}
 
   opentelemetry::sdk::metrics::AggregationTemporality GetAggregationTemporality(
       opentelemetry::sdk::metrics::InstrumentType) const noexcept override {
@@ -80,7 +83,20 @@ class MonitoringExporter final
       // Return early to save the littlest bit of processing.
       return result;
     }
-    auto mr = otel_internal::ToMonitoredResource(data, mr_proto_);
+
+    absl::optional<google::api::MonitoredResource> mr_proto = mr_proto_;
+
+    if (mr_factory_) {
+      std::cout << __func__ << ": calling lambda" << std::endl;
+      std::lock_guard<std::mutex> lock(mu_);
+      opentelemetry::sdk::common::AttributeMap attributes =
+          data.resource_->GetAttributes();
+      mr_proto = mr_factory_(attributes);
+    } else {
+      std::cout << __func__ << ": NOT calling lambda" << std::endl;
+    }
+
+    auto mr = otel_internal::ToMonitoredResource(data, mr_proto);
     auto requests =
         otel_internal::ToRequests(project_.FullName(), mr, std::move(tss));
     for (auto& request : requests) {
@@ -104,16 +120,21 @@ class MonitoringExporter final
     return result;
   }
 
+  std::mutex mu_;
   Project project_;
   monitoring_v3::MetricServiceClient client_;
   MetricNameFormatterOption::Type formatter_;
   bool use_service_time_series_;
   absl::optional<google::api::MonitoredResource> mr_proto_;
+  std::function<google::api::MonitoredResource(
+      opentelemetry::sdk::common::AttributeMap const& attr_map)>
+      mr_factory_;
 };
 }  // namespace
 
 std::unique_ptr<opentelemetry::sdk::metrics::PushMetricExporter>
 MakeMonitoringExporter(Project project, Options options) {
+  std::cout << __func__ << std::endl;
   return MakeMonitoringExporter(
       std::move(project), monitoring_v3::MakeMetricServiceConnection(options),
       std::move(options));

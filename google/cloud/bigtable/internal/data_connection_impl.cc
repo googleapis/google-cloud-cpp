@@ -81,7 +81,12 @@ bigtable::Row TransformReadModifyWriteRowResponse(
 }
 
 // TODO : generate a real UID. This would clash with other processes.
-int client_uid = 0;
+static int GetClientId() {
+  static int client_uid = 0;
+  static std::mutex mu;
+  std::lock_guard<std::mutex> lock(mu);
+  return ++client_uid;
+}
 
 DataConnectionImpl::DataConnectionImpl(
     std::unique_ptr<BackgroundThreads> background,
@@ -92,7 +97,7 @@ DataConnectionImpl::DataConnectionImpl(
       stub_(std::move(stub)),
       limiter_(std::move(limiter)),
       metrics_(std::move(metrics)),
-      client_uid_(std::to_string(++client_uid)),
+      client_uid_(std::to_string(GetClientId())),
       options_(internal::MergeOptions(std::move(options),
                                       DataConnection::options())) {}
 

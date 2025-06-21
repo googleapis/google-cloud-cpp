@@ -74,6 +74,7 @@ google::api::Metric ToMetric(
     opentelemetry::sdk::metrics::PointAttributes const& attributes,
     opentelemetry::sdk::resource::Resource const* resource,
     std::function<std::string(std::string)> const& name_formatter) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   auto add_label = [](auto& labels, auto key, auto const& value) {
     // GCM labels match on the regex: R"([a-zA-Z_][a-zA-Z0-9_]*)".
     if (key.empty()) return;
@@ -124,6 +125,7 @@ google::api::Metric ToMetric(
 
 google::monitoring::v3::TimeInterval ToNonGaugeTimeInterval(
     opentelemetry::sdk::metrics::MetricData const& metric_data) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   // GCM requires that time intervals for non-GAUGE metrics are at least 1ms
   // long. To achieve this, we override the end value to be at least 1ms after
   // the start value.
@@ -143,6 +145,7 @@ google::monitoring::v3::TimeInterval ToNonGaugeTimeInterval(
 google::monitoring::v3::TimeSeries ToTimeSeries(
     opentelemetry::sdk::metrics::MetricData const& metric_data,
     opentelemetry::sdk::metrics::SumPointData const& sum_data) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   google::monitoring::v3::TimeSeries ts;
   ts.set_metric_kind(google::api::MetricDescriptor::CUMULATIVE);
   ts.set_value_type(ToValueType(metric_data.instrument_descriptor.value_type_));
@@ -156,6 +159,7 @@ google::monitoring::v3::TimeSeries ToTimeSeries(
 google::monitoring::v3::TimeSeries ToTimeSeries(
     opentelemetry::sdk::metrics::MetricData const& metric_data,
     opentelemetry::sdk::metrics::LastValuePointData const& gauge_data) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   google::monitoring::v3::TimeSeries ts;
   ts.set_metric_kind(google::api::MetricDescriptor::GAUGE);
   ts.set_value_type(ToValueType(metric_data.instrument_descriptor.value_type_));
@@ -171,6 +175,7 @@ google::monitoring::v3::TimeSeries ToTimeSeries(
 google::monitoring::v3::TimeSeries ToTimeSeries(
     opentelemetry::sdk::metrics::MetricData const& metric_data,
     opentelemetry::sdk::metrics::HistogramPointData const& histogram_data) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   google::monitoring::v3::TimeSeries ts;
   ts.set_metric_kind(google::api::MetricDescriptor::CUMULATIVE);
   ts.set_value_type(google::api::MetricDescriptor::DISTRIBUTION);
@@ -196,6 +201,10 @@ google::monitoring::v3::TimeSeries ToTimeSeries(
 google::api::MonitoredResource ToMonitoredResource(
     opentelemetry::sdk::metrics::ResourceMetrics const& data,
     absl::optional<google::api::MonitoredResource> const& mr_proto) {
+  std::cout << __func__ << " data.resource_->GetAttributes().size()="
+            << data.resource_->GetAttributes().size() << std::endl;
+  std::cout << __func__ << " data.scope_metric_data_.size()="
+            << data.scope_metric_data_.size() << std::endl;
   if (mr_proto) return *mr_proto;
   google::api::MonitoredResource resource;
   if (data.resource_) {
@@ -212,6 +221,10 @@ google::api::MonitoredResource ToMonitoredResource(
 std::vector<google::monitoring::v3::TimeSeries> ToTimeSeries(
     opentelemetry::sdk::metrics::ResourceMetrics const& data,
     std::function<std::string(std::string)> const& metrics_name_formatter) {
+  std::cout << __func__ << " data.resource_->GetAttributes().size()="
+            << data.resource_->GetAttributes().size() << std::endl;
+  std::cout << __func__ << " data.scope_metric_data_.size()="
+            << data.scope_metric_data_.size() << std::endl;
   std::vector<google::monitoring::v3::TimeSeries> tss;
   for (auto const& scope_metric : data.scope_metric_data_) {
     for (auto const& metric_data : scope_metric.metric_data_) {

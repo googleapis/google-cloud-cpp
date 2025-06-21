@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_METRICS_H
 
 #include "google/cloud/bigtable/version.h"
+#include "google/cloud/opentelemetry/monitoring_exporter.h"
 #include "google/cloud/status.h"
 #include <opentelemetry/context/runtime_context.h>
 #include <opentelemetry/metrics/meter.h>
@@ -44,15 +45,19 @@ struct MetricLabels {
   std::string status;
 };
 
-using LabelMap = std::map<std::string, std::string>;
-LabelMap IntoMap(MetricLabels labels);
+// using LabelMap = std::map<std::string, std::string>;
+otel::LabelMap IntoMap(MetricLabels labels);
 
 class Metrics {
  public:
+  virtual otel::LabelMap const& labels() const { return empty; }
   virtual void RecordAttemptLatency(double value,
                                     MetricLabels const& labels) const {}
   virtual void RecordOperationLatency(double value,
                                       MetricLabels const& labels) const {}
+
+ private:
+  otel::LabelMap empty;
 };
 
 std::shared_ptr<Metrics> MakeMetrics();
@@ -109,7 +114,7 @@ class AttemptLatency : public Metric {
   }
 
  private:
-  LabelMap labels_;
+  otel::LabelMap labels_;
   std::shared_ptr<opentelemetry::metrics::MeterProvider> provider_;
   std::unique_ptr<opentelemetry::metrics::Histogram<double>> attempt_latencies_;
   std::chrono::system_clock::time_point attempt_start_;
@@ -137,7 +142,7 @@ class OperationLatency : public Metric {
   }
 
  private:
-  LabelMap labels_;
+  otel::LabelMap labels_;
   std::shared_ptr<opentelemetry::metrics::MeterProvider> provider_;
   std::unique_ptr<opentelemetry::metrics::Histogram<double>>
       operation_latencies_;
@@ -156,7 +161,7 @@ class RetryCount : public Metric {
   }
 
  private:
-  LabelMap labels_;
+  otel::LabelMap labels_;
   std::shared_ptr<opentelemetry::metrics::MeterProvider> provider_;
   std::unique_ptr<opentelemetry::metrics::Counter<std::uint64_t>> retry_count_;
 };
@@ -185,7 +190,7 @@ class FirstResponseLatency : public Metric {
   }
 
  private:
-  LabelMap labels_;
+  otel::LabelMap labels_;
   std::shared_ptr<opentelemetry::metrics::MeterProvider> provider_;
   std::unique_ptr<opentelemetry::metrics::Histogram<double>>
       first_response_latencies_;

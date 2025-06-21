@@ -28,7 +28,7 @@ namespace cloud {
 namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-LabelMap IntoMap(MetricLabels labels) {
+otel::LabelMap IntoMap(MetricLabels labels) {
   // Annoyingly, we need to split the table resource name into its components.
   // TODO : we need to handle errors, although the client should never give us
   // bad input.
@@ -53,23 +53,43 @@ LabelMap IntoMap(MetricLabels labels) {
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
 namespace {
 
-class OTelMetrics : public Metrics {
+class OTelMetrics : public Metrics, std::enable_shared_from_this<OTelMetrics> {
  public:
   OTelMetrics();
   //~OTelMetrics() override = default;
 
+  otel::LabelMap const& labels() const override { return *labels_; }
+
   void RecordAttemptLatency(double value,
                             MetricLabels const& labels) const override {
+    static int call_number = 0;
+    if (call_number++ % 300 == 0) {
+      std::cout << __func__ << std::endl;
+    }
+
     auto context = opentelemetry::context::RuntimeContext::GetCurrent();
+    if (!labels_.has_value()) {
+      labels_ = IntoMap(labels);
+    }
     attempt_latencies_->Record(value, IntoMap(labels), context);
   }
+
   void RecordOperationLatency(double value,
                               MetricLabels const& labels) const override {
+    static int call_number = 0;
+    if (call_number++ % 300 == 0) {
+      std::cout << __func__ << std::endl;
+    }
+
     auto context = opentelemetry::context::RuntimeContext::GetCurrent();
+    if (!labels_.has_value()) {
+      labels_ = IntoMap(labels);
+    }
     operation_latencies_->Record(value, IntoMap(labels), context);
   }
 
  private:
+  mutable absl::optional<otel::LabelMap> labels_;
   // The exporter is in here somewhere.
   std::shared_ptr<opentelemetry::metrics::MeterProvider> provider_;
 
@@ -87,21 +107,65 @@ OTelMetrics::OTelMetrics() {
 
   // Hardcode the monitored resource override, for now.
   // TODO : support dynamic MRs.
-  auto monitored_resource = google::api::MonitoredResource{};
-  monitored_resource.set_type("bigtable_client_raw");
-  auto& labels = *monitored_resource.mutable_labels();
-  labels["project_id"] = "cloud-cpp-testing-resources";
-  labels["instance"] = "test-instance";
-  labels["cluster"] = "test-instance-c1";
-  labels["table"] = "endurance";
-  labels["zone"] = "us-central1-f";
+  //  auto monitored_resource = google::api::MonitoredResource{};
+  //  monitored_resource.set_type("bigtable_client_raw");
+  //  auto& labels = *monitored_resource.mutable_labels();
+  //  labels["project_id"] = "cloud-cpp-testing-resources";
+  //  labels["instance"] = "test-instance";
+  //  labels["cluster"] = "test-instance-c1";
+  //  labels["table"] = "endurance";
+  //  labels["zone"] = "us-central1-f";
+
+  //  auto self = shared_from_this();
+  auto lambda =
+      [self = this](opentelemetry::sdk::common::AttributeMap const& attr_map) {
+        std::cout << ": MonitoredResourceFactory lambda called" << std::endl;
+        google::api::MonitoredResource mr;
+        mr.set_type("bigtable_client_raw");
+        auto& labels = *mr.mutable_labels();
+
+        auto const& l = self->labels();
+        labels["project_id"] = l.find("project_id")->second;
+        labels["instance"] = l.find("instance")->second;
+        labels["cluster"] = l.find("cluster")->second;
+        labels["table"] = l.find("table")->second;
+        labels["zone"] = l.find("zone")->second;
+
+        //    auto get_field = [](opentelemetry::sdk::common::AttributeMap
+        //    const& attr_map,
+        //                        std::string const& field) {
+        //      auto iter = attr_map.find(field);
+        //      if (iter == attr_map.end()) {
+        //        std::cout << "AttributeMap: key NOT found=" << field <<
+        //        std::endl; return std::string{};
+        //      }
+        //
+        //      std::cout << "AttributeMap: key found=" << field << std::endl;
+        //      auto v = iter->second;
+        //      if (absl::holds_alternative<std::string>(v)) {
+        //        return absl::get<std::string>(v);
+        //      }
+        //
+        //      std::cout << "AttributeMap: value does not hold string; key=" <<
+        //      field << std::endl; return std::string{};
+        //
+        //      };
+        //
+        //    labels["project_id"] = get_field(attr_map, "project_id");
+        //    labels["instance"] = get_field(attr_map, "instance");
+        //    labels["cluster"] = get_field(attr_map, "cluster");
+        //    labels["table"] = get_field(attr_map, "table");
+        //    labels["zone"] = get_field(attr_map, "zone");
+        return mr;
+      };
 
   auto o =
       Options{}
           .set<LoggingComponentsOption>({"rpc"})
           .set<otel::ServiceTimeSeriesOption>(true)
           // NOTE : we need a different option for dynamic MRs.
-          .set<otel::MonitoredResourceOption>(std::move(monitored_resource))
+          //          .set<otel::MonitoredResourceOption>(std::move(monitored_resource))
+          .set<otel::MonitoredResourceFactoryOption>(lambda)
           .set<otel::MetricNameFormatterOption>([](auto name) {
             return "bigtable.googleapis.com/internal/client/" + name;
           });
@@ -125,6 +189,9 @@ OTelMetrics::OTelMetrics() {
       // resource labels. oh god why.
       opentelemetry::sdk::resource::Resource::GetEmpty());
   context->AddMetricReader(std::move(reader));
+  std::cout << __func__
+            << ": opentelemetry::sdk::metrics::MeterProviderFactory::Create"
+            << std::endl;
   provider_ = opentelemetry::sdk::metrics::MeterProviderFactory::Create(
       std::move(context));
 

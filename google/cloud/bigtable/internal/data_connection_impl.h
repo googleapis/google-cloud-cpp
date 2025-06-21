@@ -34,6 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class RetryContextFactory {
  public:
   RetryContextFactory() {}
+  // ReadRow is a synthetic RPC and should appear in metrics as if it's a
+  // different RPC than ReadRows with row_limit=1.
+  std::unique_ptr<RetryContext> ReadRow();
   std::unique_ptr<RetryContext> ReadRows() {
     return std::make_unique<RetryContext>();
   }

@@ -14,6 +14,7 @@
 
 #include "google/cloud/bigtable/internal/retry_context.h"
 #include "absl/strings/match.h"
+#include "absl/strings/str_split.h"
 
 namespace google {
 namespace cloud {
@@ -109,10 +110,29 @@ void RetryContext::FirstResponse(grpc::ClientContext const&) {
 void RetryContext::ProcessMetadata(
     std::multimap<grpc::string_ref, grpc::string_ref> const& metadata) {
   for (auto const& kv : metadata) {
+    //    std::cout << __func__ << " kv.first="  <<  kv.first << " : "
+    //              << "kv.second=" << kv.second << std::endl;
     auto key = std::string{kv.first.data(), kv.first.size()};
     if (absl::StartsWith(key, "x-goog-cbt-cookie")) {
       cookies_[std::move(key)] =
           std::string{kv.second.data(), kv.second.size()};
+    }
+    if (absl::StartsWith(key, "x-goog-ext-425905942-bin")) {
+      //          std::cout << __func__ << " kv.first="  <<  kv.first << " : "
+      //              << "kv.second=" << kv.second << std::endl;
+      absl::string_view v{kv.second.data(), kv.second.size()};
+      v = absl::StripAsciiWhitespace(v);
+      //      // us-central1-ftest-instance-c1
+      std::vector<std::string> parts = absl::StrSplit(v, '-');
+      //      std::cout << __func__ << ": parts.size()=" << parts.size() <<
+      //      std::endl;
+      labels_.zone =
+          absl::StrCat(parts[0], "-", parts[1], "-", parts[2].substr(0, 1));
+      labels_.cluster =
+          absl::StrCat(parts[2].substr(1), "-", parts[3], "-", parts[4]);
+      //      std::cout << __func__ << ": zone=" << labels_.zone << std::endl;
+      //      std::cout << __func__ << ": cluster=" << labels_.cluster <<
+      //      std::endl;
     }
   }
 
