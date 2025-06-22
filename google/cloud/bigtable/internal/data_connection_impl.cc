@@ -21,12 +21,18 @@
 #include "google/cloud/bigtable/internal/defaults.h"
 #include "google/cloud/bigtable/internal/retry_context.h"
 #include "google/cloud/bigtable/options.h"
+#include "google/cloud/opentelemetry/monitoring_exporter.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/idempotency.h"
 #include "google/cloud/internal/async_retry_loop.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/retry_loop.h"
+#include <opentelemetry/context/runtime_context.h>
+#include <opentelemetry/sdk/metrics/export/periodic_exporting_metric_reader.h>
+#include <opentelemetry/sdk/metrics/export/periodic_exporting_metric_reader_factory.h>
+#include <opentelemetry/sdk/metrics/meter_context_factory.h>
+#include <opentelemetry/sdk/metrics/meter_provider_factory.h>
 #include <memory>
 #include <string>
 
@@ -59,6 +65,197 @@ inline bool enable_server_retries(Options const& options) {
 }
 
 }  // namespace
+
+RetryContextFactory::~RetryContextFactory() = default;
+
+class SimpleRetryContextFactory : public RetryContextFactory {
+ public:
+  // ReadRow is a synthetic RPC and should appear in metrics as if it's a
+  // different RPC than ReadRows with row_limit=1.
+  std::shared_ptr<RetryContext> ReadRow() override {
+    return std::make_shared<RetryContext>();
+  }
+
+  std::shared_ptr<RetryContext> ReadRows() override {
+    return std::make_shared<RetryContext>();
+  }
+  std::shared_ptr<RetryContext> AsyncReadRows() override {
+    return std::make_shared<RetryContext>();
+  }
+
+  std::shared_ptr<RetryContext> MutateRow(std::string const&,
+                                          std::string const&) override {
+    return std::make_shared<RetryContext>();
+  }
+
+  std::shared_ptr<RetryContext> AsyncMutateRow()
+      override {  // not currently used
+    return std::make_shared<RetryContext>();
+  }
+
+  std::shared_ptr<RetryContext> MutateRows() override {
+    return std::make_shared<RetryContext>();
+  }
+  std::shared_ptr<RetryContext> AsyncMutateRows() override {
+    return std::make_shared<RetryContext>();
+  }
+
+  std::shared_ptr<RetryContext> CheckandMutateRow() override {
+    return std::make_shared<RetryContext>();
+  }
+  std::shared_ptr<RetryContext> AsyncCheckandMutateRow() override {
+    return std::make_shared<RetryContext>();
+  }
+
+  std::shared_ptr<RetryContext> SampleRowKeys() override {
+    return std::make_shared<RetryContext>();
+  }
+  std::shared_ptr<RetryContext> AsyncSampleRowKeys() override {
+    return std::make_shared<RetryContext>();
+  }
+
+  std::shared_ptr<RetryContext> ReadModifyWriteRow() override {
+    return std::make_shared<RetryContext>();
+  }
+  std::shared_ptr<RetryContext> AsyncReadModifyWriteRow() override {
+    return std::make_shared<RetryContext>();
+  }
+};
+
+class MetricsRetryContextFactory : public RetryContextFactory {
+ public:
+  MetricsRetryContextFactory(Project project, std::string client_uid)
+      : client_uid_(std::move(client_uid)) {
+    auto resource_label_fn =
+        [self =
+             this](opentelemetry::sdk::common::AttributeMap const& attr_map) {
+          std::cout << ": MonitoredResourceFactory lambda called" << std::endl;
+          google::api::MonitoredResource mr;
+          mr.set_type("bigtable_client_raw");
+          auto& labels = *mr.mutable_labels();
+
+          auto const& l = self->resource_labels();
+          labels["project_id"] = l.project_id;
+          labels["instance"] = l.instance;
+          labels["table"] = l.table;
+          labels["cluster"] = l.cluster;
+          labels["zone"] = l.zone;
+          return mr;
+        };
+    auto o = Options{}
+                 .set<LoggingComponentsOption>({"rpc"})
+                 .set<otel::ServiceTimeSeriesOption>(true)
+                 .set<otel::MonitoredResourceFactoryOption>(resource_label_fn)
+                 .set<otel::MetricNameFormatterOption>([](auto name) {
+                   return "bigtable.googleapis.com/internal/client/" + name;
+                 });
+    auto exporter = otel::MakeMonitoringExporter(project, std::move(o));
+    auto options =
+        opentelemetry::sdk::metrics::PeriodicExportingMetricReaderOptions{};
+    // Empirically, it seems like 30s is the minimum.
+    options.export_interval_millis = std::chrono::seconds(30);
+    options.export_timeout_millis = std::chrono::seconds(1);
+
+    auto reader =
+        opentelemetry::sdk::metrics::PeriodicExportingMetricReaderFactory::
+            Create(std::move(exporter), options);
+
+    auto context = opentelemetry::sdk::metrics::MeterContextFactory::Create(
+        std::make_unique<opentelemetry::sdk::metrics::ViewRegistry>(),
+        // NOTE : this skips OTel's built in resource detection which is more
+        // confusing than helpful. (The default is {{"service_name",
+        // "unknown_service" }}). And after #14930, this gets copied into our
+        // resource labels. oh god why.
+        opentelemetry::sdk::resource::Resource::GetEmpty());
+    context->AddMetricReader(std::move(reader));
+    std::cout << __func__
+              << ": opentelemetry::sdk::metrics::MeterProviderFactory::Create"
+              << std::endl;
+    provider_ = opentelemetry::sdk::metrics::MeterProviderFactory::Create(
+        std::move(context));
+
+    auto meter = provider_->GetMeter("bigtable", "");
+  }
+
+  ResourceLabels const& resource_labels() const { return resource_labels_; }
+
+  // ReadRow is a synthetic RPC and should appear in metrics as if it's a
+  // different RPC than ReadRows with row_limit=1.
+  std::shared_ptr<RetryContext> ReadRow() override {
+    return std::make_shared<RetryContext>();
+  }
+
+  std::shared_ptr<RetryContext> ReadRows() override {
+    return std::make_shared<RetryContext>();
+  }
+  std::shared_ptr<RetryContext> AsyncReadRows() override {
+    return std::make_shared<RetryContext>();
+  }
+
+  std::shared_ptr<RetryContext> MutateRow(
+      std::string const& table_name,
+      std::string const& app_profile_id) override {
+    // parse table_name into component pieces
+    // projets/<project>/instances/<instance>/tables/<table>
+    std::vector<absl::string_view> name_parts = absl::StrSplit(table_name, '/');
+    ResourceLabels resource_labels = {
+        std::string(name_parts[1]), std::string(name_parts[3]),
+        std::string(name_parts[5]), "" /*=cluster*/, "" /*=zone*/};
+    DataLabels data_labels = {"MutateRow",
+                              "false",  // streaming
+                              "cpp.Bigtable/" + version_string(),
+                              client_uid_,
+                              app_profile_id,
+                              "" /*=status*/};
+    std::vector<std::shared_ptr<Metric>> metrics;
+    metrics.push_back(std::make_shared<AttemptLatency>(
+        resource_labels, data_labels, "bigtable", "", provider_));
+    metrics.push_back(std::make_shared<OperationLatency>(
+        resource_labels, data_labels, "bigtable", "", provider_));
+
+    return std::make_shared<RetryContext>(
+        std::move(resource_labels), std::move(data_labels), std::move(metrics));
+  }
+
+  std::shared_ptr<RetryContext> AsyncMutateRow()
+      override {  // not currently used
+    return std::make_shared<RetryContext>();
+  }
+
+  std::shared_ptr<RetryContext> MutateRows() override {
+    return std::make_shared<RetryContext>();
+  }
+  std::shared_ptr<RetryContext> AsyncMutateRows() override {
+    return std::make_shared<RetryContext>();
+  }
+
+  std::shared_ptr<RetryContext> CheckandMutateRow() override {
+    return std::make_shared<RetryContext>();
+  }
+  std::shared_ptr<RetryContext> AsyncCheckandMutateRow() override {
+    return std::make_shared<RetryContext>();
+  }
+
+  std::shared_ptr<RetryContext> SampleRowKeys() override {
+    return std::make_shared<RetryContext>();
+  }
+  std::shared_ptr<RetryContext> AsyncSampleRowKeys() override {
+    return std::make_shared<RetryContext>();
+  }
+
+  std::shared_ptr<RetryContext> ReadModifyWriteRow() override {
+    return std::make_shared<RetryContext>();
+  }
+  std::shared_ptr<RetryContext> AsyncReadModifyWriteRow() override {
+    return std::make_shared<RetryContext>();
+  }
+
+ private:
+  ResourceLabels resource_labels_;
+  std::string client_uid_;
+  std::shared_ptr<opentelemetry::metrics::MeterProvider> provider_;
+  //  std::vector<std::shared_ptr<Metric>> metrics_;
+};
 
 bigtable::Row TransformReadModifyWriteRowResponse(
     google::bigtable::v2::ReadModifyWriteRowResponse response) {
@@ -116,22 +313,25 @@ Status DataConnectionImpl::Apply(std::string const& table_name,
         return idempotent_policy->is_idempotent(m);
       });
 
-  RetryContext retry_context(metrics_, client_uid_, "MutateRow", "false",
-                             table_name, app_profile_id(*current));
+  auto retry_context =
+      retry_context_factory_->MutateRow(table_name, app_profile_id(*current));
+
+  //  RetryContext retry_context(metrics_, client_uid_, "MutateRow", "false",
+  //                             table_name, app_profile_id(*current));
 
   auto sor = google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       is_idempotent ? Idempotency::kIdempotent : Idempotency::kNonIdempotent,
-      [this, &retry_context](
+      [this, retry_context](
           grpc::ClientContext& context, Options const& options,
           google::bigtable::v2::MutateRowRequest const& request) {
-        retry_context.PreCall(context);
+        retry_context->PreCall(context);
         auto s = stub_->MutateRow(context, options, request);
-        retry_context.PostCall(context);
+        retry_context->PostCall(context, s.status());
         return s;
       },
       *current, request, __func__);
-  retry_context.OnDone(sor.status());
+  retry_context->OnDone(sor.status());
   if (!sor) return std::move(sor).status();
   return Status{};
 }
@@ -169,7 +369,7 @@ future<Status> DataConnectionImpl::AsyncApply(std::string const& table_name,
                return f.then(
                    [retry_context, context = std::move(context)](auto f) {
                      auto s = f.get();
-                     retry_context->PostCall(*context);
+                     retry_context->PostCall(*context, s.status());
                      return s;
                    });
              },
@@ -277,7 +477,7 @@ StatusOr<bigtable::MutationBranch> DataConnectionImpl::CheckAndMutateRow(
           google::bigtable::v2::CheckAndMutateRowRequest const& request) {
         retry_context.PreCall(context);
         auto s = stub_->CheckAndMutateRow(context, options, request);
-        retry_context.PostCall(context);
+        retry_context.PostCall(context, s.status());
         return s;
       },
       *current, request, __func__);
@@ -326,7 +526,7 @@ DataConnectionImpl::AsyncCheckAndMutateRow(
                return f.then(
                    [retry_context, context = std::move(context)](auto f) {
                      auto s = f.get();
-                     retry_context->PostCall(*context);
+                     retry_context->PostCall(*context, s.status());
                      return s;
                    });
              },
@@ -386,7 +586,7 @@ StatusOr<std::vector<bigtable::RowKeySample>> DataConnectionImpl::SampleRows(
                                    Idempotency::kIdempotent,
                                    enable_server_retries(*current));
     if (!delay) return std::move(delay).status();
-    retry_context.PostCall(*context);
+    retry_context.PostCall(*context, status);
     // A new stream invalidates previously returned samples.
     samples.clear();
     std::this_thread::sleep_for(*delay);
@@ -514,6 +714,15 @@ DataConnectionImpl::AsyncReadRow(std::string const& table_name,
       },
       std::move(row_set), rows_limit, std::move(filter));
   return handler->GetFuture();
+}
+
+void DataConnectionImpl::Initialize(google::cloud::Project const& project) {
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  retry_context_factory_ =
+      std::make_unique<MetricsRetryContextFactory>(project, client_uid_);
+#else
+  retry_context_factory_ = std::make_unique<SimpleRetryContextFactory>(project);
+#endif
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

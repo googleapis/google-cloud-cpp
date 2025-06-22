@@ -156,6 +156,8 @@ future<StatusOr<std::pair<bool, Row>>> DataConnection::AsyncReadRow(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+void DataConnection::Initialize(Project const&) {}
+
 std::shared_ptr<DataConnection> MakeDataConnection(Options options) {
   google::cloud::internal::CheckExpectedOptions<
       AppProfileIdOption, CommonOptionList, GrpcOptionList,
@@ -171,7 +173,8 @@ std::shared_ptr<DataConnection> MakeDataConnection(Options options) {
   auto limiter =
       bigtable_internal::MakeMutateRowsLimiter(background->cq(), options);
   // TODO : only create if metrics are enabled.
-  auto metrics = bigtable_internal::MakeMetrics();
+  //  auto metrics = bigtable_internal::MakeMetrics();
+  std::shared_ptr<bigtable_internal::Metrics> metrics = nullptr;
   std::shared_ptr<DataConnection> conn =
       std::make_shared<bigtable_internal::DataConnectionImpl>(
           std::move(background), std::move(stub), std::move(limiter),

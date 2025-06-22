@@ -25,6 +25,7 @@
 #include "google/cloud/bigtable/row_set.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
+#include "google/cloud/project.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -143,6 +144,8 @@ class DataConnection {
 
   virtual future<StatusOr<std::pair<bool, Row>>> AsyncReadRow(
       std::string const& table_name, std::string row_key, Filter filter);
+
+  virtual void Initialize(Project const& project);
 };
 
 /**

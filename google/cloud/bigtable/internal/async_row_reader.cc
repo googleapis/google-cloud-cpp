@@ -220,7 +220,7 @@ void AsyncRowReader::OnStreamFinished(Status status) {
     TryGiveRowToUser();
     return;
   }
-  retry_context_->PostCall(*context_);
+  retry_context_->PostCall(*context_, status_);
   context_.reset();
   auto self = this->shared_from_this();
   internal::TracedAsyncBackoff(cq_, *call_context_.options, *delay,

@@ -45,8 +45,26 @@ struct MetricLabels {
   std::string status;
 };
 
+struct ResourceLabels {
+  std::string project_id;
+  std::string instance;
+  std::string table;
+  std::string cluster;
+  std::string zone;
+};
+
+struct DataLabels {
+  std::string method;
+  std::string streaming;
+  std::string client_name;
+  std::string client_uid;
+  std::string app_profile;
+  std::string status;
+};
+
 // using LabelMap = std::map<std::string, std::string>;
 otel::LabelMap IntoMap(MetricLabels labels);
+otel::LabelMap IntoMap(ResourceLabels const& r, DataLabels const& d);
 
 class Metrics {
  public:
@@ -70,6 +88,9 @@ struct PreCallParams {
 
 struct PostCallParams {
   std::chrono::system_clock::time_point attempt_end;
+  google::cloud::Status attempt_status;
+  std::string cluster;
+  std::string zone;
 };
 
 struct FirstResponseParams {
@@ -78,6 +99,7 @@ struct FirstResponseParams {
 
 struct OnDoneParams {
   std::chrono::system_clock::time_point operation_end;
+  google::cloud::Status operation_status;
 };
 
 class Metric {
@@ -96,9 +118,12 @@ class Metric {
 class AttemptLatency : public Metric {
  public:
   AttemptLatency(
+      ResourceLabels resource_labels, DataLabels data_labels,
       std::string const& name, std::string const& version,
       std::shared_ptr<opentelemetry::metrics::MeterProvider> provider)
-      : provider_(std::move(provider)),
+      : resource_labels_(std::move(resource_labels)),
+        data_labels_(std::move(data_labels)),
+        provider_(std::move(provider)),
         attempt_latencies_(provider_->GetMeter(name, version)
                                ->CreateDoubleHistogram("attempt_latencies")) {}
   void PreCall(opentelemetry::context::Context const&,
@@ -107,14 +132,20 @@ class AttemptLatency : public Metric {
   }
   void PostCall(opentelemetry::context::Context const& context,
                 PostCallParams p) override {
+    resource_labels_.cluster = p.cluster;
+    resource_labels_.zone = p.zone;
+    data_labels_.status = StatusCodeToString(p.attempt_status.code());
     using dmilliseconds = std::chrono::duration<double, std::milli>;
     auto attempt_elapsed = std::chrono::duration_cast<dmilliseconds>(
         p.attempt_end - attempt_start_);
-    attempt_latencies_->Record(attempt_elapsed.count(), labels_, context);
+    attempt_latencies_->Record(attempt_elapsed.count(),
+                               IntoMap(resource_labels_, data_labels_),
+                               context);
   }
 
  private:
-  otel::LabelMap labels_;
+  ResourceLabels resource_labels_;
+  DataLabels data_labels_;
   std::shared_ptr<opentelemetry::metrics::MeterProvider> provider_;
   std::unique_ptr<opentelemetry::metrics::Histogram<double>> attempt_latencies_;
   std::chrono::system_clock::time_point attempt_start_;
@@ -123,9 +154,12 @@ class AttemptLatency : public Metric {
 class OperationLatency : public Metric {
  public:
   OperationLatency(
+      ResourceLabels resource_labels, DataLabels data_labels,
       std::string const& name, std::string const& version,
       std::shared_ptr<opentelemetry::metrics::MeterProvider> provider)
-      : provider_(std::move(provider)),
+      : resource_labels_(std::move(resource_labels)),
+        data_labels_(std::move(data_labels)),
+        provider_(std::move(provider)),
         operation_latencies_(
             provider_->GetMeter(name, version)
                 ->CreateDoubleHistogram("operation_latencies")) {}
@@ -135,14 +169,18 @@ class OperationLatency : public Metric {
   }
   void OnDone(opentelemetry::context::Context const& context,
               OnDoneParams p) override {
+    data_labels_.status = StatusCodeToString(p.operation_status.code());
     using dmilliseconds = std::chrono::duration<double, std::milli>;
     auto operation_elapsed = std::chrono::duration_cast<dmilliseconds>(
         p.operation_end - operation_start_);
-    operation_latencies_->Record(operation_elapsed.count(), labels_, context);
+    operation_latencies_->Record(operation_elapsed.count(),
+                                 IntoMap(resource_labels_, data_labels_),
+                                 context);
   }
 
  private:
-  otel::LabelMap labels_;
+  ResourceLabels resource_labels_;
+  DataLabels data_labels_;
   std::shared_ptr<opentelemetry::metrics::MeterProvider> provider_;
   std::unique_ptr<opentelemetry::metrics::Histogram<double>>
       operation_latencies_;
@@ -151,17 +189,21 @@ class OperationLatency : public Metric {
 
 class RetryCount : public Metric {
  public:
-  RetryCount(std::string const& name, std::string const& version,
+  RetryCount(ResourceLabels resource_labels, DataLabels data_labels,
+             std::string const& name, std::string const& version,
              std::shared_ptr<opentelemetry::metrics::MeterProvider> provider)
-      : provider_(std::move(provider)),
+      : resource_labels_(std::move(resource_labels)),
+        data_labels_(std::move(data_labels)),
+        provider_(std::move(provider)),
         retry_count_(provider_->GetMeter(name, version)
                          ->CreateUInt64Counter("retry_count")) {}
   void PreCall(opentelemetry::context::Context const&, PreCallParams) override {
-    retry_count_->Add(1, labels_);
+    retry_count_->Add(1, IntoMap(resource_labels_, data_labels_));
   }
 
  private:
-  otel::LabelMap labels_;
+  ResourceLabels resource_labels_;
+  DataLabels data_labels_;
   std::shared_ptr<opentelemetry::metrics::MeterProvider> provider_;
   std::unique_ptr<opentelemetry::metrics::Counter<std::uint64_t>> retry_count_;
 };
@@ -169,9 +211,12 @@ class RetryCount : public Metric {
 class FirstResponseLatency : public Metric {
  public:
   FirstResponseLatency(
+      ResourceLabels resource_labels, DataLabels data_labels,
       std::string const& name, std::string const& version,
       std::shared_ptr<opentelemetry::metrics::MeterProvider> provider)
-      : provider_(std::move(provider)),
+      : resource_labels_(std::move(resource_labels)),
+        data_labels_(std::move(data_labels)),
+        provider_(std::move(provider)),
         first_response_latencies_(
             provider_->GetMeter(name, version)
                 ->CreateDoubleHistogram("first_response_latencies")) {}
@@ -185,12 +230,14 @@ class FirstResponseLatency : public Metric {
     using dmilliseconds = std::chrono::duration<double, std::milli>;
     auto first_response_elapsed = std::chrono::duration_cast<dmilliseconds>(
         p.first_response - operation_start_);
-    first_response_latencies_->Record(first_response_elapsed.count(), labels_,
+    first_response_latencies_->Record(first_response_elapsed.count(),
+                                      IntoMap(resource_labels_, data_labels_),
                                       context);
   }
 
  private:
-  otel::LabelMap labels_;
+  ResourceLabels resource_labels_;
+  DataLabels data_labels_;
   std::shared_ptr<opentelemetry::metrics::MeterProvider> provider_;
   std::unique_ptr<opentelemetry::metrics::Histogram<double>>
       first_response_latencies_;

@@ -27,7 +27,7 @@ RetryContext::RetryContext(std::shared_ptr<Metrics> metrics,
                            std::string const& streaming,
                            std::string const& table_name,
                            std::string const& app_profile)
-    : metrics_(std::move(metrics)), metric_collection_(nullptr) {
+    : metrics_(std::move(metrics)) {
   labels_.client_name = "Bigtable-C++";
   labels_.client_uid = client_uid;
   labels_.method = method;
@@ -36,19 +36,27 @@ RetryContext::RetryContext(std::shared_ptr<Metrics> metrics,
   labels_.app_profile = app_profile;
 }
 
+// RetryContext::RetryContext(
+//     std::shared_ptr<std::vector<std::shared_ptr<Metric>>> metric_collection,
+//     std::string const& client_uid, std::string const& method,
+//     std::string const& streaming, std::string const& table_name,
+//     std::string const& app_profile)
+//     : metrics_(nullptr), metric_collection_(std::move(metric_collection)) {
+//   labels_.client_name = "Bigtable-C++";
+//   labels_.client_uid = client_uid;
+//   labels_.method = method;
+//   labels_.streaming = streaming;
+//   labels_.table_name = table_name;
+//   labels_.app_profile = app_profile;
+// }
+
+// for use with RetryContextFactory
 RetryContext::RetryContext(
-    std::shared_ptr<std::vector<std::shared_ptr<Metric>>> metric_collection,
-    std::string const& client_uid, std::string const& method,
-    std::string const& streaming, std::string const& table_name,
-    std::string const& app_profile)
-    : metrics_(nullptr), metric_collection_(std::move(metric_collection)) {
-  labels_.client_name = "Bigtable-C++";
-  labels_.client_uid = client_uid;
-  labels_.method = method;
-  labels_.streaming = streaming;
-  labels_.table_name = table_name;
-  labels_.app_profile = app_profile;
-}
+    ResourceLabels resource_labels, DataLabels data_labels,
+    std::vector<std::shared_ptr<Metric>> stub_applicable_metrics)
+    : resource_labels_(std::move(resource_labels)),
+      data_labels_(std::move(data_labels)),
+      stub_applicable_metrics_(std::move(stub_applicable_metrics)) {}
 
 void RetryContext::PreCall(grpc::ClientContext& context) {
   auto otel_context = opentelemetry::context::RuntimeContext::GetCurrent();
@@ -65,9 +73,13 @@ void RetryContext::PreCall(grpc::ClientContext& context) {
   context.AddMetadata("bigtable-attempt", std::to_string(attempt_number_++));
 }
 
-void RetryContext::PostCall(grpc::ClientContext const& context) {
+void RetryContext::PostCall(grpc::ClientContext const& context,
+                            google::cloud::Status const& status) {
+  //  std::cout << __func__ << std::endl;
   ProcessMetadata(context.GetServerInitialMetadata());
-  ProcessMetadata(context.GetServerTrailingMetadata());
+  auto trailer_metadata = ProcessMetadata(context.GetServerTrailingMetadata());
+  resource_labels_.cluster = trailer_metadata.cluster;
+  resource_labels_.zone = trailer_metadata.zone;
   // NOTE : metrics_ should always exist. But I have only instrumented
   // `Apply()`.
   auto attempt_end = std::chrono::system_clock::now();
@@ -79,7 +91,10 @@ void RetryContext::PostCall(grpc::ClientContext const& context) {
   }
   auto otel_context = opentelemetry::context::RuntimeContext::GetCurrent();
   for (auto& m : stub_applicable_metrics_) {
-    m->PostCall(otel_context, PostCallParams{attempt_end});
+    //    std::cout << __func__ << ": calling metric" << std::endl;
+    m->PostCall(otel_context,
+                PostCallParams{attempt_end, status, trailer_metadata.cluster,
+                               trailer_metadata.zone});
   }
 }
 
@@ -107,8 +122,9 @@ void RetryContext::FirstResponse(grpc::ClientContext const&) {
   }
 }
 
-void RetryContext::ProcessMetadata(
+RetryContext::Metadata RetryContext::ProcessMetadata(
     std::multimap<grpc::string_ref, grpc::string_ref> const& metadata) {
+  Metadata m;
   for (auto const& kv : metadata) {
     //    std::cout << __func__ << " kv.first="  <<  kv.first << " : "
     //              << "kv.second=" << kv.second << std::endl;
@@ -126,9 +142,9 @@ void RetryContext::ProcessMetadata(
       std::vector<std::string> parts = absl::StrSplit(v, '-');
       //      std::cout << __func__ << ": parts.size()=" << parts.size() <<
       //      std::endl;
-      labels_.zone =
+      m.zone =
           absl::StrCat(parts[0], "-", parts[1], "-", parts[2].substr(0, 1));
-      labels_.cluster =
+      m.cluster =
           absl::StrCat(parts[2].substr(1), "-", parts[3], "-", parts[4]);
       //      std::cout << __func__ << ": zone=" << labels_.zone << std::endl;
       //      std::cout << __func__ << ": cluster=" << labels_.cluster <<
@@ -138,8 +154,9 @@ void RetryContext::ProcessMetadata(
 
   // TODO : Capture cluster, zone, server_latencies in here.
   // For now we hardcode them.
-  labels_.cluster = "test-instance-c1";
-  labels_.zone = "us-central1-f";
+  //  labels_.cluster = "test-instance-c1";
+  //  labels_.zone = "us-central1-f";
+  return m;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

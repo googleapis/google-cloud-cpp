@@ -96,7 +96,7 @@ void AsyncRowSampler::OnFinish(Status const& status) {
     return;
   }
 
-  retry_context_->PostCall(*context_);
+  retry_context_->PostCall(*context_, status);
   context_.reset();
   samples_.clear();
   auto self = this->shared_from_this();

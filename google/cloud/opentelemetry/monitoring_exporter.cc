@@ -75,6 +75,7 @@ class MonitoringExporter final
  private:
   opentelemetry::sdk::common::ExportResult ExportImpl(
       opentelemetry::sdk::metrics::ResourceMetrics const& data) {
+    std::cout << __func__ << std::endl;
     auto result = opentelemetry::sdk::common::ExportResult::kSuccess;
 
     auto tss = otel_internal::ToTimeSeries(data, formatter_);

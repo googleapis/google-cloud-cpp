@@ -50,6 +50,22 @@ otel::LabelMap IntoMap(MetricLabels labels) {
   };
 }
 
+otel::LabelMap IntoMap(ResourceLabels const& r, DataLabels const& d) {
+  return {
+      {"project_id", r.project_id},
+      {"instance", r.instance},
+      {"table", r.table},
+      {"cluster", r.cluster},
+      {"zone", r.zone},
+      {"method", d.method},
+      {"streaming", d.streaming},
+      {"client_name", d.client_name},
+      {"client_uid", d.client_uid},
+      {"app_profile", d.app_profile},
+      {"status", d.status},
+  };
+}
+
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
 namespace {
 
@@ -63,7 +79,7 @@ class OTelMetrics : public Metrics, std::enable_shared_from_this<OTelMetrics> {
   void RecordAttemptLatency(double value,
                             MetricLabels const& labels) const override {
     static int call_number = 0;
-    if (call_number++ % 300 == 0) {
+    if (call_number++ % 500 == 0) {
       std::cout << __func__ << std::endl;
     }
 
@@ -77,7 +93,7 @@ class OTelMetrics : public Metrics, std::enable_shared_from_this<OTelMetrics> {
   void RecordOperationLatency(double value,
                               MetricLabels const& labels) const override {
     static int call_number = 0;
-    if (call_number++ % 300 == 0) {
+    if (call_number++ % 500 == 0) {
       std::cout << __func__ << std::endl;
     }
 
@@ -205,62 +221,63 @@ std::shared_ptr<Metrics> MakeMetrics() {
   return std::make_shared<OTelMetrics>();
 }
 
-std::shared_ptr<std::vector<std::shared_ptr<Metric>>> MakeMetricCollection() {
-  auto m = std::make_shared<std::vector<std::shared_ptr<Metric>>>();
-
-  // TODO : what is the project? I assume we get it from the request.
-  auto project = Project("cloud-cpp-testing-resources");
-
-  // Hardcode the monitored resource override, for now.
-  // TODO : support dynamic MRs.
-  auto monitored_resource = google::api::MonitoredResource{};
-  monitored_resource.set_type("bigtable_client_raw");
-  auto& labels = *monitored_resource.mutable_labels();
-  labels["project_id"] = "cloud-cpp-testing-resources";
-  labels["instance"] = "test-instance";
-  labels["cluster"] = "test-cluster";
-  labels["table"] = "endurance";
-  labels["zone"] = "us-east4-a";
-
-  auto o =
-      Options{}
-          .set<LoggingComponentsOption>({"rpc"})
-          .set<otel::ServiceTimeSeriesOption>(true)
-          // NOTE : we need a different option for dynamic MRs.
-          .set<otel::MonitoredResourceOption>(std::move(monitored_resource))
-          .set<otel::MetricNameFormatterOption>([](auto name) {
-            return "bigtable.googleapis.com/internal/client/" + name;
-          });
-  auto exporter =
-      otel::MakeMonitoringExporter(std::move(project), std::move(o));
-  auto options =
-      opentelemetry::sdk::metrics::PeriodicExportingMetricReaderOptions{};
-  // Empirically, it seems like 30s is the minimum.
-  options.export_interval_millis = std::chrono::seconds(30);
-  options.export_timeout_millis = std::chrono::seconds(1);
-
-  auto reader =
-      opentelemetry::sdk::metrics::PeriodicExportingMetricReaderFactory::Create(
-          std::move(exporter), options);
-
-  auto context = opentelemetry::sdk::metrics::MeterContextFactory::Create(
-      std::make_unique<opentelemetry::sdk::metrics::ViewRegistry>(),
-      // NOTE : this skips OTel's built in resource detection which is more
-      // confusing than helpful. (The default is {{"service_name",
-      // "unknown_service" }}). And after #14930, this gets copied into our
-      // resource labels. oh god why.
-      opentelemetry::sdk::resource::Resource::GetEmpty());
-  context->AddMetricReader(std::move(reader));
-  std::shared_ptr<opentelemetry::metrics::MeterProvider> provider =
-      opentelemetry::sdk::metrics::MeterProviderFactory::Create(
-          std::move(context));
-
-  m->push_back(std::make_shared<AttemptLatency>("bigtable", "", provider));
-  m->push_back(std::make_shared<OperationLatency>("bigtable", "", provider));
-  m->push_back(std::make_shared<RetryCount>("bigtable", "", provider));
-
-  return m;
-}
+// std::shared_ptr<std::vector<std::shared_ptr<Metric>>> MakeMetricCollection()
+// {
+//   auto m = std::make_shared<std::vector<std::shared_ptr<Metric>>>();
+//
+//   // TODO : what is the project? I assume we get it from the request.
+//   auto project = Project("cloud-cpp-testing-resources");
+//
+//   // Hardcode the monitored resource override, for now.
+//   // TODO : support dynamic MRs.
+//   auto monitored_resource = google::api::MonitoredResource{};
+//   monitored_resource.set_type("bigtable_client_raw");
+//   auto& labels = *monitored_resource.mutable_labels();
+//   labels["project_id"] = "cloud-cpp-testing-resources";
+//   labels["instance"] = "test-instance";
+//   labels["cluster"] = "test-cluster";
+//   labels["table"] = "endurance";
+//   labels["zone"] = "us-east4-a";
+//
+//   auto o =
+//       Options{}
+//           .set<LoggingComponentsOption>({"rpc"})
+//           .set<otel::ServiceTimeSeriesOption>(true)
+//           // NOTE : we need a different option for dynamic MRs.
+//           .set<otel::MonitoredResourceOption>(std::move(monitored_resource))
+//           .set<otel::MetricNameFormatterOption>([](auto name) {
+//             return "bigtable.googleapis.com/internal/client/" + name;
+//           });
+//   auto exporter =
+//       otel::MakeMonitoringExporter(std::move(project), std::move(o));
+//   auto options =
+//       opentelemetry::sdk::metrics::PeriodicExportingMetricReaderOptions{};
+//   // Empirically, it seems like 30s is the minimum.
+//   options.export_interval_millis = std::chrono::seconds(30);
+//   options.export_timeout_millis = std::chrono::seconds(1);
+//
+//   auto reader =
+//       opentelemetry::sdk::metrics::PeriodicExportingMetricReaderFactory::Create(
+//           std::move(exporter), options);
+//
+//   auto context = opentelemetry::sdk::metrics::MeterContextFactory::Create(
+//       std::make_unique<opentelemetry::sdk::metrics::ViewRegistry>(),
+//       // NOTE : this skips OTel's built in resource detection which is more
+//       // confusing than helpful. (The default is {{"service_name",
+//       // "unknown_service" }}). And after #14930, this gets copied into our
+//       // resource labels. oh god why.
+//       opentelemetry::sdk::resource::Resource::GetEmpty());
+//   context->AddMetricReader(std::move(reader));
+//   std::shared_ptr<opentelemetry::metrics::MeterProvider> provider =
+//       opentelemetry::sdk::metrics::MeterProviderFactory::Create(
+//           std::move(context));
+//
+//   m->push_back(std::make_shared<AttemptLatency>("bigtable", "", provider));
+//   m->push_back(std::make_shared<OperationLatency>("bigtable", "", provider));
+//   m->push_back(std::make_shared<RetryCount>("bigtable", "", provider));
+//
+//   return m;
+// }
 
 Metric::~Metric() = default;
 

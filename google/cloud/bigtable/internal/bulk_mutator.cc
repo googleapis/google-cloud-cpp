@@ -245,7 +245,7 @@ Status BulkMutator::MakeOneRequest(BigtableStub& stub,
   while (absl::visit(UnpackVariant{state_, limiter, enable_server_retries},
                      stream->Read())) {
   }
-  retry_context_.PostCall(*context);
+  retry_context_.PostCall(*context, state_.last_status());
   return state_.last_status();
 }
 

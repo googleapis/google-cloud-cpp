@@ -33,32 +33,51 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class RetryContextFactory {
  public:
-  RetryContextFactory() {}
+  virtual ~RetryContextFactory() = 0;
   // ReadRow is a synthetic RPC and should appear in metrics as if it's a
   // different RPC than ReadRows with row_limit=1.
-  std::unique_ptr<RetryContext> ReadRow();
-  std::unique_ptr<RetryContext> ReadRows() {
-    return std::make_unique<RetryContext>();
+  virtual std::shared_ptr<RetryContext> ReadRow() {
+    return std::make_shared<RetryContext>();
   }
-  std::unique_ptr<RetryContext> AsyncReadRows();
+  virtual std::shared_ptr<RetryContext> ReadRows() {
+    return std::make_shared<RetryContext>();
+  }
+  virtual std::shared_ptr<RetryContext> AsyncReadRows() {
+    return std::make_shared<RetryContext>();
+  }
+  virtual std::shared_ptr<RetryContext> MutateRow(std::string const&,
+                                                  std::string const&) {
+    return std::make_shared<RetryContext>();
+  }
+  virtual std::shared_ptr<RetryContext>
+  AsyncMutateRow() {  // not currently used
+    return std::make_shared<RetryContext>();
+  }
+  virtual std::shared_ptr<RetryContext> MutateRows() {
+    return std::make_shared<RetryContext>();
+  }
+  virtual std::shared_ptr<RetryContext> AsyncMutateRows() {
+    return std::make_shared<RetryContext>();
+  }
+  virtual std::shared_ptr<RetryContext> CheckandMutateRow() {
+    return std::make_shared<RetryContext>();
+  }
+  virtual std::shared_ptr<RetryContext> AsyncCheckandMutateRow() {
+    return std::make_shared<RetryContext>();
+  }
+  virtual std::shared_ptr<RetryContext> SampleRowKeys() {
+    return std::make_shared<RetryContext>();
+  }
+  virtual std::shared_ptr<RetryContext> AsyncSampleRowKeys() {
+    return std::make_shared<RetryContext>();
+  }
 
-  std::unique_ptr<RetryContext> MutateRow();
-  std::unique_ptr<RetryContext> AsyncMutateRow();  // not currently used
-
-  std::unique_ptr<RetryContext> MutateRows();
-  std::unique_ptr<RetryContext> AsyncMutateRows();
-
-  std::unique_ptr<RetryContext> CheckandMutateRow();
-  std::unique_ptr<RetryContext> AsyncCheckandMutateRow();
-
-  std::unique_ptr<RetryContext> SampleRowKeys();
-  std::unique_ptr<RetryContext> AsyncSampleRowKeys();
-
-  std::unique_ptr<RetryContext> ReadModifyWriteRow();
-  std::unique_ptr<RetryContext> AsyncReadModifyWriteRow();
-
- private:
-  std::vector<std::shared_ptr<Metric>> metrics_;
+  virtual std::shared_ptr<RetryContext> ReadModifyWriteRow() {
+    return std::make_shared<RetryContext>();
+  }
+  virtual std::shared_ptr<RetryContext> AsyncReadModifyWriteRow() {
+    return std::make_shared<RetryContext>();
+  }
 };
 
 bigtable::Row TransformReadModifyWriteRowResponse(
@@ -125,7 +144,10 @@ class DataConnectionImpl : public bigtable::DataConnection {
       std::string const& table_name, std::string row_key,
       bigtable::Filter filter) override;
 
+  void Initialize(Project const& project) override;
+
  private:
+  std::unique_ptr<RetryContextFactory> retry_context_factory_;
   std::unique_ptr<BackgroundThreads> background_;
   std::shared_ptr<BigtableStub> stub_;
   std::shared_ptr<MutateRowsLimiter> limiter_;
