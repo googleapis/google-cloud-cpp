@@ -18,9 +18,12 @@
 #include "google/cloud/bigtable/emulator/filtered_map.h"
 #include "google/cloud/bigtable/emulator/range_set.h"
 #include "google/cloud/bigtable/internal/google_bytes_traits.h"
+#include "google/cloud/internal/big_endian.h"
 #include "google/cloud/internal/make_status.h"
+#include "google/cloud/status.h"
 #include "google/protobuf/util/field_mask_util.h"
 #include <grpc/grpc_security_constants.h>
+#include <google/bigtable/admin/v2/types.pb.h>
 #include <google/bigtable/v2/bigtable.pb.h>
 #include <google/bigtable/v2/data.pb.h>
 #include <absl/strings/match.h>
@@ -38,6 +41,7 @@
 #include <mutex>
 #include <random>
 #include <ratio>
+#include <optional>
 #include <string>
 #include <type_traits>
 
@@ -89,10 +93,29 @@ Status Table::Construct(google::bigtable::admin::v2::Table schema) {
         "`automated_backup_policy` not empty.",
         GCP_ERROR_INFO().WithMetadata("schema", schema_.DebugString()));
   }
+
   for (auto const& column_family_def : schema_.column_families()) {
-    column_families_.emplace(column_family_def.first,
-                             std::make_shared<ColumnFamily>());
+    absl::optional<google::bigtable::admin::v2::Type> opt_value_type =
+        absl::nullopt;
+
+    // Support for complex types (AddToCell aggregations, e.t.c.).
+    if (column_family_def.second.has_value_type()) {
+      opt_value_type = column_family_def.second.value_type();
+    }
+
+    if (opt_value_type.has_value()) {
+      auto cf =
+          ColumnFamily::ConstructAggregateColumnFamily(opt_value_type.value());
+      if (!cf) {
+        return cf.status();
+      }
+      column_families_.emplace(column_family_def.first, cf.value());
+    } else {
+      column_families_.emplace(column_family_def.first,
+                               std::make_shared<ColumnFamily>());
+    }
   }
+
   return Status();
 }
 
@@ -129,6 +152,7 @@ StatusOr<btadmin::Table> Table::ModifyColumnFamilies(
                              GCP_ERROR_INFO().WithMetadata(
                                  "modification", modification.DebugString()));
       }
+
       using google::protobuf::util::FieldMaskUtil;
 
       using google::protobuf::util::FieldMaskUtil;
@@ -151,13 +175,36 @@ StatusOr<btadmin::Table> Table::ModifyColumnFamilies(
                                    "mask", effective_mask.DebugString()));
         }
       }
+
+      // Disallow the modification of the type of data stored in the
+      // column family (the aggregate type -- which is currently the
+      // only supported type -- can always be set during column family
+      // creation).
+      if (FieldMaskUtil::IsPathInFieldMask("value_type", effective_mask)) {
+        return InvalidArgumentError(
+            "The value_type cannot be changed after column family creation",
+            GCP_ERROR_INFO().WithMetadata("mask",
+                                          effective_mask.DebugString()));
+      }
+
       FieldMaskUtil::MergeMessageTo(modification.update(), effective_mask,
                                     FieldMaskUtil::MergeOptions(),
                                     &(cf_it->second));
     } else if (modification.has_create()) {
-      if (!new_column_families
-               .emplace(modification.id(), std::make_shared<ColumnFamily>())
-               .second) {
+      std::shared_ptr<ColumnFamily> cf;
+      // Have we been asked to create an aggregate column family?
+      if (modification.create().has_value_type()) {
+        auto value_type = modification.create().value_type();
+        auto maybe_cf =
+            ColumnFamily::ConstructAggregateColumnFamily(value_type);
+        if (!maybe_cf) {
+          return maybe_cf.status();
+        }
+        cf = std::move(maybe_cf.value());
+      } else {
+        cf = std::make_shared<ColumnFamily>();
+      }
+      if (!new_column_families.emplace(modification.id(), cf).second) {
         return AlreadyExistsError(
             "Column family already exists.",
             GCP_ERROR_INFO().WithMetadata("modification",
@@ -271,9 +318,31 @@ Status Table::DoMutationsWithPossibleRollback(
         return status;
       }
     } else if (mutation.has_add_to_cell()) {
-      return UnimplementedError(
-          "Unsupported mutation type.",
-          GCP_ERROR_INFO().WithMetadata("mutation", mutation.DebugString()));
+      auto const& add_to_cell = mutation.add_to_cell();
+
+      absl::optional<std::chrono::milliseconds> timestamp_override =
+          absl::nullopt;
+
+      std::chrono::milliseconds timestamp = std::chrono::milliseconds::zero();
+
+      if (add_to_cell.has_timestamp() &&
+          add_to_cell.timestamp().has_raw_timestamp_micros()) {
+        timestamp = std::chrono::duration_cast<std::chrono::milliseconds>(
+            std::chrono::microseconds(
+                add_to_cell.timestamp().raw_timestamp_micros()));
+      }
+
+      // If no valid timestamp is provided, override with the system time.
+      if (timestamp <= std::chrono::milliseconds::zero()) {
+        timestamp = std::chrono::duration_cast<std::chrono::milliseconds>(
+            std::chrono::system_clock::now().time_since_epoch());
+        timestamp_override.emplace(std::move(timestamp));
+      }
+
+      auto status = row_transaction.AddToCell(add_to_cell, timestamp_override);
+      if (!status.ok()) {
+        return status;
+      }
     } else if (mutation.has_merge_to_cell()) {
       return UnimplementedError(
           "Unsupported mutation type.",
@@ -681,10 +750,98 @@ Table::ReadModifyWriteRow(
 
 // NOLINTBEGIN(readability-convert-member-functions-to-static)
 Status RowTransaction::AddToCell(
-    ::google::bigtable::v2::Mutation_AddToCell const& add_to_cell) {
-  return UnimplementedError(
-      "Unsupported mutation type.",
-      GCP_ERROR_INFO().WithMetadata("mutation", add_to_cell.DebugString()));
+    ::google::bigtable::v2::Mutation_AddToCell const& add_to_cell,
+    absl::optional<std::chrono::milliseconds> timestamp_override) {
+  auto status = table_->FindColumnFamily(add_to_cell);
+  if (!status.ok()) {
+    return status.status();
+  }
+
+  auto& cf = status->get();
+  auto cf_value_type = cf.GetValueType();
+  if (!cf_value_type.has_value() ||
+      !cf_value_type.value().has_aggregate_type()) {
+    return InvalidArgumentError(
+        "column family is not configured to contain aggregation cells or "
+        "aggregation type not properly configured",
+        GCP_ERROR_INFO().WithMetadata("column family",
+                                      add_to_cell.family_name()));
+  }
+
+  // Ensure that we support the aggregation that is configured in the
+  // column family.
+  switch (cf_value_type.value().aggregate_type().aggregator_case()) {
+    case google::bigtable::admin::v2::Type::Aggregate::kSum:
+    case google::bigtable::admin::v2::Type::Aggregate::kMin:
+    case google::bigtable::admin::v2::Type::Aggregate::kMax:
+      break;
+    default:
+      return UnimplementedError(
+          "column family configured with unimplemented aggregation",
+          GCP_ERROR_INFO()
+              .WithMetadata("column family", add_to_cell.family_name())
+              .WithMetadata("configured aggregation",
+                            absl::StrFormat("%d", cf_value_type.value()
+                                                      .aggregate_type()
+                                                      .aggregator_case())));
+  }
+
+  if (!add_to_cell.has_input()) {
+    return InvalidArgumentError(
+        "input not set",
+        GCP_ERROR_INFO().WithMetadata("mutation", add_to_cell.DebugString()));
+  }
+
+  switch (add_to_cell.input().kind_case()) {
+    case google::bigtable::v2::Value::kIntValue:
+      if (!add_to_cell.input().has_int_value()) {
+        return InvalidArgumentError("input value not set",
+                                    GCP_ERROR_INFO().WithMetadata(
+                                        "mutation", add_to_cell.DebugString()));
+      }
+      break;
+    default:
+      return InvalidArgumentError(
+          "only int64 values are supported",
+          GCP_ERROR_INFO().WithMetadata("mutation", add_to_cell.DebugString()));
+  }
+  auto int64_input = add_to_cell.input().int_value();
+
+  auto value = google::cloud::internal::EncodeBigEndian(int64_input);
+  auto row_key = row_key_;
+
+  std::chrono::milliseconds ts_ms;
+  if (timestamp_override.has_value()) {
+    ts_ms = timestamp_override.value();
+  } else {
+    ts_ms = std::chrono::duration_cast<std::chrono::milliseconds>(
+        std::chrono::microseconds(
+            add_to_cell.timestamp().raw_timestamp_micros()));
+  }
+
+  if (!add_to_cell.has_column_qualifier() ||
+      !add_to_cell.column_qualifier().has_raw_value()) {
+    return InvalidArgumentError(
+        "column qualifier not set",
+        GCP_ERROR_INFO().WithMetadata("mutation", add_to_cell.DebugString()));
+  }
+  auto column_qualifier = add_to_cell.column_qualifier().raw_value();
+
+  auto maybe_old_value = cf.UpdateCell(row_key, column_qualifier, ts_ms, value);
+  if (!maybe_old_value) {
+    return maybe_old_value.status();
+  }
+
+  if (!maybe_old_value.value()) {
+    DeleteValue delete_value{cf, std::move(column_qualifier), ts_ms};
+    undo_.emplace(std::move(delete_value));
+  } else {
+    RestoreValue restore_value{cf, std::move(column_qualifier), ts_ms,
+                               std::move(maybe_old_value.value().value())};
+    undo_.emplace(std::move(restore_value));
+  }
+
+  return Status();
 }
 
 Status RowTransaction::MergeToCell(

@@ -18,6 +18,8 @@
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
+#include <array>
+#include <cstdint>
 
 namespace google {
 namespace cloud {
