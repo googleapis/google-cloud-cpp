@@ -24,6 +24,7 @@
 #include <google/bigtable/admin/v2/bigtable_table_admin.grpc.pb.h>
 #include <google/bigtable/admin/v2/bigtable_table_admin.pb.h>
 #include <google/bigtable/admin/v2/table.pb.h>
+#include <google/bigtable/admin/v2/types.pb.h>
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
 #include <google/bigtable/v2/bigtable.pb.h>
 #include <google/bigtable/v2/data.pb.h>
@@ -59,6 +60,55 @@ StatusOr<std::shared_ptr<Table>> CreateTable(
   }
 
   return Table::Create(schema);
+}
+
+::google::bigtable::admin::v2::ColumnFamily MakeBEAggregateCFProto(
+    ::google::bigtable::admin::v2::Type_Aggregate::AggregatorCase aggregator) {
+  ::google::bigtable::admin::v2::ColumnFamily column_family;
+
+  auto* value_type = column_family.mutable_value_type();
+  auto* kind_aggregate_type = value_type->mutable_aggregate_type();
+  switch (aggregator) {
+    case google::bigtable::admin::v2::Type::Aggregate::kSum:
+      kind_aggregate_type->mutable_sum();
+      break;
+    case google::bigtable::admin::v2::Type::Aggregate::kMax:
+      kind_aggregate_type->mutable_max();
+      break;
+    case google::bigtable::admin::v2::Type::Aggregate::kMin:
+      kind_aggregate_type->mutable_min();
+      break;
+    default:
+      std::abort();
+  }
+  auto* input_type = kind_aggregate_type->mutable_input_type();
+  auto* int64_type = input_type->mutable_int64_type();
+  // We need to set the encoding
+  auto* encoding = int64_type->mutable_encoding();
+  encoding->mutable_big_endian_bytes();
+
+  // What do we do about the state_type?
+  // FIXME: Is this correct?
+  auto* state_type = kind_aggregate_type->mutable_state_type();
+  int64_type = state_type->mutable_int64_type();
+  encoding = int64_type->mutable_encoding();
+  encoding->mutable_big_endian_bytes();
+
+  return column_family;
+}
+
+::google::bigtable::admin::v2::Table CreateSchema(
+    std::string const& table_name,
+    std::map<std::string, ::google::bigtable::admin::v2::ColumnFamily> const&
+        column_families) {
+  ::google::bigtable::admin::v2::Table schema;
+
+  schema.set_name(table_name);
+  for (auto const& cf : column_families) {
+    (*schema.mutable_column_families())[cf.first] = cf.second;
+  }
+
+  return schema;
 }
 
 Status DeleteFromFamilies(
@@ -189,11 +239,10 @@ Status HasColumn(
   auto const& cf = column_family_it->second;
   auto column_family_row_it = cf->find(row_key);
   if (column_family_row_it == cf->end()) {
-    return internal::NotFoundError(
-        "row key not found in column family",
-        GCP_ERROR_INFO()
-            .WithMetadata("row key", row_key)
-            .WithMetadata("column family", column_family));
+    return NotFoundError("row key not found in column family",
+                         GCP_ERROR_INFO()
+                             .WithMetadata("row key", row_key)
+                             .WithMetadata("column family", column_family));
   }
 
   auto& column_family_row = column_family_row_it->second;
@@ -221,11 +270,10 @@ StatusOr<std::map<std::chrono::milliseconds, std::string>> GetColumn(
   auto const& cf = column_family_it->second;
   auto column_family_row_it = cf->find(row_key);
   if (column_family_row_it == cf->end()) {
-    return internal::NotFoundError(
-        "row key not found in column family",
-        GCP_ERROR_INFO()
-            .WithMetadata("row key", row_key)
-            .WithMetadata("column family", column_family));
+    return NotFoundError("row key not found in column family",
+                         GCP_ERROR_INFO()
+                             .WithMetadata("row key", row_key)
+                             .WithMetadata("column family", column_family));
   }
 
   auto& column_family_row = column_family_row_it->second;
@@ -871,6 +919,200 @@ TEST(TransactionRollback, DeleteFromRowBasicFunction) {
                        .ok());
 }
 
+// Does AddToCell reject requests to add to a cell in a column family
+// not provisioned for aggregation?
+TEST(TransactionRollback, AddToCellRejectsRequestsToNonAggregateColumnFamily) {
+  ::google::bigtable::admin::v2::Table schema;
+  ::google::bigtable::admin::v2::ColumnFamily column_family;
+
+  auto const* const table_name = "projects/test/instances/test/tables/test";
+  auto const* const row_key = "0";
+  auto const* const column_family_name = "column_family_1";
+  auto const* const column_qualifier = "column_qualifier";
+  auto const timestamp_micros = 1000;
+
+  auto maybe_table = Table::Create(
+      CreateSchema(table_name, {{column_family_name, column_family}}));
+
+  ASSERT_STATUS_OK(maybe_table);
+  auto table = maybe_table.value();
+
+  ::google::bigtable::v2::MutateRowRequest mutation_request;
+  mutation_request.set_table_name(table_name);
+  mutation_request.set_row_key(row_key);
+
+  auto* mutation_request_mutation = mutation_request.add_mutations();
+  auto* add_to_cell_mutation = mutation_request_mutation->mutable_add_to_cell();
+
+  add_to_cell_mutation->set_family_name(column_family_name);
+  auto* mutable_column_qualifier =
+      add_to_cell_mutation->mutable_column_qualifier();
+  mutable_column_qualifier->set_raw_value(column_qualifier);
+  auto* mutable_timestamp = add_to_cell_mutation->mutable_timestamp();
+  mutable_timestamp->set_raw_timestamp_micros(timestamp_micros);
+  auto* mutable_input = add_to_cell_mutation->mutable_input();
+  mutable_input->set_int_value(100);
+
+  // Should fail because `column_family' has not been provisioned for
+  // aggregation. i.e. its value_type is not set all, in this case (it
+  // would need to be set to `Aggregate'.
+  ASSERT_EQ(false, table->MutateRow(mutation_request).ok());
+}
+
+// Test basic functionality of AddToCell Sum aggregation.
+TEST(TransactionRollback, AddToCellTestSum) {
+  auto const* const table_name = "projects/test/instances/test/tables/test";
+  auto const* const row_key = "0";
+  auto const* const column_family_name = "column_family_1";
+  auto const* const column_qualifier = "column_qualifier";
+  auto const timestamp_micros = 1000;
+
+  auto maybe_table = Table::Create(CreateSchema(
+      table_name, {{column_family_name,
+                    MakeBEAggregateCFProto(
+                        google::bigtable::admin::v2::Type::Aggregate::kSum)}}));
+  ASSERT_STATUS_OK(maybe_table);
+
+  auto table = maybe_table.value();
+
+  ::google::bigtable::v2::MutateRowRequest mutation_request;
+  mutation_request.set_table_name(table_name);
+  mutation_request.set_row_key(row_key);
+
+  auto* mutation_request_mutation = mutation_request.add_mutations();
+  auto* add_to_cell_mutation = mutation_request_mutation->mutable_add_to_cell();
+
+  add_to_cell_mutation->set_family_name(column_family_name);
+  auto* mutable_column_qualifier =
+      add_to_cell_mutation->mutable_column_qualifier();
+  mutable_column_qualifier->set_raw_value(column_qualifier);
+  auto* mutable_timestamp = add_to_cell_mutation->mutable_timestamp();
+  mutable_timestamp->set_raw_timestamp_micros(timestamp_micros);
+  auto* mutable_input = add_to_cell_mutation->mutable_input();
+  mutable_input->set_int_value(100);
+
+  ASSERT_EQ(true, table->MutateRow(mutation_request).ok());
+  ASSERT_EQ(true,
+            HasCell(table, column_family_name, row_key, column_qualifier,
+                    timestamp_micros,
+                    google::cloud::internal::EncodeBigEndian<std::int64_t>(100))
+                .ok());
+
+  // Try and add 200
+  mutable_input->set_int_value(200);
+  ASSERT_EQ(true, table->MutateRow(mutation_request).ok());
+  ASSERT_EQ(true,
+            HasCell(table, column_family_name, row_key, column_qualifier,
+                    timestamp_micros,
+                    google::cloud::internal::EncodeBigEndian<std::int64_t>(300))
+                .ok());
+
+  // Try and subtract 50
+  mutable_input->set_int_value(-50);
+  ASSERT_EQ(true, table->MutateRow(mutation_request).ok());
+  ASSERT_EQ(true,
+            HasCell(table, column_family_name, row_key, column_qualifier,
+                    timestamp_micros,
+                    google::cloud::internal::EncodeBigEndian<std::int64_t>(250))
+                .ok());
+}
+
+// Test basic functionality of AddToCell Max aggregation.
+TEST(TransactionRollback, AddToCellTestMax) {
+  auto const* const table_name = "projects/test/instances/test/tables/test";
+  auto const* const row_key = "0";
+  auto const* const column_family_name = "column_family_1";
+  auto const* const column_qualifier = "column_qualifier";
+  auto const timestamp_micros = 1000;
+
+  auto maybe_table = Table::Create(CreateSchema(
+      table_name, {{column_family_name,
+                    MakeBEAggregateCFProto(
+                        google::bigtable::admin::v2::Type::Aggregate::kMax)}}));
+  ASSERT_STATUS_OK(maybe_table);
+
+  auto table = maybe_table.value();
+
+  ::google::bigtable::v2::MutateRowRequest mutation_request;
+  mutation_request.set_table_name(table_name);
+  mutation_request.set_row_key(row_key);
+
+  auto* mutation_request_mutation = mutation_request.add_mutations();
+  auto* add_to_cell_mutation = mutation_request_mutation->mutable_add_to_cell();
+
+  add_to_cell_mutation->set_family_name(column_family_name);
+  auto* mutable_column_qualifier =
+      add_to_cell_mutation->mutable_column_qualifier();
+  mutable_column_qualifier->set_raw_value(column_qualifier);
+  auto* mutable_timestamp = add_to_cell_mutation->mutable_timestamp();
+  mutable_timestamp->set_raw_timestamp_micros(timestamp_micros);
+  auto* mutable_input = add_to_cell_mutation->mutable_input();
+  mutable_input->set_int_value(100);
+
+  ASSERT_EQ(true, table->MutateRow(mutation_request).ok());
+  ASSERT_EQ(true,
+            HasCell(table, column_family_name, row_key, column_qualifier,
+                    timestamp_micros,
+                    google::cloud::internal::EncodeBigEndian<std::int64_t>(100))
+                .ok());
+
+  mutable_input->set_int_value(200);
+  ASSERT_EQ(true, table->MutateRow(mutation_request).ok());
+  ASSERT_EQ(true,
+            HasCell(table, column_family_name, row_key, column_qualifier,
+                    timestamp_micros,
+                    google::cloud::internal::EncodeBigEndian<std::int64_t>(200))
+                .ok());
+}
+
+// Test basic functionality of AddToCell Min aggregation.
+TEST(TransactionRollback, AddToCellTestMin) {
+  auto const* const table_name = "projects/test/instances/test/tables/test";
+  auto const* const row_key = "0";
+  auto const* const column_family_name = "column_family_1";
+  auto const* const column_qualifier = "column_qualifier";
+  auto const timestamp_micros = 1000;
+
+  auto maybe_table = Table::Create(CreateSchema(
+      table_name, {{column_family_name,
+                    MakeBEAggregateCFProto(
+                        google::bigtable::admin::v2::Type::Aggregate::kMin)}}));
+  ASSERT_STATUS_OK(maybe_table);
+
+  auto table = maybe_table.value();
+
+  ::google::bigtable::v2::MutateRowRequest mutation_request;
+  mutation_request.set_table_name(table_name);
+  mutation_request.set_row_key(row_key);
+
+  auto* mutation_request_mutation = mutation_request.add_mutations();
+  auto* add_to_cell_mutation = mutation_request_mutation->mutable_add_to_cell();
+
+  add_to_cell_mutation->set_family_name(column_family_name);
+  auto* mutable_column_qualifier =
+      add_to_cell_mutation->mutable_column_qualifier();
+  mutable_column_qualifier->set_raw_value(column_qualifier);
+  auto* mutable_timestamp = add_to_cell_mutation->mutable_timestamp();
+  mutable_timestamp->set_raw_timestamp_micros(timestamp_micros);
+  auto* mutable_input = add_to_cell_mutation->mutable_input();
+  mutable_input->set_int_value(100);
+
+  ASSERT_EQ(true, table->MutateRow(mutation_request).ok());
+  ASSERT_EQ(true,
+            HasCell(table, column_family_name, row_key, column_qualifier,
+                    timestamp_micros,
+                    google::cloud::internal::EncodeBigEndian<std::int64_t>(100))
+                .ok());
+
+  mutable_input->set_int_value(50);
+  ASSERT_EQ(true, table->MutateRow(mutation_request).ok());
+  ASSERT_EQ(true,
+            HasCell(table, column_family_name, row_key, column_qualifier,
+                    timestamp_micros,
+                    google::cloud::internal::EncodeBigEndian<std::int64_t>(50))
+                .ok());
+}
+
 StatusOr<google::bigtable::v2::Column> GetColumn(
     google::bigtable::v2::ReadModifyWriteRowResponse const& resp,
     std::string const& row_key, int family_index, std::string const& qual) {
@@ -894,7 +1136,7 @@ StatusOr<google::bigtable::v2::Column> GetColumn(
   }
 
   if (family_index > resp.row().families_size() - 1) {
-    return internal::InvalidArgumentError(
+    return InvalidArgumentError(
         "supplied family index is out of range",
         GCP_ERROR_INFO().WithMetadata("family index",
                                       absl::StrFormat("%d", family_index)));
@@ -909,7 +1151,7 @@ StatusOr<google::bigtable::v2::Column> GetColumn(
     // repeated. Neither should the column qualifiers be empty or
     // repeated.
     if (ret.first->empty() || !ret.second) {
-      return internal::InvalidArgumentError(
+      return InvalidArgumentError(
           "empty or repeated family name",
           GCP_ERROR_INFO().WithMetadata("ReadModifyWriteRowResponse",
                                         resp.DebugString()));
@@ -919,7 +1161,7 @@ StatusOr<google::bigtable::v2::Column> GetColumn(
     for (auto const& col : resp.row().families(i).columns()) {
       auto ret = column_qualifiers.emplace(col.qualifier());
       if (ret.first->empty() || !ret.second) {
-        return internal::InvalidArgumentError(
+        return InvalidArgumentError(
             "empty or repeated column qualifier",
             GCP_ERROR_INFO().WithMetadata("ReadModifyWriteRowResponse",
                                           resp.DebugString()));
@@ -989,8 +1231,8 @@ TEST(ReadModifyWrite, Unsetcase) {
   ASSERT_GE(std::chrono::duration_cast<std::chrono::milliseconds>(
                 std::chrono::microseconds(col.cells(0).timestamp_micros())),
             system_time_ms_before);
-  ASSERT_EQ(col.cells(0).value(),
-            internal::EncodeBigEndian(static_cast<std::int64_t>(1)));
+  ASSERT_EQ(col.cells(0).value(), ::google::cloud::internal::EncodeBigEndian(
+                                      static_cast<std::int64_t>(1)));
 
   auto maybe_column_2 = GetColumn(response, "0", 0, "column_2");
   ASSERT_STATUS_OK(maybe_column_2);
@@ -1007,8 +1249,8 @@ TEST(ReadModifyWrite, Unsetcase) {
   ASSERT_EQ(cells.size(), 1);
   auto cell_it = cells.begin();
   ASSERT_GE(cell_it->first, system_time_ms_before);
-  ASSERT_EQ(cell_it->second,
-            internal::EncodeBigEndian(static_cast<std::int64_t>(1)));
+  ASSERT_EQ(cell_it->second, ::google::cloud::internal::EncodeBigEndian(
+                                 static_cast<std::int64_t>(1)));
 
   auto maybe_cells_2 = GetColumn(table, "column_family", "0", "column_2");
   ASSERT_STATUS_OK(maybe_cells_2);
@@ -1051,9 +1293,11 @@ TEST(ReadModifyWrite, SetAndNewerTimestampCase) {
       {"column_family", "column_1", far_future_us, "older"},
       {"column_family", "column_1", far_future_us_latest, "latest"},
       {"column_family", "column_2", far_future_us,
-       internal::EncodeBigEndian(static_cast<std::int64_t>(100))},
+       ::google::cloud::internal::EncodeBigEndian(
+           static_cast<std::int64_t>(100))},
       {"column_family", "column_2", far_future_us_latest,
-       internal::EncodeBigEndian(static_cast<std::int64_t>(200))},
+       ::google::cloud::internal::EncodeBigEndian(
+           static_cast<std::int64_t>(200))},
   };
 
   auto status = SetCells(table, table_name, "0", p);
@@ -1099,20 +1343,22 @@ TEST(ReadModifyWrite, SetAndNewerTimestampCase) {
   col = maybe_column_2.value();
   ASSERT_EQ(col.cells_size(), 1);
   ASSERT_EQ(col.cells(0).timestamp_micros(), far_future_us_latest);
-  ASSERT_EQ(col.cells(0).value(),
-            internal::EncodeBigEndian(static_cast<std::int64_t>(201)));
+  ASSERT_EQ(col.cells(0).value(), ::google::cloud::internal::EncodeBigEndian(
+                                      static_cast<std::int64_t>(201)));
 
   ASSERT_STATUS_OK(
       HasCell(table, "column_family", "0", "column_1", far_future_us, "older"));
   ASSERT_STATUS_OK(HasCell(table, "column_family", "0", "column_1",
                            far_future_us_latest, "latest_with_suffix"));
 
-  ASSERT_STATUS_OK(
-      HasCell(table, "column_family", "0", "column_2", far_future_us,
-              internal::EncodeBigEndian(static_cast<std::int64_t>(100))));
-  ASSERT_STATUS_OK(
-      HasCell(table, "column_family", "0", "column_2", far_future_us_latest,
-              internal::EncodeBigEndian(static_cast<std::int64_t>(201))));
+  ASSERT_STATUS_OK(HasCell(table, "column_family", "0", "column_2",
+                           far_future_us,
+                           ::google::cloud::internal::EncodeBigEndian(
+                               static_cast<std::int64_t>(100))));
+  ASSERT_STATUS_OK(HasCell(table, "column_family", "0", "column_2",
+                           far_future_us_latest,
+                           ::google::cloud::internal::EncodeBigEndian(
+                               static_cast<std::int64_t>(201))));
 }
 
 // Test that the RPC does the right thing when the latest cell in the
@@ -1145,9 +1391,11 @@ TEST(ReadModifyWrite, SetAndOlderTimestampCase) {
       {"column_family", "column_1", far_past_us, "old"},
       {"column_family", "column_1", far_past_us_oldest, "oldest"},
       {"column_family", "column_2", far_past_us,
-       internal::EncodeBigEndian(static_cast<std::int64_t>(100))},
+       ::google::cloud::internal::EncodeBigEndian(
+           static_cast<std::int64_t>(100))},
       {"column_family", "column_2", far_past_us_oldest,
-       internal::EncodeBigEndian(static_cast<std::int64_t>(200))},
+       ::google::cloud::internal::EncodeBigEndian(
+           static_cast<std::int64_t>(200))},
   };
 
   auto status = SetCells(table, table_name, "0", p);
@@ -1200,7 +1448,8 @@ TEST(ReadModifyWrite, SetAndOlderTimestampCase) {
   ASSERT_EQ(integer_col.cells_size(), 1);
   ASSERT_GE(integer_col.cells(0).timestamp_micros(), system_time_us_before);
   ASSERT_EQ(integer_col.cells(0).value(),
-            internal::EncodeBigEndian(static_cast<std::int64_t>(101)));
+            ::google::cloud::internal::EncodeBigEndian(
+                static_cast<std::int64_t>(101)));
 
   ASSERT_STATUS_OK(
       HasCell(table, "column_family", "0", "column_1", far_past_us, "old"));
@@ -1209,16 +1458,17 @@ TEST(ReadModifyWrite, SetAndOlderTimestampCase) {
   ASSERT_STATUS_OK(HasCell(table, "column_family", "0", "column_1",
                            col.cells(0).timestamp_micros(), "old_with_suffix"));
 
-  ASSERT_STATUS_OK(
-      HasCell(table, "column_family", "0", "column_2", far_past_us,
-              internal::EncodeBigEndian(static_cast<std::int64_t>(100))));
-  ASSERT_STATUS_OK(
-      HasCell(table, "column_family", "0", "column_2", far_past_us_oldest,
-              internal::EncodeBigEndian(static_cast<std::int64_t>(200))));
-  ASSERT_STATUS_OK(
-      HasCell(table, "column_family", "0", "column_2",
-              integer_col.cells(0).timestamp_micros(),
-              internal::EncodeBigEndian(static_cast<std::int64_t>(101))));
+  ASSERT_STATUS_OK(HasCell(table, "column_family", "0", "column_2", far_past_us,
+                           ::google::cloud::internal::EncodeBigEndian(
+                               static_cast<std::int64_t>(100))));
+  ASSERT_STATUS_OK(HasCell(table, "column_family", "0", "column_2",
+                           far_past_us_oldest,
+                           ::google::cloud::internal::EncodeBigEndian(
+                               static_cast<std::int64_t>(200))));
+  ASSERT_STATUS_OK(HasCell(table, "column_family", "0", "column_2",
+                           integer_col.cells(0).timestamp_micros(),
+                           ::google::cloud::internal::EncodeBigEndian(
+                               static_cast<std::int64_t>(101))));
 }
 
 // Test that the RPC does the right thing when the latest cell in the

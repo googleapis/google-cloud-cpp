@@ -14,10 +14,15 @@
 
 #include "google/cloud/bigtable/emulator/column_family.h"
 #include "google/cloud/internal/big_endian.h"
+#include <google/bigtable/v2/types.pb.h>
 #include <absl/types/optional.h>
+#include <array>
 #include <chrono>
 #include <cstdint>
+#include <iterator>
 #include <map>
+#include <string>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -118,9 +123,32 @@ ReadModifyWriteCellResult ColumnRow::ReadModifyWrite(
 absl::optional<std::string> ColumnRow::SetCell(
     std::chrono::milliseconds timestamp, std::string const& value) {
   absl::optional<std::string> ret = absl::nullopt;
+
   auto cell_it = cells_.find(timestamp);
   if (!(cell_it == cells_.end())) {
     ret = std::move(cell_it->second);
+  }
+
+  cells_[timestamp] = value;
+
+  return ret;
+}
+
+StatusOr<absl::optional<std::string>> ColumnRow::UpdateCell(
+    std::chrono::milliseconds timestamp, std::string& value,
+    std::function<StatusOr<std::string>(std::string const&,
+                                        std::string&&)> const& update_fn) {
+  absl::optional<std::string> ret = absl::nullopt;
+
+  auto cell_it = cells_.find(timestamp);
+  if (!(cell_it == cells_.end())) {
+    auto maybe_update_value = update_fn(cell_it->second, std::move(value));
+    if (!maybe_update_value) {
+      return maybe_update_value.status();
+    }
+    ret = std::move(cell_it->second);
+    maybe_update_value.value().swap(cell_it->second);
+    return ret;
   }
 
   cells_[timestamp] = value;
@@ -166,6 +194,15 @@ absl::optional<std::string> ColumnFamilyRow::SetCell(
   return columns_[column_qualifier].SetCell(timestamp, value);
 }
 
+StatusOr<absl::optional<std::string>> ColumnFamilyRow::UpdateCell(
+    std::string const& column_qualifier, std::chrono::milliseconds timestamp,
+    std::string& value,
+    std::function<StatusOr<std::string>(std::string const&,
+                                        std::string&&)> const& update_fn) {
+  return columns_[column_qualifier].UpdateCell(timestamp, value,
+                                               std::move(update_fn));
+}
+
 std::vector<Cell> ColumnFamilyRow::DeleteColumn(
     std::string const& column_qualifier,
     ::google::bigtable::v2::TimestampRange const& time_range) {
@@ -201,6 +238,13 @@ absl::optional<std::string> ColumnFamily::SetCell(
   return rows_[row_key].SetCell(column_qualifier, timestamp, value);
 }
 
+StatusOr<absl::optional<std::string>> ColumnFamily::UpdateCell(
+    std::string const& row_key, std::string const& column_qualifier,
+    std::chrono::milliseconds timestamp, std::string& value) {
+  return rows_[row_key].UpdateCell(column_qualifier, timestamp, value,
+                                   update_cell_);
+}
+
 std::map<std::string, std::vector<Cell>> ColumnFamily::DeleteRow(
     std::string const& row_key) {
   std::map<std::string, std::vector<Cell>> res;
@@ -215,11 +259,11 @@ std::map<std::string, std::vector<Cell>> ColumnFamily::DeleteRow(
     ::google::bigtable::v2::TimestampRange time_range;
     auto deleted_cells = column.second.DeleteTimeRange(time_range);
     if (!deleted_cells.empty()) {
-      res[std::move(column.first)] = std::move(deleted_cells);
+      res[column.first] = std::move(deleted_cells);
     }
   }
 
-  rows_.erase(row_key);
+  rows_.erase(row_it);
 
   return res;
 }
@@ -385,6 +429,41 @@ bool FilteredColumnFamilyStream::PointToFirstCellAfterRowChange() const {
   return false;
 }
 
+StatusOr<std::shared_ptr<ColumnFamily>>
+ColumnFamily::ConstructAggregateColumnFamily(
+    google::bigtable::admin::v2::Type value_type) {
+  auto cf = std::make_shared<ColumnFamily>();
+
+  if (value_type.has_aggregate_type()) {
+    auto const& aggregate_type = value_type.aggregate_type();
+    switch (aggregate_type.aggregator_case()) {
+      case google::bigtable::admin::v2::Type::Aggregate::kSum:
+        cf->update_cell_ = cf->SumUpdateCellBEInt64;
+        break;
+      case google::bigtable::admin::v2::Type::Aggregate::kMin:
+        cf->update_cell_ = cf->MinUpdateCellBEInt64;
+        break;
+      case google::bigtable::admin::v2::Type::Aggregate::kMax:
+        cf->update_cell_ = cf->MaxUpdateCellBEInt64;
+        break;
+      default:
+        return InvalidArgumentError(
+            "unsupported aggregation type",
+            GCP_ERROR_INFO().WithMetadata(
+                "aggregation case",
+                absl::StrFormat("%d", aggregate_type.aggregator_case())));
+    }
+
+    cf->value_type_ = std::move(value_type);
+
+    return cf;
+  }
+
+  return InvalidArgumentError(
+      "no aggregate type set in the supplied value_type",
+      GCP_ERROR_INFO().WithMetadata("supplied value type",
+                                    value_type.DebugString()));
+}
 }  // namespace emulator
 }  // namespace bigtable
 }  // namespace cloud

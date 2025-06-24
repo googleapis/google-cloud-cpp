@@ -154,7 +154,8 @@ class RowTransaction {
                  absl::optional<std::chrono::milliseconds> timestamp_override =
                      absl::nullopt);
   Status AddToCell(
-      ::google::bigtable::v2::Mutation_AddToCell const& add_to_cell);
+      ::google::bigtable::v2::Mutation_AddToCell const& add_to_cell,
+      absl::optional<std::chrono::milliseconds> timestamp_override);
   Status MergeToCell(
       ::google::bigtable::v2::Mutation_MergeToCell const& merge_to_cell);
   Status DeleteFromColumn(

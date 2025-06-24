@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_EMULATOR_COLUMN_FAMILY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_EMULATOR_COLUMN_FAMILY_H
 
+#include "google/cloud/bigtable/cell.h"
 #include "google/cloud/bigtable/emulator/cell_view.h"
 #include "google/cloud/bigtable/emulator/filter.h"
 #include "google/cloud/bigtable/emulator/filtered_map.h"
@@ -22,10 +23,14 @@
 #include "google/cloud/bigtable/read_modify_write_rule.h"
 #include "google/cloud/internal/big_endian.h"
 #include "google/cloud/internal/make_status.h"
+#include "google/cloud/status_or.h"
 #include "absl/types/optional.h"
 #include <google/bigtable/admin/v2/table.pb.h>
 #include <google/bigtable/v2/data.pb.h>
+#include <google/bigtable/v2/types.pb.h>
+#include <absl/strings/str_format.h>
 #include <chrono>
+#include <cstdint>
 #include <map>
 #include <memory>
 #include <optional>
@@ -88,6 +93,12 @@ class ColumnRow {
    */
   absl::optional<std::string> SetCell(std::chrono::milliseconds timestamp,
                                       std::string const& value);
+
+  StatusOr<absl::optional<std::string>> UpdateCell(
+      std::chrono::milliseconds timestamp, std::string& value,
+      std::function<StatusOr<std::string>(std::string const&,
+                                          std::string&&)> const& update_fn);
+
   /**
    * Delete cells falling into a given timestamp range.
    *
@@ -173,6 +184,13 @@ class ColumnFamilyRow {
   absl::optional<std::string> SetCell(std::string const& column_qualifier,
                                       std::chrono::milliseconds timestamp,
                                       std::string const& value);
+
+  StatusOr<absl::optional<std::string>> UpdateCell(
+      std::string const& column_qualifier, std::chrono::milliseconds timestamp,
+      std::string& value,
+      std::function<StatusOr<std::string>(std::string const&,
+                                          std::string&&)> const& update_fn);
+
   /**
    * Delete cells falling into a given timestamp range in one column.
    *
@@ -237,6 +255,13 @@ class ColumnFamilyRow {
 class ColumnFamily {
  public:
   ColumnFamily() = default;
+  // ConstructAggregateColumnFamily can be used to return an aggregate
+  // ColumnFamily that can support AddToCell or MergeToCell and
+  // similar aggregate complex types. To construct an ordinary
+  // ColumnFamily, use the default constructor ColumnFamily().
+  static StatusOr<std::shared_ptr<ColumnFamily>> ConstructAggregateColumnFamily(
+      google::bigtable::admin::v2::Type value_type);
+
   // Disable copying.
   ColumnFamily(ColumnFamily const&) = delete;
   ColumnFamily& operator=(ColumnFamily const&) = delete;
@@ -274,6 +299,21 @@ class ColumnFamily {
                                       std::string const& column_qualifier,
                                       std::chrono::milliseconds timestamp,
                                       std::string const& value);
+
+  /**
+   * UpdateCell is like SetCell except that, when a cell exists with
+   * the same timestamp, an update function (that depends on the column
+   * family type) is called to derive a new value from the new and
+   * existing value, and that is the value that is written.
+   *
+   * Simple (non-aggregate) column families have a default update
+   * function that just returns the new value.
+   *
+   */
+  StatusOr<absl::optional<std::string>> UpdateCell(
+      std::string const& row_key, std::string const& column_qualifier,
+      std::chrono::milliseconds timestamp, std::string& value);
+
   /**
    * Delete the whole row from this column family.
    *
@@ -351,9 +391,81 @@ class ColumnFamily {
   }
 
   void clear() { rows_.clear(); }
+  absl::optional<google::bigtable::admin::v2::Type> GetValueType() {
+    return value_type_;
+  };
 
  private:
   std::map<std::string, ColumnFamilyRow> rows_;
+
+  // Support for aggregate and other complex types.
+  absl::optional<google::bigtable::admin::v2::Type> value_type_ = absl::nullopt;
+
+  static StatusOr<std::string> DefaultUpdateCell(
+      std::string const& /*existing_value*/, std::string&& new_value) {
+    return new_value;
+  };
+
+  static StatusOr<std::string> SumUpdateCellBEInt64(
+      std::string const& existing_value, std::string&& new_value) {
+    auto existing_value_int =
+        google::cloud::internal::DecodeBigEndian<std::int64_t>(existing_value);
+    if (!existing_value_int) {
+      return existing_value_int.status();
+    }
+
+    auto new_value_int =
+        google::cloud::internal::DecodeBigEndian<std::int64_t>(new_value);
+    if (!new_value_int) {
+      return new_value_int.status();
+    }
+
+    return google::cloud::internal::EncodeBigEndian(existing_value_int.value() +
+                                                    new_value_int.value());
+  };
+
+  static StatusOr<std::string> MaxUpdateCellBEInt64(
+      std::string const& existing_value, std::string&& new_value) {
+    auto existing_int =
+        google::cloud::internal::DecodeBigEndian<std::int64_t>(existing_value);
+    if (!existing_int) {
+      return existing_int.status();
+    }
+    auto new_int = google::cloud::internal::DecodeBigEndian<std::int64_t>(
+        std::move(new_value));
+    if (!new_int) {
+      return new_int.status();
+    }
+
+    if (existing_int.value() > new_int.value()) {
+      return existing_value;
+    }
+
+    return new_value;
+  };
+
+  static StatusOr<std::string> MinUpdateCellBEInt64(
+      std::string const& existing_value, std::string&& new_value) {
+    auto existing_int =
+        google::cloud::internal::DecodeBigEndian<std::int64_t>(existing_value);
+    if (!existing_int) {
+      return existing_int.status();
+    }
+    auto new_int = google::cloud::internal::DecodeBigEndian<std::int64_t>(
+        std::move(new_value));
+    if (!new_int) {
+      return new_int.status();
+    }
+
+    if (existing_int.value() < new_int.value()) {
+      return existing_value;
+    }
+
+    return new_value;
+  };
+
+  std::function<StatusOr<std::string>(std::string const&, std::string&&)>
+      update_cell_ = DefaultUpdateCell;
 };
 
 /**
