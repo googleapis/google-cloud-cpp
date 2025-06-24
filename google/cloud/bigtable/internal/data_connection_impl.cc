@@ -127,14 +127,15 @@ class MetricsRetryContextFactory : public RetryContextFactory {
   MetricsRetryContextFactory(Project project, std::string client_uid)
       : client_uid_(std::move(client_uid)) {
     auto resource_label_fn =
-        [self =
-             this](opentelemetry::sdk::common::AttributeMap const& attr_map) {
-          std::cout << ": MonitoredResourceFactory lambda called" << std::endl;
+        [self = this](opentelemetry::sdk::common::AttributeMap const&) {
+          std::cout << ": MetricsRetryContextFactory lambda called"
+                    << std::endl;
           google::api::MonitoredResource mr;
           mr.set_type("bigtable_client_raw");
           auto& labels = *mr.mutable_labels();
 
           auto const& l = self->resource_labels();
+          std::cout << "lambda labels=" << l << std::endl;
           labels["project_id"] = l.project_id;
           labels["instance"] = l.instance;
           labels["table"] = l.table;

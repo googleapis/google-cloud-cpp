@@ -53,6 +53,11 @@ struct ResourceLabels {
   std::string zone;
 };
 
+inline std::ostream& operator<<(std::ostream& os, ResourceLabels const& r) {
+  return os << r.project_id << "/" << r.instance << "/" << r.table << "/"
+            << r.cluster << "/" << r.zone;
+}
+
 struct DataLabels {
   std::string method;
   std::string streaming;
@@ -65,6 +70,8 @@ struct DataLabels {
 // using LabelMap = std::map<std::string, std::string>;
 otel::LabelMap IntoMap(MetricLabels labels);
 otel::LabelMap IntoMap(ResourceLabels const& r, DataLabels const& d);
+
+std::ostream& operator<<(std::ostream& os, otel::LabelMap const& m);
 
 class Metrics {
  public:
@@ -138,9 +145,9 @@ class AttemptLatency : public Metric {
     using dmilliseconds = std::chrono::duration<double, std::milli>;
     auto attempt_elapsed = std::chrono::duration_cast<dmilliseconds>(
         p.attempt_end - attempt_start_);
-    attempt_latencies_->Record(attempt_elapsed.count(),
-                               IntoMap(resource_labels_, data_labels_),
-                               context);
+    auto m = IntoMap(resource_labels_, data_labels_);
+    //    std::cout << __func__ << ": LabelMap=" << m << std::endl;
+    attempt_latencies_->Record(attempt_elapsed.count(), std::move(m), context);
   }
 
  private:
@@ -167,6 +174,14 @@ class OperationLatency : public Metric {
                PreCallParams p) override {
     operation_start_ = std::move(p.attempt_start);
   }
+
+  void PostCall(opentelemetry::context::Context const& context,
+                PostCallParams p) override {
+    resource_labels_.cluster = p.cluster;
+    resource_labels_.zone = p.zone;
+    data_labels_.status = StatusCodeToString(p.attempt_status.code());
+  }
+
   void OnDone(opentelemetry::context::Context const& context,
               OnDoneParams p) override {
     data_labels_.status = StatusCodeToString(p.operation_status.code());

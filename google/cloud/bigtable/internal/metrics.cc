@@ -22,6 +22,7 @@
 #include <opentelemetry/sdk/metrics/meter_context_factory.h>
 #include <opentelemetry/sdk/metrics/meter_provider_factory.h>
 // #include <google/api/monitored_resource.pb.h>
+#include "google/cloud/internal/absl_str_join_quiet.h"
 
 namespace google {
 namespace cloud {
@@ -64,6 +65,14 @@ otel::LabelMap IntoMap(ResourceLabels const& r, DataLabels const& d) {
       {"app_profile", d.app_profile},
       {"status", d.status},
   };
+}
+
+std::ostream& operator<<(std::ostream& os, otel::LabelMap const& m) {
+  return os << absl::StrJoin(
+             m, ", ",
+             [](std::string* out, std::pair<std::string, std::string> p) {
+               out->append(absl::StrCat(p.first, ":", p.second));
+             });
 }
 
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS

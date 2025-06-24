@@ -19,6 +19,7 @@
 #include "google/cloud/internal/noexcept_action.h"
 #include "google/cloud/log.h"
 #include "google/cloud/project.h"
+#include "absl/types/variant.h"
 #include <memory>
 
 namespace google {
@@ -73,10 +74,31 @@ class MonitoringExporter final
   bool Shutdown(std::chrono::microseconds) noexcept override { return true; }
 
  private:
+  opentelemetry::sdk::common::OrderedAttributeMap GrabMap(
+      opentelemetry::sdk::metrics::ResourceMetrics const& data) {
+    opentelemetry::sdk::common::OrderedAttributeMap attr_map;
+    for (auto const& scope_metric : data.scope_metric_data_) {
+      for (auto const& metric : scope_metric.metric_data_) {
+        for (auto const& point : metric.point_data_attr_) {
+          return point.attributes;
+        }
+      }
+    }
+    return attr_map;
+  }
+
   opentelemetry::sdk::common::ExportResult ExportImpl(
       opentelemetry::sdk::metrics::ResourceMetrics const& data) {
     std::cout << __func__ << std::endl;
     auto result = opentelemetry::sdk::common::ExportResult::kSuccess;
+
+    //    auto attr_map = GrabMap(data);
+    //    for (auto const& p : attr_map) {
+    //      std::cout << p.first << ": "
+    //                << (absl::holds_alternative<std::string>(p.second) ?
+    //                    absl::get<std::string>(p.second) : "not a string")
+    //                << std::endl;
+    //    }
 
     auto tss = otel_internal::ToTimeSeries(data, formatter_);
     if (tss.empty()) {
