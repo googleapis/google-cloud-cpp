@@ -79,12 +79,26 @@ class Transaction {
   };
 
   /**
+   * Read lock mode for ReadWrite transactions
+   * The Spanner V1 Transaction proto classes have their own enum
+   * implementations.
+   * See google::spanner::v1::TransactionOptions_ReadWrite_ReadLockMode
+   * This is a shorthand convenience for the developer.
+   */
+  enum class ReadLockMode {
+    kUnspecified,
+    kPessimistic,
+    kOptimistic,
+  };
+
+  /**
    * Options for ReadWrite transactions.
    */
   class ReadWriteOptions {
    public:
-    // There are currently no read-write options.
     ReadWriteOptions();
+
+    ReadWriteOptions(ReadLockMode read_lock_mode);
 
     // A tag used for collecting statistics about the transaction.
     ReadWriteOptions& WithTag(absl::optional<std::string> tag);
