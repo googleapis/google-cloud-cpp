@@ -74,6 +74,9 @@ class RetryContext {
   RetryContext(ResourceLabels resource_labels, DataLabels data_labels,
                std::vector<std::shared_ptr<Metric>> stub_applicable_metrics);
 
+  explicit RetryContext(
+      std::vector<std::shared_ptr<Metric>> stub_applicable_metrics);
+
   // Adds stored bigtable cookies as client metadata.
   void PreCall(grpc::ClientContext& context);
   // Stores bigtable cookies returned as server metadata.

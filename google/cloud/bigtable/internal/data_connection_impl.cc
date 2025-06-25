@@ -198,24 +198,31 @@ class MetricsRetryContextFactory : public RetryContextFactory {
       std::string const& app_profile_id) override {
     // parse table_name into component pieces
     // projets/<project>/instances/<instance>/tables/<table>
-    std::vector<absl::string_view> name_parts = absl::StrSplit(table_name, '/');
-    ResourceLabels resource_labels = {
-        std::string(name_parts[1]), std::string(name_parts[3]),
-        std::string(name_parts[5]), "" /*=cluster*/, "" /*=zone*/};
-    DataLabels data_labels = {"MutateRow",
-                              "false",  // streaming
-                              "cpp.Bigtable/" + version_string(),
-                              client_uid_,
-                              app_profile_id,
-                              "" /*=status*/};
-    std::vector<std::shared_ptr<Metric>> metrics;
-    metrics.push_back(std::make_shared<AttemptLatency>(
-        resource_labels, data_labels, "bigtable", "", provider_));
-    metrics.push_back(std::make_shared<OperationLatency>(
-        resource_labels, data_labels, "bigtable", "", provider_));
+    static bool const kMetricsInitialized = [this, &table_name,
+                                             &app_profile_id]() {
+      std::vector<std::shared_ptr<Metric>> v;
+      std::vector<absl::string_view> name_parts =
+          absl::StrSplit(table_name, '/');
+      ResourceLabels resource_labels = {
+          std::string(name_parts[1]), std::string(name_parts[3]),
+          std::string(name_parts[5]), "" /*=cluster*/, "" /*=zone*/};
+      DataLabels data_labels = {"MutateRow",
+                                "false",  // streaming
+                                "cpp.Bigtable/" + version_string(),
+                                client_uid_,
+                                app_profile_id,
+                                "" /*=status*/};
+      v.push_back(std::make_shared<AttemptLatency>(resource_labels, data_labels,
+                                                   "bigtable", "", provider_));
+      v.push_back(std::make_shared<OperationLatency>(
+          resource_labels, data_labels, "bigtable", "", provider_));
+      std::lock_guard<std::mutex> lock(mu_);
+      swap(mutate_row_metrics_, v);
+      return true;
+    }();
 
-    return std::make_shared<RetryContext>(
-        std::move(resource_labels), std::move(data_labels), std::move(metrics));
+    // this creates a copy, we may not want to make a copy
+    return std::make_shared<RetryContext>(mutate_row_metrics_);
   }
 
   std::shared_ptr<RetryContext> AsyncMutateRow()
@@ -255,7 +262,10 @@ class MetricsRetryContextFactory : public RetryContextFactory {
   ResourceLabels resource_labels_;
   std::string client_uid_;
   std::shared_ptr<opentelemetry::metrics::MeterProvider> provider_;
-  //  std::vector<std::shared_ptr<Metric>> metrics_;
+  //  std::shared_ptr<Metric> attempt_latency_;
+  //  std::shared_ptr<Metric> operation_latency_;
+  std::mutex mu_;
+  std::vector<std::shared_ptr<Metric>> mutate_row_metrics_;
 };
 
 bigtable::Row TransformReadModifyWriteRowResponse(
@@ -678,9 +688,9 @@ DataConnectionImpl::AsyncReadRow(std::string const& table_name,
       // Don't satisfy the promise before `OnStreamFinished`.
       //
       // The `CompletionQueue`, which this object holds a reference to, should
-      // not be shut down before `OnStreamFinished` is called. In order to make
-      // sure of that, satisying the `promise<>` is deferred until then - the
-      // user shouldn't shutdown the `CompletionQueue` before this whole
+      // not be shut down before `OnStreamFinished` is called. In order to
+      // make sure of that, satisying the `promise<>` is deferred until then -
+      // the user shouldn't shutdown the `CompletionQueue` before this whole
       // operation is done.
       return make_ready_future(false);
     }

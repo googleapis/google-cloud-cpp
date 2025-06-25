@@ -58,6 +58,10 @@ RetryContext::RetryContext(
       data_labels_(std::move(data_labels)),
       stub_applicable_metrics_(std::move(stub_applicable_metrics)) {}
 
+RetryContext::RetryContext(
+    std::vector<std::shared_ptr<Metric>> stub_applicable_metrics)
+    : stub_applicable_metrics_(std::move(stub_applicable_metrics)) {}
+
 void RetryContext::PreCall(grpc::ClientContext& context) {
   auto otel_context = opentelemetry::context::RuntimeContext::GetCurrent();
   auto attempt_start = std::chrono::system_clock::now();
