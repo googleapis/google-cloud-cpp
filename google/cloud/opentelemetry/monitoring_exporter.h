@@ -77,15 +77,6 @@ struct MonitoredResourceOption {
   using Type = google::api::MonitoredResource;
 };
 
-// this should be elsewhere
-using LabelMap = std::map<std::string, std::string>;
-
-// this should be internal
-struct MonitoredResourceFactoryOption {
-  using Type = std::function<google::api::MonitoredResource(
-      opentelemetry::sdk::common::AttributeMap const& attr_map)>;
-};
-
 std::unique_ptr<opentelemetry::sdk::metrics::PushMetricExporter>
 MakeMonitoringExporter(Project project, Options options = {});
 

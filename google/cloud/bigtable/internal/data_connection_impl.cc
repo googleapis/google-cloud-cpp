@@ -126,27 +126,9 @@ class MetricsRetryContextFactory : public RetryContextFactory {
  public:
   MetricsRetryContextFactory(Project project, std::string client_uid)
       : client_uid_(std::move(client_uid)) {
-    auto resource_label_fn =
-        [self = this](opentelemetry::sdk::common::AttributeMap const&) {
-          std::cout << ": MetricsRetryContextFactory lambda called"
-                    << std::endl;
-          google::api::MonitoredResource mr;
-          mr.set_type("bigtable_client_raw");
-          auto& labels = *mr.mutable_labels();
-
-          auto const& l = self->resource_labels();
-          std::cout << "lambda labels=" << l << std::endl;
-          labels["project_id"] = l.project_id;
-          labels["instance"] = l.instance;
-          labels["table"] = l.table;
-          labels["cluster"] = l.cluster;
-          labels["zone"] = l.zone;
-          return mr;
-        };
     auto o = Options{}
                  .set<LoggingComponentsOption>({"rpc"})
                  .set<otel::ServiceTimeSeriesOption>(true)
-                 .set<otel::MonitoredResourceFactoryOption>(resource_label_fn)
                  .set<otel::MetricNameFormatterOption>([](auto name) {
                    return "bigtable.googleapis.com/internal/client/" + name;
                  });
