@@ -34,8 +34,11 @@ google::protobuf::Duration ToProto(std::chrono::nanoseconds ns) {
   return proto;
 }
 
-google::spanner::v1::TransactionOptions_ReadWrite_ReadLockMode ToProto(Transaction::ReadLockMode read_lock_mode) {
-  return static_cast<google::spanner::v1::TransactionOptions_ReadWrite_ReadLockMode>(read_lock_mode);
+google::spanner::v1::TransactionOptions_ReadWrite_ReadLockMode ToProto(
+    Transaction::ReadLockMode read_lock_mode) {
+  return static_cast<
+      google::spanner::v1::TransactionOptions_ReadWrite_ReadLockMode>(
+      read_lock_mode);
 }
 
 google::spanner::v1::TransactionOptions MakeOpts(
@@ -77,8 +80,7 @@ Transaction::ReadOnlyOptions::ReadOnlyOptions(
 
 Transaction::ReadWriteOptions::ReadWriteOptions() = default;
 
-Transaction::ReadWriteOptions::ReadWriteOptions(
-    ReadLockMode read_lock_mode) {
+Transaction::ReadWriteOptions::ReadWriteOptions(ReadLockMode read_lock_mode) {
   rw_opts_.set_read_lock_mode(ToProto(read_lock_mode));
 }
 
@@ -87,7 +89,6 @@ Transaction::ReadWriteOptions& Transaction::ReadWriteOptions::WithTag(
   tag_ = std::move(tag);
   return *this;
 }
-
 
 Transaction::SingleUseOptions::SingleUseOptions(ReadOnlyOptions opts) {
   ro_opts_ = std::move(opts.ro_opts_);
