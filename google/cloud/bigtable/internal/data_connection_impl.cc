@@ -300,11 +300,12 @@ DataConnectionImpl::DataConnectionImpl(
     std::unique_ptr<BackgroundThreads> background,
     std::shared_ptr<BigtableStub> stub,
     std::shared_ptr<MutateRowsLimiter> limiter,
-    std::shared_ptr<Metrics> metrics, Options options)
+    //    std::shared_ptr<Metrics> metrics,
+    Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
       limiter_(std::move(limiter)),
-      metrics_(std::move(metrics)),
+      //      metrics_(std::move(metrics)),
       client_uid_(std::to_string(GetClientId())),
       options_(internal::MergeOptions(std::move(options),
                                       DataConnection::options())) {}

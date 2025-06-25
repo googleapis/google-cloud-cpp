@@ -75,6 +75,10 @@ std::ostream& operator<<(std::ostream& os, otel::LabelMap const& m) {
              });
 }
 
+Metric::~Metric() = default;
+
+#if 0
+
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
 namespace {
 
@@ -295,6 +299,7 @@ Metric::~Metric() = default;
 std::shared_ptr<Metrics> MakeMetrics() { return std::make_shared<Metrics>(); }
 
 #endif  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+#endif
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal

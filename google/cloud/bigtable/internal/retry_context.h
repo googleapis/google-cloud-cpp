@@ -59,9 +59,11 @@ class RetryContext {
   // TODO : remove when all RPCs are instrumented.
   RetryContext() = default;
 
-  RetryContext(std::shared_ptr<Metrics> metrics, std::string const& client_uid,
-               std::string const& method, std::string const& streaming,
-               std::string const& table_name, std::string const& app_profile);
+  //  RetryContext(std::shared_ptr<Metrics> metrics, std::string const&
+  //  client_uid,
+  //               std::string const& method, std::string const& streaming,
+  //               std::string const& table_name, std::string const&
+  //               app_profile);
 
   // obsolete experiment
   //  RetryContext(
@@ -71,8 +73,9 @@ class RetryContext {
   //      std::string const& app_profile);
 
   // for use with RetryContextFactory
-  RetryContext(ResourceLabels resource_labels, DataLabels data_labels,
-               std::vector<std::shared_ptr<Metric>> stub_applicable_metrics);
+  //  RetryContext(ResourceLabels resource_labels, DataLabels data_labels,
+  //               std::vector<std::shared_ptr<Metric>>
+  //               stub_applicable_metrics);
 
   explicit RetryContext(
       std::vector<std::shared_ptr<Metric>> stub_applicable_metrics);
@@ -88,15 +91,15 @@ class RetryContext {
   void FirstResponse(grpc::ClientContext const& context);
 
  private:
-  struct Metadata {
-    std::string cluster;
-    std::string zone;
-  };
+  //  struct Metadata {
+  //    std::string cluster;
+  //    std::string zone;
+  //  };
   // Adds cookies that start with "x-goog-cbt-cookie" to the cookie jar.
-  Metadata ProcessMetadata(
+  void ProcessMetadata(
       std::multimap<grpc::string_ref, grpc::string_ref> const& metadata);
 
-  std::shared_ptr<Metrics> metrics_ = nullptr;
+  //  std::shared_ptr<Metrics> metrics_ = nullptr;
   //  std::shared_ptr<std::vector<std::shared_ptr<Metric>>> metric_collection_;
   MetricLabels labels_ = {};
 

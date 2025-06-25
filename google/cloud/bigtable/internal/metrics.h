@@ -18,6 +18,9 @@
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/opentelemetry/monitoring_exporter.h"
 #include "google/cloud/status.h"
+#include "absl/strings/match.h"
+#include "absl/strings/str_split.h"
+#include <grpcpp/grpcpp.h>
 #include <opentelemetry/context/runtime_context.h>
 #include <opentelemetry/metrics/meter.h>
 #include <opentelemetry/metrics/meter_provider.h>
@@ -73,6 +76,7 @@ otel::LabelMap IntoMap(ResourceLabels const& r, DataLabels const& d);
 
 std::ostream& operator<<(std::ostream& os, otel::LabelMap const& m);
 
+#if 0
 class Metrics {
  public:
   virtual otel::LabelMap const& labels() const { return empty; }
@@ -86,7 +90,7 @@ class Metrics {
 };
 
 std::shared_ptr<Metrics> MakeMetrics();
-
+#endif
 // end darren's prototype
 
 struct PreCallParams {
@@ -96,8 +100,8 @@ struct PreCallParams {
 struct PostCallParams {
   std::chrono::system_clock::time_point attempt_end;
   google::cloud::Status attempt_status;
-  std::string cluster;
-  std::string zone;
+  //  std::string cluster;
+  //  std::string zone;
 };
 
 struct FirstResponseParams {
@@ -114,8 +118,12 @@ class Metric {
   virtual ~Metric() = 0;
   virtual void PreCall(opentelemetry::context::Context const& context,
                        PreCallParams p) {}
-  virtual void PostCall(opentelemetry::context::Context const& context,
-                        PostCallParams p) {}
+  virtual void PostCall(
+      opentelemetry::context::Context const& context,
+      std::multimap<grpc::string_ref, grpc::string_ref> const& initial_metadata,
+      std::multimap<grpc::string_ref, grpc::string_ref> const&
+          trailing_metadata,
+      PostCallParams p) {}
   virtual void FirstResponse(opentelemetry::context::Context const& context,
                              FirstResponseParams p) {}
   virtual void OnDone(opentelemetry::context::Context const& context,
@@ -137,10 +145,15 @@ class AttemptLatency : public Metric {
                PreCallParams p) override {
     attempt_start_ = std::move(p.attempt_start);
   }
-  void PostCall(opentelemetry::context::Context const& context,
-                PostCallParams p) override {
-    resource_labels_.cluster = p.cluster;
-    resource_labels_.zone = p.zone;
+  void PostCall(
+      opentelemetry::context::Context const& context,
+      std::multimap<grpc::string_ref, grpc::string_ref> const& initial_metadata,
+      std::multimap<grpc::string_ref, grpc::string_ref> const&
+          trailing_metadata,
+      PostCallParams p) override {
+    auto cluster_zone = ProcessMetadata(trailing_metadata);
+    resource_labels_.cluster = cluster_zone.cluster;
+    resource_labels_.zone = cluster_zone.zone;
     data_labels_.status = StatusCodeToString(p.attempt_status.code());
     using dmilliseconds = std::chrono::duration<double, std::milli>;
     auto attempt_elapsed = std::chrono::duration_cast<dmilliseconds>(
@@ -151,6 +164,38 @@ class AttemptLatency : public Metric {
   }
 
  private:
+  struct ClusterZone {
+    std::string cluster;
+    std::string zone;
+  };
+
+  ClusterZone ProcessMetadata(
+      std::multimap<grpc::string_ref, grpc::string_ref> const& metadata) {
+    ClusterZone cz;
+    for (auto const& kv : metadata) {
+      auto key = std::string{kv.first.data(), kv.first.size()};
+
+      if (absl::StartsWith(key, "x-goog-ext-425905942-bin")) {
+        //          std::cout << __func__ << " kv.first="  <<  kv.first << " : "
+        //              << "kv.second=" << kv.second << std::endl;
+        absl::string_view v{kv.second.data(), kv.second.size()};
+        v = absl::StripAsciiWhitespace(v);
+        //      // us-central1-ftest-instance-c1
+        std::vector<std::string> parts = absl::StrSplit(v, '-');
+        //      std::cout << __func__ << ": parts.size()=" << parts.size() <<
+        //      std::endl;
+        cz.zone =
+            absl::StrCat(parts[0], "-", parts[1], "-", parts[2].substr(0, 1));
+        cz.cluster =
+            absl::StrCat(parts[2].substr(1), "-", parts[3], "-", parts[4]);
+        //      std::cout << __func__ << ": zone=" << labels_.zone << std::endl;
+        //      std::cout << __func__ << ": cluster=" << labels_.cluster <<
+        //      std::endl;
+      }
+    }
+    return cz;
+  }
+
   ResourceLabels resource_labels_;
   DataLabels data_labels_;
   std::shared_ptr<opentelemetry::metrics::MeterProvider> provider_;
@@ -175,10 +220,15 @@ class OperationLatency : public Metric {
     operation_start_ = std::move(p.attempt_start);
   }
 
-  void PostCall(opentelemetry::context::Context const& context,
-                PostCallParams p) override {
-    resource_labels_.cluster = p.cluster;
-    resource_labels_.zone = p.zone;
+  void PostCall(
+      opentelemetry::context::Context const& context,
+      std::multimap<grpc::string_ref, grpc::string_ref> const& initial_metadata,
+      std::multimap<grpc::string_ref, grpc::string_ref> const&
+          trailing_metadata,
+      PostCallParams p) override {
+    auto cluster_zone = ProcessMetadata(trailing_metadata);
+    resource_labels_.cluster = cluster_zone.cluster;
+    resource_labels_.zone = cluster_zone.zone;
     data_labels_.status = StatusCodeToString(p.attempt_status.code());
   }
 
@@ -194,6 +244,38 @@ class OperationLatency : public Metric {
   }
 
  private:
+  struct ClusterZone {
+    std::string cluster;
+    std::string zone;
+  };
+
+  ClusterZone ProcessMetadata(
+      std::multimap<grpc::string_ref, grpc::string_ref> const& metadata) {
+    ClusterZone cz;
+    for (auto const& kv : metadata) {
+      auto key = std::string{kv.first.data(), kv.first.size()};
+
+      if (absl::StartsWith(key, "x-goog-ext-425905942-bin")) {
+        //          std::cout << __func__ << " kv.first="  <<  kv.first << " : "
+        //              << "kv.second=" << kv.second << std::endl;
+        absl::string_view v{kv.second.data(), kv.second.size()};
+        v = absl::StripAsciiWhitespace(v);
+        //      // us-central1-ftest-instance-c1
+        std::vector<std::string> parts = absl::StrSplit(v, '-');
+        //      std::cout << __func__ << ": parts.size()=" << parts.size() <<
+        //      std::endl;
+        cz.zone =
+            absl::StrCat(parts[0], "-", parts[1], "-", parts[2].substr(0, 1));
+        cz.cluster =
+            absl::StrCat(parts[2].substr(1), "-", parts[3], "-", parts[4]);
+        //      std::cout << __func__ << ": zone=" << labels_.zone << std::endl;
+        //      std::cout << __func__ << ": cluster=" << labels_.cluster <<
+        //      std::endl;
+      }
+    }
+    return cz;
+  }
+
   ResourceLabels resource_labels_;
   DataLabels data_labels_;
   std::shared_ptr<opentelemetry::metrics::MeterProvider> provider_;

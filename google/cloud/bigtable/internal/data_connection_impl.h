@@ -90,7 +90,8 @@ class DataConnectionImpl : public bigtable::DataConnection {
   DataConnectionImpl(std::unique_ptr<BackgroundThreads> background,
                      std::shared_ptr<BigtableStub> stub,
                      std::shared_ptr<MutateRowsLimiter> limiter,
-                     std::shared_ptr<Metrics> metrics, Options options);
+                     //                     std::shared_ptr<Metrics> metrics,
+                     Options options);
 
   Options options() override { return options_; }
 
@@ -151,8 +152,8 @@ class DataConnectionImpl : public bigtable::DataConnection {
   std::unique_ptr<BackgroundThreads> background_;
   std::shared_ptr<BigtableStub> stub_;
   std::shared_ptr<MutateRowsLimiter> limiter_;
-  std::shared_ptr<Metrics> metrics_;
-  std::shared_ptr<std::vector<std::shared_ptr<Metric>>> metric_collection_;
+  //  std::shared_ptr<Metrics> metrics_;
+  //  std::shared_ptr<std::vector<std::shared_ptr<Metric>>> metric_collection_;
   std::string client_uid_;
   Options options_;
 };
