@@ -236,7 +236,7 @@ google::api::MonitoredResource ToMonitoredResource(
   //  if (mr_proto) return *mr_proto;
   google::api::MonitoredResource resource;
   if (data.resource_ && data.resource_->GetAttributes().empty()) {
-    auto attr_map = GrabMap(data);
+    //    auto attr_map = GrabMap(data);
     resource.set_type("bigtable_client_raw");
     auto& labels = *resource.mutable_labels();
     labels["project_id"] =

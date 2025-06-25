@@ -59,30 +59,12 @@ class RetryContext {
   // TODO : remove when all RPCs are instrumented.
   RetryContext() = default;
 
-  //  RetryContext(std::shared_ptr<Metrics> metrics, std::string const&
-  //  client_uid,
-  //               std::string const& method, std::string const& streaming,
-  //               std::string const& table_name, std::string const&
-  //               app_profile);
-
-  // obsolete experiment
-  //  RetryContext(
-  //      std::shared_ptr<std::vector<std::shared_ptr<Metric>>>
-  //      metric_collection, std::string const& client_uid, std::string const&
-  //      method, std::string const& streaming, std::string const& table_name,
-  //      std::string const& app_profile);
-
-  // for use with RetryContextFactory
-  //  RetryContext(ResourceLabels resource_labels, DataLabels data_labels,
-  //               std::vector<std::shared_ptr<Metric>>
-  //               stub_applicable_metrics);
-
   explicit RetryContext(
       std::vector<std::shared_ptr<Metric>> stub_applicable_metrics);
 
-  // Adds stored bigtable cookies as client metadata.
+  // Called before each RPC attempt.
   void PreCall(grpc::ClientContext& context);
-  // Stores bigtable cookies returned as server metadata.
+  // Called after receiving RPC attempt response.
   void PostCall(grpc::ClientContext const& context,
                 google::cloud::Status const& status);
   // A hook that executes at the end of a client operation.
@@ -91,20 +73,8 @@ class RetryContext {
   void FirstResponse(grpc::ClientContext const& context);
 
  private:
-  //  struct Metadata {
-  //    std::string cluster;
-  //    std::string zone;
-  //  };
-  // Adds cookies that start with "x-goog-cbt-cookie" to the cookie jar.
   void ProcessMetadata(
       std::multimap<grpc::string_ref, grpc::string_ref> const& metadata);
-
-  //  std::shared_ptr<Metrics> metrics_ = nullptr;
-  //  std::shared_ptr<std::vector<std::shared_ptr<Metric>>> metric_collection_;
-  MetricLabels labels_ = {};
-
-  ResourceLabels resource_labels_;
-  DataLabels data_labels_;
 
   std::unordered_map<std::string, std::string> cookies_;
   int attempt_number_ = 0;
@@ -112,7 +82,7 @@ class RetryContext {
       std::chrono::system_clock::now();
   std::chrono::system_clock::time_point attempt_start_;
 
-  // newest idea, we call stub method specific factory functions that
+  // We call stub method specific factory functions that
   // populate the metrics that are supported on that stub method.
   // These metrics share a common interface that to record data analogous to
   // PreCall, PostCall, OnDone, etc. When the RetryContext method is called it
