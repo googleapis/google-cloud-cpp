@@ -36,7 +36,7 @@ std::ostream& operator<<(std::ostream& os, ResourceLabels const& r) {
             << r.cluster << "/" << r.zone;
 }
 
-otel::LabelMap IntoMap(ResourceLabels const& r, DataLabels const& d) {
+LabelMap IntoMap(ResourceLabels const& r, DataLabels const& d) {
   return {
       {"project_id", r.project_id},
       {"instance", r.instance},
@@ -52,7 +52,7 @@ otel::LabelMap IntoMap(ResourceLabels const& r, DataLabels const& d) {
   };
 }
 
-std::ostream& operator<<(std::ostream& os, otel::LabelMap const& m) {
+std::ostream& operator<<(std::ostream& os, LabelMap const& m) {
   return os << absl::StrJoin(
              m, ", ",
              [](std::string* out, std::pair<std::string, std::string> p) {
@@ -82,6 +82,7 @@ ClusterZone ProcessMetadata(
           absl::StrCat(parts[2].substr(1), "-", parts[3], "-", parts[4]);
     }
   }
+//  std::cout << __func__ << ": cluster=" << cz.cluster << std::endl;
   return cz;
 }
 

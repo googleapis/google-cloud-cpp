@@ -69,10 +69,9 @@ struct DataLabels {
   std::string status;
 };
 
-// probably not the correct header for these
-otel::LabelMap IntoMap(ResourceLabels const& r, DataLabels const& d);
-std::ostream& operator<<(std::ostream& os, otel::LabelMap const& m);
-// probably not the correct header for these
+using LabelMap = std::map<std::string, std::string>;
+LabelMap IntoMap(ResourceLabels const& r, DataLabels const& d);
+std::ostream& operator<<(std::ostream& os, LabelMap const& m);
 
 struct PreCallParams {
   std::chrono::system_clock::time_point attempt_start;
