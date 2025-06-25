@@ -28,6 +28,7 @@
 #include "google/cloud/internal/async_retry_loop.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/retry_loop.h"
+#include "google/api/monitored_resource.pb.h"
 #include <opentelemetry/context/runtime_context.h>
 #include <opentelemetry/sdk/metrics/export/periodic_exporting_metric_reader.h>
 #include <opentelemetry/sdk/metrics/export/periodic_exporting_metric_reader_factory.h>
@@ -122,17 +123,63 @@ class SimpleRetryContextFactory : public RetryContextFactory {
   }
 };
 
+opentelemetry::sdk::common::OrderedAttributeMap GrabMap(
+    opentelemetry::sdk::metrics::ResourceMetrics const& data) {
+  opentelemetry::sdk::common::OrderedAttributeMap attr_map;
+  for (auto const& scope_metric : data.scope_metric_data_) {
+    for (auto const& metric : scope_metric.metric_data_) {
+      for (auto const& point : metric.point_data_attr_) {
+        std::cout << __func__ << " data.scope_metric_data_.size()="
+                  << data.scope_metric_data_.size()
+                  << "; scope_metric.metric_data_.size()="
+                  << scope_metric.metric_data_.size()
+                  << "; metric.point_data_attr_.size()="
+                  << metric.point_data_attr_.size() << std::endl;
+        return point.attributes;
+      }
+    }
+  }
+  return attr_map;
+}
+
 class MetricsRetryContextFactory : public RetryContextFactory {
  public:
   MetricsRetryContextFactory(Project project, std::string client_uid)
       : client_uid_(std::move(client_uid)) {
+    std::cout << __func__ << std::endl;
+    auto fn = [](opentelemetry::sdk::metrics::ResourceMetrics const& data) {
+      google::api::MonitoredResource resource;
+      std::cout << __func__ << ": build MonitoredResource from attr_map"
+                << std::endl;
+      auto attr_map = GrabMap(data);
+      for (auto const& p : attr_map) {
+        std::cout << p.first << ": "
+                  << (absl::holds_alternative<std::string>(p.second)
+                          ? absl::get<std::string>(p.second)
+                          : "not a string")
+                  << std::endl;
+      }
+
+      resource.set_type("bigtable_client_raw");
+      auto& labels = *resource.mutable_labels();
+      labels["project_id"] =
+          absl::get<std::string>(attr_map.find("project_id")->second);
+      labels["instance"] =
+          absl::get<std::string>(attr_map.find("instance")->second);
+      labels["cluster"] =
+          absl::get<std::string>(attr_map.find("cluster")->second);
+      labels["table"] = absl::get<std::string>(attr_map.find("table")->second);
+      labels["zone"] = absl::get<std::string>(attr_map.find("zone")->second);
+
+      return resource;
+    };
     auto o = Options{}
                  .set<LoggingComponentsOption>({"rpc"})
                  .set<otel::ServiceTimeSeriesOption>(true)
                  .set<otel::MetricNameFormatterOption>([](auto name) {
                    return "bigtable.googleapis.com/internal/client/" + name;
                  });
-    auto exporter = otel::MakeMonitoringExporter(project, std::move(o));
+    auto exporter = otel::MakeMonitoringExporter(project, fn, std::move(o));
     auto options =
         opentelemetry::sdk::metrics::PeriodicExportingMetricReaderOptions{};
     // Empirically, it seems like 30s is the minimum.
@@ -159,8 +206,6 @@ class MetricsRetryContextFactory : public RetryContextFactory {
 
     auto meter = provider_->GetMeter("bigtable", "");
   }
-
-  ResourceLabels const& resource_labels() const { return resource_labels_; }
 
   // ReadRow is a synthetic RPC and should appear in metrics as if it's a
   // different RPC than ReadRows with row_limit=1.
@@ -241,13 +286,10 @@ class MetricsRetryContextFactory : public RetryContextFactory {
   }
 
  private:
-  ResourceLabels resource_labels_;
   std::string client_uid_;
   std::shared_ptr<opentelemetry::metrics::MeterProvider> provider_;
-  //  std::shared_ptr<Metric> attempt_latency_;
-  //  std::shared_ptr<Metric> operation_latency_;
-  std::mutex mu_;
-  std::vector<std::shared_ptr<Metric>> mutate_row_metrics_;
+  std::mutex mu_;  // may not be needed
+  std::vector<std::shared_ptr<Metric>> mutate_row_metrics_;  // GUARDED_BY(mu_)
 };
 
 bigtable::Row TransformReadModifyWriteRowResponse(

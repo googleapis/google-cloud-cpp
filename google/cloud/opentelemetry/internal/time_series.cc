@@ -74,7 +74,6 @@ google::api::Metric ToMetric(
     opentelemetry::sdk::metrics::PointAttributes const& attributes,
     opentelemetry::sdk::resource::Resource const* resource,
     std::function<std::string(std::string)> const& name_formatter) {
-  //  std::cout << __PRETTY_FUNCTION__ << std::endl;
   auto add_label = [](auto& labels, auto key, auto const& value) {
     // GCM labels match on the regex: R"([a-zA-Z_][a-zA-Z0-9_]*)".
     if (key.empty()) return;
@@ -145,7 +144,6 @@ google::monitoring::v3::TimeInterval ToNonGaugeTimeInterval(
 google::monitoring::v3::TimeSeries ToTimeSeries(
     opentelemetry::sdk::metrics::MetricData const& metric_data,
     opentelemetry::sdk::metrics::SumPointData const& sum_data) {
-  //  std::cout << __PRETTY_FUNCTION__ << std::endl;
   google::monitoring::v3::TimeSeries ts;
   ts.set_metric_kind(google::api::MetricDescriptor::CUMULATIVE);
   ts.set_value_type(ToValueType(metric_data.instrument_descriptor.value_type_));
@@ -159,7 +157,6 @@ google::monitoring::v3::TimeSeries ToTimeSeries(
 google::monitoring::v3::TimeSeries ToTimeSeries(
     opentelemetry::sdk::metrics::MetricData const& metric_data,
     opentelemetry::sdk::metrics::LastValuePointData const& gauge_data) {
-  //  std::cout << __PRETTY_FUNCTION__ << std::endl;
   google::monitoring::v3::TimeSeries ts;
   ts.set_metric_kind(google::api::MetricDescriptor::GAUGE);
   ts.set_value_type(ToValueType(metric_data.instrument_descriptor.value_type_));
@@ -175,7 +172,6 @@ google::monitoring::v3::TimeSeries ToTimeSeries(
 google::monitoring::v3::TimeSeries ToTimeSeries(
     opentelemetry::sdk::metrics::MetricData const& metric_data,
     opentelemetry::sdk::metrics::HistogramPointData const& histogram_data) {
-  //  std::cout << __PRETTY_FUNCTION__ << std::endl;
   google::monitoring::v3::TimeSeries ts;
   ts.set_metric_kind(google::api::MetricDescriptor::CUMULATIVE);
   ts.set_value_type(google::api::MetricDescriptor::DISTRIBUTION);
@@ -198,57 +194,12 @@ google::monitoring::v3::TimeSeries ToTimeSeries(
   return ts;
 }
 
-opentelemetry::sdk::common::OrderedAttributeMap GrabMap(
-    opentelemetry::sdk::metrics::ResourceMetrics const& data) {
-  opentelemetry::sdk::common::OrderedAttributeMap attr_map;
-  for (auto const& scope_metric : data.scope_metric_data_) {
-    for (auto const& metric : scope_metric.metric_data_) {
-      for (auto const& point : metric.point_data_attr_) {
-        std::cout << __func__ << " data.scope_metric_data_.size()="
-                  << data.scope_metric_data_.size()
-                  << "; scope_metric.metric_data_.size()="
-                  << scope_metric.metric_data_.size()
-                  << "; metric.point_data_attr_.size()="
-                  << metric.point_data_attr_.size() << std::endl;
-        return point.attributes;
-      }
-    }
-  }
-  return attr_map;
-}
-
 google::api::MonitoredResource ToMonitoredResource(
     opentelemetry::sdk::metrics::ResourceMetrics const& data,
     absl::optional<google::api::MonitoredResource> const& mr_proto) {
-  std::cout << __func__ << " data.resource_->GetAttributes().size()="
-            << data.resource_->GetAttributes().size() << std::endl;
-  std::cout << __func__ << " data.scope_metric_data_.size()="
-            << data.scope_metric_data_.size() << std::endl;
-  auto attr_map = GrabMap(data);
-  for (auto const& p : attr_map) {
-    std::cout << p.first << ": "
-              << (absl::holds_alternative<std::string>(p.second)
-                      ? absl::get<std::string>(p.second)
-                      : "not a string")
-              << std::endl;
-  }
-
-  //  if (mr_proto) return *mr_proto;
+  if (mr_proto) return *mr_proto;
   google::api::MonitoredResource resource;
-  if (data.resource_ && data.resource_->GetAttributes().empty()) {
-    std::cout << __func__ << ": build MonitoredResource from attr_map" << std::endl;
-    //    auto attr_map = GrabMap(data);
-    resource.set_type("bigtable_client_raw");
-    auto& labels = *resource.mutable_labels();
-    labels["project_id"] =
-        absl::get<std::string>(attr_map.find("project_id")->second);
-    labels["instance"] =
-        absl::get<std::string>(attr_map.find("instance")->second);
-    labels["cluster"] =
-        absl::get<std::string>(attr_map.find("cluster")->second);
-    labels["table"] = absl::get<std::string>(attr_map.find("table")->second);
-    labels["zone"] = absl::get<std::string>(attr_map.find("zone")->second);
-  } else if (data.resource_) {
+  if (data.resource_) {
     auto mr = ToMonitoredResource(data.resource_->GetAttributes());
     resource.set_type(std::move(mr.type));
     for (auto& label : mr.labels) {

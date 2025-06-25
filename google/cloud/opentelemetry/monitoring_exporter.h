@@ -75,8 +75,13 @@ struct MonitoredResourceOption {
   using Type = google::api::MonitoredResource;
 };
 
+using MonitoredResourceFromDataFn =
+    std::function<google::api::MonitoredResource(
+        opentelemetry::sdk::metrics::ResourceMetrics const&)>;
+
 std::unique_ptr<opentelemetry::sdk::metrics::PushMetricExporter>
-MakeMonitoringExporter(Project project, Options options = {});
+MakeMonitoringExporter(Project project, MonitoredResourceFromDataFn fn,
+                       Options options = {});
 
 std::unique_ptr<opentelemetry::sdk::metrics::PushMetricExporter>
 MakeMonitoringExporter(

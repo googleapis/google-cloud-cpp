@@ -82,7 +82,7 @@ ClusterZone ProcessMetadata(
           absl::StrCat(parts[2].substr(1), "-", parts[3], "-", parts[4]);
     }
   }
-//  std::cout << __func__ << ": cluster=" << cz.cluster << std::endl;
+  //  std::cout << __func__ << ": cluster=" << cz.cluster << std::endl;
   return cz;
 }
 
