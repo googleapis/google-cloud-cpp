@@ -771,7 +771,7 @@ void CheckExecuteQueryWithSingleUseOptions(
 }
 
 /// @test Verify the `ReadLockMode` option is sent in the RPC by creating a
-/// situation where a transaction A perfomrs a commit while a transaction B
+/// situation where a transaction A performs a commit while a transaction B
 /// performed one after tx A started.
 TEST_F(ClientIntegrationTest, ReadLockModeOptionIsSent) {
   if (UsingEmulator()) {
