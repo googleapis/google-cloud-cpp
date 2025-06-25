@@ -41,15 +41,30 @@ class ObjectDescriptorReaderTracing : public ObjectDescriptorReader {
   ~ObjectDescriptorReaderTracing() override = default;
 
   future<ObjectDescriptorReader::ReadResponse> Read() override {
+    auto span = internal::MakeSpan("storage::AsyncConnection::ReadObjectRange");
+    internal::OTelScope scope(span);
     return ObjectDescriptorReader::Read().then(
-        [](
+        [span = std::move(span),
+         oc = opentelemetry::context::RuntimeContext::GetCurrent()](
             auto f) -> ReadResponse {
           auto result = f.get();
-          // internal::DetachOTelContext(oc);
+          internal::DetachOTelContext(oc);
           if (!absl::holds_alternative<Status>(result)) {
             auto const& payload =
                 absl::get<storage_experimental::ReadPayload>(result);
 
+            span->AddEvent(
+                "gl-cpp.read-range",
+                {{/*sc::kRpcMessageType=*/"rpc.message.type", "RECEIVED"},
+                 {sc::kThreadId, internal::CurrentThreadId()},
+                 {"message.size", static_cast<std::uint32_t>(payload.size())}});
+          } else {
+            span->AddEvent(
+                "gl-cpp.read-range",
+                {{/*sc::kRpcMessageType=*/"rpc.message.type", "RECEIVED"},
+                 {sc::kThreadId, internal::CurrentThreadId()}});
+            return internal::EndSpan(*span,
+                                     absl::get<Status>(std::move(result)));
           }
           return result;
         });
