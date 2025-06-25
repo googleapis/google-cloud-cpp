@@ -42,20 +42,22 @@ class MonitoringExporter final
   MonitoringExporter(
       Project project,
       std::shared_ptr<monitoring_v3::MetricServiceConnection> conn,
-      MonitoredResourceFromDataFn fn, Options const& options)
+      otel_internal::MonitoredResourceFromDataFn resource_fn,
+      otel_internal::ResourceFilterDataFn filter_fn, Options const& options)
       : project_(std::move(project)),
         client_(std::move(conn)),
         formatter_(options.get<MetricNameFormatterOption>()),
         use_service_time_series_(options.get<ServiceTimeSeriesOption>()),
         mr_proto_(internal::FetchOption<MonitoredResourceOption>(options)),
-        fn_(std::move(fn)) {}
+        resource_fn_(std::move(resource_fn)),
+        filter_fn_(std::move(filter_fn)) {}
 
   MonitoringExporter(
       Project project,
       std::shared_ptr<monitoring_v3::MetricServiceConnection> conn,
       Options const& options)
       : MonitoringExporter(std::move(project), std::move(conn), nullptr,
-                           options) {}
+                           nullptr, options) {}
 
   opentelemetry::sdk::metrics::AggregationTemporality GetAggregationTemporality(
       opentelemetry::sdk::metrics::InstrumentType) const noexcept override {
@@ -82,7 +84,7 @@ class MonitoringExporter final
       opentelemetry::sdk::metrics::ResourceMetrics const& data) {
     auto result = opentelemetry::sdk::common::ExportResult::kSuccess;
 
-    auto tss = otel_internal::ToTimeSeries(data, formatter_);
+    auto tss = otel_internal::ToTimeSeries(data, formatter_, filter_fn_);
     if (tss.empty()) {
       GCP_LOG(INFO) << "Cloud Monitoring Export skipped. No data.";
       // Return early to save the littlest bit of processing.
@@ -90,9 +92,9 @@ class MonitoringExporter final
     }
 
     google::api::MonitoredResource mr;
-    if (fn_) {
+    if (resource_fn_) {
       std::cout << __func__ << ": calling lambda" << std::endl;
-      mr = fn_(data);
+      mr = resource_fn_(data);
     } else {
       std::cout << __func__ << ": NOT calling lambda" << std::endl;
       mr = otel_internal::ToMonitoredResource(data, mr_proto_);
@@ -125,19 +127,10 @@ class MonitoringExporter final
   MetricNameFormatterOption::Type formatter_;
   bool use_service_time_series_;
   absl::optional<google::api::MonitoredResource> mr_proto_;
-  MonitoredResourceFromDataFn fn_;
+  otel_internal::MonitoredResourceFromDataFn resource_fn_;
+  otel_internal::ResourceFilterDataFn filter_fn_;
 };
 }  // namespace
-
-std::unique_ptr<opentelemetry::sdk::metrics::PushMetricExporter>
-MakeMonitoringExporter(Project project, MonitoredResourceFromDataFn fn,
-                       Options options) {
-  auto connection = monitoring_v3::MakeMetricServiceConnection();
-  options = DefaultOptions(std::move(options));
-  return std::make_unique<MonitoringExporter>(
-      std::move(project), std::move(connection), std::move(fn),
-      std::move(options));
-}
 
 std::unique_ptr<opentelemetry::sdk::metrics::PushMetricExporter>
 MakeMonitoringExporter(
@@ -151,5 +144,22 @@ MakeMonitoringExporter(
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace otel
+
+// TODO: move this to a file in google/cloud/opentelemetry/internal
+namespace otel_internal {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+std::unique_ptr<opentelemetry::sdk::metrics::PushMetricExporter>
+MakeMonitoringExporter(Project project, MonitoredResourceFromDataFn resource_fn,
+                       ResourceFilterDataFn filter_fn, Options options) {
+  auto connection = monitoring_v3::MakeMetricServiceConnection();
+  options = otel::DefaultOptions(std::move(options));
+  return std::make_unique<otel::MonitoringExporter>(
+      std::move(project), std::move(connection), std::move(resource_fn),
+      std::move(filter_fn), std::move(options));
+}
+
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace otel_internal
 }  // namespace cloud
 }  // namespace google

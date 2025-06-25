@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OPENTELEMETRY_INTERNAL_TIME_SERIES_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OPENTELEMETRY_INTERNAL_TIME_SERIES_H
 
+#include "google/cloud/opentelemetry/monitoring_exporter.h"
 #include "google/cloud/version.h"
 #include "absl/types/optional.h"
 #include <google/api/metric.pb.h>
@@ -77,7 +78,8 @@ google::api::MonitoredResource ToMonitoredResource(
  */
 std::vector<google::monitoring::v3::TimeSeries> ToTimeSeries(
     opentelemetry::sdk::metrics::ResourceMetrics const& data,
-    std::function<std::string(std::string)> const& metrics_name_formatter);
+    std::function<std::string(std::string)> const& metrics_name_formatter,
+    ResourceFilterDataFn const& resource_filter_fn);
 
 /**
  * Convert from OpenTelemetry metrics to Cloud Monitoring protos.

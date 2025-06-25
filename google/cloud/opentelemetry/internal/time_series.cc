@@ -73,8 +73,10 @@ google::api::Metric ToMetric(
     opentelemetry::sdk::metrics::MetricData const& metric_data,
     opentelemetry::sdk::metrics::PointAttributes const& attributes,
     opentelemetry::sdk::resource::Resource const* resource,
-    std::function<std::string(std::string)> const& name_formatter) {
-  auto add_label = [](auto& labels, auto key, auto const& value) {
+    std::function<std::string(std::string)> const& name_formatter,
+    ResourceFilterDataFn const& resource_filter_fn) {
+  auto add_label = [&resource_filter_fn](auto& labels, auto key,
+                                         auto const& value) {
     // GCM labels match on the regex: R"([a-zA-Z_][a-zA-Z0-9_]*)".
     if (key.empty()) return;
     if (!std::isalpha(key[0]) && key[0] != '_') {
@@ -86,12 +88,7 @@ google::api::Metric ToMetric(
     for (auto& c : key) {
       if (!std::isalnum(c)) c = '_';
     }
-    // TODO : Add an option and use it to filter the labels. For now we do it by
-    // hand.
-    auto skip = std::set<std::string>{
-        "zone", "cluster", "instance", "table", "project_id",
-    };
-    if (skip.count(key) == 1) return;
+    if (resource_filter_fn(key)) return;
     labels[std::move(key)] = AsString(value);
   };
 
@@ -212,7 +209,8 @@ google::api::MonitoredResource ToMonitoredResource(
 
 std::vector<google::monitoring::v3::TimeSeries> ToTimeSeries(
     opentelemetry::sdk::metrics::ResourceMetrics const& data,
-    std::function<std::string(std::string)> const& metrics_name_formatter) {
+    std::function<std::string(std::string)> const& metrics_name_formatter,
+    ResourceFilterDataFn const& resource_filter_fn) {
   std::cout << __func__ << " data.resource_->GetAttributes().size()="
             << data.resource_->GetAttributes().size() << std::endl;
   std::cout << __func__ << " data.scope_metric_data_.size()="
@@ -246,7 +244,7 @@ std::vector<google::monitoring::v3::TimeSeries> ToTimeSeries(
         ts->set_unit(metric_data.instrument_descriptor.unit_);
         *ts->mutable_metric() =
             ToMetric(metric_data, pda.attributes, data.resource_,
-                     metrics_name_formatter);
+                     metrics_name_formatter, resource_filter_fn);
         tss.push_back(*std::move(ts));
       }
     }

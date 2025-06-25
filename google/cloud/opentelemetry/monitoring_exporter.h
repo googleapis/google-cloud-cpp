@@ -75,14 +75,6 @@ struct MonitoredResourceOption {
   using Type = google::api::MonitoredResource;
 };
 
-using MonitoredResourceFromDataFn =
-    std::function<google::api::MonitoredResource(
-        opentelemetry::sdk::metrics::ResourceMetrics const&)>;
-
-std::unique_ptr<opentelemetry::sdk::metrics::PushMetricExporter>
-MakeMonitoringExporter(Project project, MonitoredResourceFromDataFn fn,
-                       Options options = {});
-
 std::unique_ptr<opentelemetry::sdk::metrics::PushMetricExporter>
 MakeMonitoringExporter(
     Project project,
@@ -91,6 +83,23 @@ MakeMonitoringExporter(
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace otel
+
+// TODO: move this to a file in google/cloud/opentelemetry/internal
+namespace otel_internal {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+using MonitoredResourceFromDataFn =
+    std::function<google::api::MonitoredResource(
+        opentelemetry::sdk::metrics::ResourceMetrics const&)>;
+
+using ResourceFilterDataFn = std::function<bool(std::string const&)>;
+
+std::unique_ptr<opentelemetry::sdk::metrics::PushMetricExporter>
+MakeMonitoringExporter(Project project, MonitoredResourceFromDataFn resource_fn,
+                       ResourceFilterDataFn filter_fn, Options options = {});
+
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace otel_internal
 }  // namespace cloud
 }  // namespace google
 
