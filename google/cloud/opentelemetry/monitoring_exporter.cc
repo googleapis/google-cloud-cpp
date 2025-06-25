@@ -19,7 +19,6 @@
 #include "google/cloud/internal/noexcept_action.h"
 #include "google/cloud/log.h"
 #include "google/cloud/project.h"
-#include "absl/types/variant.h"
 #include <memory>
 
 namespace google {
@@ -73,7 +72,6 @@ class MonitoringExporter final
  private:
   opentelemetry::sdk::common::ExportResult ExportImpl(
       opentelemetry::sdk::metrics::ResourceMetrics const& data) {
-    std::cout << __func__ << std::endl;
     auto result = opentelemetry::sdk::common::ExportResult::kSuccess;
 
     auto tss = otel_internal::ToTimeSeries(data, formatter_);
@@ -83,9 +81,8 @@ class MonitoringExporter final
       return result;
     }
 
-    absl::optional<google::api::MonitoredResource> mr_proto = mr_proto_;
 
-    auto mr = otel_internal::ToMonitoredResource(data, mr_proto);
+    auto mr = otel_internal::ToMonitoredResource(data, mr_proto_);
     auto requests =
         otel_internal::ToRequests(project_.FullName(), mr, std::move(tss));
     for (auto& request : requests) {
@@ -119,7 +116,6 @@ class MonitoringExporter final
 
 std::unique_ptr<opentelemetry::sdk::metrics::PushMetricExporter>
 MakeMonitoringExporter(Project project, Options options) {
-  std::cout << __func__ << std::endl;
   return MakeMonitoringExporter(
       std::move(project), monitoring_v3::MakeMetricServiceConnection(options),
       std::move(options));

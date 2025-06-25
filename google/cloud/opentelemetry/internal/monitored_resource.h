@@ -16,7 +16,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OPENTELEMETRY_INTERNAL_MONITORED_RESOURCE_H
 
 #include "google/cloud/version.h"
-#include <google/api/monitored_resource.pb.h>
 #include <opentelemetry/sdk/resource/resource.h>
 #include <string>
 #include <unordered_map>

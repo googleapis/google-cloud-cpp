@@ -19,10 +19,8 @@
 #include "google/cloud/opentelemetry/internal/recordable.h"
 #include "google/cloud/project.h"
 #include "google/cloud/version.h"
-#include "google/api/monitored_resource.pb.h"
 #include <opentelemetry/sdk/metrics/push_metric_exporter.h>
 #include <functional>
-#include <map>
 #include <memory>
 #include <string>
 
