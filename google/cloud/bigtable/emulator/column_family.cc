@@ -33,7 +33,8 @@ namespace emulator {
 // timestamps. Remove when that is fixed and they are in decreasing
 // order, at which point we can just pick the first element.
 std::map<std::chrono::milliseconds, std::string>::iterator latest(
-    std::map<std::chrono::milliseconds, std::string>& cells_not_empty) {
+    std::map<std::chrono::milliseconds, std::string, std::greater<>>&
+        cells_not_empty) {
   assert(!cells_not_empty.empty());
 
   auto first_it = cells_not_empty.begin();
