@@ -121,7 +121,6 @@ google::api::Metric ToMetric(
 
 google::monitoring::v3::TimeInterval ToNonGaugeTimeInterval(
     opentelemetry::sdk::metrics::MetricData const& metric_data) {
-  //  std::cout << __PRETTY_FUNCTION__ << std::endl;
   // GCM requires that time intervals for non-GAUGE metrics are at least 1ms
   // long. To achieve this, we override the end value to be at least 1ms after
   // the start value.

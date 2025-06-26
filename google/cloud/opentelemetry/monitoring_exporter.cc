@@ -93,10 +93,8 @@ class MonitoringExporter final
 
     google::api::MonitoredResource mr;
     if (resource_fn_) {
-      std::cout << __func__ << ": calling lambda" << std::endl;
       mr = resource_fn_(data);
     } else {
-      std::cout << __func__ << ": NOT calling lambda" << std::endl;
       mr = otel_internal::ToMonitoredResource(data, mr_proto_);
     }
     auto requests =
