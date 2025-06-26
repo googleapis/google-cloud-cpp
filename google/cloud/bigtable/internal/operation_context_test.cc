@@ -34,16 +34,16 @@ class RetryContextTest : public ::testing::Test {
   testing_util::ValidateMetadataFixture metadata_fixture_;
 
   /**
-   * Simulate receiving server metadata, using the given `RetryContext`.
+   * Simulate receiving server metadata, using the given `OperationContext`.
    *
-   * Returns the headers that would be set by the `RetryContext`, before the
+   * Returns the headers that would be set by the `OperationContext`, before the
    * next RPC.
    *
    * While it may seem odd to simulate the second half of an RPC, and the first
    * half of another, it makes the tests simpler.
    */
   std::multimap<std::string, std::string> SimulateRequest(
-      RetryContext& retry_context, RpcMetadata const& server_metadata = {}) {
+      OperationContext& retry_context, RpcMetadata const& server_metadata = {}) {
     grpc::ClientContext c1;
     metadata_fixture_.SetServerMetadata(c1, server_metadata);
     retry_context.PostCall(c1);
@@ -56,7 +56,7 @@ class RetryContextTest : public ::testing::Test {
 };
 
 TEST_F(RetryContextTest, StartsWithoutBigtableCookies) {
-  RetryContext retry_context;
+  OperationContext retry_context;
 
   grpc::ClientContext c;
   retry_context.PreCall(c);
@@ -65,7 +65,7 @@ TEST_F(RetryContextTest, StartsWithoutBigtableCookies) {
 }
 
 TEST_F(RetryContextTest, ParrotsBigtableCookies) {
-  RetryContext retry_context;
+  OperationContext retry_context;
 
   RpcMetadata server_metadata;
   server_metadata.headers = {
@@ -88,7 +88,7 @@ TEST_F(RetryContextTest, ParrotsBigtableCookies) {
 }
 
 TEST_F(RetryContextTest, Retries) {
-  RetryContext retry_context;
+  OperationContext retry_context;
 
   auto headers = SimulateRequest(
       retry_context, {{}, {{"x-goog-cbt-cookie-routing", "request-0"}}});

@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/bigtable/internal/retry_context.h"
+#include "google/cloud/bigtable/internal/operation_context.h"
 #include "absl/strings/match.h"
 #include "absl/strings/str_split.h"
 
@@ -21,11 +21,11 @@ namespace cloud {
 namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-RetryContext::RetryContext(
+OperationContext::OperationContext(
     std::vector<std::shared_ptr<Metric>> stub_applicable_metrics)
     : stub_applicable_metrics_(std::move(stub_applicable_metrics)) {}
 
-void RetryContext::PreCall(grpc::ClientContext& context) {
+void OperationContext::PreCall(grpc::ClientContext& context) {
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
   auto otel_context = opentelemetry::context::RuntimeContext::GetCurrent();
   auto attempt_start = std::chrono::system_clock::now();
@@ -40,7 +40,7 @@ void RetryContext::PreCall(grpc::ClientContext& context) {
   context.AddMetadata("bigtable-attempt", std::to_string(attempt_number_++));
 }
 
-void RetryContext::PostCall(grpc::ClientContext const& context,
+void OperationContext::PostCall(grpc::ClientContext const& context,
                             google::cloud::Status const& status) {
   ProcessMetadata(context.GetServerInitialMetadata());
   ProcessMetadata(context.GetServerTrailingMetadata());
@@ -55,7 +55,7 @@ void RetryContext::PostCall(grpc::ClientContext const& context,
 #endif
 }
 
-void RetryContext::OnDone(Status const& s) {
+void OperationContext::OnDone(Status const& s) {
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
   auto operation_end = std::chrono::system_clock::now();
   auto otel_context = opentelemetry::context::RuntimeContext::GetCurrent();
@@ -65,7 +65,7 @@ void RetryContext::OnDone(Status const& s) {
 #endif
 }
 
-void RetryContext::FirstResponse(grpc::ClientContext const&) {
+void OperationContext::FirstResponse(grpc::ClientContext const&) {
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
   auto otel_context = opentelemetry::context::RuntimeContext::GetCurrent();
   auto first_response = std::chrono::system_clock::now();
@@ -75,7 +75,7 @@ void RetryContext::FirstResponse(grpc::ClientContext const&) {
 #endif
 }
 
-void RetryContext::ProcessMetadata(
+void OperationContext::ProcessMetadata(
     std::multimap<grpc::string_ref, grpc::string_ref> const& metadata) {
   for (auto const& kv : metadata) {
     auto key = std::string{kv.first.data(), kv.first.size()};

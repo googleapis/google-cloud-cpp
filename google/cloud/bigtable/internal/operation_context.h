@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_RETRY_CONTEXT_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_RETRY_CONTEXT_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_OPERATION_CONTEXT_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_OPERATION_CONTEXT_H
 
 #include "google/cloud/bigtable/internal/metrics.h"
 #include "google/cloud/bigtable/version.h"
@@ -41,25 +41,25 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * @code
  * Result Connection::Foo() {
- *   RetryContext retry_context;
+ *   OperationContext operation_context;
  *   auto result = RetryLoop(...,
- *     [retry_context, &stub] (auto& context, auto const& request) {
- *       retry_context.PreCall(context);
+ *     [operation_context, &stub] (auto& context, auto const& request) {
+ *       operation_context.PreCall(context);
  *       auto result = stub.Foo(context, request);
- *       retry_context.PostCall(context);
+ *       operation_context.PostCall(context);
  *       return result;
  *     }, ...);
- *   retry_context.OnDone(result.status());
+ *   operation_context.OnDone(result.status());
  *   return result;
  * }
  * @endcode
  */
-class RetryContext {
+class OperationContext {
  public:
   // TODO : remove when all RPCs are instrumented.
-  RetryContext() = default;
+  OperationContext() = default;
 
-  explicit RetryContext(
+  explicit OperationContext(
       std::vector<std::shared_ptr<Metric>> stub_applicable_metrics);
 
   // Called before each RPC attempt.
@@ -85,7 +85,7 @@ class RetryContext {
   // We call stub method specific factory functions that
   // populate the metrics that are supported on that stub method.
   // These metrics share a common interface that to record data analogous to
-  // PreCall, PostCall, OnDone, etc. When the RetryContext method is called it
+  // PreCall, PostCall, OnDone, etc. When the OperationContext method is called it
   // iterates through the metrics calling that function on the MetricInterface.
   std::vector<std::shared_ptr<Metric>> stub_applicable_metrics_;
 };
@@ -95,4 +95,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_RETRY_CONTEXT_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_OPERATION_CONTEXT_H

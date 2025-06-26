@@ -19,7 +19,7 @@
 #include "google/cloud/bigtable/internal/bigtable_stub.h"
 #include "google/cloud/bigtable/internal/metrics.h"
 #include "google/cloud/bigtable/internal/mutate_rows_limiter.h"
-#include "google/cloud/bigtable/internal/retry_context.h"
+#include "google/cloud/bigtable/internal/operation_context.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -36,49 +36,49 @@ class RetryContextFactory {
   virtual ~RetryContextFactory() = 0;
   // ReadRow is a synthetic RPC and should appear in metrics as if it's a
   // different RPC than ReadRows with row_limit=1.
-  virtual std::shared_ptr<RetryContext> ReadRow() {
-    return std::make_shared<RetryContext>();
+  virtual std::shared_ptr<OperationContext> ReadRow() {
+    return std::make_shared<OperationContext>();
   }
-  virtual std::shared_ptr<RetryContext> ReadRows() {
-    return std::make_shared<RetryContext>();
+  virtual std::shared_ptr<OperationContext> ReadRows() {
+    return std::make_shared<OperationContext>();
   }
-  virtual std::shared_ptr<RetryContext> AsyncReadRows() {
-    return std::make_shared<RetryContext>();
+  virtual std::shared_ptr<OperationContext> AsyncReadRows() {
+    return std::make_shared<OperationContext>();
   }
-  virtual std::shared_ptr<RetryContext> MutateRow(std::string const&,
+  virtual std::shared_ptr<OperationContext> MutateRow(std::string const&,
                                                   std::string const&) {
-    return std::make_shared<RetryContext>();
+    return std::make_shared<OperationContext>();
   }
-  virtual std::shared_ptr<RetryContext> AsyncMutateRow(
+  virtual std::shared_ptr<OperationContext> AsyncMutateRow(
       std::string const&, std::string const&) {  // not currently used
-    return std::make_shared<RetryContext>();
+    return std::make_shared<OperationContext>();
   }
-  virtual std::shared_ptr<RetryContext> MutateRows(std::string const&,
+  virtual std::shared_ptr<OperationContext> MutateRows(std::string const&,
                                                    std::string const&) {
-    return std::make_shared<RetryContext>();
+    return std::make_shared<OperationContext>();
   }
-  virtual std::shared_ptr<RetryContext> AsyncMutateRows(std::string const&,
+  virtual std::shared_ptr<OperationContext> AsyncMutateRows(std::string const&,
                                                         std::string const&) {
-    return std::make_shared<RetryContext>();
+    return std::make_shared<OperationContext>();
   }
-  virtual std::shared_ptr<RetryContext> CheckandMutateRow() {
-    return std::make_shared<RetryContext>();
+  virtual std::shared_ptr<OperationContext> CheckandMutateRow() {
+    return std::make_shared<OperationContext>();
   }
-  virtual std::shared_ptr<RetryContext> AsyncCheckandMutateRow() {
-    return std::make_shared<RetryContext>();
+  virtual std::shared_ptr<OperationContext> AsyncCheckandMutateRow() {
+    return std::make_shared<OperationContext>();
   }
-  virtual std::shared_ptr<RetryContext> SampleRowKeys() {
-    return std::make_shared<RetryContext>();
+  virtual std::shared_ptr<OperationContext> SampleRowKeys() {
+    return std::make_shared<OperationContext>();
   }
-  virtual std::shared_ptr<RetryContext> AsyncSampleRowKeys() {
-    return std::make_shared<RetryContext>();
+  virtual std::shared_ptr<OperationContext> AsyncSampleRowKeys() {
+    return std::make_shared<OperationContext>();
   }
 
-  virtual std::shared_ptr<RetryContext> ReadModifyWriteRow() {
-    return std::make_shared<RetryContext>();
+  virtual std::shared_ptr<OperationContext> ReadModifyWriteRow() {
+    return std::make_shared<OperationContext>();
   }
-  virtual std::shared_ptr<RetryContext> AsyncReadModifyWriteRow() {
-    return std::make_shared<RetryContext>();
+  virtual std::shared_ptr<OperationContext> AsyncReadModifyWriteRow() {
+    return std::make_shared<OperationContext>();
   }
 };
 

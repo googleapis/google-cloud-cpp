@@ -29,7 +29,7 @@ future<std::vector<bigtable::FailedMutation>> AsyncBulkApplier::Create(
     std::unique_ptr<BackoffPolicy> backoff_policy, bool enable_server_retries,
     bigtable::IdempotentMutationPolicy& idempotent_policy,
     std::string const& app_profile_id, std::string const& table_name,
-    bigtable::BulkMutation mut, std::shared_ptr<RetryContext> retry_context) {
+    bigtable::BulkMutation mut, std::shared_ptr<OperationContext> operation_context) {
   if (mut.empty()) {
     return make_ready_future(std::vector<bigtable::FailedMutation>{});
   }
@@ -38,7 +38,7 @@ future<std::vector<bigtable::FailedMutation>> AsyncBulkApplier::Create(
       std::move(cq), std::move(stub), std::move(limiter),
       std::move(retry_policy), std::move(backoff_policy), enable_server_retries,
       idempotent_policy, app_profile_id, table_name, std::move(mut),
-      std::move(retry_context)));
+      std::move(operation_context)));
   bulk_apply->StartIteration();
   return bulk_apply->promise_.get_future();
 }
@@ -50,7 +50,7 @@ AsyncBulkApplier::AsyncBulkApplier(
     std::unique_ptr<BackoffPolicy> backoff_policy, bool enable_server_retries,
     bigtable::IdempotentMutationPolicy& idempotent_policy,
     std::string const& app_profile_id, std::string const& table_name,
-    bigtable::BulkMutation mut, std::shared_ptr<RetryContext> retry_context)
+    bigtable::BulkMutation mut, std::shared_ptr<OperationContext> operation_context)
     : cq_(std::move(cq)),
       stub_(std::move(stub)),
       limiter_(std::move(limiter)),
@@ -61,7 +61,7 @@ AsyncBulkApplier::AsyncBulkApplier(
       promise_([this] { keep_reading_ = false; }),
       options_(internal::SaveCurrentOptions()),
       call_context_(options_),
-      retry_context_(std::move(retry_context)) {}
+      operation_context_(std::move(operation_context)) {}
 
 void AsyncBulkApplier::StartIteration() {
   auto self = this->shared_from_this();
@@ -75,7 +75,7 @@ void AsyncBulkApplier::MakeRequest() {
   internal::ScopedCallContext scope(call_context_);
   context_ = std::make_shared<grpc::ClientContext>();
   internal::ConfigureContext(*context_, *call_context_.options);
-  retry_context_->PreCall(*context_);
+  operation_context_->PreCall(*context_);
 
   auto self = this->shared_from_this();
   PerformAsyncStreamingRead(
@@ -107,7 +107,7 @@ void AsyncBulkApplier::OnFinish(Status const& status) {
     return;
   }
 
-  retry_context_->PostCall(*context_, status);
+  operation_context_->PostCall(*context_, status);
   context_.reset();
   auto self = this->shared_from_this();
   internal::TracedAsyncBackoff(cq_, *call_context_.options, *delay,

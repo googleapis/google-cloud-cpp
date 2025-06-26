@@ -19,7 +19,7 @@
 #include "google/cloud/bigtable/internal/async_streaming_read.h"
 #include "google/cloud/bigtable/internal/bigtable_stub.h"
 #include "google/cloud/bigtable/internal/readrowsparser.h"
-#include "google/cloud/bigtable/internal/retry_context.h"
+#include "google/cloud/bigtable/internal/operation_context.h"
 #include "google/cloud/bigtable/options.h"
 #include "google/cloud/bigtable/row.h"
 #include "google/cloud/bigtable/row_set.h"
@@ -176,8 +176,8 @@ class AsyncRowReader : public std::enable_shared_from_this<AsyncRowReader> {
   internal::ImmutableOptions options_;
   internal::CallContext call_context_;
   std::shared_ptr<grpc::ClientContext> context_;
-  std::shared_ptr<RetryContext> retry_context_ =
-      std::make_shared<RetryContext>();
+  std::shared_ptr<OperationContext> operation_context_ =
+      std::make_shared<OperationContext>();
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

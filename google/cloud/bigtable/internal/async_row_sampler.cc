@@ -64,7 +64,7 @@ void AsyncRowSampler::StartIteration() {
   internal::ScopedCallContext scope(call_context_);
   context_ = std::make_shared<grpc::ClientContext>();
   internal::ConfigureContext(*context_, *call_context_.options);
-  retry_context_->PreCall(*context_);
+  operation_context_->PreCall(*context_);
 
   auto self = this->shared_from_this();
   PerformAsyncStreamingRead<v2::SampleRowKeysResponse>(
@@ -96,7 +96,7 @@ void AsyncRowSampler::OnFinish(Status const& status) {
     return;
   }
 
-  retry_context_->PostCall(*context_, status);
+  operation_context_->PostCall(*context_, status);
   context_.reset();
   samples_.clear();
   auto self = this->shared_from_this();

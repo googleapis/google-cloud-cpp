@@ -19,7 +19,7 @@
 #include "google/cloud/bigtable/internal/bulk_mutator.h"
 #include "google/cloud/bigtable/internal/default_row_reader.h"
 #include "google/cloud/bigtable/internal/defaults.h"
-#include "google/cloud/bigtable/internal/retry_context.h"
+#include "google/cloud/bigtable/internal/operation_context.h"
 #include "google/cloud/bigtable/options.h"
 #include "google/cloud/opentelemetry/monitoring_exporter.h"
 #include "google/cloud/background_threads.h"
@@ -73,56 +73,56 @@ class SimpleRetryContextFactory : public RetryContextFactory {
  public:
   // ReadRow is a synthetic RPC and should appear in metrics as if it's a
   // different RPC than ReadRows with row_limit=1.
-  std::shared_ptr<RetryContext> ReadRow() override {
-    return std::make_shared<RetryContext>();
+  std::shared_ptr<OperationContext> ReadRow() override {
+    return std::make_shared<OperationContext>();
   }
 
-  std::shared_ptr<RetryContext> ReadRows() override {
-    return std::make_shared<RetryContext>();
+  std::shared_ptr<OperationContext> ReadRows() override {
+    return std::make_shared<OperationContext>();
   }
-  std::shared_ptr<RetryContext> AsyncReadRows() override {
-    return std::make_shared<RetryContext>();
+  std::shared_ptr<OperationContext> AsyncReadRows() override {
+    return std::make_shared<OperationContext>();
   }
 
-  std::shared_ptr<RetryContext> MutateRow(std::string const&,
+  std::shared_ptr<OperationContext> MutateRow(std::string const&,
                                           std::string const&) override {
-    return std::make_shared<RetryContext>();
+    return std::make_shared<OperationContext>();
   }
 
-  std::shared_ptr<RetryContext> AsyncMutateRow(
+  std::shared_ptr<OperationContext> AsyncMutateRow(
       std::string const&,
       std::string const&) override {  // not currently used
-    return std::make_shared<RetryContext>();
+    return std::make_shared<OperationContext>();
   }
 
-  std::shared_ptr<RetryContext> MutateRows(std::string const&,
+  std::shared_ptr<OperationContext> MutateRows(std::string const&,
                                            std::string const&) override {
-    return std::make_shared<RetryContext>();
+    return std::make_shared<OperationContext>();
   }
-  std::shared_ptr<RetryContext> AsyncMutateRows(std::string const&,
+  std::shared_ptr<OperationContext> AsyncMutateRows(std::string const&,
                                                 std::string const&) override {
-    return std::make_shared<RetryContext>();
+    return std::make_shared<OperationContext>();
   }
 
-  std::shared_ptr<RetryContext> CheckandMutateRow() override {
-    return std::make_shared<RetryContext>();
+  std::shared_ptr<OperationContext> CheckandMutateRow() override {
+    return std::make_shared<OperationContext>();
   }
-  std::shared_ptr<RetryContext> AsyncCheckandMutateRow() override {
-    return std::make_shared<RetryContext>();
-  }
-
-  std::shared_ptr<RetryContext> SampleRowKeys() override {
-    return std::make_shared<RetryContext>();
-  }
-  std::shared_ptr<RetryContext> AsyncSampleRowKeys() override {
-    return std::make_shared<RetryContext>();
+  std::shared_ptr<OperationContext> AsyncCheckandMutateRow() override {
+    return std::make_shared<OperationContext>();
   }
 
-  std::shared_ptr<RetryContext> ReadModifyWriteRow() override {
-    return std::make_shared<RetryContext>();
+  std::shared_ptr<OperationContext> SampleRowKeys() override {
+    return std::make_shared<OperationContext>();
   }
-  std::shared_ptr<RetryContext> AsyncReadModifyWriteRow() override {
-    return std::make_shared<RetryContext>();
+  std::shared_ptr<OperationContext> AsyncSampleRowKeys() override {
+    return std::make_shared<OperationContext>();
+  }
+
+  std::shared_ptr<OperationContext> ReadModifyWriteRow() override {
+    return std::make_shared<OperationContext>();
+  }
+  std::shared_ptr<OperationContext> AsyncReadModifyWriteRow() override {
+    return std::make_shared<OperationContext>();
   }
 };
 
@@ -223,18 +223,18 @@ class MetricsRetryContextFactory : public RetryContextFactory {
 
   // ReadRow is a synthetic RPC and should appear in metrics as if it's a
   // different RPC than ReadRows with row_limit=1.
-  std::shared_ptr<RetryContext> ReadRow() override {
-    return std::make_shared<RetryContext>();
+  std::shared_ptr<OperationContext> ReadRow() override {
+    return std::make_shared<OperationContext>();
   }
 
-  std::shared_ptr<RetryContext> ReadRows() override {
-    return std::make_shared<RetryContext>();
+  std::shared_ptr<OperationContext> ReadRows() override {
+    return std::make_shared<OperationContext>();
   }
-  std::shared_ptr<RetryContext> AsyncReadRows() override {
-    return std::make_shared<RetryContext>();
+  std::shared_ptr<OperationContext> AsyncReadRows() override {
+    return std::make_shared<OperationContext>();
   }
 
-  std::shared_ptr<RetryContext> MutateRow(
+  std::shared_ptr<OperationContext> MutateRow(
       std::string const& table_name,
       std::string const& app_profile_id) override {
     static bool const kMetricsInitialized = [this, &table_name,
@@ -258,12 +258,12 @@ class MetricsRetryContextFactory : public RetryContextFactory {
 
     // this creates a copy, we may not want to make a copy
     if (kMetricsInitialized) {
-      return std::make_shared<RetryContext>(mutate_row_metrics_);
+      return std::make_shared<OperationContext>(mutate_row_metrics_);
     }
-    return std::make_shared<RetryContext>();
+    return std::make_shared<OperationContext>();
   }
 
-  std::shared_ptr<RetryContext> AsyncMutateRow(
+  std::shared_ptr<OperationContext> AsyncMutateRow(
       std::string const& table_name,
       std::string const& app_profile_id) override {  // not currently used
     static bool const kMetricsInitialized = [this, &table_name,
@@ -287,12 +287,12 @@ class MetricsRetryContextFactory : public RetryContextFactory {
 
     // this creates a copy, we may not want to make a copy
     if (kMetricsInitialized) {
-      return std::make_shared<RetryContext>(mutate_row_metrics_);
+      return std::make_shared<OperationContext>(mutate_row_metrics_);
     }
-    return std::make_shared<RetryContext>();
+    return std::make_shared<OperationContext>();
   }
 
-  std::shared_ptr<RetryContext> MutateRows(
+  std::shared_ptr<OperationContext> MutateRows(
       std::string const& table_name,
       std::string const& app_profile_id) override {
     static bool const kMetricsInitialized = [this, &table_name,
@@ -316,12 +316,12 @@ class MetricsRetryContextFactory : public RetryContextFactory {
 
     // this creates a copy, we may not want to make a copy
     if (kMetricsInitialized) {
-      return std::make_shared<RetryContext>(mutate_rows_metrics_);
+      return std::make_shared<OperationContext>(mutate_rows_metrics_);
     }
-    return std::make_shared<RetryContext>();
+    return std::make_shared<OperationContext>();
   }
 
-  std::shared_ptr<RetryContext> AsyncMutateRows(
+  std::shared_ptr<OperationContext> AsyncMutateRows(
       std::string const& table_name,
       std::string const& app_profile_id) override {
     static bool const kMetricsInitialized = [this, &table_name,
@@ -345,30 +345,30 @@ class MetricsRetryContextFactory : public RetryContextFactory {
 
     // this creates a copy, we may not want to make a copy
     if (kMetricsInitialized) {
-      return std::make_shared<RetryContext>(mutate_rows_metrics_);
+      return std::make_shared<OperationContext>(mutate_rows_metrics_);
     }
-    return std::make_shared<RetryContext>();
+    return std::make_shared<OperationContext>();
   }
 
-  std::shared_ptr<RetryContext> CheckandMutateRow() override {
-    return std::make_shared<RetryContext>();
+  std::shared_ptr<OperationContext> CheckandMutateRow() override {
+    return std::make_shared<OperationContext>();
   }
-  std::shared_ptr<RetryContext> AsyncCheckandMutateRow() override {
-    return std::make_shared<RetryContext>();
-  }
-
-  std::shared_ptr<RetryContext> SampleRowKeys() override {
-    return std::make_shared<RetryContext>();
-  }
-  std::shared_ptr<RetryContext> AsyncSampleRowKeys() override {
-    return std::make_shared<RetryContext>();
+  std::shared_ptr<OperationContext> AsyncCheckandMutateRow() override {
+    return std::make_shared<OperationContext>();
   }
 
-  std::shared_ptr<RetryContext> ReadModifyWriteRow() override {
-    return std::make_shared<RetryContext>();
+  std::shared_ptr<OperationContext> SampleRowKeys() override {
+    return std::make_shared<OperationContext>();
   }
-  std::shared_ptr<RetryContext> AsyncReadModifyWriteRow() override {
-    return std::make_shared<RetryContext>();
+  std::shared_ptr<OperationContext> AsyncSampleRowKeys() override {
+    return std::make_shared<OperationContext>();
+  }
+
+  std::shared_ptr<OperationContext> ReadModifyWriteRow() override {
+    return std::make_shared<OperationContext>();
+  }
+  std::shared_ptr<OperationContext> AsyncReadModifyWriteRow() override {
+    return std::make_shared<OperationContext>();
   }
 
  private:
@@ -446,22 +446,22 @@ Status DataConnectionImpl::Apply(std::string const& table_name,
         return idempotent_policy->is_idempotent(m);
       });
 
-  auto retry_context =
+  auto operation_context =
       retry_context_factory_->MutateRow(table_name, app_profile_id(*current));
 
   auto sor = google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       is_idempotent ? Idempotency::kIdempotent : Idempotency::kNonIdempotent,
-      [this, retry_context](
+      [this, operation_context](
           grpc::ClientContext& context, Options const& options,
           google::bigtable::v2::MutateRowRequest const& request) {
-        retry_context->PreCall(context);
+        operation_context->PreCall(context);
         auto s = stub_->MutateRow(context, options, request);
-        retry_context->PostCall(context, s.status());
+        operation_context->PostCall(context, s.status());
         return s;
       },
       *current, request, __func__);
-  retry_context->OnDone(sor.status());
+  operation_context->OnDone(sor.status());
   if (!sor) return std::move(sor).status();
   return Status{};
 }
@@ -481,7 +481,7 @@ future<Status> DataConnectionImpl::AsyncApply(std::string const& table_name,
         return idempotent_policy->is_idempotent(m);
       });
 
-  auto retry_context = retry_context_factory_->AsyncMutateRow(
+  auto operation_context = retry_context_factory_->AsyncMutateRow(
       table_name, app_profile_id(*current));
   auto retry = retry_policy(*current);
   auto backoff = backoff_policy(*current);
@@ -490,26 +490,26 @@ future<Status> DataConnectionImpl::AsyncApply(std::string const& table_name,
              is_idempotent ? Idempotency::kIdempotent
                            : Idempotency::kNonIdempotent,
              background_->cq(),
-             [stub = stub_, retry_context](
+             [stub = stub_, operation_context](
                  CompletionQueue& cq,
                  std::shared_ptr<grpc::ClientContext> context,
                  google::cloud::internal::ImmutableOptions options,
                  google::bigtable::v2::MutateRowRequest const& request) {
-               retry_context->PreCall(*context);
+               operation_context->PreCall(*context);
                auto f = stub->AsyncMutateRow(cq, context, std::move(options),
                                              request);
                return f.then(
-                   [retry_context, context = std::move(context)](auto f) {
+                   [operation_context, context = std::move(context)](auto f) {
                      auto s = f.get();
-                     retry_context->PostCall(*context, s.status());
+                     operation_context->PostCall(*context, s.status());
                      return s;
                    });
              },
              std::move(current), request, __func__)
-      .then([retry_context](
+      .then([operation_context](
                 future<StatusOr<google::bigtable::v2::MutateRowResponse>> f) {
         auto sor = f.get();
-        retry_context->OnDone(sor.status());
+        operation_context->OnDone(sor.status());
         if (!sor) return std::move(sor).status();
         return Status{};
       });
@@ -519,11 +519,11 @@ std::vector<bigtable::FailedMutation> DataConnectionImpl::BulkApply(
     std::string const& table_name, bigtable::BulkMutation mut) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (mut.empty()) return {};
-  auto retry_context =
+  auto operation_context =
       retry_context_factory_->MutateRows(table_name, app_profile_id(*current));
   BulkMutator mutator(app_profile_id(*current), table_name,
                       *idempotency_policy(*current), std::move(mut),
-                      std::move(retry_context));
+                      std::move(operation_context));
   // We wait to allocate the policies until they are needed as a
   // micro-optimization.
   std::unique_ptr<bigtable::DataRetryPolicy> retry;
@@ -546,13 +546,13 @@ future<std::vector<bigtable::FailedMutation>>
 DataConnectionImpl::AsyncBulkApply(std::string const& table_name,
                                    bigtable::BulkMutation mut) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto retry_context =
+  auto operation_context =
       retry_context_factory_->MutateRows(table_name, app_profile_id(*current));
   return AsyncBulkApplier::Create(
       background_->cq(), stub_, limiter_, retry_policy(*current),
       backoff_policy(*current), enable_server_retries(*current),
       *idempotency_policy(*current), app_profile_id(*current), table_name,
-      std::move(mut), std::move(retry_context));
+      std::move(mut), std::move(operation_context));
 }
 
 bigtable::RowReader DataConnectionImpl::ReadRowsFull(
@@ -608,15 +608,15 @@ StatusOr<bigtable::MutationBranch> DataConnectionImpl::CheckAndMutateRow(
   auto const idempotency = idempotency_policy(*current)->is_idempotent(request)
                                ? Idempotency::kIdempotent
                                : Idempotency::kNonIdempotent;
-  RetryContext retry_context;
+  OperationContext operation_context;
   auto sor = google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current), idempotency,
-      [this, &retry_context](
+      [this, &operation_context](
           grpc::ClientContext& context, Options const& options,
           google::bigtable::v2::CheckAndMutateRowRequest const& request) {
-        retry_context.PreCall(context);
+        operation_context.PreCall(context);
         auto s = stub_->CheckAndMutateRow(context, options, request);
-        retry_context.PostCall(context, s.status());
+        operation_context.PostCall(context, s.status());
         return s;
       },
       *current, request, __func__);
@@ -653,19 +653,19 @@ DataConnectionImpl::AsyncCheckAndMutateRow(
   return google::cloud::internal::AsyncRetryLoop(
              std::move(retry), std::move(backoff), idempotency,
              background_->cq(),
-             [stub = stub_, retry_context = std::make_shared<RetryContext>()](
+             [stub = stub_, operation_context = std::make_shared<OperationContext>()](
                  CompletionQueue& cq,
                  std::shared_ptr<grpc::ClientContext> context,
                  google::cloud::internal::ImmutableOptions options,
                  google::bigtable::v2::CheckAndMutateRowRequest const&
                      request) {
-               retry_context->PreCall(*context);
+               operation_context->PreCall(*context);
                auto f = stub->AsyncCheckAndMutateRow(
                    cq, context, std::move(options), request);
                return f.then(
-                   [retry_context, context = std::move(context)](auto f) {
+                   [operation_context, context = std::move(context)](auto f) {
                      auto s = f.get();
-                     retry_context->PostCall(*context, s.status());
+                     operation_context->PostCall(*context, s.status());
                      return s;
                    });
              },
@@ -692,11 +692,11 @@ StatusOr<std::vector<bigtable::RowKeySample>> DataConnectionImpl::SampleRows(
   std::vector<bigtable::RowKeySample> samples;
   std::unique_ptr<bigtable::DataRetryPolicy> retry;
   std::unique_ptr<BackoffPolicy> backoff;
-  RetryContext retry_context;
+  OperationContext operation_context;
   while (true) {
     auto context = std::make_shared<grpc::ClientContext>();
     internal::ConfigureContext(*context, internal::CurrentOptions());
-    retry_context.PreCall(*context);
+    operation_context.PreCall(*context);
     auto stream = stub_->SampleRowKeys(context, Options{}, request);
 
     struct UnpackVariant {
@@ -725,7 +725,7 @@ StatusOr<std::vector<bigtable::RowKeySample>> DataConnectionImpl::SampleRows(
                                    Idempotency::kIdempotent,
                                    enable_server_retries(*current));
     if (!delay) return std::move(delay).status();
-    retry_context.PostCall(*context, status);
+    operation_context.PostCall(*context, status);
     // A new stream invalidates previously returned samples.
     samples.clear();
     std::this_thread::sleep_for(*delay);
