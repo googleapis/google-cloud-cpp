@@ -13,11 +13,19 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/emulator/filter.h"
+#include "google/cloud/bigtable/emulator/range_set.h"
+#include "google/cloud/bigtable/emulator/table.h"
+#include "google/cloud/bigtable/emulator/test_util.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "gmock/gmock.h"
+#include <gtest/gtest.h>
 #include <re2/re2.h>
+#include <algorithm>
+#include <chrono>
 #include <memory>
+#include <string>
+#include <vector>
 
 namespace google {
 namespace cloud {
@@ -1881,6 +1889,71 @@ TEST_F(FilterWorkTest, ConditionBranchFilterNextDifferentThanCell) {
       TestCell{"r4", "cf", "q", 3_ms, "f", "TRUE"},
   };
   EXPECT_EQ(expected, *maybe_output);
+}
+
+// Test our implementation of the ColumnRange filter, by actually
+// streaming cells from actual table data (hence end to end).
+TEST(FiltersEndToEnd, ColumnRange) {
+  std::vector<std::string> column_families = {"family1", "family2", "family3"};
+  auto maybe_table = CreateTable("table", column_families);
+  ASSERT_STATUS_OK(maybe_table);
+  auto& table = maybe_table.value();
+
+  std::vector<SetCellParams> created = {
+      {"family1", "a00", 0, "bar"}, {"family1", "b00", 0, "bar"},
+      {"family1", "b01", 0, "bar"}, {"family1", "b02", 0, "bar"},
+      {"family2", "a00", 0, "bar"}, {"family2", "b01", 0, "bar"},
+      {"family2", "b00", 0, "bar"}, {"family3", "a00", 0, "bar"},
+  };
+
+  std::string row_key = "column-range-row-key";
+
+  auto status = SetCells(table, "table", row_key, created);
+  ASSERT_STATUS_OK(status);
+
+  auto all_rows_set = std::make_shared<StringRangeSet>(StringRangeSet::All());
+
+  RowFilter filter;
+  filter.mutable_column_range_filter()->set_family_name("family1");
+  filter.mutable_column_range_filter()->set_start_qualifier_closed("b00");
+  filter.mutable_column_range_filter()->set_end_qualifier_open("b02");
+
+  struct Cell {
+    std::string row_key;
+    std::string column_family;
+    std::string column_qualifier;
+    std::int64_t timestamp_micros;
+    std::string value;
+
+    bool operator==(Cell const& other) const {
+      return this->row_key == other.row_key &&
+             this->column_family == other.column_family &&
+             this->column_qualifier == other.column_qualifier &&
+             this->timestamp_micros == other.timestamp_micros &&
+             this->value == other.value;
+    }
+  };
+
+  auto maybe_stream = table->CreateCellStream(all_rows_set, filter);
+  ASSERT_STATUS_OK(maybe_stream);
+
+  std::vector<Cell> expected = {
+      {row_key, "family1", "b00", 0, "bar"},
+      {row_key, "family1", "b01", 0, "bar"},
+  };
+
+  std::vector<Cell> actual;
+  auto& stream = *maybe_stream;
+  for (; stream; ++stream) {
+    actual.push_back({stream->row_key(), stream->column_family(),
+                      stream->column_qualifier(),
+                      stream->timestamp().count() * 1000, stream->value()});
+  }
+
+  ASSERT_EQ(expected.size(), actual.size());
+
+  ASSERT_TRUE(
+      std::is_permutation(expected.begin(), expected.end(), actual.begin()));
 }
 
 }  // namespace emulator
