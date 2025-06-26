@@ -49,14 +49,16 @@ class RetryContextFactory {
                                                   std::string const&) {
     return std::make_shared<RetryContext>();
   }
-  virtual std::shared_ptr<RetryContext>
-  AsyncMutateRow() {  // not currently used
+  virtual std::shared_ptr<RetryContext> AsyncMutateRow(
+      std::string const&, std::string const&) {  // not currently used
     return std::make_shared<RetryContext>();
   }
-  virtual std::shared_ptr<RetryContext> MutateRows() {
+  virtual std::shared_ptr<RetryContext> MutateRows(std::string const&,
+                                                   std::string const&) {
     return std::make_shared<RetryContext>();
   }
-  virtual std::shared_ptr<RetryContext> AsyncMutateRows() {
+  virtual std::shared_ptr<RetryContext> AsyncMutateRows(std::string const&,
+                                                        std::string const&) {
     return std::make_shared<RetryContext>();
   }
   virtual std::shared_ptr<RetryContext> CheckandMutateRow() {

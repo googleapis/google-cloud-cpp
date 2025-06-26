@@ -190,8 +190,10 @@ std::vector<bigtable::FailedMutation> BulkMutatorState::OnRetryDone() && {
 BulkMutator::BulkMutator(std::string const& app_profile_id,
                          std::string const& table_name,
                          bigtable::IdempotentMutationPolicy& idempotent_policy,
-                         bigtable::BulkMutation mut)
-    : state_(app_profile_id, table_name, idempotent_policy, std::move(mut)) {}
+                         bigtable::BulkMutation mut,
+                         std::shared_ptr<RetryContext> retry_context)
+    : state_(app_profile_id, table_name, idempotent_policy, std::move(mut)),
+      retry_context_(std::move(retry_context)) {}
 
 grpc::Status BulkMutator::MakeOneRequest(bigtable::DataClient& client,
                                          grpc::ClientContext& client_context) {
@@ -218,7 +220,7 @@ Status BulkMutator::MakeOneRequest(BigtableStub& stub,
   // Configure the context
   auto context = std::make_shared<grpc::ClientContext>();
   google::cloud::internal::ConfigureContext(*context, options);
-  retry_context_.PreCall(*context);
+  retry_context_->PreCall(*context);
   bool enable_server_retries = options.get<EnableServerRetriesOption>();
 
   struct UnpackVariant {
@@ -245,7 +247,7 @@ Status BulkMutator::MakeOneRequest(BigtableStub& stub,
   while (absl::visit(UnpackVariant{state_, limiter, enable_server_retries},
                      stream->Read())) {
   }
-  retry_context_.PostCall(*context, state_.last_status());
+  retry_context_->PostCall(*context, state_.last_status());
   return state_.last_status();
 }
 

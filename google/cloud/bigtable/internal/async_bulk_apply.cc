@@ -29,7 +29,7 @@ future<std::vector<bigtable::FailedMutation>> AsyncBulkApplier::Create(
     std::unique_ptr<BackoffPolicy> backoff_policy, bool enable_server_retries,
     bigtable::IdempotentMutationPolicy& idempotent_policy,
     std::string const& app_profile_id, std::string const& table_name,
-    bigtable::BulkMutation mut) {
+    bigtable::BulkMutation mut, std::shared_ptr<RetryContext> retry_context) {
   if (mut.empty()) {
     return make_ready_future(std::vector<bigtable::FailedMutation>{});
   }
@@ -37,7 +37,8 @@ future<std::vector<bigtable::FailedMutation>> AsyncBulkApplier::Create(
   std::shared_ptr<AsyncBulkApplier> bulk_apply(new AsyncBulkApplier(
       std::move(cq), std::move(stub), std::move(limiter),
       std::move(retry_policy), std::move(backoff_policy), enable_server_retries,
-      idempotent_policy, app_profile_id, table_name, std::move(mut)));
+      idempotent_policy, app_profile_id, table_name, std::move(mut),
+      std::move(retry_context)));
   bulk_apply->StartIteration();
   return bulk_apply->promise_.get_future();
 }
@@ -49,7 +50,7 @@ AsyncBulkApplier::AsyncBulkApplier(
     std::unique_ptr<BackoffPolicy> backoff_policy, bool enable_server_retries,
     bigtable::IdempotentMutationPolicy& idempotent_policy,
     std::string const& app_profile_id, std::string const& table_name,
-    bigtable::BulkMutation mut)
+    bigtable::BulkMutation mut, std::shared_ptr<RetryContext> retry_context)
     : cq_(std::move(cq)),
       stub_(std::move(stub)),
       limiter_(std::move(limiter)),
@@ -59,7 +60,8 @@ AsyncBulkApplier::AsyncBulkApplier(
       state_(app_profile_id, table_name, idempotent_policy, std::move(mut)),
       promise_([this] { keep_reading_ = false; }),
       options_(internal::SaveCurrentOptions()),
-      call_context_(options_) {}
+      call_context_(options_),
+      retry_context_(std::move(retry_context)) {}
 
 void AsyncBulkApplier::StartIteration() {
   auto self = this->shared_from_this();
