@@ -102,7 +102,6 @@ class DefaultRowReader : public RowReaderImpl {
   bool enable_server_retries_;
   Sleeper sleeper_;
   std::shared_ptr<grpc::ClientContext> context_;
-  bool first_response_ = true;
   OperationContext operation_context_;
 
   std::unique_ptr<bigtable::internal::ReadRowsParser> parser_;

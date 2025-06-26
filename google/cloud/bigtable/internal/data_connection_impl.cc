@@ -87,7 +87,7 @@ bigtable::Row TransformReadModifyWriteRowResponse(
   return bigtable::Row(std::move(*row.mutable_key()), std::move(cells));
 }
 
-// TODO : generate a real UID. This would clash with other processes.
+// TODO: Figure out a better/idiomatic way to assign a unique client_id.
 static int GetClientId() {
   static int client_uid = 0;
   static std::mutex mu;
@@ -98,13 +98,10 @@ static int GetClientId() {
 DataConnectionImpl::DataConnectionImpl(
     std::unique_ptr<BackgroundThreads> background,
     std::shared_ptr<BigtableStub> stub,
-    std::shared_ptr<MutateRowsLimiter> limiter,
-    //    std::shared_ptr<Metrics> metrics,
-    Options options)
+    std::shared_ptr<MutateRowsLimiter> limiter, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
       limiter_(std::move(limiter)),
-      //      metrics_(std::move(metrics)),
       client_uid_(std::to_string(GetClientId())),
       options_(internal::MergeOptions(std::move(options),
                                       DataConnection::options())) {}
@@ -540,7 +537,7 @@ void DataConnectionImpl::Initialize(google::cloud::Project const& project) {
       std::make_unique<MetricsOperationContextFactory>(project, client_uid_);
 #else
   operation_context_factory_ =
-      std::make_unique<SimpleOperationContextFactory>(project);
+      std::make_unique<SimpleOperationContextFactory>();
 #endif
 }
 

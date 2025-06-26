@@ -49,6 +49,7 @@ class AsyncBulkApplier : public std::enable_shared_from_this<AsyncBulkApplier> {
       bigtable::IdempotentMutationPolicy& idempotent_policy,
       std::string const& app_profile_id, std::string const& table_name,
       bigtable::BulkMutation mut,
+      // TODO: Remove default from parameter.
       std::shared_ptr<OperationContext> operation_context = {});
 
  private:
@@ -60,6 +61,7 @@ class AsyncBulkApplier : public std::enable_shared_from_this<AsyncBulkApplier> {
                    bigtable::IdempotentMutationPolicy& idempotent_policy,
                    std::string const& app_profile_id,
                    std::string const& table_name, bigtable::BulkMutation mut,
+                   // TODO: Remove default from parameter.
                    std::shared_ptr<OperationContext> operation_context = {});
 
   void StartIteration();

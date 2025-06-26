@@ -29,6 +29,7 @@ namespace cloud {
 namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+// TODO: Add table_name and app_profile_id parameters for all stub methods.
 class OperationContextFactory {
  public:
   virtual ~OperationContextFactory() = 0;
@@ -59,10 +60,10 @@ class OperationContextFactory {
       std::string const&, std::string const&) {
     return std::make_shared<OperationContext>();
   }
-  virtual std::shared_ptr<OperationContext> CheckandMutateRow() {
+  virtual std::shared_ptr<OperationContext> CheckAndMutateRow() {
     return std::make_shared<OperationContext>();
   }
-  virtual std::shared_ptr<OperationContext> AsyncCheckandMutateRow() {
+  virtual std::shared_ptr<OperationContext> AsyncCheckAndMutateRow() {
     return std::make_shared<OperationContext>();
   }
   virtual std::shared_ptr<OperationContext> SampleRowKeys() {
@@ -78,48 +79,6 @@ class OperationContextFactory {
   virtual std::shared_ptr<OperationContext> AsyncReadModifyWriteRow() {
     return std::make_shared<OperationContext>();
   }
-};
-
-class MetricsOperationContextFactory : public OperationContextFactory {
- public:
-  MetricsOperationContextFactory(Project project, std::string client_uid);
-
-  // ReadRow is a synthetic RPC and should appear in metrics as if it's a
-  // different RPC than ReadRows with row_limit=1.
-  std::shared_ptr<OperationContext> ReadRow() override;
-  std::shared_ptr<OperationContext> ReadRows() override;
-
-  std::shared_ptr<OperationContext> AsyncReadRows() override;
-
-  std::shared_ptr<OperationContext> MutateRow(
-      std::string const& table_name,
-      std::string const& app_profile_id) override;
-  std::shared_ptr<OperationContext> AsyncMutateRow(
-      std::string const& table_name,
-      std::string const& app_profile_id) override;
-
-  std::shared_ptr<OperationContext> MutateRows(
-      std::string const& table_name,
-      std::string const& app_profile_id) override;
-
-  std::shared_ptr<OperationContext> AsyncMutateRows(
-      std::string const& table_name,
-      std::string const& app_profile_id) override;
-  std::shared_ptr<OperationContext> CheckandMutateRow() override;
-  std::shared_ptr<OperationContext> AsyncCheckandMutateRow() override;
-
-  std::shared_ptr<OperationContext> SampleRowKeys() override;
-  std::shared_ptr<OperationContext> AsyncSampleRowKeys() override;
-
-  std::shared_ptr<OperationContext> ReadModifyWriteRow() override;
-  std::shared_ptr<OperationContext> AsyncReadModifyWriteRow() override;
-
- private:
-  std::string client_uid_;
-  std::shared_ptr<opentelemetry::metrics::MeterProvider> provider_;
-  std::mutex mu_;  // This is necessary because RPC and AsyncRPC share metrics.
-  std::vector<std::shared_ptr<Metric>> mutate_row_metrics_;   // GUARDED_BY(mu_)
-  std::vector<std::shared_ptr<Metric>> mutate_rows_metrics_;  // GUARDED_BY(mu_)
 };
 
 class SimpleOperationContextFactory : public OperationContextFactory {
@@ -157,10 +116,10 @@ class SimpleOperationContextFactory : public OperationContextFactory {
     return std::make_shared<OperationContext>();
   }
 
-  std::shared_ptr<OperationContext> CheckandMutateRow() override {
+  std::shared_ptr<OperationContext> CheckAndMutateRow() override {
     return std::make_shared<OperationContext>();
   }
-  std::shared_ptr<OperationContext> AsyncCheckandMutateRow() override {
+  std::shared_ptr<OperationContext> AsyncCheckAndMutateRow() override {
     return std::make_shared<OperationContext>();
   }
 
@@ -178,6 +137,51 @@ class SimpleOperationContextFactory : public OperationContextFactory {
     return std::make_shared<OperationContext>();
   }
 };
+
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+
+class MetricsOperationContextFactory : public OperationContextFactory {
+ public:
+  MetricsOperationContextFactory(Project project, std::string client_uid);
+
+  std::shared_ptr<OperationContext> ReadRow() override;
+  std::shared_ptr<OperationContext> ReadRows() override;
+
+  std::shared_ptr<OperationContext> AsyncReadRows() override;
+
+  std::shared_ptr<OperationContext> MutateRow(
+      std::string const& table_name,
+      std::string const& app_profile_id) override;
+  std::shared_ptr<OperationContext> AsyncMutateRow(
+      std::string const& table_name,
+      std::string const& app_profile_id) override;
+
+  std::shared_ptr<OperationContext> MutateRows(
+      std::string const& table_name,
+      std::string const& app_profile_id) override;
+
+  std::shared_ptr<OperationContext> AsyncMutateRows(
+      std::string const& table_name,
+      std::string const& app_profile_id) override;
+  std::shared_ptr<OperationContext> CheckAndMutateRow() override;
+  std::shared_ptr<OperationContext> AsyncCheckAndMutateRow() override;
+
+  std::shared_ptr<OperationContext> SampleRowKeys() override;
+  std::shared_ptr<OperationContext> AsyncSampleRowKeys() override;
+
+  std::shared_ptr<OperationContext> ReadModifyWriteRow() override;
+  std::shared_ptr<OperationContext> AsyncReadModifyWriteRow() override;
+
+ private:
+  std::string client_uid_;
+  std::shared_ptr<opentelemetry::metrics::MeterProvider> provider_;
+  std::mutex mu_;  // This is necessary because RPC and AsyncRPC share metrics.
+  std::vector<std::shared_ptr<Metric>> mutate_row_metrics_;   // GUARDED_BY(mu_)
+  std::vector<std::shared_ptr<Metric>> mutate_rows_metrics_;  // GUARDED_BY(mu_)
+  // TODO: add additional Metric vectors for each service RPC.
+};
+
+#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal

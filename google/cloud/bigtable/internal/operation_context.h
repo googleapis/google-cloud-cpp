@@ -30,14 +30,18 @@ namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
- * A Bigtable-specific context that persists across retries.
+ * A Bigtable-specific context that persists across retries until the operation
+ * completes.
  *
  * The client communicates with the server via metadata, prefixed with
  * "x-goog-cbt-cookie". This helps the server associate RPCs with a single
  * client call. This information can be used to make routing decisions, for
  * example, to avoid outages.
  *
- * The lifetime for this object should be a single client call.
+ * The lifetime for this object should be a single client operation, lasting
+ * until a successful response is received or the try policy is exhausted. In
+ * the case of streaming operations, the context should last until a permanent
+ * error occurs or the streaming is complete.
  *
  * @code
  * Result Connection::Foo() {
@@ -56,7 +60,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  */
 class OperationContext {
  public:
-  // TODO : remove when all RPCs are instrumented.
+  // TODO: remove when all RPCs are instrumented.
   OperationContext() = default;
 
   explicit OperationContext(
@@ -81,13 +85,14 @@ class OperationContext {
   std::chrono::system_clock::time_point operation_start_ =
       std::chrono::system_clock::now();
   std::chrono::system_clock::time_point attempt_start_;
+  bool first_response_ = true;
 
   // We call stub method specific factory functions that
   // populate the metrics that are supported on that stub method.
   // These metrics share a common interface that to record data analogous to
   // PreCall, PostCall, OnDone, etc. When the OperationContext method is called
   // it iterates through the metrics calling that function on the
-  // MetricInterface.
+  // Metric interface.
   std::vector<std::shared_ptr<Metric>> stub_applicable_metrics_;
 };
 

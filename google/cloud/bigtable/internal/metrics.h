@@ -35,21 +35,6 @@ namespace cloud {
 namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-// It will be convenient to have one struct
-// struct MetricLabels {
-//  // TODO : consider avoiding copies in the no-CSM case with references
-//  std::string method;
-//  std::string streaming;
-//  std::string client_name;
-//  std::string client_uid;
-//  std::string table_name;
-//  std::string app_profile;
-//  std::string cluster;
-//  std::string zone;
-//  // TODO : what is the format of status? "UNAVAILABLE"? Or an int? who knows.
-//  std::string status;
-//};
-
 struct ResourceLabels {
   std::string project_id;
   std::string instance;
@@ -91,6 +76,9 @@ struct OnDoneParams {
   google::cloud::Status operation_status;
 };
 
+// TODO: Determine whether "Params" should be const& or by-value.
+// TODO: Consider moving Metric class to separate header as it is independent of
+// Bigtable.
 class Metric {
  public:
   virtual ~Metric() = 0;

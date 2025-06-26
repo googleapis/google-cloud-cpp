@@ -118,6 +118,7 @@ class BulkMutator {
   BulkMutator(std::string const& app_profile_id, std::string const& table_name,
               bigtable::IdempotentMutationPolicy& idempotent_policy,
               bigtable::BulkMutation mut,
+              // TODO: Remove default from parameter.
               std::shared_ptr<OperationContext> operation_context = {});
 
   /// Return true if there are pending mutations in the mutator

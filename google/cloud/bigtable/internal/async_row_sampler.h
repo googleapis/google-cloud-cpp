@@ -71,6 +71,7 @@ class AsyncRowSampler : public std::enable_shared_from_this<AsyncRowSampler> {
   internal::CallContext call_context_;
   std::shared_ptr<grpc::ClientContext> context_;
   std::shared_ptr<OperationContext> operation_context_ =
+      // TODO: Remove default and add to constructor and Create.
       std::make_shared<OperationContext>();
 };
 

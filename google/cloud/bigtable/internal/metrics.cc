@@ -16,20 +16,43 @@
 
 #include "google/cloud/bigtable/internal/metrics.h"
 #include "google/cloud/bigtable/table_resource.h"
-#include "google/cloud/opentelemetry/monitoring_exporter.h"
 #include "google/cloud/common_options.h"
-#include <opentelemetry/context/runtime_context.h>
-#include <opentelemetry/sdk/metrics/export/periodic_exporting_metric_reader.h>
-#include <opentelemetry/sdk/metrics/export/periodic_exporting_metric_reader_factory.h>
-#include <opentelemetry/sdk/metrics/meter_context_factory.h>
-#include <opentelemetry/sdk/metrics/meter_provider_factory.h>
-// #include <google/api/monitored_resource.pb.h>
 #include "google/cloud/internal/absl_str_join_quiet.h"
+#include <opentelemetry/context/runtime_context.h>
+#include <opentelemetry/sdk/metrics/export/periodic_exporting_metric_reader_factory.h>
+#include <opentelemetry/sdk/metrics/meter_provider_factory.h>
 
 namespace google {
 namespace cloud {
 namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+struct ClusterZone {
+  std::string cluster;
+  std::string zone;
+};
+
+ClusterZone ProcessMetadata(
+    std::multimap<grpc::string_ref, grpc::string_ref> const& metadata) {
+  ClusterZone cz;
+  for (auto const& kv : metadata) {
+    auto key = std::string{kv.first.data(), kv.first.size()};
+
+    if (absl::StartsWith(key, "x-goog-ext-425905942-bin")) {
+      absl::string_view v{kv.second.data(), kv.second.size()};
+      v = absl::StripAsciiWhitespace(v);
+      std::vector<std::string> parts = absl::StrSplit(v, '-');
+      cz.zone =
+          absl::StrCat(parts[0], "-", parts[1], "-", parts[2].substr(0, 1));
+      cz.cluster =
+          absl::StrCat(parts[2].substr(1), "-", parts[3], "-", parts[4]);
+    }
+  }
+  return cz;
+}
+
+}  // namespace
 
 std::ostream& operator<<(std::ostream& os, ResourceLabels const& r) {
   return os << r.project_id << "/" << r.instance << "/" << r.table << "/"
@@ -59,34 +82,6 @@ std::ostream& operator<<(std::ostream& os, LabelMap const& m) {
                out->append(absl::StrCat(p.first, ":", p.second));
              });
 }
-
-namespace {
-struct ClusterZone {
-  std::string cluster;
-  std::string zone;
-};
-
-ClusterZone ProcessMetadata(
-    std::multimap<grpc::string_ref, grpc::string_ref> const& metadata) {
-  ClusterZone cz;
-  for (auto const& kv : metadata) {
-    auto key = std::string{kv.first.data(), kv.first.size()};
-
-    if (absl::StartsWith(key, "x-goog-ext-425905942-bin")) {
-      absl::string_view v{kv.second.data(), kv.second.size()};
-      v = absl::StripAsciiWhitespace(v);
-      std::vector<std::string> parts = absl::StrSplit(v, '-');
-      cz.zone =
-          absl::StrCat(parts[0], "-", parts[1], "-", parts[2].substr(0, 1));
-      cz.cluster =
-          absl::StrCat(parts[2].substr(1), "-", parts[3], "-", parts[4]);
-    }
-  }
-  //  std::cout << __func__ << ": cluster=" << cz.cluster << std::endl;
-  return cz;
-}
-
-}  // namespace
 
 Metric::~Metric() = default;
 

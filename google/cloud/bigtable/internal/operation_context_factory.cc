@@ -15,14 +15,16 @@
 #include "google/cloud/bigtable/internal/operation_context_factory.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/algorithm.h"
-#include "absl/strings/match.h"
 #include "absl/strings/str_split.h"
+
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
 #include <google/api/monitored_resource.pb.h>
 #include <opentelemetry/context/runtime_context.h>
 #include <opentelemetry/sdk/metrics/export/periodic_exporting_metric_reader.h>
 #include <opentelemetry/sdk/metrics/export/periodic_exporting_metric_reader_factory.h>
 #include <opentelemetry/sdk/metrics/meter_context_factory.h>
 #include <opentelemetry/sdk/metrics/meter_provider_factory.h>
+#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
 
 namespace google {
 namespace cloud {
@@ -42,6 +44,8 @@ ResourceLabels ResourceLabelsFromTableName(std::string const& table_name) {
 }  // namespace
 
 OperationContextFactory::~OperationContextFactory() = default;
+
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
 
 opentelemetry::sdk::common::OrderedAttributeMap GrabMap(
     opentelemetry::sdk::metrics::ResourceMetrics const& data) {
@@ -266,11 +270,11 @@ MetricsOperationContextFactory::AsyncMutateRows(
 }
 
 std::shared_ptr<OperationContext>
-MetricsOperationContextFactory::CheckandMutateRow() {
+MetricsOperationContextFactory::CheckAndMutateRow() {
   return std::make_shared<OperationContext>();
 }
 std::shared_ptr<OperationContext>
-MetricsOperationContextFactory::AsyncCheckandMutateRow() {
+MetricsOperationContextFactory::AsyncCheckAndMutateRow() {
   return std::make_shared<OperationContext>();
 }
 
@@ -291,6 +295,8 @@ std::shared_ptr<OperationContext>
 MetricsOperationContextFactory::AsyncReadModifyWriteRow() {
   return std::make_shared<OperationContext>();
 }
+
+#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal
