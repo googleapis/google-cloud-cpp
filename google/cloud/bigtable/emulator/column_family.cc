@@ -159,14 +159,20 @@ StatusOr<absl::optional<std::string>> ColumnRow::UpdateCell(
 std::vector<Cell> ColumnRow::DeleteTimeRange(
     ::google::bigtable::v2::TimestampRange const& time_range) {
   std::vector<Cell> deleted_cells;
-  for (auto cell_it = cells_.lower_bound(
-           std::chrono::duration_cast<std::chrono::milliseconds>(
-               std::chrono::microseconds(time_range.start_timestamp_micros())));
+  absl::optional<int64_t> maybe_end_micros = time_range.end_timestamp_micros();
+  if (maybe_end_micros.value_or(0) == 0) {
+    maybe_end_micros.reset();
+  }
+  for (auto cell_it =
+           maybe_end_micros
+               ? upper_bound(
+                     std::chrono::duration_cast<std::chrono::milliseconds>(
+                         std::chrono::microseconds(*maybe_end_micros)))
+               : begin();
        cell_it != cells_.end() &&
-       (time_range.end_timestamp_micros() == 0 ||
-        cell_it->first < std::chrono::duration_cast<std::chrono::milliseconds>(
+       cell_it->first >= std::chrono::duration_cast<std::chrono::milliseconds>(
                              std::chrono::microseconds(
-                                 time_range.end_timestamp_micros())));) {
+                                 time_range.start_timestamp_micros()));) {
     Cell cell = {std::move(cell_it->first), std::move(cell_it->second)};
     deleted_cells.emplace_back(std::move(cell));
     cells_.erase(cell_it++);
@@ -346,9 +352,9 @@ FilteredColumnFamilyStream::FilteredColumnFamilyStream(
       row_ranges_(std::move(row_set)),
       column_ranges_(StringRangeSet::All()),
       timestamp_ranges_(TimestampRangeSet::All()),
-      rows_(RangeFilteredMapView<ColumnFamily, StringRangeSet>(column_family,
-                                                               *row_ranges_),
-            std::cref(row_regexes_)) {}
+      rows_(
+          StringRangeFilteredMapView<ColumnFamily>(column_family, *row_ranges_),
+          std::cref(row_regexes_)) {}
 
 bool FilteredColumnFamilyStream::ApplyFilter(
     InternalFilter const& internal_filter) {
@@ -404,7 +410,7 @@ void FilteredColumnFamilyStream::InitializeIfNeeded() const {
 
 bool FilteredColumnFamilyStream::PointToFirstCellAfterColumnChange() const {
   for (; column_it_.value() != columns_.value().end(); ++(column_it_.value())) {
-    cells_ = RangeFilteredMapView<ColumnRow, TimestampRangeSet>(
+    cells_ = TimestampRangeFilteredMapView<ColumnRow>(
         column_it_.value()->second, timestamp_ranges_);
     cell_it_ = cells_.value().begin();
     if (cell_it_.value() != cells_.value().end()) {
@@ -416,10 +422,9 @@ bool FilteredColumnFamilyStream::PointToFirstCellAfterColumnChange() const {
 
 bool FilteredColumnFamilyStream::PointToFirstCellAfterRowChange() const {
   for (; (*row_it_) != rows_.end(); ++(*row_it_)) {
-    columns_ = RegexFiteredMapView<
-        RangeFilteredMapView<ColumnFamilyRow, StringRangeSet>>(
-        RangeFilteredMapView<ColumnFamilyRow, StringRangeSet>(
-            (*row_it_)->second, column_ranges_),
+    columns_ = RegexFiteredMapView<StringRangeFilteredMapView<ColumnFamilyRow>>(
+        StringRangeFilteredMapView<ColumnFamilyRow>((*row_it_)->second,
+                                                    column_ranges_),
         column_regexes_);
     column_it_ = columns_.value().begin();
     if (PointToFirstCellAfterColumnChange()) {
