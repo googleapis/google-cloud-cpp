@@ -41,7 +41,7 @@ void OperationContext::PreCall(grpc::ClientContext& context) {
 }
 
 void OperationContext::PostCall(grpc::ClientContext const& context,
-                            google::cloud::Status const& status) {
+                                google::cloud::Status const& status) {
   ProcessMetadata(context.GetServerInitialMetadata());
   ProcessMetadata(context.GetServerTrailingMetadata());
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS

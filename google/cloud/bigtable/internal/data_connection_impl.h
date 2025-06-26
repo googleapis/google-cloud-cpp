@@ -20,6 +20,7 @@
 #include "google/cloud/bigtable/internal/metrics.h"
 #include "google/cloud/bigtable/internal/mutate_rows_limiter.h"
 #include "google/cloud/bigtable/internal/operation_context.h"
+#include "google/cloud/bigtable/internal/operation_context_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -30,57 +31,6 @@ namespace google {
 namespace cloud {
 namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-class RetryContextFactory {
- public:
-  virtual ~RetryContextFactory() = 0;
-  // ReadRow is a synthetic RPC and should appear in metrics as if it's a
-  // different RPC than ReadRows with row_limit=1.
-  virtual std::shared_ptr<OperationContext> ReadRow() {
-    return std::make_shared<OperationContext>();
-  }
-  virtual std::shared_ptr<OperationContext> ReadRows() {
-    return std::make_shared<OperationContext>();
-  }
-  virtual std::shared_ptr<OperationContext> AsyncReadRows() {
-    return std::make_shared<OperationContext>();
-  }
-  virtual std::shared_ptr<OperationContext> MutateRow(std::string const&,
-                                                  std::string const&) {
-    return std::make_shared<OperationContext>();
-  }
-  virtual std::shared_ptr<OperationContext> AsyncMutateRow(
-      std::string const&, std::string const&) {  // not currently used
-    return std::make_shared<OperationContext>();
-  }
-  virtual std::shared_ptr<OperationContext> MutateRows(std::string const&,
-                                                   std::string const&) {
-    return std::make_shared<OperationContext>();
-  }
-  virtual std::shared_ptr<OperationContext> AsyncMutateRows(std::string const&,
-                                                        std::string const&) {
-    return std::make_shared<OperationContext>();
-  }
-  virtual std::shared_ptr<OperationContext> CheckandMutateRow() {
-    return std::make_shared<OperationContext>();
-  }
-  virtual std::shared_ptr<OperationContext> AsyncCheckandMutateRow() {
-    return std::make_shared<OperationContext>();
-  }
-  virtual std::shared_ptr<OperationContext> SampleRowKeys() {
-    return std::make_shared<OperationContext>();
-  }
-  virtual std::shared_ptr<OperationContext> AsyncSampleRowKeys() {
-    return std::make_shared<OperationContext>();
-  }
-
-  virtual std::shared_ptr<OperationContext> ReadModifyWriteRow() {
-    return std::make_shared<OperationContext>();
-  }
-  virtual std::shared_ptr<OperationContext> AsyncReadModifyWriteRow() {
-    return std::make_shared<OperationContext>();
-  }
-};
 
 bigtable::Row TransformReadModifyWriteRowResponse(
     google::bigtable::v2::ReadModifyWriteRowResponse response);
@@ -150,7 +100,7 @@ class DataConnectionImpl : public bigtable::DataConnection {
   void Initialize(Project const& project) override;
 
  private:
-  std::unique_ptr<RetryContextFactory> retry_context_factory_;
+  std::unique_ptr<OperationContextFactory> operation_context_factory_;
   std::unique_ptr<BackgroundThreads> background_;
   std::shared_ptr<BigtableStub> stub_;
   std::shared_ptr<MutateRowsLimiter> limiter_;

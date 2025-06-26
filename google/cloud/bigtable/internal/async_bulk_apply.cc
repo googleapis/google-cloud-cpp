@@ -29,7 +29,8 @@ future<std::vector<bigtable::FailedMutation>> AsyncBulkApplier::Create(
     std::unique_ptr<BackoffPolicy> backoff_policy, bool enable_server_retries,
     bigtable::IdempotentMutationPolicy& idempotent_policy,
     std::string const& app_profile_id, std::string const& table_name,
-    bigtable::BulkMutation mut, std::shared_ptr<OperationContext> operation_context) {
+    bigtable::BulkMutation mut,
+    std::shared_ptr<OperationContext> operation_context) {
   if (mut.empty()) {
     return make_ready_future(std::vector<bigtable::FailedMutation>{});
   }
@@ -50,7 +51,8 @@ AsyncBulkApplier::AsyncBulkApplier(
     std::unique_ptr<BackoffPolicy> backoff_policy, bool enable_server_retries,
     bigtable::IdempotentMutationPolicy& idempotent_policy,
     std::string const& app_profile_id, std::string const& table_name,
-    bigtable::BulkMutation mut, std::shared_ptr<OperationContext> operation_context)
+    bigtable::BulkMutation mut,
+    std::shared_ptr<OperationContext> operation_context)
     : cq_(std::move(cq)),
       stub_(std::move(stub)),
       limiter_(std::move(limiter)),

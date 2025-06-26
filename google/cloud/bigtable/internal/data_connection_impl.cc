@@ -67,328 +67,6 @@ inline bool enable_server_retries(Options const& options) {
 
 }  // namespace
 
-RetryContextFactory::~RetryContextFactory() = default;
-
-class SimpleRetryContextFactory : public RetryContextFactory {
- public:
-  // ReadRow is a synthetic RPC and should appear in metrics as if it's a
-  // different RPC than ReadRows with row_limit=1.
-  std::shared_ptr<OperationContext> ReadRow() override {
-    return std::make_shared<OperationContext>();
-  }
-
-  std::shared_ptr<OperationContext> ReadRows() override {
-    return std::make_shared<OperationContext>();
-  }
-  std::shared_ptr<OperationContext> AsyncReadRows() override {
-    return std::make_shared<OperationContext>();
-  }
-
-  std::shared_ptr<OperationContext> MutateRow(std::string const&,
-                                          std::string const&) override {
-    return std::make_shared<OperationContext>();
-  }
-
-  std::shared_ptr<OperationContext> AsyncMutateRow(
-      std::string const&,
-      std::string const&) override {  // not currently used
-    return std::make_shared<OperationContext>();
-  }
-
-  std::shared_ptr<OperationContext> MutateRows(std::string const&,
-                                           std::string const&) override {
-    return std::make_shared<OperationContext>();
-  }
-  std::shared_ptr<OperationContext> AsyncMutateRows(std::string const&,
-                                                std::string const&) override {
-    return std::make_shared<OperationContext>();
-  }
-
-  std::shared_ptr<OperationContext> CheckandMutateRow() override {
-    return std::make_shared<OperationContext>();
-  }
-  std::shared_ptr<OperationContext> AsyncCheckandMutateRow() override {
-    return std::make_shared<OperationContext>();
-  }
-
-  std::shared_ptr<OperationContext> SampleRowKeys() override {
-    return std::make_shared<OperationContext>();
-  }
-  std::shared_ptr<OperationContext> AsyncSampleRowKeys() override {
-    return std::make_shared<OperationContext>();
-  }
-
-  std::shared_ptr<OperationContext> ReadModifyWriteRow() override {
-    return std::make_shared<OperationContext>();
-  }
-  std::shared_ptr<OperationContext> AsyncReadModifyWriteRow() override {
-    return std::make_shared<OperationContext>();
-  }
-};
-
-opentelemetry::sdk::common::OrderedAttributeMap GrabMap(
-    opentelemetry::sdk::metrics::ResourceMetrics const& data) {
-  opentelemetry::sdk::common::OrderedAttributeMap attr_map;
-  for (auto const& scope_metric : data.scope_metric_data_) {
-    for (auto const& metric : scope_metric.metric_data_) {
-      for (auto const& point : metric.point_data_attr_) {
-        std::cout << __func__ << " data.scope_metric_data_.size()="
-                  << data.scope_metric_data_.size()
-                  << "; scope_metric.metric_data_.size()="
-                  << scope_metric.metric_data_.size()
-                  << "; metric.point_data_attr_.size()="
-                  << metric.point_data_attr_.size() << std::endl;
-        return point.attributes;
-      }
-    }
-  }
-  return attr_map;
-}
-
-class MetricsRetryContextFactory : public RetryContextFactory {
- public:
-  MetricsRetryContextFactory(Project project, std::string client_uid)
-      : client_uid_(std::move(client_uid)) {
-    std::cout << __func__ << std::endl;
-    auto resource_fn =
-        [](opentelemetry::sdk::metrics::ResourceMetrics const& data) {
-          google::api::MonitoredResource resource;
-          std::cout << __func__ << ": build MonitoredResource from attr_map"
-                    << std::endl;
-          auto attr_map = GrabMap(data);
-          for (auto const& p : attr_map) {
-            std::cout << p.first << ": "
-                      << (absl::holds_alternative<std::string>(p.second)
-                              ? absl::get<std::string>(p.second)
-                              : "not a string")
-                      << std::endl;
-          }
-
-          resource.set_type("bigtable_client_raw");
-          auto& labels = *resource.mutable_labels();
-          labels["project_id"] =
-              absl::get<std::string>(attr_map.find("project_id")->second);
-          labels["instance"] =
-              absl::get<std::string>(attr_map.find("instance")->second);
-          labels["cluster"] =
-              absl::get<std::string>(attr_map.find("cluster")->second);
-          labels["table"] =
-              absl::get<std::string>(attr_map.find("table")->second);
-          labels["zone"] =
-              absl::get<std::string>(attr_map.find("zone")->second);
-
-          return resource;
-        };
-
-    auto filter_fn = [resource_keys = std::set<std::string>{
-                          "project_id", "instance", "cluster", "table",
-                          "zone"}](std::string const& key) {
-      return internal::Contains(resource_keys, key);
-    };
-
-    auto o = Options{}
-                 .set<LoggingComponentsOption>({"rpc"})
-                 .set<otel::ServiceTimeSeriesOption>(true)
-                 .set<otel::MetricNameFormatterOption>([](auto name) {
-                   return "bigtable.googleapis.com/internal/client/" + name;
-                 });
-    auto exporter = otel_internal::MakeMonitoringExporter(
-        project, resource_fn, filter_fn, std::move(o));
-    auto options =
-        opentelemetry::sdk::metrics::PeriodicExportingMetricReaderOptions{};
-    // Empirically, it seems like 30s is the minimum.
-    options.export_interval_millis = std::chrono::seconds(30);
-    options.export_timeout_millis = std::chrono::seconds(1);
-
-    auto reader =
-        opentelemetry::sdk::metrics::PeriodicExportingMetricReaderFactory::
-            Create(std::move(exporter), options);
-
-    auto context = opentelemetry::sdk::metrics::MeterContextFactory::Create(
-        std::make_unique<opentelemetry::sdk::metrics::ViewRegistry>(),
-        // NOTE : this skips OTel's built in resource detection which is more
-        // confusing than helpful. (The default is {{"service_name",
-        // "unknown_service" }}). And after #14930, this gets copied into our
-        // resource labels. oh god why.
-        opentelemetry::sdk::resource::Resource::GetEmpty());
-    context->AddMetricReader(std::move(reader));
-    std::cout << __func__
-              << ": opentelemetry::sdk::metrics::MeterProviderFactory::Create"
-              << std::endl;
-    provider_ = opentelemetry::sdk::metrics::MeterProviderFactory::Create(
-        std::move(context));
-
-    auto meter = provider_->GetMeter("bigtable", "");
-  }
-
-  // ReadRow is a synthetic RPC and should appear in metrics as if it's a
-  // different RPC than ReadRows with row_limit=1.
-  std::shared_ptr<OperationContext> ReadRow() override {
-    return std::make_shared<OperationContext>();
-  }
-
-  std::shared_ptr<OperationContext> ReadRows() override {
-    return std::make_shared<OperationContext>();
-  }
-  std::shared_ptr<OperationContext> AsyncReadRows() override {
-    return std::make_shared<OperationContext>();
-  }
-
-  std::shared_ptr<OperationContext> MutateRow(
-      std::string const& table_name,
-      std::string const& app_profile_id) override {
-    static bool const kMetricsInitialized = [this, &table_name,
-                                             &app_profile_id]() {
-      std::vector<std::shared_ptr<Metric>> v;
-      auto resource_labels = ResourceLabelsFromTableName(table_name);
-      DataLabels data_labels = {"MutateRow",
-                                "false",  // streaming
-                                "cpp.Bigtable/" + version_string(),
-                                client_uid_,
-                                app_profile_id,
-                                "" /*=status*/};
-      v.push_back(std::make_shared<AttemptLatency>(resource_labels, data_labels,
-                                                   "bigtable", "", provider_));
-      v.push_back(std::make_shared<OperationLatency>(
-          resource_labels, data_labels, "bigtable", "", provider_));
-      std::lock_guard<std::mutex> lock(mu_);
-      if (mutate_row_metrics_.empty()) swap(mutate_row_metrics_, v);
-      return true;
-    }();
-
-    // this creates a copy, we may not want to make a copy
-    if (kMetricsInitialized) {
-      return std::make_shared<OperationContext>(mutate_row_metrics_);
-    }
-    return std::make_shared<OperationContext>();
-  }
-
-  std::shared_ptr<OperationContext> AsyncMutateRow(
-      std::string const& table_name,
-      std::string const& app_profile_id) override {  // not currently used
-    static bool const kMetricsInitialized = [this, &table_name,
-                                             &app_profile_id]() {
-      std::vector<std::shared_ptr<Metric>> v;
-      auto resource_labels = ResourceLabelsFromTableName(table_name);
-      DataLabels data_labels = {"MutateRow",
-                                "false",  // streaming
-                                "cpp.Bigtable/" + version_string(),
-                                client_uid_,
-                                app_profile_id,
-                                "" /*=status*/};
-      v.push_back(std::make_shared<AttemptLatency>(resource_labels, data_labels,
-                                                   "bigtable", "", provider_));
-      v.push_back(std::make_shared<OperationLatency>(
-          resource_labels, data_labels, "bigtable", "", provider_));
-      std::lock_guard<std::mutex> lock(mu_);
-      if (mutate_row_metrics_.empty()) swap(mutate_row_metrics_, v);
-      return true;
-    }();
-
-    // this creates a copy, we may not want to make a copy
-    if (kMetricsInitialized) {
-      return std::make_shared<OperationContext>(mutate_row_metrics_);
-    }
-    return std::make_shared<OperationContext>();
-  }
-
-  std::shared_ptr<OperationContext> MutateRows(
-      std::string const& table_name,
-      std::string const& app_profile_id) override {
-    static bool const kMetricsInitialized = [this, &table_name,
-                                             &app_profile_id]() {
-      std::vector<std::shared_ptr<Metric>> v;
-      auto resource_labels = ResourceLabelsFromTableName(table_name);
-      DataLabels data_labels = {"MutateRows",
-                                "false",  // streaming
-                                "cpp.Bigtable/" + version_string(),
-                                client_uid_,
-                                app_profile_id,
-                                "" /*=status*/};
-      v.push_back(std::make_shared<AttemptLatency>(resource_labels, data_labels,
-                                                   "bigtable", "", provider_));
-      v.push_back(std::make_shared<OperationLatency>(
-          resource_labels, data_labels, "bigtable", "", provider_));
-      std::lock_guard<std::mutex> lock(mu_);
-      if (mutate_rows_metrics_.empty()) swap(mutate_rows_metrics_, v);
-      return true;
-    }();
-
-    // this creates a copy, we may not want to make a copy
-    if (kMetricsInitialized) {
-      return std::make_shared<OperationContext>(mutate_rows_metrics_);
-    }
-    return std::make_shared<OperationContext>();
-  }
-
-  std::shared_ptr<OperationContext> AsyncMutateRows(
-      std::string const& table_name,
-      std::string const& app_profile_id) override {
-    static bool const kMetricsInitialized = [this, &table_name,
-                                             &app_profile_id]() {
-      std::vector<std::shared_ptr<Metric>> v;
-      auto resource_labels = ResourceLabelsFromTableName(table_name);
-      DataLabels data_labels = {"MutateRows",
-                                "false",  // streaming
-                                "cpp.Bigtable/" + version_string(),
-                                client_uid_,
-                                app_profile_id,
-                                "" /*=status*/};
-      v.push_back(std::make_shared<AttemptLatency>(resource_labels, data_labels,
-                                                   "bigtable", "", provider_));
-      v.push_back(std::make_shared<OperationLatency>(
-          resource_labels, data_labels, "bigtable", "", provider_));
-      std::lock_guard<std::mutex> lock(mu_);
-      if (mutate_rows_metrics_.empty()) swap(mutate_rows_metrics_, v);
-      return true;
-    }();
-
-    // this creates a copy, we may not want to make a copy
-    if (kMetricsInitialized) {
-      return std::make_shared<OperationContext>(mutate_rows_metrics_);
-    }
-    return std::make_shared<OperationContext>();
-  }
-
-  std::shared_ptr<OperationContext> CheckandMutateRow() override {
-    return std::make_shared<OperationContext>();
-  }
-  std::shared_ptr<OperationContext> AsyncCheckandMutateRow() override {
-    return std::make_shared<OperationContext>();
-  }
-
-  std::shared_ptr<OperationContext> SampleRowKeys() override {
-    return std::make_shared<OperationContext>();
-  }
-  std::shared_ptr<OperationContext> AsyncSampleRowKeys() override {
-    return std::make_shared<OperationContext>();
-  }
-
-  std::shared_ptr<OperationContext> ReadModifyWriteRow() override {
-    return std::make_shared<OperationContext>();
-  }
-  std::shared_ptr<OperationContext> AsyncReadModifyWriteRow() override {
-    return std::make_shared<OperationContext>();
-  }
-
- private:
-  ResourceLabels ResourceLabelsFromTableName(std::string const& table_name) {
-    // parse table_name into component pieces
-    // projects/<project>/instances/<instance>/tables/<table>
-    std::vector<absl::string_view> name_parts = absl::StrSplit(table_name, '/');
-    ResourceLabels resource_labels = {
-        std::string(name_parts[1]), std::string(name_parts[3]),
-        std::string(name_parts[5]), "" /*=cluster*/, "" /*=zone*/};
-    return resource_labels;
-  }
-
-  std::string client_uid_;
-  std::shared_ptr<opentelemetry::metrics::MeterProvider> provider_;
-  std::mutex mu_;  // This is necessary because RPC and AsyncRPC share metrics.
-  std::vector<std::shared_ptr<Metric>> mutate_row_metrics_;   // GUARDED_BY(mu_)
-  std::vector<std::shared_ptr<Metric>> mutate_rows_metrics_;  // GUARDED_BY(mu_)
-};
-
 bigtable::Row TransformReadModifyWriteRowResponse(
     google::bigtable::v2::ReadModifyWriteRowResponse response) {
   std::vector<bigtable::Cell> cells;
@@ -446,8 +124,8 @@ Status DataConnectionImpl::Apply(std::string const& table_name,
         return idempotent_policy->is_idempotent(m);
       });
 
-  auto operation_context =
-      retry_context_factory_->MutateRow(table_name, app_profile_id(*current));
+  auto operation_context = operation_context_factory_->MutateRow(
+      table_name, app_profile_id(*current));
 
   auto sor = google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -481,7 +159,7 @@ future<Status> DataConnectionImpl::AsyncApply(std::string const& table_name,
         return idempotent_policy->is_idempotent(m);
       });
 
-  auto operation_context = retry_context_factory_->AsyncMutateRow(
+  auto operation_context = operation_context_factory_->AsyncMutateRow(
       table_name, app_profile_id(*current));
   auto retry = retry_policy(*current);
   auto backoff = backoff_policy(*current);
@@ -519,8 +197,8 @@ std::vector<bigtable::FailedMutation> DataConnectionImpl::BulkApply(
     std::string const& table_name, bigtable::BulkMutation mut) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (mut.empty()) return {};
-  auto operation_context =
-      retry_context_factory_->MutateRows(table_name, app_profile_id(*current));
+  auto operation_context = operation_context_factory_->MutateRows(
+      table_name, app_profile_id(*current));
   BulkMutator mutator(app_profile_id(*current), table_name,
                       *idempotency_policy(*current), std::move(mut),
                       std::move(operation_context));
@@ -546,8 +224,8 @@ future<std::vector<bigtable::FailedMutation>>
 DataConnectionImpl::AsyncBulkApply(std::string const& table_name,
                                    bigtable::BulkMutation mut) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto operation_context =
-      retry_context_factory_->MutateRows(table_name, app_profile_id(*current));
+  auto operation_context = operation_context_factory_->MutateRows(
+      table_name, app_profile_id(*current));
   return AsyncBulkApplier::Create(
       background_->cq(), stub_, limiter_, retry_policy(*current),
       backoff_policy(*current), enable_server_retries(*current),
@@ -653,7 +331,8 @@ DataConnectionImpl::AsyncCheckAndMutateRow(
   return google::cloud::internal::AsyncRetryLoop(
              std::move(retry), std::move(backoff), idempotency,
              background_->cq(),
-             [stub = stub_, operation_context = std::make_shared<OperationContext>()](
+             [stub = stub_,
+              operation_context = std::make_shared<OperationContext>()](
                  CompletionQueue& cq,
                  std::shared_ptr<grpc::ClientContext> context,
                  google::cloud::internal::ImmutableOptions options,
@@ -857,10 +536,11 @@ DataConnectionImpl::AsyncReadRow(std::string const& table_name,
 
 void DataConnectionImpl::Initialize(google::cloud::Project const& project) {
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
-  retry_context_factory_ =
-      std::make_unique<MetricsRetryContextFactory>(project, client_uid_);
+  operation_context_factory_ =
+      std::make_unique<MetricsOperationContextFactory>(project, client_uid_);
 #else
-  retry_context_factory_ = std::make_unique<SimpleRetryContextFactory>(project);
+  operation_context_factory_ =
+      std::make_unique<SimpleOperationContextFactory>(project);
 #endif
 }
 

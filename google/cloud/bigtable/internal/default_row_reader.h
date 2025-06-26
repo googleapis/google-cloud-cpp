@@ -17,8 +17,8 @@
 
 #include "google/cloud/bigtable/filters.h"
 #include "google/cloud/bigtable/internal/bigtable_stub.h"
-#include "google/cloud/bigtable/internal/readrowsparser.h"
 #include "google/cloud/bigtable/internal/operation_context.h"
+#include "google/cloud/bigtable/internal/readrowsparser.h"
 #include "google/cloud/bigtable/internal/row_reader_impl.h"
 #include "google/cloud/bigtable/metadata_update_policy.h"
 #include "google/cloud/bigtable/options.h"

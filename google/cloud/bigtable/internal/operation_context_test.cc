@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/bigtable/internal/retry_context.h"
+#include "google/cloud/bigtable/internal/operation_context.h"
 #include "google/cloud/testing_util/validate_metadata.h"
 #include <gmock/gmock.h>
 
@@ -29,7 +29,7 @@ using ::testing::UnorderedElementsAre;
  * Use a test fixture because initializing `ValidateMetadataFixture` once is
  * slightly more performant than creating one per test.
  */
-class RetryContextTest : public ::testing::Test {
+class OperationContextTest : public ::testing::Test {
  protected:
   testing_util::ValidateMetadataFixture metadata_fixture_;
 
@@ -43,29 +43,30 @@ class RetryContextTest : public ::testing::Test {
    * half of another, it makes the tests simpler.
    */
   std::multimap<std::string, std::string> SimulateRequest(
-      OperationContext& retry_context, RpcMetadata const& server_metadata = {}) {
+      OperationContext& operation_context,
+      RpcMetadata const& server_metadata = {}) {
     grpc::ClientContext c1;
     metadata_fixture_.SetServerMetadata(c1, server_metadata);
-    retry_context.PostCall(c1);
+    operation_context.PostCall(c1);
 
     // Return the headers set by the client.
     grpc::ClientContext c2;
-    retry_context.PreCall(c2);
+    operation_context.PreCall(c2);
     return metadata_fixture_.GetMetadata(c2);
   }
 };
 
-TEST_F(RetryContextTest, StartsWithoutBigtableCookies) {
-  OperationContext retry_context;
+TEST_F(OperationContextTest, StartsWithoutBigtableCookies) {
+  OperationContext operation_context;
 
   grpc::ClientContext c;
-  retry_context.PreCall(c);
+  operation_context.PreCall(c);
   auto headers = metadata_fixture_.GetMetadata(c);
   EXPECT_THAT(headers, UnorderedElementsAre(Pair("bigtable-attempt", "0")));
 }
 
-TEST_F(RetryContextTest, ParrotsBigtableCookies) {
-  OperationContext retry_context;
+TEST_F(OperationContextTest, ParrotsBigtableCookies) {
+  OperationContext operation_context;
 
   RpcMetadata server_metadata;
   server_metadata.headers = {
@@ -79,7 +80,7 @@ TEST_F(RetryContextTest, ParrotsBigtableCookies) {
       {"x-goog-cbt-cookie-both", "trailer"},
   };
 
-  auto headers = SimulateRequest(retry_context, server_metadata);
+  auto headers = SimulateRequest(operation_context, server_metadata);
   EXPECT_THAT(headers, UnorderedElementsAre(
                            Pair("x-goog-cbt-cookie-header-only", "header"),
                            Pair("x-goog-cbt-cookie-trailer-only", "trailer"),
@@ -87,25 +88,25 @@ TEST_F(RetryContextTest, ParrotsBigtableCookies) {
                            Pair("bigtable-attempt", "0")));
 }
 
-TEST_F(RetryContextTest, Retries) {
-  OperationContext retry_context;
+TEST_F(OperationContextTest, Retries) {
+  OperationContext operation_context;
 
   auto headers = SimulateRequest(
-      retry_context, {{}, {{"x-goog-cbt-cookie-routing", "request-0"}}});
+      operation_context, {{}, {{"x-goog-cbt-cookie-routing", "request-0"}}});
   EXPECT_THAT(headers, UnorderedElementsAre(
                            Pair("x-goog-cbt-cookie-routing", "request-0"),
                            Pair("bigtable-attempt", "0")));
 
   // Simulate receiving no `RpcMetadata` from the server. We should remember the
   // cookie from the first response.
-  headers = SimulateRequest(retry_context, {});
+  headers = SimulateRequest(operation_context, {});
   EXPECT_THAT(headers, UnorderedElementsAre(
                            Pair("x-goog-cbt-cookie-routing", "request-0"),
                            Pair("bigtable-attempt", "1")));
 
   // Simulate receiving a new routing cookie. We should overwrite the cookie
   // from the first response.
-  headers = SimulateRequest(retry_context,
+  headers = SimulateRequest(operation_context,
                             {{}, {{"x-goog-cbt-cookie-routing", "request-2"}}});
   EXPECT_THAT(headers, UnorderedElementsAre(
                            Pair("x-goog-cbt-cookie-routing", "request-2"),

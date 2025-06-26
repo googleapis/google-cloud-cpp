@@ -85,8 +85,9 @@ class OperationContext {
   // We call stub method specific factory functions that
   // populate the metrics that are supported on that stub method.
   // These metrics share a common interface that to record data analogous to
-  // PreCall, PostCall, OnDone, etc. When the OperationContext method is called it
-  // iterates through the metrics calling that function on the MetricInterface.
+  // PreCall, PostCall, OnDone, etc. When the OperationContext method is called
+  // it iterates through the metrics calling that function on the
+  // MetricInterface.
   std::vector<std::shared_ptr<Metric>> stub_applicable_metrics_;
 };
 
