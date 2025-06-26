@@ -34,20 +34,20 @@ namespace {
 using ReadResponse =
     ::google::cloud::storage_experimental::AsyncReaderConnection::ReadResponse;
 using ::google::cloud::storage_experimental::ObjectDescriptorConnection;
+using ::google::cloud::storage_experimental::ReadPayload;
 using ::google::cloud::storage_mocks::MockAsyncObjectDescriptorConnection;
 using ::google::cloud::storage_mocks::MockAsyncReaderConnection;
-using ::google::cloud::storage_experimental::ReadPayload;
 using ::google::cloud::testing_util::EventNamed;
 using ::google::cloud::testing_util::InstallSpanCatcher;
 using ::google::cloud::testing_util::OTelAttribute;
 using ::google::cloud::testing_util::OTelContextCaptured;
-using ::google::cloud::testing_util::ThereIsAnActiveSpan;
 using ::google::cloud::testing_util::PromiseWithOTelContext;
 using ::google::cloud::testing_util::SpanEventAttributesAre;
 using ::google::cloud::testing_util::SpanHasInstrumentationScope;
 using ::google::cloud::testing_util::SpanKindIsClient;
 using ::google::cloud::testing_util::SpanNamed;
 using ::google::cloud::testing_util::SpanWithStatus;
+using ::google::cloud::testing_util::ThereIsAnActiveSpan;
 using ::testing::_;
 
 // A helper to set expectations on a mock async reader. It captures the OTel
@@ -103,7 +103,8 @@ TEST(ObjectDescriptorConnectionTracing, ReadThenRead) {
   namespace sc = ::opentelemetry::trace::SemanticConventions;
   auto span_catcher = InstallSpanCatcher();
 
-  auto mock_connection = std::make_shared<MockAsyncObjectDescriptorConnection>();
+  auto mock_connection =
+      std::make_shared<MockAsyncObjectDescriptorConnection>();
   auto* mock_reader_ptr = new MockAsyncReaderConnection;
   PromiseWithOTelContext<ReadResponse> p;
   EXPECT_CALL(*mock_reader_ptr, Read).WillOnce(expect_context(p));
@@ -126,27 +127,25 @@ TEST(ObjectDescriptorConnectionTracing, ReadThenRead) {
 
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(
-      spans,
-      ElementsAre(AllOf(
-          SpanNamed("test-span"),
-          SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
-          SpanHasInstrumentationScope(), SpanKindIsClient(),
-          SpanHasEvents(
-              AllOf(EventNamed("gl-cpp.open.read"),
-                    SpanEventAttributesAre(
-                        OTelAttribute<std::int64_t>("read-length", 0),
-                        OTelAttribute<std::int64_t>("read-start", 0),
-                        OTelAttribute<std::string>(sc::kThreadId, _))),
-              AllOf(
-                  EventNamed("gl-cpp.read"),
-                  SpanEventAttributesAre(
-                      OTelAttribute<std::int64_t>("message.starting_offset",
-                                                  123),
-                      OTelAttribute<std::string>(sc::kThreadId, _),
-                      OTelAttribute<std::int64_t>("rpc.message.id", 1),
-                      // THIS WAS THE MISSING ATTRIBUTE:
-                      OTelAttribute<std::string>("rpc.message.type",
-                                                 "RECEIVED")))))));
+      spans, ElementsAre(AllOf(
+                 SpanNamed("test-span"),
+                 SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
+                 SpanHasInstrumentationScope(), SpanKindIsClient(),
+                 SpanHasEvents(
+                     AllOf(EventNamed("gl-cpp.open.read"),
+                           SpanEventAttributesAre(
+                               OTelAttribute<std::int64_t>("read-length", 0),
+                               OTelAttribute<std::int64_t>("read-start", 0),
+                               OTelAttribute<std::string>(sc::kThreadId, _))),
+                     AllOf(EventNamed("gl-cpp.read"),
+                           SpanEventAttributesAre(
+                               OTelAttribute<std::int64_t>(
+                                   "message.starting_offset", 123),
+                               OTelAttribute<std::string>(sc::kThreadId, _),
+                               OTelAttribute<std::int64_t>("rpc.message.id", 1),
+                               // THIS WAS THE MISSING ATTRIBUTE:
+                               OTelAttribute<std::string>("rpc.message.type",
+                                                          "RECEIVED")))))));
 }
 
 }  // namespace
