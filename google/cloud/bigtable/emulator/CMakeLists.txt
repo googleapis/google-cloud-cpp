@@ -33,6 +33,8 @@ add_library(
     server.h
     table.cc
     table.h
+    test_util.h
+    test_util.cc
     to_grpc_status.cc
     to_grpc_status.h)
 
