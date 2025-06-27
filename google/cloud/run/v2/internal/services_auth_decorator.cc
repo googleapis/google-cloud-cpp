@@ -17,7 +17,7 @@
 // source: google/cloud/run/v2/service.proto
 
 #include "google/cloud/run/v2/internal/services_auth_decorator.h"
-#include <google/cloud/run/v2/service.grpc.pb.h>
+#include "google/cloud/run/v2/service.grpc.pb.h"
 #include <memory>
 #include <utility>
 

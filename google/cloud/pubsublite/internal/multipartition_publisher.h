@@ -22,8 +22,8 @@
 #include "google/cloud/pubsublite/internal/service_composite.h"
 #include "google/cloud/pubsublite/message_metadata.h"
 #include "google/cloud/pubsublite/topic.h"
-#include <google/cloud/pubsublite/v1/admin.pb.h>
-#include <google/cloud/pubsublite/v1/publisher.pb.h>
+#include "google/cloud/pubsublite/v1/admin.pb.h"
+#include "google/cloud/pubsublite/v1/publisher.pb.h"
 #include <deque>
 #include <mutex>
 #include <vector>

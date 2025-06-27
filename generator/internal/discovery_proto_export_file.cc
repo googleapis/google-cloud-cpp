@@ -55,9 +55,9 @@ Status DiscoveryProtoExportFile::FormatFile(std::ostream& output_stream) const {
 )""");
   printer.Print("// IWYU pragma: begin_exports\n");
   for (auto const& p : proto_includes_) {
-    printer.Print("#include <");
+    printer.Print("#include \"");
     printer.Print(absl::StrReplaceAll(p, {{".proto", ".pb.h"}}));
-    printer.Print(">\n");
+    printer.Print("\"\n");
   }
   printer.Print("// IWYU pragma: end_exports\n");
   printer.Print(vars, R"""(

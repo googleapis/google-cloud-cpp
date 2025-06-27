@@ -19,7 +19,7 @@
 #include "generator/integration_tests/golden/v1/internal/deprecated_logging_decorator.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
-#include <generator/integration_tests/test_deprecated.grpc.pb.h>
+#include "generator/integration_tests/test_deprecated.grpc.pb.h"
 #include <memory>
 #include <set>
 #include <string>

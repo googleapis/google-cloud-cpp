@@ -19,7 +19,7 @@
 #include "google/cloud/cloudbuild/v2/internal/repository_manager_logging_decorator.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
-#include <google/devtools/cloudbuild/v2/repositories.grpc.pb.h>
+#include "google/devtools/cloudbuild/v2/repositories.grpc.pb.h"
 #include <memory>
 #include <set>
 #include <string>

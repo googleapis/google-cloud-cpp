@@ -17,7 +17,7 @@
 // source: google/cloud/dialogflow/v2/environment.proto
 
 #include "google/cloud/dialogflow_es/internal/environments_auth_decorator.h"
-#include <google/cloud/dialogflow/v2/environment.grpc.pb.h>
+#include "google/cloud/dialogflow/v2/environment.grpc.pb.h"
 #include <memory>
 #include <utility>
 

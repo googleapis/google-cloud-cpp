@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_NODE_TYPES_V1_NODE_TYPES_CONNECTION_H
 
 #include "google/cloud/compute/node_types/v1/internal/node_types_retry_traits.h"
+#include "google/cloud/compute/node_types/v1/node_types.pb.h"
 #include "google/cloud/compute/node_types/v1/node_types_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
@@ -27,7 +28,6 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/node_types/v1/node_types.pb.h>
 #include <memory>
 
 namespace google {

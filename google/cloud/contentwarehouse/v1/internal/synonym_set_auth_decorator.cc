@@ -17,7 +17,7 @@
 // source: google/cloud/contentwarehouse/v1/synonymset_service.proto
 
 #include "google/cloud/contentwarehouse/v1/internal/synonym_set_auth_decorator.h"
-#include <google/cloud/contentwarehouse/v1/synonymset_service.grpc.pb.h>
+#include "google/cloud/contentwarehouse/v1/synonymset_service.grpc.pb.h"
 #include <memory>
 #include <utility>
 

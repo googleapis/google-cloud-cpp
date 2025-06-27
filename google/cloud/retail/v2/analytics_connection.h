@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_V2_ANALYTICS_CONNECTION_H
 
 #include "google/cloud/retail/v2/analytics_connection_idempotency_policy.h"
+#include "google/cloud/retail/v2/analytics_service.pb.h"
 #include "google/cloud/retail/v2/internal/analytics_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
@@ -30,8 +31,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/retail/v2/analytics_service.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 
 namespace google {

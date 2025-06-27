@@ -19,7 +19,7 @@
 #include "google/cloud/iam/credentials/v1/internal/iam_credentials_logging_decorator.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
-#include <google/iam/credentials/v1/iamcredentials.grpc.pb.h>
+#include "google/iam/credentials/v1/iamcredentials.grpc.pb.h"
 #include <memory>
 #include <set>
 #include <string>

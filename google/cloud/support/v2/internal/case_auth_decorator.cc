@@ -17,7 +17,7 @@
 // source: google/cloud/support/v2/case_service.proto
 
 #include "google/cloud/support/v2/internal/case_auth_decorator.h"
-#include <google/cloud/support/v2/case_service.grpc.pb.h>
+#include "google/cloud/support/v2/case_service.grpc.pb.h"
 #include <memory>
 #include <utility>
 

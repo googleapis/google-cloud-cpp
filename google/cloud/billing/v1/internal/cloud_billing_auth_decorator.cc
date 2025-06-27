@@ -17,7 +17,7 @@
 // source: google/cloud/billing/v1/cloud_billing.proto
 
 #include "google/cloud/billing/v1/internal/cloud_billing_auth_decorator.h"
-#include <google/cloud/billing/v1/cloud_billing.grpc.pb.h>
+#include "google/cloud/billing/v1/cloud_billing.grpc.pb.h"
 #include <memory>
 #include <utility>
 

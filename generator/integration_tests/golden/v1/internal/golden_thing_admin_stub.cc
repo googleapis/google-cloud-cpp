@@ -19,8 +19,8 @@
 #include "generator/integration_tests/golden/v1/internal/golden_thing_admin_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <generator/integration_tests/test.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "generator/integration_tests/test.grpc.pb.h"
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>
 

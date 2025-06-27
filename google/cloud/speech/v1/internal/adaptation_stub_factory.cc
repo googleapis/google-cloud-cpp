@@ -17,6 +17,7 @@
 // source: google/cloud/speech/v1/cloud_speech_adaptation.proto
 
 #include "google/cloud/speech/v1/internal/adaptation_stub_factory.h"
+#include "google/cloud/speech/v1/cloud_speech_adaptation.grpc.pb.h"
 #include "google/cloud/speech/v1/internal/adaptation_auth_decorator.h"
 #include "google/cloud/speech/v1/internal/adaptation_logging_decorator.h"
 #include "google/cloud/speech/v1/internal/adaptation_metadata_decorator.h"
@@ -28,8 +29,7 @@
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-#include <google/cloud/speech/v1/cloud_speech_adaptation.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>
 

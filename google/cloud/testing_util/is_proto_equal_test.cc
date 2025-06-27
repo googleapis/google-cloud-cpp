@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/testing_util/is_proto_equal.h"
-#include <google/protobuf/wrappers.pb.h>
+#include "google/protobuf/wrappers.pb.h"
 #include <gmock/gmock.h>
 
 namespace google {

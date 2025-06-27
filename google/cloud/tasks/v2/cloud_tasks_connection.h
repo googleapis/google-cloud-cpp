@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TASKS_V2_CLOUD_TASKS_CONNECTION_H
 
 #include "google/cloud/tasks/v2/cloud_tasks_connection_idempotency_policy.h"
+#include "google/cloud/tasks/v2/cloudtasks.pb.h"
 #include "google/cloud/tasks/v2/internal/cloud_tasks_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
@@ -27,7 +28,6 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/tasks/v2/cloudtasks.pb.h>
 #include <memory>
 
 namespace google {

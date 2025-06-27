@@ -19,7 +19,7 @@
 #if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
 #include "google/cloud/storage/internal/grpc/ctype_cord_workaround.h"
 #include "google/cloud/grpc_error_delegate.h"
-#include <google/storage/v2/storage.grpc.pb.h>
+#include "google/storage/v2/storage.grpc.pb.h"
 #include <memory>
 #include <random>
 #include <string>

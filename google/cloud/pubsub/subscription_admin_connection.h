@@ -27,7 +27,7 @@
 #include "google/cloud/internal/non_constructible.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/status_or.h"
-#include <google/pubsub/v1/pubsub.pb.h>
+#include "google/pubsub/v1/pubsub.pb.h"
 #include <initializer_list>
 #include <memory>
 #include <string>

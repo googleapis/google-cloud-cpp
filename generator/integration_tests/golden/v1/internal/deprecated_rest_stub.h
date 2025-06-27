@@ -24,7 +24,7 @@
 #include "google/cloud/internal/rest_context.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <generator/integration_tests/test_deprecated.pb.h>
+#include "generator/integration_tests/test_deprecated.pb.h"
 #include <memory>
 
 namespace google {

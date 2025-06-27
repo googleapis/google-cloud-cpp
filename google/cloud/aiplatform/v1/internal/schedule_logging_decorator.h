@@ -22,7 +22,7 @@
 #include "google/cloud/aiplatform/v1/internal/schedule_stub.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <set>
 #include <string>

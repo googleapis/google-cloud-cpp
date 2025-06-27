@@ -35,12 +35,12 @@ index 026553f5c7..f3c6b6925c 100644
 +# angle-brackets, thus treating their headers as system includes. This allows
 +# us to dial-up the warnings in our own code, without seeing compiler warnings
 +# from their headers, which we do not own.
-+cc_library(
-+    name = "googleapis_system_includes",
-+    includes = [
-+        ".",
-+    ],
-+)
++#cc_library(
++#    name = "googleapis_system_includes",
++#    includes = [
++#        ".",
++#    ],
++#)
 +
 diff --git a/MODULE.bazel b/MODULE.bazel
 new file mode 100644

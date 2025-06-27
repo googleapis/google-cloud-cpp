@@ -139,7 +139,7 @@ def gl_cpp_workspace0(name = None):
         ],
         sha256 = "a1b2315f7eb290e2876b19839da1cc7916b36f93c88921f90d0daab58755a8a3",
         strip_prefix = "googleapis-f9d6fe4a6ad9ed89dfc315f284124d2104377940",
-        build_file = Label("//bazel:googleapis.BUILD"),
+        # build_file = Label("//bazel:googleapis.BUILD"),
         # Scaffolding for patching googleapis after download. For example:
         #   patches = ["googleapis.patch"]
         # NOTE: This should only be used while developing with a new

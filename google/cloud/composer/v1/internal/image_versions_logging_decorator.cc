@@ -17,9 +17,9 @@
 // source: google/cloud/orchestration/airflow/service/v1/image_versions.proto
 
 #include "google/cloud/composer/v1/internal/image_versions_logging_decorator.h"
+#include "google/cloud/orchestration/airflow/service/v1/image_versions.grpc.pb.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/orchestration/airflow/service/v1/image_versions.grpc.pb.h>
 #include <memory>
 #include <set>
 #include <string>

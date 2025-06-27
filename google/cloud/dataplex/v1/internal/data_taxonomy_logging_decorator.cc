@@ -17,9 +17,9 @@
 // source: google/cloud/dataplex/v1/data_taxonomy.proto
 
 #include "google/cloud/dataplex/v1/internal/data_taxonomy_logging_decorator.h"
+#include "google/cloud/dataplex/v1/data_taxonomy.grpc.pb.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/dataplex/v1/data_taxonomy.grpc.pb.h>
 #include <memory>
 #include <set>
 #include <string>

@@ -21,7 +21,7 @@
 #include "google/cloud/internal/setup_context.h"
 #include "google/cloud/retry_policy.h"
 #include "google/cloud/version.h"
-#include <google/protobuf/empty.pb.h>
+#include "google/protobuf/empty.pb.h"
 #include <chrono>
 #include <string>
 

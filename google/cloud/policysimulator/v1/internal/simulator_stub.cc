@@ -17,10 +17,10 @@
 // source: google/cloud/policysimulator/v1/simulator.proto
 
 #include "google/cloud/policysimulator/v1/internal/simulator_stub.h"
+#include "google/cloud/policysimulator/v1/simulator.grpc.pb.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/policysimulator/v1/simulator.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>
 

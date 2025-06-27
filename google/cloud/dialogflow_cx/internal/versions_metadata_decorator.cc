@@ -17,12 +17,12 @@
 // source: google/cloud/dialogflow/cx/v3/version.proto
 
 #include "google/cloud/dialogflow_cx/internal/versions_metadata_decorator.h"
+#include "google/cloud/dialogflow/cx/v3/version.grpc.pb.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/url_encode.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/dialogflow/cx/v3/version.grpc.pb.h>
 #include <memory>
 #include <string>
 #include <utility>

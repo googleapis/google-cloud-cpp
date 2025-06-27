@@ -17,11 +17,11 @@
 // source: google/cloud/sql/v1/cloud_sql_instances.proto
 
 #include "google/cloud/sql/v1/internal/sql_instances_rest_stub.h"
+#include "google/cloud/sql/v1/cloud_sql_instances.pb.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/rest_stub_helpers.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/sql/v1/cloud_sql_instances.pb.h>
 #include <memory>
 #include <utility>
 

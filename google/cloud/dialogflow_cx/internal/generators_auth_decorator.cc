@@ -17,7 +17,7 @@
 // source: google/cloud/dialogflow/cx/v3/generator.proto
 
 #include "google/cloud/dialogflow_cx/internal/generators_auth_decorator.h"
-#include <google/cloud/dialogflow/cx/v3/generator.grpc.pb.h>
+#include "google/cloud/dialogflow/cx/v3/generator.grpc.pb.h"
 #include <memory>
 #include <utility>
 

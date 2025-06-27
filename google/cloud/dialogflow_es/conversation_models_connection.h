@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_CONVERSATION_MODELS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_CONVERSATION_MODELS_CONNECTION_H
 
+#include "google/cloud/dialogflow/v2/conversation_model.pb.h"
 #include "google/cloud/dialogflow_es/conversation_models_connection_idempotency_policy.h"
 #include "google/cloud/dialogflow_es/internal/conversation_models_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
@@ -30,8 +31,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/dialogflow/v2/conversation_model.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <string>
 
