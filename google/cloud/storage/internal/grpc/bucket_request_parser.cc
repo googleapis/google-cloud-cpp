@@ -209,6 +209,46 @@ Status PatchIamConfig(Bucket& b, nlohmann::json const& i) {
   return Status{};
 }
 
+Status PatchIpFilter(Bucket& b, nlohmann::json const& p) {
+  if (p.is_null()) {
+    b.clear_ip_filter();
+    return Status{};
+  }
+  auto& ip_filter = *b.mutable_ip_filter();
+  if (p.contains("mode")) {
+    ip_filter.set_mode(p.value("mode", ""));
+  }
+  if (p.contains("allowAllServiceAgentAccess")) {
+    ip_filter.set_allow_all_service_agent_access(
+        p.value("allowAllServiceAgentAccess", false));
+  }
+  if (p.contains("allowCrossOrgVpcs")) {
+    ip_filter.set_allow_cross_org_vpcs(p.value("allowCrossOrgVpcs", false));
+  }
+  if (p.contains("publicNetworkSource")) {
+    auto& pns = *ip_filter.mutable_public_network_source();
+    auto const& public_network_source = p["publicNetworkSource"];
+    if (public_network_source.contains("allowedIpCidrRanges")) {
+      for (auto const& v :
+           public_network_source["allowedIpCidrRanges"]) {
+        pns.add_allowed_ip_cidr_ranges(v.get<std::string>());
+      }
+    }
+  }
+  if (p.contains("vpcNetworkSources")) {
+    for (auto const& v : p["vpcNetworkSources"]) {
+      auto& entry = *ip_filter.add_vpc_network_sources();
+      entry.set_network(v.value("network", ""));
+      if (v.contains("allowedIpCidrRanges")) {
+        for (auto const& ip : v["allowedIpCidrRanges"]) {
+          entry.add_allowed_ip_cidr_ranges(ip.get<std::string>());
+        }
+      }
+    }
+  }
+  return Status{};
+}
+
 Status PatchAutoclass(Bucket& bucket, nlohmann::json const& p) {
   if (p.is_null()) {
     bucket.clear_autoclass();
@@ -558,6 +598,7 @@ StatusOr<google::storage::v2::UpdateBucketRequest> ToProto(
       {"billing", "", PatchBilling},
       {"retentionPolicy", "retention_policy", PatchRetentionPolicy},
       {"iamConfiguration", "iam_config", PatchIamConfig},
+      {"ipFilter", "ip_filter", PatchIpFilter},
       {"autoclass", "", PatchAutoclass},
   };
 
