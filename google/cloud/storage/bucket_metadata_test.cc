@@ -120,6 +120,18 @@ BucketMetadata CreateBucketMetadataForTest() {
         },
         "publicAccessPrevention": "inherited"
       },
+      "ipFilter": {
+        "mode": "Enabled",
+        "allowAllServiceAgentAccess": true,
+        "allowCrossOrgVpcs": true,
+        "publicNetworkSource": {
+          "allowedIpCidrRanges": ["1.2.3.4/32"]
+        },
+        "vpcNetworkSources": [{
+          "network": "projects/p/global/networks/n",
+          "allowedIpCidrRanges": ["5.6.7.8/32"]
+        }]
+      },
       "id": "test-bucket",
       "kind": "storage#bucket",
       "labels": {
@@ -239,6 +251,20 @@ TEST(BucketMetadataTest, Parse) {
           actual.iam_configuration().uniform_bucket_level_access->locked_time));
   EXPECT_EQ(actual.iam_configuration().public_access_prevention.value_or(""),
             "inherited");
+
+  // ip_filter
+  ASSERT_TRUE(actual.has_ip_filter());
+  EXPECT_EQ(actual.ip_filter().mode, "Enabled");
+  EXPECT_TRUE(actual.ip_filter().allow_all_service_agent_access);
+  EXPECT_TRUE(actual.ip_filter().allow_cross_org_vpcs);
+  ASSERT_TRUE(actual.ip_filter().public_network_source.has_value());
+  EXPECT_THAT(actual.ip_filter().public_network_source->allowed_ip_cidr_ranges,
+              ElementsAre("1.2.3.4/32"));
+  ASSERT_TRUE(actual.ip_filter().vpc_network_sources.has_value());
+  EXPECT_THAT(*actual.ip_filter().vpc_network_sources,
+              ElementsAre(BucketIpFilterVpcNetworkSource{
+                  "projects/p/global/networks/n", {"5.6.7.8/32"}}));
+
   EXPECT_EQ("test-bucket", actual.id());
   EXPECT_EQ("storage#bucket", actual.kind());
   EXPECT_EQ(2, actual.labels().size());
@@ -388,6 +414,9 @@ TEST(BucketMetadataTest, IOStream) {
   EXPECT_THAT(actual, HasSubstr("BucketIamConfiguration={"));
   EXPECT_THAT(actual, HasSubstr("locked_time=2020-01-02T03:04:05Z"));
   EXPECT_THAT(actual, HasSubstr("public_access_prevention=inherited"));
+
+  // ip_filter()
+  EXPECT_THAT(actual, HasSubstr("ip_filter=BucketIpFilter"));
 
   // lifecycle()
   EXPECT_THAT(actual, HasSubstr("age=30"));
@@ -1294,6 +1323,53 @@ TEST(BucketMetadataPatchBuilder, ResetIamConfiguration) {
   auto json = nlohmann::json::parse(actual);
   ASSERT_EQ(1U, json.count("iamConfiguration")) << json;
   ASSERT_TRUE(json["iamConfiguration"].is_null()) << json;
+}
+
+TEST(BucketMetadataPatchBuilder, SetIpFilter) {
+  BucketMetadataPatchBuilder builder;
+  BucketIpFilter ip_filter;
+  ip_filter.mode = "Enabled";
+  ip_filter.allow_all_service_agent_access = true;
+  ip_filter.allow_cross_org_vpcs = true;
+  ip_filter.public_network_source =
+      BucketIpFilterPublicNetworkSource{{"1.2.3.4/32"}};
+  ip_filter.vpc_network_sources =
+      absl::make_optional<std::vector<BucketIpFilterVpcNetworkSource>>(
+          {BucketIpFilterVpcNetworkSource{"projects/p/global/networks/n",
+                                          {"5.6.7.8/32"}},
+           BucketIpFilterVpcNetworkSource{"projects/p/global/networks/m",
+                                          {"9.0.1.2/32"}}});
+  builder.SetIpFilter(ip_filter);
+
+  auto actual = builder.BuildPatch();
+  auto json = nlohmann::json::parse(actual);
+  ASSERT_EQ(1U, json.count("ipFilter")) << json;
+  ASSERT_TRUE(json["ipFilter"].is_object()) << json;
+  auto const expected = nlohmann::json{
+      {"mode", "Enabled"},
+      {"allowAllServiceAgentAccess", true},
+      {"allowCrossOrgVpcs", true},
+      {"publicNetworkSource",
+       {{"allowedIpCidrRanges", nlohmann::json::array({"1.2.3.4/32"})}}},
+      {"vpcNetworkSources",
+       nlohmann::json::array({
+           {{"network", "projects/p/global/networks/n"},
+            {"allowedIpCidrRanges", nlohmann::json::array({"5.6.7.8/32"})}},
+           {{"network", "projects/p/global/networks/m"},
+            {"allowedIpCidrRanges", nlohmann::json::array({"9.0.1.2/32"})}},
+       })},
+  };
+  EXPECT_EQ(json["ipFilter"], expected);
+}
+
+TEST(BucketMetadataPatchBuilder, ResetIpFilter) {
+  BucketMetadataPatchBuilder builder;
+  builder.ResetIpFilter();
+
+  auto actual = builder.BuildPatch();
+  auto json = nlohmann::json::parse(actual);
+  ASSERT_EQ(1U, json.count("ipFilter")) << json;
+  ASSERT_TRUE(json["ipFilter"].is_null()) << json;
 }
 
 TEST(BucketMetadataPatchBuilder, SetHierarchicalNamespace) {

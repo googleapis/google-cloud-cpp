@@ -50,6 +50,11 @@ google::storage::v2::Bucket::IamConfig ToProto(
 storage::BucketIamConfiguration FromProto(
     google::storage::v2::Bucket::IamConfig const& rhs);
 
+google::storage::v2::Bucket::IpFilter ToProto(
+    storage::BucketIpFilter const& rhs);
+storage::BucketIpFilter FromProto(
+    google::storage::v2::Bucket::IpFilter const& rhs);
+
 google::storage::v2::Bucket::Lifecycle::Rule::Action ToProto(
     storage::LifecycleRuleAction rhs);
 storage::LifecycleRuleAction FromProto(
