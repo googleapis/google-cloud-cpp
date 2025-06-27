@@ -23,6 +23,7 @@
 #include "google/cloud/storage/bucket_encryption.h"
 #include "google/cloud/storage/bucket_hierarchical_namespace.h"
 #include "google/cloud/storage/bucket_iam_configuration.h"
+#include "google/cloud/storage/bucket_ip_filter.h"
 #include "google/cloud/storage/bucket_lifecycle.h"
 #include "google/cloud/storage/bucket_logging.h"
 #include "google/cloud/storage/bucket_object_retention.h"
@@ -265,6 +266,23 @@ class BucketMetadata {
   }
   BucketMetadata& reset_iam_configuration() {
     iam_configuration_.reset();
+    return *this;
+  }
+  ///@}
+
+  /// @name Accessors and modifiers for the IP filter configuration.
+  ///@{
+  bool has_ip_filter() const { return ip_filter_.has_value(); }
+  BucketIpFilter const& ip_filter() const { return *ip_filter_; }
+  absl::optional<BucketIpFilter> const& ip_filter_as_optional() const {
+    return ip_filter_;
+  }
+  BucketMetadata& set_ip_filter(BucketIpFilter v) {
+    ip_filter_ = std::move(v);
+    return *this;
+  }
+  BucketMetadata& reset_ip_filter() {
+    ip_filter_.reset();
     return *this;
   }
   ///@}
@@ -664,6 +682,7 @@ class BucketMetadata {
   std::string etag_;
   absl::optional<BucketHierarchicalNamespace> hierarchical_namespace_;
   absl::optional<BucketIamConfiguration> iam_configuration_;
+  absl::optional<BucketIpFilter> ip_filter_;
   std::string id_;
   std::string kind_;
   std::map<std::string, std::string> labels_;
@@ -741,6 +760,9 @@ class BucketMetadataPatchBuilder {
   BucketMetadataPatchBuilder& SetIamConfiguration(
       BucketIamConfiguration const& v);
   BucketMetadataPatchBuilder& ResetIamConfiguration();
+
+  BucketMetadataPatchBuilder& SetIpFilter(BucketIpFilter const& v);
+  BucketMetadataPatchBuilder& ResetIpFilter();
 
   /// Sets a new hierarchical namespace configuration.
   BucketMetadataPatchBuilder& SetHierarchicalNamespace(

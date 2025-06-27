@@ -21,6 +21,7 @@ storage_client_unit_tests = [
     "bucket_access_control_test.cc",
     "bucket_cors_entry_test.cc",
     "bucket_iam_configuration_test.cc",
+    "bucket_ip_filter_test.cc",
     "bucket_metadata_test.cc",
     "bucket_object_retention_test.cc",
     "bucket_soft_delete_policy_test.cc",
