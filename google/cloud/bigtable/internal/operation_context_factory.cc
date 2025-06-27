@@ -158,7 +158,7 @@ std::shared_ptr<OperationContext> MetricsOperationContextFactory::MutateRow(
     std::string const& table_name, std::string const& app_profile_id) {
   static bool const kMetricsInitialized = [this, &table_name,
                                            &app_profile_id]() {
-    std::vector<std::shared_ptr<Metric>> v;
+    std::vector<std::shared_ptr<Metric const>> v;
     auto resource_labels = ResourceLabelsFromTableName(table_name);
     DataLabels data_labels = {"MutateRow",
                               "false",  // streaming
@@ -188,7 +188,7 @@ MetricsOperationContextFactory::AsyncMutateRow(
     std::string const& app_profile_id) {  // not currently used
   static bool const kMetricsInitialized = [this, &table_name,
                                            &app_profile_id]() {
-    std::vector<std::shared_ptr<Metric>> v;
+    std::vector<std::shared_ptr<Metric const>> v;
     auto resource_labels = ResourceLabelsFromTableName(table_name);
     DataLabels data_labels = {"MutateRow",
                               "false",  // streaming
@@ -216,7 +216,7 @@ std::shared_ptr<OperationContext> MetricsOperationContextFactory::MutateRows(
     std::string const& table_name, std::string const& app_profile_id) {
   static bool const kMetricsInitialized = [this, &table_name,
                                            &app_profile_id]() {
-    std::vector<std::shared_ptr<Metric>> v;
+    std::vector<std::shared_ptr<Metric const>> v;
     auto resource_labels = ResourceLabelsFromTableName(table_name);
     DataLabels data_labels = {"MutateRows",
                               "false",  // streaming
@@ -245,7 +245,7 @@ MetricsOperationContextFactory::AsyncMutateRows(
     std::string const& table_name, std::string const& app_profile_id) {
   static bool const kMetricsInitialized = [this, &table_name,
                                            &app_profile_id]() {
-    std::vector<std::shared_ptr<Metric>> v;
+    std::vector<std::shared_ptr<Metric const>> v;
     auto resource_labels = ResourceLabelsFromTableName(table_name);
     DataLabels data_labels = {"MutateRows",
                               "false",  // streaming

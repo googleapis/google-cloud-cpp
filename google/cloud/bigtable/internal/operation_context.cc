@@ -21,15 +21,27 @@ namespace cloud {
 namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+namespace {
+std::vector<std::shared_ptr<Metric>> CloneMetrics(
+    std::vector<std::shared_ptr<Metric const>> const& metrics) {
+  std::vector<std::shared_ptr<Metric>> v;
+  for (auto const& m : metrics) {
+    v.emplace_back(m->clone());
+  }
+  return v;
+}
+
+}  // namespace
+
 OperationContext::OperationContext(
-    std::vector<std::shared_ptr<Metric>> stub_applicable_metrics)
-    : stub_applicable_metrics_(std::move(stub_applicable_metrics)) {}
+    std::vector<std::shared_ptr<Metric const>> const& stub_specific_metrics)
+    : stub_specific_metrics_(CloneMetrics(stub_specific_metrics)) {}
 
 void OperationContext::PreCall(grpc::ClientContext& context) {
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
   auto otel_context = opentelemetry::context::RuntimeContext::GetCurrent();
   auto attempt_start = std::chrono::system_clock::now();
-  for (auto& m : stub_applicable_metrics_) {
+  for (auto& m : stub_specific_metrics_) {
     m->PreCall(otel_context, PreCallParams{attempt_start});
   }
 #endif
@@ -47,7 +59,7 @@ void OperationContext::PostCall(grpc::ClientContext const& context,
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
   auto attempt_end = std::chrono::system_clock::now();
   auto otel_context = opentelemetry::context::RuntimeContext::GetCurrent();
-  for (auto& m : stub_applicable_metrics_) {
+  for (auto& m : stub_specific_metrics_) {
     m->PostCall(otel_context, context.GetServerInitialMetadata(),
                 context.GetServerTrailingMetadata(),
                 PostCallParams{attempt_end, status});
@@ -59,7 +71,7 @@ void OperationContext::OnDone(Status const& s) {
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
   auto operation_end = std::chrono::system_clock::now();
   auto otel_context = opentelemetry::context::RuntimeContext::GetCurrent();
-  for (auto& m : stub_applicable_metrics_) {
+  for (auto& m : stub_specific_metrics_) {
     m->OnDone(otel_context, OnDoneParams{operation_end, s});
   }
 #endif
@@ -69,7 +81,7 @@ void OperationContext::ElementRequest(grpc::ClientContext const& context) {
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
   auto element_request = std::chrono::system_clock::now();
   auto otel_context = opentelemetry::context::RuntimeContext::GetCurrent();
-  for (auto& m : stub_applicable_metrics_) {
+  for (auto& m : stub_specific_metrics_) {
     m->ElementRequest(otel_context, ElementRequestParams{element_request});
   }
 #endif
@@ -79,7 +91,7 @@ void OperationContext::ElementDelivery(grpc::ClientContext const&) {
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
   auto otel_context = opentelemetry::context::RuntimeContext::GetCurrent();
   auto first_response = std::chrono::system_clock::now();
-  for (auto& m : stub_applicable_metrics_) {
+  for (auto& m : stub_specific_metrics_) {
     m->ElementDelivery(otel_context,
                        ElementDeliveryParams{first_response, first_response_});
   }

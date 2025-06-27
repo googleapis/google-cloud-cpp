@@ -98,6 +98,7 @@ class Metric {
                               ElementRequestParams) {}
   virtual void ElementDelivery(opentelemetry::context::Context const&,
                                ElementDeliveryParams) {}
+  virtual std::unique_ptr<Metric> clone() const = 0;
 };
 
 class AttemptLatency : public Metric {
@@ -114,11 +115,12 @@ class AttemptLatency : public Metric {
       std::multimap<grpc::string_ref, grpc::string_ref> const&
           trailing_metadata,
       PostCallParams p) override;
+  std::unique_ptr<Metric> clone() const override;
 
  private:
   ResourceLabels resource_labels_;
   DataLabels data_labels_;
-  std::unique_ptr<opentelemetry::metrics::Histogram<double>> attempt_latencies_;
+  std::shared_ptr<opentelemetry::metrics::Histogram<double>> attempt_latencies_;
   std::chrono::system_clock::time_point attempt_start_;
 };
 
@@ -139,11 +141,12 @@ class OperationLatency : public Metric {
 
   void OnDone(opentelemetry::context::Context const& context,
               OnDoneParams p) override;
+  std::unique_ptr<Metric> clone() const override;
 
  private:
   ResourceLabels resource_labels_;
   DataLabels data_labels_;
-  std::unique_ptr<opentelemetry::metrics::Histogram<double>>
+  std::shared_ptr<opentelemetry::metrics::Histogram<double>>
       operation_latencies_;
   std::chrono::system_clock::time_point operation_start_;
 };
@@ -161,11 +164,12 @@ class RetryCount : public Metric {
       std::multimap<grpc::string_ref, grpc::string_ref> const&
           trailing_metadata,
       PostCallParams p) override;
+  std::unique_ptr<Metric> clone() const override;
 
  private:
   ResourceLabels resource_labels_;
   DataLabels data_labels_;
-  std::unique_ptr<opentelemetry::metrics::Counter<std::uint64_t>> retry_count_;
+  std::shared_ptr<opentelemetry::metrics::Counter<std::uint64_t>> retry_count_;
 };
 
 class FirstResponseLatency : public Metric {
@@ -184,11 +188,12 @@ class FirstResponseLatency : public Metric {
       PostCallParams p) override;
   void ElementDelivery(opentelemetry::context::Context const& context,
                        ElementDeliveryParams p) override;
+  std::unique_ptr<Metric> clone() const override;
 
  private:
   ResourceLabels resource_labels_;
   DataLabels data_labels_;
-  std::unique_ptr<opentelemetry::metrics::Histogram<double>>
+  std::shared_ptr<opentelemetry::metrics::Histogram<double>>
       first_response_latencies_;
   std::chrono::system_clock::time_point operation_start_;
 };

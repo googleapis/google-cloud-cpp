@@ -94,7 +94,8 @@ AttemptLatency::AttemptLatency(
       // TODO: consider making meters for the global metric provider, if one is
       // set.
       attempt_latencies_(provider->GetMeter(name, version)
-                             ->CreateDoubleHistogram("attempt_latencies")) {}
+                             ->CreateDoubleHistogram("attempt_latencies")
+                             .release()) {}
 
 void AttemptLatency::PreCall(opentelemetry::context::Context const&,
                              PreCallParams p) {
@@ -117,6 +118,10 @@ void AttemptLatency::PostCall(
   attempt_latencies_->Record(attempt_elapsed.count(), std::move(m), context);
 }
 
+std::unique_ptr<Metric> AttemptLatency::clone() const {
+  return std::make_unique<AttemptLatency>(*this);
+}
+
 OperationLatency::OperationLatency(
     ResourceLabels resource_labels, DataLabels data_labels,
     std::string const& name, std::string const& version,
@@ -124,8 +129,8 @@ OperationLatency::OperationLatency(
     : resource_labels_(std::move(resource_labels)),
       data_labels_(std::move(data_labels)),
       operation_latencies_(provider->GetMeter(name, version)
-                               ->CreateDoubleHistogram("operation_latencies")) {
-}
+                               ->CreateDoubleHistogram("operation_latencies")
+                               .release()) {}
 
 void OperationLatency::PreCall(opentelemetry::context::Context const&,
                                PreCallParams p) {
@@ -153,6 +158,10 @@ void OperationLatency::OnDone(opentelemetry::context::Context const& context,
                                context);
 }
 
+std::unique_ptr<Metric> OperationLatency::clone() const {
+  return std::make_unique<OperationLatency>(*this);
+}
+
 RetryCount::RetryCount(
     ResourceLabels resource_labels, DataLabels data_labels,
     std::string const& name, std::string const& version,
@@ -160,7 +169,8 @@ RetryCount::RetryCount(
     : resource_labels_(std::move(resource_labels)),
       data_labels_(std::move(data_labels)),
       retry_count_(provider->GetMeter(name, version)
-                       ->CreateUInt64Counter("retry_count")) {}
+                       ->CreateUInt64Counter("retry_count")
+                       .release()) {}
 
 void RetryCount::PreCall(opentelemetry::context::Context const&,
                          PreCallParams) {
@@ -177,6 +187,10 @@ void RetryCount::PostCall(
   resource_labels_.zone = cluster_zone.zone;
 }
 
+std::unique_ptr<Metric> RetryCount::clone() const {
+  return std::make_unique<RetryCount>(*this);
+}
+
 FirstResponseLatency::FirstResponseLatency(
     ResourceLabels resource_labels, DataLabels data_labels,
     std::string const& name, std::string const& version,
@@ -185,7 +199,8 @@ FirstResponseLatency::FirstResponseLatency(
       data_labels_(std::move(data_labels)),
       first_response_latencies_(
           provider->GetMeter(name, version)
-              ->CreateDoubleHistogram("first_response_latencies")) {}
+              ->CreateDoubleHistogram("first_response_latencies")
+              .release()) {}
 
 void FirstResponseLatency::PreCall(opentelemetry::context::Context const&,
                                    PreCallParams p) {
@@ -212,6 +227,10 @@ void FirstResponseLatency::ElementDelivery(
                                       IntoMap(resource_labels_, data_labels_),
                                       context);
   }
+}
+
+std::unique_ptr<Metric> FirstResponseLatency::clone() const {
+  return std::make_unique<FirstResponseLatency>(*this);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

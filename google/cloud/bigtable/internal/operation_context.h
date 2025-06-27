@@ -64,7 +64,7 @@ class OperationContext {
   OperationContext() = default;
 
   explicit OperationContext(
-      std::vector<std::shared_ptr<Metric>> stub_applicable_metrics);
+      std::vector<std::shared_ptr<Metric const>> const& stub_specific_metrics);
 
   // Called before each RPC attempt.
   void PreCall(grpc::ClientContext& context);
@@ -96,7 +96,7 @@ class OperationContext {
   // PreCall, PostCall, OnDone, etc. When the OperationContext method is called
   // it iterates through the metrics calling that function on the
   // Metric interface.
-  std::vector<std::shared_ptr<Metric>> stub_applicable_metrics_;
+  std::vector<std::shared_ptr<Metric>> stub_specific_metrics_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
