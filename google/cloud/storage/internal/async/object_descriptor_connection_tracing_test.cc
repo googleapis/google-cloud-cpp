@@ -131,7 +131,7 @@ TEST(ObjectDescriptorConnectionTracing, ReadThenRead) {
                  SpanNamed("test-span"),
                  SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
                  SpanHasInstrumentationScope(), SpanKindIsClient(),
-                 SpanHasEvents(
+                 SpanEventsAre(
                      AllOf(EventNamed("gl-cpp.open.read"),
                            SpanEventAttributesAre(
                                OTelAttribute<std::int64_t>("read-length", 0),
