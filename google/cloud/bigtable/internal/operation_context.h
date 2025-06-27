@@ -73,8 +73,10 @@ class OperationContext {
                 google::cloud::Status const& status);
   // A hook that executes at the end of a client operation.
   void OnDone(Status const& status);
-  // Called for some RPCs. Definition of "first response" may vary by RPC.
-  void FirstResponse(grpc::ClientContext const& context);
+  // Called during operations that allow the user to iterate over data
+  // synchronously or asynchronously.
+  void ElementRequest(grpc::ClientContext const& context);
+  void ElementDelivery(grpc::ClientContext const& context);
 
  private:
   void ProcessMetadata(
@@ -86,6 +88,7 @@ class OperationContext {
       std::chrono::system_clock::now();
   std::chrono::system_clock::time_point attempt_start_;
   bool first_response_ = true;
+  //  std::chrono::system_clock::time_point element_request_;
 
   // We call stub method specific factory functions that
   // populate the metrics that are supported on that stub method.

@@ -88,13 +88,12 @@ Metric::~Metric() = default;
 AttemptLatency::AttemptLatency(
     ResourceLabels resource_labels, DataLabels data_labels,
     std::string const& name, std::string const& version,
-    std::shared_ptr<opentelemetry::metrics::MeterProvider> provider)
+    std::shared_ptr<opentelemetry::metrics::MeterProvider> const& provider)
     : resource_labels_(std::move(resource_labels)),
       data_labels_(std::move(data_labels)),
-      provider_(std::move(provider)),
       // TODO: consider making meters for the global metric provider, if one is
       // set.
-      attempt_latencies_(provider_->GetMeter(name, version)
+      attempt_latencies_(provider->GetMeter(name, version)
                              ->CreateDoubleHistogram("attempt_latencies")) {}
 
 void AttemptLatency::PreCall(opentelemetry::context::Context const&,
@@ -121,11 +120,10 @@ void AttemptLatency::PostCall(
 OperationLatency::OperationLatency(
     ResourceLabels resource_labels, DataLabels data_labels,
     std::string const& name, std::string const& version,
-    std::shared_ptr<opentelemetry::metrics::MeterProvider> provider)
+    std::shared_ptr<opentelemetry::metrics::MeterProvider> const& provider)
     : resource_labels_(std::move(resource_labels)),
       data_labels_(std::move(data_labels)),
-      provider_(std::move(provider)),
-      operation_latencies_(provider_->GetMeter(name, version)
+      operation_latencies_(provider->GetMeter(name, version)
                                ->CreateDoubleHistogram("operation_latencies")) {
 }
 
@@ -158,11 +156,10 @@ void OperationLatency::OnDone(opentelemetry::context::Context const& context,
 RetryCount::RetryCount(
     ResourceLabels resource_labels, DataLabels data_labels,
     std::string const& name, std::string const& version,
-    std::shared_ptr<opentelemetry::metrics::MeterProvider> provider)
+    std::shared_ptr<opentelemetry::metrics::MeterProvider> const& provider)
     : resource_labels_(std::move(resource_labels)),
       data_labels_(std::move(data_labels)),
-      provider_(std::move(provider)),
-      retry_count_(provider_->GetMeter(name, version)
+      retry_count_(provider->GetMeter(name, version)
                        ->CreateUInt64Counter("retry_count")) {}
 
 void RetryCount::PreCall(opentelemetry::context::Context const&,
@@ -183,12 +180,11 @@ void RetryCount::PostCall(
 FirstResponseLatency::FirstResponseLatency(
     ResourceLabels resource_labels, DataLabels data_labels,
     std::string const& name, std::string const& version,
-    std::shared_ptr<opentelemetry::metrics::MeterProvider> provider)
+    std::shared_ptr<opentelemetry::metrics::MeterProvider> const& provider)
     : resource_labels_(std::move(resource_labels)),
       data_labels_(std::move(data_labels)),
-      provider_(std::move(provider)),
       first_response_latencies_(
-          provider_->GetMeter(name, version)
+          provider->GetMeter(name, version)
               ->CreateDoubleHistogram("first_response_latencies")) {}
 
 void FirstResponseLatency::PreCall(opentelemetry::context::Context const&,
@@ -206,14 +202,16 @@ void FirstResponseLatency::PostCall(
   resource_labels_.zone = cluster_zone.zone;
 }
 
-void FirstResponseLatency::FirstResponse(
-    opentelemetry::context::Context const& context, FirstResponseParams p) {
+void FirstResponseLatency::ElementDelivery(
+    opentelemetry::context::Context const& context, ElementDeliveryParams p) {
   using dmilliseconds = std::chrono::duration<double, std::milli>;
-  auto first_response_elapsed = std::chrono::duration_cast<dmilliseconds>(
-      p.first_response - operation_start_);
-  first_response_latencies_->Record(first_response_elapsed.count(),
-                                    IntoMap(resource_labels_, data_labels_),
-                                    context);
+  if (p.first_response) {
+    auto first_response_elapsed = std::chrono::duration_cast<dmilliseconds>(
+        p.element_delivery - operation_start_);
+    first_response_latencies_->Record(first_response_elapsed.count(),
+                                      IntoMap(resource_labels_, data_labels_),
+                                      context);
+  }
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -137,7 +137,7 @@ MetricsOperationContextFactory::MetricsOperationContextFactory(
   provider_ = opentelemetry::sdk::metrics::MeterProviderFactory::Create(
       std::move(context));
 
-  auto meter = provider_->GetMeter("bigtable", "");
+  //  auto meter = provider_->GetMeter("bigtable", "");
 }
 
 // ReadRow is a synthetic RPC and should appear in metrics as if it's a

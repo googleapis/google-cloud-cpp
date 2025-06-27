@@ -67,13 +67,18 @@ struct PostCallParams {
   google::cloud::Status attempt_status;
 };
 
-struct FirstResponseParams {
-  std::chrono::system_clock::time_point first_response;
-};
-
 struct OnDoneParams {
   std::chrono::system_clock::time_point operation_end;
   google::cloud::Status operation_status;
+};
+
+struct ElementRequestParams {
+  std::chrono::system_clock::time_point element_request;
+};
+
+struct ElementDeliveryParams {
+  std::chrono::system_clock::time_point element_delivery;
+  bool first_response;
 };
 
 // TODO: Determine whether "Params" should be const& or by-value.
@@ -88,9 +93,11 @@ class Metric {
       std::multimap<grpc::string_ref, grpc::string_ref> const&,
       std::multimap<grpc::string_ref, grpc::string_ref> const&,
       PostCallParams) {}
-  virtual void FirstResponse(opentelemetry::context::Context const&,
-                             FirstResponseParams) {}
   virtual void OnDone(opentelemetry::context::Context const&, OnDoneParams) {}
+  virtual void ElementRequest(opentelemetry::context::Context const&,
+                              ElementRequestParams) {}
+  virtual void ElementDelivery(opentelemetry::context::Context const&,
+                               ElementDeliveryParams) {}
 };
 
 class AttemptLatency : public Metric {
@@ -98,7 +105,7 @@ class AttemptLatency : public Metric {
   AttemptLatency(
       ResourceLabels resource_labels, DataLabels data_labels,
       std::string const& name, std::string const& version,
-      std::shared_ptr<opentelemetry::metrics::MeterProvider> provider);
+      std::shared_ptr<opentelemetry::metrics::MeterProvider> const& provider);
   void PreCall(opentelemetry::context::Context const&,
                PreCallParams p) override;
   void PostCall(
@@ -111,7 +118,6 @@ class AttemptLatency : public Metric {
  private:
   ResourceLabels resource_labels_;
   DataLabels data_labels_;
-  std::shared_ptr<opentelemetry::metrics::MeterProvider> provider_;
   std::unique_ptr<opentelemetry::metrics::Histogram<double>> attempt_latencies_;
   std::chrono::system_clock::time_point attempt_start_;
 };
@@ -121,7 +127,7 @@ class OperationLatency : public Metric {
   OperationLatency(
       ResourceLabels resource_labels, DataLabels data_labels,
       std::string const& name, std::string const& version,
-      std::shared_ptr<opentelemetry::metrics::MeterProvider> provider);
+      std::shared_ptr<opentelemetry::metrics::MeterProvider> const& provider);
   void PreCall(opentelemetry::context::Context const&,
                PreCallParams p) override;
   void PostCall(
@@ -137,7 +143,6 @@ class OperationLatency : public Metric {
  private:
   ResourceLabels resource_labels_;
   DataLabels data_labels_;
-  std::shared_ptr<opentelemetry::metrics::MeterProvider> provider_;
   std::unique_ptr<opentelemetry::metrics::Histogram<double>>
       operation_latencies_;
   std::chrono::system_clock::time_point operation_start_;
@@ -145,9 +150,10 @@ class OperationLatency : public Metric {
 
 class RetryCount : public Metric {
  public:
-  RetryCount(ResourceLabels resource_labels, DataLabels data_labels,
-             std::string const& name, std::string const& version,
-             std::shared_ptr<opentelemetry::metrics::MeterProvider> provider);
+  RetryCount(
+      ResourceLabels resource_labels, DataLabels data_labels,
+      std::string const& name, std::string const& version,
+      std::shared_ptr<opentelemetry::metrics::MeterProvider> const& provider);
   void PreCall(opentelemetry::context::Context const&, PreCallParams) override;
   void PostCall(
       opentelemetry::context::Context const& context,
@@ -159,7 +165,6 @@ class RetryCount : public Metric {
  private:
   ResourceLabels resource_labels_;
   DataLabels data_labels_;
-  std::shared_ptr<opentelemetry::metrics::MeterProvider> provider_;
   std::unique_ptr<opentelemetry::metrics::Counter<std::uint64_t>> retry_count_;
 };
 
@@ -168,7 +173,7 @@ class FirstResponseLatency : public Metric {
   FirstResponseLatency(
       ResourceLabels resource_labels, DataLabels data_labels,
       std::string const& name, std::string const& version,
-      std::shared_ptr<opentelemetry::metrics::MeterProvider> provider);
+      std::shared_ptr<opentelemetry::metrics::MeterProvider> const& provider);
   void PreCall(opentelemetry::context::Context const&,
                PreCallParams p) override;
   void PostCall(
@@ -177,14 +182,12 @@ class FirstResponseLatency : public Metric {
       std::multimap<grpc::string_ref, grpc::string_ref> const&
           trailing_metadata,
       PostCallParams p) override;
-
-  void FirstResponse(opentelemetry::context::Context const& context,
-                     FirstResponseParams p) override;
+  void ElementDelivery(opentelemetry::context::Context const& context,
+                       ElementDeliveryParams p) override;
 
  private:
   ResourceLabels resource_labels_;
   DataLabels data_labels_;
-  std::shared_ptr<opentelemetry::metrics::MeterProvider> provider_;
   std::unique_ptr<opentelemetry::metrics::Histogram<double>>
       first_response_latencies_;
   std::chrono::system_clock::time_point operation_start_;

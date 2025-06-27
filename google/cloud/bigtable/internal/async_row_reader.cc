@@ -102,7 +102,9 @@ void AsyncRowReader::TryGiveRowToUser() {
 
   auto self = this->shared_from_this();
   bool const break_recursion = recursion_level_ >= 100;
+  operation_context_->ElementDelivery(*context_);
   on_row_(std::move(row)).then([self, break_recursion](future<bool> fut) {
+    self->operation_context_->ElementRequest(*self->context_);
     bool should_cancel;
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
     try {

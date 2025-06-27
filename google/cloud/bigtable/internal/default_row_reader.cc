@@ -92,6 +92,7 @@ bool DefaultRowReader::NextChunk() {
 }
 
 absl::variant<Status, bigtable::Row> DefaultRowReader::Advance() {
+  operation_context_.ElementRequest(*context_);
   if (operation_cancelled_) {
     return internal::CancelledError(
         "call cancelled",
@@ -100,7 +101,7 @@ absl::variant<Status, bigtable::Row> DefaultRowReader::Advance() {
   while (true) {
     auto variant = AdvanceOrFail();
     if (absl::holds_alternative<bigtable::Row>(variant)) {
-      operation_context_.FirstResponse(*context_);
+      operation_context_.ElementDelivery(*context_);
       return absl::get<bigtable::Row>(std::move(variant));
     }
 

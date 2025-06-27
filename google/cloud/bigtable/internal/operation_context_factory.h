@@ -176,6 +176,7 @@ class MetricsOperationContextFactory : public OperationContextFactory {
   std::string client_uid_;
   std::shared_ptr<opentelemetry::metrics::MeterProvider> provider_;
   std::mutex mu_;  // This is necessary because RPC and AsyncRPC share metrics.
+
   std::vector<std::shared_ptr<Metric>> mutate_row_metrics_;   // GUARDED_BY(mu_)
   std::vector<std::shared_ptr<Metric>> mutate_rows_metrics_;  // GUARDED_BY(mu_)
   // TODO: add additional Metric vectors for each service RPC.
