@@ -89,6 +89,16 @@ void DiffIamConfiguration(BucketMetadataPatchBuilder& builder,
   }
 }
 
+void DiffIpFilter(BucketMetadataPatchBuilder& builder, BucketMetadata const& o,
+                  BucketMetadata const& u) {
+  if (o.ip_filter_as_optional() == u.ip_filter_as_optional()) return;
+  if (u.has_ip_filter()) {
+    builder.SetIpFilter(u.ip_filter());
+  } else {
+    builder.ResetIpFilter();
+  }
+}
+
 void DiffLabels(BucketMetadataPatchBuilder& builder, BucketMetadata const& o,
                 BucketMetadata const& u) {
   if (o.labels() == u.labels()) return;
@@ -199,6 +209,7 @@ BucketMetadataPatchBuilder DiffBucketMetadata(BucketMetadata const& original,
   DiffDefaultObjectAcl(builder, original, updated);
   DiffEncryption(builder, original, updated);
   DiffIamConfiguration(builder, original, updated);
+  DiffIpFilter(builder, original, updated);
   DiffLabels(builder, original, updated);
   DiffLifecycle(builder, original, updated);
   DiffLogging(builder, original, updated);

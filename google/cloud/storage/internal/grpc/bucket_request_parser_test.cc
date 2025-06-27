@@ -643,7 +643,7 @@ TEST(GrpcBucketRequestParser, PatchBucketRequestResetLabels) {
 TEST(GrpcBucketRequestParser, PatchBucketRequestResetIpFilter) {
   auto constexpr kTextProto = R"pb(
     bucket { name: "projects/_/buckets/bucket-name" }
-    update_mask {}
+    update_mask { paths: "ip_filter" }
   )pb";
   google::storage::v2::UpdateBucketRequest expected;
   ASSERT_TRUE(TextFormat::ParseFromString(kTextProto, &expected));
@@ -653,11 +653,6 @@ TEST(GrpcBucketRequestParser, PatchBucketRequestResetIpFilter) {
 
   auto actual = ToProto(req);
   ASSERT_STATUS_OK(actual);
-  // First check the paths. We do not care about their order, so checking them
-  // with IsProtoEqual does not work.
-  EXPECT_THAT(actual->update_mask().paths(), UnorderedElementsAre("ip_filter"));
-  // Clear the paths, which we already compared, and compare the proto.
-  actual->mutable_update_mask()->clear_paths();
   EXPECT_THAT(*actual, IsProtoEqual(expected));
 }
 
@@ -676,7 +671,7 @@ TEST(GrpcBucketRequestParser, PatchBucketRequestIpFilter) {
         }
       }
     }
-    update_mask {}
+    update_mask { paths: "ip_filter" }
   )pb";
   google::storage::v2::UpdateBucketRequest expected;
   ASSERT_TRUE(TextFormat::ParseFromString(kTextProto, &expected));
@@ -693,15 +688,10 @@ TEST(GrpcBucketRequestParser, PatchBucketRequestIpFilter) {
               "projects/p/global/networks/n", {"5.6.7.8/32"}}});
   storage::internal::PatchBucketRequest req(
       "bucket-name",
-      storage::BucketMetadataPatchBuilder().SetIpFilter(ip_filter));
+      storage::BucketMetadataPatchBuilder().SetIpFilter(std::move(ip_filter)));
 
   auto actual = ToProto(req);
   ASSERT_STATUS_OK(actual);
-  // First check the paths. We do not care about their order, so checking them
-  // with IsProtoEqual does not work.
-  EXPECT_THAT(actual->update_mask().paths(), UnorderedElementsAre("ip_filter"));
-  // Clear the paths, which we already compared, and compare the proto.
-  actual->mutable_update_mask()->clear_paths();
   EXPECT_THAT(*actual, IsProtoEqual(expected));
 }
 

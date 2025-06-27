@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/storage/bucket_ip_filter.h"
-#include "google/cloud/testing_util/is_proto_equal.h"
 #include <gmock/gmock.h>
 
 namespace google {
