@@ -17,7 +17,7 @@
 // source: google/api/apikeys/v2/apikeys.proto
 
 #include "google/cloud/apikeys/v2/internal/api_keys_auth_decorator.h"
-#include <google/api/apikeys/v2/apikeys.grpc.pb.h>
+#include "google/api/apikeys/v2/apikeys.grpc.pb.h"
 #include <memory>
 #include <utility>
 

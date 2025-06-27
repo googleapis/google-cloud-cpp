@@ -17,6 +17,7 @@
 // source: google/cloud/bigquery/connection/v1/connection.proto
 
 #include "google/cloud/bigquery/connection/v1/internal/connection_stub_factory.h"
+#include "google/cloud/bigquery/connection/v1/connection.grpc.pb.h"
 #include "google/cloud/bigquery/connection/v1/internal/connection_auth_decorator.h"
 #include "google/cloud/bigquery/connection/v1/internal/connection_logging_decorator.h"
 #include "google/cloud/bigquery/connection/v1/internal/connection_metadata_decorator.h"
@@ -28,7 +29,6 @@
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-#include <google/cloud/bigquery/connection/v1/connection.grpc.pb.h>
 #include <memory>
 #include <utility>
 

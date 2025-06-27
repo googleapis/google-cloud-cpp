@@ -17,7 +17,7 @@
 // source: google/cloud/chronicle/v1/rule.proto
 
 #include "google/cloud/chronicle/v1/internal/rule_auth_decorator.h"
-#include <google/cloud/chronicle/v1/rule.grpc.pb.h>
+#include "google/cloud/chronicle/v1/rule.grpc.pb.h"
 #include <memory>
 #include <utility>
 

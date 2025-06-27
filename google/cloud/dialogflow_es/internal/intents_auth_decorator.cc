@@ -17,7 +17,7 @@
 // source: google/cloud/dialogflow/v2/intent.proto
 
 #include "google/cloud/dialogflow_es/internal/intents_auth_decorator.h"
-#include <google/cloud/dialogflow/v2/intent.grpc.pb.h>
+#include "google/cloud/dialogflow/v2/intent.grpc.pb.h"
 #include <memory>
 #include <utility>
 

@@ -17,6 +17,7 @@
 // source: google/cloud/billing/v1/cloud_catalog.proto
 
 #include "google/cloud/billing/v1/internal/cloud_catalog_stub_factory.h"
+#include "google/cloud/billing/v1/cloud_catalog.grpc.pb.h"
 #include "google/cloud/billing/v1/internal/cloud_catalog_auth_decorator.h"
 #include "google/cloud/billing/v1/internal/cloud_catalog_logging_decorator.h"
 #include "google/cloud/billing/v1/internal/cloud_catalog_metadata_decorator.h"
@@ -28,7 +29,6 @@
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-#include <google/cloud/billing/v1/cloud_catalog.grpc.pb.h>
 #include <memory>
 #include <utility>
 

@@ -16,7 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_CLUSTER_CONFIG_H
 
 #include "google/cloud/bigtable/version.h"
-#include <google/bigtable/admin/v2/bigtable_instance_admin.pb.h>
+#include "google/bigtable/admin/v2/bigtable_instance_admin.pb.h"
 #include <string>
 
 namespace google {

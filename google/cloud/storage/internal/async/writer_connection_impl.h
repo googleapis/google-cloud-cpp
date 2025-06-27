@@ -20,7 +20,7 @@
 #include "google/cloud/async_streaming_read_write_rpc.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
-#include <google/storage/v2/storage.pb.h>
+#include "google/storage/v2/storage.pb.h"
 #include <atomic>
 #include <cstdint>
 #include <memory>

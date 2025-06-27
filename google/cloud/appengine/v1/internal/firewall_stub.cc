@@ -19,7 +19,7 @@
 #include "google/cloud/appengine/v1/internal/firewall_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/appengine/v1/appengine.grpc.pb.h>
+#include "google/appengine/v1/appengine.grpc.pb.h"
 #include <memory>
 #include <utility>
 

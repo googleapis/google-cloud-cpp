@@ -17,7 +17,7 @@
 // source: google/cloud/aiplatform/v1/job_service.proto
 
 #include "google/cloud/aiplatform/v1/internal/job_auth_decorator.h"
-#include <google/cloud/aiplatform/v1/job_service.grpc.pb.h>
+#include "google/cloud/aiplatform/v1/job_service.grpc.pb.h"
 #include <memory>
 #include <utility>
 

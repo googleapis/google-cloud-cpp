@@ -20,9 +20,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_NETWORK_EDGE_SECURITY_SERVICES_V1_NETWORK_EDGE_SECURITY_SERVICES_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_NETWORK_EDGE_SECURITY_SERVICES_V1_NETWORK_EDGE_SECURITY_SERVICES_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.pb.h"
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.pb.h>
 #include <memory>
 
 namespace google {

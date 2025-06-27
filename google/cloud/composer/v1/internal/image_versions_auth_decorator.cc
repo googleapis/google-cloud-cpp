@@ -17,7 +17,7 @@
 // source: google/cloud/orchestration/airflow/service/v1/image_versions.proto
 
 #include "google/cloud/composer/v1/internal/image_versions_auth_decorator.h"
-#include <google/cloud/orchestration/airflow/service/v1/image_versions.grpc.pb.h>
+#include "google/cloud/orchestration/airflow/service/v1/image_versions.grpc.pb.h"
 #include <memory>
 #include <utility>
 

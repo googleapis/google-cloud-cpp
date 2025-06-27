@@ -23,7 +23,7 @@
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/universe_domain_options.h"
-#include <google/api/monitored_resource.pb.h>
+#include "google/api/monitored_resource.pb.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 #include <regex>

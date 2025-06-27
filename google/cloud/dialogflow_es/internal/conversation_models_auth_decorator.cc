@@ -17,7 +17,7 @@
 // source: google/cloud/dialogflow/v2/conversation_model.proto
 
 #include "google/cloud/dialogflow_es/internal/conversation_models_auth_decorator.h"
-#include <google/cloud/dialogflow/v2/conversation_model.grpc.pb.h>
+#include "google/cloud/dialogflow/v2/conversation_model.grpc.pb.h"
 #include <memory>
 #include <utility>
 

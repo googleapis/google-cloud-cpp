@@ -55,8 +55,8 @@ TEST(DiscoveryProtoExportFileTest, FormatFile) {
 #define GOOGLE_CLOUD_CPP_RELATIVE_FILE_PATH_H
 
 // IWYU pragma: begin_exports
-#include <google/cloud/compute/v1/internal/common_001.pb.h>
-#include <google/cloud/compute/v1/internal/common_002.pb.h>
+#include "google/cloud/compute/v1/internal/common_001.pb.h"
+#include "google/cloud/compute/v1/internal/common_002.pb.h"
 // IWYU pragma: end_exports
 
 #endif  // GOOGLE_CLOUD_CPP_RELATIVE_FILE_PATH_H

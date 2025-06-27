@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_SQL_INSTANCE_NAMES_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_SQL_INSTANCE_NAMES_CONNECTION_H
 
+#include "google/cloud/sql/v1/cloud_sql_instance_names.pb.h"
 #include "google/cloud/sql/v1/internal/sql_instance_names_retry_traits.h"
 #include "google/cloud/sql/v1/sql_instance_names_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
@@ -26,7 +27,6 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/cloud/sql/v1/cloud_sql_instance_names.pb.h>
 #include <memory>
 
 namespace google {

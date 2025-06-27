@@ -17,9 +17,9 @@
 // source: google/cloud/dataproc/v1/clusters.proto
 
 #include "google/cloud/dataproc/v1/internal/cluster_controller_logging_decorator.h"
+#include "google/cloud/dataproc/v1/clusters.grpc.pb.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/dataproc/v1/clusters.grpc.pb.h>
 #include <memory>
 #include <set>
 #include <string>
