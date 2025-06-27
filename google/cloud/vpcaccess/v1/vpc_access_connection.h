@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VPCACCESS_V1_VPC_ACCESS_CONNECTION_H
 
 #include "google/cloud/vpcaccess/v1/internal/vpc_access_retry_traits.h"
+#include "google/cloud/vpcaccess/v1/vpc_access.pb.h"
 #include "google/cloud/vpcaccess/v1/vpc_access_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
@@ -30,8 +31,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/vpcaccess/v1/vpc_access.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 
 namespace google {

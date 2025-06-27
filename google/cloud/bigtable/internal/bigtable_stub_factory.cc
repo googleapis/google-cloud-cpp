@@ -29,7 +29,7 @@
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/log.h"
-#include <google/bigtable/v2/feature_flags.pb.h>
+#include "google/bigtable/v2/feature_flags.pb.h"
 #include <grpcpp/grpcpp.h>
 
 namespace google {

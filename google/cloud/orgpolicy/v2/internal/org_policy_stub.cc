@@ -17,9 +17,9 @@
 // source: google/cloud/orgpolicy/v2/orgpolicy.proto
 
 #include "google/cloud/orgpolicy/v2/internal/org_policy_stub.h"
+#include "google/cloud/orgpolicy/v2/orgpolicy.grpc.pb.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/orgpolicy/v2/orgpolicy.grpc.pb.h>
 #include <memory>
 #include <utility>
 

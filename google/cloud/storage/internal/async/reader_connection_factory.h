@@ -20,7 +20,7 @@
 #include "google/cloud/future.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/storage/v2/storage.pb.h>
+#include "google/storage/v2/storage.pb.h"
 #include <cstdint>
 #include <functional>
 #include <memory>

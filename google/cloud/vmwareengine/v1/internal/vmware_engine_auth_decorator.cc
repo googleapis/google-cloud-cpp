@@ -17,7 +17,7 @@
 // source: google/cloud/vmwareengine/v1/vmwareengine.proto
 
 #include "google/cloud/vmwareengine/v1/internal/vmware_engine_auth_decorator.h"
-#include <google/cloud/vmwareengine/v1/vmwareengine.grpc.pb.h>
+#include "google/cloud/vmwareengine/v1/vmwareengine.grpc.pb.h"
 #include <memory>
 #include <utility>
 

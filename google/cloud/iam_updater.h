@@ -17,7 +17,7 @@
 
 #include "google/cloud/version.h"
 #include "absl/types/optional.h"
-#include <google/iam/v1/policy.pb.h>
+#include "google/iam/v1/policy.pb.h"
 #include <functional>
 
 namespace google {

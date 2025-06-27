@@ -18,7 +18,7 @@
 
 #include "google/cloud/bigtable/internal/bigtable_auth_decorator.h"
 #include "google/cloud/internal/async_streaming_read_rpc_auth.h"
-#include <google/bigtable/v2/bigtable.grpc.pb.h>
+#include "google/bigtable/v2/bigtable.grpc.pb.h"
 #include <memory>
 #include <utility>
 

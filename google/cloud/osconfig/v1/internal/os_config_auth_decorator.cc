@@ -17,7 +17,7 @@
 // source: google/cloud/osconfig/v1/osconfig_service.proto
 
 #include "google/cloud/osconfig/v1/internal/os_config_auth_decorator.h"
-#include <google/cloud/osconfig/v1/osconfig_service.grpc.pb.h>
+#include "google/cloud/osconfig/v1/osconfig_service.grpc.pb.h"
 #include <memory>
 #include <utility>
 

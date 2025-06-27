@@ -19,7 +19,7 @@
 #include "google/cloud/spanner/keys.h"
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/status_or.h"
-#include <google/spanner/v1/spanner.pb.h>
+#include "google/spanner/v1/spanner.pb.h"
 #include <string>
 #include <vector>
 

@@ -21,7 +21,7 @@
 
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include <google/bigtable/admin/v2/bigtable_instance_admin.grpc.pb.h>
+#include "google/bigtable/admin/v2/bigtable_instance_admin.grpc.pb.h"
 #include <memory>
 
 namespace google {

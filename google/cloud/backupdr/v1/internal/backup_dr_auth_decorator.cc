@@ -17,7 +17,7 @@
 // source: google/cloud/backupdr/v1/backupdr.proto
 
 #include "google/cloud/backupdr/v1/internal/backup_dr_auth_decorator.h"
-#include <google/cloud/backupdr/v1/backupdr.grpc.pb.h>
+#include "google/cloud/backupdr/v1/backupdr.grpc.pb.h"
 #include <memory>
 #include <utility>
 

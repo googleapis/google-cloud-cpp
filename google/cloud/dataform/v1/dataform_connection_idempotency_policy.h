@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAFORM_V1_DATAFORM_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAFORM_V1_DATAFORM_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/dataform/v1/dataform.grpc.pb.h"
+#include "google/cloud/location/locations.grpc.pb.h"
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include <google/cloud/dataform/v1/dataform.grpc.pb.h>
-#include <google/cloud/location/locations.grpc.pb.h>
-#include <google/iam/v1/iam_policy.grpc.pb.h>
+#include "google/iam/v1/iam_policy.grpc.pb.h"
 #include <memory>
 
 namespace google {

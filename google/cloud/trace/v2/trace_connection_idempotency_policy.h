@@ -21,7 +21,7 @@
 
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include <google/devtools/cloudtrace/v2/tracing.grpc.pb.h>
+#include "google/devtools/cloudtrace/v2/tracing.grpc.pb.h"
 #include <memory>
 
 namespace google {

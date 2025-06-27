@@ -17,10 +17,10 @@
 // source: google/cloud/developerconnect/v1/developer_connect.proto
 
 #include "google/cloud/developerconnect/v1/internal/developer_connect_stub.h"
+#include "google/cloud/developerconnect/v1/developer_connect.grpc.pb.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/developerconnect/v1/developer_connect.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>
 

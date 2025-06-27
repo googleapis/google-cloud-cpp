@@ -17,7 +17,7 @@
 // source: google/cloud/managedidentities/v1/managed_identities_service.proto
 
 #include "google/cloud/managedidentities/v1/internal/managed_identities_auth_decorator.h"
-#include <google/cloud/managedidentities/v1/managed_identities_service.grpc.pb.h>
+#include "google/cloud/managedidentities/v1/managed_identities_service.grpc.pb.h"
 #include <memory>
 #include <utility>
 

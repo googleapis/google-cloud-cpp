@@ -28,7 +28,7 @@
 #include "google/cloud/future.h"
 #include "google/cloud/status_or.h"
 #include "absl/container/fixed_array.h"
-#include <google/spanner/v1/spanner.pb.h>
+#include "google/spanner/v1/spanner.pb.h"
 #include <chrono>
 #include <condition_variable>
 #include <cstddef>

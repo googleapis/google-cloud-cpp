@@ -17,9 +17,9 @@
 // source: google/cloud/dialogflow/v2/knowledge_base.proto
 
 #include "google/cloud/dialogflow_es/internal/knowledge_bases_stub.h"
+#include "google/cloud/dialogflow/v2/knowledge_base.grpc.pb.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/dialogflow/v2/knowledge_base.grpc.pb.h>
 #include <memory>
 #include <utility>
 

@@ -14,7 +14,7 @@
 
 #include "google/cloud/spanner/results.h"
 #include "absl/types/optional.h"
-#include <google/spanner/v1/result_set.pb.h>
+#include "google/spanner/v1/result_set.pb.h"
 #include <memory>
 #include <string>
 #include <unordered_map>

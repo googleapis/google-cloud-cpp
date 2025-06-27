@@ -17,9 +17,9 @@
 // source: google/cloud/run/v2/revision.proto
 
 #include "google/cloud/run/v2/internal/revisions_logging_decorator.h"
+#include "google/cloud/run/v2/revision.grpc.pb.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/run/v2/revision.grpc.pb.h>
 #include <memory>
 #include <set>
 #include <string>

@@ -17,7 +17,7 @@
 // source: google/cloud/aiplatform/v1/model_garden_service.proto
 
 #include "google/cloud/aiplatform/v1/internal/model_garden_auth_decorator.h"
-#include <google/cloud/aiplatform/v1/model_garden_service.grpc.pb.h>
+#include "google/cloud/aiplatform/v1/model_garden_service.grpc.pb.h"
 #include <memory>
 #include <utility>
 

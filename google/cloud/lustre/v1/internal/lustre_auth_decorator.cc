@@ -17,7 +17,7 @@
 // source: google/cloud/lustre/v1/lustre.proto
 
 #include "google/cloud/lustre/v1/internal/lustre_auth_decorator.h"
-#include <google/cloud/lustre/v1/lustre.grpc.pb.h>
+#include "google/cloud/lustre/v1/lustre.grpc.pb.h"
 #include <memory>
 #include <utility>
 

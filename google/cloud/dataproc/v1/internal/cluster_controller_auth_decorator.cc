@@ -17,7 +17,7 @@
 // source: google/cloud/dataproc/v1/clusters.proto
 
 #include "google/cloud/dataproc/v1/internal/cluster_controller_auth_decorator.h"
-#include <google/cloud/dataproc/v1/clusters.grpc.pb.h>
+#include "google/cloud/dataproc/v1/clusters.grpc.pb.h"
 #include <memory>
 #include <utility>
 

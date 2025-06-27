@@ -17,10 +17,10 @@
 // source: google/cloud/dataproc/v1/node_groups.proto
 
 #include "google/cloud/dataproc/v1/internal/node_group_controller_stub.h"
+#include "google/cloud/dataproc/v1/node_groups.grpc.pb.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/dataproc/v1/node_groups.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>
 

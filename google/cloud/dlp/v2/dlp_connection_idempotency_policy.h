@@ -21,7 +21,7 @@
 
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include <google/privacy/dlp/v2/dlp.grpc.pb.h>
+#include "google/privacy/dlp/v2/dlp.grpc.pb.h"
 #include <memory>
 
 namespace google {
