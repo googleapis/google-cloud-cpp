@@ -17,6 +17,7 @@
 
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
 
+#include "google/cloud/bigtable/internal/operation_context.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/opentelemetry/monitoring_exporter.h"
 #include "google/cloud/status.h"
@@ -59,25 +60,25 @@ LabelMap IntoMap(ResourceLabels const& r, DataLabels const& d);
 std::ostream& operator<<(std::ostream& os, LabelMap const& m);
 
 struct PreCallParams {
-  std::chrono::system_clock::time_point attempt_start;
+  OperationContext::Clock::time_point attempt_start;
 };
 
 struct PostCallParams {
-  std::chrono::system_clock::time_point attempt_end;
+  OperationContext::Clock::time_point attempt_end;
   google::cloud::Status attempt_status;
 };
 
 struct OnDoneParams {
-  std::chrono::system_clock::time_point operation_end;
+  OperationContext::Clock::time_point operation_end;
   google::cloud::Status operation_status;
 };
 
 struct ElementRequestParams {
-  std::chrono::system_clock::time_point element_request;
+  OperationContext::Clock::time_point element_request;
 };
 
 struct ElementDeliveryParams {
-  std::chrono::system_clock::time_point element_delivery;
+  OperationContext::Clock::time_point element_delivery;
   bool first_response;
 };
 
@@ -121,7 +122,7 @@ class AttemptLatency : public Metric {
   ResourceLabels resource_labels_;
   DataLabels data_labels_;
   std::shared_ptr<opentelemetry::metrics::Histogram<double>> attempt_latencies_;
-  std::chrono::system_clock::time_point attempt_start_;
+  OperationContext::Clock::time_point attempt_start_;
 };
 
 class OperationLatency : public Metric {
@@ -148,7 +149,7 @@ class OperationLatency : public Metric {
   DataLabels data_labels_;
   std::shared_ptr<opentelemetry::metrics::Histogram<double>>
       operation_latencies_;
-  std::chrono::system_clock::time_point operation_start_;
+  OperationContext::Clock::time_point operation_start_;
 };
 
 class RetryCount : public Metric {
@@ -195,7 +196,7 @@ class FirstResponseLatency : public Metric {
   DataLabels data_labels_;
   std::shared_ptr<opentelemetry::metrics::Histogram<double>>
       first_response_latencies_;
-  std::chrono::system_clock::time_point operation_start_;
+  OperationContext::Clock::time_point operation_start_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -15,8 +15,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_OPERATION_CONTEXT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_OPERATION_CONTEXT_H
 
-#include "google/cloud/bigtable/internal/metrics.h"
+// #include "google/cloud/bigtable/internal/metrics.h"
 #include "google/cloud/bigtable/version.h"
+#include "google/cloud/internal/clock.h"
 #include "google/cloud/status.h"
 #include <grpcpp/grpcpp.h>
 #include <chrono>
@@ -29,6 +30,7 @@ namespace cloud {
 namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+class Metric;
 /**
  * A Bigtable-specific context that persists across retries until the operation
  * completes.
@@ -60,11 +62,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  */
 class OperationContext {
  public:
+  using Clock = ::google::cloud::internal::SteadyClock;
+
   // TODO: remove when all RPCs are instrumented.
   OperationContext() = default;
 
-  explicit OperationContext(
-      std::vector<std::shared_ptr<Metric const>> const& stub_specific_metrics);
+  OperationContext(
+      std::vector<std::shared_ptr<Metric const>> const& stub_specific_metrics,
+      std::shared_ptr<Clock> clock);
 
   // Called before each RPC attempt.
   void PreCall(grpc::ClientContext& context);
@@ -83,20 +88,14 @@ class OperationContext {
       std::multimap<grpc::string_ref, grpc::string_ref> const& metadata);
 
   std::unordered_map<std::string, std::string> cookies_;
+  std::vector<std::shared_ptr<Metric>> stub_specific_metrics_;
+  std::shared_ptr<Clock> clock_ = std::make_shared<Clock>();
   int attempt_number_ = 0;
   std::chrono::system_clock::time_point operation_start_ =
       std::chrono::system_clock::now();
   std::chrono::system_clock::time_point attempt_start_;
   bool first_response_ = true;
   //  std::chrono::system_clock::time_point element_request_;
-
-  // We call stub method specific factory functions that
-  // populate the metrics that are supported on that stub method.
-  // These metrics share a common interface that to record data analogous to
-  // PreCall, PostCall, OnDone, etc. When the OperationContext method is called
-  // it iterates through the metrics calling that function on the
-  // Metric interface.
-  std::vector<std::shared_ptr<Metric>> stub_specific_metrics_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -18,6 +18,7 @@
 #include "absl/strings/str_split.h"
 
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+#include "google/cloud/bigtable/internal/metrics.h"
 #include <google/api/monitored_resource.pb.h>
 #include <opentelemetry/context/runtime_context.h>
 #include <opentelemetry/sdk/metrics/export/periodic_exporting_metric_reader.h>
@@ -177,7 +178,7 @@ std::shared_ptr<OperationContext> MetricsOperationContextFactory::MutateRow(
 
   // this creates a copy, we may not want to make a copy
   if (kMetricsInitialized) {
-    return std::make_shared<OperationContext>(mutate_row_metrics_);
+    return std::make_shared<OperationContext>(mutate_row_metrics_, clock_);
   }
   return std::make_shared<OperationContext>();
 }
@@ -207,7 +208,7 @@ MetricsOperationContextFactory::AsyncMutateRow(
 
   // this creates a copy, we may not want to make a copy
   if (kMetricsInitialized) {
-    return std::make_shared<OperationContext>(mutate_row_metrics_);
+    return std::make_shared<OperationContext>(mutate_row_metrics_, clock_);
   }
   return std::make_shared<OperationContext>();
 }
@@ -235,7 +236,7 @@ std::shared_ptr<OperationContext> MetricsOperationContextFactory::MutateRows(
 
   // this creates a copy, we may not want to make a copy
   if (kMetricsInitialized) {
-    return std::make_shared<OperationContext>(mutate_rows_metrics_);
+    return std::make_shared<OperationContext>(mutate_rows_metrics_, clock_);
   }
   return std::make_shared<OperationContext>();
 }
@@ -264,7 +265,7 @@ MetricsOperationContextFactory::AsyncMutateRows(
 
   // this creates a copy, we may not want to make a copy
   if (kMetricsInitialized) {
-    return std::make_shared<OperationContext>(mutate_rows_metrics_);
+    return std::make_shared<OperationContext>(mutate_rows_metrics_, clock_);
   }
   return std::make_shared<OperationContext>();
 }

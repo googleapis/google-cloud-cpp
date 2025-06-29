@@ -17,8 +17,11 @@
 
 #include "google/cloud/bigtable/internal/operation_context.h"
 #include "google/cloud/bigtable/version.h"
+#include "google/cloud/project.h"
 #include "google/cloud/status.h"
 #include <grpcpp/grpcpp.h>
+#include <opentelemetry/sdk/metrics/export/periodic_exporting_metric_reader_factory.h>
+#include <opentelemetry/sdk/metrics/meter_provider_factory.h>
 #include <chrono>
 #include <map>
 #include <string>
@@ -173,6 +176,8 @@ class MetricsOperationContextFactory : public OperationContextFactory {
   std::shared_ptr<OperationContext> AsyncReadModifyWriteRow() override;
 
  private:
+  std::shared_ptr<OperationContext::Clock> clock_ =
+      std::make_shared<OperationContext::Clock>();
   std::string client_uid_;
   std::shared_ptr<opentelemetry::metrics::MeterProvider> provider_;
   std::mutex mu_;  // This is necessary because RPC and AsyncRPC share metrics.
