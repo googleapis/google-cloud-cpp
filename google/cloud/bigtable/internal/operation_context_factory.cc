@@ -68,7 +68,8 @@ opentelemetry::sdk::common::OrderedAttributeMap GrabMap(
 }
 
 MetricsOperationContextFactory::MetricsOperationContextFactory(
-    Project project, std::string client_uid)
+    Project project, std::string client_uid,
+    std::shared_ptr<monitoring_v3::MetricServiceConnection> conn)
     : client_uid_(std::move(client_uid)) {
   std::cout << __func__ << std::endl;
   auto resource_fn =
@@ -112,8 +113,14 @@ MetricsOperationContextFactory::MetricsOperationContextFactory(
                .set<otel::MetricNameFormatterOption>([](auto name) {
                  return "bigtable.googleapis.com/internal/client/" + name;
                });
-  auto exporter = otel_internal::MakeMonitoringExporter(
-      project, resource_fn, filter_fn, std::move(o));
+  std::unique_ptr<opentelemetry::sdk::metrics::PushMetricExporter> exporter;
+  if (conn) {
+    exporter = otel_internal::MakeMonitoringExporter(
+        project, resource_fn, filter_fn, std::move(conn), std::move(o));
+  } else {
+    exporter = otel_internal::MakeMonitoringExporter(project, resource_fn,
+                                                     filter_fn, std::move(o));
+  }
   auto options =
       opentelemetry::sdk::metrics::PeriodicExportingMetricReaderOptions{};
   // Empirically, it seems like 30s is the minimum.
@@ -140,6 +147,11 @@ MetricsOperationContextFactory::MetricsOperationContextFactory(
 
   //  auto meter = provider_->GetMeter("bigtable", "");
 }
+
+MetricsOperationContextFactory::MetricsOperationContextFactory(
+    Project project, std::string client_uid)
+    : MetricsOperationContextFactory(std::move(project), std::move(client_uid),
+                                     nullptr) {}
 
 // ReadRow is a synthetic RPC and should appear in metrics as if it's a
 // different RPC than ReadRows with row_limit=1.

@@ -20,8 +20,11 @@
 #include "google/cloud/project.h"
 #include "google/cloud/status.h"
 #include <grpcpp/grpcpp.h>
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+#include "google/cloud/monitoring/v3/metric_connection.h"
 #include <opentelemetry/sdk/metrics/export/periodic_exporting_metric_reader_factory.h>
 #include <opentelemetry/sdk/metrics/meter_provider_factory.h>
+#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
 #include <chrono>
 #include <map>
 #include <string>
@@ -146,6 +149,10 @@ class SimpleOperationContextFactory : public OperationContextFactory {
 class MetricsOperationContextFactory : public OperationContextFactory {
  public:
   MetricsOperationContextFactory(Project project, std::string client_uid);
+  // Used for injecting a MockMetricsServiceConnection for testing.
+  MetricsOperationContextFactory(
+      Project project, std::string client_uid,
+      std::shared_ptr<monitoring_v3::MetricServiceConnection> conn);
 
   std::shared_ptr<OperationContext> ReadRow() override;
   std::shared_ptr<OperationContext> ReadRows() override;

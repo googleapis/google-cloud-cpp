@@ -150,10 +150,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::unique_ptr<opentelemetry::sdk::metrics::PushMetricExporter>
 MakeMonitoringExporter(Project project, MonitoredResourceFromDataFn resource_fn,
                        ResourceFilterDataFn filter_fn, Options options) {
+  // TODO: may need to pass options to MakeMetricServiceConnection.
   auto connection = monitoring_v3::MakeMetricServiceConnection();
   options = otel::DefaultOptions(std::move(options));
   return std::make_unique<otel::MonitoringExporter>(
       std::move(project), std::move(connection), std::move(resource_fn),
+      std::move(filter_fn), std::move(options));
+}
+
+std::unique_ptr<opentelemetry::sdk::metrics::PushMetricExporter>
+MakeMonitoringExporter(
+    Project project, MonitoredResourceFromDataFn resource_fn,
+    ResourceFilterDataFn filter_fn,
+    std::shared_ptr<monitoring_v3::MetricServiceConnection> conn,
+    Options options) {
+  options = otel::DefaultOptions(std::move(options));
+  return std::make_unique<otel::MonitoringExporter>(
+      std::move(project), std::move(conn), std::move(resource_fn),
       std::move(filter_fn), std::move(options));
 }
 
