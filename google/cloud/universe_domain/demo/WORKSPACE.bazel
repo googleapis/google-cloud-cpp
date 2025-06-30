@@ -21,9 +21,9 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 # Fetch the Google Cloud C++ libraries.
 http_archive(
     name = "google_cloud_cpp",
-    sha256 = "10867580483cb338e7d50920c2383698f3572cc6b4c7d072e38d5f43755cbd80",
-    strip_prefix = "google-cloud-cpp-2.37.0",
-    url = "https://github.com/googleapis/google-cloud-cpp/archive/v2.37.0.tar.gz",
+    sha256 = "f1493b2dce9b379714342f2be7ccb483d70d13aac09d4a90ae3b4756693b72fc",
+    strip_prefix = "google-cloud-cpp-2.38.0",
+    url = "https://github.com/googleapis/google-cloud-cpp/archive/v2.38.0.tar.gz",
 )
 
 load("@google_cloud_cpp//bazel:workspace0.bzl", "gl_cpp_workspace0")
