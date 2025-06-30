@@ -87,6 +87,18 @@ class ClientIntegrationTest : public spanner_testing::DatabaseIntegrationTest {
     spanner_testing::DatabaseIntegrationTest::TearDownTestSuite();
   }
 
+  static void InsertUnorderedSingers() {
+    auto commit_result = client_->Commit(
+        Mutations{InsertMutationBuilder("Singers",
+                                        {"SingerId", "FirstName", "LastName"})
+                      .EmplaceRow(3, "test-fname-3", "test-lname-3")
+                      .EmplaceRow(1, "test-fname-1", "test-lname-1")
+                      .EmplaceRow(2, "test-fname-2", "test-lname-2")
+                      .Build()},
+        Options{}.set<GrpcCompressionAlgorithmOption>(GRPC_COMPRESS_DEFLATE));
+    ASSERT_STATUS_OK(commit_result);
+  }
+
   static std::unique_ptr<Client> client_;
 };
 
@@ -834,6 +846,23 @@ TEST_F(ClientIntegrationTest, DirectedReadWithinReadWriteTransaction) {
                                          "in a read-only transaction")));
 }
 
+/// @test Verify that Read() returns rows ordered by primary key.
+TEST_F(ClientIntegrationTest, ReadWithOrderByPrimaryKey) {
+  ASSERT_NO_FATAL_FAILURE(InsertUnorderedSingers());
+
+  auto rows = client_->Read(
+      "Singers", KeySet::All(), {"SingerId", "FirstName", "LastName"},
+      Options{}.set<OrderByOption>(OrderBy::kOrderByPrimaryKey));
+
+  using RowType = std::tuple<std::int64_t, std::string, std::string>;
+  std::vector<std::int64_t> actual_singer_ids;
+  for (auto& row : StreamOf<RowType>(rows)) {
+    if (!row) break;
+    actual_singer_ids.push_back(std::get<0>(*row));
+  }
+  EXPECT_THAT(actual_singer_ids, ::testing::ElementsAre(1, 2, 3));
+}
+
 StatusOr<std::vector<std::vector<Value>>> AddSingerDataToTable(Client client) {
   std::vector<std::vector<Value>> expected_rows;
   auto commit = client.Commit(
@@ -856,6 +885,7 @@ StatusOr<std::vector<std::vector<Value>>> AddSingerDataToTable(Client client) {
   return expected_rows;
 }
 
+  
 TEST_F(ClientIntegrationTest, PartitionRead) {
   auto expected_rows = AddSingerDataToTable(*client_);
   ASSERT_STATUS_OK(expected_rows);
