@@ -190,6 +190,21 @@ google::spanner::v1::RequestOptions_Priority ProtoRequestPriority(
   return google::spanner::v1::RequestOptions::PRIORITY_UNSPECIFIED;
 }
 
+google::spanner::v1::ReadRequest_OrderBy ProtoOrderBy(
+    absl::optional<spanner::OrderBy> const& order_by) {
+  if (order_by) {
+    switch (*order_by) {
+      case spanner::OrderBy::kOrderByUnspecified:
+        return google::spanner::v1::ReadRequest_OrderBy_ORDER_BY_UNSPECIFIED;
+      case spanner::OrderBy::kOrderByPrimaryKey:
+        return google::spanner::v1::ReadRequest_OrderBy_ORDER_BY_PRIMARY_KEY;
+      case spanner::OrderBy::kOrderByNoOrder:
+        return google::spanner::v1::ReadRequest_OrderBy_ORDER_BY_NO_ORDER;
+    }
+  }
+  return google::spanner::v1::ReadRequest_OrderBy_ORDER_BY_UNSPECIFIED;
+}
+
 // Converts a `google::protobuf::Timestamp` to a `spanner::Timestamp`, but
 // substitutes the maximal value for any conversion error. This is needed
 // when, for example, a response commit_timestamp is out of range but the
@@ -548,6 +563,7 @@ spanner::RowStream ConnectionImpl::ReadImpl(
   *request->mutable_transaction() = *s;
   request->set_table(std::move(params.table));
   request->set_index(std::move(params.read_options.index_name));
+  request->set_order_by(ProtoOrderBy(params.order_by));
   for (auto&& column : params.columns) {
     request->add_columns(std::move(column));
   }
