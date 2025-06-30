@@ -197,8 +197,8 @@ struct SessionPoolActionOnExhaustionOption {
 };
 
 /**
- * Option for `google::cloud::Options` to set the action to take when
- * attempting to allocate a session when the pool is exhausted.
+ * Option for `google::cloud::Options` to set the order in which the rows are
+ * returned from a read request.
  *
  * @ingroup google-cloud-spanner-options
  */
