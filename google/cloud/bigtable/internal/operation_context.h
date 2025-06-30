@@ -30,6 +30,8 @@ namespace cloud {
 namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+class DataLabels;
+class ResourceLabels;
 class Metric;
 /**
  * A Bigtable-specific context that persists across retries until the operation
@@ -64,10 +66,11 @@ class OperationContext {
  public:
   using Clock = ::google::cloud::internal::SteadyClock;
 
-  // TODO: remove when all RPCs are instrumented.
+  // The default constructor is used by the SimpleOperationContextFactory.
   OperationContext() = default;
 
   OperationContext(
+      ResourceLabels const& resource_labels, DataLabels const& data_labels,
       std::vector<std::shared_ptr<Metric const>> const& stub_specific_metrics,
       std::shared_ptr<Clock> clock);
 

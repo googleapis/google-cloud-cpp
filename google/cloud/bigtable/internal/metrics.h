@@ -99,13 +99,13 @@ class Metric {
                               ElementRequestParams) {}
   virtual void ElementDelivery(opentelemetry::context::Context const&,
                                ElementDeliveryParams) {}
-  virtual std::unique_ptr<Metric> clone() const = 0;
+  virtual std::unique_ptr<Metric> clone(ResourceLabels resource_labels,
+                                        DataLabels data_labels) const = 0;
 };
 
 class AttemptLatency : public Metric {
  public:
   AttemptLatency(
-      ResourceLabels resource_labels, DataLabels data_labels,
       std::string const& name, std::string const& version,
       std::shared_ptr<opentelemetry::metrics::MeterProvider> const& provider);
   void PreCall(opentelemetry::context::Context const&,
@@ -116,7 +116,8 @@ class AttemptLatency : public Metric {
       std::multimap<grpc::string_ref, grpc::string_ref> const&
           trailing_metadata,
       PostCallParams p) override;
-  std::unique_ptr<Metric> clone() const override;
+  std::unique_ptr<Metric> clone(ResourceLabels resource_labels,
+                                DataLabels data_labels) const override;
 
  private:
   ResourceLabels resource_labels_;
@@ -128,7 +129,6 @@ class AttemptLatency : public Metric {
 class OperationLatency : public Metric {
  public:
   OperationLatency(
-      ResourceLabels resource_labels, DataLabels data_labels,
       std::string const& name, std::string const& version,
       std::shared_ptr<opentelemetry::metrics::MeterProvider> const& provider);
   void PreCall(opentelemetry::context::Context const&,
@@ -142,7 +142,8 @@ class OperationLatency : public Metric {
 
   void OnDone(opentelemetry::context::Context const& context,
               OnDoneParams p) override;
-  std::unique_ptr<Metric> clone() const override;
+  std::unique_ptr<Metric> clone(ResourceLabels resource_labels,
+                                DataLabels data_labels) const override;
 
  private:
   ResourceLabels resource_labels_;
@@ -155,7 +156,6 @@ class OperationLatency : public Metric {
 class RetryCount : public Metric {
  public:
   RetryCount(
-      ResourceLabels resource_labels, DataLabels data_labels,
       std::string const& name, std::string const& version,
       std::shared_ptr<opentelemetry::metrics::MeterProvider> const& provider);
   void PreCall(opentelemetry::context::Context const&, PreCallParams) override;
@@ -165,7 +165,8 @@ class RetryCount : public Metric {
       std::multimap<grpc::string_ref, grpc::string_ref> const&
           trailing_metadata,
       PostCallParams p) override;
-  std::unique_ptr<Metric> clone() const override;
+  std::unique_ptr<Metric> clone(ResourceLabels resource_labels,
+                                DataLabels data_labels) const override;
 
  private:
   ResourceLabels resource_labels_;
@@ -176,7 +177,6 @@ class RetryCount : public Metric {
 class FirstResponseLatency : public Metric {
  public:
   FirstResponseLatency(
-      ResourceLabels resource_labels, DataLabels data_labels,
       std::string const& name, std::string const& version,
       std::shared_ptr<opentelemetry::metrics::MeterProvider> const& provider);
   void PreCall(opentelemetry::context::Context const&,
@@ -189,7 +189,8 @@ class FirstResponseLatency : public Metric {
       PostCallParams p) override;
   void ElementDelivery(opentelemetry::context::Context const& context,
                        ElementDeliveryParams p) override;
-  std::unique_ptr<Metric> clone() const override;
+  std::unique_ptr<Metric> clone(ResourceLabels resource_labels,
+                                DataLabels data_labels) const override;
 
  private:
   ResourceLabels resource_labels_;

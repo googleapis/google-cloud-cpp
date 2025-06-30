@@ -24,10 +24,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 namespace {
 std::vector<std::shared_ptr<Metric>> CloneMetrics(
+    ResourceLabels const& resource_labels, DataLabels const& data_labels,
     std::vector<std::shared_ptr<Metric const>> const& metrics) {
   std::vector<std::shared_ptr<Metric>> v;
   for (auto const& m : metrics) {
-    v.emplace_back(m->clone());
+    v.emplace_back(m->clone(resource_labels, data_labels));
   }
   return v;
 }
@@ -35,9 +36,11 @@ std::vector<std::shared_ptr<Metric>> CloneMetrics(
 }  // namespace
 
 OperationContext::OperationContext(
+    ResourceLabels const& resource_labels, DataLabels const& data_labels,
     std::vector<std::shared_ptr<Metric const>> const& stub_specific_metrics,
     std::shared_ptr<Clock> clock)
-    : stub_specific_metrics_(CloneMetrics(stub_specific_metrics)),
+    : stub_specific_metrics_(
+          CloneMetrics(resource_labels, data_labels, stub_specific_metrics)),
       clock_(clock) {}
 
 void OperationContext::PreCall(grpc::ClientContext& context) {

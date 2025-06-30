@@ -86,14 +86,9 @@ std::ostream& operator<<(std::ostream& os, LabelMap const& m) {
 Metric::~Metric() = default;
 
 AttemptLatency::AttemptLatency(
-    ResourceLabels resource_labels, DataLabels data_labels,
     std::string const& name, std::string const& version,
     std::shared_ptr<opentelemetry::metrics::MeterProvider> const& provider)
-    : resource_labels_(std::move(resource_labels)),
-      data_labels_(std::move(data_labels)),
-      // TODO: consider making meters for the global metric provider, if one is
-      // set.
-      attempt_latencies_(provider->GetMeter(name, version)
+    : attempt_latencies_(provider->GetMeter(name, version)
                              ->CreateDoubleHistogram("attempt_latencies")
                              .release()) {}
 
@@ -118,17 +113,18 @@ void AttemptLatency::PostCall(
   attempt_latencies_->Record(attempt_elapsed.count(), std::move(m), context);
 }
 
-std::unique_ptr<Metric> AttemptLatency::clone() const {
-  return std::make_unique<AttemptLatency>(*this);
+std::unique_ptr<Metric> AttemptLatency::clone(ResourceLabels resource_labels,
+                                              DataLabels data_labels) const {
+  auto m = std::make_unique<AttemptLatency>(*this);
+  m->resource_labels_ = std::move(resource_labels);
+  m->data_labels_ = std::move(data_labels);
+  return m;
 }
 
 OperationLatency::OperationLatency(
-    ResourceLabels resource_labels, DataLabels data_labels,
     std::string const& name, std::string const& version,
     std::shared_ptr<opentelemetry::metrics::MeterProvider> const& provider)
-    : resource_labels_(std::move(resource_labels)),
-      data_labels_(std::move(data_labels)),
-      operation_latencies_(provider->GetMeter(name, version)
+    : operation_latencies_(provider->GetMeter(name, version)
                                ->CreateDoubleHistogram("operation_latencies")
                                .release()) {}
 
@@ -158,17 +154,18 @@ void OperationLatency::OnDone(opentelemetry::context::Context const& context,
                                context);
 }
 
-std::unique_ptr<Metric> OperationLatency::clone() const {
-  return std::make_unique<OperationLatency>(*this);
+std::unique_ptr<Metric> OperationLatency::clone(ResourceLabels resource_labels,
+                                                DataLabels data_labels) const {
+  auto m = std::make_unique<OperationLatency>(*this);
+  m->resource_labels_ = std::move(resource_labels);
+  m->data_labels_ = std::move(data_labels);
+  return m;
 }
 
 RetryCount::RetryCount(
-    ResourceLabels resource_labels, DataLabels data_labels,
     std::string const& name, std::string const& version,
     std::shared_ptr<opentelemetry::metrics::MeterProvider> const& provider)
-    : resource_labels_(std::move(resource_labels)),
-      data_labels_(std::move(data_labels)),
-      retry_count_(provider->GetMeter(name, version)
+    : retry_count_(provider->GetMeter(name, version)
                        ->CreateUInt64Counter("retry_count")
                        .release()) {}
 
@@ -187,17 +184,18 @@ void RetryCount::PostCall(
   resource_labels_.zone = cluster_zone.zone;
 }
 
-std::unique_ptr<Metric> RetryCount::clone() const {
-  return std::make_unique<RetryCount>(*this);
+std::unique_ptr<Metric> RetryCount::clone(ResourceLabels resource_labels,
+                                          DataLabels data_labels) const {
+  auto m = std::make_unique<RetryCount>(*this);
+  m->resource_labels_ = std::move(resource_labels);
+  m->data_labels_ = std::move(data_labels);
+  return m;
 }
 
 FirstResponseLatency::FirstResponseLatency(
-    ResourceLabels resource_labels, DataLabels data_labels,
     std::string const& name, std::string const& version,
     std::shared_ptr<opentelemetry::metrics::MeterProvider> const& provider)
-    : resource_labels_(std::move(resource_labels)),
-      data_labels_(std::move(data_labels)),
-      first_response_latencies_(
+    : first_response_latencies_(
           provider->GetMeter(name, version)
               ->CreateDoubleHistogram("first_response_latencies")
               .release()) {}
@@ -229,8 +227,12 @@ void FirstResponseLatency::ElementDelivery(
   }
 }
 
-std::unique_ptr<Metric> FirstResponseLatency::clone() const {
-  return std::make_unique<FirstResponseLatency>(*this);
+std::unique_ptr<Metric> FirstResponseLatency::clone(
+    ResourceLabels resource_labels, DataLabels data_labels) const {
+  auto m = std::make_unique<FirstResponseLatency>(*this);
+  m->resource_labels_ = std::move(resource_labels);
+  m->data_labels_ = std::move(data_labels);
+  return m;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
