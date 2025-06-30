@@ -41,6 +41,7 @@
 #include "google/cloud/spanner/backoff_policy.h"
 #include "google/cloud/spanner/directed_read_replicas.h"
 #include "google/cloud/spanner/internal/session.h"
+#include "google/cloud/spanner/order_by.h"
 #include "google/cloud/spanner/polling_policy.h"
 #include "google/cloud/spanner/request_priority.h"
 #include "google/cloud/spanner/retry_policy.h"
@@ -193,6 +194,16 @@ enum class ActionOnExhaustion {
  */
 struct SessionPoolActionOnExhaustionOption {
   using Type = spanner::ActionOnExhaustion;
+};
+
+/**
+ * Option for `google::cloud::Options` to set the action to take when
+ * attempting to allocate a session when the pool is exhausted.
+ *
+ * @ingroup google-cloud-spanner-options
+ */
+struct OrderByOption {
+  using Type = spanner::OrderBy;
 };
 
 /**

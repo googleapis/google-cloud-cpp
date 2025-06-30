@@ -182,6 +182,7 @@ add_library(
     numeric.h
     oid.h
     options.h
+    order_by.h
     partition_options.cc
     partition_options.h
     partitioned_dml_result.h
