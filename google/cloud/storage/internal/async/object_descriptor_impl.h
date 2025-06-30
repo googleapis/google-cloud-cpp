@@ -62,6 +62,8 @@ class ObjectDescriptorImpl
   std::unique_ptr<storage_experimental::AsyncReaderConnection> Read(
       ReadParams p) override;
 
+  void MakeSubsequentStream() override;
+
  private:
   std::weak_ptr<ObjectDescriptorImpl> WeakFromThis() {
     return shared_from_this();
@@ -77,7 +79,9 @@ class ObjectDescriptorImpl
     return CopyActiveRanges(std::unique_lock<std::mutex>(mu_));
   }
 
-  auto CurrentStream(std::unique_lock<std::mutex>) const { return stream_; }
+  auto CurrentStream(std::unique_lock<std::mutex>) const {
+    return streams_[active_stream_];
+  }
 
   void Flush(std::unique_lock<std::mutex> lk);
   void OnWrite(bool ok);
@@ -97,7 +101,6 @@ class ObjectDescriptorImpl
 
   mutable std::mutex mu_;
   google::storage::v2::BidiReadObjectSpec read_object_spec_;
-  std::shared_ptr<OpenStream> stream_;
   absl::optional<google::storage::v2::Object> metadata_;
   std::int64_t read_id_generator_ = 0;
   bool write_pending_ = false;
@@ -105,6 +108,8 @@ class ObjectDescriptorImpl
 
   std::unordered_map<std::int64_t, std::shared_ptr<ReadRange>> active_ranges_;
   Options options_;
+  std::int64_t active_stream_ = 0;
+  std::vector<std::shared_ptr<OpenStream>> streams_ = {};
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
