@@ -885,7 +885,6 @@ StatusOr<std::vector<std::vector<Value>>> AddSingerDataToTable(Client client) {
   return expected_rows;
 }
 
-  
 TEST_F(ClientIntegrationTest, PartitionRead) {
   auto expected_rows = AddSingerDataToTable(*client_);
   ASSERT_STATUS_OK(expected_rows);
