@@ -119,13 +119,12 @@ class ColumnRow {
   absl::optional<Cell> DeleteTimeStamp(std::chrono::milliseconds timestamp);
 
   bool HasCells() const { return !cells_.empty(); }
-  using const_iterator =
-      std::map<std::chrono::milliseconds, std::string>::const_iterator;
-  using iterator = std::map<std::chrono::milliseconds, std::string>::iterator;
+
+  using const_iterator = std::map<std::chrono::milliseconds, std::string,
+                                  std::greater<>>::const_iterator;
+
   const_iterator begin() const { return cells_.begin(); }
   const_iterator end() const { return cells_.end(); }
-  iterator begin() { return cells_.begin(); }
-  iterator end() { return cells_.end(); }
   const_iterator lower_bound(std::chrono::milliseconds timestamp) const {
     return cells_.lower_bound(timestamp);
   }
@@ -425,8 +424,8 @@ class ColumnFamily {
     if (!existing_int) {
       return existing_int.status();
     }
-    auto new_int = google::cloud::internal::DecodeBigEndian<std::int64_t>(
-        std::move(new_value));
+    auto new_int =
+        google::cloud::internal::DecodeBigEndian<std::int64_t>(new_value);
     if (!new_int) {
       return new_int.status();
     }
@@ -445,8 +444,8 @@ class ColumnFamily {
     if (!existing_int) {
       return existing_int.status();
     }
-    auto new_int = google::cloud::internal::DecodeBigEndian<std::int64_t>(
-        std::move(new_value));
+    auto new_int =
+        google::cloud::internal::DecodeBigEndian<std::int64_t>(new_value);
     if (!new_int) {
       return new_int.status();
     }

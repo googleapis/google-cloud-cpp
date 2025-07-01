@@ -973,10 +973,14 @@ StatusOr<CellStreamConstructor> CreateFilterImpl(
     }
     CellStreamConstructor res = [source_ctor = std::move(source_ctor)] {
       auto source = source_ctor();
-      return MakeTrivialTransformer(std::move(source), [](CellView cell_view) {
-        cell_view.SetValue(kStrippedValue);
-        return cell_view;
-      });
+      // We need to ensure that the value outlives the reference.
+      std::string const stripped_value;
+      return MakeTrivialTransformer(
+          std::move(source),
+          [stripped_value = std::move(stripped_value)](CellView cell_view) {
+            cell_view.SetValue(stripped_value);
+            return cell_view;
+          });
     };
     return res;
   }

@@ -26,6 +26,11 @@
 #include <memory>
 #include <string>
 #include <vector>
+#include "google/cloud/testing_util/chrono_literals.h"
+#include "google/cloud/testing_util/status_matchers.h"
+#include "gmock/gmock.h"
+#include <re2/re2.h>
+#include <memory>
 
 namespace google {
 namespace cloud {

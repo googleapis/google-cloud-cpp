@@ -29,21 +29,6 @@ namespace cloud {
 namespace bigtable {
 namespace emulator {
 
-// FIXME: Workaround our current incorrect ordering of
-// timestamps. Remove when that is fixed and they are in decreasing
-// order, at which point we can just pick the first element.
-std::map<std::chrono::milliseconds, std::string>::iterator latest(
-    std::map<std::chrono::milliseconds, std::string, std::greater<>>&
-        cells_not_empty) {
-  assert(!cells_not_empty.empty());
-
-  auto first_it = cells_not_empty.begin();
-  auto last_it = std::prev(cells_not_empty.end());
-  auto latest_it = first_it->first >= last_it->first ? first_it : last_it;
-
-  return latest_it;
-}
-
 StatusOr<ReadModifyWriteCellResult> ColumnRow::ReadModifyWrite(
     std::int64_t inc_value) {
   auto system_ms = std::chrono::duration_cast<std::chrono::milliseconds>(
@@ -57,10 +42,7 @@ StatusOr<ReadModifyWriteCellResult> ColumnRow::ReadModifyWrite(
                                      absl::nullopt};
   }
 
-  // FIXME: Workaround our current incorrect ordering of
-  // timestamps. Remove when that is fixed and they are in decreasing
-  // order, at which point we can just pick the first element.
-  auto latest_it = latest(cells_);
+  auto latest_it = cells_.begin();
 
   auto maybe_old_value =
       google::cloud::internal::DecodeBigEndian<std::int64_t>(latest_it->second);
@@ -98,10 +80,7 @@ ReadModifyWriteCellResult ColumnRow::ReadModifyWrite(
                                      absl::nullopt};
   }
 
-  // FIXME: Workaround our current incorrect ordering of
-  // timestamps. Remove when that is fixed and they are in decreasing
-  // order, at which point we can just pick the first element.
-  auto latest_it = latest(cells_);
+  auto latest_it = cells_.begin();
 
   auto value = latest_it->second + append_value;
 
@@ -160,7 +139,8 @@ StatusOr<absl::optional<std::string>> ColumnRow::UpdateCell(
 std::vector<Cell> ColumnRow::DeleteTimeRange(
     ::google::bigtable::v2::TimestampRange const& time_range) {
   std::vector<Cell> deleted_cells;
-  absl::optional<int64_t> maybe_end_micros = time_range.end_timestamp_micros();
+  absl::optional<std::int64_t> maybe_end_micros =
+      time_range.end_timestamp_micros();
   if (maybe_end_micros.value_or(0) == 0) {
     maybe_end_micros.reset();
   }
