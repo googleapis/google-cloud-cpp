@@ -91,8 +91,8 @@ TEST(FilteredTableStream, OnlyRightFamilyColumnsAreFiltered) {
   FilteredTableStream stream(std::move(fams));
 
   stream.ApplyFilter(
-      ColumnRange{"fam2", StringRangeSet::Range("a", false, "b", false)});
-  EXPECT_EQ("row0 fam1:col0 @10ms: foo\n", DumpStream(stream));
+      ColumnRange{"fam2", StringRangeSet::Range("col0", false, "col1", true)});
+  EXPECT_EQ("row0 fam2:col0 @10ms: foo\n", DumpStream(stream));
 }
 
 TEST(FilteredTableStream, OtherFiltersArePropagated) {

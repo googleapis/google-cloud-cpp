@@ -395,26 +395,51 @@ StatusOr<CellStream> Table::CreateCellStream(
 }
 
 bool FilteredTableStream::ApplyFilter(InternalFilter const& internal_filter) {
-  if (!absl::holds_alternative<FamilyNameRegex>(internal_filter)) {
+  if (!absl::holds_alternative<FamilyNameRegex>(internal_filter) &&
+      !absl::holds_alternative<ColumnRange>(internal_filter)) {
     return MergeCellStreams::ApplyFilter(internal_filter);
   }
+  // internal_filter is either FamilyNameRegex or ColumnRange
   for (auto stream_it = unfinished_streams_.begin();
-       stream_it != unfinished_streams_.end(); ++stream_it) {
+       stream_it != unfinished_streams_.end(); ) {
     auto const* cf_stream =
         dynamic_cast<FilteredColumnFamilyStream const*>(&(*stream_it)->impl());
     assert(cf_stream);
-    if (!re2::RE2::PartialMatch(
-            cf_stream->column_family_name(),
-            *absl::get<FamilyNameRegex>(internal_filter).regex)) {
+
+    // We need to call ApplyFilter on the column family stream. But
+    // ApplyFilter changes the data of the calling object so it cannot
+    // be const.
+    auto* cf_stream_mutable =
+        const_cast<FilteredColumnFamilyStream*>(cf_stream);
+    assert(cf_stream_mutable);
+
+    if ((absl::holds_alternative<FamilyNameRegex>(internal_filter) &&
+         !re2::RE2::PartialMatch(
+             cf_stream_mutable->column_family_name(),
+             *absl::get<FamilyNameRegex>(internal_filter).regex)) ||
+        (absl::holds_alternative<ColumnRange>(internal_filter) &&
+         absl::get<ColumnRange>(internal_filter).column_family !=
+             cf_stream_mutable->column_family_name())) {
       auto last_it = std::prev(unfinished_streams_.end());
       if (stream_it == last_it) {
         unfinished_streams_.pop_back();
         break;
       }
-      stream_it->swap(unfinished_streams_.back());
-      unfinished_streams_.pop_back();
+
+      stream_it = unfinished_streams_.erase(stream_it);
+      continue;
     }
+
+    if (absl::holds_alternative<ColumnRange>(internal_filter) &&
+        absl::get<ColumnRange>(internal_filter).column_family ==
+            cf_stream_mutable->column_family_name()) {
+      cf_stream_mutable->ApplyFilter(internal_filter);
+    }
+
+    stream_it++;
+
   }
+
   return true;
 }
 
