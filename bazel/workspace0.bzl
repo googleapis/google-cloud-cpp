@@ -93,9 +93,9 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "build_bazel_rules_apple",
         urls = [
-            "https://github.com/bazelbuild/rules_apple/releases/download/3.22.0/rules_apple.3.22.0.tar.gz",
+            "https://github.com/bazelbuild/rules_apple/releases/download/4.0.1/rules_apple.4.0.1.tar.gz",
         ],
-        sha256 = "a78f26c22ac8d6e3f3fcaad50eace4d9c767688bd7254b75bdf4a6735b299f6a",
+        sha256 = "b28822cb81916fb544119f5533de010cc67ec6a789f2e7d0fc19d53bfcbb8285",
     )
 
     # Load Abseil
