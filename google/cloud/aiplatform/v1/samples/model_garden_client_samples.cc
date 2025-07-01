@@ -22,6 +22,7 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/polling_policy.h"
 #include "google/cloud/testing_util/example_driver.h"
 #include <fstream>
 #include <iostream>
@@ -30,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: aiplatform_v1::ModelGardenServiceClient
+// lro-marker: true
 // clang-format on
 namespace {
 
@@ -42,7 +44,7 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
   //     https://cloud.google.com/vpc/docs/private-google-access
   auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>(
       "private.googleapis.com");
-  auto client = google::cloud::aiplatform_v1::ModelGardenServiceClient(
+  auto vpc_client = google::cloud::aiplatform_v1::ModelGardenServiceClient(
       google::cloud::aiplatform_v1::MakeModelGardenServiceConnection("unused",
                                                                      options));
   //! [set-client-endpoint]
@@ -111,6 +113,48 @@ void SetRetryPolicy(std::vector<std::string> const& argv) {
   //! [set-retry-policy]
 }
 
+void SetPollingPolicy(std::vector<std::string> const& argv) {
+  if (!argv.empty()) {
+    throw google::cloud::testing_util::Usage{"set-client-policy-policy"};
+  }
+  //! [set-polling-policy]
+
+  // The polling policy controls how the client waits for long-running
+  // operations. `GenericPollingPolicy<>` combines existing policies.
+  // In this case, keep polling until the operation completes (with success
+  // or error) or 45 minutes, whichever happens first. Initially pause for
+  // 10 seconds between polling requests, increasing the pause by a factor
+  // of 4 until it becomes 2 minutes.
+  auto options =
+      google::cloud::Options{}
+          .set<google::cloud::aiplatform_v1::
+                   ModelGardenServicePollingPolicyOption>(
+              google::cloud::GenericPollingPolicy<
+                  google::cloud::aiplatform_v1::
+                      ModelGardenServiceRetryPolicyOption::Type,
+                  google::cloud::aiplatform_v1::
+                      ModelGardenServiceBackoffPolicyOption::Type>(
+                  google::cloud::aiplatform_v1::
+                      ModelGardenServiceLimitedTimeRetryPolicy(
+                          /*maximum_duration=*/std::chrono::minutes(45))
+                          .clone(),
+                  google::cloud::ExponentialBackoffPolicy(
+                      /*initial_delay=*/std::chrono::seconds(10),
+                      /*maximum_delay=*/std::chrono::minutes(2),
+                      /*scaling=*/4.0)
+                      .clone())
+                  .clone());
+
+  auto connection =
+      google::cloud::aiplatform_v1::MakeModelGardenServiceConnection(
+          "location-unused-in-this-example", options);
+
+  // c1 and c2 share the same polling policies.
+  auto c1 = google::cloud::aiplatform_v1::ModelGardenServiceClient(connection);
+  auto c2 = google::cloud::aiplatform_v1::ModelGardenServiceClient(connection);
+  //! [set-polling-policy]
+}
+
 void WithServiceAccount(std::vector<std::string> const& argv) {
   if (argv.size() != 1 || argv[0] == "--help") {
     throw google::cloud::testing_util::Usage{"with-service-account <keyfile>"};
@@ -146,6 +190,9 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "\nRunning SetRetryPolicy() example" << std::endl;
   SetRetryPolicy({});
 
+  std::cout << "\nRunning SetPollingPolicy() example" << std::endl;
+  SetPollingPolicy({});
+
   std::cout << "\nRunning WithServiceAccount() example" << std::endl;
   WithServiceAccount({keyfile});
 }
@@ -156,6 +203,7 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
   google::cloud::testing_util::Example example({
       {"set-client-endpoint", SetClientEndpoint},
       {"set-retry-policy", SetRetryPolicy},
+      {"set-polling-policy", SetPollingPolicy},
       {"with-service-account", WithServiceAccount},
       {"auto", AutoRun},
   });

@@ -26,10 +26,13 @@
 #include "google/cloud/aiplatform/v1/model_garden_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/future.h"
 #include "google/cloud/options.h"
+#include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
 namespace google {
@@ -52,6 +55,16 @@ class ModelGardenServiceConnectionImpl
   StatusOr<google::cloud::aiplatform::v1::PublisherModel> GetPublisherModel(
       google::cloud::aiplatform::v1::GetPublisherModelRequest const& request)
       override;
+
+  future<StatusOr<google::cloud::aiplatform::v1::DeployResponse>> Deploy(
+      google::cloud::aiplatform::v1::DeployRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> Deploy(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::DeployRequest const& request) override;
+
+  future<StatusOr<google::cloud::aiplatform::v1::DeployResponse>> Deploy(
+      google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request) override;

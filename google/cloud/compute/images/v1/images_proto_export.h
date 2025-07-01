@@ -28,15 +28,15 @@
 // IWYU pragma: begin_exports
 #include <google/cloud/compute/v1/internal/common_007.pb.h>
 #include <google/cloud/compute/v1/internal/common_016.pb.h>
-#include <google/cloud/compute/v1/internal/common_020.pb.h>
-#include <google/cloud/compute/v1/internal/common_022.pb.h>
+#include <google/cloud/compute/v1/internal/common_021.pb.h>
+#include <google/cloud/compute/v1/internal/common_023.pb.h>
 #include <google/cloud/compute/v1/internal/common_031.pb.h>
 #include <google/cloud/compute/v1/internal/common_033.pb.h>
 #include <google/cloud/compute/v1/internal/common_046.pb.h>
 #include <google/cloud/compute/v1/internal/common_047.pb.h>
 #include <google/cloud/compute/v1/internal/common_055.pb.h>
 #include <google/cloud/compute/v1/internal/common_057.pb.h>
-#include <google/cloud/compute/v1/internal/common_141.pb.h>
+#include <google/cloud/compute/v1/internal/common_145.pb.h>
 // IWYU pragma: end_exports
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_IMAGES_V1_IMAGES_PROTO_EXPORT_H

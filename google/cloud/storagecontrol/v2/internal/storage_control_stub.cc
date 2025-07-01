@@ -289,6 +289,90 @@ DefaultStorageControlStub::ListAnywhereCaches(
   return response;
 }
 
+StatusOr<google::storage::control::v2::IntelligenceConfig>
+DefaultStorageControlStub::GetProjectIntelligenceConfig(
+    grpc::ClientContext& context, Options const&,
+    google::storage::control::v2::GetProjectIntelligenceConfigRequest const&
+        request) {
+  google::storage::control::v2::IntelligenceConfig response;
+  auto status =
+      grpc_stub_->GetProjectIntelligenceConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::storage::control::v2::IntelligenceConfig>
+DefaultStorageControlStub::UpdateProjectIntelligenceConfig(
+    grpc::ClientContext& context, Options const&,
+    google::storage::control::v2::UpdateProjectIntelligenceConfigRequest const&
+        request) {
+  google::storage::control::v2::IntelligenceConfig response;
+  auto status =
+      grpc_stub_->UpdateProjectIntelligenceConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::storage::control::v2::IntelligenceConfig>
+DefaultStorageControlStub::GetFolderIntelligenceConfig(
+    grpc::ClientContext& context, Options const&,
+    google::storage::control::v2::GetFolderIntelligenceConfigRequest const&
+        request) {
+  google::storage::control::v2::IntelligenceConfig response;
+  auto status =
+      grpc_stub_->GetFolderIntelligenceConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::storage::control::v2::IntelligenceConfig>
+DefaultStorageControlStub::UpdateFolderIntelligenceConfig(
+    grpc::ClientContext& context, Options const&,
+    google::storage::control::v2::UpdateFolderIntelligenceConfigRequest const&
+        request) {
+  google::storage::control::v2::IntelligenceConfig response;
+  auto status =
+      grpc_stub_->UpdateFolderIntelligenceConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::storage::control::v2::IntelligenceConfig>
+DefaultStorageControlStub::GetOrganizationIntelligenceConfig(
+    grpc::ClientContext& context, Options const&,
+    google::storage::control::v2::
+        GetOrganizationIntelligenceConfigRequest const& request) {
+  google::storage::control::v2::IntelligenceConfig response;
+  auto status = grpc_stub_->GetOrganizationIntelligenceConfig(&context, request,
+                                                              &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::storage::control::v2::IntelligenceConfig>
+DefaultStorageControlStub::UpdateOrganizationIntelligenceConfig(
+    grpc::ClientContext& context, Options const&,
+    google::storage::control::v2::
+        UpdateOrganizationIntelligenceConfigRequest const& request) {
+  google::storage::control::v2::IntelligenceConfig response;
+  auto status = grpc_stub_->UpdateOrganizationIntelligenceConfig(
+      &context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultStorageControlStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

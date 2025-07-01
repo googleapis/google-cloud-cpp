@@ -255,6 +255,77 @@ StorageControlTracingConnection::ListAnywhereCaches(
                                                    std::move(sr));
 }
 
+StatusOr<google::storage::control::v2::IntelligenceConfig>
+StorageControlTracingConnection::GetProjectIntelligenceConfig(
+    google::storage::control::v2::GetProjectIntelligenceConfigRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "storagecontrol_v2::StorageControlConnection::"
+      "GetProjectIntelligenceConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span,
+                           child_->GetProjectIntelligenceConfig(request));
+}
+
+StatusOr<google::storage::control::v2::IntelligenceConfig>
+StorageControlTracingConnection::UpdateProjectIntelligenceConfig(
+    google::storage::control::v2::UpdateProjectIntelligenceConfigRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "storagecontrol_v2::StorageControlConnection::"
+      "UpdateProjectIntelligenceConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span,
+                           child_->UpdateProjectIntelligenceConfig(request));
+}
+
+StatusOr<google::storage::control::v2::IntelligenceConfig>
+StorageControlTracingConnection::GetFolderIntelligenceConfig(
+    google::storage::control::v2::GetFolderIntelligenceConfigRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "storagecontrol_v2::StorageControlConnection::"
+      "GetFolderIntelligenceConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetFolderIntelligenceConfig(request));
+}
+
+StatusOr<google::storage::control::v2::IntelligenceConfig>
+StorageControlTracingConnection::UpdateFolderIntelligenceConfig(
+    google::storage::control::v2::UpdateFolderIntelligenceConfigRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "storagecontrol_v2::StorageControlConnection::"
+      "UpdateFolderIntelligenceConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span,
+                           child_->UpdateFolderIntelligenceConfig(request));
+}
+
+StatusOr<google::storage::control::v2::IntelligenceConfig>
+StorageControlTracingConnection::GetOrganizationIntelligenceConfig(
+    google::storage::control::v2::
+        GetOrganizationIntelligenceConfigRequest const& request) {
+  auto span = internal::MakeSpan(
+      "storagecontrol_v2::StorageControlConnection::"
+      "GetOrganizationIntelligenceConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span,
+                           child_->GetOrganizationIntelligenceConfig(request));
+}
+
+StatusOr<google::storage::control::v2::IntelligenceConfig>
+StorageControlTracingConnection::UpdateOrganizationIntelligenceConfig(
+    google::storage::control::v2::
+        UpdateOrganizationIntelligenceConfigRequest const& request) {
+  auto span = internal::MakeSpan(
+      "storagecontrol_v2::StorageControlConnection::"
+      "UpdateOrganizationIntelligenceConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateOrganizationIntelligenceConfig(request));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<storagecontrol_v2::StorageControlConnection>

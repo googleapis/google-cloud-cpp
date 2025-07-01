@@ -438,6 +438,32 @@ ClusterManagerLogging::CheckAutopilotCompatibility(
       context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::container::v1::ClusterUpgradeInfo>
+ClusterManagerLogging::FetchClusterUpgradeInfo(
+    grpc::ClientContext& context, Options const& options,
+    google::container::v1::FetchClusterUpgradeInfoRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::container::v1::FetchClusterUpgradeInfoRequest const&
+                 request) {
+        return child_->FetchClusterUpgradeInfo(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::container::v1::NodePoolUpgradeInfo>
+ClusterManagerLogging::FetchNodePoolUpgradeInfo(
+    grpc::ClientContext& context, Options const& options,
+    google::container::v1::FetchNodePoolUpgradeInfoRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::container::v1::FetchNodePoolUpgradeInfoRequest const&
+                 request) {
+        return child_->FetchNodePoolUpgradeInfo(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace container_v1_internal
 }  // namespace cloud

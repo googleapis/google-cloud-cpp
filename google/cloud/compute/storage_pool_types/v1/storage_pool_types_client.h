@@ -119,7 +119,7 @@ class StoragePoolTypesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.storage_pool_types.v1.AggregatedListStoragePoolTypesRequest]: @cloud_cpp_reference_link{google/cloud/compute/storage_pool_types/v1/storage_pool_types.proto#L72}
-  /// [google.cloud.cpp.compute.v1.StoragePoolTypesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_127.proto#L308}
+  /// [google.cloud.cpp.compute.v1.StoragePoolTypesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_131.proto#L308}
   ///
   // clang-format on
   StreamRange<std::pair<
@@ -162,7 +162,7 @@ class StoragePoolTypesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.storage_pool_types.v1.AggregatedListStoragePoolTypesRequest]: @cloud_cpp_reference_link{google/cloud/compute/storage_pool_types/v1/storage_pool_types.proto#L72}
-  /// [google.cloud.cpp.compute.v1.StoragePoolTypesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_127.proto#L308}
+  /// [google.cloud.cpp.compute.v1.StoragePoolTypesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_131.proto#L308}
   ///
   // clang-format on
   StreamRange<std::pair<
@@ -194,7 +194,7 @@ class StoragePoolTypesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.storage_pool_types.v1.GetStoragePoolTypeRequest]: @cloud_cpp_reference_link{google/cloud/compute/storage_pool_types/v1/storage_pool_types.proto#L154}
-  /// [google.cloud.cpp.compute.v1.StoragePoolType]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_127.proto#L26}
+  /// [google.cloud.cpp.compute.v1.StoragePoolType]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_131.proto#L26}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::StoragePoolType> GetStoragePoolType(
@@ -226,7 +226,7 @@ class StoragePoolTypesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.storage_pool_types.v1.GetStoragePoolTypeRequest]: @cloud_cpp_reference_link{google/cloud/compute/storage_pool_types/v1/storage_pool_types.proto#L154}
-  /// [google.cloud.cpp.compute.v1.StoragePoolType]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_127.proto#L26}
+  /// [google.cloud.cpp.compute.v1.StoragePoolType]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_131.proto#L26}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::StoragePoolType> GetStoragePoolType(
@@ -264,7 +264,7 @@ class StoragePoolTypesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.storage_pool_types.v1.ListStoragePoolTypesRequest]: @cloud_cpp_reference_link{google/cloud/compute/storage_pool_types/v1/storage_pool_types.proto#L168}
-  /// [google.cloud.cpp.compute.v1.StoragePoolType]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_127.proto#L26}
+  /// [google.cloud.cpp.compute.v1.StoragePoolType]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_131.proto#L26}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::StoragePoolType>
@@ -305,7 +305,7 @@ class StoragePoolTypesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.storage_pool_types.v1.ListStoragePoolTypesRequest]: @cloud_cpp_reference_link{google/cloud/compute/storage_pool_types/v1/storage_pool_types.proto#L168}
-  /// [google.cloud.cpp.compute.v1.StoragePoolType]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_127.proto#L26}
+  /// [google.cloud.cpp.compute.v1.StoragePoolType]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_131.proto#L26}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::StoragePoolType>

@@ -16,7 +16,7 @@
 
 module(
     name = "google_cloud_cpp",
-    version = "2.38.0-rc",  # Updated by CMake
+    version = "2.39.0-rc",  # Updated by CMake
     compatibility_level = 2,  # Updated by CMake
 )
 
@@ -32,7 +32,7 @@ bazel_dep(name = "curl", version = "8.8.0.bcr.3", repo_name = "com_github_curl_c
 bazel_dep(name = "crc32c", version = "1.1.0", repo_name = "com_github_google_crc32c")
 bazel_dep(name = "opentelemetry-cpp", version = "1.19.0", repo_name = "io_opentelemetry_cpp")
 bazel_dep(name = "rules_proto", version = "7.1.0")
-bazel_dep(name = "rules_python", version = "1.3.0")
+bazel_dep(name = "rules_python", version = "1.4.1")
 
 bazel_dep(name = "googletest", version = "1.15.2", dev_dependency = True, repo_name = "com_google_googletest")
 bazel_dep(name = "google_benchmark", version = "1.9.2", dev_dependency = True, repo_name = "com_google_benchmark")
@@ -40,11 +40,11 @@ bazel_dep(name = "yaml-cpp", version = "0.8.0", dev_dependency = True, repo_name
 bazel_dep(name = "pugixml", version = "1.15", dev_dependency = True, repo_name = "com_github_zeux_pugixml")
 
 # Our `curl.BUILD` file uses these.
-bazel_dep(name = "zlib", version = "1.3.1.bcr.5")
+bazel_dep(name = "zlib", version = "1.3.1.bcr.6")
 bazel_dep(name = "c-ares", version = "1.19.1.bcr.1", repo_name = "com_github_cares_cares")
 
 # Pin this to fix a break in bazel/deps-cache.py
-bazel_dep(name = "protoc-gen-validate", version = "1.2.1", dev_dependency = True, repo_name = "com_envoyproxy_protoc_gen_validate")
+bazel_dep(name = "protoc-gen-validate", version = "1.2.1.bcr.1", dev_dependency = True, repo_name = "com_envoyproxy_protoc_gen_validate")
 
 python = use_extension("@rules_python//python/extensions:python.bzl", "python")
 python.toolchain(
@@ -55,12 +55,12 @@ python.toolchain(
 bazel_dep(name = "googleapis", version = "0.0.0", repo_name = "com_google_googleapis")
 archive_override(
     module_name = "googleapis",
-    integrity = "sha256-BUa9ungV9/7bsPxRANTzg5DuZ5MEZg/njNOIxEhNhp0=",
+    integrity = "sha256-vkHcmQF/L8fMzxFQgZR+NU0zo3lD7en13XBbZovOfyk=",
     patch_strip = 1,
     patches = ["//bazel:googleapis.modules.patch"],
-    strip_prefix = "googleapis-079e5305050859d0e3a8c0768611283ee4863c07",
+    strip_prefix = "googleapis-f01a17a560b4fbc888fd552c978f4e1f8614100b",
     urls = [
-        "https://github.com/googleapis/googleapis/archive/079e5305050859d0e3a8c0768611283ee4863c07.tar.gz",
+        "https://github.com/googleapis/googleapis/archive/f01a17a560b4fbc888fd552c978f4e1f8614100b.tar.gz",
     ],
 )
 

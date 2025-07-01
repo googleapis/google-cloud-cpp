@@ -93,9 +93,9 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "build_bazel_rules_apple",
         urls = [
-            "https://github.com/bazelbuild/rules_apple/releases/download/3.20.1/rules_apple.3.20.1.tar.gz",
+            "https://github.com/bazelbuild/rules_apple/releases/download/3.22.0/rules_apple.3.22.0.tar.gz",
         ],
-        sha256 = "73ad768dfe824c736d0a8a81521867b1fb7a822acda2ed265897c03de6ae6767",
+        sha256 = "a78f26c22ac8d6e3f3fcaad50eace4d9c767688bd7254b75bdf4a6735b299f6a",
     )
 
     # Load Abseil
@@ -126,10 +126,10 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "com_google_googleapis",
         urls = [
-            "https://github.com/googleapis/googleapis/archive/079e5305050859d0e3a8c0768611283ee4863c07.tar.gz",
+            "https://github.com/googleapis/googleapis/archive/f01a17a560b4fbc888fd552c978f4e1f8614100b.tar.gz",
         ],
-        sha256 = "0546bdba7815f7fedbb0fc5100d4f38390ee679304660fe78cd388c4484d869d",
-        strip_prefix = "googleapis-079e5305050859d0e3a8c0768611283ee4863c07",
+        sha256 = "be41dc99017f2fc7cccf115081947e354d33a37943ede9f5dd705b668bce7f29",
+        strip_prefix = "googleapis-f01a17a560b4fbc888fd552c978f4e1f8614100b",
         build_file = Label("//bazel:googleapis.BUILD"),
         # Scaffolding for patching googleapis after download. For example:
         #   patches = ["googleapis.patch"]

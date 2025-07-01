@@ -839,6 +839,42 @@ NetworkServicesLogging::CreateServiceBinding(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+NetworkServicesLogging::AsyncUpdateServiceBinding(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkservices::v1::UpdateServiceBindingRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::networkservices::v1::UpdateServiceBindingRequest const&
+              request) {
+        return child_->AsyncUpdateServiceBinding(cq, std::move(context),
+                                                 std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesLogging::UpdateServiceBinding(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::UpdateServiceBindingRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::networkservices::v1::UpdateServiceBindingRequest const&
+              request) {
+        return child_->UpdateServiceBinding(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 NetworkServicesLogging::AsyncDeleteServiceBinding(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -989,6 +1025,195 @@ StatusOr<google::longrunning::Operation> NetworkServicesLogging::DeleteMesh(
              google::cloud::networkservices::v1::DeleteMeshRequest const&
                  request) {
         return child_->DeleteMesh(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::networkservices::v1::ListServiceLbPoliciesResponse>
+NetworkServicesLogging::ListServiceLbPolicies(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networkservices::v1::ListServiceLbPoliciesRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::networkservices::v1::
+                 ListServiceLbPoliciesRequest const& request) {
+        return child_->ListServiceLbPolicies(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::networkservices::v1::ServiceLbPolicy>
+NetworkServicesLogging::GetServiceLbPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networkservices::v1::GetServiceLbPolicyRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::networkservices::v1::GetServiceLbPolicyRequest const&
+              request) {
+        return child_->GetServiceLbPolicy(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NetworkServicesLogging::AsyncCreateServiceLbPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkservices::v1::CreateServiceLbPolicyRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::networkservices::v1::
+                 CreateServiceLbPolicyRequest const& request) {
+        return child_->AsyncCreateServiceLbPolicy(cq, std::move(context),
+                                                  std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesLogging::CreateServiceLbPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::CreateServiceLbPolicyRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::networkservices::v1::
+                 CreateServiceLbPolicyRequest const& request) {
+        return child_->CreateServiceLbPolicy(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NetworkServicesLogging::AsyncUpdateServiceLbPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkservices::v1::UpdateServiceLbPolicyRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::networkservices::v1::
+                 UpdateServiceLbPolicyRequest const& request) {
+        return child_->AsyncUpdateServiceLbPolicy(cq, std::move(context),
+                                                  std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesLogging::UpdateServiceLbPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::UpdateServiceLbPolicyRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::networkservices::v1::
+                 UpdateServiceLbPolicyRequest const& request) {
+        return child_->UpdateServiceLbPolicy(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NetworkServicesLogging::AsyncDeleteServiceLbPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkservices::v1::DeleteServiceLbPolicyRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::networkservices::v1::
+                 DeleteServiceLbPolicyRequest const& request) {
+        return child_->AsyncDeleteServiceLbPolicy(cq, std::move(context),
+                                                  std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesLogging::DeleteServiceLbPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::DeleteServiceLbPolicyRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::networkservices::v1::
+                 DeleteServiceLbPolicyRequest const& request) {
+        return child_->DeleteServiceLbPolicy(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::networkservices::v1::GatewayRouteView>
+NetworkServicesLogging::GetGatewayRouteView(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networkservices::v1::GetGatewayRouteViewRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::networkservices::v1::GetGatewayRouteViewRequest const&
+              request) {
+        return child_->GetGatewayRouteView(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::networkservices::v1::MeshRouteView>
+NetworkServicesLogging::GetMeshRouteView(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networkservices::v1::GetMeshRouteViewRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::networkservices::v1::GetMeshRouteViewRequest const&
+                 request) {
+        return child_->GetMeshRouteView(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::networkservices::v1::ListGatewayRouteViewsResponse>
+NetworkServicesLogging::ListGatewayRouteViews(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networkservices::v1::ListGatewayRouteViewsRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::networkservices::v1::
+                 ListGatewayRouteViewsRequest const& request) {
+        return child_->ListGatewayRouteViews(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::networkservices::v1::ListMeshRouteViewsResponse>
+NetworkServicesLogging::ListMeshRouteViews(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networkservices::v1::ListMeshRouteViewsRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::networkservices::v1::ListMeshRouteViewsRequest const&
+              request) {
+        return child_->ListMeshRouteViews(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }

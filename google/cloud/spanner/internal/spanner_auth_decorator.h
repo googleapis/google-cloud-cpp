@@ -96,6 +96,12 @@ class SpannerAuth : public SpannerStub {
              Options const& options,
              google::spanner::v1::BatchWriteRequest const& request) override;
 
+  future<StatusOr<google::spanner::v1::Session>> AsyncCreateSession(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::spanner::v1::CreateSessionRequest const& request) override;
+
   future<StatusOr<google::spanner::v1::BatchCreateSessionsResponse>>
   AsyncBatchCreateSessions(
       google::cloud::CompletionQueue& cq,

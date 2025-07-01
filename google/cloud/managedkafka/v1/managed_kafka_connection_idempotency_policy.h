@@ -83,6 +83,27 @@ class ManagedKafkaConnectionIdempotencyPolicy {
       google::cloud::managedkafka::v1::DeleteConsumerGroupRequest const&
           request);
 
+  virtual google::cloud::Idempotency ListAcls(
+      google::cloud::managedkafka::v1::ListAclsRequest request);
+
+  virtual google::cloud::Idempotency GetAcl(
+      google::cloud::managedkafka::v1::GetAclRequest const& request);
+
+  virtual google::cloud::Idempotency CreateAcl(
+      google::cloud::managedkafka::v1::CreateAclRequest const& request);
+
+  virtual google::cloud::Idempotency UpdateAcl(
+      google::cloud::managedkafka::v1::UpdateAclRequest const& request);
+
+  virtual google::cloud::Idempotency DeleteAcl(
+      google::cloud::managedkafka::v1::DeleteAclRequest const& request);
+
+  virtual google::cloud::Idempotency AddAclEntry(
+      google::cloud::managedkafka::v1::AddAclEntryRequest const& request);
+
+  virtual google::cloud::Idempotency RemoveAclEntry(
+      google::cloud::managedkafka::v1::RemoveAclEntryRequest const& request);
+
   virtual google::cloud::Idempotency ListLocations(
       google::cloud::location::ListLocationsRequest request);
 

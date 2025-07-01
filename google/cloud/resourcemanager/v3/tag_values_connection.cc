@@ -145,12 +145,13 @@ StatusOr<google::longrunning::Operation> TagValuesConnection::GetOperation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-std::shared_ptr<TagValuesConnection> MakeTagValuesConnection(Options options) {
+std::shared_ptr<TagValuesConnection> MakeTagValuesConnection(
+    std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  UnifiedCredentialsOptionList,
                                  TagValuesPolicyOptionList>(options, __func__);
-  options =
-      resourcemanager_v3_internal::TagValuesDefaultOptions(std::move(options));
+  options = resourcemanager_v3_internal::TagValuesDefaultOptions(
+      location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = resourcemanager_v3_internal::CreateDefaultTagValuesStub(
@@ -158,6 +159,10 @@ std::shared_ptr<TagValuesConnection> MakeTagValuesConnection(Options options) {
   return resourcemanager_v3_internal::MakeTagValuesTracingConnection(
       std::make_shared<resourcemanager_v3_internal::TagValuesConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));
+}
+
+std::shared_ptr<TagValuesConnection> MakeTagValuesConnection(Options options) {
+  return MakeTagValuesConnection(std::string{}, std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

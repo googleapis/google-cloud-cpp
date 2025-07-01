@@ -80,6 +80,21 @@ Idempotency CloudControlsPartnerCoreConnectionIdempotencyPolicy::GetPartner(
   return Idempotency::kIdempotent;
 }
 
+Idempotency CloudControlsPartnerCoreConnectionIdempotencyPolicy::CreateCustomer(
+    google::cloud::cloudcontrolspartner::v1::CreateCustomerRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency CloudControlsPartnerCoreConnectionIdempotencyPolicy::UpdateCustomer(
+    google::cloud::cloudcontrolspartner::v1::UpdateCustomerRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency CloudControlsPartnerCoreConnectionIdempotencyPolicy::DeleteCustomer(
+    google::cloud::cloudcontrolspartner::v1::DeleteCustomerRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<CloudControlsPartnerCoreConnectionIdempotencyPolicy>
 MakeDefaultCloudControlsPartnerCoreConnectionIdempotencyPolicy() {
   return std::make_unique<

@@ -19,6 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_AIPLATFORM_V1_INTERNAL_MODEL_GARDEN_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_AIPLATFORM_V1_INTERNAL_MODEL_GARDEN_STUB_H
 
+#include "google/cloud/completion_queue.h"
+#include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
@@ -43,6 +45,16 @@ class ModelGardenServiceStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetPublisherModelRequest const&
           request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncDeploy(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::DeployRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> Deploy(
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::DeployRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::location::ListLocationsResponse>
   ListLocations(
@@ -85,28 +97,50 @@ class ModelGardenServiceStub {
   virtual StatusOr<google::longrunning::Operation> WaitOperation(
       grpc::ClientContext& context, Options const& options,
       google::longrunning::WaitOperationRequest const& request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::longrunning::GetOperationRequest const& request) = 0;
+
+  virtual future<Status> AsyncCancelOperation(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::longrunning::CancelOperationRequest const& request) = 0;
 };
 
 class DefaultModelGardenServiceStub : public ModelGardenServiceStub {
  public:
-  explicit DefaultModelGardenServiceStub(
+  DefaultModelGardenServiceStub(
       std::unique_ptr<
           google::cloud::aiplatform::v1::ModelGardenService::StubInterface>
           grpc_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface>
-          operations_stub,
       std::unique_ptr<google::iam::v1::IAMPolicy::StubInterface> iampolicy_stub,
       std::unique_ptr<google::cloud::location::Locations::StubInterface>
-          locations_stub)
+          locations_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface>
+          operations_stub)
       : grpc_stub_(std::move(grpc_stub)),
-        operations_stub_(std::move(operations_stub)),
         iampolicy_stub_(std::move(iampolicy_stub)),
-        locations_stub_(std::move(locations_stub)) {}
+        locations_stub_(std::move(locations_stub)),
+        operations_stub_(std::move(operations_stub)) {}
 
   StatusOr<google::cloud::aiplatform::v1::PublisherModel> GetPublisherModel(
       grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetPublisherModelRequest const& request)
       override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeploy(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::DeployRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> Deploy(
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::DeployRequest const& request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
       grpc::ClientContext& context, Options const& options,
@@ -148,15 +182,27 @@ class DefaultModelGardenServiceStub : public ModelGardenServiceStub {
       grpc::ClientContext& context, Options const& options,
       google::longrunning::WaitOperationRequest const& request) override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::longrunning::GetOperationRequest const& request) override;
+
+  future<Status> AsyncCancelOperation(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::longrunning::CancelOperationRequest const& request) override;
+
  private:
   std::unique_ptr<
       google::cloud::aiplatform::v1::ModelGardenService::StubInterface>
       grpc_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface>
-      operations_stub_;
   std::unique_ptr<google::iam::v1::IAMPolicy::StubInterface> iampolicy_stub_;
   std::unique_ptr<google::cloud::location::Locations::StubInterface>
       locations_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface>
+      operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

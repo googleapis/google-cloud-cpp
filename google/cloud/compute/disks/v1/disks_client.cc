@@ -161,6 +161,58 @@ DisksClient::BulkInsert(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+DisksClient::BulkSetLabels(
+    std::string const& project, std::string const& zone,
+    google::cloud::cpp::compute::v1::BulkZoneSetLabelsRequest const&
+        bulk_zone_set_labels_request_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::disks::v1::BulkSetLabelsRequest request;
+  request.set_project(project);
+  request.set_zone(zone);
+  *request.mutable_bulk_zone_set_labels_request_resource() =
+      bulk_zone_set_labels_request_resource;
+  return connection_->BulkSetLabels(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation> DisksClient::BulkSetLabels(
+    NoAwaitTag, std::string const& project, std::string const& zone,
+    google::cloud::cpp::compute::v1::BulkZoneSetLabelsRequest const&
+        bulk_zone_set_labels_request_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::disks::v1::BulkSetLabelsRequest request;
+  request.set_project(project);
+  request.set_zone(zone);
+  *request.mutable_bulk_zone_set_labels_request_resource() =
+      bulk_zone_set_labels_request_resource;
+  return connection_->BulkSetLabels(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+DisksClient::BulkSetLabels(
+    google::cloud::cpp::compute::disks::v1::BulkSetLabelsRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->BulkSetLabels(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation> DisksClient::BulkSetLabels(
+    NoAwaitTag,
+    google::cloud::cpp::compute::disks::v1::BulkSetLabelsRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->BulkSetLabels(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+DisksClient::BulkSetLabels(
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->BulkSetLabels(operation);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DisksClient::CreateSnapshot(
     std::string const& project, std::string const& zone,
     std::string const& disk,
