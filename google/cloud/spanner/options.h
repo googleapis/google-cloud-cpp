@@ -41,8 +41,8 @@
 #include "google/cloud/spanner/backoff_policy.h"
 #include "google/cloud/spanner/directed_read_replicas.h"
 #include "google/cloud/spanner/internal/session.h"
-#include "google/cloud/spanner/polling_policy.h"
 #include "google/cloud/spanner/lock_hint.h"
+#include "google/cloud/spanner/polling_policy.h"
 #include "google/cloud/spanner/request_priority.h"
 #include "google/cloud/spanner/retry_policy.h"
 #include "google/cloud/spanner/version.h"
@@ -197,7 +197,8 @@ struct SessionPoolActionOnExhaustionOption {
 };
 
 /**
- * Option for `google::cloud::Options` to set the lock hint mechanism for reads done within a transaction
+ * Option for `google::cloud::Options` to set the lock hint mechanism for reads
+ * done within a transaction.
  *
  * @ingroup google-cloud-spanner-options
  */
