@@ -13,9 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/emulator/column_family.h"
-#include "google/cloud/bigtable/row_range.h"
 #include "google/cloud/testing_util/chrono_literals.h"
-#include "google/cloud/testing_util/is_proto_equal.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 #include <array>
@@ -69,8 +67,14 @@ TEST(ColumnRow, Trivial) {
 
   col_row.SetCell(0_ms, "baz");
   col_row.SetCell(20_ms, "qux");
+  EXPECT_EQ("qux", col_row.lower_bound(30_ms)->second);
+  EXPECT_EQ("qux", col_row.lower_bound(20_ms)->second);
   EXPECT_EQ("bar", col_row.lower_bound(10_ms)->second);
-  EXPECT_EQ("qux", col_row.upper_bound(10_ms)->second);
+  EXPECT_EQ("baz", col_row.lower_bound(0_ms)->second);
+  EXPECT_EQ("qux", col_row.upper_bound(30_ms)->second);
+  EXPECT_EQ("bar", col_row.upper_bound(20_ms)->second);
+  EXPECT_EQ("baz", col_row.upper_bound(10_ms)->second);
+  EXPECT_EQ(col_row.end(), col_row.upper_bound(0_ms));
 }
 
 TEST(ColumnRow, DeleteTimeRangeFinite) {
@@ -225,14 +229,14 @@ TEST(FilteredColumnFamilyStream, Unfiltered) {
   FilteredColumnFamilyStream filtered_stream(fam, "cf1", included_rows);
   EXPECT_EQ(R"""(
 row0 cf1:col0 @10ms: foo
-row0 cf1:col1 @20ms: bar
 row0 cf1:col1 @30ms: baz
+row0 cf1:col1 @20ms: bar
 row1 cf1:col0 @10ms: foo
-row1 cf1:col1 @20ms: foo
 row1 cf1:col1 @30ms: foo
+row1 cf1:col1 @20ms: foo
 row2 cf1:col0 @10ms: qux
-row2 cf1:col2 @40ms: qux
 row2 cf1:col2 @50ms: qux
+row2 cf1:col2 @40ms: qux
 )""",
             "\n" + DumpFilteredColumnFamilyStream(filtered_stream));
 }
@@ -272,12 +276,12 @@ TEST(FilteredColumnFamilyStream, FilterByTimestampRange) {
       TimestampRange{TimestampRangeSet::Range(100_ms, 200_ms)});
   EXPECT_EQ(R"""(
 row0 cf1:col0 @100ms: foo
-row0 cf1:col2 @100ms: foo
-row0 cf1:col2 @120ms: foo
 row0 cf1:col2 @140ms: foo
-row1 cf1:col2 @100ms: foo
-row1 cf1:col2 @120ms: foo
+row0 cf1:col2 @120ms: foo
+row0 cf1:col2 @100ms: foo
 row1 cf1:col2 @140ms: foo
+row1 cf1:col2 @120ms: foo
+row1 cf1:col2 @100ms: foo
 )""",
             "\n" + DumpFilteredColumnFamilyStream(filtered_stream));
 }

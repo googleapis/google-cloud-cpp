@@ -19,7 +19,6 @@
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/status_or.h"
 #include <re2/re2.h>
-#include <queue>
 #include <random>
 
 namespace google {
@@ -325,8 +324,8 @@ class TrivialFilter : public AbstractCellStreamImpl {
  * @param filter_filter a functor which given an `InternalFilter` decides
  *     whether filtering this cell stream's results and then applying the
  *     `InternalFilter` would yield the same results as applying
- *     `InternalFilter` to the underlying stream and the perform this stream's
- *     filtering.
+ *     `InternalFilter` to the underlying stream and then performing this
+ *     stream's filtering.
  */
 template <typename Filter>
 CellStream MakeTrivialFilter(
@@ -539,14 +538,14 @@ class ConditionStream : public AbstractCellStreamImpl {
     if (condition_true_) {
       true_stream_.Next(mode);
       if (!true_stream_ ||
-          !internal::CompareRowKey(current_row_, true_stream_->row_key())) {
+          internal::CompareRowKey(current_row_, true_stream_->row_key()) != 0) {
         source_.Next(NextMode::kRow);
         OnNewRow();
       }
     } else {
       false_stream_.Next(mode);
-      if (!false_stream_ ||
-          !internal::CompareRowKey(current_row_, false_stream_->row_key())) {
+      if (!false_stream_ || internal::CompareRowKey(
+                                current_row_, false_stream_->row_key()) != 0) {
         source_.Next(NextMode::kRow);
         OnNewRow();
       }
@@ -870,7 +869,7 @@ StatusOr<CellStreamConstructor> CreateFilterImpl(
             if (per_row_state-- <= 0) {
               return {};
             }
-            return NextMode::kRow;
+            return NextMode::kCell;
           },
           [cells_per_row_offset]() { return cells_per_row_offset; },
           [](InternalFilter const& internal_filter) {
@@ -971,10 +970,14 @@ StatusOr<CellStreamConstructor> CreateFilterImpl(
     }
     CellStreamConstructor res = [source_ctor = std::move(source_ctor)] {
       auto source = source_ctor();
-      return MakeTrivialTransformer(std::move(source), [](CellView cell_view) {
-        cell_view.SetValue("");
-        return cell_view;
-      });
+      // We need to ensure that the value outlives the reference.
+      std::string const stripped_value;
+      return MakeTrivialTransformer(
+          std::move(source),
+          [stripped_value = std::move(stripped_value)](CellView cell_view) {
+            cell_view.SetValue(stripped_value);
+            return cell_view;
+          });
     };
     return res;
   }
@@ -1046,6 +1049,16 @@ StatusOr<CellStreamConstructor> CreateFilterImpl(
           "`condition` must have a `predicate_filter` set.",
           GCP_ERROR_INFO().WithMetadata("filter", filter.DebugString()));
     }
+    if (!filter.condition().has_true_filter() &&
+        !filter.condition().has_false_filter()) {
+      return InvalidArgumentError(
+          "`condition` must have `true_filter` or `false_filter` set.",
+          GCP_ERROR_INFO().WithMetadata("filter", filter.DebugString()));
+    }
+    // FIXME: validate that `sink` is not present in condition's predicate.
+    // Expected error:
+    //  INVALID_ARGUMENT: Error in field 'condition filter predicate' : sink
+    //  cannot be nested in a condition filter
 
     auto maybe_predicate_stream_ctor = CreateFilterImpl(
         filter.condition().predicate_filter(), source_ctor, direct_sinks);
