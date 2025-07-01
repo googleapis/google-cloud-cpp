@@ -32,11 +32,13 @@
 #include <google/protobuf/util/time_util.h>
 #include <absl/types/optional.h>
 #include <chrono>
+#include <cstddef>
 #include <map>
 #include <memory>
 #include <mutex>
 #include <stack>
 #include <string>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -92,6 +94,10 @@ class Table : public std::enable_shared_from_this<Table> {
       std::string const& column_family) {
     return column_families_.find(column_family);
   }
+
+  Status SampleRowKeys(
+      double pass_probability,
+      grpc::ServerWriter<google::bigtable::v2::SampleRowKeysResponse>* writer);
 
   std::shared_ptr<Table> get() { return shared_from_this(); }
 

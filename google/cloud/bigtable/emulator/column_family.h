@@ -30,6 +30,7 @@
 #include <google/bigtable/v2/types.pb.h>
 #include <absl/strings/str_format.h>
 #include <chrono>
+#include <cstddef>
 #include <cstdint>
 #include <map>
 #include <memory>
