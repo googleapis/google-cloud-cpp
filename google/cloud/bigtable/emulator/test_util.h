@@ -44,4 +44,4 @@ StatusOr<std::shared_ptr<Table>> CreateTable(
 }  // namespace cloud
 }  // namespace google
 
-#endif // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_EMULATOR_TEST_UTIL_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_EMULATOR_TEST_UTIL_H
