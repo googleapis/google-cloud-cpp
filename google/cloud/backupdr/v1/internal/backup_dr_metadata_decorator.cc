@@ -457,6 +457,26 @@ StatusOr<google::longrunning::Operation> BackupDRMetadata::TriggerBackup(
   return child_->TriggerBackup(context, options, request);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+BackupDRMetadata::AsyncInitializeService(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::backupdr::v1::InitializeServiceRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncInitializeService(cq, std::move(context),
+                                        std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation> BackupDRMetadata::InitializeService(
+    grpc::ClientContext& context, Options options,
+    google::cloud::backupdr::v1::InitializeServiceRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->InitializeService(context, options, request);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 BackupDRMetadata::ListLocations(
     grpc::ClientContext& context, Options const& options,

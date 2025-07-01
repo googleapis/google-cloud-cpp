@@ -42,10 +42,24 @@ Idempotency NetworkFirewallPoliciesConnectionIdempotencyPolicy::AddAssociation(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency
+NetworkFirewallPoliciesConnectionIdempotencyPolicy::AddPacketMirroringRule(
+    google::cloud::cpp::compute::network_firewall_policies::v1::
+        AddPacketMirroringRuleRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency NetworkFirewallPoliciesConnectionIdempotencyPolicy::AddRule(
     google::cloud::cpp::compute::network_firewall_policies::v1::
         AddRuleRequest const&) {
   return Idempotency::kNonIdempotent;
+}
+
+Idempotency NetworkFirewallPoliciesConnectionIdempotencyPolicy::
+    AggregatedListNetworkFirewallPolicies(
+        google::cloud::cpp::compute::network_firewall_policies::v1::
+            AggregatedListNetworkFirewallPoliciesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
 }
 
 Idempotency NetworkFirewallPoliciesConnectionIdempotencyPolicy::CloneRules(
@@ -80,6 +94,13 @@ Idempotency NetworkFirewallPoliciesConnectionIdempotencyPolicy::GetIamPolicy(
   return Idempotency::kIdempotent;
 }
 
+Idempotency
+NetworkFirewallPoliciesConnectionIdempotencyPolicy::GetPacketMirroringRule(
+    google::cloud::cpp::compute::network_firewall_policies::v1::
+        GetPacketMirroringRuleRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 Idempotency NetworkFirewallPoliciesConnectionIdempotencyPolicy::GetRule(
     google::cloud::cpp::compute::network_firewall_policies::v1::
         GetRuleRequest const&) {
@@ -107,6 +128,13 @@ NetworkFirewallPoliciesConnectionIdempotencyPolicy::PatchFirewallPolicy(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency
+NetworkFirewallPoliciesConnectionIdempotencyPolicy::PatchPacketMirroringRule(
+    google::cloud::cpp::compute::network_firewall_policies::v1::
+        PatchPacketMirroringRuleRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency NetworkFirewallPoliciesConnectionIdempotencyPolicy::PatchRule(
     google::cloud::cpp::compute::network_firewall_policies::v1::
         PatchRuleRequest const&) {
@@ -117,6 +145,13 @@ Idempotency
 NetworkFirewallPoliciesConnectionIdempotencyPolicy::RemoveAssociation(
     google::cloud::cpp::compute::network_firewall_policies::v1::
         RemoveAssociationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
+NetworkFirewallPoliciesConnectionIdempotencyPolicy::RemovePacketMirroringRule(
+    google::cloud::cpp::compute::network_firewall_policies::v1::
+        RemovePacketMirroringRuleRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 

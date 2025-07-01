@@ -50,6 +50,7 @@ void CreateBucketWithSoftDelete(google::cloud::storage::Client client,
 
 void SetBucketSoftDeletePolicy(google::cloud::storage::Client client,
                                std::vector<std::string> const& argv) {
+  //! [storage_set_soft_delete_policy]
   namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name) {
@@ -64,11 +65,14 @@ void SetBucketSoftDeletePolicy(google::cloud::storage::Client client,
     std::cout << "Successfully updated bucket " << bucket_name
               << " the updated soft-delete policy is "
               << bucket->soft_delete_policy() << "\n";
-  }(std::move(client), argv.at(0));
+  }
+  //! [storage_set_soft_delete_policy]
+  (std::move(client), argv.at(0));
 }
 
 void ResetBucketSoftDeletePolicy(google::cloud::storage::Client client,
                                  std::vector<std::string> const& argv) {
+  //! [storage_disable_soft_delete]
   namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name) {
@@ -84,11 +88,14 @@ void ResetBucketSoftDeletePolicy(google::cloud::storage::Client client,
     std::cout << "Updated bucket " << bucket_name
               << " still has a soft-delete policy: "
               << bucket->soft_delete_policy() << "\n";
-  }(std::move(client), argv.at(0));
+  }
+  //! [storage_disable_soft_delete]
+  (std::move(client), argv.at(0));
 }
 
 void GetBucketSoftDeletePolicy(google::cloud::storage::Client client,
                                std::vector<std::string> const& argv) {
+  //! [storage_get_soft_delete_policy]
   namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name) {
@@ -103,7 +110,9 @@ void GetBucketSoftDeletePolicy(google::cloud::storage::Client client,
     std::cout << "Bucket " << bucket->name()
               << " has a soft-delete policy set: "
               << bucket->soft_delete_policy() << "\n";
-  }(std::move(client), argv.at(0));
+  }
+  //! [storage_get_soft_delete_policy]
+  (std::move(client), argv.at(0));
 }
 
 void RunAll(std::vector<std::string> const& argv) {

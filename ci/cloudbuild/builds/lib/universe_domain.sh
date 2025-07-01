@@ -32,6 +32,34 @@ if [[ -n "${UD_SERVICE_ACCOUNT}" ]]; then
   io::log "Created SA key file ${UD_SA_KEY_FILE}"
 fi
 
+# Only create the EA key file if the secret is available.
+if [[ -n "${UD_EXTERNAL_ACCOUNT_CRED}" ]]; then
+  ORIG_UMASK=$(umask)
+  umask 077
+  UD_EA_KEY_FILE=$(mktemp)
+  external_account_cred_template="${UD_EXTERNAL_ACCOUNT_CRED}"
+
+  response=$(eval "${UD_FETCH_OIDC_TOKEN}")
+  id_token=$(echo "${response}" | jq -r '.id_token')
+  id_token_file=$(mktemp)
+  echo "${id_token}" >"${id_token_file}"
+
+  # shellcheck disable=SC2059
+  printf "${external_account_cred_template}" "${id_token_file}" >"${UD_EA_KEY_FILE}"
+  umask "${ORIG_UMASK}"
+  io::log "Created EA key file ${UD_EA_KEY_FILE}"
+fi
+
+# Only create the IdToken SA key file if the secret is available.
+if [[ -n "${UD_IDTOKEN_SA_IMPERSONATION_CRED}" ]]; then
+  ORIG_UMASK=$(umask)
+  umask 077
+  UD_IDTOKEN_SA_KEY_FILE=$(mktemp)
+  echo "${UD_IDTOKEN_SA_IMPERSONATION_CRED}" >"${UD_IDTOKEN_SA_KEY_FILE}"
+  umask "${ORIG_UMASK}"
+  io::log "Created IdToken SA key file ${UD_IDTOKEN_SA_KEY_FILE}"
+fi
+
 function ud::bazel_run() {
   io::log "Executing bazel run $1 with obscured arguments:"
   bazel run --ui_event_filters=-info -- "$@"
@@ -42,6 +70,10 @@ function ud::bazel_test() {
   io::log "Executing bazel test $1 with obscured arguments:"
   bazel test "${args[@]}" --sandbox_add_mount_pair=/tmp \
     --test_env=UD_SA_KEY_FILE="${UD_SA_KEY_FILE}" \
+    --test_env=UD_EA_KEY_FILE="${UD_EA_KEY_FILE}" \
     --test_env=UD_REGION="${UD_REGION}" \
+    --test_env=UD_ZONE="${UD_ZONE}" \
+    --test_env=UD_IMPERSONATED_SERVICE_ACCOUNT_NAME="${UD_IMPERSONATED_SERVICE_ACCOUNT_NAME}" \
+    --test_env=UD_IDTOKEN_SA_KEY_FILE="${UD_IDTOKEN_SA_KEY_FILE}" \
     --test_env=UD_PROJECT="${UD_PROJECT}" -- "$@"
 }

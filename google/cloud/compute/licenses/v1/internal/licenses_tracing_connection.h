@@ -84,6 +84,18 @@ class LicensesTracingConnection
   TestIamPermissions(google::cloud::cpp::compute::licenses::v1::
                          TestIamPermissionsRequest const& request) override;
 
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateLicense(
+      google::cloud::cpp::compute::licenses::v1::UpdateLicenseRequest const&
+          request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateLicense(
+      NoAwaitTag,
+      google::cloud::cpp::compute::licenses::v1::UpdateLicenseRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateLicense(
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
  private:
   std::shared_ptr<compute_licenses_v1::LicensesConnection> child_;
 };

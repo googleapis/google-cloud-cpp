@@ -62,7 +62,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// such a copy when using this class from multiple threads.
 ///
 /// [google.cloud.dialogflow.cx.v3.TransitionRouteGroup]:
-/// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L129}
+/// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L128}
 ///
 class TransitionRouteGroupsClient {
  public:
@@ -98,8 +98,9 @@ class TransitionRouteGroupsClient {
   /// Returns the list of all transition route groups in the specified flow.
   ///
   /// @param parent  Required. The flow to list all transition route groups for.
-  ///  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/flows/<Flow ID>`
-  ///  or `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>`.
+  ///  Format:
+  ///  `projects/<ProjectID>/locations/<LocationID>/agents/<AgentID>/flows/<FlowID>`
+  ///   or `projects/<ProjectID>/locations/<LocationID>/agents/<AgentID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -122,8 +123,8 @@ class TransitionRouteGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.ListTransitionRouteGroupsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L157}
-  /// [google.cloud.dialogflow.cx.v3.TransitionRouteGroup]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L129}
+  /// [google.cloud.dialogflow.cx.v3.ListTransitionRouteGroupsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L155}
+  /// [google.cloud.dialogflow.cx.v3.TransitionRouteGroup]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L128}
   ///
   // clang-format on
   StreamRange<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
@@ -161,8 +162,8 @@ class TransitionRouteGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.ListTransitionRouteGroupsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L157}
-  /// [google.cloud.dialogflow.cx.v3.TransitionRouteGroup]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L129}
+  /// [google.cloud.dialogflow.cx.v3.ListTransitionRouteGroupsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L155}
+  /// [google.cloud.dialogflow.cx.v3.TransitionRouteGroup]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L128}
   ///
   // clang-format on
   StreamRange<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
@@ -178,8 +179,10 @@ class TransitionRouteGroupsClient {
   ///
   /// @param name  Required. The name of the
   ///  [TransitionRouteGroup][google.cloud.dialogflow.cx.v3.TransitionRouteGroup].
-  ///  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/flows/<Flow ID>/transitionRouteGroups/<Transition Route Group ID>`
-  ///  or `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/transitionRouteGroups/<Transition Route Group ID>`.
+  ///  Format:
+  ///  `projects/<ProjectID>/locations/<LocationID>/agents/<AgentID>/flows/<FlowID>/transitionRouteGroups/<TransitionRouteGroupID>`
+  ///  or
+  ///  `projects/<ProjectID>/locations/<LocationID>/agents/<AgentID>/transitionRouteGroups/<TransitionRouteGroupID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -193,8 +196,8 @@ class TransitionRouteGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.GetTransitionRouteGroupRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L208}
-  /// [google.cloud.dialogflow.cx.v3.TransitionRouteGroup]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L129}
+  /// [google.cloud.dialogflow.cx.v3.GetTransitionRouteGroupRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L205}
+  /// [google.cloud.dialogflow.cx.v3.TransitionRouteGroup]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L128}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
@@ -224,8 +227,8 @@ class TransitionRouteGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.GetTransitionRouteGroupRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L208}
-  /// [google.cloud.dialogflow.cx.v3.TransitionRouteGroup]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L129}
+  /// [google.cloud.dialogflow.cx.v3.GetTransitionRouteGroupRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L205}
+  /// [google.cloud.dialogflow.cx.v3.TransitionRouteGroup]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L128}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
@@ -246,8 +249,9 @@ class TransitionRouteGroupsClient {
   ///
   /// @param parent  Required. The flow to create an
   ///  [TransitionRouteGroup][google.cloud.dialogflow.cx.v3.TransitionRouteGroup]
-  ///  for. Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/flows/<Flow ID>`
-  ///  or `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>`
+  ///  for. Format:
+  ///  `projects/<ProjectID>/locations/<LocationID>/agents/<AgentID>/flows/<FlowID>`
+  ///  or `projects/<ProjectID>/locations/<LocationID>/agents/<AgentID>`
   ///  for agent-level groups.
   /// @param transition_route_group  Required. The transition route group to create.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -263,8 +267,8 @@ class TransitionRouteGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.CreateTransitionRouteGroupRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L239}
-  /// [google.cloud.dialogflow.cx.v3.TransitionRouteGroup]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L129}
+  /// [google.cloud.dialogflow.cx.v3.CreateTransitionRouteGroupRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L236}
+  /// [google.cloud.dialogflow.cx.v3.TransitionRouteGroup]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L128}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
@@ -303,8 +307,8 @@ class TransitionRouteGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.CreateTransitionRouteGroupRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L239}
-  /// [google.cloud.dialogflow.cx.v3.TransitionRouteGroup]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L129}
+  /// [google.cloud.dialogflow.cx.v3.CreateTransitionRouteGroupRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L236}
+  /// [google.cloud.dialogflow.cx.v3.TransitionRouteGroup]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L128}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
@@ -337,8 +341,8 @@ class TransitionRouteGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.TransitionRouteGroup]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L129}
-  /// [google.cloud.dialogflow.cx.v3.UpdateTransitionRouteGroupRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L273}
+  /// [google.cloud.dialogflow.cx.v3.TransitionRouteGroup]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L128}
+  /// [google.cloud.dialogflow.cx.v3.UpdateTransitionRouteGroupRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L270}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
@@ -375,8 +379,8 @@ class TransitionRouteGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.TransitionRouteGroup]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L129}
-  /// [google.cloud.dialogflow.cx.v3.UpdateTransitionRouteGroupRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L273}
+  /// [google.cloud.dialogflow.cx.v3.TransitionRouteGroup]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L128}
+  /// [google.cloud.dialogflow.cx.v3.UpdateTransitionRouteGroupRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L270}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
@@ -396,7 +400,10 @@ class TransitionRouteGroupsClient {
   ///
   /// @param name  Required. The name of the
   ///  [TransitionRouteGroup][google.cloud.dialogflow.cx.v3.TransitionRouteGroup]
-  ///  to delete. Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/flows/<Flow ID>/transitionRouteGroups/<Transition Route Group ID>` or `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/transitionRouteGroups/<Transition Route Group ID>`.
+  ///  to delete. Format:
+  ///  `projects/<ProjectID>/locations/<LocationID>/agents/<AgentID>/flows/<FlowID>/transitionRouteGroups/<TransitionRouteGroupID>`
+  ///  or
+  ///  `projects/<ProjectID>/locations/<LocationID>/agents/<AgentID>/transitionRouteGroups/<TransitionRouteGroupID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [`Status`] object. If the request failed, the
@@ -408,8 +415,8 @@ class TransitionRouteGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.DeleteTransitionRouteGroupRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L297}
-  /// [google.cloud.dialogflow.cx.v3.TransitionRouteGroup]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L129}
+  /// [google.cloud.dialogflow.cx.v3.DeleteTransitionRouteGroupRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L294}
+  /// [google.cloud.dialogflow.cx.v3.TransitionRouteGroup]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L128}
   ///
   // clang-format on
   Status DeleteTransitionRouteGroup(std::string const& name, Options opts = {});
@@ -440,8 +447,8 @@ class TransitionRouteGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.DeleteTransitionRouteGroupRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L297}
-  /// [google.cloud.dialogflow.cx.v3.TransitionRouteGroup]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L129}
+  /// [google.cloud.dialogflow.cx.v3.DeleteTransitionRouteGroupRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L294}
+  /// [google.cloud.dialogflow.cx.v3.TransitionRouteGroup]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L128}
   ///
   // clang-format on
   Status DeleteTransitionRouteGroup(
@@ -524,14 +531,6 @@ class TransitionRouteGroupsClient {
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
   ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
-  ///
   /// @param name  The name of the operation's parent resource.
   /// @param filter  The standard list filter.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -556,8 +555,8 @@ class TransitionRouteGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StreamRange<google::longrunning::Operation> ListOperations(
@@ -567,14 +566,6 @@ class TransitionRouteGroupsClient {
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -604,8 +595,8 @@ class TransitionRouteGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StreamRange<google::longrunning::Operation> ListOperations(
@@ -631,8 +622,8 @@ class TransitionRouteGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
@@ -663,8 +654,8 @@ class TransitionRouteGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> GetOperation(
@@ -681,8 +672,9 @@ class TransitionRouteGroupsClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param name  The name of the operation resource to be cancelled.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -696,9 +688,9 @@ class TransitionRouteGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
@@ -714,8 +706,9 @@ class TransitionRouteGroupsClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -734,9 +727,9 @@ class TransitionRouteGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on

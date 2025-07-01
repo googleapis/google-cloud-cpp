@@ -67,6 +67,19 @@ class EndpointServiceMetadata : public EndpointServiceStub {
       google::cloud::aiplatform::v1::UpdateEndpointRequest const& request)
       override;
 
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncUpdateEndpointLongRunning(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::UpdateEndpointLongRunningRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateEndpointLongRunning(
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::UpdateEndpointLongRunningRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteEndpoint(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,

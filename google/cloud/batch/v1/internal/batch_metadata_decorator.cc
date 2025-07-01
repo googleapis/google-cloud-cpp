@@ -80,6 +80,26 @@ StatusOr<google::longrunning::Operation> BatchServiceMetadata::DeleteJob(
   return child_->DeleteJob(context, options, request);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+BatchServiceMetadata::AsyncCancelJob(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::batch::v1::CancelJobRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncCancelJob(cq, std::move(context), std::move(options),
+                                request);
+}
+
+StatusOr<google::longrunning::Operation> BatchServiceMetadata::CancelJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::batch::v1::CancelJobRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->CancelJob(context, options, request);
+}
+
 StatusOr<google::cloud::batch::v1::ListJobsResponse>
 BatchServiceMetadata::ListJobs(
     grpc::ClientContext& context, Options const& options,

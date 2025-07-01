@@ -49,6 +49,27 @@ ModelGardenServiceClient::GetPublisherModel(
   return connection_->GetPublisherModel(request);
 }
 
+future<StatusOr<google::cloud::aiplatform::v1::DeployResponse>>
+ModelGardenServiceClient::Deploy(
+    google::cloud::aiplatform::v1::DeployRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->Deploy(request);
+}
+
+StatusOr<google::longrunning::Operation> ModelGardenServiceClient::Deploy(
+    NoAwaitTag, google::cloud::aiplatform::v1::DeployRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->Deploy(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::DeployResponse>>
+ModelGardenServiceClient::Deploy(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->Deploy(operation);
+}
+
 StreamRange<google::cloud::location::Location>
 ModelGardenServiceClient::ListLocations(
     google::cloud::location::ListLocationsRequest request, Options opts) {

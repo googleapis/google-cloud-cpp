@@ -58,7 +58,7 @@ std::string RequestIdFieldName(
       if (f.Type() != YAML::NodeType::Scalar) continue;
       auto const* fd = request_descriptor.FindFieldByName(f.as<std::string>());
       if (fd == nullptr) continue;
-      if (MeetsRequestIdRequirements(*fd)) return fd->name();
+      if (MeetsRequestIdRequirements(*fd)) return std::string{fd->name()};
     }
   }
   return {};

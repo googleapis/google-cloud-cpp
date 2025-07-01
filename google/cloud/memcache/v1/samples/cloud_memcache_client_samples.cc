@@ -44,7 +44,7 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
   //     https://cloud.google.com/vpc/docs/private-google-access
   auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>(
       "private.googleapis.com");
-  auto client = google::cloud::memcache_v1::CloudMemcacheClient(
+  auto vpc_client = google::cloud::memcache_v1::CloudMemcacheClient(
       google::cloud::memcache_v1::MakeCloudMemcacheConnection(options));
   //! [set-client-endpoint]
 }

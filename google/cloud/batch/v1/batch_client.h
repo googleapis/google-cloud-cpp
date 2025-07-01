@@ -119,7 +119,7 @@ class BatchServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.batch.v1.CreateJobRequest]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L102}
+  /// [google.cloud.batch.v1.CreateJobRequest]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L115}
   /// [google.cloud.batch.v1.Job]: @googleapis_reference_link{google/cloud/batch/v1/job.proto#L35}
   ///
   // clang-format on
@@ -150,7 +150,7 @@ class BatchServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.batch.v1.CreateJobRequest]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L102}
+  /// [google.cloud.batch.v1.CreateJobRequest]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L115}
   /// [google.cloud.batch.v1.Job]: @googleapis_reference_link{google/cloud/batch/v1/job.proto#L35}
   ///
   // clang-format on
@@ -176,7 +176,7 @@ class BatchServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.batch.v1.GetJobRequest]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L141}
+  /// [google.cloud.batch.v1.GetJobRequest]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L154}
   /// [google.cloud.batch.v1.Job]: @googleapis_reference_link{google/cloud/batch/v1/job.proto#L35}
   ///
   // clang-format on
@@ -206,7 +206,7 @@ class BatchServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.batch.v1.GetJobRequest]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L141}
+  /// [google.cloud.batch.v1.GetJobRequest]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L154}
   /// [google.cloud.batch.v1.Job]: @googleapis_reference_link{google/cloud/batch/v1/job.proto#L35}
   ///
   // clang-format on
@@ -239,8 +239,8 @@ class BatchServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.batch.v1.DeleteJobRequest]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L150}
-  /// [google.cloud.batch.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L248}
+  /// [google.cloud.batch.v1.DeleteJobRequest]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L163}
+  /// [google.cloud.batch.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L291}
   ///
   // clang-format on
   future<StatusOr<google::cloud::batch::v1::OperationMetadata>> DeleteJob(
@@ -291,8 +291,8 @@ class BatchServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.batch.v1.DeleteJobRequest]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L150}
-  /// [google.cloud.batch.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L248}
+  /// [google.cloud.batch.v1.DeleteJobRequest]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L163}
+  /// [google.cloud.batch.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L291}
   ///
   // clang-format on
   future<StatusOr<google::cloud::batch::v1::OperationMetadata>> DeleteJob(
@@ -328,6 +328,118 @@ class BatchServiceClient {
 
   // clang-format off
   ///
+  /// Cancel a Job.
+  ///
+  /// @param name  Required. Job name.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.batch.v1.CancelJobResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.batch.v1.CancelJobRequest]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L187}
+  /// [google.cloud.batch.v1.CancelJobResponse]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L214}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::batch::v1::CancelJobResponse>> CancelJob(
+      std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CancelJob
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CancelJob(NoAwaitTag,
+                                                     std::string const& name,
+                                                     Options opts = {});
+
+  // clang-format off
+  ///
+  /// Cancel a Job.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.batch.v1.CancelJobRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.batch.v1.CancelJobResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.batch.v1.CancelJobRequest]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L187}
+  /// [google.cloud.batch.v1.CancelJobResponse]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L214}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::batch::v1::CancelJobResponse>> CancelJob(
+      google::cloud::batch::v1::CancelJobRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CancelJob
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CancelJob(
+      NoAwaitTag, google::cloud::batch::v1::CancelJobRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CancelJob
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::batch::v1::CancelJobResponse>> CancelJob(
+      google::longrunning::Operation const& operation, Options opts = {});
+
+  // clang-format off
+  ///
   /// List all Jobs for a project within a region.
   ///
   /// @param parent  Parent path.
@@ -354,7 +466,7 @@ class BatchServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.batch.v1.Job]: @googleapis_reference_link{google/cloud/batch/v1/job.proto#L35}
-  /// [google.cloud.batch.v1.ListJobsRequest]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L174}
+  /// [google.cloud.batch.v1.ListJobsRequest]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L217}
   ///
   // clang-format on
   StreamRange<google::cloud::batch::v1::Job> ListJobs(std::string const& parent,
@@ -393,7 +505,7 @@ class BatchServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.batch.v1.Job]: @googleapis_reference_link{google/cloud/batch/v1/job.proto#L35}
-  /// [google.cloud.batch.v1.ListJobsRequest]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L174}
+  /// [google.cloud.batch.v1.ListJobsRequest]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L217}
   ///
   // clang-format on
   StreamRange<google::cloud::batch::v1::Job> ListJobs(
@@ -417,7 +529,7 @@ class BatchServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.batch.v1.GetTaskRequest]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L239}
+  /// [google.cloud.batch.v1.GetTaskRequest]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L282}
   /// [google.cloud.batch.v1.Task]: @googleapis_reference_link{google/cloud/batch/v1/task.proto#L437}
   ///
   // clang-format on
@@ -447,7 +559,7 @@ class BatchServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.batch.v1.GetTaskRequest]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L239}
+  /// [google.cloud.batch.v1.GetTaskRequest]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L282}
   /// [google.cloud.batch.v1.Task]: @googleapis_reference_link{google/cloud/batch/v1/task.proto#L437}
   ///
   // clang-format on
@@ -484,7 +596,7 @@ class BatchServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.batch.v1.ListTasksRequest]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L205}
+  /// [google.cloud.batch.v1.ListTasksRequest]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L248}
   /// [google.cloud.batch.v1.Task]: @googleapis_reference_link{google/cloud/batch/v1/task.proto#L437}
   ///
   // clang-format on
@@ -523,7 +635,7 @@ class BatchServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.batch.v1.ListTasksRequest]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L205}
+  /// [google.cloud.batch.v1.ListTasksRequest]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L248}
   /// [google.cloud.batch.v1.Task]: @googleapis_reference_link{google/cloud/batch/v1/task.proto#L437}
   ///
   // clang-format on
@@ -605,14 +717,6 @@ class BatchServiceClient {
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
   ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
-  ///
   /// @param name  The name of the operation's parent resource.
   /// @param filter  The standard list filter.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -637,8 +741,8 @@ class BatchServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StreamRange<google::longrunning::Operation> ListOperations(
@@ -648,14 +752,6 @@ class BatchServiceClient {
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -685,8 +781,8 @@ class BatchServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StreamRange<google::longrunning::Operation> ListOperations(
@@ -712,8 +808,8 @@ class BatchServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
@@ -744,8 +840,8 @@ class BatchServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> GetOperation(
@@ -771,7 +867,7 @@ class BatchServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L201}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
   Status DeleteOperation(std::string const& name, Options opts = {});
@@ -800,7 +896,7 @@ class BatchServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L201}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
   Status DeleteOperation(
@@ -817,8 +913,9 @@ class BatchServiceClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param name  The name of the operation resource to be cancelled.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -832,9 +929,9 @@ class BatchServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
@@ -850,8 +947,9 @@ class BatchServiceClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -870,9 +968,9 @@ class BatchServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on

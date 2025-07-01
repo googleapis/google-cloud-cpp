@@ -152,6 +152,19 @@ StatusOr<google::longrunning::Operation> WorkflowsLogging::UpdateWorkflow(
       context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::workflows::v1::ListWorkflowRevisionsResponse>
+WorkflowsLogging::ListWorkflowRevisions(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::workflows::v1::ListWorkflowRevisionsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::workflows::v1::ListWorkflowRevisionsRequest const&
+                 request) {
+        return child_->ListWorkflowRevisions(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 WorkflowsLogging::ListLocations(
     grpc::ClientContext& context, Options const& options,

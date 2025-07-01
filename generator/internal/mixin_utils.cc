@@ -65,9 +65,8 @@ google::api::HttpRule ParseHttpRule(YAML::detail::iterator_value const& rule) {
         kv.second.Type() != YAML::NodeType::Scalar)
       continue;
 
-    std::string const rule_key =
-        absl::AsciiStrToLower(kv.first.as<std::string>());
-    std::string const rule_value = kv.second.as<std::string>();
+    auto const rule_key = absl::AsciiStrToLower(kv.first.as<std::string>());
+    auto const rule_value = kv.second.as<std::string>();
 
     if (rule_key == "get") {
       http_rule.set_get(rule_value);
@@ -107,7 +106,7 @@ std::unordered_map<std::string, google::api::HttpRule> GetMixinHttpOverrides(
     auto const& selector = rule["selector"];
     if (selector.Type() != YAML::NodeType::Scalar) continue;
 
-    std::string const method_full_name = selector.as<std::string>();
+    auto const method_full_name = selector.as<std::string>();
     google::api::HttpRule http_rule = ParseHttpRule(rule);
 
     if (rule["additional_bindings"]) {
@@ -134,7 +133,7 @@ std::unordered_set<std::string> GetMethodNames(
   std::unordered_set<std::string> method_names;
   for (int i = 0; i < service.method_count(); ++i) {
     auto const* method = service.method(i);
-    method_names.insert(method->name());
+    method_names.insert(std::string{method->name()});
   }
   return method_names;
 }
@@ -150,7 +149,7 @@ std::vector<std::string> GetMixinProtoPaths(YAML::Node const& service_config) {
     if (api.Type() != YAML::NodeType::Map) continue;
     auto const& name = api["name"];
     if (name.Type() != YAML::NodeType::Scalar) continue;
-    std::string const package_path = name.as<std::string>();
+    auto const package_path = name.as<std::string>();
     auto const& mixin_proto_path_map = GetMixinProtoPathMap();
     auto const it = mixin_proto_path_map.find(package_path);
     if (it == mixin_proto_path_map.end()) continue;
@@ -189,14 +188,15 @@ std::vector<MixinMethod> GetMixinMethods(YAML::Node const& service_config,
       ServiceDescriptor const* mixin_service = mixin_file->service(i);
       for (int j = 0; j < mixin_service->method_count(); ++j) {
         MethodDescriptor const* mixin_method = mixin_service->method(j);
-        auto mixin_method_full_name = mixin_method->full_name();
+        std::string mixin_method_full_name{mixin_method->full_name()};
         // Add the mixin method only if it appears in the http field of YAML
         auto const it = mixin_http_overrides.find(mixin_method_full_name);
         if (it == mixin_http_overrides.end()) continue;
 
         // If the mixin method name required from YAML appears in the original
         // service proto, ignore the mixin.
-        if (method_names.find(mixin_method->name()) != method_names.end())
+        if (method_names.find(std::string{mixin_method->name()}) !=
+            method_names.end())
           continue;
 
         mixin_methods.push_back(

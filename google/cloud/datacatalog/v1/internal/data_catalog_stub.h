@@ -212,6 +212,21 @@ class DataCatalogStub {
       grpc::ClientContext& context, Options options,
       google::cloud::datacatalog::v1::ImportEntriesRequest const& request) = 0;
 
+  virtual StatusOr<google::cloud::datacatalog::v1::MigrationConfig> SetConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::datacatalog::v1::SetConfigRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::datacatalog::v1::OrganizationConfig>
+  RetrieveConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::datacatalog::v1::RetrieveConfigRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::datacatalog::v1::MigrationConfig>
+  RetrieveEffectiveConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::datacatalog::v1::RetrieveEffectiveConfigRequest const&
+          request) = 0;
+
   virtual StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
       grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) = 0;
@@ -429,6 +444,21 @@ class DefaultDataCatalogStub : public DataCatalogStub {
       grpc::ClientContext& context, Options options,
       google::cloud::datacatalog::v1::ImportEntriesRequest const& request)
       override;
+
+  StatusOr<google::cloud::datacatalog::v1::MigrationConfig> SetConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::datacatalog::v1::SetConfigRequest const& request) override;
+
+  StatusOr<google::cloud::datacatalog::v1::OrganizationConfig> RetrieveConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::datacatalog::v1::RetrieveConfigRequest const& request)
+      override;
+
+  StatusOr<google::cloud::datacatalog::v1::MigrationConfig>
+  RetrieveEffectiveConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::datacatalog::v1::RetrieveEffectiveConfigRequest const&
+          request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
       grpc::ClientContext& context, Options const& options,

@@ -193,6 +193,29 @@ NetAppClient::DeleteStoragePool(google::longrunning::Operation const& operation,
   return connection_->DeleteStoragePool(operation);
 }
 
+future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
+NetAppClient::ValidateDirectoryService(
+    google::cloud::netapp::v1::ValidateDirectoryServiceRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ValidateDirectoryService(request);
+}
+
+StatusOr<google::longrunning::Operation> NetAppClient::ValidateDirectoryService(
+    NoAwaitTag,
+    google::cloud::netapp::v1::ValidateDirectoryServiceRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ValidateDirectoryService(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
+NetAppClient::ValidateDirectoryService(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ValidateDirectoryService(operation);
+}
+
 future<StatusOr<google::cloud::netapp::v1::StoragePool>>
 NetAppClient::SwitchActiveReplicaZone(
     google::cloud::netapp::v1::SwitchActiveReplicaZoneRequest const& request,
@@ -1129,6 +1152,52 @@ NetAppClient::ReverseReplicationDirection(
   return connection_->ReverseReplicationDirection(operation);
 }
 
+future<StatusOr<google::cloud::netapp::v1::Replication>>
+NetAppClient::EstablishPeering(
+    google::cloud::netapp::v1::EstablishPeeringRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->EstablishPeering(request);
+}
+
+StatusOr<google::longrunning::Operation> NetAppClient::EstablishPeering(
+    NoAwaitTag,
+    google::cloud::netapp::v1::EstablishPeeringRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->EstablishPeering(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::netapp::v1::Replication>>
+NetAppClient::EstablishPeering(google::longrunning::Operation const& operation,
+                               Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->EstablishPeering(operation);
+}
+
+future<StatusOr<google::cloud::netapp::v1::Replication>>
+NetAppClient::SyncReplication(
+    google::cloud::netapp::v1::SyncReplicationRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SyncReplication(request);
+}
+
+StatusOr<google::longrunning::Operation> NetAppClient::SyncReplication(
+    NoAwaitTag,
+    google::cloud::netapp::v1::SyncReplicationRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SyncReplication(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::netapp::v1::Replication>>
+NetAppClient::SyncReplication(google::longrunning::Operation const& operation,
+                              Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SyncReplication(operation);
+}
+
 future<StatusOr<google::cloud::netapp::v1::BackupVault>>
 NetAppClient::CreateBackupVault(
     std::string const& parent,
@@ -1599,6 +1668,166 @@ NetAppClient::DeleteBackupPolicy(
     google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteBackupPolicy(operation);
+}
+
+StreamRange<google::cloud::netapp::v1::QuotaRule> NetAppClient::ListQuotaRules(
+    std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::netapp::v1::ListQuotaRulesRequest request;
+  request.set_parent(parent);
+  return connection_->ListQuotaRules(request);
+}
+
+StreamRange<google::cloud::netapp::v1::QuotaRule> NetAppClient::ListQuotaRules(
+    google::cloud::netapp::v1::ListQuotaRulesRequest request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListQuotaRules(std::move(request));
+}
+
+StatusOr<google::cloud::netapp::v1::QuotaRule> NetAppClient::GetQuotaRule(
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::netapp::v1::GetQuotaRuleRequest request;
+  request.set_name(name);
+  return connection_->GetQuotaRule(request);
+}
+
+StatusOr<google::cloud::netapp::v1::QuotaRule> NetAppClient::GetQuotaRule(
+    google::cloud::netapp::v1::GetQuotaRuleRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetQuotaRule(request);
+}
+
+future<StatusOr<google::cloud::netapp::v1::QuotaRule>>
+NetAppClient::CreateQuotaRule(
+    std::string const& parent,
+    google::cloud::netapp::v1::QuotaRule const& quota_rule,
+    std::string const& quota_rule_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::netapp::v1::CreateQuotaRuleRequest request;
+  request.set_parent(parent);
+  *request.mutable_quota_rule() = quota_rule;
+  request.set_quota_rule_id(quota_rule_id);
+  return connection_->CreateQuotaRule(request);
+}
+
+StatusOr<google::longrunning::Operation> NetAppClient::CreateQuotaRule(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::netapp::v1::QuotaRule const& quota_rule,
+    std::string const& quota_rule_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::netapp::v1::CreateQuotaRuleRequest request;
+  request.set_parent(parent);
+  *request.mutable_quota_rule() = quota_rule;
+  request.set_quota_rule_id(quota_rule_id);
+  return connection_->CreateQuotaRule(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::netapp::v1::QuotaRule>>
+NetAppClient::CreateQuotaRule(
+    google::cloud::netapp::v1::CreateQuotaRuleRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateQuotaRule(request);
+}
+
+StatusOr<google::longrunning::Operation> NetAppClient::CreateQuotaRule(
+    NoAwaitTag,
+    google::cloud::netapp::v1::CreateQuotaRuleRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateQuotaRule(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::netapp::v1::QuotaRule>>
+NetAppClient::CreateQuotaRule(google::longrunning::Operation const& operation,
+                              Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateQuotaRule(operation);
+}
+
+future<StatusOr<google::cloud::netapp::v1::QuotaRule>>
+NetAppClient::UpdateQuotaRule(
+    google::cloud::netapp::v1::QuotaRule const& quota_rule,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::netapp::v1::UpdateQuotaRuleRequest request;
+  *request.mutable_quota_rule() = quota_rule;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateQuotaRule(request);
+}
+
+StatusOr<google::longrunning::Operation> NetAppClient::UpdateQuotaRule(
+    NoAwaitTag, google::cloud::netapp::v1::QuotaRule const& quota_rule,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::netapp::v1::UpdateQuotaRuleRequest request;
+  *request.mutable_quota_rule() = quota_rule;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateQuotaRule(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::netapp::v1::QuotaRule>>
+NetAppClient::UpdateQuotaRule(
+    google::cloud::netapp::v1::UpdateQuotaRuleRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateQuotaRule(request);
+}
+
+StatusOr<google::longrunning::Operation> NetAppClient::UpdateQuotaRule(
+    NoAwaitTag,
+    google::cloud::netapp::v1::UpdateQuotaRuleRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateQuotaRule(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::netapp::v1::QuotaRule>>
+NetAppClient::UpdateQuotaRule(google::longrunning::Operation const& operation,
+                              Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateQuotaRule(operation);
+}
+
+future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
+NetAppClient::DeleteQuotaRule(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::netapp::v1::DeleteQuotaRuleRequest request;
+  request.set_name(name);
+  return connection_->DeleteQuotaRule(request);
+}
+
+StatusOr<google::longrunning::Operation> NetAppClient::DeleteQuotaRule(
+    NoAwaitTag, std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::netapp::v1::DeleteQuotaRuleRequest request;
+  request.set_name(name);
+  return connection_->DeleteQuotaRule(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
+NetAppClient::DeleteQuotaRule(
+    google::cloud::netapp::v1::DeleteQuotaRuleRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteQuotaRule(request);
+}
+
+StatusOr<google::longrunning::Operation> NetAppClient::DeleteQuotaRule(
+    NoAwaitTag,
+    google::cloud::netapp::v1::DeleteQuotaRuleRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteQuotaRule(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
+NetAppClient::DeleteQuotaRule(google::longrunning::Operation const& operation,
+                              Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteQuotaRule(operation);
 }
 
 StreamRange<google::cloud::location::Location> NetAppClient::ListLocations(

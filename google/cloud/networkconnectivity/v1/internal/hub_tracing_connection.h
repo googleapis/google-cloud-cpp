@@ -87,6 +87,10 @@ class HubServiceTracingConnection
       google::cloud::networkconnectivity::v1::ListHubSpokesRequest request)
       override;
 
+  StreamRange<google::cloud::networkconnectivity::v1::HubStatusEntry>
+  QueryHubStatus(google::cloud::networkconnectivity::v1::QueryHubStatusRequest
+                     request) override;
+
   StreamRange<google::cloud::networkconnectivity::v1::Spoke> ListSpokes(
       google::cloud::networkconnectivity::v1::ListSpokesRequest request)
       override;
@@ -149,6 +153,36 @@ class HubServiceTracingConnection
       StatusOr<google::cloud::networkconnectivity::v1::AcceptHubSpokeResponse>>
   AcceptHubSpoke(google::longrunning::Operation const& operation) override;
 
+  future<StatusOr<
+      google::cloud::networkconnectivity::v1::AcceptSpokeUpdateResponse>>
+  AcceptSpokeUpdate(
+      google::cloud::networkconnectivity::v1::AcceptSpokeUpdateRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> AcceptSpokeUpdate(
+      NoAwaitTag,
+      google::cloud::networkconnectivity::v1::AcceptSpokeUpdateRequest const&
+          request) override;
+
+  future<StatusOr<
+      google::cloud::networkconnectivity::v1::AcceptSpokeUpdateResponse>>
+  AcceptSpokeUpdate(google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<
+      google::cloud::networkconnectivity::v1::RejectSpokeUpdateResponse>>
+  RejectSpokeUpdate(
+      google::cloud::networkconnectivity::v1::RejectSpokeUpdateRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> RejectSpokeUpdate(
+      NoAwaitTag,
+      google::cloud::networkconnectivity::v1::RejectSpokeUpdateRequest const&
+          request) override;
+
+  future<StatusOr<
+      google::cloud::networkconnectivity::v1::RejectSpokeUpdateResponse>>
+  RejectSpokeUpdate(google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
   DeleteSpoke(google::cloud::networkconnectivity::v1::DeleteSpokeRequest const&
                   request) override;
@@ -184,6 +218,18 @@ class HubServiceTracingConnection
   StreamRange<google::cloud::networkconnectivity::v1::Group> ListGroups(
       google::cloud::networkconnectivity::v1::ListGroupsRequest request)
       override;
+
+  future<StatusOr<google::cloud::networkconnectivity::v1::Group>> UpdateGroup(
+      google::cloud::networkconnectivity::v1::UpdateGroupRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UpdateGroup(
+      NoAwaitTag,
+      google::cloud::networkconnectivity::v1::UpdateGroupRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::networkconnectivity::v1::Group>> UpdateGroup(
+      google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request) override;

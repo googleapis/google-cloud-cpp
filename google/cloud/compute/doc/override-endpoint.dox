@@ -42,7 +42,9 @@ Follow these links to find examples for other \c *Client classes:
 - [\c compute_instance_templates_v1::InstanceTemplatesClient](@ref compute_instance_templates_v1::InstanceTemplatesClient-endpoint-snippet)
 - [\c compute_instances_v1::InstancesClient](@ref compute_instances_v1::InstancesClient-endpoint-snippet)
 - [\c compute_instant_snapshots_v1::InstantSnapshotsClient](@ref compute_instant_snapshots_v1::InstantSnapshotsClient-endpoint-snippet)
+- [\c compute_interconnect_attachment_groups_v1::InterconnectAttachmentGroupsClient](@ref compute_interconnect_attachment_groups_v1::InterconnectAttachmentGroupsClient-endpoint-snippet)
 - [\c compute_interconnect_attachments_v1::InterconnectAttachmentsClient](@ref compute_interconnect_attachments_v1::InterconnectAttachmentsClient-endpoint-snippet)
+- [\c compute_interconnect_groups_v1::InterconnectGroupsClient](@ref compute_interconnect_groups_v1::InterconnectGroupsClient-endpoint-snippet)
 - [\c compute_interconnect_locations_v1::InterconnectLocationsClient](@ref compute_interconnect_locations_v1::InterconnectLocationsClient-endpoint-snippet)
 - [\c compute_interconnect_remote_locations_v1::InterconnectRemoteLocationsClient](@ref compute_interconnect_remote_locations_v1::InterconnectRemoteLocationsClient-endpoint-snippet)
 - [\c compute_interconnects_v1::InterconnectsClient](@ref compute_interconnects_v1::InterconnectsClient-endpoint-snippet)
@@ -54,6 +56,7 @@ Follow these links to find examples for other \c *Client classes:
 - [\c compute_network_edge_security_services_v1::NetworkEdgeSecurityServicesClient](@ref compute_network_edge_security_services_v1::NetworkEdgeSecurityServicesClient-endpoint-snippet)
 - [\c compute_network_endpoint_groups_v1::NetworkEndpointGroupsClient](@ref compute_network_endpoint_groups_v1::NetworkEndpointGroupsClient-endpoint-snippet)
 - [\c compute_network_firewall_policies_v1::NetworkFirewallPoliciesClient](@ref compute_network_firewall_policies_v1::NetworkFirewallPoliciesClient-endpoint-snippet)
+- [\c compute_network_profiles_v1::NetworkProfilesClient](@ref compute_network_profiles_v1::NetworkProfilesClient-endpoint-snippet)
 - [\c compute_networks_v1::NetworksClient](@ref compute_networks_v1::NetworksClient-endpoint-snippet)
 - [\c compute_node_groups_v1::NodeGroupsClient](@ref compute_node_groups_v1::NodeGroupsClient-endpoint-snippet)
 - [\c compute_node_templates_v1::NodeTemplatesClient](@ref compute_node_templates_v1::NodeTemplatesClient-endpoint-snippet)
@@ -87,6 +90,8 @@ Follow these links to find examples for other \c *Client classes:
 - [\c compute_region_url_maps_v1::RegionUrlMapsClient](@ref compute_region_url_maps_v1::RegionUrlMapsClient-endpoint-snippet)
 - [\c compute_region_zones_v1::RegionZonesClient](@ref compute_region_zones_v1::RegionZonesClient-endpoint-snippet)
 - [\c compute_regions_v1::RegionsClient](@ref compute_regions_v1::RegionsClient-endpoint-snippet)
+- [\c compute_reservation_blocks_v1::ReservationBlocksClient](@ref compute_reservation_blocks_v1::ReservationBlocksClient-endpoint-snippet)
+- [\c compute_reservation_sub_blocks_v1::ReservationSubBlocksClient](@ref compute_reservation_sub_blocks_v1::ReservationSubBlocksClient-endpoint-snippet)
 - [\c compute_reservations_v1::ReservationsClient](@ref compute_reservations_v1::ReservationsClient-endpoint-snippet)
 - [\c compute_resource_policies_v1::ResourcePoliciesClient](@ref compute_resource_policies_v1::ResourcePoliciesClient-endpoint-snippet)
 - [\c compute_routers_v1::RoutersClient](@ref compute_routers_v1::RoutersClient-endpoint-snippet)
@@ -294,9 +299,21 @@ Follow these links to find examples for other \c *Client classes:
 
 */
 
+/*! @page compute_interconnect_attachment_groups_v1::InterconnectAttachmentGroupsClient-endpoint-snippet Override compute_interconnect_attachment_groups_v1::InterconnectAttachmentGroupsClient Endpoint Configuration
+
+@snippet google/cloud/compute/interconnect_attachment_groups/v1/samples/interconnect_attachment_groups_client_samples.cc set-client-endpoint
+
+*/
+
 /*! @page compute_interconnect_attachments_v1::InterconnectAttachmentsClient-endpoint-snippet Override compute_interconnect_attachments_v1::InterconnectAttachmentsClient Endpoint Configuration
 
 @snippet google/cloud/compute/interconnect_attachments/v1/samples/interconnect_attachments_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_interconnect_groups_v1::InterconnectGroupsClient-endpoint-snippet Override compute_interconnect_groups_v1::InterconnectGroupsClient Endpoint Configuration
+
+@snippet google/cloud/compute/interconnect_groups/v1/samples/interconnect_groups_client_samples.cc set-client-endpoint
 
 */
 
@@ -363,6 +380,12 @@ Follow these links to find examples for other \c *Client classes:
 /*! @page compute_network_firewall_policies_v1::NetworkFirewallPoliciesClient-endpoint-snippet Override compute_network_firewall_policies_v1::NetworkFirewallPoliciesClient Endpoint Configuration
 
 @snippet google/cloud/compute/network_firewall_policies/v1/samples/network_firewall_policies_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_network_profiles_v1::NetworkProfilesClient-endpoint-snippet Override compute_network_profiles_v1::NetworkProfilesClient Endpoint Configuration
+
+@snippet google/cloud/compute/network_profiles/v1/samples/network_profiles_client_samples.cc set-client-endpoint
 
 */
 
@@ -561,6 +584,18 @@ Follow these links to find examples for other \c *Client classes:
 /*! @page compute_regions_v1::RegionsClient-endpoint-snippet Override compute_regions_v1::RegionsClient Endpoint Configuration
 
 @snippet google/cloud/compute/regions/v1/samples/regions_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_reservation_blocks_v1::ReservationBlocksClient-endpoint-snippet Override compute_reservation_blocks_v1::ReservationBlocksClient Endpoint Configuration
+
+@snippet google/cloud/compute/reservation_blocks/v1/samples/reservation_blocks_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_reservation_sub_blocks_v1::ReservationSubBlocksClient-endpoint-snippet Override compute_reservation_sub_blocks_v1::ReservationSubBlocksClient Endpoint Configuration
+
+@snippet google/cloud/compute/reservation_sub_blocks/v1/samples/reservation_sub_blocks_client_samples.cc set-client-endpoint
 
 */
 

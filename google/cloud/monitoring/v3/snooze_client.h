@@ -253,7 +253,7 @@ class SnoozeServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.GetSnoozeRequest]: @googleapis_reference_link{google/monitoring/v3/snooze_service.proto#L157}
+  /// [google.monitoring.v3.GetSnoozeRequest]: @googleapis_reference_link{google/monitoring/v3/snooze_service.proto#L155}
   /// [google.monitoring.v3.Snooze]: @googleapis_reference_link{google/monitoring/v3/snooze.proto#L35}
   ///
   // clang-format on
@@ -283,7 +283,7 @@ class SnoozeServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.GetSnoozeRequest]: @googleapis_reference_link{google/monitoring/v3/snooze_service.proto#L157}
+  /// [google.monitoring.v3.GetSnoozeRequest]: @googleapis_reference_link{google/monitoring/v3/snooze_service.proto#L155}
   /// [google.monitoring.v3.Snooze]: @googleapis_reference_link{google/monitoring/v3/snooze.proto#L35}
   ///
   // clang-format on
@@ -314,7 +314,7 @@ class SnoozeServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.monitoring.v3.Snooze]: @googleapis_reference_link{google/monitoring/v3/snooze.proto#L35}
-  /// [google.monitoring.v3.UpdateSnoozeRequest]: @googleapis_reference_link{google/monitoring/v3/snooze_service.proto#L182}
+  /// [google.monitoring.v3.UpdateSnoozeRequest]: @googleapis_reference_link{google/monitoring/v3/snooze_service.proto#L180}
   ///
   // clang-format on
   StatusOr<google::monitoring::v3::Snooze> UpdateSnooze(
@@ -346,7 +346,7 @@ class SnoozeServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.monitoring.v3.Snooze]: @googleapis_reference_link{google/monitoring/v3/snooze.proto#L35}
-  /// [google.monitoring.v3.UpdateSnoozeRequest]: @googleapis_reference_link{google/monitoring/v3/snooze_service.proto#L182}
+  /// [google.monitoring.v3.UpdateSnoozeRequest]: @googleapis_reference_link{google/monitoring/v3/snooze_service.proto#L180}
   ///
   // clang-format on
   StatusOr<google::monitoring::v3::Snooze> UpdateSnooze(

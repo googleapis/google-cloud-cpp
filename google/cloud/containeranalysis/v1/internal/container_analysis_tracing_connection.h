@@ -55,6 +55,10 @@ class ContainerAnalysisTracingConnection
       google::devtools::containeranalysis::v1::
           GetVulnerabilityOccurrencesSummaryRequest const& request) override;
 
+  StatusOr<google::devtools::containeranalysis::v1::ExportSBOMResponse>
+  ExportSBOM(google::devtools::containeranalysis::v1::ExportSBOMRequest const&
+                 request) override;
+
  private:
   std::shared_ptr<containeranalysis_v1::ContainerAnalysisConnection> child_;
 };

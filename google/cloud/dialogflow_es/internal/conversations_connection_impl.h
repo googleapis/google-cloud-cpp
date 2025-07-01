@@ -64,6 +64,11 @@ class ConversationsConnectionImpl
       google::cloud::dialogflow::v2::CompleteConversationRequest const& request)
       override;
 
+  StatusOr<google::cloud::dialogflow::v2::IngestContextReferencesResponse>
+  IngestContextReferences(
+      google::cloud::dialogflow::v2::IngestContextReferencesRequest const&
+          request) override;
+
   StreamRange<google::cloud::dialogflow::v2::Message> ListMessages(
       google::cloud::dialogflow::v2::ListMessagesRequest request) override;
 
@@ -85,6 +90,11 @@ class ConversationsConnectionImpl
   StatusOr<google::cloud::dialogflow::v2::SearchKnowledgeResponse>
   SearchKnowledge(google::cloud::dialogflow::v2::SearchKnowledgeRequest const&
                       request) override;
+
+  StatusOr<google::cloud::dialogflow::v2::GenerateSuggestionsResponse>
+  GenerateSuggestions(
+      google::cloud::dialogflow::v2::GenerateSuggestionsRequest const& request)
+      override;
 
   StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request) override;

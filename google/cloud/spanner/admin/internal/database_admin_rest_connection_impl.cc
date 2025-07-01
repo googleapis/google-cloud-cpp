@@ -910,6 +910,22 @@ DatabaseAdminRestConnectionImpl::ListDatabaseRoles(
       });
 }
 
+StatusOr<google::spanner::admin::database::v1::AddSplitPointsResponse>
+DatabaseAdminRestConnectionImpl::AddSplitPoints(
+    google::spanner::admin::database::v1::AddSplitPointsRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::rest_internal::RestRetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->AddSplitPoints(request),
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::spanner::admin::database::v1::AddSplitPointsRequest const&
+                 request) {
+        return stub_->AddSplitPoints(rest_context, options, request);
+      },
+      *current, request, __func__);
+}
+
 StatusOr<google::spanner::admin::database::v1::BackupSchedule>
 DatabaseAdminRestConnectionImpl::CreateBackupSchedule(
     google::spanner::admin::database::v1::CreateBackupScheduleRequest const&

@@ -180,7 +180,7 @@ void AutoRun(std::vector<std::string> const& argv) {
 
 }  // namespace
 
-int main(int argc, char* argv[]) {
+int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
   using google::cloud::testing_util::Example;
   namespace storagecontrol = google::cloud::storagecontrol_v2;
   using ClientCommand = std::function<void(storagecontrol::StorageControlClient,

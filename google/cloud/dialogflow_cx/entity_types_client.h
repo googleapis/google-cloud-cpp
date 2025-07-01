@@ -64,7 +64,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// such a copy when using this class from multiple threads.
 ///
 /// [google.cloud.dialogflow.cx.v3.EntityType]:
-/// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L156}
+/// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L155}
 ///
 class EntityTypesClient {
  public:
@@ -97,7 +97,8 @@ class EntityTypesClient {
   /// Retrieves the specified entity type.
   ///
   /// @param name  Required. The name of the entity type.
-  ///  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/entityTypes/<Entity Type ID>`.
+  ///  Format:
+  ///  `projects/<ProjectID>/locations/<LocationID>/agents/<AgentID>/entityTypes/<EntityTypeID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -111,8 +112,8 @@ class EntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.EntityType]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L156}
-  /// [google.cloud.dialogflow.cx.v3.GetEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L505}
+  /// [google.cloud.dialogflow.cx.v3.EntityType]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L155}
+  /// [google.cloud.dialogflow.cx.v3.GetEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L503}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::EntityType> GetEntityType(
@@ -141,8 +142,8 @@ class EntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.EntityType]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L156}
-  /// [google.cloud.dialogflow.cx.v3.GetEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L505}
+  /// [google.cloud.dialogflow.cx.v3.EntityType]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L155}
+  /// [google.cloud.dialogflow.cx.v3.GetEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L503}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::EntityType> GetEntityType(
@@ -158,7 +159,7 @@ class EntityTypesClient {
   /// documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).
   ///
   /// @param parent  Required. The agent to create a entity type for.
-  ///  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>`.
+  ///  Format: `projects/<ProjectID>/locations/<LocationID>/agents/<AgentID>`.
   /// @param entity_type  Required. The entity type to create.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -173,8 +174,8 @@ class EntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.CreateEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L533}
-  /// [google.cloud.dialogflow.cx.v3.EntityType]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L156}
+  /// [google.cloud.dialogflow.cx.v3.CreateEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L531}
+  /// [google.cloud.dialogflow.cx.v3.EntityType]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L155}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::EntityType> CreateEntityType(
@@ -209,8 +210,8 @@ class EntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.CreateEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L533}
-  /// [google.cloud.dialogflow.cx.v3.EntityType]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L156}
+  /// [google.cloud.dialogflow.cx.v3.CreateEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L531}
+  /// [google.cloud.dialogflow.cx.v3.EntityType]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L155}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::EntityType> CreateEntityType(
@@ -240,8 +241,8 @@ class EntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.EntityType]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L156}
-  /// [google.cloud.dialogflow.cx.v3.UpdateEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L562}
+  /// [google.cloud.dialogflow.cx.v3.EntityType]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L155}
+  /// [google.cloud.dialogflow.cx.v3.UpdateEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L560}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::EntityType> UpdateEntityType(
@@ -275,8 +276,8 @@ class EntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.EntityType]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L156}
-  /// [google.cloud.dialogflow.cx.v3.UpdateEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L562}
+  /// [google.cloud.dialogflow.cx.v3.EntityType]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L155}
+  /// [google.cloud.dialogflow.cx.v3.UpdateEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L560}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::EntityType> UpdateEntityType(
@@ -292,7 +293,8 @@ class EntityTypesClient {
   /// documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).
   ///
   /// @param name  Required. The name of the entity type to delete.
-  ///  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/entityTypes/<Entity Type ID>`.
+  ///  Format:
+  ///  `projects/<ProjectID>/locations/<LocationID>/agents/<AgentID>/entityTypes/<EntityTypeID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [`Status`] object. If the request failed, the
@@ -304,7 +306,7 @@ class EntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.DeleteEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L585}
+  /// [google.cloud.dialogflow.cx.v3.DeleteEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L583}
   ///
   // clang-format on
   Status DeleteEntityType(std::string const& name, Options opts = {});
@@ -334,7 +336,7 @@ class EntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.DeleteEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L585}
+  /// [google.cloud.dialogflow.cx.v3.DeleteEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L583}
   ///
   // clang-format on
   Status DeleteEntityType(
@@ -346,7 +348,7 @@ class EntityTypesClient {
   /// Returns the list of all entity types in the specified agent.
   ///
   /// @param parent  Required. The agent to list all entity types for.
-  ///  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>`.
+  ///  Format: `projects/<ProjectID>/locations/<LocationID>/agents/<AgentID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -369,8 +371,8 @@ class EntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.EntityType]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L156}
-  /// [google.cloud.dialogflow.cx.v3.ListEntityTypesRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L459}
+  /// [google.cloud.dialogflow.cx.v3.EntityType]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L155}
+  /// [google.cloud.dialogflow.cx.v3.ListEntityTypesRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L457}
   ///
   // clang-format on
   StreamRange<google::cloud::dialogflow::cx::v3::EntityType> ListEntityTypes(
@@ -408,8 +410,8 @@ class EntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.EntityType]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L156}
-  /// [google.cloud.dialogflow.cx.v3.ListEntityTypesRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L459}
+  /// [google.cloud.dialogflow.cx.v3.EntityType]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L155}
+  /// [google.cloud.dialogflow.cx.v3.ListEntityTypesRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L457}
   ///
   // clang-format on
   StreamRange<google::cloud::dialogflow::cx::v3::EntityType> ListEntityTypes(
@@ -446,8 +448,8 @@ class EntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.ExportEntityTypesRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L263}
-  /// [google.cloud.dialogflow.cx.v3.ExportEntityTypesResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L331}
+  /// [google.cloud.dialogflow.cx.v3.ExportEntityTypesRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L262}
+  /// [google.cloud.dialogflow.cx.v3.ExportEntityTypesResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L329}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::cx::v3::ExportEntityTypesResponse>>
@@ -516,8 +518,8 @@ class EntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.ImportEntityTypesRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L353}
-  /// [google.cloud.dialogflow.cx.v3.ImportEntityTypesResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L427}
+  /// [google.cloud.dialogflow.cx.v3.ImportEntityTypesRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L351}
+  /// [google.cloud.dialogflow.cx.v3.ImportEntityTypesResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L425}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::cx::v3::ImportEntityTypesResponse>>
@@ -631,14 +633,6 @@ class EntityTypesClient {
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
   ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
-  ///
   /// @param name  The name of the operation's parent resource.
   /// @param filter  The standard list filter.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -663,8 +657,8 @@ class EntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StreamRange<google::longrunning::Operation> ListOperations(
@@ -674,14 +668,6 @@ class EntityTypesClient {
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -711,8 +697,8 @@ class EntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StreamRange<google::longrunning::Operation> ListOperations(
@@ -738,8 +724,8 @@ class EntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
@@ -770,8 +756,8 @@ class EntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> GetOperation(
@@ -788,8 +774,9 @@ class EntityTypesClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param name  The name of the operation resource to be cancelled.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -803,9 +790,9 @@ class EntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
@@ -821,8 +808,9 @@ class EntityTypesClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -841,9 +829,9 @@ class EntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on

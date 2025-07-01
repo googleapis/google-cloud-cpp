@@ -126,6 +126,20 @@ TEST(GetJobResponseTest, InvalidJob) {
                                      HasSubstr("Not a valid Json Job object")));
 }
 
+TEST(ListJobsResponseTest, NoJobs) {
+  BigQueryHttpResponse http_response;
+  http_response.payload =
+      R"({"kind": "kind-1",
+          "etag": "tag-1"})";
+  auto const list_jobs_response =
+      ListJobsResponse::BuildFromHttpResponse(http_response);
+
+  ASSERT_STATUS_OK(list_jobs_response);
+  EXPECT_FALSE(list_jobs_response->http_response.payload.empty());
+  EXPECT_EQ(list_jobs_response->kind, "kind-1");
+  EXPECT_EQ(list_jobs_response->etag, "tag-1");
+}
+
 TEST(ListJobsResponseTest, SuccessMultiplePages) {
   BigQueryHttpResponse http_response;
   http_response.payload =
@@ -223,16 +237,6 @@ TEST(ListJobsResponseTest, InvalidJson) {
   EXPECT_THAT(response,
               StatusIs(StatusCode::kInternal,
                        HasSubstr("Error parsing Json from response payload")));
-}
-
-TEST(ListJobsResponseTest, InvalidJobList) {
-  BigQueryHttpResponse http_response;
-  http_response.payload =
-      R"({"kind": "jkind",
-          "etag": "jtag"})";
-  auto const response = ListJobsResponse::BuildFromHttpResponse(http_response);
-  EXPECT_THAT(response, StatusIs(StatusCode::kInternal,
-                                 HasSubstr("Not a valid Json JobList object")));
 }
 
 TEST(ListJobsResponseTest, InvalidListFormatJob) {

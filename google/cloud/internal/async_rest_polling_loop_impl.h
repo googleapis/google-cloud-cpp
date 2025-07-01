@@ -36,6 +36,11 @@ namespace cloud {
 namespace rest_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+template <typename OperationType>
+std::string DefaultOperationName(StatusOr<OperationType> const& operation) {
+  return operation->name();
+}
+
 template <typename OperationType, typename GetOperationRequestType,
           typename CancelOperationRequestType>
 class AsyncRestPollingLoopImpl
@@ -52,7 +57,8 @@ class AsyncRestPollingLoopImpl
       std::function<void(std::string const&, GetOperationRequestType&)>
           get_request_set_operation_name,
       std::function<void(std::string const&, CancelOperationRequestType&)>
-          cancel_request_set_operation_name)
+          cancel_request_set_operation_name,
+      std::function<std::string(StatusOr<OperationType> const&)> operation_name)
       : cq_(std::move(cq)),
         options_(std::move(options)),
         poll_(std::move(poll)),
@@ -64,7 +70,8 @@ class AsyncRestPollingLoopImpl
         get_request_set_operation_name_(
             std::move(get_request_set_operation_name)),
         cancel_request_set_operation_name_(
-            std::move(cancel_request_set_operation_name)) {}
+            std::move(cancel_request_set_operation_name)),
+        operation_name_(std::move(operation_name)) {}
 
   AsyncRestPollingLoopImpl(
       google::cloud::CompletionQueue cq, internal::ImmutableOptions options,
@@ -84,6 +91,23 @@ class AsyncRestPollingLoopImpl
                google::longrunning::CancelOperationRequest& r) {
               r.set_name(name);
             }) {}
+
+  AsyncRestPollingLoopImpl(
+      google::cloud::CompletionQueue cq, internal::ImmutableOptions options,
+      AsyncRestPollLongRunningOperation<OperationType, GetOperationRequestType>
+          poll,
+      AsyncRestCancelLongRunningOperation<CancelOperationRequestType> cancel,
+      std::unique_ptr<PollingPolicy> polling_policy, std::string location,
+      std::function<bool(OperationType const&)> is_operation_done,
+      std::function<void(std::string const&, GetOperationRequestType&)>
+          get_request_set_operation_name,
+      std::function<void(std::string const&, CancelOperationRequestType&)>
+          cancel_request_set_operation_name)
+      : AsyncRestPollingLoopImpl(
+            std::move(cq), std::move(options), poll, cancel,
+            std::move(polling_policy), std::move(location), is_operation_done,
+            get_request_set_operation_name, cancel_request_set_operation_name,
+            DefaultOperationName<OperationType>) {}
 
   future<StatusOr<OperationType>> Start(future<StatusOr<OperationType>> op) {
     auto self = this->shared_from_this();
@@ -131,15 +155,16 @@ class AsyncRestPollingLoopImpl
 
   void OnStart(StatusOr<OperationType> op) {
     if (!op) return promise_.set_value(std::move(op));
-    internal::AddSpanAttribute(*options_, "gl-cpp.LRO_name", op->name());
+    auto operation_name = operation_name_(op);
+    internal::AddSpanAttribute(*options_, "gl-cpp.LRO_name", operation_name);
     if (is_operation_done_(*op)) return promise_.set_value(std::move(op));
     GCP_LOG(DEBUG) << location_ << "() polling loop starting for "
-                   << op->name();
+                   << operation_name;
     bool do_cancel = false;
     {
       std::unique_lock<std::mutex> lk(mu_);
       std::swap(delayed_cancel_, do_cancel);
-      op_name_ = std::move(*op->mutable_name());
+      op_name_ = std::move(operation_name);
     }
     if (do_cancel) DoCancel();
     return Wait();
@@ -212,6 +237,7 @@ class AsyncRestPollingLoopImpl
       get_request_set_operation_name_;
   std::function<void(std::string const&, CancelOperationRequestType&)>
       cancel_request_set_operation_name_;
+  std::function<std::string(StatusOr<OperationType> const&)> operation_name_;
 
   // `delayed_cancel_` and `op_name_`, in contrast, are also used from
   // `DoCancel()`, which is called asynchronously, so they need locking.

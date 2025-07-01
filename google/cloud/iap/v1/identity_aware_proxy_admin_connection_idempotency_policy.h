@@ -53,6 +53,10 @@ class IdentityAwareProxyAdminServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency UpdateIapSettings(
       google::cloud::iap::v1::UpdateIapSettingsRequest const& request);
 
+  virtual google::cloud::Idempotency ValidateIapAttributeExpression(
+      google::cloud::iap::v1::ValidateIapAttributeExpressionRequest const&
+          request);
+
   virtual google::cloud::Idempotency ListTunnelDestGroups(
       google::cloud::iap::v1::ListTunnelDestGroupsRequest request);
 

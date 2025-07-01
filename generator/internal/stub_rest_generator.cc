@@ -54,19 +54,19 @@ Status StubRestGenerator::GenerateHeader() {
                        "google/cloud/status_or.h", "google/cloud/version.h"});
   std::vector<std::string> additional_pb_header_paths =
       absl::StrSplit(vars("additional_pb_header_paths"), absl::ByChar(','));
-  HeaderSystemIncludes(additional_pb_header_paths);
+  HeaderProtobufGenCodeIncludes(additional_pb_header_paths);
   std::vector<std::string> mixin_headers =
       absl::StrSplit(vars("mixin_proto_header_paths"), ',');
-  HeaderSystemIncludes(mixin_headers);
+  HeaderProtobufGenCodeIncludes(mixin_headers);
   bool include_lro_header =
       HasLongrunningMethod() &&
       std::find(mixin_headers.begin(), mixin_headers.end(),
                 vars("longrunning_operation_include_header")) ==
           mixin_headers.end();
-  HeaderSystemIncludes(
+  HeaderProtobufGenCodeIncludes(
       {vars("proto_header_path"),
-       include_lro_header ? vars("longrunning_operation_include_header") : "",
-       "memory"});
+       include_lro_header ? vars("longrunning_operation_include_header") : ""});
+  HeaderSystemIncludes({"memory"});
 
   auto result = HeaderOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;
@@ -261,11 +261,11 @@ Status StubRestGenerator::GenerateCc() {
                    "google/cloud/internal/absl_str_cat_quiet.h",
                    "google/cloud/internal/rest_stub_helpers.h",
                    "google/cloud/status_or.h"});
-  CcSystemIncludes({vars("proto_header_path"),
-                    HasLongrunningMethod()
-                        ? vars("longrunning_operation_include_header")
-                        : "",
-                    "memory", "utility"});
+  CcProtobufGenCodeIncludes({vars("proto_header_path"),
+                             HasLongrunningMethod()
+                                 ? vars("longrunning_operation_include_header")
+                                 : ""});
+  CcSystemIncludes({"memory", "utility"});
 
   auto result = CcOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;

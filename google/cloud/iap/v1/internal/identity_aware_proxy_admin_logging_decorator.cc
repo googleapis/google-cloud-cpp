@@ -95,6 +95,22 @@ IdentityAwareProxyAdminServiceLogging::UpdateIapSettings(
       context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::iap::v1::ValidateIapAttributeExpressionResponse>
+IdentityAwareProxyAdminServiceLogging::ValidateIapAttributeExpression(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::iap::v1::ValidateIapAttributeExpressionRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::iap::v1::ValidateIapAttributeExpressionRequest const&
+              request) {
+        return child_->ValidateIapAttributeExpression(context, options,
+                                                      request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::iap::v1::ListTunnelDestGroupsResponse>
 IdentityAwareProxyAdminServiceLogging::ListTunnelDestGroups(
     grpc::ClientContext& context, Options const& options,

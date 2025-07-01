@@ -20,6 +20,7 @@ this library.
 
 ```cc
 #include "google/cloud/gkeconnect/gateway/v1/gateway_control_client.h"
+#include "google/cloud/gkeconnect/gateway/v1/gateway_control_rest_connection.h"
 #include "google/cloud/location.h"
 #include <iostream>
 
@@ -34,7 +35,7 @@ int main(int argc, char* argv[]) try {
 
   namespace gkeconnect = ::google::cloud::gkeconnect_gateway_v1;
   auto client = gkeconnect::GatewayControlClient(
-      gkeconnect::MakeGatewayControlConnection());
+      gkeconnect::MakeGatewayControlConnectionRest());
 
   google::cloud::gkeconnect::gateway::v1::GenerateCredentialsRequest request;
   request.set_name(location.FullName() + "/memberships/" + argv[3]);

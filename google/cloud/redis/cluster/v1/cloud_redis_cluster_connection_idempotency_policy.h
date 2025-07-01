@@ -58,6 +58,32 @@ class CloudRedisClusterConnectionIdempotencyPolicy {
       google::cloud::redis::cluster::v1::
           GetClusterCertificateAuthorityRequest const& request);
 
+  virtual google::cloud::Idempotency RescheduleClusterMaintenance(
+      google::cloud::redis::cluster::v1::
+          RescheduleClusterMaintenanceRequest const& request);
+
+  virtual google::cloud::Idempotency ListBackupCollections(
+      google::cloud::redis::cluster::v1::ListBackupCollectionsRequest request);
+
+  virtual google::cloud::Idempotency GetBackupCollection(
+      google::cloud::redis::cluster::v1::GetBackupCollectionRequest const&
+          request);
+
+  virtual google::cloud::Idempotency ListBackups(
+      google::cloud::redis::cluster::v1::ListBackupsRequest request);
+
+  virtual google::cloud::Idempotency GetBackup(
+      google::cloud::redis::cluster::v1::GetBackupRequest const& request);
+
+  virtual google::cloud::Idempotency DeleteBackup(
+      google::cloud::redis::cluster::v1::DeleteBackupRequest const& request);
+
+  virtual google::cloud::Idempotency ExportBackup(
+      google::cloud::redis::cluster::v1::ExportBackupRequest const& request);
+
+  virtual google::cloud::Idempotency BackupCluster(
+      google::cloud::redis::cluster::v1::BackupClusterRequest const& request);
+
   virtual google::cloud::Idempotency ListLocations(
       google::cloud::location::ListLocationsRequest request);
 

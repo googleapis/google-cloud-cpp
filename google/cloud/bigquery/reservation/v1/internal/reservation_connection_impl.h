@@ -74,6 +74,10 @@ class ReservationServiceConnectionImpl
       google::cloud::bigquery::reservation::v1::UpdateReservationRequest const&
           request) override;
 
+  StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
+  FailoverReservation(google::cloud::bigquery::reservation::v1::
+                          FailoverReservationRequest const& request) override;
+
   StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
   CreateCapacityCommitment(
       google::cloud::bigquery::reservation::v1::

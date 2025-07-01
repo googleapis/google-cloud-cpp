@@ -21,6 +21,7 @@
 #include <google/api/monitored_resource.pb.h>
 #include <google/monitoring/v3/metric_service.pb.h>
 #include <opentelemetry/sdk/metrics/metric_reader.h>
+#include <opentelemetry/sdk/resource/resource.h>
 #include <functional>
 #include <string>
 
@@ -37,6 +38,7 @@ auto constexpr kMaxTimeSeriesPerRequest = 200;
 google::api::Metric ToMetric(
     opentelemetry::sdk::metrics::MetricData const& metric_data,
     opentelemetry::sdk::metrics::PointAttributes const& attributes,
+    opentelemetry::sdk::resource::Resource const* resource,
     std::function<std::string(std::string)> const& metrics_name_formatter);
 
 google::monitoring::v3::TimeSeries ToTimeSeries(

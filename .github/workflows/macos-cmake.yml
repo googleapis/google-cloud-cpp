@@ -33,7 +33,6 @@ jobs:
     runs-on: ${{ matrix.os }}
     permissions:
       contents: 'read'
-      id-token: 'write'
     strategy:
       # Continue other builds even if one fails
       fail-fast: false
@@ -175,7 +174,6 @@ jobs:
           rapidmigrationassessment
           recaptchaenterprise
           recommender
-          resourcesettings
           scheduler
           secretmanager
           securesourcemanager
@@ -264,7 +262,7 @@ jobs:
       if: ${{ inputs.sccache-mode != 'DISABLED' }}
       working-directory: "${{runner.temp}}"
       run: |
-        curl -fsSL https://github.com/mozilla/sccache/releases/download/v0.5.4/sccache-v0.5.4-x86_64-apple-darwin.tar.gz | \
+        curl -fsSL https://github.com/mozilla/sccache/releases/download/v0.9.1/sccache-v0.9.1-x86_64-apple-darwin.tar.gz | \
           tar -zxf - --strip-components=1 && \
         chmod +x sccache && \
         mv sccache /Users/runner/.cargo/bin/sccache

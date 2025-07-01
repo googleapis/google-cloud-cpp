@@ -14,10 +14,10 @@
 
 #include "google/cloud/storage/internal/async/connection_impl.h"
 #include "google/cloud/storage/async/idempotency_policy.h"
+#include "google/cloud/storage/async/retry_policy.h"
 #include "google/cloud/storage/internal/async/default_options.h"
 #include "google/cloud/storage/internal/async/write_payload_impl.h"
 #include "google/cloud/storage/options.h"
-#include "google/cloud/storage/retry_policy.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/mock_storage_stub.h"
 #include "google/cloud/common_options.h"
@@ -69,8 +69,8 @@ auto TestOptions(Options options = {}) {
       std::move(options),
       Options{}
           .set<GrpcNumChannelsOption>(1)
-          .set<storage::RetryPolicyOption>(
-              storage::LimitedErrorCountRetryPolicy(2).clone())
+          .set<storage_experimental::AsyncRetryPolicyOption>(
+              storage_experimental::LimitedErrorCountRetryPolicy(2).clone())
           .set<storage::BackoffPolicyOption>(
               storage::ExponentialBackoffPolicy(ms(1), ms(2), 2.0).clone()));
   return DefaultOptionsAsync(std::move(options));

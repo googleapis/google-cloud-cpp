@@ -243,6 +243,20 @@ class InstanceGroupManagersRestStub {
           ResizeRequest const& request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncResumeInstances(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::instance_group_managers::v1::
+          ResumeInstancesRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> ResumeInstances(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::instance_group_managers::v1::
+          ResumeInstancesRequest const& request) = 0;
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncSetInstanceTemplate(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
@@ -269,6 +283,48 @@ class InstanceGroupManagersRestStub {
       Options const& options,
       google::cloud::cpp::compute::instance_group_managers::v1::
           SetTargetPoolsRequest const& request) = 0;
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncStartInstances(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::instance_group_managers::v1::
+          StartInstancesRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> StartInstances(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::instance_group_managers::v1::
+          StartInstancesRequest const& request) = 0;
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncStopInstances(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::instance_group_managers::v1::
+          StopInstancesRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> StopInstances(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::instance_group_managers::v1::
+          StopInstancesRequest const& request) = 0;
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncSuspendInstances(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::instance_group_managers::v1::
+          SuspendInstancesRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SuspendInstances(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::instance_group_managers::v1::
+          SuspendInstancesRequest const& request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncUpdatePerInstanceConfigs(
@@ -512,6 +568,20 @@ class DefaultInstanceGroupManagersRestStub
           ResizeRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncResumeInstances(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::instance_group_managers::v1::
+          ResumeInstancesRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> ResumeInstances(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::instance_group_managers::v1::
+          ResumeInstancesRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncSetInstanceTemplate(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
@@ -538,6 +608,48 @@ class DefaultInstanceGroupManagersRestStub
       Options const& options,
       google::cloud::cpp::compute::instance_group_managers::v1::
           SetTargetPoolsRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncStartInstances(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::instance_group_managers::v1::
+          StartInstancesRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> StartInstances(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::instance_group_managers::v1::
+          StartInstancesRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncStopInstances(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::instance_group_managers::v1::
+          StopInstancesRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> StopInstances(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::instance_group_managers::v1::
+          StopInstancesRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncSuspendInstances(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::instance_group_managers::v1::
+          SuspendInstancesRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SuspendInstances(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::instance_group_managers::v1::
+          SuspendInstancesRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncUpdatePerInstanceConfigs(

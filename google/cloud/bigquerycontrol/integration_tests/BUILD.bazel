@@ -24,7 +24,7 @@ licenses(["notice"])  # Apache 2.0
         "integration-test",
     ],
     deps = [
-        "//:experimental-bigquerycontrol",
+        "//:bigquerycontrol",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
     ],
 ) for test in glob(["*_test.cc"])]

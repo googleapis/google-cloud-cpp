@@ -347,8 +347,8 @@ class ContainerAnalysisClient {
   ///
   /// Gets a summary of the number and severity of occurrences.
   ///
-  /// @param parent  Required. The name of the project to get a vulnerability summary for in the form of
-  ///  `projects/[PROJECT_ID]`.
+  /// @param parent  Required. The name of the project to get a vulnerability summary for in the
+  ///  form of `projects/[PROJECT_ID]`.
   /// @param filter  The filter expression.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -363,8 +363,8 @@ class ContainerAnalysisClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.containeranalysis.v1.GetVulnerabilityOccurrencesSummaryRequest]: @googleapis_reference_link{google/devtools/containeranalysis/v1/containeranalysis.proto#L121}
-  /// [google.devtools.containeranalysis.v1.VulnerabilityOccurrencesSummary]: @googleapis_reference_link{google/devtools/containeranalysis/v1/containeranalysis.proto#L137}
+  /// [google.devtools.containeranalysis.v1.GetVulnerabilityOccurrencesSummaryRequest]: @googleapis_reference_link{google/devtools/containeranalysis/v1/containeranalysis.proto#L194}
+  /// [google.devtools.containeranalysis.v1.VulnerabilityOccurrencesSummary]: @googleapis_reference_link{google/devtools/containeranalysis/v1/containeranalysis.proto#L210}
   ///
   // clang-format on
   StatusOr<
@@ -396,8 +396,8 @@ class ContainerAnalysisClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.containeranalysis.v1.GetVulnerabilityOccurrencesSummaryRequest]: @googleapis_reference_link{google/devtools/containeranalysis/v1/containeranalysis.proto#L121}
-  /// [google.devtools.containeranalysis.v1.VulnerabilityOccurrencesSummary]: @googleapis_reference_link{google/devtools/containeranalysis/v1/containeranalysis.proto#L137}
+  /// [google.devtools.containeranalysis.v1.GetVulnerabilityOccurrencesSummaryRequest]: @googleapis_reference_link{google/devtools/containeranalysis/v1/containeranalysis.proto#L194}
+  /// [google.devtools.containeranalysis.v1.VulnerabilityOccurrencesSummary]: @googleapis_reference_link{google/devtools/containeranalysis/v1/containeranalysis.proto#L210}
   ///
   // clang-format on
   StatusOr<
@@ -405,6 +405,38 @@ class ContainerAnalysisClient {
   GetVulnerabilityOccurrencesSummary(
       google::devtools::containeranalysis::v1::
           GetVulnerabilityOccurrencesSummaryRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Generates an SBOM for the given resource.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.devtools.containeranalysis.v1.ExportSBOMRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.devtools.containeranalysis.v1.ExportSBOMResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.containeranalysis.v1.ExportSBOMRequest]: @googleapis_reference_link{google/devtools/containeranalysis/v1/containeranalysis.proto#L167}
+  /// [google.devtools.containeranalysis.v1.ExportSBOMResponse]: @googleapis_reference_link{google/devtools/containeranalysis/v1/containeranalysis.proto#L186}
+  ///
+  // clang-format on
+  StatusOr<google::devtools::containeranalysis::v1::ExportSBOMResponse>
+  ExportSBOM(
+      google::devtools::containeranalysis::v1::ExportSBOMRequest const& request,
       Options opts = {});
 
  private:

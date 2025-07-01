@@ -34,9 +34,9 @@ def gl_cpp_development2(name = None):
         http_archive,
         name = "com_github_zeux_pugixml",
         urls = [
-            "https://github.com/zeux/pugixml/archive/v1.14.tar.gz",
+            "https://github.com/zeux/pugixml/archive/v1.15.tar.gz",
         ],
-        sha256 = "610f98375424b5614754a6f34a491adbddaaec074e9044577d965160ec103d2e",
-        strip_prefix = "pugixml-1.14",
+        sha256 = "b39647064d9e28297a34278bfb897092bf33b7c487906ddfc094c9e8868bddcb",
+        strip_prefix = "pugixml-1.15",
         build_file = Label("//bazel:pugixml.BUILD"),
     )

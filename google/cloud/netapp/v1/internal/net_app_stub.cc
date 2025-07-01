@@ -143,6 +143,38 @@ StatusOr<google::longrunning::Operation> DefaultNetAppStub::DeleteStoragePool(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+DefaultNetAppStub::AsyncValidateDirectoryService(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::netapp::v1::ValidateDirectoryServiceRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::netapp::v1::ValidateDirectoryServiceRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::netapp::v1::ValidateDirectoryServiceRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncValidateDirectoryService(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultNetAppStub::ValidateDirectoryService(
+    grpc::ClientContext& context, Options,
+    google::cloud::netapp::v1::ValidateDirectoryServiceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->ValidateDirectoryService(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
 DefaultNetAppStub::AsyncSwitchActiveReplicaZone(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -897,6 +929,64 @@ DefaultNetAppStub::ReverseReplicationDirection(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+DefaultNetAppStub::AsyncEstablishPeering(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::netapp::v1::EstablishPeeringRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::netapp::v1::EstablishPeeringRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::netapp::v1::EstablishPeeringRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncEstablishPeering(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultNetAppStub::EstablishPeering(
+    grpc::ClientContext& context, Options,
+    google::cloud::netapp::v1::EstablishPeeringRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->EstablishPeering(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultNetAppStub::AsyncSyncReplication(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::netapp::v1::SyncReplicationRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::netapp::v1::SyncReplicationRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::netapp::v1::SyncReplicationRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncSyncReplication(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultNetAppStub::SyncReplication(
+    grpc::ClientContext& context, Options,
+    google::cloud::netapp::v1::SyncReplicationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->SyncReplication(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
 DefaultNetAppStub::AsyncCreateBackupVault(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -1225,6 +1315,116 @@ StatusOr<google::longrunning::Operation> DefaultNetAppStub::DeleteBackupPolicy(
     google::cloud::netapp::v1::DeleteBackupPolicyRequest const& request) {
   google::longrunning::Operation response;
   auto status = grpc_stub_->DeleteBackupPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::netapp::v1::ListQuotaRulesResponse>
+DefaultNetAppStub::ListQuotaRules(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::netapp::v1::ListQuotaRulesRequest const& request) {
+  google::cloud::netapp::v1::ListQuotaRulesResponse response;
+  auto status = grpc_stub_->ListQuotaRules(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::netapp::v1::QuotaRule> DefaultNetAppStub::GetQuotaRule(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::netapp::v1::GetQuotaRuleRequest const& request) {
+  google::cloud::netapp::v1::QuotaRule response;
+  auto status = grpc_stub_->GetQuotaRule(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultNetAppStub::AsyncCreateQuotaRule(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::netapp::v1::CreateQuotaRuleRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::netapp::v1::CreateQuotaRuleRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::netapp::v1::CreateQuotaRuleRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCreateQuotaRule(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultNetAppStub::CreateQuotaRule(
+    grpc::ClientContext& context, Options,
+    google::cloud::netapp::v1::CreateQuotaRuleRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateQuotaRule(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultNetAppStub::AsyncUpdateQuotaRule(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::netapp::v1::UpdateQuotaRuleRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::netapp::v1::UpdateQuotaRuleRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::netapp::v1::UpdateQuotaRuleRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUpdateQuotaRule(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultNetAppStub::UpdateQuotaRule(
+    grpc::ClientContext& context, Options,
+    google::cloud::netapp::v1::UpdateQuotaRuleRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateQuotaRule(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultNetAppStub::AsyncDeleteQuotaRule(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::netapp::v1::DeleteQuotaRuleRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::netapp::v1::DeleteQuotaRuleRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::netapp::v1::DeleteQuotaRuleRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeleteQuotaRule(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultNetAppStub::DeleteQuotaRule(
+    grpc::ClientContext& context, Options,
+    google::cloud::netapp::v1::DeleteQuotaRuleRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteQuotaRule(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

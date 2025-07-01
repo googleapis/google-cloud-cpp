@@ -57,10 +57,10 @@ def gl_cpp_development0(name = None):
         http_archive,
         name = "com_google_benchmark",
         urls = [
-            "https://github.com/google/benchmark/archive/v1.9.0.tar.gz",
+            "https://github.com/google/benchmark/archive/v1.9.2.tar.gz",
         ],
-        sha256 = "35a77f46cc782b16fac8d3b107fbfbb37dcd645f7c28eee19f3b8e0758b48994",
-        strip_prefix = "benchmark-1.9.0",
+        sha256 = "409075176168dc46bbb81b74c1b4b6900385b5d16bfc181d678afb060d928bd3",
+        strip_prefix = "benchmark-1.9.2",
     )
 
     # A YAML parser and generator, this is only used in //docfx and //generator.

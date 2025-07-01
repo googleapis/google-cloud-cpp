@@ -210,6 +210,10 @@ class ReservationServiceConnection {
       google::cloud::bigquery::reservation::v1::UpdateReservationRequest const&
           request);
 
+  virtual StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
+  FailoverReservation(google::cloud::bigquery::reservation::v1::
+                          FailoverReservationRequest const& request);
+
   virtual StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
   CreateCapacityCommitment(google::cloud::bigquery::reservation::v1::
                                CreateCapacityCommitmentRequest const& request);

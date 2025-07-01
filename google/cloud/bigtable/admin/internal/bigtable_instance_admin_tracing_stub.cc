@@ -372,6 +372,193 @@ BigtableInstanceAdminTracingStub::ListHotTablets(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+BigtableInstanceAdminTracingStub::AsyncCreateLogicalView(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::bigtable::admin::v2::CreateLogicalViewRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.bigtable.admin.v2.BigtableInstanceAdmin", "CreateLogicalView");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f =
+      child_->AsyncCreateLogicalView(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableInstanceAdminTracingStub::CreateLogicalView(
+    grpc::ClientContext& context, Options options,
+    google::bigtable::admin::v2::CreateLogicalViewRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.bigtable.admin.v2.BigtableInstanceAdmin", "CreateLogicalView");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->CreateLogicalView(context, options, request));
+}
+
+StatusOr<google::bigtable::admin::v2::LogicalView>
+BigtableInstanceAdminTracingStub::GetLogicalView(
+    grpc::ClientContext& context, Options const& options,
+    google::bigtable::admin::v2::GetLogicalViewRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.bigtable.admin.v2.BigtableInstanceAdmin", "GetLogicalView");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetLogicalView(context, options, request));
+}
+
+StatusOr<google::bigtable::admin::v2::ListLogicalViewsResponse>
+BigtableInstanceAdminTracingStub::ListLogicalViews(
+    grpc::ClientContext& context, Options const& options,
+    google::bigtable::admin::v2::ListLogicalViewsRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.bigtable.admin.v2.BigtableInstanceAdmin", "ListLogicalViews");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ListLogicalViews(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+BigtableInstanceAdminTracingStub::AsyncUpdateLogicalView(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::bigtable::admin::v2::UpdateLogicalViewRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.bigtable.admin.v2.BigtableInstanceAdmin", "UpdateLogicalView");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f =
+      child_->AsyncUpdateLogicalView(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableInstanceAdminTracingStub::UpdateLogicalView(
+    grpc::ClientContext& context, Options options,
+    google::bigtable::admin::v2::UpdateLogicalViewRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.bigtable.admin.v2.BigtableInstanceAdmin", "UpdateLogicalView");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->UpdateLogicalView(context, options, request));
+}
+
+Status BigtableInstanceAdminTracingStub::DeleteLogicalView(
+    grpc::ClientContext& context, Options const& options,
+    google::bigtable::admin::v2::DeleteLogicalViewRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.bigtable.admin.v2.BigtableInstanceAdmin", "DeleteLogicalView");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->DeleteLogicalView(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+BigtableInstanceAdminTracingStub::AsyncCreateMaterializedView(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::bigtable::admin::v2::CreateMaterializedViewRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.bigtable.admin.v2.BigtableInstanceAdmin",
+                             "CreateMaterializedView");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncCreateMaterializedView(cq, context, std::move(options),
+                                               request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableInstanceAdminTracingStub::CreateMaterializedView(
+    grpc::ClientContext& context, Options options,
+    google::bigtable::admin::v2::CreateMaterializedViewRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.bigtable.admin.v2.BigtableInstanceAdmin",
+                             "CreateMaterializedView");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->CreateMaterializedView(context, options, request));
+}
+
+StatusOr<google::bigtable::admin::v2::MaterializedView>
+BigtableInstanceAdminTracingStub::GetMaterializedView(
+    grpc::ClientContext& context, Options const& options,
+    google::bigtable::admin::v2::GetMaterializedViewRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.bigtable.admin.v2.BigtableInstanceAdmin", "GetMaterializedView");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->GetMaterializedView(context, options, request));
+}
+
+StatusOr<google::bigtable::admin::v2::ListMaterializedViewsResponse>
+BigtableInstanceAdminTracingStub::ListMaterializedViews(
+    grpc::ClientContext& context, Options const& options,
+    google::bigtable::admin::v2::ListMaterializedViewsRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.bigtable.admin.v2.BigtableInstanceAdmin",
+                             "ListMaterializedViews");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->ListMaterializedViews(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+BigtableInstanceAdminTracingStub::AsyncUpdateMaterializedView(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::bigtable::admin::v2::UpdateMaterializedViewRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.bigtable.admin.v2.BigtableInstanceAdmin",
+                             "UpdateMaterializedView");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncUpdateMaterializedView(cq, context, std::move(options),
+                                               request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableInstanceAdminTracingStub::UpdateMaterializedView(
+    grpc::ClientContext& context, Options options,
+    google::bigtable::admin::v2::UpdateMaterializedViewRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.bigtable.admin.v2.BigtableInstanceAdmin",
+                             "UpdateMaterializedView");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->UpdateMaterializedView(context, options, request));
+}
+
+Status BigtableInstanceAdminTracingStub::DeleteMaterializedView(
+    grpc::ClientContext& context, Options const& options,
+    google::bigtable::admin::v2::DeleteMaterializedViewRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.bigtable.admin.v2.BigtableInstanceAdmin",
+                             "DeleteMaterializedView");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->DeleteMaterializedView(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
 BigtableInstanceAdminTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

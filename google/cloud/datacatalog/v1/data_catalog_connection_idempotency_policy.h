@@ -146,6 +146,16 @@ class DataCatalogConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency ImportEntries(
       google::cloud::datacatalog::v1::ImportEntriesRequest const& request);
 
+  virtual google::cloud::Idempotency SetConfig(
+      google::cloud::datacatalog::v1::SetConfigRequest const& request);
+
+  virtual google::cloud::Idempotency RetrieveConfig(
+      google::cloud::datacatalog::v1::RetrieveConfigRequest const& request);
+
+  virtual google::cloud::Idempotency RetrieveEffectiveConfig(
+      google::cloud::datacatalog::v1::RetrieveEffectiveConfigRequest const&
+          request);
+
   virtual google::cloud::Idempotency ListOperations(
       google::longrunning::ListOperationsRequest request);
 

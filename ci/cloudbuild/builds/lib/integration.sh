@@ -31,7 +31,7 @@ source module ci/lib/io.sh
 export PATH="${HOME}/.local/bin:${PATH}"
 python3 -m pip uninstall -y --quiet googleapis-storage-testbench
 python3 -m pip install --upgrade --user --quiet --disable-pip-version-check \
-  "git+https://github.com/googleapis/storage-testbench@v0.46.0"
+  "git+https://github.com/googleapis/storage-testbench@v0.52.0"
 
 # Some of the tests will need a valid roots.pem file.
 rm -f /dev/shm/roots.pem
@@ -58,6 +58,7 @@ function integration::bazel_args() {
     "--test_env=GOOGLE_CLOUD_PROJECT=${GOOGLE_CLOUD_PROJECT}"
     "--test_env=GOOGLE_CLOUD_CPP_TEST_REGION=${GOOGLE_CLOUD_CPP_TEST_REGION}"
     "--test_env=GOOGLE_CLOUD_CPP_NON_US_TEST_REGION=${GOOGLE_CLOUD_CPP_NON_US_TEST_REGION}"
+    "--test_env=GOOGLE_CLOUD_CPP_US_EAST_TEST_REGION=${GOOGLE_CLOUD_CPP_US_EAST_TEST_REGION}"
     "--test_env=GOOGLE_CLOUD_CPP_TEST_ZONE=${GOOGLE_CLOUD_CPP_TEST_ZONE}"
     "--test_env=GOOGLE_CLOUD_CPP_TEST_ORGANIZATION=${GOOGLE_CLOUD_CPP_TEST_ORGANIZATION}"
     "--test_env=GOOGLE_CLOUD_CPP_TEST_SERVICE_ACCOUNT_KEYFILE=${GOOGLE_CLOUD_CPP_TEST_SERVICE_ACCOUNT_KEYFILE}"
@@ -132,6 +133,21 @@ function integration::bazel_args() {
       "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_P12=${KEY_DIR}/${key_base}.p12"
     )
   fi
+
+  # Adds environment variables for SSL testing.
+  # Info on how to create/refresh these can be found at:
+  #    https://cloud.google.com/certificate-authority-service/docs/create-certificate
+  gcloud storage cp --quiet "${SECRETS_BUCKET}/client.crt" "${KEY_DIR}/client.crt" >/dev/null 2>&1 || true
+  gcloud storage cp --quiet "${SECRETS_BUCKET}/client.chain.crt" "${KEY_DIR}/client.chain.crt" >/dev/null 2>&1 || true
+  gcloud storage cp --quiet "${SECRETS_BUCKET}/client.private.pem" "${KEY_DIR}/client.private.pem" >/dev/null 2>&1 || true
+  if [[ -r "${KEY_DIR}/client.crt" ]] && [[ -r "${KEY_DIR}/client.chain.crt" ]] && [[ -r "${KEY_DIR}/client.private.pem" ]]; then
+    args+=(
+      "--test_env=GOOGLE_CLOUD_CPP_CLIENT_SSL_CERT_FILE=${KEY_DIR}/client.crt"
+      "--test_env=GOOGLE_CLOUD_CPP_CLIENT_SSL_CERT_CHAIN_FILE=${KEY_DIR}/client.chain.crt"
+      "--test_env=GOOGLE_CLOUD_CPP_CLIENT_SSL_KEY_FILE=${KEY_DIR}/client.private.pem"
+    )
+  fi
+
   printf "%s\n" "${args[@]}"
 }
 
@@ -178,30 +194,30 @@ function integration::bazel_with_emulators() {
     "google/cloud:internal_unified_rest_credentials_integration_test"
   )
 
-  production_tests_tag_filters="integration-test"
+  production_tests_tag_filters="integration-test,-ud-only"
   if echo "${args[@]}" | grep -w -q -- "--config=msan"; then
-    production_tests_tag_filters="integration-test,-no-msan"
+    production_tests_tag_filters="integration-test,-no-msan,-ud-only"
   fi
 
   io::log_h2 "Running Pub/Sub integration tests (with emulator)"
   "google/cloud/pubsub/ci/${EMULATOR_SCRIPT}" \
-    bazel "${verb}" "${args[@]}" --test_tag_filters="integration-test"
+    bazel "${verb}" "${args[@]}" --test_tag_filters="integration-test,-ud-only"
 
   io::log_h2 "Running Storage integration tests (with emulator)"
   "google/cloud/storage/ci/${EMULATOR_SCRIPT}" \
-    bazel "${verb}" "${args[@]}" --test_tag_filters="integration-test"
+    bazel "${verb}" "${args[@]}" --test_tag_filters="integration-test,-ud-only"
 
   io::log_h2 "Running Spanner integration tests (with emulator)"
   "google/cloud/spanner/ci/${EMULATOR_SCRIPT}" \
-    bazel "${verb}" "${args[@]}" --test_tag_filters="integration-test"
+    bazel "${verb}" "${args[@]}" --test_tag_filters="integration-test,-ud-only"
 
   io::log_h2 "Running Bigtable integration tests (with emulator)"
   "google/cloud/bigtable/ci/${EMULATOR_SCRIPT}" \
-    bazel "${verb}" "${args[@]}" --test_tag_filters="integration-test"
+    bazel "${verb}" "${args[@]}" --test_tag_filters="integration-test,-ud-only"
 
   io::log_h2 "Running REST integration tests (with emulator)"
   "google/cloud/internal/ci/${EMULATOR_SCRIPT}" \
-    bazel "${verb}" "${args[@]}" --test_tag_filters="integration-test"
+    bazel "${verb}" "${args[@]}" --test_tag_filters="integration-test,-ud-only"
 
   if [[ "${BAZEL_TARGETS[*]}" != "..." ]]; then
     io::log_h2 "Skipping some integration tests because BAZEL_TARGETS is not the default"

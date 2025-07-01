@@ -134,6 +134,14 @@ environment variables are convenient when troubleshooting problems.
   `EndpointOption` (which defaults to "compute.googleapis.com")
   used by `MakeInterconnectAttachmentsConnection()`.
 
+- `GOOGLE_CLOUD_CPP_INTERCONNECT_ATTACHMENT_GROUPS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeInterconnectAttachmentGroupsConnection()`.
+
+- `GOOGLE_CLOUD_CPP_INTERCONNECT_GROUPS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeInterconnectGroupsConnection()`.
+
 - `GOOGLE_CLOUD_CPP_INTERCONNECT_LOCATIONS_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "compute.googleapis.com")
   used by `MakeInterconnectLocationsConnection()`.
@@ -177,6 +185,10 @@ environment variables are convenient when troubleshooting problems.
 - `GOOGLE_CLOUD_CPP_NETWORK_FIREWALL_POLICIES_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "compute.googleapis.com")
   used by `MakeNetworkFirewallPoliciesConnection()`.
+
+- `GOOGLE_CLOUD_CPP_NETWORK_PROFILES_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeNetworkProfilesConnection()`.
 
 - `GOOGLE_CLOUD_CPP_NODE_GROUPS_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "compute.googleapis.com")
@@ -309,6 +321,14 @@ environment variables are convenient when troubleshooting problems.
 - `GOOGLE_CLOUD_CPP_RESERVATIONS_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "compute.googleapis.com")
   used by `MakeReservationsConnection()`.
+
+- `GOOGLE_CLOUD_CPP_RESERVATION_BLOCKS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeReservationBlocksConnection()`.
+
+- `GOOGLE_CLOUD_CPP_RESERVATION_SUB_BLOCKS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeReservationSubBlocksConnection()`.
 
 - `GOOGLE_CLOUD_CPP_RESOURCE_POLICIES_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "compute.googleapis.com")

@@ -70,6 +70,40 @@ NetworkFirewallPoliciesRestLogging::AddAssociation(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NetworkFirewallPoliciesRestLogging::AsyncAddPacketMirroringRule(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::network_firewall_policies::v1::
+        AddPacketMirroringRuleRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> rest_context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::cpp::compute::network_firewall_policies::v1::
+                 AddPacketMirroringRuleRequest const& request) {
+        return child_->AsyncAddPacketMirroringRule(cq, std::move(rest_context),
+                                                   std::move(options), request);
+      },
+      cq, std::move(rest_context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworkFirewallPoliciesRestLogging::AddPacketMirroringRule(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::network_firewall_policies::v1::
+        AddPacketMirroringRuleRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::network_firewall_policies::v1::
+                 AddPacketMirroringRuleRequest const& request) {
+        return child_->AddPacketMirroringRule(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworkFirewallPoliciesRestLogging::AsyncAddRule(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
@@ -99,6 +133,21 @@ NetworkFirewallPoliciesRestLogging::AddRule(
              google::cloud::cpp::compute::network_firewall_policies::v1::
                  AddRuleRequest const& request) {
         return child_->AddRule(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::NetworkFirewallPolicyAggregatedList>
+NetworkFirewallPoliciesRestLogging::AggregatedListNetworkFirewallPolicies(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::network_firewall_policies::v1::
+        AggregatedListNetworkFirewallPoliciesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::network_firewall_policies::v1::
+                 AggregatedListNetworkFirewallPoliciesRequest const& request) {
+        return child_->AggregatedListNetworkFirewallPolicies(rest_context,
+                                                             options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
 }
@@ -214,6 +263,20 @@ NetworkFirewallPoliciesRestLogging::GetIamPolicy(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::FirewallPolicyRule>
+NetworkFirewallPoliciesRestLogging::GetPacketMirroringRule(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::network_firewall_policies::v1::
+        GetPacketMirroringRuleRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::network_firewall_policies::v1::
+                 GetPacketMirroringRuleRequest const& request) {
+        return child_->GetPacketMirroringRule(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::FirewallPolicyRule>
 NetworkFirewallPoliciesRestLogging::GetRule(
     rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::network_firewall_policies::v1::
@@ -311,6 +374,40 @@ NetworkFirewallPoliciesRestLogging::PatchFirewallPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NetworkFirewallPoliciesRestLogging::AsyncPatchPacketMirroringRule(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::network_firewall_policies::v1::
+        PatchPacketMirroringRuleRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> rest_context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::cpp::compute::network_firewall_policies::v1::
+                 PatchPacketMirroringRuleRequest const& request) {
+        return child_->AsyncPatchPacketMirroringRule(
+            cq, std::move(rest_context), std::move(options), request);
+      },
+      cq, std::move(rest_context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworkFirewallPoliciesRestLogging::PatchPacketMirroringRule(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::network_firewall_policies::v1::
+        PatchPacketMirroringRuleRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::network_firewall_policies::v1::
+                 PatchPacketMirroringRuleRequest const& request) {
+        return child_->PatchPacketMirroringRule(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworkFirewallPoliciesRestLogging::AsyncPatchRule(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
@@ -374,6 +471,41 @@ NetworkFirewallPoliciesRestLogging::RemoveAssociation(
              google::cloud::cpp::compute::network_firewall_policies::v1::
                  RemoveAssociationRequest const& request) {
         return child_->RemoveAssociation(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NetworkFirewallPoliciesRestLogging::AsyncRemovePacketMirroringRule(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::network_firewall_policies::v1::
+        RemovePacketMirroringRuleRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> rest_context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::cpp::compute::network_firewall_policies::v1::
+                 RemovePacketMirroringRuleRequest const& request) {
+        return child_->AsyncRemovePacketMirroringRule(
+            cq, std::move(rest_context), std::move(options), request);
+      },
+      cq, std::move(rest_context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworkFirewallPoliciesRestLogging::RemovePacketMirroringRule(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::network_firewall_policies::v1::
+        RemovePacketMirroringRuleRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::network_firewall_policies::v1::
+                 RemovePacketMirroringRuleRequest const& request) {
+        return child_->RemovePacketMirroringRule(rest_context, options,
+                                                 request);
       },
       rest_context, options, request, __func__, tracing_options_);
 }

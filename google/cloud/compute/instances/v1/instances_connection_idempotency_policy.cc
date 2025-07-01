@@ -145,6 +145,12 @@ Idempotency InstancesConnectionIdempotencyPolicy::RemoveResourcePolicies(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency InstancesConnectionIdempotencyPolicy::ReportHostAsFaulty(
+    google::cloud::cpp::compute::instances::v1::
+        ReportHostAsFaultyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency InstancesConnectionIdempotencyPolicy::Reset(
     google::cloud::cpp::compute::instances::v1::ResetRequest const&) {
   return Idempotency::kNonIdempotent;

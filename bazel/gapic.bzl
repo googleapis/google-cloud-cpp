@@ -14,7 +14,7 @@
 
 """A definition for the typical C++ GAPIC library."""
 
-def cc_gapic_library(name, service_dirs = [], googleapis_deps = []):
+def cc_gapic_library(name, service_dirs = [], googleapis_deps = [], additional_deps = []):
     """Defines targets for the typical fully generated GAPIC library
 
     Args:
@@ -63,7 +63,7 @@ def cc_gapic_library(name, service_dirs = [], googleapis_deps = []):
         srcs = [":srcs"],
         hdrs = [":hdrs"],
         visibility = ["//:__pkg__"],
-        deps = ["//:common", "//:grpc_utils"] + googleapis_deps,
+        deps = ["//:common", "//:grpc_utils"] + googleapis_deps + additional_deps,
     )
 
     native.cc_library(

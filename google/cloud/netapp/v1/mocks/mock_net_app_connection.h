@@ -178,6 +178,47 @@ class MockNetAppConnection : public netapp_v1::NetAppConnection {
   /// using ::testing::_;
   /// using ::testing::Matcher;
   /// EXPECT_CALL(*mock,
+  /// ValidateDirectoryService(Matcher<google::cloud::netapp::v1::ValidateDirectoryServiceRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>,
+              ValidateDirectoryService,
+              (google::cloud::netapp::v1::ValidateDirectoryServiceRequest const&
+                   request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, ValidateDirectoryService(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              ValidateDirectoryService,
+              (NoAwaitTag,
+               google::cloud::netapp::v1::ValidateDirectoryServiceRequest const&
+                   request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ValidateDirectoryService(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>,
+              ValidateDirectoryService,
+              (google::longrunning::Operation const& operation), (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
   /// SwitchActiveReplicaZone(Matcher<google::cloud::netapp::v1::SwitchActiveReplicaZoneRequest
   /// const&>(_)))
   /// @endcode
@@ -1026,6 +1067,83 @@ class MockNetAppConnection : public netapp_v1::NetAppConnection {
   /// using ::testing::_;
   /// using ::testing::Matcher;
   /// EXPECT_CALL(*mock,
+  /// EstablishPeering(Matcher<google::cloud::netapp::v1::EstablishPeeringRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::netapp::v1::Replication>>,
+      EstablishPeering,
+      (google::cloud::netapp::v1::EstablishPeeringRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, EstablishPeering(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, EstablishPeering,
+      (NoAwaitTag,
+       google::cloud::netapp::v1::EstablishPeeringRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, EstablishPeering(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::netapp::v1::Replication>>,
+              EstablishPeering,
+              (google::longrunning::Operation const& operation), (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// SyncReplication(Matcher<google::cloud::netapp::v1::SyncReplicationRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::netapp::v1::Replication>>, SyncReplication,
+      (google::cloud::netapp::v1::SyncReplicationRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, SyncReplication(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, SyncReplication,
+      (NoAwaitTag,
+       google::cloud::netapp::v1::SyncReplicationRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, SyncReplication(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::netapp::v1::Replication>>,
+              SyncReplication,
+              (google::longrunning::Operation const& operation), (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
   /// CreateBackupVault(Matcher<google::cloud::netapp::v1::CreateBackupVaultRequest
   /// const&>(_)))
   /// @endcode
@@ -1386,6 +1504,130 @@ class MockNetAppConnection : public netapp_v1::NetAppConnection {
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>,
               DeleteBackupPolicy,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD((StreamRange<google::cloud::netapp::v1::QuotaRule>),
+              ListQuotaRules,
+              (google::cloud::netapp::v1::ListQuotaRulesRequest request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::netapp::v1::QuotaRule>, GetQuotaRule,
+              (google::cloud::netapp::v1::GetQuotaRuleRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateQuotaRule(Matcher<google::cloud::netapp::v1::CreateQuotaRuleRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::netapp::v1::QuotaRule>>, CreateQuotaRule,
+      (google::cloud::netapp::v1::CreateQuotaRuleRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateQuotaRule(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateQuotaRule,
+      (NoAwaitTag,
+       google::cloud::netapp::v1::CreateQuotaRuleRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CreateQuotaRule(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::netapp::v1::QuotaRule>>,
+              CreateQuotaRule,
+              (google::longrunning::Operation const& operation), (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateQuotaRule(Matcher<google::cloud::netapp::v1::UpdateQuotaRuleRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::netapp::v1::QuotaRule>>, UpdateQuotaRule,
+      (google::cloud::netapp::v1::UpdateQuotaRuleRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateQuotaRule(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateQuotaRule,
+      (NoAwaitTag,
+       google::cloud::netapp::v1::UpdateQuotaRuleRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, UpdateQuotaRule(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::netapp::v1::QuotaRule>>,
+              UpdateQuotaRule,
+              (google::longrunning::Operation const& operation), (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteQuotaRule(Matcher<google::cloud::netapp::v1::DeleteQuotaRuleRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>,
+      DeleteQuotaRule,
+      (google::cloud::netapp::v1::DeleteQuotaRuleRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteQuotaRule(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteQuotaRule,
+      (NoAwaitTag,
+       google::cloud::netapp::v1::DeleteQuotaRuleRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, DeleteQuotaRule(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>,
+              DeleteQuotaRule,
               (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,

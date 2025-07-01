@@ -18,7 +18,6 @@
 #include "google/cloud/testing_util/mock_rest_client.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
-#include <vector>
 
 namespace google {
 namespace cloud {
@@ -41,6 +40,7 @@ using ::testing::ElementsAre;
 using ::testing::Eq;
 using ::testing::HasSubstr;
 using ::testing::Matcher;
+using ::testing::Not;
 using ::testing::Pair;
 using ::testing::ResultOf;
 using ::testing::Return;
@@ -144,6 +144,31 @@ Matcher<std::vector<absl::Span<char const>> const&> ExpectedPayload() {
   return An<std::vector<absl::Span<char const>> const&>();
 }
 
+TEST(RestStubTest, GlobalCustomHeadersAppearInRequestTest) {
+  google::cloud::Options global_opts;
+  global_opts.set<google::cloud::CustomHeadersOption>(
+      {{"custom-header-1", "value1"}, {"custom-header-2", "value2"}});
+  auto mock_client = std::make_shared<MockRestClient>();
+  EXPECT_CALL(*mock_client, Get(_, _))
+      .WillOnce([](google::cloud::rest_internal::RestContext&,
+                   google::cloud::rest_internal::RestRequest const& request) {
+        auto const& headers = request.headers();
+        EXPECT_THAT(headers,
+                    Contains(Pair("custom-header-1",
+                                  std::vector<std::string>{"value1"})));
+        EXPECT_THAT(headers,
+                    Contains(Pair("custom-header-2",
+                                  std::vector<std::string>{"value2"})));
+
+        return PermanentError();
+      });
+  auto stub = std::make_unique<RestStub>(global_opts, mock_client, mock_client);
+  ListObjectsRequest list_req("test_bucket");
+  RestContext context(global_opts);
+  auto result = stub->ListObjects(context, global_opts, list_req);
+  EXPECT_FALSE(result.ok());
+}
+
 TEST(RestStubTest, ListBuckets) {
   auto mock = std::make_shared<MockRestClient>();
   EXPECT_CALL(*mock, Get(ExpectedContext(), ExpectedRequest()))
@@ -167,6 +192,42 @@ TEST(RestStubTest, CreateBucket) {
       tested->CreateBucket(context, TestOptions(), CreateBucketRequest());
   EXPECT_THAT(status,
               StatusIs(PermanentError().code(), PermanentError().message()));
+}
+
+TEST(RestStubTest, ListBucketsIncludesPageTokenWhenPresentInRequest) {
+  auto mock = std::make_shared<MockRestClient>();
+  std::string expected_token = "test-page-token";
+  ListBucketsRequest request("test-project-id");
+  request.set_page_token(expected_token);
+
+  EXPECT_CALL(*mock,
+              Get(ExpectedContext(),
+                  ResultOf(
+                      "request parameters contain 'pageToken'",
+                      [](RestRequest const& r) { return r.parameters(); },
+                      Contains(Pair("pageToken", expected_token)))))
+      .WillOnce(Return(PermanentError()));
+
+  auto tested = std::make_unique<RestStub>(Options{}, mock, mock);
+  auto context = TestContext();
+  tested->ListBuckets(context, TestOptions(), request);
+}
+
+TEST(RestStubTest, ListBucketsOmitsPageTokenWhenEmptyInRequest) {
+  auto mock = std::make_shared<MockRestClient>();
+  ListBucketsRequest request("test-project-id");
+
+  EXPECT_CALL(*mock,
+              Get(ExpectedContext(),
+                  ResultOf(
+                      "request parameters do not contain 'pageToken'",
+                      [](RestRequest const& r) { return r.parameters(); },
+                      Not(Contains(Pair("pageToken", _))))))
+      .WillOnce(Return(PermanentError()));
+
+  auto tested = std::make_unique<RestStub>(Options{}, mock, mock);
+  auto context = TestContext();
+  tested->ListBuckets(context, TestOptions(), request);
 }
 
 TEST(RestStubTest, GetBucketMetadata) {
@@ -359,6 +420,18 @@ TEST(RestStubTest, UpdateObject) {
   auto context = TestContext();
   auto status =
       tested->UpdateObject(context, TestOptions(), UpdateObjectRequest());
+  EXPECT_THAT(status,
+              StatusIs(PermanentError().code(), PermanentError().message()));
+}
+
+TEST(RestStubTest, MoveObject) {
+  auto mock = std::make_shared<MockRestClient>();
+  EXPECT_CALL(*mock,
+              Post(ExpectedContext(), ExpectedRequest(), ExpectedPayload()))
+      .WillOnce(Return(PermanentError()));
+  auto tested = std::make_unique<RestStub>(Options{}, mock, mock);
+  auto context = TestContext();
+  auto status = tested->MoveObject(context, TestOptions(), MoveObjectRequest());
   EXPECT_THAT(status,
               StatusIs(PermanentError().code(), PermanentError().message()));
 }

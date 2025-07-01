@@ -316,6 +316,35 @@ class ContactCenterInsightsTracingStub : public ContactCenterInsightsStub {
       google::cloud::contactcenterinsights::v1::UpdateSettingsRequest const&
           request) override;
 
+  StatusOr<google::cloud::contactcenterinsights::v1::AnalysisRule>
+  CreateAnalysisRule(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::contactcenterinsights::v1::CreateAnalysisRuleRequest const&
+          request) override;
+
+  StatusOr<google::cloud::contactcenterinsights::v1::AnalysisRule>
+  GetAnalysisRule(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::contactcenterinsights::v1::GetAnalysisRuleRequest const&
+          request) override;
+
+  StatusOr<google::cloud::contactcenterinsights::v1::ListAnalysisRulesResponse>
+  ListAnalysisRules(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::contactcenterinsights::v1::ListAnalysisRulesRequest const&
+          request) override;
+
+  StatusOr<google::cloud::contactcenterinsights::v1::AnalysisRule>
+  UpdateAnalysisRule(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::contactcenterinsights::v1::UpdateAnalysisRuleRequest const&
+          request) override;
+
+  Status DeleteAnalysisRule(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::contactcenterinsights::v1::DeleteAnalysisRuleRequest const&
+          request) override;
+
   StatusOr<google::cloud::contactcenterinsights::v1::EncryptionSpec>
   GetEncryptionSpec(
       grpc::ClientContext& context, Options const& options,
@@ -359,6 +388,183 @@ class ContactCenterInsightsTracingStub : public ContactCenterInsightsStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::contactcenterinsights::v1::DeleteViewRequest const&
           request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncQueryMetrics(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::contactcenterinsights::v1::QueryMetricsRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> QueryMetrics(
+      grpc::ClientContext& context, Options options,
+      google::cloud::contactcenterinsights::v1::QueryMetricsRequest const&
+          request) override;
+
+  StatusOr<google::cloud::contactcenterinsights::v1::QaQuestion>
+  CreateQaQuestion(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::contactcenterinsights::v1::CreateQaQuestionRequest const&
+          request) override;
+
+  StatusOr<google::cloud::contactcenterinsights::v1::QaQuestion> GetQaQuestion(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::contactcenterinsights::v1::GetQaQuestionRequest const&
+          request) override;
+
+  StatusOr<google::cloud::contactcenterinsights::v1::QaQuestion>
+  UpdateQaQuestion(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::contactcenterinsights::v1::UpdateQaQuestionRequest const&
+          request) override;
+
+  Status DeleteQaQuestion(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::contactcenterinsights::v1::DeleteQaQuestionRequest const&
+          request) override;
+
+  StatusOr<google::cloud::contactcenterinsights::v1::ListQaQuestionsResponse>
+  ListQaQuestions(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::contactcenterinsights::v1::ListQaQuestionsRequest const&
+          request) override;
+
+  StatusOr<google::cloud::contactcenterinsights::v1::QaScorecard>
+  CreateQaScorecard(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::contactcenterinsights::v1::CreateQaScorecardRequest const&
+          request) override;
+
+  StatusOr<google::cloud::contactcenterinsights::v1::QaScorecard>
+  GetQaScorecard(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::contactcenterinsights::v1::GetQaScorecardRequest const&
+          request) override;
+
+  StatusOr<google::cloud::contactcenterinsights::v1::QaScorecard>
+  UpdateQaScorecard(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::contactcenterinsights::v1::UpdateQaScorecardRequest const&
+          request) override;
+
+  Status DeleteQaScorecard(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::contactcenterinsights::v1::DeleteQaScorecardRequest const&
+          request) override;
+
+  StatusOr<google::cloud::contactcenterinsights::v1::ListQaScorecardsResponse>
+  ListQaScorecards(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::contactcenterinsights::v1::ListQaScorecardsRequest const&
+          request) override;
+
+  StatusOr<google::cloud::contactcenterinsights::v1::QaScorecardRevision>
+  CreateQaScorecardRevision(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::contactcenterinsights::v1::
+          CreateQaScorecardRevisionRequest const& request) override;
+
+  StatusOr<google::cloud::contactcenterinsights::v1::QaScorecardRevision>
+  GetQaScorecardRevision(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::contactcenterinsights::v1::
+          GetQaScorecardRevisionRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncTuneQaScorecardRevision(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::contactcenterinsights::v1::
+          TuneQaScorecardRevisionRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> TuneQaScorecardRevision(
+      grpc::ClientContext& context, Options options,
+      google::cloud::contactcenterinsights::v1::
+          TuneQaScorecardRevisionRequest const& request) override;
+
+  StatusOr<google::cloud::contactcenterinsights::v1::QaScorecardRevision>
+  DeployQaScorecardRevision(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::contactcenterinsights::v1::
+          DeployQaScorecardRevisionRequest const& request) override;
+
+  StatusOr<google::cloud::contactcenterinsights::v1::QaScorecardRevision>
+  UndeployQaScorecardRevision(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::contactcenterinsights::v1::
+          UndeployQaScorecardRevisionRequest const& request) override;
+
+  Status DeleteQaScorecardRevision(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::contactcenterinsights::v1::
+          DeleteQaScorecardRevisionRequest const& request) override;
+
+  StatusOr<google::cloud::contactcenterinsights::v1::
+               ListQaScorecardRevisionsResponse>
+  ListQaScorecardRevisions(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::contactcenterinsights::v1::
+          ListQaScorecardRevisionsRequest const& request) override;
+
+  StatusOr<google::cloud::contactcenterinsights::v1::FeedbackLabel>
+  CreateFeedbackLabel(grpc::ClientContext& context, Options const& options,
+                      google::cloud::contactcenterinsights::v1::
+                          CreateFeedbackLabelRequest const& request) override;
+
+  StatusOr<google::cloud::contactcenterinsights::v1::ListFeedbackLabelsResponse>
+  ListFeedbackLabels(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::contactcenterinsights::v1::ListFeedbackLabelsRequest const&
+          request) override;
+
+  StatusOr<google::cloud::contactcenterinsights::v1::FeedbackLabel>
+  GetFeedbackLabel(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::contactcenterinsights::v1::GetFeedbackLabelRequest const&
+          request) override;
+
+  StatusOr<google::cloud::contactcenterinsights::v1::FeedbackLabel>
+  UpdateFeedbackLabel(grpc::ClientContext& context, Options const& options,
+                      google::cloud::contactcenterinsights::v1::
+                          UpdateFeedbackLabelRequest const& request) override;
+
+  Status DeleteFeedbackLabel(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::contactcenterinsights::v1::
+          DeleteFeedbackLabelRequest const& request) override;
+
+  StatusOr<
+      google::cloud::contactcenterinsights::v1::ListAllFeedbackLabelsResponse>
+  ListAllFeedbackLabels(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::contactcenterinsights::v1::
+          ListAllFeedbackLabelsRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncBulkUploadFeedbackLabels(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::contactcenterinsights::v1::
+          BulkUploadFeedbackLabelsRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> BulkUploadFeedbackLabels(
+      grpc::ClientContext& context, Options options,
+      google::cloud::contactcenterinsights::v1::
+          BulkUploadFeedbackLabelsRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncBulkDownloadFeedbackLabels(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::contactcenterinsights::v1::
+          BulkDownloadFeedbackLabelsRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> BulkDownloadFeedbackLabels(
+      grpc::ClientContext& context, Options options,
+      google::cloud::contactcenterinsights::v1::
+          BulkDownloadFeedbackLabelsRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
       grpc::ClientContext& context, Options const& options,

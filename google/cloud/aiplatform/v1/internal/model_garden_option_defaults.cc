@@ -54,6 +54,18 @@ Options ModelGardenServiceDefaultOptions(std::string const& location,
             std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
+  if (!options.has<aiplatform_v1::ModelGardenServicePollingPolicyOption>()) {
+    options.set<aiplatform_v1::ModelGardenServicePollingPolicyOption>(
+        GenericPollingPolicy<
+            aiplatform_v1::ModelGardenServiceRetryPolicyOption::Type,
+            aiplatform_v1::ModelGardenServiceBackoffPolicyOption::Type>(
+            options.get<aiplatform_v1::ModelGardenServiceRetryPolicyOption>()
+                ->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
+  }
   if (!options.has<aiplatform_v1::
                        ModelGardenServiceConnectionIdempotencyPolicyOption>()) {
     options.set<

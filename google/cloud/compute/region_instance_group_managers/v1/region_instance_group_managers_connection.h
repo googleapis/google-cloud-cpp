@@ -374,6 +374,17 @@ class RegionInstanceGroupManagersConnection {
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  ResumeInstances(google::cloud::cpp::compute::region_instance_group_managers::
+                      v1::ResumeInstancesRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> ResumeInstances(
+      NoAwaitTag, google::cloud::cpp::compute::region_instance_group_managers::
+                      v1::ResumeInstancesRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  ResumeInstances(google::cloud::cpp::compute::v1::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetInstanceTemplate(
       google::cloud::cpp::compute::region_instance_group_managers::v1::
           SetInstanceTemplateRequest const& request);
@@ -397,6 +408,39 @@ class RegionInstanceGroupManagersConnection {
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetTargetPools(google::cloud::cpp::compute::v1::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  StartInstances(google::cloud::cpp::compute::region_instance_group_managers::
+                     v1::StartInstancesRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> StartInstances(
+      NoAwaitTag, google::cloud::cpp::compute::region_instance_group_managers::
+                      v1::StartInstancesRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  StartInstances(google::cloud::cpp::compute::v1::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  StopInstances(google::cloud::cpp::compute::region_instance_group_managers::
+                    v1::StopInstancesRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> StopInstances(
+      NoAwaitTag, google::cloud::cpp::compute::region_instance_group_managers::
+                      v1::StopInstancesRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  StopInstances(google::cloud::cpp::compute::v1::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SuspendInstances(google::cloud::cpp::compute::region_instance_group_managers::
+                       v1::SuspendInstancesRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SuspendInstances(
+      NoAwaitTag, google::cloud::cpp::compute::region_instance_group_managers::
+                      v1::SuspendInstancesRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SuspendInstances(google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   UpdatePerInstanceConfigs(

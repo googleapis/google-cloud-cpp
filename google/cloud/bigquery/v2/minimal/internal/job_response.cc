@@ -37,7 +37,7 @@ bool valid_list_format_job(nlohmann::json const& j) {
 }
 
 bool valid_jobs_list(nlohmann::json const& j) {
-  return (j.contains("kind") && j.contains("etag") && j.contains("jobs"));
+  return (j.contains("kind") && j.contains("etag"));
 }
 
 StatusOr<nlohmann::json> parse_json(std::string const& payload) {
@@ -95,9 +95,16 @@ StatusOr<ListJobsResponse> ListJobsResponse::BuildFromHttpResponse(
 
   ListJobsResponse result;
   result.http_response = http_response;
-
   result.kind = json->value("kind", "");
   result.etag = json->value("etag", "");
+
+  if (!(*json).contains("jobs")) {
+    // For accounts with no jobs, "jobs" json key will not be returned.
+    // Only "kind" and "etag" keys are returned. Since the server returns
+    // a 200 in this case, we need to do the same.
+    return result;
+  }
+
   result.next_page_token = json->value("nextPageToken", "");
 
   for (auto const& kv : json->at("jobs").items()) {

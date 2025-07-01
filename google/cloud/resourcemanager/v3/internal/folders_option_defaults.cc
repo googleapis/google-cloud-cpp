@@ -19,6 +19,7 @@
 #include "google/cloud/resourcemanager/v3/internal/folders_option_defaults.h"
 #include "google/cloud/resourcemanager/v3/folders_connection.h"
 #include "google/cloud/resourcemanager/v3/folders_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
@@ -33,11 +34,13 @@ namespace {
 auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
-Options FoldersDefaultOptions(Options options) {
+Options FoldersDefaultOptions(std::string const& location, Options options) {
   options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_FOLDERS_ENDPOINT", "",
       "GOOGLE_CLOUD_CPP_FOLDERS_AUTHORITY",
-      "cloudresourcemanager.googleapis.com");
+      // optional location tag for generating docs
+      absl::StrCat(location, location.empty() ? "" : "-",
+                   "cloudresourcemanager.googleapis.com"));
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<resourcemanager_v3::FoldersRetryPolicyOption>()) {
     options.set<resourcemanager_v3::FoldersRetryPolicyOption>(

@@ -165,6 +165,21 @@ HubServiceLogging::ListHubSpokes(
       context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::networkconnectivity::v1::QueryHubStatusResponse>
+HubServiceLogging::QueryHubStatus(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networkconnectivity::v1::QueryHubStatusRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::networkconnectivity::v1::QueryHubStatusRequest const&
+              request) {
+        return child_->QueryHubStatus(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::networkconnectivity::v1::ListSpokesResponse>
 HubServiceLogging::ListSpokes(
     grpc::ClientContext& context, Options const& options,
@@ -324,6 +339,72 @@ StatusOr<google::longrunning::Operation> HubServiceLogging::AcceptHubSpoke(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+HubServiceLogging::AsyncAcceptSpokeUpdate(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkconnectivity::v1::AcceptSpokeUpdateRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::networkconnectivity::v1::
+                 AcceptSpokeUpdateRequest const& request) {
+        return child_->AsyncAcceptSpokeUpdate(cq, std::move(context),
+                                              std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> HubServiceLogging::AcceptSpokeUpdate(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkconnectivity::v1::AcceptSpokeUpdateRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::networkconnectivity::v1::
+                 AcceptSpokeUpdateRequest const& request) {
+        return child_->AcceptSpokeUpdate(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+HubServiceLogging::AsyncRejectSpokeUpdate(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkconnectivity::v1::RejectSpokeUpdateRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::networkconnectivity::v1::
+                 RejectSpokeUpdateRequest const& request) {
+        return child_->AsyncRejectSpokeUpdate(cq, std::move(context),
+                                              std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> HubServiceLogging::RejectSpokeUpdate(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkconnectivity::v1::RejectSpokeUpdateRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::networkconnectivity::v1::
+                 RejectSpokeUpdateRequest const& request) {
+        return child_->RejectSpokeUpdate(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 HubServiceLogging::AsyncDeleteSpoke(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -431,6 +512,37 @@ HubServiceLogging::ListGroups(
              google::cloud::networkconnectivity::v1::ListGroupsRequest const&
                  request) {
         return child_->ListGroups(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+HubServiceLogging::AsyncUpdateGroup(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkconnectivity::v1::UpdateGroupRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::networkconnectivity::v1::UpdateGroupRequest const&
+                 request) {
+        return child_->AsyncUpdateGroup(cq, std::move(context),
+                                        std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> HubServiceLogging::UpdateGroup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkconnectivity::v1::UpdateGroupRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::networkconnectivity::v1::UpdateGroupRequest const&
+                 request) {
+        return child_->UpdateGroup(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }

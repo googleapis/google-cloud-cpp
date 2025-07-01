@@ -92,6 +92,20 @@ class NetAppConnectionImpl : public netapp_v1::NetAppConnection {
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
   DeleteStoragePool(google::longrunning::Operation const& operation) override;
 
+  future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
+  ValidateDirectoryService(
+      google::cloud::netapp::v1::ValidateDirectoryServiceRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> ValidateDirectoryService(
+      NoAwaitTag,
+      google::cloud::netapp::v1::ValidateDirectoryServiceRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
+  ValidateDirectoryService(
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::netapp::v1::StoragePool>>
   SwitchActiveReplicaZone(
       google::cloud::netapp::v1::SwitchActiveReplicaZoneRequest const& request)
@@ -373,6 +387,30 @@ class NetAppConnectionImpl : public netapp_v1::NetAppConnection {
   ReverseReplicationDirection(
       google::longrunning::Operation const& operation) override;
 
+  future<StatusOr<google::cloud::netapp::v1::Replication>> EstablishPeering(
+      google::cloud::netapp::v1::EstablishPeeringRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> EstablishPeering(
+      NoAwaitTag,
+      google::cloud::netapp::v1::EstablishPeeringRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::netapp::v1::Replication>> EstablishPeering(
+      google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::netapp::v1::Replication>> SyncReplication(
+      google::cloud::netapp::v1::SyncReplicationRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> SyncReplication(
+      NoAwaitTag,
+      google::cloud::netapp::v1::SyncReplicationRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::netapp::v1::Replication>> SyncReplication(
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::netapp::v1::BackupVault>> CreateBackupVault(
       google::cloud::netapp::v1::CreateBackupVaultRequest const& request)
       override;
@@ -493,6 +531,48 @@ class NetAppConnectionImpl : public netapp_v1::NetAppConnection {
 
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
   DeleteBackupPolicy(google::longrunning::Operation const& operation) override;
+
+  StreamRange<google::cloud::netapp::v1::QuotaRule> ListQuotaRules(
+      google::cloud::netapp::v1::ListQuotaRulesRequest request) override;
+
+  StatusOr<google::cloud::netapp::v1::QuotaRule> GetQuotaRule(
+      google::cloud::netapp::v1::GetQuotaRuleRequest const& request) override;
+
+  future<StatusOr<google::cloud::netapp::v1::QuotaRule>> CreateQuotaRule(
+      google::cloud::netapp::v1::CreateQuotaRuleRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CreateQuotaRule(
+      NoAwaitTag,
+      google::cloud::netapp::v1::CreateQuotaRuleRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::netapp::v1::QuotaRule>> CreateQuotaRule(
+      google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::netapp::v1::QuotaRule>> UpdateQuotaRule(
+      google::cloud::netapp::v1::UpdateQuotaRuleRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UpdateQuotaRule(
+      NoAwaitTag,
+      google::cloud::netapp::v1::UpdateQuotaRuleRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::netapp::v1::QuotaRule>> UpdateQuotaRule(
+      google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
+  DeleteQuotaRule(google::cloud::netapp::v1::DeleteQuotaRuleRequest const&
+                      request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteQuotaRule(
+      NoAwaitTag,
+      google::cloud::netapp::v1::DeleteQuotaRuleRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
+  DeleteQuotaRule(google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request) override;

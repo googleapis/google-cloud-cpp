@@ -69,6 +69,12 @@ Idempotency ReservationsConnectionIdempotencyPolicy::ListReservations(
   return Idempotency::kIdempotent;
 }
 
+Idempotency ReservationsConnectionIdempotencyPolicy::PerformMaintenance(
+    google::cloud::cpp::compute::reservations::v1::
+        PerformMaintenanceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency ReservationsConnectionIdempotencyPolicy::Resize(
     google::cloud::cpp::compute::reservations::v1::ResizeRequest const&) {
   return Idempotency::kNonIdempotent;

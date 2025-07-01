@@ -121,7 +121,7 @@ class ServiceHealthClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.servicehealth.v1.Event]: @googleapis_reference_link{google/cloud/servicehealth/v1/event_resources.proto#L38}
-  /// [google.cloud.servicehealth.v1.ListEventsRequest]: @googleapis_reference_link{google/cloud/servicehealth/v1/event_resources.proto#L454}
+  /// [google.cloud.servicehealth.v1.ListEventsRequest]: @googleapis_reference_link{google/cloud/servicehealth/v1/event_resources.proto#L458}
   ///
   // clang-format on
   StreamRange<google::cloud::servicehealth::v1::Event> ListEvents(
@@ -160,7 +160,7 @@ class ServiceHealthClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.servicehealth.v1.Event]: @googleapis_reference_link{google/cloud/servicehealth/v1/event_resources.proto#L38}
-  /// [google.cloud.servicehealth.v1.ListEventsRequest]: @googleapis_reference_link{google/cloud/servicehealth/v1/event_resources.proto#L454}
+  /// [google.cloud.servicehealth.v1.ListEventsRequest]: @googleapis_reference_link{google/cloud/servicehealth/v1/event_resources.proto#L458}
   ///
   // clang-format on
   StreamRange<google::cloud::servicehealth::v1::Event> ListEvents(
@@ -192,7 +192,7 @@ class ServiceHealthClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.servicehealth.v1.Event]: @googleapis_reference_link{google/cloud/servicehealth/v1/event_resources.proto#L38}
-  /// [google.cloud.servicehealth.v1.GetEventRequest]: @googleapis_reference_link{google/cloud/servicehealth/v1/event_resources.proto#L520}
+  /// [google.cloud.servicehealth.v1.GetEventRequest]: @googleapis_reference_link{google/cloud/servicehealth/v1/event_resources.proto#L526}
   ///
   // clang-format on
   StatusOr<google::cloud::servicehealth::v1::Event> GetEvent(
@@ -222,7 +222,7 @@ class ServiceHealthClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.servicehealth.v1.Event]: @googleapis_reference_link{google/cloud/servicehealth/v1/event_resources.proto#L38}
-  /// [google.cloud.servicehealth.v1.GetEventRequest]: @googleapis_reference_link{google/cloud/servicehealth/v1/event_resources.proto#L520}
+  /// [google.cloud.servicehealth.v1.GetEventRequest]: @googleapis_reference_link{google/cloud/servicehealth/v1/event_resources.proto#L526}
   ///
   // clang-format on
   StatusOr<google::cloud::servicehealth::v1::Event> GetEvent(
@@ -265,7 +265,7 @@ class ServiceHealthClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.servicehealth.v1.ListOrganizationEventsRequest]: @googleapis_reference_link{google/cloud/servicehealth/v1/event_resources.proto#L536}
+  /// [google.cloud.servicehealth.v1.ListOrganizationEventsRequest]: @googleapis_reference_link{google/cloud/servicehealth/v1/event_resources.proto#L543}
   /// [google.cloud.servicehealth.v1.OrganizationEvent]: @googleapis_reference_link{google/cloud/servicehealth/v1/event_resources.proto#L211}
   ///
   // clang-format on
@@ -304,7 +304,7 @@ class ServiceHealthClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.servicehealth.v1.ListOrganizationEventsRequest]: @googleapis_reference_link{google/cloud/servicehealth/v1/event_resources.proto#L536}
+  /// [google.cloud.servicehealth.v1.ListOrganizationEventsRequest]: @googleapis_reference_link{google/cloud/servicehealth/v1/event_resources.proto#L543}
   /// [google.cloud.servicehealth.v1.OrganizationEvent]: @googleapis_reference_link{google/cloud/servicehealth/v1/event_resources.proto#L211}
   ///
   // clang-format on
@@ -340,7 +340,7 @@ class ServiceHealthClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.servicehealth.v1.GetOrganizationEventRequest]: @googleapis_reference_link{google/cloud/servicehealth/v1/event_resources.proto#L608}
+  /// [google.cloud.servicehealth.v1.GetOrganizationEventRequest]: @googleapis_reference_link{google/cloud/servicehealth/v1/event_resources.proto#L617}
   /// [google.cloud.servicehealth.v1.OrganizationEvent]: @googleapis_reference_link{google/cloud/servicehealth/v1/event_resources.proto#L211}
   ///
   // clang-format on
@@ -371,7 +371,7 @@ class ServiceHealthClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.servicehealth.v1.GetOrganizationEventRequest]: @googleapis_reference_link{google/cloud/servicehealth/v1/event_resources.proto#L608}
+  /// [google.cloud.servicehealth.v1.GetOrganizationEventRequest]: @googleapis_reference_link{google/cloud/servicehealth/v1/event_resources.proto#L617}
   /// [google.cloud.servicehealth.v1.OrganizationEvent]: @googleapis_reference_link{google/cloud/servicehealth/v1/event_resources.proto#L211}
   ///
   // clang-format on
@@ -415,8 +415,8 @@ class ServiceHealthClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.servicehealth.v1.ListOrganizationImpactsRequest]: @googleapis_reference_link{google/cloud/servicehealth/v1/event_resources.proto#L627}
-  /// [google.cloud.servicehealth.v1.OrganizationImpact]: @googleapis_reference_link{google/cloud/servicehealth/v1/event_resources.proto#L403}
+  /// [google.cloud.servicehealth.v1.ListOrganizationImpactsRequest]: @googleapis_reference_link{google/cloud/servicehealth/v1/event_resources.proto#L636}
+  /// [google.cloud.servicehealth.v1.OrganizationImpact]: @googleapis_reference_link{google/cloud/servicehealth/v1/event_resources.proto#L406}
   ///
   // clang-format on
   StreamRange<google::cloud::servicehealth::v1::OrganizationImpact>
@@ -455,8 +455,8 @@ class ServiceHealthClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.servicehealth.v1.ListOrganizationImpactsRequest]: @googleapis_reference_link{google/cloud/servicehealth/v1/event_resources.proto#L627}
-  /// [google.cloud.servicehealth.v1.OrganizationImpact]: @googleapis_reference_link{google/cloud/servicehealth/v1/event_resources.proto#L403}
+  /// [google.cloud.servicehealth.v1.ListOrganizationImpactsRequest]: @googleapis_reference_link{google/cloud/servicehealth/v1/event_resources.proto#L636}
+  /// [google.cloud.servicehealth.v1.OrganizationImpact]: @googleapis_reference_link{google/cloud/servicehealth/v1/event_resources.proto#L406}
   ///
   // clang-format on
   StreamRange<google::cloud::servicehealth::v1::OrganizationImpact>
@@ -491,8 +491,8 @@ class ServiceHealthClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.servicehealth.v1.GetOrganizationImpactRequest]: @googleapis_reference_link{google/cloud/servicehealth/v1/event_resources.proto#L698}
-  /// [google.cloud.servicehealth.v1.OrganizationImpact]: @googleapis_reference_link{google/cloud/servicehealth/v1/event_resources.proto#L403}
+  /// [google.cloud.servicehealth.v1.GetOrganizationImpactRequest]: @googleapis_reference_link{google/cloud/servicehealth/v1/event_resources.proto#L710}
+  /// [google.cloud.servicehealth.v1.OrganizationImpact]: @googleapis_reference_link{google/cloud/servicehealth/v1/event_resources.proto#L406}
   ///
   // clang-format on
   StatusOr<google::cloud::servicehealth::v1::OrganizationImpact>
@@ -522,8 +522,8 @@ class ServiceHealthClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.servicehealth.v1.GetOrganizationImpactRequest]: @googleapis_reference_link{google/cloud/servicehealth/v1/event_resources.proto#L698}
-  /// [google.cloud.servicehealth.v1.OrganizationImpact]: @googleapis_reference_link{google/cloud/servicehealth/v1/event_resources.proto#L403}
+  /// [google.cloud.servicehealth.v1.GetOrganizationImpactRequest]: @googleapis_reference_link{google/cloud/servicehealth/v1/event_resources.proto#L710}
+  /// [google.cloud.servicehealth.v1.OrganizationImpact]: @googleapis_reference_link{google/cloud/servicehealth/v1/event_resources.proto#L406}
   ///
   // clang-format on
   StatusOr<google::cloud::servicehealth::v1::OrganizationImpact>

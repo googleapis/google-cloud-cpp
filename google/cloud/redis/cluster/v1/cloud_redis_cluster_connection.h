@@ -230,6 +230,65 @@ class CloudRedisClusterConnection {
       google::cloud::redis::cluster::v1::
           GetClusterCertificateAuthorityRequest const& request);
 
+  virtual future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
+  RescheduleClusterMaintenance(
+      google::cloud::redis::cluster::v1::
+          RescheduleClusterMaintenanceRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> RescheduleClusterMaintenance(
+      NoAwaitTag, google::cloud::redis::cluster::v1::
+                      RescheduleClusterMaintenanceRequest const& request);
+
+  virtual future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
+  RescheduleClusterMaintenance(google::longrunning::Operation const& operation);
+
+  virtual StreamRange<google::cloud::redis::cluster::v1::BackupCollection>
+  ListBackupCollections(
+      google::cloud::redis::cluster::v1::ListBackupCollectionsRequest request);
+
+  virtual StatusOr<google::cloud::redis::cluster::v1::BackupCollection>
+  GetBackupCollection(
+      google::cloud::redis::cluster::v1::GetBackupCollectionRequest const&
+          request);
+
+  virtual StreamRange<google::cloud::redis::cluster::v1::Backup> ListBackups(
+      google::cloud::redis::cluster::v1::ListBackupsRequest request);
+
+  virtual StatusOr<google::cloud::redis::cluster::v1::Backup> GetBackup(
+      google::cloud::redis::cluster::v1::GetBackupRequest const& request);
+
+  virtual future<StatusOr<google::protobuf::Any>> DeleteBackup(
+      google::cloud::redis::cluster::v1::DeleteBackupRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteBackup(
+      NoAwaitTag,
+      google::cloud::redis::cluster::v1::DeleteBackupRequest const& request);
+
+  virtual future<StatusOr<google::protobuf::Any>> DeleteBackup(
+      google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::redis::cluster::v1::Backup>>
+  ExportBackup(
+      google::cloud::redis::cluster::v1::ExportBackupRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> ExportBackup(
+      NoAwaitTag,
+      google::cloud::redis::cluster::v1::ExportBackupRequest const& request);
+
+  virtual future<StatusOr<google::cloud::redis::cluster::v1::Backup>>
+  ExportBackup(google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
+  BackupCluster(
+      google::cloud::redis::cluster::v1::BackupClusterRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> BackupCluster(
+      NoAwaitTag,
+      google::cloud::redis::cluster::v1::BackupClusterRequest const& request);
+
+  virtual future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
+  BackupCluster(google::longrunning::Operation const& operation);
+
   virtual StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request);
 

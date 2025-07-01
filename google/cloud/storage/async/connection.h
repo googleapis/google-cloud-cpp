@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_ASYNC_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_ASYNC_CONNECTION_H
 
+#include "google/cloud/storage/async/object_descriptor_connection.h"
 #include "google/cloud/storage/async/object_responses.h"
 #include "google/cloud/storage/async/write_payload.h"
 #include "google/cloud/storage/internal/object_requests.h"
@@ -76,6 +77,22 @@ class AsyncConnection {
       InsertObjectParams p) = 0;
 
   /**
+   * A thin wrapper around the `Open()` parameters.
+   *
+   * We use a single struct as the input parameter for this function to
+   * prevent breaking any mocks when additional parameters are needed.
+   */
+  struct OpenParams {
+    google::storage::v2::BidiReadObjectSpec read_spec;
+    Options options;
+  };
+
+  /// Open an object to perform multiple reads.
+  virtual future<StatusOr<
+      std::shared_ptr<storage_experimental::ObjectDescriptorConnection>>>
+  Open(OpenParams p) = 0;
+
+  /**
    * A thin wrapper around the `ReadObject()` parameters.
    *
    * We use a single struct as the input parameter for this function to
@@ -97,6 +114,28 @@ class AsyncConnection {
 
   /// Read a range from an object returning all the contents.
   virtual future<StatusOr<ReadPayload>> ReadObjectRange(ReadObjectParams p) = 0;
+
+  /**
+   * A thin wrapper around the `StartAppendableObjectUpload()` parameters for
+   * appendable object
+   */
+  struct AppendableUploadParams {
+    /// The bucket name and object name for the new object.
+    google::storage::v2::BidiWriteObjectRequest request;
+    /// Any options modifying the RPC behavior, including per-client and
+    /// per-connection options.
+    Options options;
+  };
+
+  /// Start an appendable upload configured for persistent sources.
+  virtual future<
+      StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
+  StartAppendableObjectUpload(AppendableUploadParams p) = 0;
+
+  /// Resume an appendable upload configured for persistent sources.
+  virtual future<
+      StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
+  ResumeAppendableObjectUpload(AppendableUploadParams p) = 0;
 
   /**
    * A thin wrapper around the `WriteObject()` parameters.

@@ -225,6 +225,70 @@ ReservationsClient::ListReservations(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ReservationsClient::PerformMaintenance(
+    std::string const& project, std::string const& zone,
+    std::string const& reservation,
+    google::cloud::cpp::compute::v1::
+        ReservationsPerformMaintenanceRequest const&
+            reservations_perform_maintenance_request_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::reservations::v1::PerformMaintenanceRequest
+      request;
+  request.set_project(project);
+  request.set_zone(zone);
+  request.set_reservation(reservation);
+  *request.mutable_reservations_perform_maintenance_request_resource() =
+      reservations_perform_maintenance_request_resource;
+  return connection_->PerformMaintenance(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ReservationsClient::PerformMaintenance(
+    NoAwaitTag, std::string const& project, std::string const& zone,
+    std::string const& reservation,
+    google::cloud::cpp::compute::v1::
+        ReservationsPerformMaintenanceRequest const&
+            reservations_perform_maintenance_request_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::reservations::v1::PerformMaintenanceRequest
+      request;
+  request.set_project(project);
+  request.set_zone(zone);
+  request.set_reservation(reservation);
+  *request.mutable_reservations_perform_maintenance_request_resource() =
+      reservations_perform_maintenance_request_resource;
+  return connection_->PerformMaintenance(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ReservationsClient::PerformMaintenance(
+    google::cloud::cpp::compute::reservations::v1::
+        PerformMaintenanceRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->PerformMaintenance(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ReservationsClient::PerformMaintenance(
+    NoAwaitTag,
+    google::cloud::cpp::compute::reservations::v1::
+        PerformMaintenanceRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->PerformMaintenance(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ReservationsClient::PerformMaintenance(
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->PerformMaintenance(operation);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ReservationsClient::Resize(
     std::string const& project, std::string const& zone,
     std::string const& reservation,

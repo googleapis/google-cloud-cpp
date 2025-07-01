@@ -666,10 +666,39 @@ StatusOr<google::storage::v2::RewriteObjectRequest> ToProto(
   return result;
 }
 
+StatusOr<google::storage::v2::MoveObjectRequest> ToProto(
+    storage::internal::MoveObjectRequest const& request) {
+  google::storage::v2::MoveObjectRequest result;
+  SetGenerationConditions(result, request);
+  SetMetagenerationConditions(result, request);
+  if (request.HasOption<storage::IfSourceGenerationMatch>()) {
+    result.set_if_source_generation_match(
+        request.GetOption<storage::IfSourceGenerationMatch>().value());
+  }
+  if (request.HasOption<storage::IfSourceGenerationNotMatch>()) {
+    result.set_if_source_generation_not_match(
+        request.GetOption<storage::IfSourceGenerationNotMatch>().value());
+  }
+  if (request.HasOption<storage::IfSourceMetagenerationMatch>()) {
+    result.set_if_source_metageneration_match(
+        request.GetOption<storage::IfSourceMetagenerationMatch>().value());
+  }
+  if (request.HasOption<storage::IfSourceMetagenerationNotMatch>()) {
+    result.set_if_source_metageneration_not_match(
+        request.GetOption<storage::IfSourceMetagenerationNotMatch>().value());
+  }
+  result.set_bucket(GrpcBucketIdToName(request.bucket_name()));
+  result.set_source_object(request.source_object_name());
+  result.set_destination_object(request.destination_object_name());
+
+  return result;
+}
+
 StatusOr<google::storage::v2::RestoreObjectRequest> ToProto(
     storage::internal::RestoreObjectRequest const& request) {
   google::storage::v2::RestoreObjectRequest result;
   auto status = SetCommonObjectParameters(result, request);
+  if (!status.ok()) return status;
 
   result.set_bucket(GrpcBucketIdToName(request.bucket_name()));
   result.set_object(request.object_name());

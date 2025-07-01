@@ -9,4 +9,5 @@
 @com_google_googleapis//google/rpc:status_proto
 @com_google_googleapis//google/type:date_proto
 @com_google_googleapis//google/type:interval_proto
+@com_google_googleapis//google/type:latlng_proto
 @com_google_googleapis//google/type:money_proto

@@ -57,6 +57,20 @@ class NetworkFirewallPoliciesRestMetadata
           AddAssociationRequest const& request) override;
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncAddPacketMirroringRule(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::network_firewall_policies::v1::
+          AddPacketMirroringRuleRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> AddPacketMirroringRule(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::network_firewall_policies::v1::
+          AddPacketMirroringRuleRequest const& request) override;
+
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncAddRule(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
@@ -69,6 +83,13 @@ class NetworkFirewallPoliciesRestMetadata
       Options const& options,
       google::cloud::cpp::compute::network_firewall_policies::v1::
           AddRuleRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::NetworkFirewallPolicyAggregatedList>
+  AggregatedListNetworkFirewallPolicies(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::network_firewall_policies::v1::
+          AggregatedListNetworkFirewallPoliciesRequest const& request) override;
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncCloneRules(
@@ -116,6 +137,13 @@ class NetworkFirewallPoliciesRestMetadata
       google::cloud::cpp::compute::network_firewall_policies::v1::
           GetIamPolicyRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::FirewallPolicyRule>
+  GetPacketMirroringRule(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::network_firewall_policies::v1::
+          GetPacketMirroringRuleRequest const& request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::FirewallPolicyRule> GetRule(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
@@ -158,6 +186,20 @@ class NetworkFirewallPoliciesRestMetadata
           PatchFirewallPolicyRequest const& request) override;
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncPatchPacketMirroringRule(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::network_firewall_policies::v1::
+          PatchPacketMirroringRuleRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchPacketMirroringRule(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::network_firewall_policies::v1::
+          PatchPacketMirroringRuleRequest const& request) override;
+
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncPatchRule(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
@@ -184,6 +226,21 @@ class NetworkFirewallPoliciesRestMetadata
       Options const& options,
       google::cloud::cpp::compute::network_firewall_policies::v1::
           RemoveAssociationRequest const& request) override;
+
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncRemovePacketMirroringRule(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::network_firewall_policies::v1::
+          RemovePacketMirroringRuleRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  RemovePacketMirroringRule(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::network_firewall_policies::v1::
+          RemovePacketMirroringRuleRequest const& request) override;
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncRemoveRule(

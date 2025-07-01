@@ -480,6 +480,19 @@ class NetworkServicesConnection {
   virtual future<StatusOr<google::cloud::networkservices::v1::ServiceBinding>>
   CreateServiceBinding(google::longrunning::Operation const& operation);
 
+  virtual future<StatusOr<google::cloud::networkservices::v1::ServiceBinding>>
+  UpdateServiceBinding(
+      google::cloud::networkservices::v1::UpdateServiceBindingRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateServiceBinding(
+      NoAwaitTag,
+      google::cloud::networkservices::v1::UpdateServiceBindingRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::networkservices::v1::ServiceBinding>>
+  UpdateServiceBinding(google::longrunning::Operation const& operation);
+
   virtual future<
       StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
   DeleteServiceBinding(
@@ -533,6 +546,74 @@ class NetworkServicesConnection {
   virtual future<
       StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
   DeleteMesh(google::longrunning::Operation const& operation);
+
+  virtual StreamRange<google::cloud::networkservices::v1::ServiceLbPolicy>
+  ListServiceLbPolicies(
+      google::cloud::networkservices::v1::ListServiceLbPoliciesRequest request);
+
+  virtual StatusOr<google::cloud::networkservices::v1::ServiceLbPolicy>
+  GetServiceLbPolicy(
+      google::cloud::networkservices::v1::GetServiceLbPolicyRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::networkservices::v1::ServiceLbPolicy>>
+  CreateServiceLbPolicy(
+      google::cloud::networkservices::v1::CreateServiceLbPolicyRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> CreateServiceLbPolicy(
+      NoAwaitTag,
+      google::cloud::networkservices::v1::CreateServiceLbPolicyRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::networkservices::v1::ServiceLbPolicy>>
+  CreateServiceLbPolicy(google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::networkservices::v1::ServiceLbPolicy>>
+  UpdateServiceLbPolicy(
+      google::cloud::networkservices::v1::UpdateServiceLbPolicyRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateServiceLbPolicy(
+      NoAwaitTag,
+      google::cloud::networkservices::v1::UpdateServiceLbPolicyRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::networkservices::v1::ServiceLbPolicy>>
+  UpdateServiceLbPolicy(google::longrunning::Operation const& operation);
+
+  virtual future<
+      StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+  DeleteServiceLbPolicy(
+      google::cloud::networkservices::v1::DeleteServiceLbPolicyRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteServiceLbPolicy(
+      NoAwaitTag,
+      google::cloud::networkservices::v1::DeleteServiceLbPolicyRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+  DeleteServiceLbPolicy(google::longrunning::Operation const& operation);
+
+  virtual StatusOr<google::cloud::networkservices::v1::GatewayRouteView>
+  GetGatewayRouteView(
+      google::cloud::networkservices::v1::GetGatewayRouteViewRequest const&
+          request);
+
+  virtual StatusOr<google::cloud::networkservices::v1::MeshRouteView>
+  GetMeshRouteView(
+      google::cloud::networkservices::v1::GetMeshRouteViewRequest const&
+          request);
+
+  virtual StreamRange<google::cloud::networkservices::v1::GatewayRouteView>
+  ListGatewayRouteViews(
+      google::cloud::networkservices::v1::ListGatewayRouteViewsRequest request);
+
+  virtual StreamRange<google::cloud::networkservices::v1::MeshRouteView>
+  ListMeshRouteViews(
+      google::cloud::networkservices::v1::ListMeshRouteViewsRequest request);
 
   virtual StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request);

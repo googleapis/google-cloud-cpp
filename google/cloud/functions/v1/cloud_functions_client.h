@@ -124,7 +124,7 @@ class CloudFunctionsServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.functions.v1.CloudFunction]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L205}
-  /// [google.cloud.functions.v1.ListFunctionsRequest]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L752}
+  /// [google.cloud.functions.v1.ListFunctionsRequest]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L756}
   ///
   // clang-format on
   StreamRange<google::cloud::functions::v1::CloudFunction> ListFunctions(
@@ -150,7 +150,7 @@ class CloudFunctionsServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.functions.v1.CloudFunction]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L205}
-  /// [google.cloud.functions.v1.GetFunctionRequest]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L733}
+  /// [google.cloud.functions.v1.GetFunctionRequest]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L737}
   ///
   // clang-format on
   StatusOr<google::cloud::functions::v1::CloudFunction> GetFunction(
@@ -180,7 +180,7 @@ class CloudFunctionsServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.functions.v1.CloudFunction]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L205}
-  /// [google.cloud.functions.v1.GetFunctionRequest]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L733}
+  /// [google.cloud.functions.v1.GetFunctionRequest]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L737}
   ///
   // clang-format on
   StatusOr<google::cloud::functions::v1::CloudFunction> GetFunction(
@@ -217,7 +217,7 @@ class CloudFunctionsServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.functions.v1.CloudFunction]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L205}
-  /// [google.cloud.functions.v1.CreateFunctionRequest]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L709}
+  /// [google.cloud.functions.v1.CreateFunctionRequest]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L713}
   ///
   // clang-format on
   future<StatusOr<google::cloud::functions::v1::CloudFunction>> CreateFunction(
@@ -274,7 +274,7 @@ class CloudFunctionsServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.functions.v1.CloudFunction]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L205}
-  /// [google.cloud.functions.v1.CreateFunctionRequest]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L709}
+  /// [google.cloud.functions.v1.CreateFunctionRequest]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L713}
   ///
   // clang-format on
   future<StatusOr<google::cloud::functions::v1::CloudFunction>> CreateFunction(
@@ -335,7 +335,7 @@ class CloudFunctionsServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.functions.v1.CloudFunction]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L205}
-  /// [google.cloud.functions.v1.UpdateFunctionRequest]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L724}
+  /// [google.cloud.functions.v1.UpdateFunctionRequest]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L728}
   ///
   // clang-format on
   future<StatusOr<google::cloud::functions::v1::CloudFunction>> UpdateFunction(
@@ -388,7 +388,7 @@ class CloudFunctionsServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.functions.v1.CloudFunction]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L205}
-  /// [google.cloud.functions.v1.UpdateFunctionRequest]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L724}
+  /// [google.cloud.functions.v1.UpdateFunctionRequest]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L728}
   ///
   // clang-format on
   future<StatusOr<google::cloud::functions::v1::CloudFunction>> UpdateFunction(
@@ -450,7 +450,7 @@ class CloudFunctionsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.functions.v1.DeleteFunctionRequest]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L790}
+  /// [google.cloud.functions.v1.DeleteFunctionRequest]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L794}
   /// [google.cloud.functions.v1.OperationMetadataV1]: @googleapis_reference_link{google/cloud/functions/v1/operations.proto#L43}
   ///
   // clang-format on
@@ -503,7 +503,7 @@ class CloudFunctionsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.functions.v1.DeleteFunctionRequest]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L790}
+  /// [google.cloud.functions.v1.DeleteFunctionRequest]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L794}
   /// [google.cloud.functions.v1.OperationMetadataV1]: @googleapis_reference_link{google/cloud/functions/v1/operations.proto#L43}
   ///
   // clang-format on
@@ -563,8 +563,8 @@ class CloudFunctionsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.functions.v1.CallFunctionRequest]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L801}
-  /// [google.cloud.functions.v1.CallFunctionResponse]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L815}
+  /// [google.cloud.functions.v1.CallFunctionRequest]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L805}
+  /// [google.cloud.functions.v1.CallFunctionResponse]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L819}
   ///
   // clang-format on
   StatusOr<google::cloud::functions::v1::CallFunctionResponse> CallFunction(
@@ -596,8 +596,8 @@ class CloudFunctionsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.functions.v1.CallFunctionRequest]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L801}
-  /// [google.cloud.functions.v1.CallFunctionResponse]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L815}
+  /// [google.cloud.functions.v1.CallFunctionRequest]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L805}
+  /// [google.cloud.functions.v1.CallFunctionResponse]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L819}
   ///
   // clang-format on
   StatusOr<google::cloud::functions::v1::CallFunctionResponse> CallFunction(
@@ -651,8 +651,8 @@ class CloudFunctionsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.functions.v1.GenerateUploadUrlRequest]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L829}
-  /// [google.cloud.functions.v1.GenerateUploadUrlResponse]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L857}
+  /// [google.cloud.functions.v1.GenerateUploadUrlRequest]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L833}
+  /// [google.cloud.functions.v1.GenerateUploadUrlResponse]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L861}
   ///
   // clang-format on
   StatusOr<google::cloud::functions::v1::GenerateUploadUrlResponse>
@@ -687,8 +687,8 @@ class CloudFunctionsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.functions.v1.GenerateDownloadUrlRequest]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L865}
-  /// [google.cloud.functions.v1.GenerateDownloadUrlResponse]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L876}
+  /// [google.cloud.functions.v1.GenerateDownloadUrlRequest]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L869}
+  /// [google.cloud.functions.v1.GenerateDownloadUrlResponse]: @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L880}
   ///
   // clang-format on
   StatusOr<google::cloud::functions::v1::GenerateDownloadUrlResponse>
@@ -837,14 +837,6 @@ class CloudFunctionsServiceClient {
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
   ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
-  ///
   /// @param name  The name of the operation's parent resource.
   /// @param filter  The standard list filter.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -869,8 +861,8 @@ class CloudFunctionsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StreamRange<google::longrunning::Operation> ListOperations(
@@ -880,14 +872,6 @@ class CloudFunctionsServiceClient {
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -917,8 +901,8 @@ class CloudFunctionsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StreamRange<google::longrunning::Operation> ListOperations(
@@ -944,8 +928,8 @@ class CloudFunctionsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
@@ -976,8 +960,8 @@ class CloudFunctionsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> GetOperation(

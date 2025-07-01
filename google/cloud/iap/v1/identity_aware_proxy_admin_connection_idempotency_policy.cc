@@ -66,6 +66,12 @@ IdentityAwareProxyAdminServiceConnectionIdempotencyPolicy::UpdateIapSettings(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency IdentityAwareProxyAdminServiceConnectionIdempotencyPolicy::
+    ValidateIapAttributeExpression(
+        google::cloud::iap::v1::ValidateIapAttributeExpressionRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency
 IdentityAwareProxyAdminServiceConnectionIdempotencyPolicy::ListTunnelDestGroups(
     google::cloud::iap::v1::ListTunnelDestGroupsRequest) {  // NOLINT

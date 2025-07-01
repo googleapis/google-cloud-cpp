@@ -165,6 +165,22 @@ ReservationServiceConnectionImpl::UpdateReservation(
       *current, request, __func__);
 }
 
+StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
+ReservationServiceConnectionImpl::FailoverReservation(
+    google::cloud::bigquery::reservation::v1::FailoverReservationRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->FailoverReservation(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::bigquery::reservation::v1::
+                 FailoverReservationRequest const& request) {
+        return stub_->FailoverReservation(context, options, request);
+      },
+      *current, request, __func__);
+}
+
 StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
 ReservationServiceConnectionImpl::CreateCapacityCommitment(
     google::cloud::bigquery::reservation::v1::

@@ -36,7 +36,7 @@ bool valid_list_format_table(nlohmann::json const& j) {
 }
 
 bool valid_tables_list(nlohmann::json const& j) {
-  return (j.contains("kind") && j.contains("etag") && j.contains("tables"));
+  return (j.contains("kind") && j.contains("etag"));
 }
 
 StatusOr<nlohmann::json> parse_json(std::string const& payload) {
@@ -87,6 +87,11 @@ StatusOr<ListTablesResponse> ListTablesResponse::BuildFromHttpResponse(
   result.etag = json->value("etag", "");
   result.next_page_token = json->value("nextPageToken", "");
   result.total_items = json->value("totalItems", 0);
+
+  if (result.total_items == 0) {
+    // If the dataset is empty, server does not return the "tables" key.
+    return result;
+  }
 
   for (auto const& kv : json->at("tables").items()) {
     auto const& json_list_format_table_obj = kv.value();

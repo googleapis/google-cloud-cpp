@@ -139,6 +139,14 @@ ContainerAnalysisClient::GetVulnerabilityOccurrencesSummary(
   return connection_->GetVulnerabilityOccurrencesSummary(request);
 }
 
+StatusOr<google::devtools::containeranalysis::v1::ExportSBOMResponse>
+ContainerAnalysisClient::ExportSBOM(
+    google::devtools::containeranalysis::v1::ExportSBOMRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ExportSBOM(request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace containeranalysis_v1
 }  // namespace cloud

@@ -53,6 +53,10 @@ class NetAppConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency DeleteStoragePool(
       google::cloud::netapp::v1::DeleteStoragePoolRequest const& request);
 
+  virtual google::cloud::Idempotency ValidateDirectoryService(
+      google::cloud::netapp::v1::ValidateDirectoryServiceRequest const&
+          request);
+
   virtual google::cloud::Idempotency SwitchActiveReplicaZone(
       google::cloud::netapp::v1::SwitchActiveReplicaZoneRequest const& request);
 
@@ -150,6 +154,12 @@ class NetAppConnectionIdempotencyPolicy {
       google::cloud::netapp::v1::ReverseReplicationDirectionRequest const&
           request);
 
+  virtual google::cloud::Idempotency EstablishPeering(
+      google::cloud::netapp::v1::EstablishPeeringRequest const& request);
+
+  virtual google::cloud::Idempotency SyncReplication(
+      google::cloud::netapp::v1::SyncReplicationRequest const& request);
+
   virtual google::cloud::Idempotency CreateBackupVault(
       google::cloud::netapp::v1::CreateBackupVaultRequest const& request);
 
@@ -194,6 +204,21 @@ class NetAppConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency DeleteBackupPolicy(
       google::cloud::netapp::v1::DeleteBackupPolicyRequest const& request);
+
+  virtual google::cloud::Idempotency ListQuotaRules(
+      google::cloud::netapp::v1::ListQuotaRulesRequest request);
+
+  virtual google::cloud::Idempotency GetQuotaRule(
+      google::cloud::netapp::v1::GetQuotaRuleRequest const& request);
+
+  virtual google::cloud::Idempotency CreateQuotaRule(
+      google::cloud::netapp::v1::CreateQuotaRuleRequest const& request);
+
+  virtual google::cloud::Idempotency UpdateQuotaRule(
+      google::cloud::netapp::v1::UpdateQuotaRuleRequest const& request);
+
+  virtual google::cloud::Idempotency DeleteQuotaRule(
+      google::cloud::netapp::v1::DeleteQuotaRuleRequest const& request);
 
   virtual google::cloud::Idempotency ListLocations(
       google::cloud::location::ListLocationsRequest request);

@@ -1168,6 +1168,162 @@ CatalogServiceConnectionImpl::SearchEntries(
       });
 }
 
+future<StatusOr<google::cloud::dataplex::v1::MetadataJob>>
+CatalogServiceConnectionImpl::CreateMetadataJob(
+    google::cloud::dataplex::v1::CreateMetadataJobRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateMetadataJob(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::dataplex::v1::MetadataJob>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::dataplex::v1::CreateMetadataJobRequest const&
+              request) {
+        return stub->AsyncCreateMetadataJob(cq, std::move(context),
+                                            std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::dataplex::v1::MetadataJob>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+CatalogServiceConnectionImpl::CreateMetadataJob(
+    NoAwaitTag,
+    google::cloud::dataplex::v1::CreateMetadataJobRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateMetadataJob(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataplex::v1::CreateMetadataJobRequest const&
+                 request) {
+        return stub_->CreateMetadataJob(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::dataplex::v1::MetadataJob>>
+CatalogServiceConnectionImpl::CreateMetadataJob(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::dataplex::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::dataplex::v1::MetadataJob>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateMetadataJob",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::dataplex::v1::MetadataJob>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::dataplex::v1::MetadataJob>,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::cloud::dataplex::v1::MetadataJob>
+CatalogServiceConnectionImpl::GetMetadataJob(
+    google::cloud::dataplex::v1::GetMetadataJobRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetMetadataJob(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataplex::v1::GetMetadataJobRequest const& request) {
+        return stub_->GetMetadataJob(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StreamRange<google::cloud::dataplex::v1::MetadataJob>
+CatalogServiceConnectionImpl::ListMetadataJobs(
+    google::cloud::dataplex::v1::ListMetadataJobsRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListMetadataJobs(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::dataplex::v1::MetadataJob>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<dataplex_v1::CatalogServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::cloud::dataplex::v1::ListMetadataJobsRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::dataplex::v1::ListMetadataJobsRequest const&
+                       request) {
+              return stub->ListMetadataJobs(context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::cloud::dataplex::v1::ListMetadataJobsResponse r) {
+        std::vector<google::cloud::dataplex::v1::MetadataJob> result(
+            r.metadata_jobs().size());
+        auto& messages = *r.mutable_metadata_jobs();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+Status CatalogServiceConnectionImpl::CancelMetadataJob(
+    google::cloud::dataplex::v1::CancelMetadataJobRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CancelMetadataJob(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataplex::v1::CancelMetadataJobRequest const&
+                 request) {
+        return stub_->CancelMetadataJob(context, options, request);
+      },
+      *current, request, __func__);
+}
+
 StreamRange<google::cloud::location::Location>
 CatalogServiceConnectionImpl::ListLocations(
     google::cloud::location::ListLocationsRequest request) {

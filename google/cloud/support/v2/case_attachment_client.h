@@ -34,7 +34,7 @@ namespace support_v2 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ///
-/// A service to manage file attachment for Google Cloud support cases.
+/// A service to manage file attachments for Google Cloud support cases.
 ///
 /// @par Equality
 ///
@@ -90,10 +90,9 @@ class CaseAttachmentServiceClient {
 
   // clang-format off
   ///
-  /// Retrieve all attachments associated with a support case.
+  /// List all the attachments associated with a support case.
   ///
-  /// @param parent  Required. The resource name of Case object for which attachments should be
-  ///  listed.
+  /// @param parent  Required. The name of the case for which attachments should be listed.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -116,7 +115,7 @@ class CaseAttachmentServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.support.v2.Attachment]: @googleapis_reference_link{google/cloud/support/v2/attachment.proto#L33}
+  /// [google.cloud.support.v2.Attachment]: @googleapis_reference_link{google/cloud/support/v2/attachment.proto#L40}
   /// [google.cloud.support.v2.ListAttachmentsRequest]: @googleapis_reference_link{google/cloud/support/v2/attachment_service.proto#L53}
   ///
   // clang-format on
@@ -125,7 +124,7 @@ class CaseAttachmentServiceClient {
 
   // clang-format off
   ///
-  /// Retrieve all attachments associated with a support case.
+  /// List all the attachments associated with a support case.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -155,7 +154,7 @@ class CaseAttachmentServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.support.v2.Attachment]: @googleapis_reference_link{google/cloud/support/v2/attachment.proto#L33}
+  /// [google.cloud.support.v2.Attachment]: @googleapis_reference_link{google/cloud/support/v2/attachment.proto#L40}
   /// [google.cloud.support.v2.ListAttachmentsRequest]: @googleapis_reference_link{google/cloud/support/v2/attachment_service.proto#L53}
   ///
   // clang-format on

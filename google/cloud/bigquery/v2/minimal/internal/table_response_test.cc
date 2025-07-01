@@ -64,6 +64,20 @@ TEST(GetTableResponseTest, InvalidTable) {
                                  HasSubstr("Not a valid Json Table object")));
 }
 
+TEST(ListTablesResponseTest, EmptyDatasetNoTables) {
+  BigQueryHttpResponse http_response;
+  http_response.payload =
+      R"({"kind":"kind-1", "etag":"tag-1", "totalItems":0})";
+  auto const list_tables_response =
+      ListTablesResponse::BuildFromHttpResponse(http_response);
+  ASSERT_STATUS_OK(list_tables_response);
+  EXPECT_FALSE(list_tables_response->http_response.payload.empty());
+  EXPECT_EQ(list_tables_response->kind, "kind-1");
+  EXPECT_EQ(list_tables_response->etag, "tag-1");
+  EXPECT_EQ(list_tables_response->total_items, 0);
+  EXPECT_THAT(list_tables_response->next_page_token, "");
+}
+
 TEST(ListTablesResponseTest, SuccessMultiplePages) {
   BigQueryHttpResponse http_response;
   auto tables_json_txt =
@@ -131,18 +145,6 @@ TEST(ListTablesResponseTest, InvalidJson) {
   EXPECT_THAT(response,
               StatusIs(StatusCode::kInternal,
                        HasSubstr("Error parsing Json from response payload")));
-}
-
-TEST(ListTablesResponseTest, InvalidTableList) {
-  BigQueryHttpResponse http_response;
-  http_response.payload =
-      R"({"kind": "dkind",
-          "etag": "dtag"})";
-  auto const response =
-      ListTablesResponse::BuildFromHttpResponse(http_response);
-  EXPECT_THAT(response,
-              StatusIs(StatusCode::kInternal,
-                       HasSubstr("Not a valid Json TableList object")));
 }
 
 TEST(ListTablesResponseTest, InvalidListFormatTable) {

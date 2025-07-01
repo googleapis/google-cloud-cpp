@@ -271,6 +271,24 @@ DataCatalogConnection::ImportEntries(google::longrunning::Operation const&) {
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::cloud::datacatalog::v1::MigrationConfig>
+DataCatalogConnection::SetConfig(
+    google::cloud::datacatalog::v1::SetConfigRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::datacatalog::v1::OrganizationConfig>
+DataCatalogConnection::RetrieveConfig(
+    google::cloud::datacatalog::v1::RetrieveConfigRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::datacatalog::v1::MigrationConfig>
+DataCatalogConnection::RetrieveEffectiveConfig(
+    google::cloud::datacatalog::v1::RetrieveEffectiveConfigRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StreamRange<google::longrunning::Operation>
 DataCatalogConnection::ListOperations(
     google::longrunning::

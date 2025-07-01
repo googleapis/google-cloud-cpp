@@ -126,6 +126,11 @@ class GenericStubAdapter : public GenericStub {
       storage::internal::UpdateObjectRequest const& request) override {
     return impl_->UpdateObject(request);
   }
+  StatusOr<storage::ObjectMetadata> MoveObject(
+      rest_internal::RestContext&, Options const&,
+      storage::internal::MoveObjectRequest const& request) override {
+    return impl_->MoveObject(request);
+  }
   StatusOr<storage::ObjectMetadata> PatchObject(
       rest_internal::RestContext&, Options const&,
       storage::internal::PatchObjectRequest const& request) override {

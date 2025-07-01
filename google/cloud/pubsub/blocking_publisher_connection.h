@@ -89,12 +89,23 @@ class BlockingPublisherConnection {
  *
  * @see `BlockingPublisherConnection`
  *
+ * @param location Sets the prefix for the default `EndpointOption` value.
  * @param opts The options to use for this call. Expected options are any of
  *     the types in the following option lists.
  *       - `google::cloud::CommonOptionList`
  *       - `google::cloud::GrpcOptionList`
  *       - `google::cloud::pubsub::PolicyOptionList`
  *       - `google::cloud::pubsub::PublisherOptionList`
+ */
+std::shared_ptr<BlockingPublisherConnection> MakeBlockingPublisherConnection(
+    std::string const& location, Options opts = {});
+
+/**
+ * A factory function to construct an object of type
+ * `BlockingPublisherConnection`.
+ *
+ * This overload of `MakeBlockingPublisherConnection` does not require a
+ * location argument, creating a connection to the global service endpoint.
  */
 std::shared_ptr<BlockingPublisherConnection> MakeBlockingPublisherConnection(
     Options opts = {});

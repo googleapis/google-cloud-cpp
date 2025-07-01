@@ -1,4 +1,4 @@
-// Copyright 2024 Google LLC
+// Copyright 2025 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -27,12 +27,12 @@
 
 // IWYU pragma: begin_exports
 #include <google/cloud/compute/v1/internal/common_016.pb.h>
-#include <google/cloud/compute/v1/internal/common_047.pb.h>
-#include <google/cloud/compute/v1/internal/common_050.pb.h>
-#include <google/cloud/compute/v1/internal/common_061.pb.h>
-#include <google/cloud/compute/v1/internal/common_110.pb.h>
-#include <google/cloud/compute/v1/internal/common_131.pb.h>
-#include <google/cloud/compute/v1/internal/common_132.pb.h>
+#include <google/cloud/compute/v1/internal/common_049.pb.h>
+#include <google/cloud/compute/v1/internal/common_052.pb.h>
+#include <google/cloud/compute/v1/internal/common_063.pb.h>
+#include <google/cloud/compute/v1/internal/common_118.pb.h>
+#include <google/cloud/compute/v1/internal/common_139.pb.h>
+#include <google/cloud/compute/v1/internal/common_140.pb.h>
 // IWYU pragma: end_exports
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_TARGET_POOLS_V1_TARGET_POOLS_PROTO_EXPORT_H

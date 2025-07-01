@@ -1,4 +1,4 @@
-// Copyright 2024 Google LLC
+// Copyright 2025 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -27,8 +27,8 @@
 
 // IWYU pragma: begin_exports
 #include <google/cloud/compute/v1/internal/common_016.pb.h>
-#include <google/cloud/compute/v1/internal/common_042.pb.h>
-#include <google/cloud/compute/v1/internal/common_049.pb.h>
+#include <google/cloud/compute/v1/internal/common_043.pb.h>
+#include <google/cloud/compute/v1/internal/common_051.pb.h>
 // IWYU pragma: end_exports
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_HEALTH_CHECKS_V1_HEALTH_CHECKS_PROTO_EXPORT_H

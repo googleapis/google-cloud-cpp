@@ -21,10 +21,12 @@
 
 #include "google/cloud/storageinsights/v1/storage_insights_connection.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include <google/longrunning/operations.grpc.pb.h>
 #include <map>
 #include <memory>
 #include <string>
@@ -113,8 +115,8 @@ class StorageInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.storageinsights.v1.ListReportConfigsRequest]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L107}
-  /// [google.cloud.storageinsights.v1.ReportConfig]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L452}
+  /// [google.cloud.storageinsights.v1.ListReportConfigsRequest]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L196}
+  /// [google.cloud.storageinsights.v1.ReportConfig]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L541}
   ///
   // clang-format on
   StreamRange<google::cloud::storageinsights::v1::ReportConfig>
@@ -152,8 +154,8 @@ class StorageInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.storageinsights.v1.ListReportConfigsRequest]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L107}
-  /// [google.cloud.storageinsights.v1.ReportConfig]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L452}
+  /// [google.cloud.storageinsights.v1.ListReportConfigsRequest]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L196}
+  /// [google.cloud.storageinsights.v1.ReportConfig]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L541}
   ///
   // clang-format on
   StreamRange<google::cloud::storageinsights::v1::ReportConfig>
@@ -179,8 +181,8 @@ class StorageInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.storageinsights.v1.GetReportConfigRequest]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L143}
-  /// [google.cloud.storageinsights.v1.ReportConfig]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L452}
+  /// [google.cloud.storageinsights.v1.GetReportConfigRequest]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L232}
+  /// [google.cloud.storageinsights.v1.ReportConfig]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L541}
   ///
   // clang-format on
   StatusOr<google::cloud::storageinsights::v1::ReportConfig> GetReportConfig(
@@ -209,8 +211,8 @@ class StorageInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.storageinsights.v1.GetReportConfigRequest]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L143}
-  /// [google.cloud.storageinsights.v1.ReportConfig]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L452}
+  /// [google.cloud.storageinsights.v1.GetReportConfigRequest]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L232}
+  /// [google.cloud.storageinsights.v1.ReportConfig]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L541}
   ///
   // clang-format on
   StatusOr<google::cloud::storageinsights::v1::ReportConfig> GetReportConfig(
@@ -236,8 +238,8 @@ class StorageInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.storageinsights.v1.CreateReportConfigRequest]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L154}
-  /// [google.cloud.storageinsights.v1.ReportConfig]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L452}
+  /// [google.cloud.storageinsights.v1.CreateReportConfigRequest]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L243}
+  /// [google.cloud.storageinsights.v1.ReportConfig]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L541}
   ///
   // clang-format on
   StatusOr<google::cloud::storageinsights::v1::ReportConfig> CreateReportConfig(
@@ -268,8 +270,8 @@ class StorageInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.storageinsights.v1.CreateReportConfigRequest]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L154}
-  /// [google.cloud.storageinsights.v1.ReportConfig]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L452}
+  /// [google.cloud.storageinsights.v1.CreateReportConfigRequest]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L243}
+  /// [google.cloud.storageinsights.v1.ReportConfig]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L541}
   ///
   // clang-format on
   StatusOr<google::cloud::storageinsights::v1::ReportConfig> CreateReportConfig(
@@ -300,8 +302,8 @@ class StorageInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.storageinsights.v1.ReportConfig]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L452}
-  /// [google.cloud.storageinsights.v1.UpdateReportConfigRequest]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L183}
+  /// [google.cloud.storageinsights.v1.ReportConfig]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L541}
+  /// [google.cloud.storageinsights.v1.UpdateReportConfigRequest]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L272}
   ///
   // clang-format on
   StatusOr<google::cloud::storageinsights::v1::ReportConfig> UpdateReportConfig(
@@ -331,8 +333,8 @@ class StorageInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.storageinsights.v1.ReportConfig]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L452}
-  /// [google.cloud.storageinsights.v1.UpdateReportConfigRequest]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L183}
+  /// [google.cloud.storageinsights.v1.ReportConfig]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L541}
+  /// [google.cloud.storageinsights.v1.UpdateReportConfigRequest]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L272}
   ///
   // clang-format on
   StatusOr<google::cloud::storageinsights::v1::ReportConfig> UpdateReportConfig(
@@ -356,7 +358,7 @@ class StorageInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.storageinsights.v1.DeleteReportConfigRequest]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L212}
+  /// [google.cloud.storageinsights.v1.DeleteReportConfigRequest]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L301}
   ///
   // clang-format on
   Status DeleteReportConfig(std::string const& name, Options opts = {});
@@ -382,7 +384,7 @@ class StorageInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.storageinsights.v1.DeleteReportConfigRequest]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L212}
+  /// [google.cloud.storageinsights.v1.DeleteReportConfigRequest]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L301}
   ///
   // clang-format on
   Status DeleteReportConfig(
@@ -417,8 +419,8 @@ class StorageInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.storageinsights.v1.ListReportDetailsRequest]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L290}
-  /// [google.cloud.storageinsights.v1.ReportDetail]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L243}
+  /// [google.cloud.storageinsights.v1.ListReportDetailsRequest]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L379}
+  /// [google.cloud.storageinsights.v1.ReportDetail]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L332}
   ///
   // clang-format on
   StreamRange<google::cloud::storageinsights::v1::ReportDetail>
@@ -456,8 +458,8 @@ class StorageInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.storageinsights.v1.ListReportDetailsRequest]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L290}
-  /// [google.cloud.storageinsights.v1.ReportDetail]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L243}
+  /// [google.cloud.storageinsights.v1.ListReportDetailsRequest]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L379}
+  /// [google.cloud.storageinsights.v1.ReportDetail]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L332}
   ///
   // clang-format on
   StreamRange<google::cloud::storageinsights::v1::ReportDetail>
@@ -483,8 +485,8 @@ class StorageInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.storageinsights.v1.GetReportDetailRequest]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L326}
-  /// [google.cloud.storageinsights.v1.ReportDetail]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L243}
+  /// [google.cloud.storageinsights.v1.GetReportDetailRequest]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L415}
+  /// [google.cloud.storageinsights.v1.ReportDetail]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L332}
   ///
   // clang-format on
   StatusOr<google::cloud::storageinsights::v1::ReportDetail> GetReportDetail(
@@ -513,13 +515,743 @@ class StorageInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.storageinsights.v1.GetReportDetailRequest]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L326}
-  /// [google.cloud.storageinsights.v1.ReportDetail]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L243}
+  /// [google.cloud.storageinsights.v1.GetReportDetailRequest]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L415}
+  /// [google.cloud.storageinsights.v1.ReportDetail]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L332}
   ///
   // clang-format on
   StatusOr<google::cloud::storageinsights::v1::ReportDetail> GetReportDetail(
       google::cloud::storageinsights::v1::GetReportDetailRequest const& request,
       Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists the dataset configurations in a given project for a given location.
+  ///
+  /// @param parent  Required. Parent value for ListDatasetConfigsRequest
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.storageinsights.v1.DatasetConfig], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.storageinsights.v1.DatasetConfig]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L610}
+  /// [google.cloud.storageinsights.v1.ListDatasetConfigsRequest]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L876}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::storageinsights::v1::DatasetConfig>
+  ListDatasetConfigs(std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists the dataset configurations in a given project for a given location.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.storageinsights.v1.ListDatasetConfigsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.storageinsights.v1.DatasetConfig], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.storageinsights.v1.DatasetConfig]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L610}
+  /// [google.cloud.storageinsights.v1.ListDatasetConfigsRequest]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L876}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::storageinsights::v1::DatasetConfig>
+  ListDatasetConfigs(
+      google::cloud::storageinsights::v1::ListDatasetConfigsRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets the dataset configuration in a given project for a given location.
+  ///
+  /// @param name  Required. Name of the resource
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.storageinsights.v1.DatasetConfig])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.storageinsights.v1.DatasetConfig]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L610}
+  /// [google.cloud.storageinsights.v1.GetDatasetConfigRequest]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L914}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::storageinsights::v1::DatasetConfig> GetDatasetConfig(
+      std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets the dataset configuration in a given project for a given location.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.storageinsights.v1.GetDatasetConfigRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.storageinsights.v1.DatasetConfig])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.storageinsights.v1.DatasetConfig]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L610}
+  /// [google.cloud.storageinsights.v1.GetDatasetConfigRequest]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L914}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::storageinsights::v1::DatasetConfig> GetDatasetConfig(
+      google::cloud::storageinsights::v1::GetDatasetConfigRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a dataset configuration in a given project for a given location.
+  ///
+  /// @param parent  Required. Value for parent.
+  /// @param dataset_config  Required. The resource being created
+  /// @param dataset_config_id  Required. ID of the requesting object.
+  ///  If auto-generating ID is enabled on the server-side, remove this field and
+  ///  `dataset_config_id` from the method_signature of Create RPC
+  ///  Note: The value should not contain any hyphens.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.storageinsights.v1.DatasetConfig] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.storageinsights.v1.CreateDatasetConfigRequest]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L926}
+  /// [google.cloud.storageinsights.v1.DatasetConfig]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L610}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::storageinsights::v1::DatasetConfig>>
+  CreateDatasetConfig(
+      std::string const& parent,
+      google::cloud::storageinsights::v1::DatasetConfig const& dataset_config,
+      std::string const& dataset_config_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateDatasetConfig
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateDatasetConfig(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::storageinsights::v1::DatasetConfig const& dataset_config,
+      std::string const& dataset_config_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a dataset configuration in a given project for a given location.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.storageinsights.v1.CreateDatasetConfigRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.storageinsights.v1.DatasetConfig] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.storageinsights.v1.CreateDatasetConfigRequest]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L926}
+  /// [google.cloud.storageinsights.v1.DatasetConfig]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L610}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::storageinsights::v1::DatasetConfig>>
+  CreateDatasetConfig(
+      google::cloud::storageinsights::v1::CreateDatasetConfigRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateDatasetConfig
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateDatasetConfig(
+      NoAwaitTag,
+      google::cloud::storageinsights::v1::CreateDatasetConfigRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateDatasetConfig
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::storageinsights::v1::DatasetConfig>>
+  CreateDatasetConfig(google::longrunning::Operation const& operation,
+                      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates a dataset configuration in a given project for a given location.
+  ///
+  /// @param dataset_config  Required. The resource being updated
+  /// @param update_mask  Required. Field mask is used to specify the fields to be overwritten in the
+  ///  `DatasetConfig` resource by the update.
+  ///  The fields specified in the `update_mask` are relative to the resource, not
+  ///  the full request. A field is overwritten if it is in the mask. If the
+  ///  user does not provide a mask then it returns an "Invalid Argument" error.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.storageinsights.v1.DatasetConfig] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.storageinsights.v1.DatasetConfig]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L610}
+  /// [google.cloud.storageinsights.v1.UpdateDatasetConfigRequest]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L960}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::storageinsights::v1::DatasetConfig>>
+  UpdateDatasetConfig(
+      google::cloud::storageinsights::v1::DatasetConfig const& dataset_config,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateDatasetConfig
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UpdateDatasetConfig(
+      NoAwaitTag,
+      google::cloud::storageinsights::v1::DatasetConfig const& dataset_config,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates a dataset configuration in a given project for a given location.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.storageinsights.v1.UpdateDatasetConfigRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.storageinsights.v1.DatasetConfig] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.storageinsights.v1.DatasetConfig]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L610}
+  /// [google.cloud.storageinsights.v1.UpdateDatasetConfigRequest]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L960}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::storageinsights::v1::DatasetConfig>>
+  UpdateDatasetConfig(
+      google::cloud::storageinsights::v1::UpdateDatasetConfigRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateDatasetConfig
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UpdateDatasetConfig(
+      NoAwaitTag,
+      google::cloud::storageinsights::v1::UpdateDatasetConfigRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateDatasetConfig
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::storageinsights::v1::DatasetConfig>>
+  UpdateDatasetConfig(google::longrunning::Operation const& operation,
+                      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a dataset configuration in a given project for a given location.
+  ///
+  /// @param name  Required. Name of the resource
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.storageinsights.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.storageinsights.v1.DeleteDatasetConfigRequest]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L988}
+  /// [google.cloud.storageinsights.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L426}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::storageinsights::v1::OperationMetadata>>
+  DeleteDatasetConfig(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteDatasetConfig
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteDatasetConfig(
+      NoAwaitTag, std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a dataset configuration in a given project for a given location.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.storageinsights.v1.DeleteDatasetConfigRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.storageinsights.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.storageinsights.v1.DeleteDatasetConfigRequest]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L988}
+  /// [google.cloud.storageinsights.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L426}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::storageinsights::v1::OperationMetadata>>
+  DeleteDatasetConfig(
+      google::cloud::storageinsights::v1::DeleteDatasetConfigRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteDatasetConfig
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteDatasetConfig(
+      NoAwaitTag,
+      google::cloud::storageinsights::v1::DeleteDatasetConfigRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteDatasetConfig
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::storageinsights::v1::OperationMetadata>>
+  DeleteDatasetConfig(google::longrunning::Operation const& operation,
+                      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Links a dataset to BigQuery in a given project for a given location.
+  ///
+  /// @param name  Required. Name of the resource
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.storageinsights.v1.LinkDatasetResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.storageinsights.v1.LinkDatasetRequest]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L1013}
+  /// [google.cloud.storageinsights.v1.LinkDatasetResponse]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L1025}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::storageinsights::v1::LinkDatasetResponse>>
+  LinkDataset(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief LinkDataset
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> LinkDataset(NoAwaitTag,
+                                                       std::string const& name,
+                                                       Options opts = {});
+
+  // clang-format off
+  ///
+  /// Links a dataset to BigQuery in a given project for a given location.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.storageinsights.v1.LinkDatasetRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.storageinsights.v1.LinkDatasetResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.storageinsights.v1.LinkDatasetRequest]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L1013}
+  /// [google.cloud.storageinsights.v1.LinkDatasetResponse]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L1025}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::storageinsights::v1::LinkDatasetResponse>>
+  LinkDataset(
+      google::cloud::storageinsights::v1::LinkDatasetRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief LinkDataset
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> LinkDataset(
+      NoAwaitTag,
+      google::cloud::storageinsights::v1::LinkDatasetRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief LinkDataset
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::storageinsights::v1::LinkDatasetResponse>>
+  LinkDataset(google::longrunning::Operation const& operation,
+              Options opts = {});
+
+  // clang-format off
+  ///
+  /// Unlinks a dataset from BigQuery in a given project
+  /// for a given location.
+  ///
+  /// @param name  Required. Name of the resource
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.storageinsights.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.storageinsights.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L426}
+  /// [google.cloud.storageinsights.v1.UnlinkDatasetRequest]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L1029}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::storageinsights::v1::OperationMetadata>>
+  UnlinkDataset(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UnlinkDataset
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UnlinkDataset(
+      NoAwaitTag, std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Unlinks a dataset from BigQuery in a given project
+  /// for a given location.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.storageinsights.v1.UnlinkDatasetRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.storageinsights.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.storageinsights.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L426}
+  /// [google.cloud.storageinsights.v1.UnlinkDatasetRequest]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L1029}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::storageinsights::v1::OperationMetadata>>
+  UnlinkDataset(
+      google::cloud::storageinsights::v1::UnlinkDatasetRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UnlinkDataset
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UnlinkDataset(
+      NoAwaitTag,
+      google::cloud::storageinsights::v1::UnlinkDatasetRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UnlinkDataset
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::storageinsights::v1::OperationMetadata>>
+  UnlinkDataset(google::longrunning::Operation const& operation,
+                Options opts = {});
 
   // clang-format off
   ///
@@ -596,14 +1328,6 @@ class StorageInsightsClient {
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
   ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
-  ///
   /// @param name  The name of the operation's parent resource.
   /// @param filter  The standard list filter.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -628,8 +1352,8 @@ class StorageInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StreamRange<google::longrunning::Operation> ListOperations(
@@ -639,14 +1363,6 @@ class StorageInsightsClient {
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -676,8 +1392,8 @@ class StorageInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StreamRange<google::longrunning::Operation> ListOperations(
@@ -703,8 +1419,8 @@ class StorageInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
@@ -735,8 +1451,8 @@ class StorageInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> GetOperation(
@@ -762,7 +1478,7 @@ class StorageInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L201}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
   Status DeleteOperation(std::string const& name, Options opts = {});
@@ -791,7 +1507,7 @@ class StorageInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L201}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
   Status DeleteOperation(
@@ -808,8 +1524,9 @@ class StorageInsightsClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param name  The name of the operation resource to be cancelled.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -823,9 +1540,9 @@ class StorageInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
@@ -841,8 +1558,9 @@ class StorageInsightsClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -861,9 +1579,9 @@ class StorageInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on

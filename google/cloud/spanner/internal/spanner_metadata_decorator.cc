@@ -159,6 +159,19 @@ SpannerMetadata::BatchWrite(
   return child_->BatchWrite(std::move(context), options, request);
 }
 
+future<StatusOr<google::spanner::v1::Session>>
+SpannerMetadata::AsyncCreateSession(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::spanner::v1::CreateSessionRequest const& request) {
+  SetMetadata(
+      *context, *options,
+      absl::StrCat("database=", internal::UrlEncode(request.database())));
+  return child_->AsyncCreateSession(cq, std::move(context), std::move(options),
+                                    request);
+}
+
 future<StatusOr<google::spanner::v1::BatchCreateSessionsResponse>>
 SpannerMetadata::AsyncBatchCreateSessions(
     google::cloud::CompletionQueue& cq,

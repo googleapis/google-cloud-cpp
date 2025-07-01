@@ -502,6 +502,40 @@ InstanceGroupManagersRestLogging::Resize(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InstanceGroupManagersRestLogging::AsyncResumeInstances(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::instance_group_managers::v1::
+        ResumeInstancesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> rest_context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::cpp::compute::instance_group_managers::v1::
+                 ResumeInstancesRequest const& request) {
+        return child_->AsyncResumeInstances(cq, std::move(rest_context),
+                                            std::move(options), request);
+      },
+      cq, std::move(rest_context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstanceGroupManagersRestLogging::ResumeInstances(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::instance_group_managers::v1::
+        ResumeInstancesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::instance_group_managers::v1::
+                 ResumeInstancesRequest const& request) {
+        return child_->ResumeInstances(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstanceGroupManagersRestLogging::AsyncSetInstanceTemplate(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
@@ -565,6 +599,108 @@ InstanceGroupManagersRestLogging::SetTargetPools(
              google::cloud::cpp::compute::instance_group_managers::v1::
                  SetTargetPoolsRequest const& request) {
         return child_->SetTargetPools(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InstanceGroupManagersRestLogging::AsyncStartInstances(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::instance_group_managers::v1::
+        StartInstancesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> rest_context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::cpp::compute::instance_group_managers::v1::
+                 StartInstancesRequest const& request) {
+        return child_->AsyncStartInstances(cq, std::move(rest_context),
+                                           std::move(options), request);
+      },
+      cq, std::move(rest_context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstanceGroupManagersRestLogging::StartInstances(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::instance_group_managers::v1::
+        StartInstancesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::instance_group_managers::v1::
+                 StartInstancesRequest const& request) {
+        return child_->StartInstances(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InstanceGroupManagersRestLogging::AsyncStopInstances(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::instance_group_managers::v1::
+        StopInstancesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> rest_context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::cpp::compute::instance_group_managers::v1::
+                 StopInstancesRequest const& request) {
+        return child_->AsyncStopInstances(cq, std::move(rest_context),
+                                          std::move(options), request);
+      },
+      cq, std::move(rest_context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstanceGroupManagersRestLogging::StopInstances(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::instance_group_managers::v1::
+        StopInstancesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::instance_group_managers::v1::
+                 StopInstancesRequest const& request) {
+        return child_->StopInstances(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InstanceGroupManagersRestLogging::AsyncSuspendInstances(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::instance_group_managers::v1::
+        SuspendInstancesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> rest_context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::cpp::compute::instance_group_managers::v1::
+                 SuspendInstancesRequest const& request) {
+        return child_->AsyncSuspendInstances(cq, std::move(rest_context),
+                                             std::move(options), request);
+      },
+      cq, std::move(rest_context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstanceGroupManagersRestLogging::SuspendInstances(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::instance_group_managers::v1::
+        SuspendInstancesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::instance_group_managers::v1::
+                 SuspendInstancesRequest const& request) {
+        return child_->SuspendInstances(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
 }

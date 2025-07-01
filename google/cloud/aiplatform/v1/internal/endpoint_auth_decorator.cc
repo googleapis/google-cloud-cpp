@@ -87,6 +87,37 @@ EndpointServiceAuth::UpdateEndpoint(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+EndpointServiceAuth::AsyncUpdateEndpointLongRunning(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::aiplatform::v1::UpdateEndpointLongRunningRequest const&
+        request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncUpdateEndpointLongRunning(
+            cq, *std::move(context), std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation>
+EndpointServiceAuth::UpdateEndpointLongRunning(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::UpdateEndpointLongRunningRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateEndpointLongRunning(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 EndpointServiceAuth::AsyncDeleteEndpoint(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

@@ -363,6 +363,31 @@ InstanceGroupManagersConnection::Resize(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InstanceGroupManagersConnection::ResumeInstances(
+    google::cloud::cpp::compute::instance_group_managers::v1::
+        ResumeInstancesRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstanceGroupManagersConnection::ResumeInstances(
+    NoAwaitTag, google::cloud::cpp::compute::instance_group_managers::v1::
+                    ResumeInstancesRequest const&) {
+  return StatusOr<google::cloud::cpp::compute::v1::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InstanceGroupManagersConnection::ResumeInstances(
+    google::cloud::cpp::compute::v1::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstanceGroupManagersConnection::SetInstanceTemplate(
     google::cloud::cpp::compute::instance_group_managers::v1::
         SetInstanceTemplateRequest const&) {
@@ -406,6 +431,81 @@ InstanceGroupManagersConnection::SetTargetPools(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstanceGroupManagersConnection::SetTargetPools(
+    google::cloud::cpp::compute::v1::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InstanceGroupManagersConnection::StartInstances(
+    google::cloud::cpp::compute::instance_group_managers::v1::
+        StartInstancesRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstanceGroupManagersConnection::StartInstances(
+    NoAwaitTag, google::cloud::cpp::compute::instance_group_managers::v1::
+                    StartInstancesRequest const&) {
+  return StatusOr<google::cloud::cpp::compute::v1::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InstanceGroupManagersConnection::StartInstances(
+    google::cloud::cpp::compute::v1::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InstanceGroupManagersConnection::StopInstances(
+    google::cloud::cpp::compute::instance_group_managers::v1::
+        StopInstancesRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstanceGroupManagersConnection::StopInstances(
+    NoAwaitTag, google::cloud::cpp::compute::instance_group_managers::v1::
+                    StopInstancesRequest const&) {
+  return StatusOr<google::cloud::cpp::compute::v1::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InstanceGroupManagersConnection::StopInstances(
+    google::cloud::cpp::compute::v1::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InstanceGroupManagersConnection::SuspendInstances(
+    google::cloud::cpp::compute::instance_group_managers::v1::
+        SuspendInstancesRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstanceGroupManagersConnection::SuspendInstances(
+    NoAwaitTag, google::cloud::cpp::compute::instance_group_managers::v1::
+                    SuspendInstancesRequest const&) {
+  return StatusOr<google::cloud::cpp::compute::v1::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InstanceGroupManagersConnection::SuspendInstances(
     google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(

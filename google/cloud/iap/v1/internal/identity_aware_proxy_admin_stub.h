@@ -56,6 +56,13 @@ class IdentityAwareProxyAdminServiceStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::iap::v1::UpdateIapSettingsRequest const& request) = 0;
 
+  virtual StatusOr<
+      google::cloud::iap::v1::ValidateIapAttributeExpressionResponse>
+  ValidateIapAttributeExpression(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::iap::v1::ValidateIapAttributeExpressionRequest const&
+          request) = 0;
+
   virtual StatusOr<google::cloud::iap::v1::ListTunnelDestGroupsResponse>
   ListTunnelDestGroups(
       grpc::ClientContext& context, Options const& options,
@@ -108,6 +115,12 @@ class DefaultIdentityAwareProxyAdminServiceStub
   StatusOr<google::cloud::iap::v1::IapSettings> UpdateIapSettings(
       grpc::ClientContext& context, Options const& options,
       google::cloud::iap::v1::UpdateIapSettingsRequest const& request) override;
+
+  StatusOr<google::cloud::iap::v1::ValidateIapAttributeExpressionResponse>
+  ValidateIapAttributeExpression(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::iap::v1::ValidateIapAttributeExpressionRequest const&
+          request) override;
 
   StatusOr<google::cloud::iap::v1::ListTunnelDestGroupsResponse>
   ListTunnelDestGroups(

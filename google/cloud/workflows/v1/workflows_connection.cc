@@ -115,6 +115,14 @@ WorkflowsConnection::UpdateWorkflow(google::longrunning::Operation const&) {
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StreamRange<google::cloud::workflows::v1::Workflow>
+WorkflowsConnection::ListWorkflowRevisions(
+    google::cloud::workflows::v1::
+        ListWorkflowRevisionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::workflows::v1::Workflow>>();
+}
+
 StreamRange<google::cloud::location::Location>
 WorkflowsConnection::ListLocations(
     google::cloud::location::

@@ -81,6 +81,12 @@ class MockReservationServiceConnection
            request),
       (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::bigquery::reservation::v1::Reservation>,
+              FailoverReservation,
+              (google::cloud::bigquery::reservation::v1::
+                   FailoverReservationRequest const& request),
+              (override));
+
   MOCK_METHOD(
       StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>,
       CreateCapacityCommitment,

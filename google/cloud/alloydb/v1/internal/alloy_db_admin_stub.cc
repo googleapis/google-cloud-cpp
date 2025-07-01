@@ -114,6 +114,94 @@ StatusOr<google::longrunning::Operation> DefaultAlloyDBAdminStub::UpdateCluster(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+DefaultAlloyDBAdminStub::AsyncExportCluster(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::alloydb::v1::ExportClusterRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::alloydb::v1::ExportClusterRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::alloydb::v1::ExportClusterRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncExportCluster(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultAlloyDBAdminStub::ExportCluster(
+    grpc::ClientContext& context, Options,
+    google::cloud::alloydb::v1::ExportClusterRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->ExportCluster(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultAlloyDBAdminStub::AsyncImportCluster(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::alloydb::v1::ImportClusterRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::alloydb::v1::ImportClusterRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::alloydb::v1::ImportClusterRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncImportCluster(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultAlloyDBAdminStub::ImportCluster(
+    grpc::ClientContext& context, Options,
+    google::cloud::alloydb::v1::ImportClusterRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->ImportCluster(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultAlloyDBAdminStub::AsyncUpgradeCluster(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::alloydb::v1::UpgradeClusterRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::alloydb::v1::UpgradeClusterRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::alloydb::v1::UpgradeClusterRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUpgradeCluster(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultAlloyDBAdminStub::UpgradeCluster(
+    grpc::ClientContext& context, Options,
+    google::cloud::alloydb::v1::UpgradeClusterRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpgradeCluster(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
 DefaultAlloyDBAdminStub::AsyncDeleteCluster(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

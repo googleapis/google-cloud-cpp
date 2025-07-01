@@ -115,6 +115,30 @@ NetAppConnection::DeleteStoragePool(google::longrunning::Operation const&) {
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
+NetAppConnection::ValidateDirectoryService(
+    google::cloud::netapp::v1::ValidateDirectoryServiceRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::netapp::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+NetAppConnection::ValidateDirectoryService(
+    NoAwaitTag,
+    google::cloud::netapp::v1::ValidateDirectoryServiceRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
+NetAppConnection::ValidateDirectoryService(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::netapp::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::netapp::v1::StoragePool>>
 NetAppConnection::SwitchActiveReplicaZone(
     google::cloud::netapp::v1::SwitchActiveReplicaZoneRequest const&) {
@@ -640,6 +664,48 @@ NetAppConnection::ReverseReplicationDirection(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+future<StatusOr<google::cloud::netapp::v1::Replication>>
+NetAppConnection::EstablishPeering(
+    google::cloud::netapp::v1::EstablishPeeringRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::netapp::v1::Replication>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> NetAppConnection::EstablishPeering(
+    NoAwaitTag, google::cloud::netapp::v1::EstablishPeeringRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::netapp::v1::Replication>>
+NetAppConnection::EstablishPeering(google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::netapp::v1::Replication>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::netapp::v1::Replication>>
+NetAppConnection::SyncReplication(
+    google::cloud::netapp::v1::SyncReplicationRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::netapp::v1::Replication>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> NetAppConnection::SyncReplication(
+    NoAwaitTag, google::cloud::netapp::v1::SyncReplicationRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::netapp::v1::Replication>>
+NetAppConnection::SyncReplication(google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::netapp::v1::Replication>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::netapp::v1::BackupVault>>
 NetAppConnection::CreateBackupVault(
     google::cloud::netapp::v1::CreateBackupVaultRequest const&) {
@@ -864,6 +930,82 @@ StatusOr<google::longrunning::Operation> NetAppConnection::DeleteBackupPolicy(
 
 future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
 NetAppConnection::DeleteBackupPolicy(google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::netapp::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StreamRange<google::cloud::netapp::v1::QuotaRule>
+NetAppConnection::ListQuotaRules(
+    google::cloud::netapp::v1::
+        ListQuotaRulesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::netapp::v1::QuotaRule>>();
+}
+
+StatusOr<google::cloud::netapp::v1::QuotaRule> NetAppConnection::GetQuotaRule(
+    google::cloud::netapp::v1::GetQuotaRuleRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::cloud::netapp::v1::QuotaRule>>
+NetAppConnection::CreateQuotaRule(
+    google::cloud::netapp::v1::CreateQuotaRuleRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::netapp::v1::QuotaRule>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> NetAppConnection::CreateQuotaRule(
+    NoAwaitTag, google::cloud::netapp::v1::CreateQuotaRuleRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::netapp::v1::QuotaRule>>
+NetAppConnection::CreateQuotaRule(google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::netapp::v1::QuotaRule>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::netapp::v1::QuotaRule>>
+NetAppConnection::UpdateQuotaRule(
+    google::cloud::netapp::v1::UpdateQuotaRuleRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::netapp::v1::QuotaRule>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> NetAppConnection::UpdateQuotaRule(
+    NoAwaitTag, google::cloud::netapp::v1::UpdateQuotaRuleRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::netapp::v1::QuotaRule>>
+NetAppConnection::UpdateQuotaRule(google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::netapp::v1::QuotaRule>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
+NetAppConnection::DeleteQuotaRule(
+    google::cloud::netapp::v1::DeleteQuotaRuleRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::netapp::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> NetAppConnection::DeleteQuotaRule(
+    NoAwaitTag, google::cloud::netapp::v1::DeleteQuotaRuleRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
+NetAppConnection::DeleteQuotaRule(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::netapp::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

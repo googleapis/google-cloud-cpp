@@ -55,6 +55,27 @@ class BackupForGKEConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency DeleteBackupPlan(
       google::cloud::gkebackup::v1::DeleteBackupPlanRequest const& request);
 
+  virtual google::cloud::Idempotency CreateBackupChannel(
+      google::cloud::gkebackup::v1::CreateBackupChannelRequest const& request);
+
+  virtual google::cloud::Idempotency ListBackupChannels(
+      google::cloud::gkebackup::v1::ListBackupChannelsRequest request);
+
+  virtual google::cloud::Idempotency GetBackupChannel(
+      google::cloud::gkebackup::v1::GetBackupChannelRequest const& request);
+
+  virtual google::cloud::Idempotency UpdateBackupChannel(
+      google::cloud::gkebackup::v1::UpdateBackupChannelRequest const& request);
+
+  virtual google::cloud::Idempotency DeleteBackupChannel(
+      google::cloud::gkebackup::v1::DeleteBackupChannelRequest const& request);
+
+  virtual google::cloud::Idempotency ListBackupPlanBindings(
+      google::cloud::gkebackup::v1::ListBackupPlanBindingsRequest request);
+
+  virtual google::cloud::Idempotency GetBackupPlanBinding(
+      google::cloud::gkebackup::v1::GetBackupPlanBindingRequest const& request);
+
   virtual google::cloud::Idempotency CreateBackup(
       google::cloud::gkebackup::v1::CreateBackupRequest const& request);
 
@@ -90,6 +111,28 @@ class BackupForGKEConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency DeleteRestorePlan(
       google::cloud::gkebackup::v1::DeleteRestorePlanRequest const& request);
+
+  virtual google::cloud::Idempotency CreateRestoreChannel(
+      google::cloud::gkebackup::v1::CreateRestoreChannelRequest const& request);
+
+  virtual google::cloud::Idempotency ListRestoreChannels(
+      google::cloud::gkebackup::v1::ListRestoreChannelsRequest request);
+
+  virtual google::cloud::Idempotency GetRestoreChannel(
+      google::cloud::gkebackup::v1::GetRestoreChannelRequest const& request);
+
+  virtual google::cloud::Idempotency UpdateRestoreChannel(
+      google::cloud::gkebackup::v1::UpdateRestoreChannelRequest const& request);
+
+  virtual google::cloud::Idempotency DeleteRestoreChannel(
+      google::cloud::gkebackup::v1::DeleteRestoreChannelRequest const& request);
+
+  virtual google::cloud::Idempotency ListRestorePlanBindings(
+      google::cloud::gkebackup::v1::ListRestorePlanBindingsRequest request);
+
+  virtual google::cloud::Idempotency GetRestorePlanBinding(
+      google::cloud::gkebackup::v1::GetRestorePlanBindingRequest const&
+          request);
 
   virtual google::cloud::Idempotency CreateRestore(
       google::cloud::gkebackup::v1::CreateRestoreRequest const& request);

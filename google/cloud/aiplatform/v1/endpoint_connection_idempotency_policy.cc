@@ -54,6 +54,12 @@ Idempotency EndpointServiceConnectionIdempotencyPolicy::UpdateEndpoint(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency
+EndpointServiceConnectionIdempotencyPolicy::UpdateEndpointLongRunning(
+    google::cloud::aiplatform::v1::UpdateEndpointLongRunningRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency EndpointServiceConnectionIdempotencyPolicy::DeleteEndpoint(
     google::cloud::aiplatform::v1::DeleteEndpointRequest const&) {
   return Idempotency::kNonIdempotent;

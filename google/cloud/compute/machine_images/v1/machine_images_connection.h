@@ -229,6 +229,19 @@ class MachineImagesConnection {
       google::cloud::cpp::compute::machine_images::v1::
           SetIamPolicyRequest const& request);
 
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetLabels(
+      google::cloud::cpp::compute::machine_images::v1::SetLabelsRequest const&
+          request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      NoAwaitTag,
+      google::cloud::cpp::compute::machine_images::v1::SetLabelsRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetLabels(google::cloud::cpp::compute::v1::Operation const& operation);
+
   virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
   TestIamPermissions(google::cloud::cpp::compute::machine_images::v1::
                          TestIamPermissionsRequest const& request);

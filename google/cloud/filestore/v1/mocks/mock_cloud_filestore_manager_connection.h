@@ -493,6 +493,44 @@ class MockCloudFilestoreManagerConnection
               UpdateBackup, (google::longrunning::Operation const& operation),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// PromoteReplica(Matcher<google::cloud::filestore::v1::PromoteReplicaRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::filestore::v1::Instance>>, PromoteReplica,
+      (google::cloud::filestore::v1::PromoteReplicaRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, PromoteReplica(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, PromoteReplica,
+      (NoAwaitTag,
+       google::cloud::filestore::v1::PromoteReplicaRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, PromoteReplica(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::filestore::v1::Instance>>,
+              PromoteReplica, (google::longrunning::Operation const& operation),
+              (override));
+
   MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
               (google::cloud::location::ListLocationsRequest request),
               (override));

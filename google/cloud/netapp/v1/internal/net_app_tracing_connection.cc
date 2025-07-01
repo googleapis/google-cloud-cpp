@@ -142,6 +142,37 @@ NetAppTracingConnection::DeleteStoragePool(
                            child_->DeleteStoragePool(operation));
 }
 
+future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
+NetAppTracingConnection::ValidateDirectoryService(
+    google::cloud::netapp::v1::ValidateDirectoryServiceRequest const& request) {
+  auto span = internal::MakeSpan(
+      "netapp_v1::NetAppConnection::ValidateDirectoryService");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->ValidateDirectoryService(request));
+}
+
+StatusOr<google::longrunning::Operation>
+NetAppTracingConnection::ValidateDirectoryService(
+    NoAwaitTag,
+    google::cloud::netapp::v1::ValidateDirectoryServiceRequest const& request) {
+  auto span = internal::MakeSpan(
+      "netapp_v1::NetAppConnection::ValidateDirectoryService");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->ValidateDirectoryService(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
+NetAppTracingConnection::ValidateDirectoryService(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "netapp_v1::NetAppConnection::ValidateDirectoryService");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->ValidateDirectoryService(operation));
+}
+
 future<StatusOr<google::cloud::netapp::v1::StoragePool>>
 NetAppTracingConnection::SwitchActiveReplicaZone(
     google::cloud::netapp::v1::SwitchActiveReplicaZoneRequest const& request) {
@@ -833,6 +864,65 @@ NetAppTracingConnection::ReverseReplicationDirection(
                            child_->ReverseReplicationDirection(operation));
 }
 
+future<StatusOr<google::cloud::netapp::v1::Replication>>
+NetAppTracingConnection::EstablishPeering(
+    google::cloud::netapp::v1::EstablishPeeringRequest const& request) {
+  auto span =
+      internal::MakeSpan("netapp_v1::NetAppConnection::EstablishPeering");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->EstablishPeering(request));
+}
+
+StatusOr<google::longrunning::Operation>
+NetAppTracingConnection::EstablishPeering(
+    NoAwaitTag,
+    google::cloud::netapp::v1::EstablishPeeringRequest const& request) {
+  auto span =
+      internal::MakeSpan("netapp_v1::NetAppConnection::EstablishPeering");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->EstablishPeering(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::netapp::v1::Replication>>
+NetAppTracingConnection::EstablishPeering(
+    google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("netapp_v1::NetAppConnection::EstablishPeering");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->EstablishPeering(operation));
+}
+
+future<StatusOr<google::cloud::netapp::v1::Replication>>
+NetAppTracingConnection::SyncReplication(
+    google::cloud::netapp::v1::SyncReplicationRequest const& request) {
+  auto span =
+      internal::MakeSpan("netapp_v1::NetAppConnection::SyncReplication");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->SyncReplication(request));
+}
+
+StatusOr<google::longrunning::Operation>
+NetAppTracingConnection::SyncReplication(
+    NoAwaitTag,
+    google::cloud::netapp::v1::SyncReplicationRequest const& request) {
+  auto span =
+      internal::MakeSpan("netapp_v1::NetAppConnection::SyncReplication");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->SyncReplication(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::netapp::v1::Replication>>
+NetAppTracingConnection::SyncReplication(
+    google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("netapp_v1::NetAppConnection::SyncReplication");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->SyncReplication(operation));
+}
+
 future<StatusOr<google::cloud::netapp::v1::BackupVault>>
 NetAppTracingConnection::CreateBackupVault(
     google::cloud::netapp::v1::CreateBackupVaultRequest const& request) {
@@ -1139,6 +1229,111 @@ NetAppTracingConnection::DeleteBackupPolicy(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteBackupPolicy(operation));
+}
+
+StreamRange<google::cloud::netapp::v1::QuotaRule>
+NetAppTracingConnection::ListQuotaRules(
+    google::cloud::netapp::v1::ListQuotaRulesRequest request) {
+  auto span = internal::MakeSpan("netapp_v1::NetAppConnection::ListQuotaRules");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListQuotaRules(std::move(request));
+  return internal::MakeTracedStreamRange<google::cloud::netapp::v1::QuotaRule>(
+      std::move(span), std::move(sr));
+}
+
+StatusOr<google::cloud::netapp::v1::QuotaRule>
+NetAppTracingConnection::GetQuotaRule(
+    google::cloud::netapp::v1::GetQuotaRuleRequest const& request) {
+  auto span = internal::MakeSpan("netapp_v1::NetAppConnection::GetQuotaRule");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetQuotaRule(request));
+}
+
+future<StatusOr<google::cloud::netapp::v1::QuotaRule>>
+NetAppTracingConnection::CreateQuotaRule(
+    google::cloud::netapp::v1::CreateQuotaRuleRequest const& request) {
+  auto span =
+      internal::MakeSpan("netapp_v1::NetAppConnection::CreateQuotaRule");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateQuotaRule(request));
+}
+
+StatusOr<google::longrunning::Operation>
+NetAppTracingConnection::CreateQuotaRule(
+    NoAwaitTag,
+    google::cloud::netapp::v1::CreateQuotaRuleRequest const& request) {
+  auto span =
+      internal::MakeSpan("netapp_v1::NetAppConnection::CreateQuotaRule");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->CreateQuotaRule(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::netapp::v1::QuotaRule>>
+NetAppTracingConnection::CreateQuotaRule(
+    google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("netapp_v1::NetAppConnection::CreateQuotaRule");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateQuotaRule(operation));
+}
+
+future<StatusOr<google::cloud::netapp::v1::QuotaRule>>
+NetAppTracingConnection::UpdateQuotaRule(
+    google::cloud::netapp::v1::UpdateQuotaRuleRequest const& request) {
+  auto span =
+      internal::MakeSpan("netapp_v1::NetAppConnection::UpdateQuotaRule");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateQuotaRule(request));
+}
+
+StatusOr<google::longrunning::Operation>
+NetAppTracingConnection::UpdateQuotaRule(
+    NoAwaitTag,
+    google::cloud::netapp::v1::UpdateQuotaRuleRequest const& request) {
+  auto span =
+      internal::MakeSpan("netapp_v1::NetAppConnection::UpdateQuotaRule");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->UpdateQuotaRule(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::netapp::v1::QuotaRule>>
+NetAppTracingConnection::UpdateQuotaRule(
+    google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("netapp_v1::NetAppConnection::UpdateQuotaRule");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateQuotaRule(operation));
+}
+
+future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
+NetAppTracingConnection::DeleteQuotaRule(
+    google::cloud::netapp::v1::DeleteQuotaRuleRequest const& request) {
+  auto span =
+      internal::MakeSpan("netapp_v1::NetAppConnection::DeleteQuotaRule");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteQuotaRule(request));
+}
+
+StatusOr<google::longrunning::Operation>
+NetAppTracingConnection::DeleteQuotaRule(
+    NoAwaitTag,
+    google::cloud::netapp::v1::DeleteQuotaRuleRequest const& request) {
+  auto span =
+      internal::MakeSpan("netapp_v1::NetAppConnection::DeleteQuotaRule");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->DeleteQuotaRule(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
+NetAppTracingConnection::DeleteQuotaRule(
+    google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("netapp_v1::NetAppConnection::DeleteQuotaRule");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteQuotaRule(operation));
 }
 
 StreamRange<google::cloud::location::Location>

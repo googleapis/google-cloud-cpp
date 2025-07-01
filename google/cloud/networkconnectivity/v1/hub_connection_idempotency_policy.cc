@@ -64,6 +64,11 @@ Idempotency HubServiceConnectionIdempotencyPolicy::ListHubSpokes(
   return Idempotency::kIdempotent;
 }
 
+Idempotency HubServiceConnectionIdempotencyPolicy::QueryHubStatus(
+    google::cloud::networkconnectivity::v1::QueryHubStatusRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
 Idempotency HubServiceConnectionIdempotencyPolicy::ListSpokes(
     google::cloud::networkconnectivity::v1::ListSpokesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
@@ -91,6 +96,16 @@ Idempotency HubServiceConnectionIdempotencyPolicy::RejectHubSpoke(
 
 Idempotency HubServiceConnectionIdempotencyPolicy::AcceptHubSpoke(
     google::cloud::networkconnectivity::v1::AcceptHubSpokeRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency HubServiceConnectionIdempotencyPolicy::AcceptSpokeUpdate(
+    google::cloud::networkconnectivity::v1::AcceptSpokeUpdateRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency HubServiceConnectionIdempotencyPolicy::RejectSpokeUpdate(
+    google::cloud::networkconnectivity::v1::RejectSpokeUpdateRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -127,6 +142,11 @@ Idempotency HubServiceConnectionIdempotencyPolicy::GetGroup(
 Idempotency HubServiceConnectionIdempotencyPolicy::ListGroups(
     google::cloud::networkconnectivity::v1::ListGroupsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
+}
+
+Idempotency HubServiceConnectionIdempotencyPolicy::UpdateGroup(
+    google::cloud::networkconnectivity::v1::UpdateGroupRequest const&) {
+  return Idempotency::kNonIdempotent;
 }
 
 Idempotency HubServiceConnectionIdempotencyPolicy::ListLocations(

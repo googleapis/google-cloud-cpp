@@ -213,6 +213,83 @@ SiteSearchEngineServiceLogging::ListTargetSites(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+SiteSearchEngineServiceLogging::AsyncCreateSitemap(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::discoveryengine::v1::CreateSitemapRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::discoveryengine::v1::CreateSitemapRequest const&
+                 request) {
+        return child_->AsyncCreateSitemap(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+SiteSearchEngineServiceLogging::CreateSitemap(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::CreateSitemapRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::discoveryengine::v1::CreateSitemapRequest const&
+                 request) {
+        return child_->CreateSitemap(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+SiteSearchEngineServiceLogging::AsyncDeleteSitemap(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::discoveryengine::v1::DeleteSitemapRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::discoveryengine::v1::DeleteSitemapRequest const&
+                 request) {
+        return child_->AsyncDeleteSitemap(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+SiteSearchEngineServiceLogging::DeleteSitemap(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::DeleteSitemapRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::discoveryengine::v1::DeleteSitemapRequest const&
+                 request) {
+        return child_->DeleteSitemap(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::discoveryengine::v1::FetchSitemapsResponse>
+SiteSearchEngineServiceLogging::FetchSitemaps(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::discoveryengine::v1::FetchSitemapsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::discoveryengine::v1::FetchSitemapsRequest const&
+                 request) {
+        return child_->FetchSitemaps(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 SiteSearchEngineServiceLogging::AsyncEnableAdvancedSiteSearch(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

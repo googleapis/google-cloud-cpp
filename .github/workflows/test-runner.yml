@@ -9,7 +9,7 @@ on:
   # branches we can disable builds (to speed up the testing) or add new ones,
   # without impacting the rest of the team.
   push:
-    branches: [ 'v[2-9]**', 'ci-gha**' ]
+    branches: [ 'v[2-9]**', 'ci-gha**', 'prepare-for-v3.0.0' ]
   # Start the build in the context of the target branch. This is considered
   # "safe", as the workflow files are already committed. These types of builds
   # have access to the secrets in the build, which we need to use the remote
@@ -75,13 +75,6 @@ jobs:
   # in separate files to keep the size of this file under control. Note how
   # the additional jobs inherit any secrets needed to use the remote caches and
   # receive what version to checkout as an input.
-  external-account-integration:
-    name: External Account Integration
-    needs: [pre-flight]
-    uses: ./.github/workflows/external-account-integration.yml
-    with:
-      checkout-ref: ${{ needs.pre-flight.outputs.checkout-sha }}
-    secrets: inherit
   macos-bazel:
     # Build the full matrix only on push events to the default branch, or
     # when PR gets the has a `gha:full-build` label, or when it had the
@@ -160,7 +153,6 @@ jobs:
     name: Notify-Google-Chat
     # Wait until all the other jobs have completed.
     needs:
-      - external-account-integration
       - macos-bazel
       - macos-cmake
       - windows-bazel

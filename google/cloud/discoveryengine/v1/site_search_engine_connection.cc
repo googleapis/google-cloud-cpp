@@ -157,6 +157,60 @@ SiteSearchEngineServiceConnection::ListTargetSites(
       StreamRange<google::cloud::discoveryengine::v1::TargetSite>>();
 }
 
+future<StatusOr<google::cloud::discoveryengine::v1::Sitemap>>
+SiteSearchEngineServiceConnection::CreateSitemap(
+    google::cloud::discoveryengine::v1::CreateSitemapRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::discoveryengine::v1::Sitemap>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+SiteSearchEngineServiceConnection::CreateSitemap(
+    NoAwaitTag,
+    google::cloud::discoveryengine::v1::CreateSitemapRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::discoveryengine::v1::Sitemap>>
+SiteSearchEngineServiceConnection::CreateSitemap(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::discoveryengine::v1::Sitemap>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::discoveryengine::v1::DeleteSitemapMetadata>>
+SiteSearchEngineServiceConnection::DeleteSitemap(
+    google::cloud::discoveryengine::v1::DeleteSitemapRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::discoveryengine::v1::DeleteSitemapMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+SiteSearchEngineServiceConnection::DeleteSitemap(
+    NoAwaitTag,
+    google::cloud::discoveryengine::v1::DeleteSitemapRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::discoveryengine::v1::DeleteSitemapMetadata>>
+SiteSearchEngineServiceConnection::DeleteSitemap(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::discoveryengine::v1::DeleteSitemapMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::discoveryengine::v1::FetchSitemapsResponse>
+SiteSearchEngineServiceConnection::FetchSitemaps(
+    google::cloud::discoveryengine::v1::FetchSitemapsRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 future<StatusOr<
     google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchResponse>>
 SiteSearchEngineServiceConnection::EnableAdvancedSiteSearch(

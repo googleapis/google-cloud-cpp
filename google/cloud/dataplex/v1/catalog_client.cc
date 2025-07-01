@@ -621,6 +621,104 @@ CatalogServiceClient::SearchEntries(
   return connection_->SearchEntries(std::move(request));
 }
 
+future<StatusOr<google::cloud::dataplex::v1::MetadataJob>>
+CatalogServiceClient::CreateMetadataJob(
+    std::string const& parent,
+    google::cloud::dataplex::v1::MetadataJob const& metadata_job,
+    std::string const& metadata_job_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::dataplex::v1::CreateMetadataJobRequest request;
+  request.set_parent(parent);
+  *request.mutable_metadata_job() = metadata_job;
+  request.set_metadata_job_id(metadata_job_id);
+  return connection_->CreateMetadataJob(request);
+}
+
+StatusOr<google::longrunning::Operation>
+CatalogServiceClient::CreateMetadataJob(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::dataplex::v1::MetadataJob const& metadata_job,
+    std::string const& metadata_job_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::dataplex::v1::CreateMetadataJobRequest request;
+  request.set_parent(parent);
+  *request.mutable_metadata_job() = metadata_job;
+  request.set_metadata_job_id(metadata_job_id);
+  return connection_->CreateMetadataJob(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::dataplex::v1::MetadataJob>>
+CatalogServiceClient::CreateMetadataJob(
+    google::cloud::dataplex::v1::CreateMetadataJobRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateMetadataJob(request);
+}
+
+StatusOr<google::longrunning::Operation>
+CatalogServiceClient::CreateMetadataJob(
+    NoAwaitTag,
+    google::cloud::dataplex::v1::CreateMetadataJobRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateMetadataJob(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::dataplex::v1::MetadataJob>>
+CatalogServiceClient::CreateMetadataJob(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateMetadataJob(operation);
+}
+
+StatusOr<google::cloud::dataplex::v1::MetadataJob>
+CatalogServiceClient::GetMetadataJob(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::dataplex::v1::GetMetadataJobRequest request;
+  request.set_name(name);
+  return connection_->GetMetadataJob(request);
+}
+
+StatusOr<google::cloud::dataplex::v1::MetadataJob>
+CatalogServiceClient::GetMetadataJob(
+    google::cloud::dataplex::v1::GetMetadataJobRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetMetadataJob(request);
+}
+
+StreamRange<google::cloud::dataplex::v1::MetadataJob>
+CatalogServiceClient::ListMetadataJobs(std::string const& parent,
+                                       Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::dataplex::v1::ListMetadataJobsRequest request;
+  request.set_parent(parent);
+  return connection_->ListMetadataJobs(request);
+}
+
+StreamRange<google::cloud::dataplex::v1::MetadataJob>
+CatalogServiceClient::ListMetadataJobs(
+    google::cloud::dataplex::v1::ListMetadataJobsRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListMetadataJobs(std::move(request));
+}
+
+Status CatalogServiceClient::CancelMetadataJob(std::string const& name,
+                                               Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::dataplex::v1::CancelMetadataJobRequest request;
+  request.set_name(name);
+  return connection_->CancelMetadataJob(request);
+}
+
+Status CatalogServiceClient::CancelMetadataJob(
+    google::cloud::dataplex::v1::CancelMetadataJobRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CancelMetadataJob(request);
+}
+
 StreamRange<google::cloud::location::Location>
 CatalogServiceClient::ListLocations(
     google::cloud::location::ListLocationsRequest request, Options opts) {

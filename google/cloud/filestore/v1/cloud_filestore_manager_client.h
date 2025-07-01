@@ -144,8 +144,8 @@ class CloudFilestoreManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.filestore.v1.Instance]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L419}
-  /// [google.cloud.filestore.v1.ListInstancesRequest]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L664}
+  /// [google.cloud.filestore.v1.Instance]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L512}
+  /// [google.cloud.filestore.v1.ListInstancesRequest]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L890}
   ///
   // clang-format on
   StreamRange<google::cloud::filestore::v1::Instance> ListInstances(
@@ -184,8 +184,8 @@ class CloudFilestoreManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.filestore.v1.Instance]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L419}
-  /// [google.cloud.filestore.v1.ListInstancesRequest]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L664}
+  /// [google.cloud.filestore.v1.Instance]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L512}
+  /// [google.cloud.filestore.v1.ListInstancesRequest]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L890}
   ///
   // clang-format on
   StreamRange<google::cloud::filestore::v1::Instance> ListInstances(
@@ -211,8 +211,8 @@ class CloudFilestoreManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.filestore.v1.GetInstanceRequest]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L585}
-  /// [google.cloud.filestore.v1.Instance]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L419}
+  /// [google.cloud.filestore.v1.GetInstanceRequest]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L809}
+  /// [google.cloud.filestore.v1.Instance]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L512}
   ///
   // clang-format on
   StatusOr<google::cloud::filestore::v1::Instance> GetInstance(
@@ -241,8 +241,8 @@ class CloudFilestoreManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.filestore.v1.GetInstanceRequest]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L585}
-  /// [google.cloud.filestore.v1.Instance]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L419}
+  /// [google.cloud.filestore.v1.GetInstanceRequest]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L809}
+  /// [google.cloud.filestore.v1.Instance]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L512}
   ///
   // clang-format on
   StatusOr<google::cloud::filestore::v1::Instance> GetInstance(
@@ -282,8 +282,8 @@ class CloudFilestoreManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.filestore.v1.CreateInstanceRequest]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L565}
-  /// [google.cloud.filestore.v1.Instance]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L419}
+  /// [google.cloud.filestore.v1.CreateInstanceRequest]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L789}
+  /// [google.cloud.filestore.v1.Instance]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L512}
   ///
   // clang-format on
   future<StatusOr<google::cloud::filestore::v1::Instance>> CreateInstance(
@@ -340,8 +340,8 @@ class CloudFilestoreManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.filestore.v1.CreateInstanceRequest]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L565}
-  /// [google.cloud.filestore.v1.Instance]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L419}
+  /// [google.cloud.filestore.v1.CreateInstanceRequest]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L789}
+  /// [google.cloud.filestore.v1.Instance]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L512}
   ///
   // clang-format on
   future<StatusOr<google::cloud::filestore::v1::Instance>> CreateInstance(
@@ -388,6 +388,9 @@ class CloudFilestoreManagerClient {
   ///  * "description"
   ///  * "file_shares"
   ///  * "labels"
+  ///  * "performance_config"
+  ///  * "deletion_protection_enabled"
+  ///  * "deletion_protection_reason"
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO
@@ -408,8 +411,8 @@ class CloudFilestoreManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.filestore.v1.Instance]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L419}
-  /// [google.cloud.filestore.v1.UpdateInstanceRequest]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L595}
+  /// [google.cloud.filestore.v1.Instance]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L512}
+  /// [google.cloud.filestore.v1.UpdateInstanceRequest]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L819}
   ///
   // clang-format on
   future<StatusOr<google::cloud::filestore::v1::Instance>> UpdateInstance(
@@ -461,8 +464,8 @@ class CloudFilestoreManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.filestore.v1.Instance]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L419}
-  /// [google.cloud.filestore.v1.UpdateInstanceRequest]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L595}
+  /// [google.cloud.filestore.v1.Instance]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L512}
+  /// [google.cloud.filestore.v1.UpdateInstanceRequest]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L819}
   ///
   // clang-format on
   future<StatusOr<google::cloud::filestore::v1::Instance>> UpdateInstance(
@@ -531,8 +534,8 @@ class CloudFilestoreManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.filestore.v1.Instance]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L419}
-  /// [google.cloud.filestore.v1.RestoreInstanceRequest]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L611}
+  /// [google.cloud.filestore.v1.Instance]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L512}
+  /// [google.cloud.filestore.v1.RestoreInstanceRequest]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L838}
   ///
   // clang-format on
   future<StatusOr<google::cloud::filestore::v1::Instance>> RestoreInstance(
@@ -597,8 +600,8 @@ class CloudFilestoreManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.filestore.v1.Instance]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L419}
-  /// [google.cloud.filestore.v1.RevertInstanceRequest]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L634}
+  /// [google.cloud.filestore.v1.Instance]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L512}
+  /// [google.cloud.filestore.v1.RevertInstanceRequest]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L861}
   ///
   // clang-format on
   future<StatusOr<google::cloud::filestore::v1::Instance>> RevertInstance(
@@ -660,7 +663,7 @@ class CloudFilestoreManagerClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.common.OperationMetadata]: @googleapis_reference_link{google/cloud/common/operation_metadata.proto#L27}
-  /// [google.cloud.filestore.v1.DeleteInstanceRequest]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L650}
+  /// [google.cloud.filestore.v1.DeleteInstanceRequest]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L876}
   ///
   // clang-format on
   future<StatusOr<google::cloud::common::OperationMetadata>> DeleteInstance(
@@ -711,7 +714,7 @@ class CloudFilestoreManagerClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.common.OperationMetadata]: @googleapis_reference_link{google/cloud/common/operation_metadata.proto#L27}
-  /// [google.cloud.filestore.v1.DeleteInstanceRequest]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L650}
+  /// [google.cloud.filestore.v1.DeleteInstanceRequest]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L876}
   ///
   // clang-format on
   future<StatusOr<google::cloud::common::OperationMetadata>> DeleteInstance(
@@ -776,8 +779,8 @@ class CloudFilestoreManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.filestore.v1.ListSnapshotsRequest]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L807}
-  /// [google.cloud.filestore.v1.Snapshot]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L711}
+  /// [google.cloud.filestore.v1.ListSnapshotsRequest]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L1050}
+  /// [google.cloud.filestore.v1.Snapshot]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L938}
   ///
   // clang-format on
   StreamRange<google::cloud::filestore::v1::Snapshot> ListSnapshots(
@@ -816,8 +819,8 @@ class CloudFilestoreManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.filestore.v1.ListSnapshotsRequest]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L807}
-  /// [google.cloud.filestore.v1.Snapshot]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L711}
+  /// [google.cloud.filestore.v1.ListSnapshotsRequest]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L1050}
+  /// [google.cloud.filestore.v1.Snapshot]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L938}
   ///
   // clang-format on
   StreamRange<google::cloud::filestore::v1::Snapshot> ListSnapshots(
@@ -843,8 +846,8 @@ class CloudFilestoreManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.filestore.v1.GetSnapshotRequest]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L776}
-  /// [google.cloud.filestore.v1.Snapshot]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L711}
+  /// [google.cloud.filestore.v1.GetSnapshotRequest]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L1019}
+  /// [google.cloud.filestore.v1.Snapshot]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L938}
   ///
   // clang-format on
   StatusOr<google::cloud::filestore::v1::Snapshot> GetSnapshot(
@@ -873,8 +876,8 @@ class CloudFilestoreManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.filestore.v1.GetSnapshotRequest]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L776}
-  /// [google.cloud.filestore.v1.Snapshot]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L711}
+  /// [google.cloud.filestore.v1.GetSnapshotRequest]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L1019}
+  /// [google.cloud.filestore.v1.Snapshot]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L938}
   ///
   // clang-format on
   StatusOr<google::cloud::filestore::v1::Snapshot> GetSnapshot(
@@ -913,8 +916,8 @@ class CloudFilestoreManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.filestore.v1.CreateSnapshotRequest]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L756}
-  /// [google.cloud.filestore.v1.Snapshot]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L711}
+  /// [google.cloud.filestore.v1.CreateSnapshotRequest]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L999}
+  /// [google.cloud.filestore.v1.Snapshot]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L938}
   ///
   // clang-format on
   future<StatusOr<google::cloud::filestore::v1::Snapshot>> CreateSnapshot(
@@ -968,8 +971,8 @@ class CloudFilestoreManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.filestore.v1.CreateSnapshotRequest]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L756}
-  /// [google.cloud.filestore.v1.Snapshot]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L711}
+  /// [google.cloud.filestore.v1.CreateSnapshotRequest]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L999}
+  /// [google.cloud.filestore.v1.Snapshot]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L938}
   ///
   // clang-format on
   future<StatusOr<google::cloud::filestore::v1::Snapshot>> CreateSnapshot(
@@ -1031,7 +1034,7 @@ class CloudFilestoreManagerClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.common.OperationMetadata]: @googleapis_reference_link{google/cloud/common/operation_metadata.proto#L27}
-  /// [google.cloud.filestore.v1.DeleteSnapshotRequest]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L786}
+  /// [google.cloud.filestore.v1.DeleteSnapshotRequest]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L1029}
   ///
   // clang-format on
   future<StatusOr<google::cloud::common::OperationMetadata>> DeleteSnapshot(
@@ -1082,7 +1085,7 @@ class CloudFilestoreManagerClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.common.OperationMetadata]: @googleapis_reference_link{google/cloud/common/operation_metadata.proto#L27}
-  /// [google.cloud.filestore.v1.DeleteSnapshotRequest]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L786}
+  /// [google.cloud.filestore.v1.DeleteSnapshotRequest]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L1029}
   ///
   // clang-format on
   future<StatusOr<google::cloud::common::OperationMetadata>> DeleteSnapshot(
@@ -1144,8 +1147,8 @@ class CloudFilestoreManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.filestore.v1.Snapshot]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L711}
-  /// [google.cloud.filestore.v1.UpdateSnapshotRequest]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L796}
+  /// [google.cloud.filestore.v1.Snapshot]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L938}
+  /// [google.cloud.filestore.v1.UpdateSnapshotRequest]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L1039}
   ///
   // clang-format on
   future<StatusOr<google::cloud::filestore::v1::Snapshot>> UpdateSnapshot(
@@ -1197,8 +1200,8 @@ class CloudFilestoreManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.filestore.v1.Snapshot]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L711}
-  /// [google.cloud.filestore.v1.UpdateSnapshotRequest]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L796}
+  /// [google.cloud.filestore.v1.Snapshot]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L938}
+  /// [google.cloud.filestore.v1.UpdateSnapshotRequest]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L1039}
   ///
   // clang-format on
   future<StatusOr<google::cloud::filestore::v1::Snapshot>> UpdateSnapshot(
@@ -1266,8 +1269,8 @@ class CloudFilestoreManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.filestore.v1.Backup]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L841}
-  /// [google.cloud.filestore.v1.ListBackupsRequest]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L984}
+  /// [google.cloud.filestore.v1.Backup]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L1092}
+  /// [google.cloud.filestore.v1.ListBackupsRequest]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L1275}
   ///
   // clang-format on
   StreamRange<google::cloud::filestore::v1::Backup> ListBackups(
@@ -1306,8 +1309,8 @@ class CloudFilestoreManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.filestore.v1.Backup]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L841}
-  /// [google.cloud.filestore.v1.ListBackupsRequest]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L984}
+  /// [google.cloud.filestore.v1.Backup]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L1092}
+  /// [google.cloud.filestore.v1.ListBackupsRequest]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L1275}
   ///
   // clang-format on
   StreamRange<google::cloud::filestore::v1::Backup> ListBackups(
@@ -1333,8 +1336,8 @@ class CloudFilestoreManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.filestore.v1.Backup]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L841}
-  /// [google.cloud.filestore.v1.GetBackupRequest]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L974}
+  /// [google.cloud.filestore.v1.Backup]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L1092}
+  /// [google.cloud.filestore.v1.GetBackupRequest]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L1265}
   ///
   // clang-format on
   StatusOr<google::cloud::filestore::v1::Backup> GetBackup(
@@ -1363,8 +1366,8 @@ class CloudFilestoreManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.filestore.v1.Backup]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L841}
-  /// [google.cloud.filestore.v1.GetBackupRequest]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L974}
+  /// [google.cloud.filestore.v1.Backup]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L1092}
+  /// [google.cloud.filestore.v1.GetBackupRequest]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L1265}
   ///
   // clang-format on
   StatusOr<google::cloud::filestore::v1::Backup> GetBackup(
@@ -1406,8 +1409,8 @@ class CloudFilestoreManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.filestore.v1.Backup]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L841}
-  /// [google.cloud.filestore.v1.CreateBackupRequest]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L928}
+  /// [google.cloud.filestore.v1.Backup]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L1092}
+  /// [google.cloud.filestore.v1.CreateBackupRequest]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L1200}
   ///
   // clang-format on
   future<StatusOr<google::cloud::filestore::v1::Backup>> CreateBackup(
@@ -1461,8 +1464,8 @@ class CloudFilestoreManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.filestore.v1.Backup]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L841}
-  /// [google.cloud.filestore.v1.CreateBackupRequest]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L928}
+  /// [google.cloud.filestore.v1.Backup]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L1092}
+  /// [google.cloud.filestore.v1.CreateBackupRequest]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L1200}
   ///
   // clang-format on
   future<StatusOr<google::cloud::filestore::v1::Backup>> CreateBackup(
@@ -1524,7 +1527,7 @@ class CloudFilestoreManagerClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.common.OperationMetadata]: @googleapis_reference_link{google/cloud/common/operation_metadata.proto#L27}
-  /// [google.cloud.filestore.v1.DeleteBackupRequest]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L953}
+  /// [google.cloud.filestore.v1.DeleteBackupRequest]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L1225}
   ///
   // clang-format on
   future<StatusOr<google::cloud::common::OperationMetadata>> DeleteBackup(
@@ -1576,7 +1579,7 @@ class CloudFilestoreManagerClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.common.OperationMetadata]: @googleapis_reference_link{google/cloud/common/operation_metadata.proto#L27}
-  /// [google.cloud.filestore.v1.DeleteBackupRequest]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L953}
+  /// [google.cloud.filestore.v1.DeleteBackupRequest]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L1225}
   ///
   // clang-format on
   future<StatusOr<google::cloud::common::OperationMetadata>> DeleteBackup(
@@ -1638,8 +1641,8 @@ class CloudFilestoreManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.filestore.v1.Backup]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L841}
-  /// [google.cloud.filestore.v1.UpdateBackupRequest]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L963}
+  /// [google.cloud.filestore.v1.Backup]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L1092}
+  /// [google.cloud.filestore.v1.UpdateBackupRequest]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L1235}
   ///
   // clang-format on
   future<StatusOr<google::cloud::filestore::v1::Backup>> UpdateBackup(
@@ -1691,8 +1694,8 @@ class CloudFilestoreManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.filestore.v1.Backup]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L841}
-  /// [google.cloud.filestore.v1.UpdateBackupRequest]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L963}
+  /// [google.cloud.filestore.v1.Backup]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L1092}
+  /// [google.cloud.filestore.v1.UpdateBackupRequest]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L1235}
   ///
   // clang-format on
   future<StatusOr<google::cloud::filestore::v1::Backup>> UpdateBackup(
@@ -1725,6 +1728,72 @@ class CloudFilestoreManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::filestore::v1::Backup>> UpdateBackup(
+      google::longrunning::Operation const& operation, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Promote the standby instance (replica).
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.filestore.v1.PromoteReplicaRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.filestore.v1.Instance] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.filestore.v1.Instance]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L512}
+  /// [google.cloud.filestore.v1.PromoteReplicaRequest]: @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L1246}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::filestore::v1::Instance>> PromoteReplica(
+      google::cloud::filestore::v1::PromoteReplicaRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief PromoteReplica
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> PromoteReplica(
+      NoAwaitTag,
+      google::cloud::filestore::v1::PromoteReplicaRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief PromoteReplica
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::filestore::v1::Instance>> PromoteReplica(
       google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
@@ -1802,14 +1871,6 @@ class CloudFilestoreManagerClient {
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
   ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
-  ///
   /// @param name  The name of the operation's parent resource.
   /// @param filter  The standard list filter.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -1834,8 +1895,8 @@ class CloudFilestoreManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StreamRange<google::longrunning::Operation> ListOperations(
@@ -1845,14 +1906,6 @@ class CloudFilestoreManagerClient {
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1882,8 +1935,8 @@ class CloudFilestoreManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StreamRange<google::longrunning::Operation> ListOperations(
@@ -1909,8 +1962,8 @@ class CloudFilestoreManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
@@ -1941,8 +1994,8 @@ class CloudFilestoreManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> GetOperation(
@@ -1968,7 +2021,7 @@ class CloudFilestoreManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L201}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
   Status DeleteOperation(std::string const& name, Options opts = {});
@@ -1997,7 +2050,7 @@ class CloudFilestoreManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L201}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
   Status DeleteOperation(
@@ -2014,8 +2067,9 @@ class CloudFilestoreManagerClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param name  The name of the operation resource to be cancelled.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -2029,9 +2083,9 @@ class CloudFilestoreManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
@@ -2047,8 +2101,9 @@ class CloudFilestoreManagerClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -2067,9 +2122,9 @@ class CloudFilestoreManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on

@@ -125,6 +125,15 @@ ReservationServiceClient::UpdateReservation(
   return connection_->UpdateReservation(request);
 }
 
+StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
+ReservationServiceClient::FailoverReservation(
+    google::cloud::bigquery::reservation::v1::FailoverReservationRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->FailoverReservation(request);
+}
+
 StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
 ReservationServiceClient::CreateCapacityCommitment(
     std::string const& parent,

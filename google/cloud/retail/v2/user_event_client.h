@@ -113,7 +113,7 @@ class UserEventServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.retail.v2.UserEvent]: @googleapis_reference_link{google/cloud/retail/v2/user_event.proto#L36}
-  /// [google.cloud.retail.v2.WriteUserEventRequest]: @googleapis_reference_link{google/cloud/retail/v2/user_event_service.proto#L120}
+  /// [google.cloud.retail.v2.WriteUserEventRequest]: @googleapis_reference_link{google/cloud/retail/v2/user_event_service.proto#L126}
   ///
   // clang-format on
   StatusOr<google::cloud::retail::v2::UserEvent> WriteUserEvent(
@@ -122,8 +122,10 @@ class UserEventServiceClient {
 
   // clang-format off
   ///
-  /// Writes a single user event from the browser. This uses a GET request to
-  /// due to browser restriction of POST-ing to a 3rd party domain.
+  /// Writes a single user event from the browser.
+  ///
+  /// For larger user event payload over 16 KB, the POST method should be used
+  /// instead, otherwise a 400 Bad Request error is returned.
   ///
   /// This method is used only by the Retail API JavaScript pixel and Google Tag
   /// Manager. Users should not call this method directly.
@@ -147,8 +149,8 @@ class UserEventServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.api.HttpBody]: @googleapis_reference_link{google/api/httpbody.proto#L71}
-  /// [google.cloud.retail.v2.CollectUserEventRequest]: @googleapis_reference_link{google/cloud/retail/v2/user_event_service.proto#L136}
+  /// [google.api.HttpBody]: @googleapis_reference_link{google/api/httpbody.proto#L70}
+  /// [google.cloud.retail.v2.CollectUserEventRequest]: @googleapis_reference_link{google/cloud/retail/v2/user_event_service.proto#L142}
   ///
   // clang-format on
   StatusOr<google::api::HttpBody> CollectUserEvent(
@@ -262,8 +264,8 @@ class UserEventServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.retail.v2.ImportUserEventsRequest]: @googleapis_reference_link{google/cloud/retail/v2/import_config.proto#L228}
-  /// [google.cloud.retail.v2.ImportUserEventsResponse]: @googleapis_reference_link{google/cloud/retail/v2/import_config.proto#L362}
+  /// [google.cloud.retail.v2.ImportUserEventsRequest]: @googleapis_reference_link{google/cloud/retail/v2/import_config.proto#L225}
+  /// [google.cloud.retail.v2.ImportUserEventsResponse]: @googleapis_reference_link{google/cloud/retail/v2/import_config.proto#L359}
   ///
   // clang-format on
   future<StatusOr<google::cloud::retail::v2::ImportUserEventsResponse>>
@@ -337,8 +339,8 @@ class UserEventServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.retail.v2.RejoinUserEventsRequest]: @googleapis_reference_link{google/cloud/retail/v2/user_event_service.proto#L172}
-  /// [google.cloud.retail.v2.RejoinUserEventsResponse]: @googleapis_reference_link{google/cloud/retail/v2/user_event_service.proto#L204}
+  /// [google.cloud.retail.v2.RejoinUserEventsRequest]: @googleapis_reference_link{google/cloud/retail/v2/user_event_service.proto#L178}
+  /// [google.cloud.retail.v2.RejoinUserEventsResponse]: @googleapis_reference_link{google/cloud/retail/v2/user_event_service.proto#L210}
   ///
   // clang-format on
   future<StatusOr<google::cloud::retail::v2::RejoinUserEventsResponse>>
@@ -380,14 +382,6 @@ class UserEventServiceClient {
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
   ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
-  ///
   /// @param name  The name of the operation's parent resource.
   /// @param filter  The standard list filter.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -412,8 +406,8 @@ class UserEventServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StreamRange<google::longrunning::Operation> ListOperations(
@@ -423,14 +417,6 @@ class UserEventServiceClient {
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -460,8 +446,8 @@ class UserEventServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StreamRange<google::longrunning::Operation> ListOperations(
@@ -487,8 +473,8 @@ class UserEventServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
@@ -519,8 +505,8 @@ class UserEventServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> GetOperation(

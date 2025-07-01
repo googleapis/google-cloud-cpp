@@ -525,6 +525,209 @@ SiteSearchEngineServiceConnectionImpl::ListTargetSites(
       });
 }
 
+future<StatusOr<google::cloud::discoveryengine::v1::Sitemap>>
+SiteSearchEngineServiceConnectionImpl::CreateSitemap(
+    google::cloud::discoveryengine::v1::CreateSitemapRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateSitemap(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::discoveryengine::v1::Sitemap>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::discoveryengine::v1::CreateSitemapRequest const&
+              request) {
+        return stub->AsyncCreateSitemap(cq, std::move(context),
+                                        std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::discoveryengine::v1::Sitemap>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+SiteSearchEngineServiceConnectionImpl::CreateSitemap(
+    NoAwaitTag,
+    google::cloud::discoveryengine::v1::CreateSitemapRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateSitemap(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::discoveryengine::v1::CreateSitemapRequest const&
+                 request) {
+        return stub_->CreateSitemap(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::discoveryengine::v1::Sitemap>>
+SiteSearchEngineServiceConnectionImpl::CreateSitemap(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::discoveryengine::v1::
+                   CreateSitemapMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::discoveryengine::v1::Sitemap>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateSitemap",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::discoveryengine::v1::Sitemap>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::discoveryengine::v1::Sitemap>,
+      polling_policy(*current), __func__);
+}
+
+future<StatusOr<google::cloud::discoveryengine::v1::DeleteSitemapMetadata>>
+SiteSearchEngineServiceConnectionImpl::DeleteSitemap(
+    google::cloud::discoveryengine::v1::DeleteSitemapRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteSitemap(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::discoveryengine::v1::DeleteSitemapMetadata>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::discoveryengine::v1::DeleteSitemapRequest const&
+              request) {
+        return stub->AsyncDeleteSitemap(cq, std::move(context),
+                                        std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::discoveryengine::v1::DeleteSitemapMetadata>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+SiteSearchEngineServiceConnectionImpl::DeleteSitemap(
+    NoAwaitTag,
+    google::cloud::discoveryengine::v1::DeleteSitemapRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteSitemap(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::discoveryengine::v1::DeleteSitemapRequest const&
+                 request) {
+        return stub_->DeleteSitemap(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::discoveryengine::v1::DeleteSitemapMetadata>>
+SiteSearchEngineServiceConnectionImpl::DeleteSitemap(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::discoveryengine::v1::
+                   DeleteSitemapMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::discoveryengine::v1::DeleteSitemapMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteSitemap",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::discoveryengine::v1::DeleteSitemapMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::discoveryengine::v1::DeleteSitemapMetadata>,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::cloud::discoveryengine::v1::FetchSitemapsResponse>
+SiteSearchEngineServiceConnectionImpl::FetchSitemaps(
+    google::cloud::discoveryengine::v1::FetchSitemapsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->FetchSitemaps(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::discoveryengine::v1::FetchSitemapsRequest const&
+                 request) {
+        return stub_->FetchSitemaps(context, options, request);
+      },
+      *current, request, __func__);
+}
+
 future<StatusOr<
     google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchResponse>>
 SiteSearchEngineServiceConnectionImpl::EnableAdvancedSiteSearch(

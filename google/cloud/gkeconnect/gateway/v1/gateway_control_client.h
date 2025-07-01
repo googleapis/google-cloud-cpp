@@ -19,7 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKECONNECT_GATEWAY_V1_GATEWAY_CONTROL_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKECONNECT_GATEWAY_V1_GATEWAY_CONTROL_CLIENT_H
 
-#include "google/cloud/gkeconnect/gateway/v1/gateway_control_connection.h"
+#include "google/cloud/gkeconnect/gateway/v1/gateway_control_rest_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"

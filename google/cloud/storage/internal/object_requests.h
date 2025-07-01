@@ -290,6 +290,39 @@ class ComposeObjectRequest
 std::ostream& operator<<(std::ostream& os, ComposeObjectRequest const& r);
 
 /**
+ * Represents a request to the `Objects: move` API.
+ */
+class MoveObjectRequest
+    : public GenericObjectRequest<
+          MoveObjectRequest, IfGenerationMatch, IfGenerationNotMatch,
+          IfMetagenerationMatch, IfMetagenerationNotMatch,
+          IfSourceGenerationMatch, IfSourceGenerationNotMatch,
+          IfSourceMetagenerationMatch, IfSourceMetagenerationNotMatch,
+          Projection> {
+ public:
+  MoveObjectRequest() = default;
+  explicit MoveObjectRequest(std::string bucket_name,
+                             std::string source_object_name,
+                             std::string destination_object_name)
+      : bucket_name_(std::move(bucket_name)),
+        source_object_name_(std::move(source_object_name)),
+        destination_object_name_(std::move(destination_object_name)) {}
+
+  std::string const& bucket_name() const { return bucket_name_; }
+  std::string const& source_object_name() const { return source_object_name_; }
+  std::string const& destination_object_name() const {
+    return destination_object_name_;
+  }
+
+ private:
+  std::string bucket_name_;
+  std::string source_object_name_;
+  std::string destination_object_name_;
+};
+
+std::ostream& operator<<(std::ostream& os, MoveObjectRequest const& r);
+
+/**
  * Represents a request to the `Objects: patch` API.
  */
 class PatchObjectRequest

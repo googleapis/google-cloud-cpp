@@ -63,7 +63,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// such a copy when using this class from multiple threads.
 ///
 /// [google.cloud.dialogflow.cx.v3.Version]:
-/// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L148}
+/// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L147}
 ///
 class VersionsClient {
  public:
@@ -95,7 +95,8 @@ class VersionsClient {
   /// [Flow][google.cloud.dialogflow.cx.v3.Flow].
   ///
   /// @param parent  Required. The [Flow][google.cloud.dialogflow.cx.v3.Flow] to list all
-  ///  versions for. Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/flows/<Flow ID>`.
+  ///  versions for. Format:
+  ///  `projects/<ProjectID>/locations/<LocationID>/agents/<AgentID>/flows/<FlowID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -120,7 +121,7 @@ class VersionsClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.cx.v3.Flow]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L253}
   /// [google.cloud.dialogflow.cx.v3.ListVersionsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L195}
-  /// [google.cloud.dialogflow.cx.v3.Version]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L148}
+  /// [google.cloud.dialogflow.cx.v3.Version]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L147}
   ///
   // clang-format on
   StreamRange<google::cloud::dialogflow::cx::v3::Version> ListVersions(
@@ -161,7 +162,7 @@ class VersionsClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.cx.v3.Flow]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L253}
   /// [google.cloud.dialogflow.cx.v3.ListVersionsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L195}
-  /// [google.cloud.dialogflow.cx.v3.Version]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L148}
+  /// [google.cloud.dialogflow.cx.v3.Version]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L147}
   ///
   // clang-format on
   StreamRange<google::cloud::dialogflow::cx::v3::Version> ListVersions(
@@ -173,7 +174,8 @@ class VersionsClient {
   /// Retrieves the specified [Version][google.cloud.dialogflow.cx.v3.Version].
   ///
   /// @param name  Required. The name of the [Version][google.cloud.dialogflow.cx.v3.Version].
-  ///  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/flows/<Flow ID>/versions/<Version ID>`.
+  ///  Format:
+  ///  `projects/<ProjectID>/locations/<LocationID>/agents/<AgentID>/flows/<FlowID>/versions/<VersionID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -188,7 +190,7 @@ class VersionsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.cx.v3.GetVersionRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L229}
-  /// [google.cloud.dialogflow.cx.v3.Version]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L148}
+  /// [google.cloud.dialogflow.cx.v3.Version]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L147}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::Version> GetVersion(
@@ -218,7 +220,7 @@ class VersionsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.cx.v3.GetVersionRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L229}
-  /// [google.cloud.dialogflow.cx.v3.Version]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L148}
+  /// [google.cloud.dialogflow.cx.v3.Version]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L147}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::Version> GetVersion(
@@ -240,7 +242,7 @@ class VersionsClient {
   ///
   /// @param parent  Required. The [Flow][google.cloud.dialogflow.cx.v3.Flow] to create an
   ///  [Version][google.cloud.dialogflow.cx.v3.Version] for. Format:
-  ///  `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/flows/<Flow ID>`.
+  ///  `projects/<ProjectID>/locations/<LocationID>/agents/<AgentID>/flows/<FlowID>`.
   /// @param version  Required. The version to create.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -262,10 +264,10 @@ class VersionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.CreateVersionOperationMetadata]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L138}
+  /// [google.cloud.dialogflow.cx.v3.CreateVersionOperationMetadata]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L137}
   /// [google.cloud.dialogflow.cx.v3.CreateVersionRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L243}
   /// [google.cloud.dialogflow.cx.v3.Flow]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L253}
-  /// [google.cloud.dialogflow.cx.v3.Version]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L148}
+  /// [google.cloud.dialogflow.cx.v3.Version]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L147}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::cx::v3::Version>> CreateVersion(
@@ -328,10 +330,10 @@ class VersionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.CreateVersionOperationMetadata]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L138}
+  /// [google.cloud.dialogflow.cx.v3.CreateVersionOperationMetadata]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L137}
   /// [google.cloud.dialogflow.cx.v3.CreateVersionRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L243}
   /// [google.cloud.dialogflow.cx.v3.Flow]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L253}
-  /// [google.cloud.dialogflow.cx.v3.Version]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L148}
+  /// [google.cloud.dialogflow.cx.v3.Version]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L147}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::cx::v3::Version>> CreateVersion(
@@ -386,8 +388,8 @@ class VersionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.UpdateVersionRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L261}
-  /// [google.cloud.dialogflow.cx.v3.Version]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L148}
+  /// [google.cloud.dialogflow.cx.v3.UpdateVersionRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L260}
+  /// [google.cloud.dialogflow.cx.v3.Version]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L147}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::Version> UpdateVersion(
@@ -417,8 +419,8 @@ class VersionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.UpdateVersionRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L261}
-  /// [google.cloud.dialogflow.cx.v3.Version]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L148}
+  /// [google.cloud.dialogflow.cx.v3.UpdateVersionRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L260}
+  /// [google.cloud.dialogflow.cx.v3.Version]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L147}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::Version> UpdateVersion(
@@ -430,7 +432,8 @@ class VersionsClient {
   /// Deletes the specified [Version][google.cloud.dialogflow.cx.v3.Version].
   ///
   /// @param name  Required. The name of the [Version][google.cloud.dialogflow.cx.v3.Version]
-  ///  to delete. Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/flows/<Flow ID>/versions/<Version ID>`.
+  ///  to delete. Format:
+  ///  `projects/<ProjectID>/locations/<LocationID>/agents/<AgentID>/flows/<FlowID>/versions/<VersionID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [`Status`] object. If the request failed, the
@@ -442,8 +445,8 @@ class VersionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.DeleteVersionRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L273}
-  /// [google.cloud.dialogflow.cx.v3.Version]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L148}
+  /// [google.cloud.dialogflow.cx.v3.DeleteVersionRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L272}
+  /// [google.cloud.dialogflow.cx.v3.Version]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L147}
   ///
   // clang-format on
   Status DeleteVersion(std::string const& name, Options opts = {});
@@ -469,8 +472,8 @@ class VersionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.DeleteVersionRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L273}
-  /// [google.cloud.dialogflow.cx.v3.Version]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L148}
+  /// [google.cloud.dialogflow.cx.v3.DeleteVersionRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L272}
+  /// [google.cloud.dialogflow.cx.v3.Version]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L147}
   ///
   // clang-format on
   Status DeleteVersion(
@@ -491,7 +494,8 @@ class VersionsClient {
   ///   message](https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#empty)
   ///
   /// @param name  Required. The [Version][google.cloud.dialogflow.cx.v3.Version] to be loaded
-  ///  to draft flow. Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/flows/<Flow ID>/versions/<Version ID>`.
+  ///  to draft flow. Format:
+  ///  `projects/<ProjectID>/locations/<LocationID>/agents/<AgentID>/flows/<FlowID>/versions/<VersionID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO
@@ -512,8 +516,8 @@ class VersionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.LoadVersionRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L287}
-  /// [google.cloud.dialogflow.cx.v3.Version]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L148}
+  /// [google.cloud.dialogflow.cx.v3.LoadVersionRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L286}
+  /// [google.cloud.dialogflow.cx.v3.Version]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L147}
   /// [google.protobuf.Struct]: @googleapis_reference_link{google/protobuf/struct.proto#L51}
   ///
   // clang-format on
@@ -574,7 +578,7 @@ class VersionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.LoadVersionRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L287}
+  /// [google.cloud.dialogflow.cx.v3.LoadVersionRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L286}
   /// [google.protobuf.Struct]: @googleapis_reference_link{google/protobuf/struct.proto#L51}
   ///
   // clang-format on
@@ -617,7 +621,8 @@ class VersionsClient {
   /// @param base_version  Required. Name of the base flow version to compare with the target version.
   ///  Use version ID `0` to indicate the draft version of the specified flow.
   ///  @n
-  ///  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/flows/<Flow ID>/versions/<Version ID>`.
+  ///  Format:
+  ///  `projects/<ProjectID>/locations/<LocationID>/agents/<AgentID>/flows/<FlowID>/versions/<VersionID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -631,8 +636,8 @@ class VersionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.CompareVersionsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L307}
-  /// [google.cloud.dialogflow.cx.v3.CompareVersionsResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L343}
+  /// [google.cloud.dialogflow.cx.v3.CompareVersionsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L306}
+  /// [google.cloud.dialogflow.cx.v3.CompareVersionsResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L342}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::CompareVersionsResponse>
@@ -661,8 +666,8 @@ class VersionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.CompareVersionsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L307}
-  /// [google.cloud.dialogflow.cx.v3.CompareVersionsResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L343}
+  /// [google.cloud.dialogflow.cx.v3.CompareVersionsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L306}
+  /// [google.cloud.dialogflow.cx.v3.CompareVersionsResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L342}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::CompareVersionsResponse>
@@ -745,14 +750,6 @@ class VersionsClient {
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
   ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
-  ///
   /// @param name  The name of the operation's parent resource.
   /// @param filter  The standard list filter.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -777,8 +774,8 @@ class VersionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StreamRange<google::longrunning::Operation> ListOperations(
@@ -788,14 +785,6 @@ class VersionsClient {
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -825,8 +814,8 @@ class VersionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StreamRange<google::longrunning::Operation> ListOperations(
@@ -852,8 +841,8 @@ class VersionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
@@ -884,8 +873,8 @@ class VersionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> GetOperation(
@@ -902,8 +891,9 @@ class VersionsClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param name  The name of the operation resource to be cancelled.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -917,9 +907,9 @@ class VersionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
@@ -935,8 +925,9 @@ class VersionsClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -955,9 +946,9 @@ class VersionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on

@@ -55,6 +55,19 @@ class NetworkFirewallPoliciesTracingConnection
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddAssociation(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AddPacketMirroringRule(
+      google::cloud::cpp::compute::network_firewall_policies::v1::
+          AddPacketMirroringRuleRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> AddPacketMirroringRule(
+      NoAwaitTag, google::cloud::cpp::compute::network_firewall_policies::v1::
+                      AddPacketMirroringRuleRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AddPacketMirroringRule(
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddRule(
       google::cloud::cpp::compute::network_firewall_policies::v1::
           AddRuleRequest const& request) override;
@@ -65,6 +78,12 @@ class NetworkFirewallPoliciesTracingConnection
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddRule(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
+
+  StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::FirewallPoliciesScopedList>>
+  AggregatedListNetworkFirewallPolicies(
+      google::cloud::cpp::compute::network_firewall_policies::v1::
+          AggregatedListNetworkFirewallPoliciesRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> CloneRules(
       google::cloud::cpp::compute::network_firewall_policies::v1::
@@ -102,6 +121,11 @@ class NetworkFirewallPoliciesTracingConnection
       google::cloud::cpp::compute::network_firewall_policies::v1::
           GetIamPolicyRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::FirewallPolicyRule>
+  GetPacketMirroringRule(
+      google::cloud::cpp::compute::network_firewall_policies::v1::
+          GetPacketMirroringRuleRequest const& request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::FirewallPolicyRule> GetRule(
       google::cloud::cpp::compute::network_firewall_policies::v1::
           GetRuleRequest const& request) override;
@@ -137,6 +161,19 @@ class NetworkFirewallPoliciesTracingConnection
   PatchFirewallPolicy(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PatchPacketMirroringRule(
+      google::cloud::cpp::compute::network_firewall_policies::v1::
+          PatchPacketMirroringRuleRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchPacketMirroringRule(
+      NoAwaitTag, google::cloud::cpp::compute::network_firewall_policies::v1::
+                      PatchPacketMirroringRuleRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PatchPacketMirroringRule(
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchRule(
       google::cloud::cpp::compute::network_firewall_policies::v1::
           PatchRuleRequest const& request) override;
@@ -158,6 +195,20 @@ class NetworkFirewallPoliciesTracingConnection
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   RemoveAssociation(
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  RemovePacketMirroringRule(
+      google::cloud::cpp::compute::network_firewall_policies::v1::
+          RemovePacketMirroringRuleRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  RemovePacketMirroringRule(
+      NoAwaitTag, google::cloud::cpp::compute::network_firewall_policies::v1::
+                      RemovePacketMirroringRuleRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  RemovePacketMirroringRule(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> RemoveRule(

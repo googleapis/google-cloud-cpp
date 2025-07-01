@@ -355,6 +355,20 @@ class NetworkServicesConnectionImpl
   CreateServiceBinding(
       google::longrunning::Operation const& operation) override;
 
+  future<StatusOr<google::cloud::networkservices::v1::ServiceBinding>>
+  UpdateServiceBinding(
+      google::cloud::networkservices::v1::UpdateServiceBindingRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateServiceBinding(
+      NoAwaitTag,
+      google::cloud::networkservices::v1::UpdateServiceBindingRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::networkservices::v1::ServiceBinding>>
+  UpdateServiceBinding(
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
   DeleteServiceBinding(
       google::cloud::networkservices::v1::DeleteServiceBindingRequest const&
@@ -411,6 +425,77 @@ class NetworkServicesConnectionImpl
 
   future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
   DeleteMesh(google::longrunning::Operation const& operation) override;
+
+  StreamRange<google::cloud::networkservices::v1::ServiceLbPolicy>
+  ListServiceLbPolicies(
+      google::cloud::networkservices::v1::ListServiceLbPoliciesRequest request)
+      override;
+
+  StatusOr<google::cloud::networkservices::v1::ServiceLbPolicy>
+  GetServiceLbPolicy(
+      google::cloud::networkservices::v1::GetServiceLbPolicyRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::networkservices::v1::ServiceLbPolicy>>
+  CreateServiceLbPolicy(
+      google::cloud::networkservices::v1::CreateServiceLbPolicyRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> CreateServiceLbPolicy(
+      NoAwaitTag,
+      google::cloud::networkservices::v1::CreateServiceLbPolicyRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::networkservices::v1::ServiceLbPolicy>>
+  CreateServiceLbPolicy(
+      google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::networkservices::v1::ServiceLbPolicy>>
+  UpdateServiceLbPolicy(
+      google::cloud::networkservices::v1::UpdateServiceLbPolicyRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateServiceLbPolicy(
+      NoAwaitTag,
+      google::cloud::networkservices::v1::UpdateServiceLbPolicyRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::networkservices::v1::ServiceLbPolicy>>
+  UpdateServiceLbPolicy(
+      google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+  DeleteServiceLbPolicy(
+      google::cloud::networkservices::v1::DeleteServiceLbPolicyRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteServiceLbPolicy(
+      NoAwaitTag,
+      google::cloud::networkservices::v1::DeleteServiceLbPolicyRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+  DeleteServiceLbPolicy(
+      google::longrunning::Operation const& operation) override;
+
+  StatusOr<google::cloud::networkservices::v1::GatewayRouteView>
+  GetGatewayRouteView(
+      google::cloud::networkservices::v1::GetGatewayRouteViewRequest const&
+          request) override;
+
+  StatusOr<google::cloud::networkservices::v1::MeshRouteView> GetMeshRouteView(
+      google::cloud::networkservices::v1::GetMeshRouteViewRequest const&
+          request) override;
+
+  StreamRange<google::cloud::networkservices::v1::GatewayRouteView>
+  ListGatewayRouteViews(
+      google::cloud::networkservices::v1::ListGatewayRouteViewsRequest request)
+      override;
+
+  StreamRange<google::cloud::networkservices::v1::MeshRouteView>
+  ListMeshRouteViews(
+      google::cloud::networkservices::v1::ListMeshRouteViewsRequest request)
+      override;
 
   StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request) override;
