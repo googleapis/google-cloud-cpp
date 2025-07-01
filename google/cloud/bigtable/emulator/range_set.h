@@ -146,18 +146,9 @@ class TimestampRangeSet {
         google::bigtable::v2::TimestampRange const& timestamp_range);
 
     Value start() const { return start_; }
-    Value start_finite() const { return start_; }
-    // NOLINTNEXTLINE(readability-convert-member-functions-to-static)
-    bool start_open() const { return false; }
-    // NOLINTNEXTLINE(readability-convert-member-functions-to-static)
-    bool start_closed() const { return true; }
     void set_start(Range const& source) { start_ = source.start_; }
 
     Value end() const { return end_; }
-    // NOLINTNEXTLINE(readability-convert-member-functions-to-static)
-    bool end_open() const { return true; }
-    // NOLINTNEXTLINE(readability-convert-member-functions-to-static)
-    bool end_closed() const { return false; }
     void set_end(Range const& source) { end_ = source.end_; }
 
     bool IsBelowStart(Value value) const { return value < start_; }

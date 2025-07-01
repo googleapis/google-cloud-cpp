@@ -13,14 +13,12 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/emulator/column_family.h"
-#include "google/cloud/bigtable/emulator/row_streamer.h"
 #include "google/cloud/bigtable/emulator/table.h"
 #include "google/cloud/internal/big_endian.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include "gmock/gmock.h"
 #include <google/bigtable/admin/v2/bigtable_table_admin.grpc.pb.h>
 #include <google/bigtable/admin/v2/bigtable_table_admin.pb.h>
 #include <google/bigtable/admin/v2/table.pb.h>

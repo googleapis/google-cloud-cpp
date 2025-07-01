@@ -44,7 +44,7 @@ namespace emulator {
 // uninteresting columns and avoid passing all the values around. Most of the
 // filters can be applied in any order, which makes our filtering task easy.
 //
-// Unfortunately, some filters (e.g. `cells_per_row_limit_filter`) prevents us
+// Unfortunately, some filters (e.g. `cells_per_row_limit_filter`) prevent us
 // from moving filters applied later in the chain to its beginning. Hence, we
 // need to keep the naive (object-per-graph-node) approach at least as a backup
 // option.
