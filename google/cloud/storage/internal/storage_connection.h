@@ -110,6 +110,12 @@ class StorageConnection {
       DeleteResumableUploadRequest const& request) = 0;
   virtual StatusOr<QueryResumableUploadResponse> UploadChunk(
       UploadChunkRequest const& request) = 0;
+  virtual StatusOr<EmptyResponse> UploadFileSimple(
+      std::string const& file_name, std::size_t file_size,
+      InsertObjectMediaRequest& request) = 0;
+  virtual StatusOr<std::unique_ptr<std::istream>> UploadFileResumable(
+      std::string const& file_name,
+      ResumableUploadRequest& request) = 0;
   ///@}
 
   ///@{

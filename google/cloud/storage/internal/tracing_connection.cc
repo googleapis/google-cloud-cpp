@@ -235,6 +235,26 @@ TracingConnection::UploadChunk(
   return internal::EndSpan(*span, impl_->UploadChunk(request));
 }
 
+StatusOr<storage::internal::EmptyResponse> TracingConnection::UploadFileSimple(
+    std::string const& file_name, std::size_t file_size,
+    storage::internal::InsertObjectMediaRequest& request) {
+  auto span =
+      internal::MakeSpan("storage::Client::UploadFile/UploadFileSimple");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(
+      *span, impl_->UploadFileSimple(file_name, file_size, request));
+}
+
+StatusOr<std::unique_ptr<std::istream>> TracingConnection::UploadFileResumable(
+    std::string const& file_name,
+    storage::internal::ResumableUploadRequest& request) {
+  auto span =
+      internal::MakeSpan("storage::Client::UploadFile/UploadFileResumable");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span,
+                           impl_->UploadFileResumable(file_name, request));
+}
+
 StatusOr<storage::internal::ListBucketAclResponse>
 TracingConnection::ListBucketAcl(
     storage::internal::ListBucketAclRequest const& request) {

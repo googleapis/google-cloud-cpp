@@ -99,6 +99,12 @@ class StorageConnectionImpl
       DeleteResumableUploadRequest const& request) override;
   StatusOr<QueryResumableUploadResponse> UploadChunk(
       UploadChunkRequest const& request) override;
+  StatusOr<EmptyResponse> UploadFileSimple(
+      std::string const& file_name, std::size_t file_size,
+      InsertObjectMediaRequest& request) override;
+  StatusOr<std::unique_ptr<std::istream>> UploadFileResumable(
+      std::string const& file_name,
+      ResumableUploadRequest& request) override;
 
   StatusOr<ListBucketAclResponse> ListBucketAcl(
       ListBucketAclRequest const& request) override;

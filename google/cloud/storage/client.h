@@ -3511,7 +3511,9 @@ class Client {
         SpanOptions(std::forward<Options>(options)...));
     internal::ResumableUploadRequest request(bucket_name, object_name);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return UploadFileResumable(file_name, std::move(request));
+    auto source = connection_->UploadFileResumable(file_name, request);
+    if (!source) return source.status();
+    return UploadStreamResumable(*source.value(), request);
   }
 
   // The version of UploadFile() where UseResumableUploadSession is *not* one of
@@ -3530,21 +3532,18 @@ class Client {
       internal::InsertObjectMediaRequest request(bucket_name, object_name,
                                                  std::string{});
       request.set_multiple_options(std::forward<Options>(options)...);
-      return UploadFileSimple(file_name, file_size, request);
+      auto status = connection_->UploadFileSimple(file_name, file_size, request);
+      if (!status) return status.status();
+      return connection_->InsertObjectMedia(request);
     }
     internal::ResumableUploadRequest request(bucket_name, object_name);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return UploadFileResumable(file_name, std::move(request));
+    auto source = connection_->UploadFileResumable(file_name, request);
+    if (!source) return source.status();
+    return UploadStreamResumable(*source.value(), request);
   }
 
   static bool UseSimpleUpload(std::string const& file_name, std::size_t& size);
-
-  StatusOr<ObjectMetadata> UploadFileSimple(
-      std::string const& file_name, std::size_t file_size,
-      internal::InsertObjectMediaRequest request);
-
-  StatusOr<ObjectMetadata> UploadFileResumable(
-      std::string const& file_name, internal::ResumableUploadRequest request);
 
   StatusOr<ObjectMetadata> UploadStreamResumable(
       std::istream& source,
