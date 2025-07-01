@@ -404,7 +404,8 @@ TEST(ClientTest, CommitMutatorSuccess) {
 
   auto conn = std::make_shared<MockConnection>();
   Transaction txn = MakeReadWriteTransaction();  // placeholder
-  Connection::ReadParams actual_read_params{txn, {}, {}, {}, {}, {}, {}, {}};
+  Connection::ReadParams actual_read_params{txn, {}, {}, {}, {},
+                                            {},  {}, {}, {}};
   Connection::CommitParams actual_commit_params{txn, {}, {}};
 
   auto source = std::make_unique<MockResultSetSource>();
@@ -453,7 +454,8 @@ TEST(ClientTest, CommitMutatorSuccess) {
 TEST(ClientTest, CommitMutatorRollback) {
   auto conn = std::make_shared<MockConnection>();
   Transaction txn = MakeReadWriteTransaction();  // placeholder
-  Connection::ReadParams actual_read_params{txn, {}, {}, {}, {}, {}, {}, {}};
+  Connection::ReadParams actual_read_params{txn, {}, {}, {}, {},
+                                            {},  {}, {}, {}};
 
   auto source = std::make_unique<MockResultSetSource>();
   auto constexpr kText = R"pb(
@@ -495,7 +497,8 @@ TEST(ClientTest, CommitMutatorRollback) {
 TEST(ClientTest, CommitMutatorRollbackError) {
   auto conn = std::make_shared<MockConnection>();
   Transaction txn = MakeReadWriteTransaction();  // placeholder
-  Connection::ReadParams actual_read_params{txn, {}, {}, {}, {}, {}, {}, {}};
+  Connection::ReadParams actual_read_params{txn, {}, {}, {}, {},
+                                            {},  {}, {}, {}};
 
   auto source = std::make_unique<MockResultSetSource>();
   auto constexpr kText = R"pb(
