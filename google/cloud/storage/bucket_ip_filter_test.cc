@@ -23,8 +23,8 @@ namespace {
 
 TEST(BucketIpFilterTest, PublicNetworkSource) {
   BucketIpFilterPublicNetworkSource source;
-  source.allowed_ip_cidr_ranges.push_back("1.2.3.4/32");
-  source.allowed_ip_cidr_ranges.push_back("5.6.7.8/32");
+  source.allowed_ip_cidr_ranges.emplace_back("1.2.3.4/32");
+  source.allowed_ip_cidr_ranges.emplace_back("5.6.7.8/32");
 
   BucketIpFilterPublicNetworkSource copy = source;
   EXPECT_EQ(source, copy);
@@ -36,8 +36,8 @@ TEST(BucketIpFilterTest, PublicNetworkSource) {
 TEST(BucketIpFilterTest, VpcNetworkSource) {
   BucketIpFilterVpcNetworkSource source;
   source.network = "projects/p/global/networks/n";
-  source.allowed_ip_cidr_ranges.push_back("1.2.3.4/32");
-  source.allowed_ip_cidr_ranges.push_back("5.6.7.8/32");
+  source.allowed_ip_cidr_ranges.emplace_back("1.2.3.4/32");
+  source.allowed_ip_cidr_ranges.emplace_back("5.6.7.8/32");
 
   BucketIpFilterVpcNetworkSource copy = source;
   EXPECT_EQ(source, copy);
