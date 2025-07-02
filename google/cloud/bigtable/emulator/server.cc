@@ -325,6 +325,7 @@ class DefaultEmulatorServer : public EmulatorServer {
         table_service_(cluster_) {
     builder_.AddListeningPort(host + ":" + std::to_string(port),
                               grpc::InsecureServerCredentials(), &bound_port_);
+    builder_.SetMaxReceiveMessageSize(256 * 1024 * 1024);
     builder_.RegisterService(&bt_service_);
     builder_.RegisterService(&table_service_);
     server_ = builder_.BuildAndStart();

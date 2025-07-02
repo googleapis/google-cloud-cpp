@@ -517,11 +517,15 @@ Table::CheckAndMutateRow(
 Status Table::ReadRows(google::bigtable::v2::ReadRowsRequest const& request,
                        RowStreamer& row_streamer) const {
   std::shared_ptr<StringRangeSet> row_set;
-  if (request.has_rows()) {
+  // We need to check that, not only do we have rows, but that it is
+  // not empty (i.e. at least one of row_range or rows is specified).
+  if (request.has_rows() && (request.rows().row_ranges_size() > 0 ||
+                             request.rows().row_keys_size() > 0)) {
     auto maybe_row_set = CreateStringRangeSet(request.rows());
     if (!maybe_row_set) {
       return maybe_row_set.status();
     }
+
     row_set = std::make_shared<StringRangeSet>(*std::move(maybe_row_set));
   } else {
     row_set = std::make_shared<StringRangeSet>(StringRangeSet::All());
@@ -538,6 +542,10 @@ Status Table::ReadRows(google::bigtable::v2::ReadRowsRequest const& request,
   if (!maybe_stream) {
     return maybe_stream.status();
   }
+
+  std::int64_t rows_count = 0;
+  absl::optional<std::string> current_row_key;
+
   CellStream& stream = *maybe_stream;
   for (; stream; ++stream) {
     std::cout << "Row: " << stream->row_key()
@@ -547,11 +555,25 @@ Status Table::ReadRows(google::bigtable::v2::ReadRowsRequest const& request,
               << " column_value: " << stream->value() << " label: "
               << (stream->HasLabel() ? stream->label() : std::string("unset"))
               << std::endl;
+
+    if (request.rows_limit() > 0) {
+      if (!current_row_key.has_value() ||
+          stream->row_key() != current_row_key.value()) {
+        rows_count++;
+        current_row_key = stream->row_key();
+      }
+
+      if (rows_count > request.rows_limit()) {
+        break;
+      }
+    }
+
     if (!row_streamer.Stream(*stream)) {
       std::cout << "HOW?" << std::endl;
       return AbortedError("Stream closed by the client.", GCP_ERROR_INFO());
     }
   }
+
   if (!row_streamer.Flush(true)) {
     std::cout << "Flush failed?" << std::endl;
     return AbortedError("Stream closed by the client.", GCP_ERROR_INFO());
