@@ -542,6 +542,33 @@ TEST(ObjectRequestsTest, RestoreObject) {
   EXPECT_THAT(actual, HasSubstr("copySourceAcl=true"));
 }
 
+TEST(ObjectRequestsTest, MoveObject) {
+  MoveObjectRequest request("test-bucket", "source-object-name",
+                            "destination-object-name");
+  EXPECT_EQ("test-bucket", request.bucket_name());
+  EXPECT_EQ("source-object-name", request.source_object_name());
+  EXPECT_EQ("destination-object-name", request.destination_object_name());
+  request.set_multiple_options(
+      IfGenerationMatch(1), IfGenerationNotMatch(2), IfMetagenerationMatch(3),
+      IfMetagenerationNotMatch(4), IfSourceGenerationMatch(5),
+      IfSourceGenerationNotMatch(6), IfSourceMetagenerationMatch(7),
+      IfSourceMetagenerationNotMatch(8));
+  std::ostringstream os;
+  os << request;
+  std::string actual = os.str();
+  EXPECT_THAT(actual, HasSubstr("test-bucket"));
+  EXPECT_THAT(actual, HasSubstr("source-object-name"));
+  EXPECT_THAT(actual, HasSubstr("destination-object-name"));
+  EXPECT_THAT(actual, HasSubstr("ifGenerationMatch=1"));
+  EXPECT_THAT(actual, HasSubstr("ifGenerationNotMatch=2"));
+  EXPECT_THAT(actual, HasSubstr("ifMetagenerationMatch=3"));
+  EXPECT_THAT(actual, HasSubstr("ifMetagenerationNotMatch=4"));
+  EXPECT_THAT(actual, HasSubstr("ifSourceGenerationMatch=5"));
+  EXPECT_THAT(actual, HasSubstr("ifSourceGenerationNotMatch=6"));
+  EXPECT_THAT(actual, HasSubstr("ifSourceMetagenerationMatch=7"));
+  EXPECT_THAT(actual, HasSubstr("ifSourceMetagenerationNotMatch=8"));
+}
+
 TEST(ObjectRequestsTest, ResumableUpload) {
   ResumableUploadRequest request("source-bucket", "source-object");
   EXPECT_EQ("source-bucket", request.bucket_name());

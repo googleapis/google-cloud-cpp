@@ -52,6 +52,35 @@ class MockRowAccessPolicyServiceConnection
       ListRowAccessPolicies,
       (google::cloud::bigquery::v2::ListRowAccessPoliciesRequest request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::bigquery::v2::RowAccessPolicy>,
+      GetRowAccessPolicy,
+      (google::cloud::bigquery::v2::GetRowAccessPolicyRequest const& request),
+      (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::bigquery::v2::RowAccessPolicy>,
+              CreateRowAccessPolicy,
+              (google::cloud::bigquery::v2::CreateRowAccessPolicyRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::bigquery::v2::RowAccessPolicy>,
+              UpdateRowAccessPolicy,
+              (google::cloud::bigquery::v2::UpdateRowAccessPolicyRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(Status, DeleteRowAccessPolicy,
+              (google::cloud::bigquery::v2::DeleteRowAccessPolicyRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(
+      Status, BatchDeleteRowAccessPolicies,
+      (google::cloud::bigquery::v2::BatchDeleteRowAccessPoliciesRequest const&
+           request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

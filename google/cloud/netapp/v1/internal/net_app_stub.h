@@ -82,6 +82,19 @@ class NetAppStub {
       google::cloud::netapp::v1::DeleteStoragePoolRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncValidateDirectoryService(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::netapp::v1::ValidateDirectoryServiceRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> ValidateDirectoryService(
+      grpc::ClientContext& context, Options options,
+      google::cloud::netapp::v1::ValidateDirectoryServiceRequest const&
+          request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>>
   AsyncSwitchActiveReplicaZone(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -362,6 +375,27 @@ class NetAppStub {
           request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncEstablishPeering(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::netapp::v1::EstablishPeeringRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> EstablishPeering(
+      grpc::ClientContext& context, Options options,
+      google::cloud::netapp::v1::EstablishPeeringRequest const& request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncSyncReplication(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::netapp::v1::SyncReplicationRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> SyncReplication(
+      grpc::ClientContext& context, Options options,
+      google::cloud::netapp::v1::SyncReplicationRequest const& request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>>
   AsyncCreateBackupVault(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -483,6 +517,45 @@ class NetAppStub {
       grpc::ClientContext& context, Options options,
       google::cloud::netapp::v1::DeleteBackupPolicyRequest const& request) = 0;
 
+  virtual StatusOr<google::cloud::netapp::v1::ListQuotaRulesResponse>
+  ListQuotaRules(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::netapp::v1::ListQuotaRulesRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::netapp::v1::QuotaRule> GetQuotaRule(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::netapp::v1::GetQuotaRuleRequest const& request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateQuotaRule(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::netapp::v1::CreateQuotaRuleRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> CreateQuotaRule(
+      grpc::ClientContext& context, Options options,
+      google::cloud::netapp::v1::CreateQuotaRuleRequest const& request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateQuotaRule(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::netapp::v1::UpdateQuotaRuleRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> UpdateQuotaRule(
+      grpc::ClientContext& context, Options options,
+      google::cloud::netapp::v1::UpdateQuotaRuleRequest const& request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteQuotaRule(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::netapp::v1::DeleteQuotaRuleRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> DeleteQuotaRule(
+      grpc::ClientContext& context, Options options,
+      google::cloud::netapp::v1::DeleteQuotaRuleRequest const& request) = 0;
+
   virtual StatusOr<google::cloud::location::ListLocationsResponse>
   ListLocations(
       grpc::ClientContext& context, Options const& options,
@@ -577,6 +650,19 @@ class DefaultNetAppStub : public NetAppStub {
   StatusOr<google::longrunning::Operation> DeleteStoragePool(
       grpc::ClientContext& context, Options options,
       google::cloud::netapp::v1::DeleteStoragePoolRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncValidateDirectoryService(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::netapp::v1::ValidateDirectoryServiceRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> ValidateDirectoryService(
+      grpc::ClientContext& context, Options options,
+      google::cloud::netapp::v1::ValidateDirectoryServiceRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncSwitchActiveReplicaZone(
@@ -865,6 +951,30 @@ class DefaultNetAppStub : public NetAppStub {
       google::cloud::netapp::v1::ReverseReplicationDirectionRequest const&
           request) override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncEstablishPeering(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::netapp::v1::EstablishPeeringRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> EstablishPeering(
+      grpc::ClientContext& context, Options options,
+      google::cloud::netapp::v1::EstablishPeeringRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncSyncReplication(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::netapp::v1::SyncReplicationRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> SyncReplication(
+      grpc::ClientContext& context, Options options,
+      google::cloud::netapp::v1::SyncReplicationRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncCreateBackupVault(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -992,6 +1102,50 @@ class DefaultNetAppStub : public NetAppStub {
   StatusOr<google::longrunning::Operation> DeleteBackupPolicy(
       grpc::ClientContext& context, Options options,
       google::cloud::netapp::v1::DeleteBackupPolicyRequest const& request)
+      override;
+
+  StatusOr<google::cloud::netapp::v1::ListQuotaRulesResponse> ListQuotaRules(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::netapp::v1::ListQuotaRulesRequest const& request) override;
+
+  StatusOr<google::cloud::netapp::v1::QuotaRule> GetQuotaRule(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::netapp::v1::GetQuotaRuleRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateQuotaRule(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::netapp::v1::CreateQuotaRuleRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CreateQuotaRule(
+      grpc::ClientContext& context, Options options,
+      google::cloud::netapp::v1::CreateQuotaRuleRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateQuotaRule(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::netapp::v1::UpdateQuotaRuleRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UpdateQuotaRule(
+      grpc::ClientContext& context, Options options,
+      google::cloud::netapp::v1::UpdateQuotaRuleRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteQuotaRule(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::netapp::v1::DeleteQuotaRuleRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteQuotaRule(
+      grpc::ClientContext& context, Options options,
+      google::cloud::netapp::v1::DeleteQuotaRuleRequest const& request)
       override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(

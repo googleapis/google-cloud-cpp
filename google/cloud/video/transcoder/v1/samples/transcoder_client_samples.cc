@@ -42,7 +42,7 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
   //     https://cloud.google.com/vpc/docs/private-google-access
   auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>(
       "private.googleapis.com");
-  auto client = google::cloud::video_transcoder_v1::TranscoderServiceClient(
+  auto vpc_client = google::cloud::video_transcoder_v1::TranscoderServiceClient(
       google::cloud::video_transcoder_v1::MakeTranscoderServiceConnection(
           options));
   //! [set-client-endpoint]

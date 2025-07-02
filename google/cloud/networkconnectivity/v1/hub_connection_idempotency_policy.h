@@ -57,6 +57,9 @@ class HubServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency ListHubSpokes(
       google::cloud::networkconnectivity::v1::ListHubSpokesRequest request);
 
+  virtual google::cloud::Idempotency QueryHubStatus(
+      google::cloud::networkconnectivity::v1::QueryHubStatusRequest request);
+
   virtual google::cloud::Idempotency ListSpokes(
       google::cloud::networkconnectivity::v1::ListSpokesRequest request);
 
@@ -77,6 +80,14 @@ class HubServiceConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency AcceptHubSpoke(
       google::cloud::networkconnectivity::v1::AcceptHubSpokeRequest const&
+          request);
+
+  virtual google::cloud::Idempotency AcceptSpokeUpdate(
+      google::cloud::networkconnectivity::v1::AcceptSpokeUpdateRequest const&
+          request);
+
+  virtual google::cloud::Idempotency RejectSpokeUpdate(
+      google::cloud::networkconnectivity::v1::RejectSpokeUpdateRequest const&
           request);
 
   virtual google::cloud::Idempotency DeleteSpoke(
@@ -101,6 +112,10 @@ class HubServiceConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency ListGroups(
       google::cloud::networkconnectivity::v1::ListGroupsRequest request);
+
+  virtual google::cloud::Idempotency UpdateGroup(
+      google::cloud::networkconnectivity::v1::UpdateGroupRequest const&
+          request);
 
   virtual google::cloud::Idempotency ListLocations(
       google::cloud::location::ListLocationsRequest request);

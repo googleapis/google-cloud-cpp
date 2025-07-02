@@ -332,6 +332,48 @@ CatalogServiceConnection::SearchEntries(
       StreamRange<google::cloud::dataplex::v1::SearchEntriesResult>>();
 }
 
+future<StatusOr<google::cloud::dataplex::v1::MetadataJob>>
+CatalogServiceConnection::CreateMetadataJob(
+    google::cloud::dataplex::v1::CreateMetadataJobRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::dataplex::v1::MetadataJob>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+CatalogServiceConnection::CreateMetadataJob(
+    NoAwaitTag, google::cloud::dataplex::v1::CreateMetadataJobRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::dataplex::v1::MetadataJob>>
+CatalogServiceConnection::CreateMetadataJob(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::dataplex::v1::MetadataJob>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::dataplex::v1::MetadataJob>
+CatalogServiceConnection::GetMetadataJob(
+    google::cloud::dataplex::v1::GetMetadataJobRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::cloud::dataplex::v1::MetadataJob>
+CatalogServiceConnection::ListMetadataJobs(
+    google::cloud::dataplex::v1::
+        ListMetadataJobsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::dataplex::v1::MetadataJob>>();
+}
+
+Status CatalogServiceConnection::CancelMetadataJob(
+    google::cloud::dataplex::v1::CancelMetadataJobRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StreamRange<google::cloud::location::Location>
 CatalogServiceConnection::ListLocations(
     google::cloud::location::

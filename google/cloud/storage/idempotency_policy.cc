@@ -93,6 +93,10 @@ bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
   return true;
 }
 bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
+    internal::MoveObjectRequest const&) const {
+  return true;
+}
+bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
     internal::PatchObjectRequest const&) const {
   return true;
 }
@@ -339,6 +343,11 @@ bool StrictIdempotencyPolicy::IsIdempotent(
     internal::UpdateObjectRequest const& request) const {
   return request.HasOption<IfMatchEtag>() ||
          request.HasOption<IfMetagenerationMatch>();
+}
+
+bool StrictIdempotencyPolicy::IsIdempotent(
+    internal::MoveObjectRequest const& request) const {
+  return request.HasOption<IfGenerationMatch>();
 }
 
 bool StrictIdempotencyPolicy::IsIdempotent(

@@ -19,10 +19,12 @@
 #include "google/cloud/internal/curl_handle_factory.h"
 #include "google/cloud/internal/curl_wrappers.h"
 #include "google/cloud/internal/curl_writev.h"
+#include "google/cloud/internal/http_header.h"
 #include "google/cloud/internal/rest_context.h"
 #include "google/cloud/internal/rest_request.h"
 #include "google/cloud/internal/rest_response.h"
 #include "google/cloud/options.h"
+#include "google/cloud/ssl_certificate.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include "absl/types/optional.h"
@@ -81,9 +83,9 @@ class CurlImpl {
   CurlImpl& operator=(CurlImpl const&) = delete;
   CurlImpl& operator=(CurlImpl&&) = default;
 
-  void SetHeader(std::string const& header);
-  void SetHeader(std::pair<std::string, std::string> const& header);
-  void SetHeaders(RestContext const& context, RestRequest const& request);
+  void SetHeader(HttpHeader header);
+  void SetHeaders(
+      std::unordered_map<std::string, std::vector<std::string>> const& headers);
 
   std::string MakeEscapedString(std::string const& s);
 
@@ -107,10 +109,19 @@ class CurlImpl {
   std::size_t WriteCallback(absl::Span<char> response);
   std::size_t HeaderCallback(absl::Span<char> response);
 
+  // Traverses the accrued headers added via SetHeader(s), merges the values of
+  // headers with like keys and writes them via the write_fn.
+  // The write_fn is provided for testing purposes. When used internally, the
+  // write_fn writes to libcurl buffers.
+  void MergeAndWriteHeaders(
+      std::function<void(HttpHeader const&)> const& write_fn);
+
  private:
   class ReadFunctionAbortGuard;
   Status MakeRequestImpl(RestContext& context);
   StatusOr<std::size_t> ReadImpl(RestContext& context, absl::Span<char> output);
+
+  void WriteHeader(std::string const& header);
 
   // Cleanup the CURL handles, leaving them ready for reuse.
   void CleanupHandles();
@@ -125,6 +136,7 @@ class CurlImpl {
   void OnTransferDone();
 
   std::shared_ptr<CurlHandleFactory> factory_;
+  std::vector<HttpHeader> pending_request_headers_;
   CurlHeaders request_headers_;
   CurlHandle handle_;
   CurlMulti multi_;
@@ -142,6 +154,10 @@ class CurlImpl {
   absl::optional<std::string> proxy_;
   absl::optional<std::string> proxy_username_;
   absl::optional<std::string> proxy_password_;
+
+  absl::optional<experimental::SslCertificate> client_ssl_cert_ = absl::nullopt;
+
+  absl::optional<std::string> interface_;
 
   CurlReceivedHeaders received_headers_;
   std::string url_;
@@ -191,6 +207,9 @@ absl::optional<std::string> CurlOptProxyUsername(Options const& options);
 
 /// Compute the CURLOPT_PROXYPASSWORD setting from @p options.
 absl::optional<std::string> CurlOptProxyPassword(Options const& options);
+
+/// Compute the CURLOPT_INTERFACE setting from @p options.
+absl::optional<std::string> CurlOptInterface(Options const& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace rest_internal

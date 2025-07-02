@@ -25,7 +25,6 @@ jobs:
     runs-on: ${{ matrix.os }}
     permissions:
       contents: 'read'
-      id-token: 'write'
     strategy:
       # Continue other builds even if one fails
       fail-fast: false

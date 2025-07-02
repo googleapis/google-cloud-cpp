@@ -144,6 +144,61 @@ Idempotency BigtableInstanceAdminConnectionIdempotencyPolicy::ListHotTablets(
   return Idempotency::kIdempotent;
 }
 
+Idempotency BigtableInstanceAdminConnectionIdempotencyPolicy::CreateLogicalView(
+    google::bigtable::admin::v2::CreateLogicalViewRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency BigtableInstanceAdminConnectionIdempotencyPolicy::GetLogicalView(
+    google::bigtable::admin::v2::GetLogicalViewRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency BigtableInstanceAdminConnectionIdempotencyPolicy::ListLogicalViews(
+    google::bigtable::admin::v2::ListLogicalViewsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency BigtableInstanceAdminConnectionIdempotencyPolicy::UpdateLogicalView(
+    google::bigtable::admin::v2::UpdateLogicalViewRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency BigtableInstanceAdminConnectionIdempotencyPolicy::DeleteLogicalView(
+    google::bigtable::admin::v2::DeleteLogicalViewRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
+BigtableInstanceAdminConnectionIdempotencyPolicy::CreateMaterializedView(
+    google::bigtable::admin::v2::CreateMaterializedViewRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
+BigtableInstanceAdminConnectionIdempotencyPolicy::GetMaterializedView(
+    google::bigtable::admin::v2::GetMaterializedViewRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency
+BigtableInstanceAdminConnectionIdempotencyPolicy::ListMaterializedViews(
+    google::bigtable::admin::v2::ListMaterializedViewsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency
+BigtableInstanceAdminConnectionIdempotencyPolicy::UpdateMaterializedView(
+    google::bigtable::admin::v2::UpdateMaterializedViewRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
+BigtableInstanceAdminConnectionIdempotencyPolicy::DeleteMaterializedView(
+    google::bigtable::admin::v2::DeleteMaterializedViewRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<BigtableInstanceAdminConnectionIdempotencyPolicy>
 MakeDefaultBigtableInstanceAdminConnectionIdempotencyPolicy() {
   return std::make_unique<BigtableInstanceAdminConnectionIdempotencyPolicy>();

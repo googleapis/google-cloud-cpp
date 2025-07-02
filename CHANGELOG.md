@@ -4,7 +4,149 @@
 breaking changes in the upcoming 3.x release. This release is scheduled for
 2024-12 or 2025-01.
 
-## v2.32.0 - TBD
+## v2.39.0 - TBD
+
+## v2.38.0 - 2025-06
+
+### New Libraries
+
+We are happy to announce the following GA libraries. Unless specifically noted,
+the APIs in these libraries are stable, and are ready for production use.
+
+- [Dataform API](/google/cloud/dataform/README.md)
+- [Google Cloud Managed Lustre API](/google/cloud/lustre/README.md)
+- [Memorystore API](/google/cloud/memorystore/README.md)
+- [Oracle Database@Google Cloud API](/google/cloud/oracledatabase/README.md)
+
+### [Pub/Sub](/google/cloud/pubsub/README.md)
+
+- feat(pubsub): add MakeConnection overloads to support regional and locational endpoints ([#15190](https://github.com/googleapis/google-cloud-cpp/pull/15190))
+
+### [Storage](/google/cloud/storage/README.md)
+
+- samples(storage): add the bucket soft delete related tags ([#15154](https://github.com/googleapis/google-cloud-cpp/pull/15154))
+- samples(storage): add samples for soft delete objects ([#15133](https://github.com/googleapis/google-cloud-cpp/pull/15133))
+
+### [Common Libraries](/google/cloud/README.md)
+
+- feat(resourcemanager): add Connection factory function for regional endpoints ([#15189](https://github.com/googleapis/google-cloud-cpp/pull/15189))
+- samples(storagecontrol): add samples for anywhere cache ([#15134](https://github.com/googleapis/google-cloud-cpp/pull/15134))
+- fix: Bypass proxy for GCE metadata server requests
+
+### [Google APIs interface definitions](https://github.com/googleapis/googleapis)
+
+- This release is based on definitions as of [2025-06-04T16:36:46-07:00](https://github.com/googleapis/googleapis/tree/de157ca34fa487ce248eb9130293d630b501e4ad)
+
+## v2.37.0 - 2025-05
+
+**BREAKING CHANGES**
+
+Client library `resourcesettings` is being removed because the service has been turned down.
+
+### New Libraries
+
+We are happy to announce the following GA libraries. Unless specifically noted,
+the APIs in these libraries are stable, and are ready for production use.
+
+- [Financial Services API](/google/cloud/financialservices/README.md)
+- [Storage Batch Operations API](/google/cloud/storagebatchoperations/README.md)
+- [Device Streaming API](/google/cloud/devicestreaming/README.md)
+- [Chronicle API](/google/cloud/chronicle/README.md)
+
+### Updated Libraries
+
+- [iam](/google/cloud/iam/README.md) - add v3 version of the library
+
+### [Spanner](/google/cloud/spanner/README.md)
+
+- feat(spanner): add spanner::Value support for TypeCode::INTERVAL ([#15094](https://github.com/googleapis/google-cloud-cpp/pull/15094))
+- feat(spanner): add ISO8601 duration support to spanner::Interval ([#15077](https://github.com/googleapis/google-cloud-cpp/pull/15077))
+- fix(spanner): update session bookkeeping for session NotFound ([#15009](https://github.com/googleapis/google-cloud-cpp/pull/15009))
+
+### [Storage](/google/cloud/storage/README.md)
+
+- feat(storage): Make absl::cord constructor public in write_payload.h ([#15113](https://github.com/googleapis/google-cloud-cpp/pull/15113))
+- feat(storage): Add bidiread and bidi appendable write to the async client. ([#15078](https://github.com/googleapis/google-cloud-cpp/pull/15078))
+- fix: fix bug with customheadersoption ([#15053](https://github.com/googleapis/google-cloud-cpp/pull/15053))
+
+### [Common Libraries](/google/cloud/README.md)
+
+- feat: add option to allow setting CURLOPT_INTERFACE ([#15044](https://github.com/googleapis/google-cloud-cpp/pull/15044))
+
+### [Google APIs interface definitions](https://github.com/googleapis/googleapis)
+
+- This release is based on definitions as of [2025-05-02T13:03:05-07:00](https://github.com/googleapis/googleapis/tree/079e5305050859d0e3a8c0768611283ee4863c07)
+
+## v2.36.0 - 2025-03
+
+### New Libraries
+
+We are happy to announce the following GA libraries. Unless specifically noted,
+the APIs in these libraries are stable, and are ready for production use.
+
+- [Parameter Manager API](/google/cloud/parametermanager/README.md)
+
+### [Google APIs interface definitions](https://github.com/googleapis/googleapis)
+
+- This release is based on definitions as of [2025-02-27T08:14:18-08:00](https://github.com/googleapis/googleapis/tree/b151ec2ae29c2c955c56784c0ce388b2d8c4a84c)
+
+## v2.35.0 - 2025-02
+
+### [Pub/Sub](/google/cloud/pubsub/README.md)
+
+- docs(pubsub): Add Pub/Sub ingestion from Kafka samples ([#14954](https://github.com/googleapis/google-cloud-cpp/pull/14954))
+
+### [Common Libraries](/google/cloud/README.md)
+
+- doc: update documentation to point to security best practice ([#14942](https://github.com/googleapis/google-cloud-cpp/pull/14942))
+
+### [Google APIs interface definitions](https://github.com/googleapis/googleapis)
+
+- This release is based on definitions as of [2025-01-28T16:10:24-08:00](https://github.com/googleapis/googleapis/tree/280725e991516d4a0f136268faf5aa6d32d21b54)
+
+## v2.34.0 - 2025-01
+
+### [OpenTelemetry](/google/cloud/opentelemetry/README.md)
+
+- fix(otel): Exporter creating Monitored Resource with task_id for Cloud Run ([#14923](https://github.com/googleapis/google-cloud-cpp/pull/14923))
+- feat(otel): copy service labels into GCM Metric ([#14930](https://github.com/googleapis/google-cloud-cpp/pull/14930))
+
+### [Storage](/google/cloud/storage/README.md)
+
+- feat(storage): add MoveObject functionality to JSON and gRPC ([#14936](https://github.com/googleapis/google-cloud-cpp/pull/14936))
+
+## v2.33.0 - 2024-12
+
+### [BigQuery Control](/google/cloud/bigquerycontrol/README.md)
+
+ - Has been promoted from an `experimental` library to GA.
+
+### [Storage](/google/cloud/storage/README.md)
+
+- docs(storage): Update build instructions for gcs+grpc ([#14833](https://github.com/googleapis/google-cloud-cpp/pull/14833))
+
+### [GKE Connect Gateway](/google/cloud/gkeconnect/README.md)
+
+- fix(gkeconnect): service only supports REST endpoint ([#14897](https://github.com/googleapis/google-cloud-cpp/pull/14897))
+
+### [Google APIs interface definitions](https://github.com/googleapis/googleapis)
+
+- This release is based on definitions as of [2024-12-13T14:53:44-08:00](https://github.com/googleapis/googleapis/tree/f4eff5440fd07389f820d22d2a55690c6390dc6d)
+
+## v2.32.0 - 2024-12
+
+### [Spanner](/google/cloud/spanner/README.md)
+
+- feat(spanner): add samples for MR CMEK ([#14674](https://github.com/googleapis/google-cloud-cpp/pull/14674))
+
+### [Common Libraries](/google/cloud/README.md)
+
+- feat(rest): support generateIdToken in impersonation url ([#14853](https://github.com/googleapis/google-cloud-cpp/pull/14853))
+- feat(rest): support impersonated ADC ([#14815](https://github.com/googleapis/google-cloud-cpp/pull/14815))
+
+### [Google APIs interface definitions](https://github.com/googleapis/googleapis)
+
+- This release is based on definitions as of [2024-11-28T13:52:13-08:00](https://github.com/googleapis/googleapis/tree/d675ec222c431e3346ba8aaf0027392fe8b3d90c)
 
 ## v2.31.0 - 2024-11
 

@@ -210,6 +210,71 @@ SiteSearchEngineServiceTracingConnection::ListTargetSites(
                                                       std::move(sr));
 }
 
+future<StatusOr<google::cloud::discoveryengine::v1::Sitemap>>
+SiteSearchEngineServiceTracingConnection::CreateSitemap(
+    google::cloud::discoveryengine::v1::CreateSitemapRequest const& request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::SiteSearchEngineServiceConnection::CreateSitemap");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateSitemap(request));
+}
+
+StatusOr<google::longrunning::Operation>
+SiteSearchEngineServiceTracingConnection::CreateSitemap(
+    NoAwaitTag,
+    google::cloud::discoveryengine::v1::CreateSitemapRequest const& request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::SiteSearchEngineServiceConnection::CreateSitemap");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span, child_->CreateSitemap(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::discoveryengine::v1::Sitemap>>
+SiteSearchEngineServiceTracingConnection::CreateSitemap(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::SiteSearchEngineServiceConnection::CreateSitemap");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateSitemap(operation));
+}
+
+future<StatusOr<google::cloud::discoveryengine::v1::DeleteSitemapMetadata>>
+SiteSearchEngineServiceTracingConnection::DeleteSitemap(
+    google::cloud::discoveryengine::v1::DeleteSitemapRequest const& request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::SiteSearchEngineServiceConnection::DeleteSitemap");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteSitemap(request));
+}
+
+StatusOr<google::longrunning::Operation>
+SiteSearchEngineServiceTracingConnection::DeleteSitemap(
+    NoAwaitTag,
+    google::cloud::discoveryengine::v1::DeleteSitemapRequest const& request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::SiteSearchEngineServiceConnection::DeleteSitemap");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span, child_->DeleteSitemap(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::discoveryengine::v1::DeleteSitemapMetadata>>
+SiteSearchEngineServiceTracingConnection::DeleteSitemap(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::SiteSearchEngineServiceConnection::DeleteSitemap");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteSitemap(operation));
+}
+
+StatusOr<google::cloud::discoveryengine::v1::FetchSitemapsResponse>
+SiteSearchEngineServiceTracingConnection::FetchSitemaps(
+    google::cloud::discoveryengine::v1::FetchSitemapsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::SiteSearchEngineServiceConnection::FetchSitemaps");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->FetchSitemaps(request));
+}
+
 future<StatusOr<
     google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchResponse>>
 SiteSearchEngineServiceTracingConnection::EnableAdvancedSiteSearch(

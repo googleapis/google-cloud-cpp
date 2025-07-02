@@ -86,6 +86,21 @@ class CloudControlsPartnerCoreTracingStub
       google::cloud::cloudcontrolspartner::v1::GetPartnerRequest const& request)
       override;
 
+  StatusOr<google::cloud::cloudcontrolspartner::v1::Customer> CreateCustomer(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::cloudcontrolspartner::v1::CreateCustomerRequest const&
+          request) override;
+
+  StatusOr<google::cloud::cloudcontrolspartner::v1::Customer> UpdateCustomer(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::cloudcontrolspartner::v1::UpdateCustomerRequest const&
+          request) override;
+
+  Status DeleteCustomer(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::cloudcontrolspartner::v1::DeleteCustomerRequest const&
+          request) override;
+
  private:
   std::shared_ptr<CloudControlsPartnerCoreStub> child_;
   std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>

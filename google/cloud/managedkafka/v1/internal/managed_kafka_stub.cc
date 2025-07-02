@@ -253,6 +253,88 @@ Status DefaultManagedKafkaStub::DeleteConsumerGroup(
   return google::cloud::Status();
 }
 
+StatusOr<google::cloud::managedkafka::v1::ListAclsResponse>
+DefaultManagedKafkaStub::ListAcls(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::managedkafka::v1::ListAclsRequest const& request) {
+  google::cloud::managedkafka::v1::ListAclsResponse response;
+  auto status = grpc_stub_->ListAcls(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::managedkafka::v1::Acl> DefaultManagedKafkaStub::GetAcl(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::managedkafka::v1::GetAclRequest const& request) {
+  google::cloud::managedkafka::v1::Acl response;
+  auto status = grpc_stub_->GetAcl(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::managedkafka::v1::Acl>
+DefaultManagedKafkaStub::CreateAcl(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::managedkafka::v1::CreateAclRequest const& request) {
+  google::cloud::managedkafka::v1::Acl response;
+  auto status = grpc_stub_->CreateAcl(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::managedkafka::v1::Acl>
+DefaultManagedKafkaStub::UpdateAcl(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::managedkafka::v1::UpdateAclRequest const& request) {
+  google::cloud::managedkafka::v1::Acl response;
+  auto status = grpc_stub_->UpdateAcl(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+Status DefaultManagedKafkaStub::DeleteAcl(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::managedkafka::v1::DeleteAclRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = grpc_stub_->DeleteAcl(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
+}
+
+StatusOr<google::cloud::managedkafka::v1::AddAclEntryResponse>
+DefaultManagedKafkaStub::AddAclEntry(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::managedkafka::v1::AddAclEntryRequest const& request) {
+  google::cloud::managedkafka::v1::AddAclEntryResponse response;
+  auto status = grpc_stub_->AddAclEntry(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::managedkafka::v1::RemoveAclEntryResponse>
+DefaultManagedKafkaStub::RemoveAclEntry(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::managedkafka::v1::RemoveAclEntryRequest const& request) {
+  google::cloud::managedkafka::v1::RemoveAclEntryResponse response;
+  auto status = grpc_stub_->RemoveAclEntry(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 DefaultManagedKafkaStub::ListLocations(
     grpc::ClientContext& context, Options const&,

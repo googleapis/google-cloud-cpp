@@ -528,6 +528,326 @@ future<StatusOr<google::cloud::tpu::v2::Node>> TpuConnectionImpl::UpdateNode(
       polling_policy(*current), __func__);
 }
 
+StreamRange<google::cloud::tpu::v2::QueuedResource>
+TpuConnectionImpl::ListQueuedResources(
+    google::cloud::tpu::v2::ListQueuedResourcesRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListQueuedResources(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::tpu::v2::QueuedResource>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<tpu_v2::TpuRetryPolicy>(retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::cloud::tpu::v2::ListQueuedResourcesRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::tpu::v2::ListQueuedResourcesRequest const&
+                       request) {
+              return stub->ListQueuedResources(context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::cloud::tpu::v2::ListQueuedResourcesResponse r) {
+        std::vector<google::cloud::tpu::v2::QueuedResource> result(
+            r.queued_resources().size());
+        auto& messages = *r.mutable_queued_resources();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+StatusOr<google::cloud::tpu::v2::QueuedResource>
+TpuConnectionImpl::GetQueuedResource(
+    google::cloud::tpu::v2::GetQueuedResourceRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetQueuedResource(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::tpu::v2::GetQueuedResourceRequest const& request) {
+        return stub_->GetQueuedResource(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::tpu::v2::QueuedResource>>
+TpuConnectionImpl::CreateQueuedResource(
+    google::cloud::tpu::v2::CreateQueuedResourceRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateQueuedResource(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::tpu::v2::QueuedResource>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::tpu::v2::CreateQueuedResourceRequest const& request) {
+        return stub->AsyncCreateQueuedResource(cq, std::move(context),
+                                               std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::tpu::v2::QueuedResource>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+TpuConnectionImpl::CreateQueuedResource(
+    NoAwaitTag,
+    google::cloud::tpu::v2::CreateQueuedResourceRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateQueuedResource(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::tpu::v2::CreateQueuedResourceRequest const& request) {
+        return stub_->CreateQueuedResource(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::tpu::v2::QueuedResource>>
+TpuConnectionImpl::CreateQueuedResource(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::tpu::v2::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::tpu::v2::QueuedResource>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateQueuedResource",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::tpu::v2::QueuedResource>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::tpu::v2::QueuedResource>,
+      polling_policy(*current), __func__);
+}
+
+future<StatusOr<google::cloud::tpu::v2::OperationMetadata>>
+TpuConnectionImpl::DeleteQueuedResource(
+    google::cloud::tpu::v2::DeleteQueuedResourceRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteQueuedResource(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::tpu::v2::OperationMetadata>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::tpu::v2::DeleteQueuedResourceRequest const& request) {
+        return stub->AsyncDeleteQueuedResource(cq, std::move(context),
+                                               std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::tpu::v2::OperationMetadata>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+TpuConnectionImpl::DeleteQueuedResource(
+    NoAwaitTag,
+    google::cloud::tpu::v2::DeleteQueuedResourceRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteQueuedResource(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::tpu::v2::DeleteQueuedResourceRequest const& request) {
+        return stub_->DeleteQueuedResource(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::tpu::v2::OperationMetadata>>
+TpuConnectionImpl::DeleteQueuedResource(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::tpu::v2::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::tpu::v2::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteQueuedResource",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::tpu::v2::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::tpu::v2::OperationMetadata>,
+      polling_policy(*current), __func__);
+}
+
+future<StatusOr<google::cloud::tpu::v2::QueuedResource>>
+TpuConnectionImpl::ResetQueuedResource(
+    google::cloud::tpu::v2::ResetQueuedResourceRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->ResetQueuedResource(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::tpu::v2::QueuedResource>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::tpu::v2::ResetQueuedResourceRequest const& request) {
+        return stub->AsyncResetQueuedResource(cq, std::move(context),
+                                              std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::tpu::v2::QueuedResource>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation> TpuConnectionImpl::ResetQueuedResource(
+    NoAwaitTag,
+    google::cloud::tpu::v2::ResetQueuedResourceRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ResetQueuedResource(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::tpu::v2::ResetQueuedResourceRequest const& request) {
+        return stub_->ResetQueuedResource(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::tpu::v2::QueuedResource>>
+TpuConnectionImpl::ResetQueuedResource(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::tpu::v2::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::tpu::v2::QueuedResource>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to ResetQueuedResource",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::tpu::v2::QueuedResource>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::tpu::v2::QueuedResource>,
+      polling_policy(*current), __func__);
+}
+
 StatusOr<google::cloud::tpu::v2::GenerateServiceIdentityResponse>
 TpuConnectionImpl::GenerateServiceIdentity(
     google::cloud::tpu::v2::GenerateServiceIdentityRequest const& request) {

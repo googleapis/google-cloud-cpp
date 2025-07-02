@@ -48,11 +48,11 @@ integration::bazel_with_emulators test "${args[@]}" "${integration_args[@]}"
 
 io::log_h2 "Running Bigtable integration tests (against prod)"
 bazel test "${args[@]}" "${integration_args[@]}" \
-  --test_tag_filters="integration-test" -- \
+  --test_tag_filters="integration-test,-ud-only" -- \
   "//google/cloud/bigtable/..." \
   "-//google/cloud/bigtable/examples:bigtable_grpc_credentials"
 
 io::log_h2 "Running Spanner integration tests (against prod)"
 bazel test "${args[@]}" "${integration_args[@]}" \
-  --test_tag_filters="integration-test" --test_timeout=-1,-1,-1,10800 \
+  --test_tag_filters="integration-test,-ud-only" --test_timeout=-1,-1,-1,10800 \
   "//google/cloud/spanner/..."

@@ -113,6 +113,17 @@ ConversationalSearchServiceMetadata::AnswerQuery(
   return child_->AnswerQuery(context, options, request);
 }
 
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+    google::cloud::discoveryengine::v1::AnswerQueryResponse>>
+ConversationalSearchServiceMetadata::StreamAnswerQuery(
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::cloud::discoveryengine::v1::AnswerQueryRequest const& request) {
+  SetMetadata(*context, options,
+              absl::StrCat("serving_config=",
+                           internal::UrlEncode(request.serving_config())));
+  return child_->StreamAnswerQuery(std::move(context), options, request);
+}
+
 StatusOr<google::cloud::discoveryengine::v1::Answer>
 ConversationalSearchServiceMetadata::GetAnswer(
     grpc::ClientContext& context, Options const& options,

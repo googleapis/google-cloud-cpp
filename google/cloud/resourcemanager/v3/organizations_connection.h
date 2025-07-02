@@ -29,6 +29,7 @@
 #include "google/cloud/version.h"
 #include <google/cloud/resourcemanager/v3/organizations.pb.h>
 #include <memory>
+#include <string>
 
 namespace google {
 namespace cloud {
@@ -222,8 +223,18 @@ class OrganizationsConnection {
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
+ * @param location Sets the prefix for the default `EndpointOption` value.
  * @param options (optional) Configure the `OrganizationsConnection` created by
  * this function.
+ */
+std::shared_ptr<OrganizationsConnection> MakeOrganizationsConnection(
+    std::string const& location, Options options = {});
+
+/**
+ * A factory function to construct an object of type `OrganizationsConnection`.
+ *
+ * This overload of `MakeOrganizationsConnection` does not require a location
+ * argument, creating a connection to the global service endpoint.
  */
 std::shared_ptr<OrganizationsConnection> MakeOrganizationsConnection(
     Options options = {});

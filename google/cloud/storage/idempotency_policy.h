@@ -102,6 +102,9 @@ class IdempotencyPolicy {
       internal::DeleteObjectRequest const& request) const = 0;
   virtual bool IsIdempotent(
       internal::UpdateObjectRequest const& request) const = 0;
+  virtual bool IsIdempotent(internal::MoveObjectRequest const&) const {
+    return false;
+  };
   virtual bool IsIdempotent(
       internal::PatchObjectRequest const& request) const = 0;
   virtual bool IsIdempotent(
@@ -238,6 +241,7 @@ class AlwaysRetryIdempotencyPolicy : public IdempotencyPolicy {
       internal::DeleteObjectRequest const& request) const override;
   bool IsIdempotent(
       internal::UpdateObjectRequest const& request) const override;
+  bool IsIdempotent(internal::MoveObjectRequest const& request) const override;
   bool IsIdempotent(internal::PatchObjectRequest const& request) const override;
   bool IsIdempotent(
       internal::ComposeObjectRequest const& request) const override;
@@ -370,6 +374,7 @@ class StrictIdempotencyPolicy : public IdempotencyPolicy {
       internal::DeleteObjectRequest const& request) const override;
   bool IsIdempotent(
       internal::UpdateObjectRequest const& request) const override;
+  bool IsIdempotent(internal::MoveObjectRequest const& request) const override;
   bool IsIdempotent(internal::PatchObjectRequest const& request) const override;
   bool IsIdempotent(
       internal::ComposeObjectRequest const& request) const override;

@@ -53,6 +53,9 @@ class WorkflowsConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency UpdateWorkflow(
       google::cloud::workflows::v1::UpdateWorkflowRequest const& request);
 
+  virtual google::cloud::Idempotency ListWorkflowRevisions(
+      google::cloud::workflows::v1::ListWorkflowRevisionsRequest request);
+
   virtual google::cloud::Idempotency ListLocations(
       google::cloud::location::ListLocationsRequest request);
 

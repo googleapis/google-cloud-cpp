@@ -18,9 +18,7 @@
 
 #include "google/cloud/gkeconnect/gateway/v1/gateway_control_connection.h"
 #include "google/cloud/gkeconnect/gateway/v1/gateway_control_options.h"
-#include "google/cloud/gkeconnect/gateway/v1/internal/gateway_control_connection_impl.h"
 #include "google/cloud/gkeconnect/gateway/v1/internal/gateway_control_option_defaults.h"
-#include "google/cloud/gkeconnect/gateway/v1/internal/gateway_control_stub_factory.h"
 #include "google/cloud/gkeconnect/gateway/v1/internal/gateway_control_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
@@ -41,24 +39,6 @@ StatusOr<google::cloud::gkeconnect::gateway::v1::GenerateCredentialsResponse>
 GatewayControlConnection::GenerateCredentials(
     google::cloud::gkeconnect::gateway::v1::GenerateCredentialsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
-}
-
-std::shared_ptr<GatewayControlConnection> MakeGatewayControlConnection(
-    Options options) {
-  internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 GatewayControlPolicyOptionList>(options,
-                                                                 __func__);
-  options = gkeconnect_gateway_v1_internal::GatewayControlDefaultOptions(
-      std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
-  auto stub = gkeconnect_gateway_v1_internal::CreateDefaultGatewayControlStub(
-      std::move(auth), options);
-  return gkeconnect_gateway_v1_internal::MakeGatewayControlTracingConnection(
-      std::make_shared<
-          gkeconnect_gateway_v1_internal::GatewayControlConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

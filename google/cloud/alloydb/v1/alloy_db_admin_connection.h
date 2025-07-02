@@ -212,6 +212,39 @@ class AlloyDBAdminConnection {
   virtual future<StatusOr<google::cloud::alloydb::v1::Cluster>> UpdateCluster(
       google::longrunning::Operation const& operation);
 
+  virtual future<StatusOr<google::cloud::alloydb::v1::ExportClusterResponse>>
+  ExportCluster(
+      google::cloud::alloydb::v1::ExportClusterRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> ExportCluster(
+      NoAwaitTag,
+      google::cloud::alloydb::v1::ExportClusterRequest const& request);
+
+  virtual future<StatusOr<google::cloud::alloydb::v1::ExportClusterResponse>>
+  ExportCluster(google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::alloydb::v1::ImportClusterResponse>>
+  ImportCluster(
+      google::cloud::alloydb::v1::ImportClusterRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> ImportCluster(
+      NoAwaitTag,
+      google::cloud::alloydb::v1::ImportClusterRequest const& request);
+
+  virtual future<StatusOr<google::cloud::alloydb::v1::ImportClusterResponse>>
+  ImportCluster(google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::alloydb::v1::UpgradeClusterResponse>>
+  UpgradeCluster(
+      google::cloud::alloydb::v1::UpgradeClusterRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> UpgradeCluster(
+      NoAwaitTag,
+      google::cloud::alloydb::v1::UpgradeClusterRequest const& request);
+
+  virtual future<StatusOr<google::cloud::alloydb::v1::UpgradeClusterResponse>>
+  UpgradeCluster(google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>>
   DeleteCluster(
       google::cloud::alloydb::v1::DeleteClusterRequest const& request);

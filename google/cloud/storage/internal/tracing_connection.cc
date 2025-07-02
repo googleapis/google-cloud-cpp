@@ -162,6 +162,13 @@ StatusOr<storage::ObjectMetadata> TracingConnection::UpdateObject(
   return internal::EndSpan(*span, impl_->UpdateObject(request));
 }
 
+StatusOr<storage::ObjectMetadata> TracingConnection::MoveObject(
+    storage::internal::MoveObjectRequest const& request) {
+  auto span = internal::MakeSpan("storage::Client::MoveObject");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, impl_->MoveObject(request));
+}
+
 StatusOr<storage::ObjectMetadata> TracingConnection::PatchObject(
     storage::internal::PatchObjectRequest const& request) {
   auto span = internal::MakeSpan("storage::Client::PatchObject");

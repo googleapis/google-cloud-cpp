@@ -342,6 +342,24 @@ ClusterManagerMetadata::CheckAutopilotCompatibility(
   return child_->CheckAutopilotCompatibility(context, options, request);
 }
 
+StatusOr<google::container::v1::ClusterUpgradeInfo>
+ClusterManagerMetadata::FetchClusterUpgradeInfo(
+    grpc::ClientContext& context, Options const& options,
+    google::container::v1::FetchClusterUpgradeInfoRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->FetchClusterUpgradeInfo(context, options, request);
+}
+
+StatusOr<google::container::v1::NodePoolUpgradeInfo>
+ClusterManagerMetadata::FetchNodePoolUpgradeInfo(
+    grpc::ClientContext& context, Options const& options,
+    google::container::v1::FetchNodePoolUpgradeInfoRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->FetchNodePoolUpgradeInfo(context, options, request);
+}
+
 void ClusterManagerMetadata::SetMetadata(grpc::ClientContext& context,
                                          Options const& options,
                                          std::string const& request_params) {

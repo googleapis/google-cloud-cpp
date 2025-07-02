@@ -117,8 +117,8 @@ class ManagedKafkaClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.managedkafka.v1.Cluster]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L36}
-  /// [google.cloud.managedkafka.v1.ListClustersRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L180}
+  /// [google.cloud.managedkafka.v1.Cluster]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L45}
+  /// [google.cloud.managedkafka.v1.ListClustersRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L243}
   ///
   // clang-format on
   StreamRange<google::cloud::managedkafka::v1::Cluster> ListClusters(
@@ -156,8 +156,8 @@ class ManagedKafkaClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.managedkafka.v1.Cluster]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L36}
-  /// [google.cloud.managedkafka.v1.ListClustersRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L180}
+  /// [google.cloud.managedkafka.v1.Cluster]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L45}
+  /// [google.cloud.managedkafka.v1.ListClustersRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L243}
   ///
   // clang-format on
   StreamRange<google::cloud::managedkafka::v1::Cluster> ListClusters(
@@ -182,8 +182,8 @@ class ManagedKafkaClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.managedkafka.v1.Cluster]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L36}
-  /// [google.cloud.managedkafka.v1.GetClusterRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L223}
+  /// [google.cloud.managedkafka.v1.Cluster]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L45}
+  /// [google.cloud.managedkafka.v1.GetClusterRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L286}
   ///
   // clang-format on
   StatusOr<google::cloud::managedkafka::v1::Cluster> GetCluster(
@@ -212,8 +212,8 @@ class ManagedKafkaClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.managedkafka.v1.Cluster]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L36}
-  /// [google.cloud.managedkafka.v1.GetClusterRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L223}
+  /// [google.cloud.managedkafka.v1.Cluster]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L45}
+  /// [google.cloud.managedkafka.v1.GetClusterRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L286}
   ///
   // clang-format on
   StatusOr<google::cloud::managedkafka::v1::Cluster> GetCluster(
@@ -254,8 +254,8 @@ class ManagedKafkaClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.managedkafka.v1.Cluster]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L36}
-  /// [google.cloud.managedkafka.v1.CreateClusterRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L234}
+  /// [google.cloud.managedkafka.v1.Cluster]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L45}
+  /// [google.cloud.managedkafka.v1.CreateClusterRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L297}
   ///
   // clang-format on
   future<StatusOr<google::cloud::managedkafka::v1::Cluster>> CreateCluster(
@@ -309,8 +309,8 @@ class ManagedKafkaClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.managedkafka.v1.Cluster]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L36}
-  /// [google.cloud.managedkafka.v1.CreateClusterRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L234}
+  /// [google.cloud.managedkafka.v1.Cluster]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L45}
+  /// [google.cloud.managedkafka.v1.CreateClusterRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L297}
   ///
   // clang-format on
   future<StatusOr<google::cloud::managedkafka::v1::Cluster>> CreateCluster(
@@ -375,8 +375,8 @@ class ManagedKafkaClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.managedkafka.v1.Cluster]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L36}
-  /// [google.cloud.managedkafka.v1.UpdateClusterRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L277}
+  /// [google.cloud.managedkafka.v1.Cluster]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L45}
+  /// [google.cloud.managedkafka.v1.UpdateClusterRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L340}
   ///
   // clang-format on
   future<StatusOr<google::cloud::managedkafka::v1::Cluster>> UpdateCluster(
@@ -428,8 +428,8 @@ class ManagedKafkaClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.managedkafka.v1.Cluster]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L36}
-  /// [google.cloud.managedkafka.v1.UpdateClusterRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L277}
+  /// [google.cloud.managedkafka.v1.Cluster]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L45}
+  /// [google.cloud.managedkafka.v1.UpdateClusterRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L340}
   ///
   // clang-format on
   future<StatusOr<google::cloud::managedkafka::v1::Cluster>> UpdateCluster(
@@ -489,8 +489,8 @@ class ManagedKafkaClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.managedkafka.v1.DeleteClusterRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L310}
-  /// [google.cloud.managedkafka.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L240}
+  /// [google.cloud.managedkafka.v1.DeleteClusterRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L373}
+  /// [google.cloud.managedkafka.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L252}
   ///
   // clang-format on
   future<StatusOr<google::cloud::managedkafka::v1::OperationMetadata>>
@@ -540,8 +540,8 @@ class ManagedKafkaClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.managedkafka.v1.DeleteClusterRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L310}
-  /// [google.cloud.managedkafka.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L240}
+  /// [google.cloud.managedkafka.v1.DeleteClusterRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L373}
+  /// [google.cloud.managedkafka.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L252}
   ///
   // clang-format on
   future<StatusOr<google::cloud::managedkafka::v1::OperationMetadata>>
@@ -606,8 +606,8 @@ class ManagedKafkaClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.managedkafka.v1.ListTopicsRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L340}
-  /// [google.cloud.managedkafka.v1.Topic]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L167}
+  /// [google.cloud.managedkafka.v1.ListTopicsRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L403}
+  /// [google.cloud.managedkafka.v1.Topic]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L179}
   ///
   // clang-format on
   StreamRange<google::cloud::managedkafka::v1::Topic> ListTopics(
@@ -645,8 +645,8 @@ class ManagedKafkaClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.managedkafka.v1.ListTopicsRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L340}
-  /// [google.cloud.managedkafka.v1.Topic]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L167}
+  /// [google.cloud.managedkafka.v1.ListTopicsRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L403}
+  /// [google.cloud.managedkafka.v1.Topic]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L179}
   ///
   // clang-format on
   StreamRange<google::cloud::managedkafka::v1::Topic> ListTopics(
@@ -673,8 +673,8 @@ class ManagedKafkaClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.managedkafka.v1.GetTopicRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L375}
-  /// [google.cloud.managedkafka.v1.Topic]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L167}
+  /// [google.cloud.managedkafka.v1.GetTopicRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L438}
+  /// [google.cloud.managedkafka.v1.Topic]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L179}
   ///
   // clang-format on
   StatusOr<google::cloud::managedkafka::v1::Topic> GetTopic(
@@ -703,8 +703,8 @@ class ManagedKafkaClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.managedkafka.v1.GetTopicRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L375}
-  /// [google.cloud.managedkafka.v1.Topic]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L167}
+  /// [google.cloud.managedkafka.v1.GetTopicRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L438}
+  /// [google.cloud.managedkafka.v1.Topic]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L179}
   ///
   // clang-format on
   StatusOr<google::cloud::managedkafka::v1::Topic> GetTopic(
@@ -737,8 +737,8 @@ class ManagedKafkaClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.managedkafka.v1.CreateTopicRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L388}
-  /// [google.cloud.managedkafka.v1.Topic]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L167}
+  /// [google.cloud.managedkafka.v1.CreateTopicRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L451}
+  /// [google.cloud.managedkafka.v1.Topic]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L179}
   ///
   // clang-format on
   StatusOr<google::cloud::managedkafka::v1::Topic> CreateTopic(
@@ -769,8 +769,8 @@ class ManagedKafkaClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.managedkafka.v1.CreateTopicRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L388}
-  /// [google.cloud.managedkafka.v1.Topic]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L167}
+  /// [google.cloud.managedkafka.v1.CreateTopicRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L451}
+  /// [google.cloud.managedkafka.v1.Topic]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L179}
   ///
   // clang-format on
   StatusOr<google::cloud::managedkafka::v1::Topic> CreateTopic(
@@ -800,8 +800,8 @@ class ManagedKafkaClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.managedkafka.v1.Topic]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L167}
-  /// [google.cloud.managedkafka.v1.UpdateTopicRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L411}
+  /// [google.cloud.managedkafka.v1.Topic]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L179}
+  /// [google.cloud.managedkafka.v1.UpdateTopicRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L474}
   ///
   // clang-format on
   StatusOr<google::cloud::managedkafka::v1::Topic> UpdateTopic(
@@ -831,8 +831,8 @@ class ManagedKafkaClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.managedkafka.v1.Topic]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L167}
-  /// [google.cloud.managedkafka.v1.UpdateTopicRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L411}
+  /// [google.cloud.managedkafka.v1.Topic]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L179}
+  /// [google.cloud.managedkafka.v1.UpdateTopicRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L474}
   ///
   // clang-format on
   StatusOr<google::cloud::managedkafka::v1::Topic> UpdateTopic(
@@ -856,7 +856,7 @@ class ManagedKafkaClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.managedkafka.v1.DeleteTopicRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L425}
+  /// [google.cloud.managedkafka.v1.DeleteTopicRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L488}
   ///
   // clang-format on
   Status DeleteTopic(std::string const& name, Options opts = {});
@@ -882,7 +882,7 @@ class ManagedKafkaClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.managedkafka.v1.DeleteTopicRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L425}
+  /// [google.cloud.managedkafka.v1.DeleteTopicRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L488}
   ///
   // clang-format on
   Status DeleteTopic(
@@ -918,8 +918,8 @@ class ManagedKafkaClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.managedkafka.v1.ConsumerGroup]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L219}
-  /// [google.cloud.managedkafka.v1.ListConsumerGroupsRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L437}
+  /// [google.cloud.managedkafka.v1.ConsumerGroup]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L231}
+  /// [google.cloud.managedkafka.v1.ListConsumerGroupsRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L500}
   ///
   // clang-format on
   StreamRange<google::cloud::managedkafka::v1::ConsumerGroup>
@@ -957,8 +957,8 @@ class ManagedKafkaClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.managedkafka.v1.ConsumerGroup]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L219}
-  /// [google.cloud.managedkafka.v1.ListConsumerGroupsRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L437}
+  /// [google.cloud.managedkafka.v1.ConsumerGroup]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L231}
+  /// [google.cloud.managedkafka.v1.ListConsumerGroupsRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L500}
   ///
   // clang-format on
   StreamRange<google::cloud::managedkafka::v1::ConsumerGroup>
@@ -985,8 +985,8 @@ class ManagedKafkaClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.managedkafka.v1.ConsumerGroup]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L219}
-  /// [google.cloud.managedkafka.v1.GetConsumerGroupRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L473}
+  /// [google.cloud.managedkafka.v1.ConsumerGroup]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L231}
+  /// [google.cloud.managedkafka.v1.GetConsumerGroupRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L536}
   ///
   // clang-format on
   StatusOr<google::cloud::managedkafka::v1::ConsumerGroup> GetConsumerGroup(
@@ -1015,8 +1015,8 @@ class ManagedKafkaClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.managedkafka.v1.ConsumerGroup]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L219}
-  /// [google.cloud.managedkafka.v1.GetConsumerGroupRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L473}
+  /// [google.cloud.managedkafka.v1.ConsumerGroup]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L231}
+  /// [google.cloud.managedkafka.v1.GetConsumerGroupRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L536}
   ///
   // clang-format on
   StatusOr<google::cloud::managedkafka::v1::ConsumerGroup> GetConsumerGroup(
@@ -1046,8 +1046,8 @@ class ManagedKafkaClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.managedkafka.v1.ConsumerGroup]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L219}
-  /// [google.cloud.managedkafka.v1.UpdateConsumerGroupRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L485}
+  /// [google.cloud.managedkafka.v1.ConsumerGroup]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L231}
+  /// [google.cloud.managedkafka.v1.UpdateConsumerGroupRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L548}
   ///
   // clang-format on
   StatusOr<google::cloud::managedkafka::v1::ConsumerGroup> UpdateConsumerGroup(
@@ -1077,8 +1077,8 @@ class ManagedKafkaClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.managedkafka.v1.ConsumerGroup]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L219}
-  /// [google.cloud.managedkafka.v1.UpdateConsumerGroupRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L485}
+  /// [google.cloud.managedkafka.v1.ConsumerGroup]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L231}
+  /// [google.cloud.managedkafka.v1.UpdateConsumerGroupRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L548}
   ///
   // clang-format on
   StatusOr<google::cloud::managedkafka::v1::ConsumerGroup> UpdateConsumerGroup(
@@ -1103,7 +1103,7 @@ class ManagedKafkaClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.managedkafka.v1.DeleteConsumerGroupRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L499}
+  /// [google.cloud.managedkafka.v1.DeleteConsumerGroupRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L562}
   ///
   // clang-format on
   Status DeleteConsumerGroup(std::string const& name, Options opts = {});
@@ -1129,12 +1129,471 @@ class ManagedKafkaClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.managedkafka.v1.DeleteConsumerGroupRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L499}
+  /// [google.cloud.managedkafka.v1.DeleteConsumerGroupRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L562}
   ///
   // clang-format on
   Status DeleteConsumerGroup(
       google::cloud::managedkafka::v1::DeleteConsumerGroupRequest const&
           request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists the acls in a given cluster.
+  ///
+  /// @param parent  Required. The parent cluster whose acls are to be listed.
+  ///  Structured like
+  ///  `projects/{project}/locations/{location}/clusters/{cluster}`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.managedkafka.v1.Acl], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.managedkafka.v1.Acl]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L486}
+  /// [google.cloud.managedkafka.v1.ListAclsRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L574}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::managedkafka::v1::Acl> ListAcls(
+      std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists the acls in a given cluster.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.managedkafka.v1.ListAclsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.managedkafka.v1.Acl], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.managedkafka.v1.Acl]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L486}
+  /// [google.cloud.managedkafka.v1.ListAclsRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L574}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::managedkafka::v1::Acl> ListAcls(
+      google::cloud::managedkafka::v1::ListAclsRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Returns the properties of a single acl.
+  ///
+  /// @param name  Required. The name of the acl to return.
+  ///  Structured like:
+  ///  `projects/{project}/locations/{location}/clusters/{cluster}/acls/{acl_id}`.
+  ///  @n
+  ///  The structure of `acl_id` defines the Resource Pattern (resource_type,
+  ///  resource_name, pattern_type) of the acl. See `Acl.name` for
+  ///  details.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.managedkafka.v1.Acl])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.managedkafka.v1.Acl]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L486}
+  /// [google.cloud.managedkafka.v1.GetAclRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L610}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::managedkafka::v1::Acl> GetAcl(std::string const& name,
+                                                        Options opts = {});
+
+  // clang-format off
+  ///
+  /// Returns the properties of a single acl.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.managedkafka.v1.GetAclRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.managedkafka.v1.Acl])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.managedkafka.v1.Acl]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L486}
+  /// [google.cloud.managedkafka.v1.GetAclRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L610}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::managedkafka::v1::Acl> GetAcl(
+      google::cloud::managedkafka::v1::GetAclRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a new acl in the given project, location, and cluster.
+  ///
+  /// @param parent  Required. The parent cluster in which to create the acl.
+  ///  Structured like
+  ///  `projects/{project}/locations/{location}/clusters/{cluster}`.
+  /// @param acl  Required. Configuration of the acl to create. Its `name` field is ignored.
+  /// @param acl_id  Required. The ID to use for the acl, which will become the final component
+  ///  of the acl's name. The structure of `acl_id` defines the Resource Pattern
+  ///  (resource_type, resource_name, pattern_type) of the acl. `acl_id` is
+  ///  structured like one of the following:
+  ///  @n
+  ///  For more information, see [CreateAclRequest][google.cloud.managedkafka.v1.CreateAclRequest].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.managedkafka.v1.Acl])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.managedkafka.v1.Acl]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L486}
+  /// [google.cloud.managedkafka.v1.CreateAclRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L627}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::managedkafka::v1::Acl> CreateAcl(
+      std::string const& parent,
+      google::cloud::managedkafka::v1::Acl const& acl,
+      std::string const& acl_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a new acl in the given project, location, and cluster.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.managedkafka.v1.CreateAclRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.managedkafka.v1.Acl])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.managedkafka.v1.Acl]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L486}
+  /// [google.cloud.managedkafka.v1.CreateAclRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L627}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::managedkafka::v1::Acl> CreateAcl(
+      google::cloud::managedkafka::v1::CreateAclRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates the properties of a single acl.
+  ///
+  /// @param acl  Required. The updated acl. Its `name` and `etag` fields must be populated.
+  ///  `acl_entries` must not be empty in the updated acl; to remove all acl
+  ///  entries for an acl, use DeleteAcl.
+  /// @param update_mask  Optional. Field mask is used to specify the fields to be overwritten in the
+  ///  Acl resource by the update. The fields specified in the update_mask are
+  ///  relative to the resource, not the full request. A field will be overwritten
+  ///  if it is in the mask.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.managedkafka.v1.Acl])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.managedkafka.v1.Acl]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L486}
+  /// [google.cloud.managedkafka.v1.UpdateAclRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L667}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::managedkafka::v1::Acl> UpdateAcl(
+      google::cloud::managedkafka::v1::Acl const& acl,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates the properties of a single acl.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.managedkafka.v1.UpdateAclRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.managedkafka.v1.Acl])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.managedkafka.v1.Acl]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L486}
+  /// [google.cloud.managedkafka.v1.UpdateAclRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L667}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::managedkafka::v1::Acl> UpdateAcl(
+      google::cloud::managedkafka::v1::UpdateAclRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes an acl.
+  ///
+  /// @param name  Required. The name of the acl to delete.
+  ///  Structured like:
+  ///  `projects/{project}/locations/{location}/clusters/{cluster}/acls/{acl_id}`.
+  ///  @n
+  ///  The structure of `acl_id` defines the Resource Pattern (resource_type,
+  ///  resource_name, pattern_type) of the acl. See `Acl.name` for details.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.managedkafka.v1.DeleteAclRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L682}
+  ///
+  // clang-format on
+  Status DeleteAcl(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes an acl.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.managedkafka.v1.DeleteAclRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.managedkafka.v1.DeleteAclRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L682}
+  ///
+  // clang-format on
+  Status DeleteAcl(
+      google::cloud::managedkafka::v1::DeleteAclRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Incremental update: Adds an acl entry to an acl. Creates the acl if it does
+  /// not exist yet.
+  ///
+  /// @param acl  Required. The name of the acl to add the acl entry to.
+  ///  Structured like:
+  ///  `projects/{project}/locations/{location}/clusters/{cluster}/acls/{acl_id}`.
+  ///  @n
+  ///  The structure of `acl_id` defines the Resource Pattern (resource_type,
+  ///  resource_name, pattern_type) of the acl. See `Acl.name` for
+  ///  details.
+  /// @param acl_entry  Required. The acl entry to add.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.managedkafka.v1.AddAclEntryResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.managedkafka.v1.AddAclEntryRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L698}
+  /// [google.cloud.managedkafka.v1.AddAclEntryResponse]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L718}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::managedkafka::v1::AddAclEntryResponse> AddAclEntry(
+      std::string const& acl,
+      google::cloud::managedkafka::v1::AclEntry const& acl_entry,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Incremental update: Adds an acl entry to an acl. Creates the acl if it does
+  /// not exist yet.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.managedkafka.v1.AddAclEntryRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.managedkafka.v1.AddAclEntryResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.managedkafka.v1.AddAclEntryRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L698}
+  /// [google.cloud.managedkafka.v1.AddAclEntryResponse]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L718}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::managedkafka::v1::AddAclEntryResponse> AddAclEntry(
+      google::cloud::managedkafka::v1::AddAclEntryRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Incremental update: Removes an acl entry from an acl. Deletes the acl if
+  /// its acl entries become empty (i.e. if the removed entry was the last one in
+  /// the acl).
+  ///
+  /// @param acl  Required. The name of the acl to remove the acl entry from.
+  ///  Structured like:
+  ///  `projects/{project}/locations/{location}/clusters/{cluster}/acls/{acl_id}`.
+  ///  @n
+  ///  The structure of `acl_id` defines the Resource Pattern (resource_type,
+  ///  resource_name, pattern_type) of the acl. See `Acl.name` for
+  ///  details.
+  /// @param acl_entry  Required. The acl entry to remove.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.managedkafka.v1.RemoveAclEntryResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.managedkafka.v1.RemoveAclEntryRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L727}
+  /// [google.cloud.managedkafka.v1.RemoveAclEntryResponse]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L747}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::managedkafka::v1::RemoveAclEntryResponse>
+  RemoveAclEntry(std::string const& acl,
+                 google::cloud::managedkafka::v1::AclEntry const& acl_entry,
+                 Options opts = {});
+
+  // clang-format off
+  ///
+  /// Incremental update: Removes an acl entry from an acl. Deletes the acl if
+  /// its acl entries become empty (i.e. if the removed entry was the last one in
+  /// the acl).
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.managedkafka.v1.RemoveAclEntryRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.managedkafka.v1.RemoveAclEntryResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.managedkafka.v1.RemoveAclEntryRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L727}
+  /// [google.cloud.managedkafka.v1.RemoveAclEntryResponse]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L747}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::managedkafka::v1::RemoveAclEntryResponse>
+  RemoveAclEntry(
+      google::cloud::managedkafka::v1::RemoveAclEntryRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -1212,14 +1671,6 @@ class ManagedKafkaClient {
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
   ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
-  ///
   /// @param name  The name of the operation's parent resource.
   /// @param filter  The standard list filter.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -1244,8 +1695,8 @@ class ManagedKafkaClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StreamRange<google::longrunning::Operation> ListOperations(
@@ -1255,14 +1706,6 @@ class ManagedKafkaClient {
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1292,8 +1735,8 @@ class ManagedKafkaClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StreamRange<google::longrunning::Operation> ListOperations(
@@ -1319,8 +1762,8 @@ class ManagedKafkaClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
@@ -1351,8 +1794,8 @@ class ManagedKafkaClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> GetOperation(
@@ -1378,7 +1821,7 @@ class ManagedKafkaClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L201}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
   Status DeleteOperation(std::string const& name, Options opts = {});
@@ -1407,7 +1850,7 @@ class ManagedKafkaClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L201}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
   Status DeleteOperation(
@@ -1424,8 +1867,9 @@ class ManagedKafkaClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param name  The name of the operation resource to be cancelled.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -1439,9 +1883,9 @@ class ManagedKafkaClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
@@ -1457,8 +1901,9 @@ class ManagedKafkaClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1477,9 +1922,9 @@ class ManagedKafkaClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on

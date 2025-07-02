@@ -1,4 +1,4 @@
-// Copyright 2024 Google LLC
+// Copyright 2025 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -27,9 +27,9 @@
 
 // IWYU pragma: begin_exports
 #include <google/cloud/compute/v1/internal/common_016.pb.h>
-#include <google/cloud/compute/v1/internal/common_067.pb.h>
-#include <google/cloud/compute/v1/internal/common_068.pb.h>
-#include <google/cloud/compute/v1/internal/common_101.pb.h>
+#include <google/cloud/compute/v1/internal/common_069.pb.h>
+#include <google/cloud/compute/v1/internal/common_070.pb.h>
+#include <google/cloud/compute/v1/internal/common_107.pb.h>
 // IWYU pragma: end_exports
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_INTERCONNECT_ATTACHMENTS_V1_INTERCONNECT_ATTACHMENTS_PROTO_EXPORT_H

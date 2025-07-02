@@ -54,6 +54,13 @@ Idempotency ModelServiceConnectionIdempotencyPolicy::ListModelVersions(
   return Idempotency::kIdempotent;
 }
 
+Idempotency
+ModelServiceConnectionIdempotencyPolicy::ListModelVersionCheckpoints(
+    google::cloud::aiplatform::v1::
+        ListModelVersionCheckpointsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
 Idempotency ModelServiceConnectionIdempotencyPolicy::UpdateModel(
     google::cloud::aiplatform::v1::UpdateModelRequest const&) {
   return Idempotency::kNonIdempotent;

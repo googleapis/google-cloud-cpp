@@ -80,6 +80,16 @@ ReservationServiceAuth::UpdateReservation(
   return child_->UpdateReservation(context, options, request);
 }
 
+StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
+ReservationServiceAuth::FailoverReservation(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::reservation::v1::FailoverReservationRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->FailoverReservation(context, options, request);
+}
+
 StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
 ReservationServiceAuth::CreateCapacityCommitment(
     grpc::ClientContext& context, Options const& options,

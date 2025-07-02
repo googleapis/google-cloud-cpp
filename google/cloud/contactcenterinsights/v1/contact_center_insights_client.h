@@ -118,8 +118,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.Conversation]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L46}
-  /// [google.cloud.contactcenterinsights.v1.CreateConversationRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L604}
+  /// [google.cloud.contactcenterinsights.v1.Conversation]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L68}
+  /// [google.cloud.contactcenterinsights.v1.CreateConversationRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L909}
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
@@ -154,8 +154,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.Conversation]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L46}
-  /// [google.cloud.contactcenterinsights.v1.CreateConversationRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L604}
+  /// [google.cloud.contactcenterinsights.v1.Conversation]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L68}
+  /// [google.cloud.contactcenterinsights.v1.CreateConversationRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L909}
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
@@ -196,8 +196,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.Conversation]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L46}
-  /// [google.cloud.contactcenterinsights.v1.UploadConversationRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L626}
+  /// [google.cloud.contactcenterinsights.v1.Conversation]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L68}
+  /// [google.cloud.contactcenterinsights.v1.UploadConversationRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L931}
   ///
   // clang-format on
   future<StatusOr<google::cloud::contactcenterinsights::v1::Conversation>>
@@ -268,8 +268,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.Conversation]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L46}
-  /// [google.cloud.contactcenterinsights.v1.UpdateConversationRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L750}
+  /// [google.cloud.contactcenterinsights.v1.Conversation]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L68}
+  /// [google.cloud.contactcenterinsights.v1.UpdateConversationRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1055}
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
@@ -301,8 +301,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.Conversation]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L46}
-  /// [google.cloud.contactcenterinsights.v1.UpdateConversationRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L750}
+  /// [google.cloud.contactcenterinsights.v1.Conversation]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L68}
+  /// [google.cloud.contactcenterinsights.v1.UpdateConversationRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1055}
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
@@ -329,8 +329,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.Conversation]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L46}
-  /// [google.cloud.contactcenterinsights.v1.GetConversationRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L736}
+  /// [google.cloud.contactcenterinsights.v1.Conversation]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L68}
+  /// [google.cloud.contactcenterinsights.v1.GetConversationRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1041}
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
@@ -359,8 +359,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.Conversation]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L46}
-  /// [google.cloud.contactcenterinsights.v1.GetConversationRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L736}
+  /// [google.cloud.contactcenterinsights.v1.Conversation]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L68}
+  /// [google.cloud.contactcenterinsights.v1.GetConversationRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1041}
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
@@ -396,8 +396,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.Conversation]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L46}
-  /// [google.cloud.contactcenterinsights.v1.ListConversationsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L679}
+  /// [google.cloud.contactcenterinsights.v1.Conversation]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L68}
+  /// [google.cloud.contactcenterinsights.v1.ListConversationsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L984}
   ///
   // clang-format on
   StreamRange<google::cloud::contactcenterinsights::v1::Conversation>
@@ -435,8 +435,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.Conversation]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L46}
-  /// [google.cloud.contactcenterinsights.v1.ListConversationsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L679}
+  /// [google.cloud.contactcenterinsights.v1.Conversation]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L68}
+  /// [google.cloud.contactcenterinsights.v1.ListConversationsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L984}
   ///
   // clang-format on
   StreamRange<google::cloud::contactcenterinsights::v1::Conversation>
@@ -461,7 +461,7 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.DeleteConversationRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L772}
+  /// [google.cloud.contactcenterinsights.v1.DeleteConversationRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1077}
   ///
   // clang-format on
   Status DeleteConversation(std::string const& name, Options opts = {});
@@ -487,7 +487,7 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.DeleteConversationRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L772}
+  /// [google.cloud.contactcenterinsights.v1.DeleteConversationRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1077}
   ///
   // clang-format on
   Status DeleteConversation(
@@ -522,8 +522,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.Analysis]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L267}
-  /// [google.cloud.contactcenterinsights.v1.CreateAnalysisRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L941}
+  /// [google.cloud.contactcenterinsights.v1.Analysis]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L295}
+  /// [google.cloud.contactcenterinsights.v1.CreateAnalysisRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1246}
   ///
   // clang-format on
   future<StatusOr<google::cloud::contactcenterinsights::v1::Analysis>>
@@ -579,8 +579,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.Analysis]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L267}
-  /// [google.cloud.contactcenterinsights.v1.CreateAnalysisRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L941}
+  /// [google.cloud.contactcenterinsights.v1.Analysis]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L295}
+  /// [google.cloud.contactcenterinsights.v1.CreateAnalysisRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1246}
   ///
   // clang-format on
   future<StatusOr<google::cloud::contactcenterinsights::v1::Analysis>>
@@ -637,8 +637,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.Analysis]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L267}
-  /// [google.cloud.contactcenterinsights.v1.GetAnalysisRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L991}
+  /// [google.cloud.contactcenterinsights.v1.Analysis]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L295}
+  /// [google.cloud.contactcenterinsights.v1.GetAnalysisRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1296}
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::Analysis> GetAnalysis(
@@ -667,8 +667,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.Analysis]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L267}
-  /// [google.cloud.contactcenterinsights.v1.GetAnalysisRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L991}
+  /// [google.cloud.contactcenterinsights.v1.Analysis]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L295}
+  /// [google.cloud.contactcenterinsights.v1.GetAnalysisRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1296}
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::Analysis> GetAnalysis(
@@ -703,8 +703,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.Analysis]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L267}
-  /// [google.cloud.contactcenterinsights.v1.ListAnalysesRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L955}
+  /// [google.cloud.contactcenterinsights.v1.Analysis]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L295}
+  /// [google.cloud.contactcenterinsights.v1.ListAnalysesRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1260}
   ///
   // clang-format on
   StreamRange<google::cloud::contactcenterinsights::v1::Analysis> ListAnalyses(
@@ -742,8 +742,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.Analysis]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L267}
-  /// [google.cloud.contactcenterinsights.v1.ListAnalysesRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L955}
+  /// [google.cloud.contactcenterinsights.v1.Analysis]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L295}
+  /// [google.cloud.contactcenterinsights.v1.ListAnalysesRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1260}
   ///
   // clang-format on
   StreamRange<google::cloud::contactcenterinsights::v1::Analysis> ListAnalyses(
@@ -766,7 +766,7 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.DeleteAnalysisRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1002}
+  /// [google.cloud.contactcenterinsights.v1.DeleteAnalysisRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1307}
   ///
   // clang-format on
   Status DeleteAnalysis(std::string const& name, Options opts = {});
@@ -792,7 +792,7 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.DeleteAnalysisRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1002}
+  /// [google.cloud.contactcenterinsights.v1.DeleteAnalysisRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1307}
   ///
   // clang-format on
   Status DeleteAnalysis(
@@ -828,8 +828,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.BulkAnalyzeConversationsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1013}
-  /// [google.cloud.contactcenterinsights.v1.BulkAnalyzeConversationsResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1062}
+  /// [google.cloud.contactcenterinsights.v1.BulkAnalyzeConversationsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1318}
+  /// [google.cloud.contactcenterinsights.v1.BulkAnalyzeConversationsResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1367}
   ///
   // clang-format on
   future<StatusOr<google::cloud::contactcenterinsights::v1::
@@ -882,8 +882,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.BulkAnalyzeConversationsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1013}
-  /// [google.cloud.contactcenterinsights.v1.BulkAnalyzeConversationsResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1062}
+  /// [google.cloud.contactcenterinsights.v1.BulkAnalyzeConversationsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1318}
+  /// [google.cloud.contactcenterinsights.v1.BulkAnalyzeConversationsResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1367}
   ///
   // clang-format on
   future<StatusOr<google::cloud::contactcenterinsights::v1::
@@ -951,8 +951,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.BulkDeleteConversationsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1071}
-  /// [google.cloud.contactcenterinsights.v1.BulkDeleteConversationsResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1111}
+  /// [google.cloud.contactcenterinsights.v1.BulkDeleteConversationsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1376}
+  /// [google.cloud.contactcenterinsights.v1.BulkDeleteConversationsResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1416}
   ///
   // clang-format on
   future<StatusOr<google::cloud::contactcenterinsights::v1::
@@ -1005,8 +1005,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.BulkDeleteConversationsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1071}
-  /// [google.cloud.contactcenterinsights.v1.BulkDeleteConversationsResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1111}
+  /// [google.cloud.contactcenterinsights.v1.BulkDeleteConversationsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1376}
+  /// [google.cloud.contactcenterinsights.v1.BulkDeleteConversationsResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1416}
   ///
   // clang-format on
   future<StatusOr<google::cloud::contactcenterinsights::v1::
@@ -1072,8 +1072,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.IngestConversationsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L788}
-  /// [google.cloud.contactcenterinsights.v1.IngestConversationsResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L938}
+  /// [google.cloud.contactcenterinsights.v1.IngestConversationsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1093}
+  /// [google.cloud.contactcenterinsights.v1.IngestConversationsResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1243}
   ///
   // clang-format on
   future<StatusOr<
@@ -1125,8 +1125,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.IngestConversationsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L788}
-  /// [google.cloud.contactcenterinsights.v1.IngestConversationsResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L938}
+  /// [google.cloud.contactcenterinsights.v1.IngestConversationsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1093}
+  /// [google.cloud.contactcenterinsights.v1.IngestConversationsResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1243}
   ///
   // clang-format on
   future<StatusOr<
@@ -1191,8 +1191,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.ExportInsightsDataRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1114}
-  /// [google.cloud.contactcenterinsights.v1.ExportInsightsDataResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1192}
+  /// [google.cloud.contactcenterinsights.v1.ExportInsightsDataRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1419}
+  /// [google.cloud.contactcenterinsights.v1.ExportInsightsDataResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1497}
   ///
   // clang-format on
   future<StatusOr<
@@ -1243,8 +1243,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.ExportInsightsDataRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1114}
-  /// [google.cloud.contactcenterinsights.v1.ExportInsightsDataResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1192}
+  /// [google.cloud.contactcenterinsights.v1.ExportInsightsDataRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1419}
+  /// [google.cloud.contactcenterinsights.v1.ExportInsightsDataResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1497}
   ///
   // clang-format on
   future<StatusOr<
@@ -1311,8 +1311,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.CreateIssueModelRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1195}
-  /// [google.cloud.contactcenterinsights.v1.IssueModel]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L664}
+  /// [google.cloud.contactcenterinsights.v1.CreateIssueModelRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1500}
+  /// [google.cloud.contactcenterinsights.v1.IssueModel]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L734}
   ///
   // clang-format on
   future<StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>>
@@ -1367,8 +1367,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.CreateIssueModelRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1195}
-  /// [google.cloud.contactcenterinsights.v1.IssueModel]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L664}
+  /// [google.cloud.contactcenterinsights.v1.CreateIssueModelRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1500}
+  /// [google.cloud.contactcenterinsights.v1.IssueModel]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L734}
   ///
   // clang-format on
   future<StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>>
@@ -1426,8 +1426,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.IssueModel]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L664}
-  /// [google.cloud.contactcenterinsights.v1.UpdateIssueModelRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1223}
+  /// [google.cloud.contactcenterinsights.v1.IssueModel]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L734}
+  /// [google.cloud.contactcenterinsights.v1.UpdateIssueModelRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1528}
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>
@@ -1458,8 +1458,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.IssueModel]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L664}
-  /// [google.cloud.contactcenterinsights.v1.UpdateIssueModelRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1223}
+  /// [google.cloud.contactcenterinsights.v1.IssueModel]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L734}
+  /// [google.cloud.contactcenterinsights.v1.UpdateIssueModelRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1528}
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>
@@ -1486,8 +1486,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.GetIssueModelRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1249}
-  /// [google.cloud.contactcenterinsights.v1.IssueModel]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L664}
+  /// [google.cloud.contactcenterinsights.v1.GetIssueModelRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1554}
+  /// [google.cloud.contactcenterinsights.v1.IssueModel]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L734}
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::IssueModel> GetIssueModel(
@@ -1516,8 +1516,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.GetIssueModelRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1249}
-  /// [google.cloud.contactcenterinsights.v1.IssueModel]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L664}
+  /// [google.cloud.contactcenterinsights.v1.GetIssueModelRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1554}
+  /// [google.cloud.contactcenterinsights.v1.IssueModel]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L734}
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::IssueModel> GetIssueModel(
@@ -1543,8 +1543,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.ListIssueModelsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1232}
-  /// [google.cloud.contactcenterinsights.v1.ListIssueModelsResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1243}
+  /// [google.cloud.contactcenterinsights.v1.ListIssueModelsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1537}
+  /// [google.cloud.contactcenterinsights.v1.ListIssueModelsResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1548}
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::ListIssueModelsResponse>
@@ -1573,8 +1573,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.ListIssueModelsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1232}
-  /// [google.cloud.contactcenterinsights.v1.ListIssueModelsResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1243}
+  /// [google.cloud.contactcenterinsights.v1.ListIssueModelsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1537}
+  /// [google.cloud.contactcenterinsights.v1.ListIssueModelsResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1548}
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::ListIssueModelsResponse>
@@ -1608,8 +1608,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.DeleteIssueModelMetadata]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1271}
-  /// [google.cloud.contactcenterinsights.v1.DeleteIssueModelRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1260}
+  /// [google.cloud.contactcenterinsights.v1.DeleteIssueModelMetadata]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1576}
+  /// [google.cloud.contactcenterinsights.v1.DeleteIssueModelRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1565}
   ///
   // clang-format on
   future<StatusOr<
@@ -1660,8 +1660,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.DeleteIssueModelMetadata]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1271}
-  /// [google.cloud.contactcenterinsights.v1.DeleteIssueModelRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1260}
+  /// [google.cloud.contactcenterinsights.v1.DeleteIssueModelMetadata]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1576}
+  /// [google.cloud.contactcenterinsights.v1.DeleteIssueModelRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1565}
   ///
   // clang-format on
   future<StatusOr<
@@ -1728,8 +1728,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.DeployIssueModelRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1285}
-  /// [google.cloud.contactcenterinsights.v1.DeployIssueModelResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1296}
+  /// [google.cloud.contactcenterinsights.v1.DeployIssueModelRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1590}
+  /// [google.cloud.contactcenterinsights.v1.DeployIssueModelResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1601}
   ///
   // clang-format on
   future<StatusOr<
@@ -1781,8 +1781,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.DeployIssueModelRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1285}
-  /// [google.cloud.contactcenterinsights.v1.DeployIssueModelResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1296}
+  /// [google.cloud.contactcenterinsights.v1.DeployIssueModelRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1590}
+  /// [google.cloud.contactcenterinsights.v1.DeployIssueModelResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1601}
   ///
   // clang-format on
   future<StatusOr<
@@ -1849,8 +1849,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.UndeployIssueModelRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1313}
-  /// [google.cloud.contactcenterinsights.v1.UndeployIssueModelResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1324}
+  /// [google.cloud.contactcenterinsights.v1.UndeployIssueModelRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1618}
+  /// [google.cloud.contactcenterinsights.v1.UndeployIssueModelResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1629}
   ///
   // clang-format on
   future<StatusOr<
@@ -1902,8 +1902,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.UndeployIssueModelRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1313}
-  /// [google.cloud.contactcenterinsights.v1.UndeployIssueModelResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1324}
+  /// [google.cloud.contactcenterinsights.v1.UndeployIssueModelRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1618}
+  /// [google.cloud.contactcenterinsights.v1.UndeployIssueModelResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1629}
   ///
   // clang-format on
   future<StatusOr<
@@ -1969,8 +1969,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.ExportIssueModelRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1341}
-  /// [google.cloud.contactcenterinsights.v1.ExportIssueModelResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1363}
+  /// [google.cloud.contactcenterinsights.v1.ExportIssueModelRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1646}
+  /// [google.cloud.contactcenterinsights.v1.ExportIssueModelResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1668}
   ///
   // clang-format on
   future<StatusOr<
@@ -2021,8 +2021,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.ExportIssueModelRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1341}
-  /// [google.cloud.contactcenterinsights.v1.ExportIssueModelResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1363}
+  /// [google.cloud.contactcenterinsights.v1.ExportIssueModelRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1646}
+  /// [google.cloud.contactcenterinsights.v1.ExportIssueModelResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1668}
   ///
   // clang-format on
   future<StatusOr<
@@ -2088,8 +2088,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.ImportIssueModelRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1378}
-  /// [google.cloud.contactcenterinsights.v1.ImportIssueModelResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1405}
+  /// [google.cloud.contactcenterinsights.v1.ImportIssueModelRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1683}
+  /// [google.cloud.contactcenterinsights.v1.ImportIssueModelResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1710}
   ///
   // clang-format on
   future<StatusOr<
@@ -2140,8 +2140,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.ImportIssueModelRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1378}
-  /// [google.cloud.contactcenterinsights.v1.ImportIssueModelResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1405}
+  /// [google.cloud.contactcenterinsights.v1.ImportIssueModelRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1683}
+  /// [google.cloud.contactcenterinsights.v1.ImportIssueModelResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1710}
   ///
   // clang-format on
   future<StatusOr<
@@ -2200,8 +2200,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.GetIssueRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1420}
-  /// [google.cloud.contactcenterinsights.v1.Issue]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L760}
+  /// [google.cloud.contactcenterinsights.v1.GetIssueRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1725}
+  /// [google.cloud.contactcenterinsights.v1.Issue]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L830}
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::Issue> GetIssue(
@@ -2230,8 +2230,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.GetIssueRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1420}
-  /// [google.cloud.contactcenterinsights.v1.Issue]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L760}
+  /// [google.cloud.contactcenterinsights.v1.GetIssueRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1725}
+  /// [google.cloud.contactcenterinsights.v1.Issue]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L830}
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::Issue> GetIssue(
@@ -2256,8 +2256,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.ListIssuesRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1431}
-  /// [google.cloud.contactcenterinsights.v1.ListIssuesResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1442}
+  /// [google.cloud.contactcenterinsights.v1.ListIssuesRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1736}
+  /// [google.cloud.contactcenterinsights.v1.ListIssuesResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1747}
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::ListIssuesResponse>
@@ -2286,8 +2286,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.ListIssuesRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1431}
-  /// [google.cloud.contactcenterinsights.v1.ListIssuesResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1442}
+  /// [google.cloud.contactcenterinsights.v1.ListIssuesRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1736}
+  /// [google.cloud.contactcenterinsights.v1.ListIssuesResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1747}
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::ListIssuesResponse>
@@ -2314,8 +2314,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.Issue]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L760}
-  /// [google.cloud.contactcenterinsights.v1.UpdateIssueRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1448}
+  /// [google.cloud.contactcenterinsights.v1.Issue]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L830}
+  /// [google.cloud.contactcenterinsights.v1.UpdateIssueRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1753}
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::Issue> UpdateIssue(
@@ -2345,8 +2345,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.Issue]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L760}
-  /// [google.cloud.contactcenterinsights.v1.UpdateIssueRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1448}
+  /// [google.cloud.contactcenterinsights.v1.Issue]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L830}
+  /// [google.cloud.contactcenterinsights.v1.UpdateIssueRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1753}
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::Issue> UpdateIssue(
@@ -2370,7 +2370,7 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.DeleteIssueRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1457}
+  /// [google.cloud.contactcenterinsights.v1.DeleteIssueRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1762}
   ///
   // clang-format on
   Status DeleteIssue(std::string const& name, Options opts = {});
@@ -2396,7 +2396,7 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.DeleteIssueRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1457}
+  /// [google.cloud.contactcenterinsights.v1.DeleteIssueRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1762}
   ///
   // clang-format on
   Status DeleteIssue(
@@ -2422,8 +2422,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.CalculateIssueModelStatsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1468}
-  /// [google.cloud.contactcenterinsights.v1.CalculateIssueModelStatsResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1479}
+  /// [google.cloud.contactcenterinsights.v1.CalculateIssueModelStatsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1773}
+  /// [google.cloud.contactcenterinsights.v1.CalculateIssueModelStatsResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1784}
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::
@@ -2453,8 +2453,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.CalculateIssueModelStatsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1468}
-  /// [google.cloud.contactcenterinsights.v1.CalculateIssueModelStatsResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1479}
+  /// [google.cloud.contactcenterinsights.v1.CalculateIssueModelStatsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1773}
+  /// [google.cloud.contactcenterinsights.v1.CalculateIssueModelStatsResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1784}
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::
@@ -2483,8 +2483,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.CreatePhraseMatcherRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1486}
-  /// [google.cloud.contactcenterinsights.v1.PhraseMatcher]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L819}
+  /// [google.cloud.contactcenterinsights.v1.CreatePhraseMatcherRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1791}
+  /// [google.cloud.contactcenterinsights.v1.PhraseMatcher]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L889}
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::PhraseMatcher>
@@ -2517,8 +2517,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.CreatePhraseMatcherRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1486}
-  /// [google.cloud.contactcenterinsights.v1.PhraseMatcher]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L819}
+  /// [google.cloud.contactcenterinsights.v1.CreatePhraseMatcherRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1791}
+  /// [google.cloud.contactcenterinsights.v1.PhraseMatcher]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L889}
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::PhraseMatcher>
@@ -2544,8 +2544,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.GetPhraseMatcherRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1539}
-  /// [google.cloud.contactcenterinsights.v1.PhraseMatcher]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L819}
+  /// [google.cloud.contactcenterinsights.v1.GetPhraseMatcherRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1844}
+  /// [google.cloud.contactcenterinsights.v1.PhraseMatcher]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L889}
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::PhraseMatcher>
@@ -2574,8 +2574,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.GetPhraseMatcherRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1539}
-  /// [google.cloud.contactcenterinsights.v1.PhraseMatcher]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L819}
+  /// [google.cloud.contactcenterinsights.v1.GetPhraseMatcherRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1844}
+  /// [google.cloud.contactcenterinsights.v1.PhraseMatcher]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L889}
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::PhraseMatcher>
@@ -2611,8 +2611,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.ListPhraseMatchersRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1503}
-  /// [google.cloud.contactcenterinsights.v1.PhraseMatcher]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L819}
+  /// [google.cloud.contactcenterinsights.v1.ListPhraseMatchersRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1808}
+  /// [google.cloud.contactcenterinsights.v1.PhraseMatcher]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L889}
   ///
   // clang-format on
   StreamRange<google::cloud::contactcenterinsights::v1::PhraseMatcher>
@@ -2650,8 +2650,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.ListPhraseMatchersRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1503}
-  /// [google.cloud.contactcenterinsights.v1.PhraseMatcher]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L819}
+  /// [google.cloud.contactcenterinsights.v1.ListPhraseMatchersRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1808}
+  /// [google.cloud.contactcenterinsights.v1.PhraseMatcher]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L889}
   ///
   // clang-format on
   StreamRange<google::cloud::contactcenterinsights::v1::PhraseMatcher>
@@ -2676,7 +2676,7 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.DeletePhraseMatcherRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1550}
+  /// [google.cloud.contactcenterinsights.v1.DeletePhraseMatcherRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1855}
   ///
   // clang-format on
   Status DeletePhraseMatcher(std::string const& name, Options opts = {});
@@ -2702,7 +2702,7 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.DeletePhraseMatcherRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1550}
+  /// [google.cloud.contactcenterinsights.v1.DeletePhraseMatcherRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1855}
   ///
   // clang-format on
   Status DeletePhraseMatcher(google::cloud::contactcenterinsights::v1::
@@ -2728,8 +2728,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.PhraseMatcher]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L819}
-  /// [google.cloud.contactcenterinsights.v1.UpdatePhraseMatcherRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1561}
+  /// [google.cloud.contactcenterinsights.v1.PhraseMatcher]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L889}
+  /// [google.cloud.contactcenterinsights.v1.UpdatePhraseMatcherRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1866}
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::PhraseMatcher>
@@ -2761,8 +2761,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.PhraseMatcher]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L819}
-  /// [google.cloud.contactcenterinsights.v1.UpdatePhraseMatcherRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1561}
+  /// [google.cloud.contactcenterinsights.v1.PhraseMatcher]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L889}
+  /// [google.cloud.contactcenterinsights.v1.UpdatePhraseMatcherRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1866}
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::PhraseMatcher>
@@ -2788,8 +2788,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.CalculateStatsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L510}
-  /// [google.cloud.contactcenterinsights.v1.CalculateStatsResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L525}
+  /// [google.cloud.contactcenterinsights.v1.CalculateStatsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L815}
+  /// [google.cloud.contactcenterinsights.v1.CalculateStatsResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L830}
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::CalculateStatsResponse>
@@ -2818,8 +2818,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.CalculateStatsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L510}
-  /// [google.cloud.contactcenterinsights.v1.CalculateStatsResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L525}
+  /// [google.cloud.contactcenterinsights.v1.CalculateStatsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L815}
+  /// [google.cloud.contactcenterinsights.v1.CalculateStatsResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L830}
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::CalculateStatsResponse>
@@ -2846,8 +2846,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.GetSettingsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1570}
-  /// [google.cloud.contactcenterinsights.v1.Settings]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L945}
+  /// [google.cloud.contactcenterinsights.v1.GetSettingsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1875}
+  /// [google.cloud.contactcenterinsights.v1.Settings]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1015}
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::Settings> GetSettings(
@@ -2876,8 +2876,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.GetSettingsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1570}
-  /// [google.cloud.contactcenterinsights.v1.Settings]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L945}
+  /// [google.cloud.contactcenterinsights.v1.GetSettingsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1875}
+  /// [google.cloud.contactcenterinsights.v1.Settings]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1015}
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::Settings> GetSettings(
@@ -2904,8 +2904,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.Settings]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L945}
-  /// [google.cloud.contactcenterinsights.v1.UpdateSettingsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1581}
+  /// [google.cloud.contactcenterinsights.v1.Settings]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1015}
+  /// [google.cloud.contactcenterinsights.v1.UpdateSettingsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1886}
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::Settings> UpdateSettings(
@@ -2935,12 +2935,324 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.Settings]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L945}
-  /// [google.cloud.contactcenterinsights.v1.UpdateSettingsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1581}
+  /// [google.cloud.contactcenterinsights.v1.Settings]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1015}
+  /// [google.cloud.contactcenterinsights.v1.UpdateSettingsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1886}
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::Settings> UpdateSettings(
       google::cloud::contactcenterinsights::v1::UpdateSettingsRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a analysis rule.
+  ///
+  /// @param parent  Required. The parent resource of the analysis rule. Required. The location
+  ///  to create a analysis rule for. Format: `projects/<Project ID>/locations/<Location ID>` or `projects/<Project Number>/locations/<Location ID>`
+  /// @param analysis_rule  Required. The analysis rule resource to create.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.contactcenterinsights.v1.AnalysisRule])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.AnalysisRule]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1102}
+  /// [google.cloud.contactcenterinsights.v1.CreateAnalysisRuleRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1897}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::contactcenterinsights::v1::AnalysisRule>
+  CreateAnalysisRule(
+      std::string const& parent,
+      google::cloud::contactcenterinsights::v1::AnalysisRule const&
+          analysis_rule,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a analysis rule.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.contactcenterinsights.v1.CreateAnalysisRuleRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.contactcenterinsights.v1.AnalysisRule])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.AnalysisRule]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1102}
+  /// [google.cloud.contactcenterinsights.v1.CreateAnalysisRuleRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1897}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::contactcenterinsights::v1::AnalysisRule>
+  CreateAnalysisRule(
+      google::cloud::contactcenterinsights::v1::CreateAnalysisRuleRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Get a analysis rule.
+  ///
+  /// @param name  Required. The name of the AnalysisRule to get.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.contactcenterinsights.v1.AnalysisRule])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.AnalysisRule]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1102}
+  /// [google.cloud.contactcenterinsights.v1.GetAnalysisRuleRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1914}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::contactcenterinsights::v1::AnalysisRule>
+  GetAnalysisRule(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Get a analysis rule.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.contactcenterinsights.v1.GetAnalysisRuleRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.contactcenterinsights.v1.AnalysisRule])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.AnalysisRule]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1102}
+  /// [google.cloud.contactcenterinsights.v1.GetAnalysisRuleRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1914}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::contactcenterinsights::v1::AnalysisRule>
+  GetAnalysisRule(
+      google::cloud::contactcenterinsights::v1::GetAnalysisRuleRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists analysis rules.
+  ///
+  /// @param parent  Required. The parent resource of the analysis rules.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.contactcenterinsights.v1.AnalysisRule], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.AnalysisRule]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1102}
+  /// [google.cloud.contactcenterinsights.v1.ListAnalysisRulesRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1948}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::contactcenterinsights::v1::AnalysisRule>
+  ListAnalysisRules(std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists analysis rules.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.contactcenterinsights.v1.ListAnalysisRulesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.contactcenterinsights.v1.AnalysisRule], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.AnalysisRule]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1102}
+  /// [google.cloud.contactcenterinsights.v1.ListAnalysisRulesRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1948}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::contactcenterinsights::v1::AnalysisRule>
+  ListAnalysisRules(
+      google::cloud::contactcenterinsights::v1::ListAnalysisRulesRequest
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates a analysis rule.
+  ///
+  /// @param analysis_rule  Required. The new analysis rule.
+  /// @param update_mask  Optional. The list of fields to be updated.
+  ///  If the update_mask is not provided, the update will be applied to all
+  ///  fields.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.contactcenterinsights.v1.AnalysisRule])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.AnalysisRule]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1102}
+  /// [google.cloud.contactcenterinsights.v1.UpdateAnalysisRuleRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1925}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::contactcenterinsights::v1::AnalysisRule>
+  UpdateAnalysisRule(
+      google::cloud::contactcenterinsights::v1::AnalysisRule const&
+          analysis_rule,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates a analysis rule.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.contactcenterinsights.v1.UpdateAnalysisRuleRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.contactcenterinsights.v1.AnalysisRule])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.AnalysisRule]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1102}
+  /// [google.cloud.contactcenterinsights.v1.UpdateAnalysisRuleRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1925}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::contactcenterinsights::v1::AnalysisRule>
+  UpdateAnalysisRule(
+      google::cloud::contactcenterinsights::v1::UpdateAnalysisRuleRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a analysis rule.
+  ///
+  /// @param name  Required. The name of the analysis rule to delete.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.DeleteAnalysisRuleRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1937}
+  ///
+  // clang-format on
+  Status DeleteAnalysisRule(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a analysis rule.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.contactcenterinsights.v1.DeleteAnalysisRuleRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.DeleteAnalysisRuleRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1937}
+  ///
+  // clang-format on
+  Status DeleteAnalysisRule(
+      google::cloud::contactcenterinsights::v1::DeleteAnalysisRuleRequest const&
           request,
       Options opts = {});
 
@@ -2962,8 +3274,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.EncryptionSpec]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1029}
-  /// [google.cloud.contactcenterinsights.v1.GetEncryptionSpecRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1591}
+  /// [google.cloud.contactcenterinsights.v1.EncryptionSpec]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1149}
+  /// [google.cloud.contactcenterinsights.v1.GetEncryptionSpecRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1980}
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::EncryptionSpec>
@@ -2992,8 +3304,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.EncryptionSpec]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1029}
-  /// [google.cloud.contactcenterinsights.v1.GetEncryptionSpecRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1591}
+  /// [google.cloud.contactcenterinsights.v1.EncryptionSpec]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1149}
+  /// [google.cloud.contactcenterinsights.v1.GetEncryptionSpecRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1980}
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::EncryptionSpec>
@@ -3004,16 +3316,16 @@ class ContactCenterInsightsClient {
 
   // clang-format off
   ///
-  /// Initializes a location-level encryption key specification.  An error will
-  /// be thrown if the location has resources already created before the
-  /// initialization. Once the encryption specification is initialized at a
+  /// Initializes a location-level encryption key specification. An error will
+  /// result if the location has resources already created before the
+  /// initialization. After the encryption specification is initialized at a
   /// location, it is immutable and all newly created resources under the
   /// location will be encrypted with the existing specification.
   ///
   /// @param encryption_spec  Required. The encryption spec used for CMEK encryption. It is required that
   ///  the kms key is in the same region as the endpoint. The same key will be
   ///  used for all provisioned resources, if encryption is available. If the
-  ///  kms_key_name is left empty, no encryption will be enforced.
+  ///  `kms_key_name` field is left empty, no encryption will be enforced.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO
@@ -3034,8 +3346,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.InitializeEncryptionSpecRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1602}
-  /// [google.cloud.contactcenterinsights.v1.InitializeEncryptionSpecResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1611}
+  /// [google.cloud.contactcenterinsights.v1.InitializeEncryptionSpecRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1991}
+  /// [google.cloud.contactcenterinsights.v1.InitializeEncryptionSpecResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2000}
   ///
   // clang-format on
   future<StatusOr<google::cloud::contactcenterinsights::v1::
@@ -3064,9 +3376,9 @@ class ContactCenterInsightsClient {
 
   // clang-format off
   ///
-  /// Initializes a location-level encryption key specification.  An error will
-  /// be thrown if the location has resources already created before the
-  /// initialization. Once the encryption specification is initialized at a
+  /// Initializes a location-level encryption key specification. An error will
+  /// result if the location has resources already created before the
+  /// initialization. After the encryption specification is initialized at a
   /// location, it is immutable and all newly created resources under the
   /// location will be encrypted with the existing specification.
   ///
@@ -3096,8 +3408,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.InitializeEncryptionSpecRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1602}
-  /// [google.cloud.contactcenterinsights.v1.InitializeEncryptionSpecResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1611}
+  /// [google.cloud.contactcenterinsights.v1.InitializeEncryptionSpecRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1991}
+  /// [google.cloud.contactcenterinsights.v1.InitializeEncryptionSpecResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2000}
   ///
   // clang-format on
   future<StatusOr<google::cloud::contactcenterinsights::v1::
@@ -3159,8 +3471,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.CreateViewRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1633}
-  /// [google.cloud.contactcenterinsights.v1.View]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1361}
+  /// [google.cloud.contactcenterinsights.v1.CreateViewRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2022}
+  /// [google.cloud.contactcenterinsights.v1.View]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1481}
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::View> CreateView(
@@ -3191,8 +3503,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.CreateViewRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1633}
-  /// [google.cloud.contactcenterinsights.v1.View]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1361}
+  /// [google.cloud.contactcenterinsights.v1.CreateViewRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2022}
+  /// [google.cloud.contactcenterinsights.v1.View]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1481}
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::View> CreateView(
@@ -3218,8 +3530,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.GetViewRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1650}
-  /// [google.cloud.contactcenterinsights.v1.View]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1361}
+  /// [google.cloud.contactcenterinsights.v1.GetViewRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2039}
+  /// [google.cloud.contactcenterinsights.v1.View]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1481}
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::View> GetView(
@@ -3248,8 +3560,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.GetViewRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1650}
-  /// [google.cloud.contactcenterinsights.v1.View]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1361}
+  /// [google.cloud.contactcenterinsights.v1.GetViewRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2039}
+  /// [google.cloud.contactcenterinsights.v1.View]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1481}
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::View> GetView(
@@ -3283,8 +3595,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.ListViewsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1661}
-  /// [google.cloud.contactcenterinsights.v1.View]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1361}
+  /// [google.cloud.contactcenterinsights.v1.ListViewsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2050}
+  /// [google.cloud.contactcenterinsights.v1.View]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1481}
   ///
   // clang-format on
   StreamRange<google::cloud::contactcenterinsights::v1::View> ListViews(
@@ -3322,8 +3634,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.ListViewsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1661}
-  /// [google.cloud.contactcenterinsights.v1.View]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1361}
+  /// [google.cloud.contactcenterinsights.v1.ListViewsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2050}
+  /// [google.cloud.contactcenterinsights.v1.View]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1481}
   ///
   // clang-format on
   StreamRange<google::cloud::contactcenterinsights::v1::View> ListViews(
@@ -3349,8 +3661,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.UpdateViewRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1693}
-  /// [google.cloud.contactcenterinsights.v1.View]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1361}
+  /// [google.cloud.contactcenterinsights.v1.UpdateViewRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2082}
+  /// [google.cloud.contactcenterinsights.v1.View]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1481}
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::View> UpdateView(
@@ -3380,8 +3692,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.UpdateViewRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1693}
-  /// [google.cloud.contactcenterinsights.v1.View]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1361}
+  /// [google.cloud.contactcenterinsights.v1.UpdateViewRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2082}
+  /// [google.cloud.contactcenterinsights.v1.View]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1481}
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::View> UpdateView(
@@ -3405,7 +3717,7 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.DeleteViewRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1702}
+  /// [google.cloud.contactcenterinsights.v1.DeleteViewRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2091}
   ///
   // clang-format on
   Status DeleteView(std::string const& name, Options opts = {});
@@ -3431,7 +3743,7 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.DeleteViewRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1702}
+  /// [google.cloud.contactcenterinsights.v1.DeleteViewRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2091}
   ///
   // clang-format on
   Status DeleteView(
@@ -3441,16 +3753,1785 @@ class ContactCenterInsightsClient {
 
   // clang-format off
   ///
+  /// Query metrics.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.contactcenterinsights.v1.QueryMetricsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.contactcenterinsights.v1.QueryMetricsResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.QueryMetricsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2216}
+  /// [google.cloud.contactcenterinsights.v1.QueryMetricsResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2287}
+  ///
+  // clang-format on
+  future<
+      StatusOr<google::cloud::contactcenterinsights::v1::QueryMetricsResponse>>
+  QueryMetrics(
+      google::cloud::contactcenterinsights::v1::QueryMetricsRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief QueryMetrics
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> QueryMetrics(
+      NoAwaitTag,
+      google::cloud::contactcenterinsights::v1::QueryMetricsRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief QueryMetrics
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<
+      StatusOr<google::cloud::contactcenterinsights::v1::QueryMetricsResponse>>
+  QueryMetrics(google::longrunning::Operation const& operation,
+               Options opts = {});
+
+  // clang-format off
+  ///
+  /// Create a QaQuestion.
+  ///
+  /// @param parent  Required. The parent resource of the QaQuestion.
+  /// @param qa_question  Required. The QaQuestion to create.
+  /// @param qa_question_id  Optional. A unique ID for the new question. This ID will become the final
+  ///  component of the question's resource name. If no ID is specified, a
+  ///  server-generated ID will be used.
+  ///  @n
+  ///  This value should be 4-64 characters and must match the regular
+  ///  expression `^[a-z0-9-]{4,64}$`. Valid characters are `[a-z][0-9]-`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.contactcenterinsights.v1.QaQuestion])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.CreateQaQuestionRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2408}
+  /// [google.cloud.contactcenterinsights.v1.QaQuestion]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1610}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::contactcenterinsights::v1::QaQuestion>
+  CreateQaQuestion(
+      std::string const& parent,
+      google::cloud::contactcenterinsights::v1::QaQuestion const& qa_question,
+      std::string const& qa_question_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Create a QaQuestion.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.contactcenterinsights.v1.CreateQaQuestionRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.contactcenterinsights.v1.QaQuestion])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.CreateQaQuestionRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2408}
+  /// [google.cloud.contactcenterinsights.v1.QaQuestion]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1610}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::contactcenterinsights::v1::QaQuestion>
+  CreateQaQuestion(
+      google::cloud::contactcenterinsights::v1::CreateQaQuestionRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets a QaQuestion.
+  ///
+  /// @param name  Required. The name of the QaQuestion to get.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.contactcenterinsights.v1.QaQuestion])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.GetQaQuestionRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2430}
+  /// [google.cloud.contactcenterinsights.v1.QaQuestion]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1610}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::contactcenterinsights::v1::QaQuestion> GetQaQuestion(
+      std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets a QaQuestion.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.contactcenterinsights.v1.GetQaQuestionRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.contactcenterinsights.v1.QaQuestion])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.GetQaQuestionRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2430}
+  /// [google.cloud.contactcenterinsights.v1.QaQuestion]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1610}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::contactcenterinsights::v1::QaQuestion> GetQaQuestion(
+      google::cloud::contactcenterinsights::v1::GetQaQuestionRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates a QaQuestion.
+  ///
+  /// @param qa_question  Required. The QaQuestion to update.
+  /// @param update_mask  Required. The list of fields to be updated. All possible fields can be
+  ///  updated by passing `*`, or a subset of the following updateable fields can
+  ///  be provided:
+  ///  @n
+  ///  * `abbreviation`
+  ///  * `answer_choices`
+  ///  * `answer_instructions`
+  ///  * `order`
+  ///  * `question_body`
+  ///  * `tags`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.contactcenterinsights.v1.QaQuestion])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.QaQuestion]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1610}
+  /// [google.cloud.contactcenterinsights.v1.UpdateQaQuestionRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2473}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::contactcenterinsights::v1::QaQuestion>
+  UpdateQaQuestion(
+      google::cloud::contactcenterinsights::v1::QaQuestion const& qa_question,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates a QaQuestion.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.contactcenterinsights.v1.UpdateQaQuestionRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.contactcenterinsights.v1.QaQuestion])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.QaQuestion]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1610}
+  /// [google.cloud.contactcenterinsights.v1.UpdateQaQuestionRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2473}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::contactcenterinsights::v1::QaQuestion>
+  UpdateQaQuestion(
+      google::cloud::contactcenterinsights::v1::UpdateQaQuestionRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a QaQuestion.
+  ///
+  /// @param name  Required. The name of the QaQuestion to delete.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.DeleteQaQuestionRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2492}
+  ///
+  // clang-format on
+  Status DeleteQaQuestion(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a QaQuestion.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.contactcenterinsights.v1.DeleteQaQuestionRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.DeleteQaQuestionRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2492}
+  ///
+  // clang-format on
+  Status DeleteQaQuestion(
+      google::cloud::contactcenterinsights::v1::DeleteQaQuestionRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists QaQuestions.
+  ///
+  /// @param parent  Required. The parent resource of the questions.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.contactcenterinsights.v1.QaQuestion], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.ListQaQuestionsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2441}
+  /// [google.cloud.contactcenterinsights.v1.QaQuestion]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1610}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::contactcenterinsights::v1::QaQuestion>
+  ListQaQuestions(std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists QaQuestions.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.contactcenterinsights.v1.ListQaQuestionsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.contactcenterinsights.v1.QaQuestion], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.ListQaQuestionsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2441}
+  /// [google.cloud.contactcenterinsights.v1.QaQuestion]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1610}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::contactcenterinsights::v1::QaQuestion>
+  ListQaQuestions(
+      google::cloud::contactcenterinsights::v1::ListQaQuestionsRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Create a QaScorecard.
+  ///
+  /// @param parent  Required. The parent resource of the QaScorecard.
+  /// @param qa_scorecard  Required. The QaScorecard to create.
+  /// @param qa_scorecard_id  Optional. A unique ID for the new QaScorecard. This ID will become the
+  ///  final component of the QaScorecard's resource name. If no ID is specified,
+  ///  a server-generated ID will be used.
+  ///  @n
+  ///  This value should be 4-64 characters and must match the regular
+  ///  expression `^[a-z0-9-]{4,64}$`. Valid characters are `[a-z][0-9]-`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.contactcenterinsights.v1.QaScorecard])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.CreateQaScorecardRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2503}
+  /// [google.cloud.contactcenterinsights.v1.QaScorecard]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1716}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::contactcenterinsights::v1::QaScorecard>
+  CreateQaScorecard(
+      std::string const& parent,
+      google::cloud::contactcenterinsights::v1::QaScorecard const& qa_scorecard,
+      std::string const& qa_scorecard_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Create a QaScorecard.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.contactcenterinsights.v1.CreateQaScorecardRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.contactcenterinsights.v1.QaScorecard])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.CreateQaScorecardRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2503}
+  /// [google.cloud.contactcenterinsights.v1.QaScorecard]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1716}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::contactcenterinsights::v1::QaScorecard>
+  CreateQaScorecard(
+      google::cloud::contactcenterinsights::v1::CreateQaScorecardRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets a QaScorecard.
+  ///
+  /// @param name  Required. The name of the QaScorecard to get.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.contactcenterinsights.v1.QaScorecard])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.GetQaScorecardRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2525}
+  /// [google.cloud.contactcenterinsights.v1.QaScorecard]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1716}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::contactcenterinsights::v1::QaScorecard>
+  GetQaScorecard(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets a QaScorecard.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.contactcenterinsights.v1.GetQaScorecardRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.contactcenterinsights.v1.QaScorecard])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.GetQaScorecardRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2525}
+  /// [google.cloud.contactcenterinsights.v1.QaScorecard]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1716}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::contactcenterinsights::v1::QaScorecard>
+  GetQaScorecard(
+      google::cloud::contactcenterinsights::v1::GetQaScorecardRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates a QaScorecard.
+  ///
+  /// @param qa_scorecard  Required. The QaScorecard to update.
+  /// @param update_mask  Required. The list of fields to be updated. All possible fields can be
+  ///  updated by passing `*`, or a subset of the following updateable fields can
+  ///  be provided:
+  ///  @n
+  ///  * `description`
+  ///  * `display_name`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.contactcenterinsights.v1.QaScorecard])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.QaScorecard]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1716}
+  /// [google.cloud.contactcenterinsights.v1.UpdateQaScorecardRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2536}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::contactcenterinsights::v1::QaScorecard>
+  UpdateQaScorecard(
+      google::cloud::contactcenterinsights::v1::QaScorecard const& qa_scorecard,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates a QaScorecard.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.contactcenterinsights.v1.UpdateQaScorecardRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.contactcenterinsights.v1.QaScorecard])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.QaScorecard]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1716}
+  /// [google.cloud.contactcenterinsights.v1.UpdateQaScorecardRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2536}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::contactcenterinsights::v1::QaScorecard>
+  UpdateQaScorecard(
+      google::cloud::contactcenterinsights::v1::UpdateQaScorecardRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a QaScorecard.
+  ///
+  /// @param name  Required. The name of the QaScorecard to delete.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.DeleteQaScorecardRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2551}
+  ///
+  // clang-format on
+  Status DeleteQaScorecard(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a QaScorecard.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.contactcenterinsights.v1.DeleteQaScorecardRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.DeleteQaScorecardRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2551}
+  ///
+  // clang-format on
+  Status DeleteQaScorecard(
+      google::cloud::contactcenterinsights::v1::DeleteQaScorecardRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists QaScorecards.
+  ///
+  /// @param parent  Required. The parent resource of the scorecards.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.contactcenterinsights.v1.QaScorecard], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.ListQaScorecardsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2738}
+  /// [google.cloud.contactcenterinsights.v1.QaScorecard]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1716}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::contactcenterinsights::v1::QaScorecard>
+  ListQaScorecards(std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists QaScorecards.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.contactcenterinsights.v1.ListQaScorecardsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.contactcenterinsights.v1.QaScorecard], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.ListQaScorecardsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2738}
+  /// [google.cloud.contactcenterinsights.v1.QaScorecard]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1716}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::contactcenterinsights::v1::QaScorecard>
+  ListQaScorecards(
+      google::cloud::contactcenterinsights::v1::ListQaScorecardsRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a QaScorecardRevision.
+  ///
+  /// @param parent  Required. The parent resource of the QaScorecardRevision.
+  /// @param qa_scorecard_revision  Required. The QaScorecardRevision to create.
+  /// @param qa_scorecard_revision_id  Optional. A unique ID for the new QaScorecardRevision. This ID will become
+  ///  the final component of the QaScorecardRevision's resource name. If no ID is
+  ///  specified, a server-generated ID will be used.
+  ///  @n
+  ///  This value should be 4-64 characters and must match the regular
+  ///  expression `^[a-z0-9-]{4,64}$`. Valid characters are `[a-z][0-9]-`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.contactcenterinsights.v1.QaScorecardRevision])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.CreateQaScorecardRevisionRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2566}
+  /// [google.cloud.contactcenterinsights.v1.QaScorecardRevision]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1750}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::contactcenterinsights::v1::QaScorecardRevision>
+  CreateQaScorecardRevision(
+      std::string const& parent,
+      google::cloud::contactcenterinsights::v1::QaScorecardRevision const&
+          qa_scorecard_revision,
+      std::string const& qa_scorecard_revision_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a QaScorecardRevision.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.contactcenterinsights.v1.CreateQaScorecardRevisionRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.contactcenterinsights.v1.QaScorecardRevision])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.CreateQaScorecardRevisionRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2566}
+  /// [google.cloud.contactcenterinsights.v1.QaScorecardRevision]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1750}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::contactcenterinsights::v1::QaScorecardRevision>
+  CreateQaScorecardRevision(google::cloud::contactcenterinsights::v1::
+                                CreateQaScorecardRevisionRequest const& request,
+                            Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets a QaScorecardRevision.
+  ///
+  /// @param name  Required. The name of the QaScorecardRevision to get.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.contactcenterinsights.v1.QaScorecardRevision])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.GetQaScorecardRevisionRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2589}
+  /// [google.cloud.contactcenterinsights.v1.QaScorecardRevision]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1750}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::contactcenterinsights::v1::QaScorecardRevision>
+  GetQaScorecardRevision(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets a QaScorecardRevision.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.contactcenterinsights.v1.GetQaScorecardRevisionRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.contactcenterinsights.v1.QaScorecardRevision])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.GetQaScorecardRevisionRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2589}
+  /// [google.cloud.contactcenterinsights.v1.QaScorecardRevision]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1750}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::contactcenterinsights::v1::QaScorecardRevision>
+  GetQaScorecardRevision(google::cloud::contactcenterinsights::v1::
+                             GetQaScorecardRevisionRequest const& request,
+                         Options opts = {});
+
+  // clang-format off
+  ///
+  /// Fine tune one or more QaModels.
+  ///
+  /// @param parent  Required. The parent resource for new fine tuning job instance.
+  /// @param filter  Required. Filter for selecting the feedback labels that needs to be
+  ///  used for training.
+  ///  This filter can be used to limit the feedback labels used for tuning to a
+  ///  feedback labels created or updated for a specific time-window etc.
+  /// @param validate_only  Optional. Run in validate only mode, no fine tuning will actually run.
+  ///  Data quality validations like training data distributions will run.
+  ///  Even when set to false, the data quality validations will still run but
+  ///  once the validations complete we will proceed with the fine tune, if
+  ///  applicable.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.contactcenterinsights.v1.TuneQaScorecardRevisionResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.TuneQaScorecardRevisionRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2600}
+  /// [google.cloud.contactcenterinsights.v1.TuneQaScorecardRevisionResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2624}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::contactcenterinsights::v1::
+                      TuneQaScorecardRevisionResponse>>
+  TuneQaScorecardRevision(std::string const& parent, std::string const& filter,
+                          bool validate_only, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief TuneQaScorecardRevision
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> TuneQaScorecardRevision(
+      NoAwaitTag, std::string const& parent, std::string const& filter,
+      bool validate_only, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Fine tune one or more QaModels.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.contactcenterinsights.v1.TuneQaScorecardRevisionRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.contactcenterinsights.v1.TuneQaScorecardRevisionResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.TuneQaScorecardRevisionRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2600}
+  /// [google.cloud.contactcenterinsights.v1.TuneQaScorecardRevisionResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2624}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::contactcenterinsights::v1::
+                      TuneQaScorecardRevisionResponse>>
+  TuneQaScorecardRevision(google::cloud::contactcenterinsights::v1::
+                              TuneQaScorecardRevisionRequest const& request,
+                          Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief TuneQaScorecardRevision
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> TuneQaScorecardRevision(
+      NoAwaitTag,
+      google::cloud::contactcenterinsights::v1::
+          TuneQaScorecardRevisionRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief TuneQaScorecardRevision
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::contactcenterinsights::v1::
+                      TuneQaScorecardRevisionResponse>>
+  TuneQaScorecardRevision(google::longrunning::Operation const& operation,
+                          Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deploy a QaScorecardRevision.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.contactcenterinsights.v1.DeployQaScorecardRevisionRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.contactcenterinsights.v1.QaScorecardRevision])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.DeployQaScorecardRevisionRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2700}
+  /// [google.cloud.contactcenterinsights.v1.QaScorecardRevision]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1750}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::contactcenterinsights::v1::QaScorecardRevision>
+  DeployQaScorecardRevision(google::cloud::contactcenterinsights::v1::
+                                DeployQaScorecardRevisionRequest const& request,
+                            Options opts = {});
+
+  // clang-format off
+  ///
+  /// Undeploy a QaScorecardRevision.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.contactcenterinsights.v1.UndeployQaScorecardRevisionRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.contactcenterinsights.v1.QaScorecardRevision])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.QaScorecardRevision]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1750}
+  /// [google.cloud.contactcenterinsights.v1.UndeployQaScorecardRevisionRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2711}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::contactcenterinsights::v1::QaScorecardRevision>
+  UndeployQaScorecardRevision(
+      google::cloud::contactcenterinsights::v1::
+          UndeployQaScorecardRevisionRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a QaScorecardRevision.
+  ///
+  /// @param name  Required. The name of the QaScorecardRevision to delete.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.DeleteQaScorecardRevisionRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2722}
+  ///
+  // clang-format on
+  Status DeleteQaScorecardRevision(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a QaScorecardRevision.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.contactcenterinsights.v1.DeleteQaScorecardRevisionRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.DeleteQaScorecardRevisionRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2722}
+  ///
+  // clang-format on
+  Status DeleteQaScorecardRevision(
+      google::cloud::contactcenterinsights::v1::
+          DeleteQaScorecardRevisionRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists all revisions under the parent QaScorecard.
+  ///
+  /// @param parent  Required. The parent resource of the scorecard revisions. To list all
+  ///  revisions of all scorecards, substitute the QaScorecard ID with a '-'
+  ///  character.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.contactcenterinsights.v1.QaScorecardRevision], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.ListQaScorecardRevisionsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2770}
+  /// [google.cloud.contactcenterinsights.v1.QaScorecardRevision]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1750}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::contactcenterinsights::v1::QaScorecardRevision>
+  ListQaScorecardRevisions(std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists all revisions under the parent QaScorecard.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.contactcenterinsights.v1.ListQaScorecardRevisionsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.contactcenterinsights.v1.QaScorecardRevision], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.ListQaScorecardRevisionsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2770}
+  /// [google.cloud.contactcenterinsights.v1.QaScorecardRevision]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1750}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::contactcenterinsights::v1::QaScorecardRevision>
+  ListQaScorecardRevisions(
+      google::cloud::contactcenterinsights::v1::ListQaScorecardRevisionsRequest
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Create feedback label.
+  ///
+  /// @param parent  Required. The parent resource of the feedback label.
+  /// @param feedback_label  Required. The feedback label to create.
+  /// @param feedback_label_id  Optional. The ID of the feedback label to create.
+  ///  If one is not specified it will be generated by the server.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.contactcenterinsights.v1.FeedbackLabel])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.CreateFeedbackLabelRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2809}
+  /// [google.cloud.contactcenterinsights.v1.FeedbackLabel]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L416}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::contactcenterinsights::v1::FeedbackLabel>
+  CreateFeedbackLabel(
+      std::string const& parent,
+      google::cloud::contactcenterinsights::v1::FeedbackLabel const&
+          feedback_label,
+      std::string const& feedback_label_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Create feedback label.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.contactcenterinsights.v1.CreateFeedbackLabelRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.contactcenterinsights.v1.FeedbackLabel])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.CreateFeedbackLabelRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2809}
+  /// [google.cloud.contactcenterinsights.v1.FeedbackLabel]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L416}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::contactcenterinsights::v1::FeedbackLabel>
+  CreateFeedbackLabel(google::cloud::contactcenterinsights::v1::
+                          CreateFeedbackLabelRequest const& request,
+                      Options opts = {});
+
+  // clang-format off
+  ///
+  /// List feedback labels.
+  ///
+  /// @param parent  Required. The parent resource of the feedback labels.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.contactcenterinsights.v1.FeedbackLabel], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.FeedbackLabel]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L416}
+  /// [google.cloud.contactcenterinsights.v1.ListFeedbackLabelsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2827}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::contactcenterinsights::v1::FeedbackLabel>
+  ListFeedbackLabels(std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// List feedback labels.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.contactcenterinsights.v1.ListFeedbackLabelsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.contactcenterinsights.v1.FeedbackLabel], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.FeedbackLabel]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L416}
+  /// [google.cloud.contactcenterinsights.v1.ListFeedbackLabelsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2827}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::contactcenterinsights::v1::FeedbackLabel>
+  ListFeedbackLabels(
+      google::cloud::contactcenterinsights::v1::ListFeedbackLabelsRequest
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Get feedback label.
+  ///
+  /// @param name  Required. The name of the feedback label to get.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.contactcenterinsights.v1.FeedbackLabel])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.FeedbackLabel]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L416}
+  /// [google.cloud.contactcenterinsights.v1.GetFeedbackLabelRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2875}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::contactcenterinsights::v1::FeedbackLabel>
+  GetFeedbackLabel(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Get feedback label.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.contactcenterinsights.v1.GetFeedbackLabelRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.contactcenterinsights.v1.FeedbackLabel])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.FeedbackLabel]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L416}
+  /// [google.cloud.contactcenterinsights.v1.GetFeedbackLabelRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2875}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::contactcenterinsights::v1::FeedbackLabel>
+  GetFeedbackLabel(
+      google::cloud::contactcenterinsights::v1::GetFeedbackLabelRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Update feedback label.
+  ///
+  /// @param feedback_label  Required. The feedback label to update.
+  /// @param update_mask  Required. The list of fields to be updated.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.contactcenterinsights.v1.FeedbackLabel])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.FeedbackLabel]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L416}
+  /// [google.cloud.contactcenterinsights.v1.UpdateFeedbackLabelRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2886}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::contactcenterinsights::v1::FeedbackLabel>
+  UpdateFeedbackLabel(
+      google::cloud::contactcenterinsights::v1::FeedbackLabel const&
+          feedback_label,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Update feedback label.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.contactcenterinsights.v1.UpdateFeedbackLabelRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.contactcenterinsights.v1.FeedbackLabel])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.FeedbackLabel]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L416}
+  /// [google.cloud.contactcenterinsights.v1.UpdateFeedbackLabelRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2886}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::contactcenterinsights::v1::FeedbackLabel>
+  UpdateFeedbackLabel(google::cloud::contactcenterinsights::v1::
+                          UpdateFeedbackLabelRequest const& request,
+                      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Delete feedback label.
+  ///
+  /// @param name  Required. The name of the feedback label to delete.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.DeleteFeedbackLabelRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2896}
+  ///
+  // clang-format on
+  Status DeleteFeedbackLabel(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Delete feedback label.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.contactcenterinsights.v1.DeleteFeedbackLabelRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.DeleteFeedbackLabelRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2896}
+  ///
+  // clang-format on
+  Status DeleteFeedbackLabel(google::cloud::contactcenterinsights::v1::
+                                 DeleteFeedbackLabelRequest const& request,
+                             Options opts = {});
+
+  // clang-format off
+  ///
+  /// List all feedback labels by project number.
+  ///
+  /// @param parent  Required. The parent resource of all feedback labels per project.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.contactcenterinsights.v1.FeedbackLabel], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.FeedbackLabel]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L416}
+  /// [google.cloud.contactcenterinsights.v1.ListAllFeedbackLabelsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2907}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::contactcenterinsights::v1::FeedbackLabel>
+  ListAllFeedbackLabels(std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// List all feedback labels by project number.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.contactcenterinsights.v1.ListAllFeedbackLabelsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.contactcenterinsights.v1.FeedbackLabel], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.FeedbackLabel]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L416}
+  /// [google.cloud.contactcenterinsights.v1.ListAllFeedbackLabelsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2907}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::contactcenterinsights::v1::FeedbackLabel>
+  ListAllFeedbackLabels(
+      google::cloud::contactcenterinsights::v1::ListAllFeedbackLabelsRequest
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Upload feedback labels in bulk.
+  ///
+  /// @param parent  Required. The parent resource for new feedback labels.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.contactcenterinsights.v1.BulkUploadFeedbackLabelsResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.BulkUploadFeedbackLabelsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2954}
+  /// [google.cloud.contactcenterinsights.v1.BulkUploadFeedbackLabelsResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2999}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::contactcenterinsights::v1::
+                      BulkUploadFeedbackLabelsResponse>>
+  BulkUploadFeedbackLabels(std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief BulkUploadFeedbackLabels
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> BulkUploadFeedbackLabels(
+      NoAwaitTag, std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Upload feedback labels in bulk.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.contactcenterinsights.v1.BulkUploadFeedbackLabelsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.contactcenterinsights.v1.BulkUploadFeedbackLabelsResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.BulkUploadFeedbackLabelsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2954}
+  /// [google.cloud.contactcenterinsights.v1.BulkUploadFeedbackLabelsResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2999}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::contactcenterinsights::v1::
+                      BulkUploadFeedbackLabelsResponse>>
+  BulkUploadFeedbackLabels(google::cloud::contactcenterinsights::v1::
+                               BulkUploadFeedbackLabelsRequest const& request,
+                           Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief BulkUploadFeedbackLabels
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> BulkUploadFeedbackLabels(
+      NoAwaitTag,
+      google::cloud::contactcenterinsights::v1::
+          BulkUploadFeedbackLabelsRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief BulkUploadFeedbackLabels
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::contactcenterinsights::v1::
+                      BulkUploadFeedbackLabelsResponse>>
+  BulkUploadFeedbackLabels(google::longrunning::Operation const& operation,
+                           Options opts = {});
+
+  // clang-format off
+  ///
+  /// Download feedback labels in bulk.
+  ///
+  /// @param parent  Required. The parent resource for new feedback labels.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.contactcenterinsights.v1.BulkDownloadFeedbackLabelsResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.BulkDownloadFeedbackLabelsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L3036}
+  /// [google.cloud.contactcenterinsights.v1.BulkDownloadFeedbackLabelsResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L3145}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::contactcenterinsights::v1::
+                      BulkDownloadFeedbackLabelsResponse>>
+  BulkDownloadFeedbackLabels(std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief BulkDownloadFeedbackLabels
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> BulkDownloadFeedbackLabels(
+      NoAwaitTag, std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Download feedback labels in bulk.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.contactcenterinsights.v1.BulkDownloadFeedbackLabelsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.contactcenterinsights.v1.BulkDownloadFeedbackLabelsResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.BulkDownloadFeedbackLabelsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L3036}
+  /// [google.cloud.contactcenterinsights.v1.BulkDownloadFeedbackLabelsResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L3145}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::contactcenterinsights::v1::
+                      BulkDownloadFeedbackLabelsResponse>>
+  BulkDownloadFeedbackLabels(
+      google::cloud::contactcenterinsights::v1::
+          BulkDownloadFeedbackLabelsRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief BulkDownloadFeedbackLabels
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> BulkDownloadFeedbackLabels(
+      NoAwaitTag,
+      google::cloud::contactcenterinsights::v1::
+          BulkDownloadFeedbackLabelsRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief BulkDownloadFeedbackLabels
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::contactcenterinsights::v1::
+                      BulkDownloadFeedbackLabelsResponse>>
+  BulkDownloadFeedbackLabels(google::longrunning::Operation const& operation,
+                             Options opts = {});
+
+  // clang-format off
+  ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param name  The name of the operation's parent resource.
   /// @param filter  The standard list filter.
@@ -3476,8 +5557,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StreamRange<google::longrunning::Operation> ListOperations(
@@ -3487,14 +5568,6 @@ class ContactCenterInsightsClient {
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -3524,8 +5597,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StreamRange<google::longrunning::Operation> ListOperations(
@@ -3551,8 +5624,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
@@ -3583,8 +5656,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> GetOperation(
@@ -3601,8 +5674,9 @@ class ContactCenterInsightsClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param name  The name of the operation resource to be cancelled.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -3616,9 +5690,9 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
@@ -3634,8 +5708,9 @@ class ContactCenterInsightsClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -3654,9 +5729,9 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on

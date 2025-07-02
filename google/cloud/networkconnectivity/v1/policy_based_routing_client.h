@@ -95,7 +95,7 @@ class PolicyBasedRoutingServiceClient {
 
   // clang-format off
   ///
-  /// Lists PolicyBasedRoutes in a given project and location.
+  /// Lists policy-based routes in a given project and location.
   ///
   /// @param parent  Required. The parent resource's name.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -120,8 +120,8 @@ class PolicyBasedRoutingServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkconnectivity.v1.ListPolicyBasedRoutesRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/policy_based_routing.proto#L265}
-  /// [google.cloud.networkconnectivity.v1.PolicyBasedRoute]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/policy_based_routing.proto#L95}
+  /// [google.cloud.networkconnectivity.v1.ListPolicyBasedRoutesRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/policy_based_routing.proto#L266}
+  /// [google.cloud.networkconnectivity.v1.PolicyBasedRoute]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/policy_based_routing.proto#L94}
   ///
   // clang-format on
   StreamRange<google::cloud::networkconnectivity::v1::PolicyBasedRoute>
@@ -129,7 +129,7 @@ class PolicyBasedRoutingServiceClient {
 
   // clang-format off
   ///
-  /// Lists PolicyBasedRoutes in a given project and location.
+  /// Lists policy-based routes in a given project and location.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -159,8 +159,8 @@ class PolicyBasedRoutingServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkconnectivity.v1.ListPolicyBasedRoutesRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/policy_based_routing.proto#L265}
-  /// [google.cloud.networkconnectivity.v1.PolicyBasedRoute]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/policy_based_routing.proto#L95}
+  /// [google.cloud.networkconnectivity.v1.ListPolicyBasedRoutesRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/policy_based_routing.proto#L266}
+  /// [google.cloud.networkconnectivity.v1.PolicyBasedRoute]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/policy_based_routing.proto#L94}
   ///
   // clang-format on
   StreamRange<google::cloud::networkconnectivity::v1::PolicyBasedRoute>
@@ -171,7 +171,7 @@ class PolicyBasedRoutingServiceClient {
 
   // clang-format off
   ///
-  /// Gets details of a single PolicyBasedRoute.
+  /// Gets details of a single policy-based route.
   ///
   /// @param name  Required. Name of the PolicyBasedRoute resource to get.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -187,8 +187,8 @@ class PolicyBasedRoutingServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkconnectivity.v1.GetPolicyBasedRouteRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/policy_based_routing.proto#L301}
-  /// [google.cloud.networkconnectivity.v1.PolicyBasedRoute]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/policy_based_routing.proto#L95}
+  /// [google.cloud.networkconnectivity.v1.GetPolicyBasedRouteRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/policy_based_routing.proto#L306}
+  /// [google.cloud.networkconnectivity.v1.PolicyBasedRoute]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/policy_based_routing.proto#L94}
   ///
   // clang-format on
   StatusOr<google::cloud::networkconnectivity::v1::PolicyBasedRoute>
@@ -196,7 +196,7 @@ class PolicyBasedRoutingServiceClient {
 
   // clang-format off
   ///
-  /// Gets details of a single PolicyBasedRoute.
+  /// Gets details of a single policy-based route.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -217,8 +217,8 @@ class PolicyBasedRoutingServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkconnectivity.v1.GetPolicyBasedRouteRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/policy_based_routing.proto#L301}
-  /// [google.cloud.networkconnectivity.v1.PolicyBasedRoute]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/policy_based_routing.proto#L95}
+  /// [google.cloud.networkconnectivity.v1.GetPolicyBasedRouteRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/policy_based_routing.proto#L306}
+  /// [google.cloud.networkconnectivity.v1.PolicyBasedRoute]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/policy_based_routing.proto#L94}
   ///
   // clang-format on
   StatusOr<google::cloud::networkconnectivity::v1::PolicyBasedRoute>
@@ -229,11 +229,18 @@ class PolicyBasedRoutingServiceClient {
 
   // clang-format off
   ///
-  /// Creates a new PolicyBasedRoute in a given project and location.
+  /// Creates a new policy-based route in a given project and location.
   ///
   /// @param parent  Required. The parent resource's name of the PolicyBasedRoute.
-  /// @param policy_based_route  Required. Initial values for a new Policy Based Route.
-  /// @param policy_based_route_id  Required. Unique id for the Policy Based Route to create.
+  /// @param policy_based_route  Required. Initial values for a new policy-based route.
+  /// @param policy_based_route_id  Required. Unique id for the policy-based route to create. Provided by the
+  ///  client when the resource is created. The name must comply with
+  ///  https://google.aip.dev/122#resource-id-segments. Specifically, the name
+  ///  must be 1-63 characters long and match the regular expression
+  ///  [a-z]([a-z0-9-]*[a-z0-9])?. The first character must be a lowercase letter,
+  ///  and all following characters (except for the last character) must be a
+  ///  dash, lowercase letter, or digit. The last character must be a lowercase
+  ///  letter or digit.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO
@@ -254,8 +261,8 @@ class PolicyBasedRoutingServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkconnectivity.v1.CreatePolicyBasedRouteRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/policy_based_routing.proto#L312}
-  /// [google.cloud.networkconnectivity.v1.PolicyBasedRoute]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/policy_based_routing.proto#L95}
+  /// [google.cloud.networkconnectivity.v1.CreatePolicyBasedRouteRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/policy_based_routing.proto#L319}
+  /// [google.cloud.networkconnectivity.v1.PolicyBasedRoute]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/policy_based_routing.proto#L94}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkconnectivity::v1::PolicyBasedRoute>>
@@ -284,7 +291,7 @@ class PolicyBasedRoutingServiceClient {
 
   // clang-format off
   ///
-  /// Creates a new PolicyBasedRoute in a given project and location.
+  /// Creates a new policy-based route in a given project and location.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -312,8 +319,8 @@ class PolicyBasedRoutingServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkconnectivity.v1.CreatePolicyBasedRouteRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/policy_based_routing.proto#L312}
-  /// [google.cloud.networkconnectivity.v1.PolicyBasedRoute]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/policy_based_routing.proto#L95}
+  /// [google.cloud.networkconnectivity.v1.CreatePolicyBasedRouteRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/policy_based_routing.proto#L319}
+  /// [google.cloud.networkconnectivity.v1.PolicyBasedRoute]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/policy_based_routing.proto#L94}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkconnectivity::v1::PolicyBasedRoute>>
@@ -353,9 +360,9 @@ class PolicyBasedRoutingServiceClient {
 
   // clang-format off
   ///
-  /// Deletes a single PolicyBasedRoute.
+  /// Deletes a single policy-based route.
   ///
-  /// @param name  Required. Name of the PolicyBasedRoute resource to delete.
+  /// @param name  Required. Name of the policy-based route resource to delete.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO
@@ -376,8 +383,8 @@ class PolicyBasedRoutingServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkconnectivity.v1.DeletePolicyBasedRouteRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/policy_based_routing.proto#L345}
-  /// [google.cloud.networkconnectivity.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/common.proto#L40}
+  /// [google.cloud.networkconnectivity.v1.DeletePolicyBasedRouteRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/policy_based_routing.proto#L361}
+  /// [google.cloud.networkconnectivity.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/common.proto#L48}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
@@ -399,7 +406,7 @@ class PolicyBasedRoutingServiceClient {
 
   // clang-format off
   ///
-  /// Deletes a single PolicyBasedRoute.
+  /// Deletes a single policy-based route.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -427,8 +434,8 @@ class PolicyBasedRoutingServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkconnectivity.v1.DeletePolicyBasedRouteRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/policy_based_routing.proto#L345}
-  /// [google.cloud.networkconnectivity.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/common.proto#L40}
+  /// [google.cloud.networkconnectivity.v1.DeletePolicyBasedRouteRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/policy_based_routing.proto#L361}
+  /// [google.cloud.networkconnectivity.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/common.proto#L48}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
@@ -643,14 +650,6 @@ class PolicyBasedRoutingServiceClient {
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
   ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
-  ///
   /// @param name  The name of the operation's parent resource.
   /// @param filter  The standard list filter.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -675,8 +674,8 @@ class PolicyBasedRoutingServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StreamRange<google::longrunning::Operation> ListOperations(
@@ -686,14 +685,6 @@ class PolicyBasedRoutingServiceClient {
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -723,8 +714,8 @@ class PolicyBasedRoutingServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StreamRange<google::longrunning::Operation> ListOperations(
@@ -750,8 +741,8 @@ class PolicyBasedRoutingServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
@@ -782,8 +773,8 @@ class PolicyBasedRoutingServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> GetOperation(
@@ -809,7 +800,7 @@ class PolicyBasedRoutingServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L201}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
   Status DeleteOperation(std::string const& name, Options opts = {});
@@ -838,7 +829,7 @@ class PolicyBasedRoutingServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L201}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
   Status DeleteOperation(
@@ -855,8 +846,9 @@ class PolicyBasedRoutingServiceClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param name  The name of the operation resource to be cancelled.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -870,9 +862,9 @@ class PolicyBasedRoutingServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
@@ -888,8 +880,9 @@ class PolicyBasedRoutingServiceClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -908,9 +901,9 @@ class PolicyBasedRoutingServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on

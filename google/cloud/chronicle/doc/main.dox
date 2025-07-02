@@ -1,0 +1,56 @@
+/*!
+
+@mainpage Chronicle API C++ Client Library
+
+An idiomatic C++ client library for the [Chronicle API][cloud-service-docs].
+
+The Chronicle API serves all customer endpoints.
+
+While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
+[Semantic Versioning](https://semver.org/).
+
+@tableofcontents{HTML:2}
+
+## Quickstart
+
+The following shows the code that you'll run in the
+`google/cloud/chronicle/quickstart/` directory,
+which should give you a taste of the Chronicle API C++ client library API.
+
+@snippet quickstart.cc all
+
+## Main classes
+
+<!-- inject-client-list-start -->
+This library offers multiple `*Client` classes, which are listed below. Each one
+of these classes exposes all the RPCs for a service as member functions of the
+class. This library groups multiple services because they are part of the same
+product or are often used together. A typical example may be the administrative
+and data plane operations for a single product.
+
+The library also has other classes that provide helpers, configuration
+parameters, and infrastructure to mock the `*Client` classes when testing your
+application.
+
+- [\c chronicle_v1::DataAccessControlServiceClient](@ref google::cloud::chronicle_v1::DataAccessControlServiceClient)
+- [\c chronicle_v1::EntityServiceClient](@ref google::cloud::chronicle_v1::EntityServiceClient)
+- [\c chronicle_v1::InstanceServiceClient](@ref google::cloud::chronicle_v1::InstanceServiceClient)
+- [\c chronicle_v1::ReferenceListServiceClient](@ref google::cloud::chronicle_v1::ReferenceListServiceClient)
+- [\c chronicle_v1::RuleServiceClient](@ref google::cloud::chronicle_v1::RuleServiceClient)
+<!-- inject-client-list-end -->
+
+## More Information
+
+- @ref common-error-handling - describes how the library reports errors.
+- @ref chronicle-override-endpoint - describes how to override the default
+  endpoint.
+- @ref chronicle-override-authentication - describes how to change the
+  authentication credentials used by the library.
+- @ref chronicle-override-retry - describes how to change the default retry
+  policies.
+- @ref chronicle-env - describes environment variables that can configure the
+  behavior of the library.
+
+[cloud-service-docs]: https://cloud.google.com/chronicle/docs/secops/secops-overview
+
+*/

@@ -91,6 +91,77 @@ class CloudRedisClusterLogging : public CloudRedisClusterStub {
       google::cloud::redis::cluster::v1::
           GetClusterCertificateAuthorityRequest const& request) override;
 
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncRescheduleClusterMaintenance(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::redis::cluster::v1::
+          RescheduleClusterMaintenanceRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> RescheduleClusterMaintenance(
+      grpc::ClientContext& context, Options options,
+      google::cloud::redis::cluster::v1::
+          RescheduleClusterMaintenanceRequest const& request) override;
+
+  StatusOr<google::cloud::redis::cluster::v1::ListBackupCollectionsResponse>
+  ListBackupCollections(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::redis::cluster::v1::ListBackupCollectionsRequest const&
+          request) override;
+
+  StatusOr<google::cloud::redis::cluster::v1::BackupCollection>
+  GetBackupCollection(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::redis::cluster::v1::GetBackupCollectionRequest const&
+          request) override;
+
+  StatusOr<google::cloud::redis::cluster::v1::ListBackupsResponse> ListBackups(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::redis::cluster::v1::ListBackupsRequest const& request)
+      override;
+
+  StatusOr<google::cloud::redis::cluster::v1::Backup> GetBackup(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::redis::cluster::v1::GetBackupRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteBackup(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::redis::cluster::v1::DeleteBackupRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteBackup(
+      grpc::ClientContext& context, Options options,
+      google::cloud::redis::cluster::v1::DeleteBackupRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncExportBackup(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::redis::cluster::v1::ExportBackupRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> ExportBackup(
+      grpc::ClientContext& context, Options options,
+      google::cloud::redis::cluster::v1::ExportBackupRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncBackupCluster(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::redis::cluster::v1::BackupClusterRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> BackupCluster(
+      grpc::ClientContext& context, Options options,
+      google::cloud::redis::cluster::v1::BackupClusterRequest const& request)
+      override;
+
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
       grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;

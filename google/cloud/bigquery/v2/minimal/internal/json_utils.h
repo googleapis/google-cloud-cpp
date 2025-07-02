@@ -101,7 +101,20 @@ bool SafeGetToWithNullable(ResponseType& value, bool& is_null,
   if (i != j.end()) {
     // BQ sends null type values which crashes get_to() so check for null.
     if (!i->is_null()) {
-      i->get_to(value);
+      // JSON value for the field, from the server, can be anything.
+      // In 80% cases its a string value at which point we retrieve
+      // the string value.
+      // For any other values, (like nested Arrays or objects) we just give back
+      // a string to be parsed by the caller. The library has no idea what to
+      // expect in the value field it can be anything based on what the client
+      // sends hence its not feasible to parse here. This is best done on the
+      // client side based on the client-usecase and column schema returned by
+      // the server for each of these values.
+      if (i->type() == nlohmann::json::value_t::string) {
+        i->get_to(value);
+      } else {
+        value = i->dump();
+      }
     } else {
       is_null = true;
     }

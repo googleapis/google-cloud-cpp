@@ -153,6 +153,38 @@ StatusOr<google::longrunning::Operation> NetAppLogging::DeleteStoragePool(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+NetAppLogging::AsyncValidateDirectoryService(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::netapp::v1::ValidateDirectoryServiceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::netapp::v1::ValidateDirectoryServiceRequest const&
+                 request) {
+        return child_->AsyncValidateDirectoryService(
+            cq, std::move(context), std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+NetAppLogging::ValidateDirectoryService(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::ValidateDirectoryServiceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::netapp::v1::ValidateDirectoryServiceRequest const&
+                 request) {
+        return child_->ValidateDirectoryService(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 NetAppLogging::AsyncSwitchActiveReplicaZone(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -916,6 +948,66 @@ NetAppLogging::ReverseReplicationDirection(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+NetAppLogging::AsyncEstablishPeering(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::netapp::v1::EstablishPeeringRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::netapp::v1::EstablishPeeringRequest const& request) {
+        return child_->AsyncEstablishPeering(cq, std::move(context),
+                                             std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> NetAppLogging::EstablishPeering(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::EstablishPeeringRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::netapp::v1::EstablishPeeringRequest const& request) {
+        return child_->EstablishPeering(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NetAppLogging::AsyncSyncReplication(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::netapp::v1::SyncReplicationRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::netapp::v1::SyncReplicationRequest const& request) {
+        return child_->AsyncSyncReplication(cq, std::move(context),
+                                            std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> NetAppLogging::SyncReplication(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::SyncReplicationRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::netapp::v1::SyncReplicationRequest const& request) {
+        return child_->SyncReplication(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 NetAppLogging::AsyncCreateBackupVault(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -1256,6 +1348,116 @@ StatusOr<google::longrunning::Operation> NetAppLogging::DeleteBackupPolicy(
           grpc::ClientContext& context, Options const& options,
           google::cloud::netapp::v1::DeleteBackupPolicyRequest const& request) {
         return child_->DeleteBackupPolicy(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::netapp::v1::ListQuotaRulesResponse>
+NetAppLogging::ListQuotaRules(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::netapp::v1::ListQuotaRulesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::netapp::v1::ListQuotaRulesRequest const& request) {
+        return child_->ListQuotaRules(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::netapp::v1::QuotaRule> NetAppLogging::GetQuotaRule(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::netapp::v1::GetQuotaRuleRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::netapp::v1::GetQuotaRuleRequest const& request) {
+        return child_->GetQuotaRule(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NetAppLogging::AsyncCreateQuotaRule(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::netapp::v1::CreateQuotaRuleRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::netapp::v1::CreateQuotaRuleRequest const& request) {
+        return child_->AsyncCreateQuotaRule(cq, std::move(context),
+                                            std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> NetAppLogging::CreateQuotaRule(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::CreateQuotaRuleRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::netapp::v1::CreateQuotaRuleRequest const& request) {
+        return child_->CreateQuotaRule(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NetAppLogging::AsyncUpdateQuotaRule(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::netapp::v1::UpdateQuotaRuleRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::netapp::v1::UpdateQuotaRuleRequest const& request) {
+        return child_->AsyncUpdateQuotaRule(cq, std::move(context),
+                                            std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> NetAppLogging::UpdateQuotaRule(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::UpdateQuotaRuleRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::netapp::v1::UpdateQuotaRuleRequest const& request) {
+        return child_->UpdateQuotaRule(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NetAppLogging::AsyncDeleteQuotaRule(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::netapp::v1::DeleteQuotaRuleRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::netapp::v1::DeleteQuotaRuleRequest const& request) {
+        return child_->AsyncDeleteQuotaRule(cq, std::move(context),
+                                            std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> NetAppLogging::DeleteQuotaRule(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::DeleteQuotaRuleRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::netapp::v1::DeleteQuotaRuleRequest const& request) {
+        return child_->DeleteQuotaRule(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }

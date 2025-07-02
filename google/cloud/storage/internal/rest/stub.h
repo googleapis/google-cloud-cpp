@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_REST_STUB_H
 
 #include "google/cloud/storage/internal/generic_stub.h"
+#include "google/cloud/storage/internal/rest/request_builder.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/internal/rest_client.h"
@@ -103,6 +104,9 @@ class RestStub : public storage_internal::GenericStub {
   StatusOr<ObjectMetadata> UpdateObject(
       rest_internal::RestContext& context, Options const& options,
       UpdateObjectRequest const& request) override;
+  StatusOr<ObjectMetadata> MoveObject(
+      rest_internal::RestContext& context, Options const& options,
+      MoveObjectRequest const& request) override;
   StatusOr<ObjectMetadata> PatchObject(
       rest_internal::RestContext& context, Options const& options,
       PatchObjectRequest const& request) override;

@@ -260,11 +260,23 @@ In `ports/google-cloud-cpp/vcpkg.json`
 ./vcpkg format-manifest ports/google-cloud-cpp/vcpkg.json
 ```
 
-#### Update the [SHA512]
+#### Update the [SHA512] of google-cloud-cpp repo
 
 ```shell
 SHA512=($(curl -fSsL https://github.com/googleapis/google-cloud-cpp/archive/${VERSION}.tar.gz | sha512sum))
-sed -i "s/SHA512 .*/SHA512 ${SHA512[0]}/" ports/google-cloud-cpp/portfile.cmake
+sed -i "/REPO googleapis\/google-cloud-cpp/ {n; n; s/SHA512 .*/SHA512 ${SHA512[0]}/}" ports/google-cloud-cpp/portfile.cmake
+```
+
+#### Update the [SHA512] of googleapis repo
+
+You can find the `GOOGLEAPIS_SHA512` from your release PR. For example, in
+[PR#15008], it is `b151ec2ae29c2c955c56784c0ce388b2d8c4a84c`.
+
+```shell
+GOOGLEAPIS_SHA512=...
+sed -i "/REPO googleapis\/googleapis/ {n; s/REF .*/REF ${GOOGLEAPIS_SHA512}/}" ports/google-cloud-cpp/portfile.cmake
+SHA512=($(curl -fSsL https://github.com/googleapis/googleapis/archive/${GOOGLEAPIS_SHA512}.tar.gz | sha512sum))
+sed -i "/REPO googleapis\/googleapis/ {n; n; s/SHA512 .*/SHA512 ${SHA512[0]}/}" ports/google-cloud-cpp/portfile.cmake
 ```
 
 #### Commit the changes
@@ -354,6 +366,12 @@ In your development fork:
   ```
 - If this is the first patch release for that branch, you need to update the GCB
   triggers.
+  - Update convert-to-branch-triggers.sh from HEAD/main as previous releases
+    likely contain a bug that preserves the trigger `id` and will overwrite the
+    `main` CI triggers instead of creating new triggers on `${BRANCH}`.
+    ```shell
+    git checkout main -- ci/cloudbuild/convert-to-branch-triggers.sh
+    ```
   - Update the Google Cloud Build trigger definitions to compile this branch:
     ```shell
     ci/cloudbuild/convert-to-branch-triggers.sh --branch "${BRANCH}"
@@ -412,6 +430,7 @@ ______________________________________________________________________
 [github-guides]: https://guides.github.com/
 [googleapis-sha-update-policy]: https://github.com/googleapis/google-cloud-cpp/blob/main/doc/adr/2024-08-13-googleapis-sha-update-policy.md
 [pr#138]: https://github.com/conda-forge/google-cloud-cpp-feedstock/pull/138
+[pr#15008]: https://github.com/googleapis/google-cloud-cpp/pull/15008
 [pr#32391]: https://github.com/microsoft/vcpkg/pull/32391
 [sha512]: https://learn.microsoft.com/en-us/vcpkg/maintainers/functions/vcpkg_from_github#sha512
 [vcpkg port]: https://github.com/Microsoft/vcpkg/tree/master/ports/google-cloud-cpp

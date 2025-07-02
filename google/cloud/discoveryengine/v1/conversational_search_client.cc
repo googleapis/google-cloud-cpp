@@ -153,6 +153,14 @@ ConversationalSearchServiceClient::AnswerQuery(
   return connection_->AnswerQuery(request);
 }
 
+StreamRange<google::cloud::discoveryengine::v1::AnswerQueryResponse>
+ConversationalSearchServiceClient::StreamAnswerQuery(
+    google::cloud::discoveryengine::v1::AnswerQueryRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->StreamAnswerQuery(request);
+}
+
 StatusOr<google::cloud::discoveryengine::v1::Answer>
 ConversationalSearchServiceClient::GetAnswer(std::string const& name,
                                              Options opts) {

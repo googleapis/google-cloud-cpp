@@ -21,11 +21,15 @@ licenses(["notice"])  # Apache 2.0
 service_dirs = ["gateway/v1/"]
 
 googleapis_deps = [
-    "@com_google_googleapis//google/cloud/gkeconnect/gateway/v1:gateway_cc_grpc",
+    "@com_google_googleapis//google/cloud/gkeconnect/gateway/v1:gateway_cc_proto",
 ]
 
 cc_gapic_library(
     name = "gkeconnect",
+    additional_deps = [
+        "//google/cloud:google_cloud_cpp_rest_internal",
+        "//google/cloud:google_cloud_cpp_rest_protobuf_internal",
+    ],
     googleapis_deps = googleapis_deps,
     service_dirs = service_dirs,
 )

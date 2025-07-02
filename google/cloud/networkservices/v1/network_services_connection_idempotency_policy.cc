@@ -200,6 +200,11 @@ Idempotency NetworkServicesConnectionIdempotencyPolicy::CreateServiceBinding(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency NetworkServicesConnectionIdempotencyPolicy::UpdateServiceBinding(
+    google::cloud::networkservices::v1::UpdateServiceBindingRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency NetworkServicesConnectionIdempotencyPolicy::DeleteServiceBinding(
     google::cloud::networkservices::v1::DeleteServiceBindingRequest const&) {
   return Idempotency::kNonIdempotent;
@@ -228,6 +233,53 @@ Idempotency NetworkServicesConnectionIdempotencyPolicy::UpdateMesh(
 Idempotency NetworkServicesConnectionIdempotencyPolicy::DeleteMesh(
     google::cloud::networkservices::v1::DeleteMeshRequest const&) {
   return Idempotency::kNonIdempotent;
+}
+
+Idempotency NetworkServicesConnectionIdempotencyPolicy::ListServiceLbPolicies(
+    google::cloud::networkservices::v1::
+        ListServiceLbPoliciesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency NetworkServicesConnectionIdempotencyPolicy::GetServiceLbPolicy(
+    google::cloud::networkservices::v1::GetServiceLbPolicyRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency NetworkServicesConnectionIdempotencyPolicy::CreateServiceLbPolicy(
+    google::cloud::networkservices::v1::CreateServiceLbPolicyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency NetworkServicesConnectionIdempotencyPolicy::UpdateServiceLbPolicy(
+    google::cloud::networkservices::v1::UpdateServiceLbPolicyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency NetworkServicesConnectionIdempotencyPolicy::DeleteServiceLbPolicy(
+    google::cloud::networkservices::v1::DeleteServiceLbPolicyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency NetworkServicesConnectionIdempotencyPolicy::GetGatewayRouteView(
+    google::cloud::networkservices::v1::GetGatewayRouteViewRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency NetworkServicesConnectionIdempotencyPolicy::GetMeshRouteView(
+    google::cloud::networkservices::v1::GetMeshRouteViewRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency NetworkServicesConnectionIdempotencyPolicy::ListGatewayRouteViews(
+    google::cloud::networkservices::v1::
+        ListGatewayRouteViewsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency NetworkServicesConnectionIdempotencyPolicy::ListMeshRouteViews(
+    google::cloud::networkservices::v1::ListMeshRouteViewsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
 }
 
 Idempotency NetworkServicesConnectionIdempotencyPolicy::ListLocations(

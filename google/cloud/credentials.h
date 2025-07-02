@@ -17,7 +17,9 @@
 
 #include "google/cloud/common_options.h"
 #include "google/cloud/options.h"
+#include "google/cloud/ssl_certificate.h"
 #include "google/cloud/version.h"
+#include "absl/strings/string_view.h"
 #include <chrono>
 #include <memory>
 #include <string>
@@ -29,6 +31,41 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 class CredentialsVisitor;
 }  // namespace internal
+
+namespace experimental {
+/**
+ * Represents a Client SSL certificate used in mTLS authentication.
+ *
+ * Providing this option enables both PEER and HOST verification.
+ *
+ * @note This option is currently experimental and only works with services
+ *     using JSON/HTTP transport.
+ *
+ * @note Requires libcurl v7.71.0 or later.
+ */
+struct ClientSslCertificateOption {
+  using Type = SslCertificate;
+};
+
+/**
+ * Represents one or more certificates to be added to the CA store in lieu of
+ * using any CA certificates stored on the filesystem.
+ *
+ * @note This option is currently experimental and only works with OpenSSL and
+ *     services using JSON/HTTP transport.
+ *
+ * @note Specifying this option disables reading any certificates that may exist
+ *     on the filesystem.
+ *
+ * @note Requires libcurl v7.10.6 or later.
+ *
+ * @note Not supported on Windows.
+ */
+struct CAInMemoryOption {
+  using Type = std::vector<absl::string_view>;
+};
+
+}  // namespace experimental
 
 /**
  * An opaque representation of the authentication configuration.
@@ -44,6 +81,9 @@ class CredentialsVisitor;
  *
  * @see https://cloud.google.com/docs/authentication for more information on
  *     authentication in GCP.
+ *
+ * @see https://cloud.google.com/docs/authentication/client-libraries for more
+ *     information on authentication for client libraries.
  *
  * @see https://cloud.google.com/iam for more information on the IAM Service.
  *
@@ -116,8 +156,19 @@ std::shared_ptr<Credentials> MakeInsecureCredentials(Options opts = {});
  *   service account key file, or a JSON object describing your user
  *   credentials.
  *
+ * @warning If you accept a credential configuration (credential
+ * JSON/File/Stream) from an external source for authentication to Google Cloud
+ * Platform, you must validate it before providing it to any Google API or
+ * client library. Providing an unvalidated credential configuration to Google
+ * APIs can compromise the security of your systems and data. For more
+ * information, refer to
+ * https://cloud.google.com/docs/authentication/external/externally-sourced-credentials.
+ *
  * @see https://cloud.google.com/docs/authentication for more information on
  *     authentication in GCP.
+ *
+ * @see https://cloud.google.com/docs/authentication/client-libraries for more
+ *     information on authentication for client libraries.
  *
  * [aip/4110]: https://google.aip.dev/auth/4110
  * [gcloud auth application-default]:
@@ -140,6 +191,9 @@ std::shared_ptr<Credentials> MakeGoogleDefaultCredentials(Options opts = {});
  *
  * @see https://cloud.google.com/docs/authentication for more information on
  *     authentication in GCP.
+ *
+ * @see https://cloud.google.com/docs/authentication/client-libraries for more
+ *     information on authentication for client libraries.
  *
  * @ingroup guac
  *
@@ -181,6 +235,8 @@ std::shared_ptr<Credentials> MakeAccessTokenCredentials(
  * [IAM quotas]: https://cloud.google.com/iam/quotas
  * @see https://cloud.google.com/docs/authentication for more information on
  *     authentication in GCP.
+ * @see https://cloud.google.com/docs/authentication/client-libraries for more
+ *     information on authentication for client libraries.
  * @see https://cloud.google.com/iam/docs/impersonating-service-accounts for
  *     information on managing service account impersonation.
  * @see https://developers.google.com/identity/protocols/oauth2/scopes for
@@ -254,8 +310,19 @@ std::shared_ptr<Credentials> MakeServiceAccountCredentials(
  * identity provider that supports OpenID Connect (OIDC), such as Microsoft
  * Azure, or SAML 2.0.
  *
+ * @warning If you accept a credential configuration (credential
+ * JSON/File/Stream) from an external source for authentication to Google Cloud
+ * Platform, you must validate it before providing it to any Google API or
+ * client library. Providing an unvalidated credential configuration to Google
+ * APIs can compromise the security of your systems and data. For more
+ * information, refer to
+ * https://cloud.google.com/docs/authentication/external/externally-sourced-credentials.
+ *
  * @see https://cloud.google.com/docs/authentication for more information on
  *     authentication in GCP.
+ *
+ * @see https://cloud.google.com/docs/authentication/client-libraries for more
+ *     information on authentication for client libraries.
  *
  * @ingroup guac
  *
@@ -288,6 +355,12 @@ std::shared_ptr<Credentials> MakeExternalAccountCredentials(
  *
  * @note This authentication scheme does not involve access tokens. The returned
  * `Credentials` are incompatible with an `oauth2::AccessTokenGenerator`.
+ *
+ * @see https://cloud.google.com/docs/authentication for more information on
+ *     authentication in GCP.
+ *
+ * @see https://cloud.google.com/docs/authentication/client-libraries for more
+ *     information on authentication for client libraries.
  *
  * @ingroup guac
  *
@@ -394,10 +467,10 @@ struct CARootsFilePathOption {
 };
 
 /// A list of  options related to authentication.
-using UnifiedCredentialsOptionList =
-    OptionList<AccessTokenLifetimeOption, CARootsFilePathOption,
-               DelegatesOption, ScopesOption, LoggingComponentsOption,
-               UnifiedCredentialsOption>;
+using UnifiedCredentialsOptionList = OptionList<
+    AccessTokenLifetimeOption, CARootsFilePathOption, DelegatesOption,
+    ScopesOption, LoggingComponentsOption, UnifiedCredentialsOption,
+    experimental::ClientSslCertificateOption, experimental::CAInMemoryOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud

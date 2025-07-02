@@ -44,9 +44,10 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
   //     https://cloud.google.com/vpc/docs/private-google-access
   auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>(
       "private.googleapis.com");
-  auto client = google::cloud::video_stitcher_v1::VideoStitcherServiceClient(
-      google::cloud::video_stitcher_v1::MakeVideoStitcherServiceConnection(
-          options));
+  auto vpc_client =
+      google::cloud::video_stitcher_v1::VideoStitcherServiceClient(
+          google::cloud::video_stitcher_v1::MakeVideoStitcherServiceConnection(
+              options));
   //! [set-client-endpoint]
 }
 

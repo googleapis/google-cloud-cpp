@@ -80,6 +80,18 @@ DefaultContainerAnalysisStub::GetVulnerabilityOccurrencesSummary(
   return response;
 }
 
+StatusOr<google::devtools::containeranalysis::v1::ExportSBOMResponse>
+DefaultContainerAnalysisStub::ExportSBOM(
+    grpc::ClientContext& context, Options const&,
+    google::devtools::containeranalysis::v1::ExportSBOMRequest const& request) {
+  google::devtools::containeranalysis::v1::ExportSBOMResponse response;
+  auto status = grpc_stub_->ExportSBOM(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace containeranalysis_v1_internal
 }  // namespace cloud

@@ -206,6 +206,11 @@ class ModelServiceConnection {
   virtual StreamRange<google::cloud::aiplatform::v1::Model> ListModelVersions(
       google::cloud::aiplatform::v1::ListModelVersionsRequest request);
 
+  virtual StreamRange<google::cloud::aiplatform::v1::ModelVersionCheckpoint>
+  ListModelVersionCheckpoints(
+      google::cloud::aiplatform::v1::ListModelVersionCheckpointsRequest
+          request);
+
   virtual StatusOr<google::cloud::aiplatform::v1::Model> UpdateModel(
       google::cloud::aiplatform::v1::UpdateModelRequest const& request);
 

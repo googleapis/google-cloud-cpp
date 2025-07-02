@@ -89,7 +89,12 @@ class QueryServiceClient {
 
   // clang-format off
   ///
-  /// Queries time series using Monitoring Query Language.
+  /// @deprecated This RPC is deprecated.
+  ///
+  /// Queries time series by using Monitoring Query Language (MQL). We recommend
+  /// using PromQL instead of MQL. For more information about the status of MQL,
+  /// see the [MQL deprecation
+  /// notice](https://cloud.google.com/stackdriver/docs/deprecations/mql).
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -119,10 +124,11 @@ class QueryServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.QueryTimeSeriesRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L493}
-  /// [google.monitoring.v3.TimeSeriesData]: @googleapis_reference_link{google/monitoring/v3/metric.proto#L133}
+  /// [google.monitoring.v3.QueryTimeSeriesRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L508}
+  /// [google.monitoring.v3.TimeSeriesData]: @googleapis_reference_link{google/monitoring/v3/metric.proto#L140}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StreamRange<google::monitoring::v3::TimeSeriesData> QueryTimeSeries(
       google::monitoring::v3::QueryTimeSeriesRequest request,
       Options opts = {});

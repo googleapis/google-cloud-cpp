@@ -360,6 +360,8 @@ void CreateInstanceWithAutoscalingConfig(
   request.mutable_instance()->set_name(in.FullName());
   request.mutable_instance()->set_config(config);
   request.mutable_instance()->set_display_name(display_name);
+  request.mutable_instance()->set_edition(
+      google::spanner::admin::instance::v1::Instance_Edition_ENTERPRISE);
 
   auto* autoscaling = request.mutable_instance()->mutable_autoscaling_config();
   auto* limits = autoscaling->mutable_autoscaling_limits();
@@ -1296,6 +1298,100 @@ void CopyBackupCommand(std::vector<std::string> argv) {
              argv[4], expire_time);
 }
 
+//! [copy_backup_with_MR_CMEK]
+// [START spanner_copy_backup_with_MR_CMEK]
+struct BackupIdentifier {
+  std::string project_id;
+  std::string instance_id;
+  std::string backup_id;
+};
+
+void PrintKmsKeys(
+    std::vector<google::cloud::KmsKeyName> const& encryption_keys) {
+  std::cout << " using encryption keys ";
+  for (std::size_t i = 0; i < encryption_keys.size(); ++i) {
+    std::cout << encryption_keys[i].FullName();
+    if (i != encryption_keys.size() - 1) {
+      std::cout << ", ";
+    }
+  }
+  std::cout << ".\n";
+}
+
+void CopyBackupWithMRCMEK(
+    google::cloud::spanner_admin::DatabaseAdminClient client,
+    BackupIdentifier const& src, BackupIdentifier const& dst,
+    google::cloud::spanner::Timestamp expire_time,
+    std::vector<google::cloud::KmsKeyName> const& encryption_keys) {
+  google::cloud::spanner::Backup source(
+      google::cloud::spanner::Instance(src.project_id, src.instance_id),
+      src.backup_id);
+  google::cloud::spanner::Instance dst_in(dst.project_id, dst.instance_id);
+  google::spanner::admin::database::v1::CopyBackupRequest request;
+  request.set_backup_id(dst.backup_id);
+  request.set_parent(dst_in.FullName());
+  request.set_source_backup(source.FullName());
+  *request.mutable_expire_time() =
+      expire_time.get<google::protobuf::Timestamp>().value();
+  request.mutable_encryption_config()->set_encryption_type(
+      google::spanner::admin::database::v1::CopyBackupEncryptionConfig::
+          CUSTOMER_MANAGED_ENCRYPTION);
+  for (google::cloud::KmsKeyName const& encryption_key : encryption_keys) {
+    request.mutable_encryption_config()->add_kms_key_names(
+        encryption_key.FullName());
+  }
+  auto copy_backup = client.CopyBackup(request).get();
+  if (!copy_backup) throw std::move(copy_backup).status();
+  std::cout << "Copy Backup " << copy_backup->name()  //
+            << " of " << source.FullName()            //
+            << " of size " << copy_backup->size_bytes() << " bytes as of "
+            << google::cloud::spanner::MakeTimestamp(
+                   copy_backup->version_time())
+                   .value()
+            << " was created at "
+            << google::cloud::spanner::MakeTimestamp(copy_backup->create_time())
+                   .value();
+  PrintKmsKeys(encryption_keys);
+}
+// [END spanner_copy_backup_with_MR_CMEK]
+//! [copy_backup_with_MR_CMEK]
+
+void CopyBackupWithMRCMEKCommand(std::vector<std::string> argv) {
+  if (argv.size() < 8) {
+    throw std::runtime_error(
+        "copy-backup <project-id> <instance-id> <backup-id>"
+        " <copy-instance-id> <copy-backup-id> <<location> <key-ring> "
+        "<key-name>>+");
+  }
+  google::cloud::spanner_admin::DatabaseAdminClient client(
+      google::cloud::spanner_admin::MakeDatabaseAdminConnection());
+  google::cloud::spanner::Backup source(
+      google::cloud::spanner::Instance(argv[0], argv[1]), argv[2]);
+  auto backup = client.GetBackup(source.FullName());
+  if (!backup) throw std::move(backup).status();
+  auto expire_time = TimestampAdd(
+      google::cloud::spanner::MakeTimestamp(backup->expire_time()).value(),
+      absl::Hours(7));
+  std::vector<google::cloud::KmsKeyName> encryption_keys;
+  for (std::size_t i = 3; i < argv.size(); i += 3) {
+    google::cloud::KmsKeyName encryption_key(/*project_id=*/argv[0],
+                                             /*location=*/argv[i],
+                                             /*key_ring=*/argv[i + 1],
+                                             /*kms_key_name=*/argv[i + 2]);
+    encryption_keys.push_back(encryption_key);
+  }
+  BackupIdentifier src;
+  src.project_id = argv[0];
+  src.instance_id = argv[1];
+  src.backup_id = argv[2];
+  BackupIdentifier dst;
+  src.project_id = argv[0];
+  src.instance_id = argv[3];
+  src.backup_id = argv[4];
+  CopyBackupWithMRCMEK(std::move(client), src, dst, expire_time,
+                       encryption_keys);
+}
+
 //! [delete-backup] [START spanner_delete_backup]
 void DeleteBackup(google::cloud::spanner_admin::DatabaseAdminClient client,
                   std::string const& project_id, std::string const& instance_id,
@@ -1415,6 +1511,67 @@ void CreateDatabaseWithEncryptionKeyCommand(std::vector<std::string> argv) {
                                   encryption_key);
 }
 
+//! [create_database_with_MR_CMEK]
+// [START spanner_create_database_with_MR_CMEK]
+void CreateDatabaseWithMRCMEK(
+    google::cloud::spanner_admin::DatabaseAdminClient client,
+    std::string const& project_id, std::string const& instance_id,
+    std::string const& database_id,
+    std::vector<google::cloud::KmsKeyName> const& encryption_keys) {
+  google::cloud::spanner::Database database(project_id, instance_id,
+                                            database_id);
+  google::spanner::admin::database::v1::CreateDatabaseRequest request;
+  request.set_parent(database.instance().FullName());
+  request.set_create_statement("CREATE DATABASE `" + database.database_id() +
+                               "`");
+  request.add_extra_statements(R"""(
+      CREATE TABLE Singers (
+          SingerId   INT64 NOT NULL,
+          FirstName  STRING(1024),
+          LastName   STRING(1024),
+          SingerInfo BYTES(MAX),
+          FullName   STRING(2049)
+              AS (ARRAY_TO_STRING([FirstName, LastName], " ")) STORED
+      ) PRIMARY KEY (SingerId))""");
+  request.add_extra_statements(R"""(
+      CREATE TABLE Albums (
+          SingerId     INT64 NOT NULL,
+          AlbumId      INT64 NOT NULL,
+          AlbumTitle   STRING(MAX)
+      ) PRIMARY KEY (SingerId, AlbumId),
+          INTERLEAVE IN PARENT Singers ON DELETE CASCADE)""");
+  for (google::cloud::KmsKeyName const& encryption_key : encryption_keys) {
+    request.mutable_encryption_config()->add_kms_key_names(
+        encryption_key.FullName());
+  }
+  auto db = client.CreateDatabase(request).get();
+  if (!db) throw std::move(db).status();
+  std::cout << "Database " << db->name() << " created";
+  PrintKmsKeys(encryption_keys);
+}
+// [END spanner_create_database_with_MR_CMEK]
+//! [create_database_with_MR_CMEK]
+
+void CreateDatabaseWithMRCMEKCommand(std::vector<std::string> argv) {
+  if (argv.size() < 6) {
+    throw std::runtime_error(
+        "create-database-with-MR-CMEK <project-id> <instance-id>"
+        " <database-id> <<location> <key-ring> <key-name>>+");
+  }
+  google::cloud::spanner_admin::DatabaseAdminClient client(
+      google::cloud::spanner_admin::MakeDatabaseAdminConnection());
+  std::vector<google::cloud::KmsKeyName> encryption_keys;
+  for (std::size_t i = 3; i < argv.size(); i += 3) {
+    google::cloud::KmsKeyName encryption_key(/*project_id=*/argv[0],
+                                             /*location=*/argv[i],
+                                             /*key_ring=*/argv[i + 1],
+                                             /*kms_key_name=*/argv[i + 2]);
+    encryption_keys.push_back(encryption_key);
+  }
+  CreateDatabaseWithMRCMEK(std::move(client), argv[0], argv[1], argv[2],
+                           encryption_keys);
+}
+
 //! [create-backup-with-encryption-key]
 // [START spanner_create_backup_with_encryption_key]
 void CreateBackupWithEncryptionKey(
@@ -1468,6 +1625,70 @@ void CreateBackupWithEncryptionKeyCommand(std::vector<std::string> argv) {
   CreateBackupWithEncryptionKey(std::move(client), argv[0], argv[1], argv[2],
                                 argv[3], TimestampAdd(now, absl::Hours(7)), now,
                                 encryption_key);
+}
+
+//! [create_backup_with_MR_CMEK]
+// [START spanner_create_backup_with_MR_CMEK]
+void CreateBackupWithMRCMEK(
+    google::cloud::spanner_admin::DatabaseAdminClient client,
+    BackupIdentifier dst, std::string const& database_id,
+    google::cloud::spanner::Timestamp expire_time,
+    google::cloud::spanner::Timestamp version_time,
+    std::vector<google::cloud::KmsKeyName> const& encryption_keys) {
+  google::cloud::spanner::Database database(dst.project_id, dst.instance_id,
+                                            database_id);
+  google::spanner::admin::database::v1::CreateBackupRequest request;
+  request.set_parent(database.instance().FullName());
+  request.set_backup_id(dst.backup_id);
+  request.mutable_backup()->set_database(database.FullName());
+  *request.mutable_backup()->mutable_expire_time() =
+      expire_time.get<google::protobuf::Timestamp>().value();
+  *request.mutable_backup()->mutable_version_time() =
+      version_time.get<google::protobuf::Timestamp>().value();
+  request.mutable_encryption_config()->set_encryption_type(
+      google::spanner::admin::database::v1::CreateBackupEncryptionConfig::
+          CUSTOMER_MANAGED_ENCRYPTION);
+  for (google::cloud::KmsKeyName const& encryption_key : encryption_keys) {
+    request.mutable_encryption_config()->add_kms_key_names(
+        encryption_key.FullName());
+  }
+  auto backup = client.CreateBackup(request).get();
+  if (!backup) throw std::move(backup).status();
+  std::cout
+      << "Backup " << backup->name() << " of " << backup->database()
+      << " of size " << backup->size_bytes() << " bytes as of "
+      << google::cloud::spanner::MakeTimestamp(backup->version_time()).value()
+      << " was created at "
+      << google::cloud::spanner::MakeTimestamp(backup->create_time()).value();
+  PrintKmsKeys(encryption_keys);
+}
+// [END spanner_create_backup_with_MR_CMEK]
+//! [create_backup_with_MR_CMEK]
+
+void CreateBackupWithMRCMEKCommand(std::vector<std::string> argv) {
+  if (argv.size() < 7) {
+    throw std::runtime_error(
+        "create-backup-with-MR-CMEK <project-id> <instance-id>"
+        " <database-id> <backup-id> <<location> <key-ring> <key-name>>+");
+  }
+  google::cloud::spanner_admin::DatabaseAdminClient client(
+      google::cloud::spanner_admin::MakeDatabaseAdminConnection());
+  auto now = DatabaseNow(MakeSampleClient(argv[0], argv[1], argv[2]));
+  std::vector<google::cloud::KmsKeyName> encryption_keys;
+  for (std::size_t i = 4; i < argv.size(); i += 3) {
+    google::cloud::KmsKeyName encryption_key(/*project_id=*/argv[0],
+                                             /*location=*/argv[i],
+                                             /*key_ring=*/argv[i + 1],
+                                             /*kms_key_name=*/argv[i + 2]);
+    encryption_keys.push_back(encryption_key);
+  }
+  BackupIdentifier dst;
+  dst.project_id = argv[0];
+  dst.instance_id = argv[1];
+  dst.backup_id = argv[3];
+  CreateBackupWithMRCMEK(std::move(client), dst, argv[2],
+                         TimestampAdd(now, absl::Hours(7)), now,
+                         encryption_keys);
 }
 
 //! [restore-database-with-encryption-key]
@@ -1524,6 +1745,66 @@ void RestoreDatabaseWithEncryptionKeyCommand(std::vector<std::string> argv) {
                                    argv[3], encryption_key);
 }
 
+//! [restore_backup_with_MR_CMEK]
+// [START spanner_restore_backup_with_MR_CMEK]
+void RestoreDatabaseWithMRCMEK(
+    google::cloud::spanner_admin::DatabaseAdminClient client,
+    BackupIdentifier const& src, std::string const& database_id,
+    std::vector<google::cloud::KmsKeyName> const& encryption_keys) {
+  google::cloud::spanner::Database database(src.project_id, src.instance_id,
+                                            database_id);
+  google::cloud::spanner::Backup backup(database.instance(), src.backup_id);
+  google::spanner::admin::database::v1::RestoreDatabaseRequest request;
+  request.set_parent(database.instance().FullName());
+  request.set_database_id(database.database_id());
+  request.set_backup(backup.FullName());
+  request.mutable_encryption_config()->set_encryption_type(
+      google::spanner::admin::database::v1::RestoreDatabaseEncryptionConfig::
+          CUSTOMER_MANAGED_ENCRYPTION);
+  for (google::cloud::KmsKeyName const& encryption_key : encryption_keys) {
+    request.mutable_encryption_config()->add_kms_key_names(
+        encryption_key.FullName());
+  }
+  auto restored_db = client.RestoreDatabase(request).get();
+  if (!restored_db) throw std::move(restored_db).status();
+  std::cout << "Database";
+  if (restored_db->restore_info().source_type() ==
+      google::spanner::admin::database::v1::BACKUP) {
+    auto const& backup_info = restored_db->restore_info().backup_info();
+    std::cout << " " << backup_info.source_database() << " as of "
+              << google::cloud::spanner::MakeTimestamp(
+                     backup_info.version_time())
+                     .value();
+  }
+  std::cout << " restored to " << restored_db->name();
+  std::cout << " from backup " << backup.FullName();
+  PrintKmsKeys(encryption_keys);
+}
+// [END spanner_restore_backup_with_MR_CMEK]
+//! [restore_backup_with_MR_CMEK]
+
+void RestoreDatabaseWithMRCMEKCommand(std::vector<std::string> argv) {
+  if (argv.size() < 7) {
+    throw std::runtime_error(
+        "restore-database-with-MR-CMEK <project-id> <instance-id>"
+        " <database-id> <backup-id> <<location> <key-ring> <key-name>>+");
+  }
+  google::cloud::spanner_admin::DatabaseAdminClient client(
+      google::cloud::spanner_admin::MakeDatabaseAdminConnection());
+  std::vector<google::cloud::KmsKeyName> encryption_keys;
+  for (std::size_t i = 4; i < argv.size(); i += 3) {
+    google::cloud::KmsKeyName encryption_key(/*project_id=*/argv[0],
+                                             /*location=*/argv[i],
+                                             /*key_ring=*/argv[i + 1],
+                                             /*kms_key_name=*/argv[i + 2]);
+    encryption_keys.push_back(encryption_key);
+  }
+  BackupIdentifier src;
+  src.project_id = argv[0];
+  src.instance_id = argv[1];
+  src.backup_id = argv[3];
+  RestoreDatabaseWithMRCMEK(std::move(client), src, argv[2], encryption_keys);
+}
 //! [list-backups] [START spanner_list_backups]
 void ListBackups(google::cloud::spanner_admin::DatabaseAdminClient client,
                  std::string const& project_id,
@@ -4833,6 +5114,7 @@ int RunOneCommand(std::vector<std::string> argv) {
       {"get-backup", GetBackupCommand},
       {"update-backup", UpdateBackupCommand},
       {"copy-backup", CopyBackupCommand},
+      {"copy-backup-with-mr-cmek", CopyBackupWithMRCMEKCommand},
       {"delete-backup", DeleteBackupCommand},
       {"create-backup-and-cancel", CreateBackupAndCancelCommand},
       {"create-database-with-encryption-key",
@@ -4841,6 +5123,9 @@ int RunOneCommand(std::vector<std::string> argv) {
        CreateBackupWithEncryptionKeyCommand},
       {"restore-database-with-encryption-key",
        RestoreDatabaseWithEncryptionKeyCommand},
+      {"create-database-with-mr-cmek", CreateDatabaseWithMRCMEKCommand},
+      {"create-backup-with-mr-cmek", CreateBackupWithMRCMEKCommand},
+      {"restore-database-with-mr-cmek", RestoreDatabaseWithMRCMEKCommand},
       {"list-backups", ListBackupsCommand},
       {"list-backup-operations", ListBackupOperationsCommand},
       {"list-database-operations", ListDatabaseOperationsCommand},
@@ -5165,6 +5450,7 @@ void RunAllSlowInstanceTests(
       }
       google::cloud::KmsKeyName encryption_key(
           project_id, *location, "spanner-cmek", "spanner-cmek-test-key");
+      std::vector<google::cloud::KmsKeyName> encryption_keys = {encryption_key};
 
       SampleBanner("spanner_drop_database");
       DropDatabase(database_admin_client, project_id, crud_instance_id,
@@ -5188,6 +5474,57 @@ void RunAllSlowInstanceTests(
       RestoreDatabaseWithEncryptionKey(database_admin_client, project_id,
                                        crud_instance_id, restore_database_id,
                                        backup_id, encryption_key);
+
+      SampleBanner("spanner_drop_database");
+      DropDatabase(database_admin_client, project_id, crud_instance_id,
+                   restore_database_id);
+
+      SampleBanner("spanner_delete_backup");
+      DeleteBackup(database_admin_client, project_id, crud_instance_id,
+                   backup_id);
+
+      SampleBanner("spanner_drop_database");
+      DropDatabase(database_admin_client, project_id, crud_instance_id,
+                   database_id);
+
+      // mr-cmek
+      SampleBanner("spanner_create_database_with_MR_CMEK");
+      CreateDatabaseWithMRCMEK(database_admin_client, project_id,
+                               crud_instance_id, database_id, encryption_keys);
+
+      SampleBanner("spanner_create_backup_with_MR_CMEK");
+      BackupIdentifier backup_dst;
+      backup_dst.project_id = project_id;
+      backup_dst.instance_id = crud_instance_id;
+      backup_dst.backup_id = backup_id;
+      version_time = DatabaseNow(
+          MakeSampleClient(project_id, crud_instance_id, database_id));
+      CreateBackupWithMRCMEK(database_admin_client, backup_dst, database_id,
+                             expire_time, version_time, encryption_keys);
+
+      SampleBanner("spanner_copy_backup_with_MR_CMEK");
+      BackupIdentifier copy_src;
+      copy_src.project_id = project_id;
+      copy_src.instance_id = crud_instance_id;
+      copy_src.backup_id = backup_id;
+      BackupIdentifier copy_dst;
+      copy_dst.project_id = project_id;
+      copy_dst.instance_id = crud_instance_id;
+      copy_dst.backup_id = copy_backup_id;
+      CopyBackupWithMRCMEK(database_admin_client, copy_src, copy_dst,
+                           expire_time, encryption_keys);
+
+      SampleBanner("spanner_delete_backup");
+      DeleteBackup(database_admin_client, project_id, crud_instance_id,
+                   copy_backup_id);
+
+      SampleBanner("spanner_restore_backup_with_MR_CMEK");
+      BackupIdentifier restore_src;
+      restore_src.project_id = project_id;
+      restore_src.instance_id = crud_instance_id;
+      restore_src.backup_id = backup_id;
+      RestoreDatabaseWithMRCMEK(database_admin_client, restore_src,
+                                restore_database_id, encryption_keys);
 
       SampleBanner("spanner_drop_database");
       DropDatabase(database_admin_client, project_id, crud_instance_id,
@@ -5376,6 +5713,7 @@ void RunAll(bool emulator) {
     }
     google::cloud::KmsKeyName encryption_key(
         project_id, *location, "spanner-cmek", "spanner-cmek-test-key");
+    std::vector<google::cloud::KmsKeyName> encryption_keys = {encryption_key};
 
     SampleBanner("spanner_drop_database");
     DropDatabase(database_admin_client, project_id, instance_id, database_id);
@@ -5383,6 +5721,13 @@ void RunAll(bool emulator) {
     SampleBanner("spanner_create_database_with_encryption_key");
     CreateDatabaseWithEncryptionKey(database_admin_client, project_id,
                                     instance_id, database_id, encryption_key);
+
+    SampleBanner("spanner_drop_database");
+    DropDatabase(database_admin_client, project_id, instance_id, database_id);
+
+    SampleBanner("spanner_create_database_with_MR_CMEK");
+    CreateDatabaseWithMRCMEK(database_admin_client, project_id, instance_id,
+                             database_id, encryption_keys);
   }
 
   SampleBanner("spanner_create_table_with_datatypes");

@@ -64,6 +64,12 @@ ConversationsConnection::CompleteConversation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::cloud::dialogflow::v2::IngestContextReferencesResponse>
+ConversationsConnection::IngestContextReferences(
+    google::cloud::dialogflow::v2::IngestContextReferencesRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StreamRange<google::cloud::dialogflow::v2::Message>
 ConversationsConnection::ListMessages(
     google::cloud::dialogflow::v2::
@@ -93,6 +99,12 @@ ConversationsConnection::GenerateStatelessSuggestion(
 StatusOr<google::cloud::dialogflow::v2::SearchKnowledgeResponse>
 ConversationsConnection::SearchKnowledge(
     google::cloud::dialogflow::v2::SearchKnowledgeRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::dialogflow::v2::GenerateSuggestionsResponse>
+ConversationsConnection::GenerateSuggestions(
+    google::cloud::dialogflow::v2::GenerateSuggestionsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 

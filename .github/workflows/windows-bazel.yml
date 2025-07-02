@@ -25,7 +25,6 @@ jobs:
     runs-on: windows-2022
     permissions:
       contents: 'read'
-      id-token: 'write'
     strategy:
       # Continue other builds even if one fails
       fail-fast: false
@@ -89,6 +88,9 @@ jobs:
     - name: Pre Build Disk Space
       shell: bash
       run: df -m
+    - name: Check installed curl version
+      shell: bash
+      run: curl --version
     - name: Build google-cloud-cpp
       shell: bash
       run: |

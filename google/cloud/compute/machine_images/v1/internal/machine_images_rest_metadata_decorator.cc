@@ -116,6 +116,27 @@ MachineImagesRestMetadata::SetIamPolicy(
   return child_->SetIamPolicy(rest_context, options, request);
 }
 
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+MachineImagesRestMetadata::AsyncSetLabels(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::machine_images::v1::SetLabelsRequest const&
+        request) {
+  SetMetadata(*rest_context, *options);
+  return child_->AsyncSetLabels(cq, std::move(rest_context), std::move(options),
+                                request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+MachineImagesRestMetadata::SetLabels(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::machine_images::v1::SetLabelsRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->SetLabels(rest_context, options, request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 MachineImagesRestMetadata::TestIamPermissions(
     rest_internal::RestContext& rest_context, Options const& options,

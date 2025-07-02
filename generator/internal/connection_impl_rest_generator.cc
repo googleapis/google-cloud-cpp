@@ -57,10 +57,10 @@ Status ConnectionImplRestGenerator::GenerateHeader() {
        "google/cloud/status_or.h",
        HasPaginatedMethod() ? "google/cloud/stream_range.h" : "",
        "google/cloud/version.h"});
-  HeaderSystemIncludes({HasLongrunningMethod()
-                            ? vars("longrunning_operation_include_header")
-                            : "",
-                        "memory"});
+  HeaderProtobufGenCodeIncludes(
+      {HasLongrunningMethod() ? vars("longrunning_operation_include_header")
+                              : ""});
+  HeaderSystemIncludes({"memory"});
 
   auto result = HeaderOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;

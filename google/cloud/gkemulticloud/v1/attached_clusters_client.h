@@ -142,7 +142,7 @@ class AttachedClustersClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkemulticloud.v1.AttachedCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_resources.proto#L33}
   /// [google.cloud.gkemulticloud.v1.CreateAttachedClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L227}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
@@ -205,7 +205,7 @@ class AttachedClustersClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkemulticloud.v1.AttachedCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_resources.proto#L33}
   /// [google.cloud.gkemulticloud.v1.CreateAttachedClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L227}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
@@ -268,6 +268,7 @@ class AttachedClustersClient {
   ///   *   `proxy_config.kubernetes_secret.name`.
   ///   *   `proxy_config.kubernetes_secret.namespace`.
   ///   *   `security_posture_config.vulnerability_mode`
+  ///   *   `monitoring_config.cloud_monitoring_config.enabled`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO
@@ -428,7 +429,7 @@ class AttachedClustersClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkemulticloud.v1.AttachedCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_resources.proto#L33}
   /// [google.cloud.gkemulticloud.v1.ImportAttachedClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L263}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
@@ -491,7 +492,7 @@ class AttachedClustersClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkemulticloud.v1.AttachedCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_resources.proto#L33}
   /// [google.cloud.gkemulticloud.v1.ImportAttachedClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L263}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
@@ -558,7 +559,7 @@ class AttachedClustersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkemulticloud.v1.AttachedCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_resources.proto#L33}
-  /// [google.cloud.gkemulticloud.v1.GetAttachedClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L332}
+  /// [google.cloud.gkemulticloud.v1.GetAttachedClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L333}
   ///
   // clang-format on
   StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>
@@ -589,7 +590,7 @@ class AttachedClustersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkemulticloud.v1.AttachedCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_resources.proto#L33}
-  /// [google.cloud.gkemulticloud.v1.GetAttachedClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L332}
+  /// [google.cloud.gkemulticloud.v1.GetAttachedClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L333}
   ///
   // clang-format on
   StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>
@@ -633,7 +634,7 @@ class AttachedClustersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkemulticloud.v1.AttachedCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_resources.proto#L33}
-  /// [google.cloud.gkemulticloud.v1.ListAttachedClustersRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L351}
+  /// [google.cloud.gkemulticloud.v1.ListAttachedClustersRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L352}
   ///
   // clang-format on
   StreamRange<google::cloud::gkemulticloud::v1::AttachedCluster>
@@ -673,7 +674,7 @@ class AttachedClustersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkemulticloud.v1.AttachedCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_resources.proto#L33}
-  /// [google.cloud.gkemulticloud.v1.ListAttachedClustersRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L351}
+  /// [google.cloud.gkemulticloud.v1.ListAttachedClustersRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L352}
   ///
   // clang-format on
   StreamRange<google::cloud::gkemulticloud::v1::AttachedCluster>
@@ -719,9 +720,9 @@ class AttachedClustersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkemulticloud.v1.AttachedCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_resources.proto#L33}
-  /// [google.cloud.gkemulticloud.v1.DeleteAttachedClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L393}
+  /// [google.cloud.gkemulticloud.v1.DeleteAttachedClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L394}
   /// [google.cloud.gkemulticloud.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/common_resources.proto#L80}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
@@ -777,9 +778,9 @@ class AttachedClustersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkemulticloud.v1.AttachedCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_resources.proto#L33}
-  /// [google.cloud.gkemulticloud.v1.DeleteAttachedClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L393}
+  /// [google.cloud.gkemulticloud.v1.DeleteAttachedClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L394}
   /// [google.cloud.gkemulticloud.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/common_resources.proto#L80}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
@@ -845,8 +846,8 @@ class AttachedClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkemulticloud.v1.AttachedServerConfig]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_resources.proto#L234}
-  /// [google.cloud.gkemulticloud.v1.GetAttachedServerConfigRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L439}
+  /// [google.cloud.gkemulticloud.v1.AttachedServerConfig]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_resources.proto#L252}
+  /// [google.cloud.gkemulticloud.v1.GetAttachedServerConfigRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L440}
   ///
   // clang-format on
   StatusOr<google::cloud::gkemulticloud::v1::AttachedServerConfig>
@@ -876,8 +877,8 @@ class AttachedClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkemulticloud.v1.AttachedServerConfig]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_resources.proto#L234}
-  /// [google.cloud.gkemulticloud.v1.GetAttachedServerConfigRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L439}
+  /// [google.cloud.gkemulticloud.v1.AttachedServerConfig]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_resources.proto#L252}
+  /// [google.cloud.gkemulticloud.v1.GetAttachedServerConfigRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L440}
   ///
   // clang-format on
   StatusOr<google::cloud::gkemulticloud::v1::AttachedServerConfig>
@@ -994,8 +995,8 @@ class AttachedClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkemulticloud.v1.GenerateAttachedClusterAgentTokenRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L457}
-  /// [google.cloud.gkemulticloud.v1.GenerateAttachedClusterAgentTokenResponse]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L491}
+  /// [google.cloud.gkemulticloud.v1.GenerateAttachedClusterAgentTokenRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L458}
+  /// [google.cloud.gkemulticloud.v1.GenerateAttachedClusterAgentTokenResponse]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L492}
   ///
   // clang-format on
   StatusOr<google::cloud::gkemulticloud::v1::
@@ -1009,14 +1010,6 @@ class AttachedClustersClient {
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param name  The name of the operation's parent resource.
   /// @param filter  The standard list filter.
@@ -1042,8 +1035,8 @@ class AttachedClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StreamRange<google::longrunning::Operation> ListOperations(
@@ -1053,14 +1046,6 @@ class AttachedClustersClient {
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1090,8 +1075,8 @@ class AttachedClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StreamRange<google::longrunning::Operation> ListOperations(
@@ -1117,8 +1102,8 @@ class AttachedClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
@@ -1149,8 +1134,8 @@ class AttachedClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> GetOperation(
@@ -1176,7 +1161,7 @@ class AttachedClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L201}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
   Status DeleteOperation(std::string const& name, Options opts = {});
@@ -1205,7 +1190,7 @@ class AttachedClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L201}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
   Status DeleteOperation(
@@ -1222,8 +1207,9 @@ class AttachedClustersClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param name  The name of the operation resource to be cancelled.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -1237,9 +1223,9 @@ class AttachedClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
@@ -1255,8 +1241,9 @@ class AttachedClustersClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1275,9 +1262,9 @@ class AttachedClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on

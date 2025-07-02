@@ -73,19 +73,22 @@ Status ConnectionGenerator::GenerateHeader() {
        "google/cloud/version.h"});
   std::vector<std::string> const additional_pb_header_paths =
       absl::StrSplit(vars("additional_pb_header_paths"), absl::ByChar(','));
-  HeaderSystemIncludes(additional_pb_header_paths);
-  HeaderSystemIncludes({vars("proto_header_path"),
-                        HasGRPCLongrunningOperation()
-                            ? "google/longrunning/operations.grpc.pb.h"
-                            : "",
-                        "memory"});
-  switch (endpoint_location_style) {
-    case ServiceConfiguration::LOCATION_DEPENDENT:
-    case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:
-      HeaderSystemIncludes({"string"});
-      break;
-    default:
-      break;
+  HeaderProtobufGenCodeIncludes(additional_pb_header_paths);
+  HeaderProtobufGenCodeIncludes({vars("proto_header_path")});
+  HeaderProtobufGenCodeIncludes({HasGRPCLongrunningOperation()
+                                     ? "google/longrunning/operations.grpc.pb.h"
+                                     : ""});
+  HeaderSystemIncludes({"memory"});
+  if (HasGenerateGrpcTransport()) {
+    switch (endpoint_location_style) {
+      case ServiceConfiguration::LOCATION_DEPENDENT:
+      case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:
+      case ServiceConfiguration::LOCATION_OPTIONALLY_DEPENDENT:
+        HeaderSystemIncludes({"string"});
+        break;
+      default:
+        break;
+    }
   }
 
   auto result = HeaderOpenNamespaces();
@@ -426,8 +429,7 @@ $connection_class_name$::Async$method_name$() {
     "    StatusOr<$longrunning_deduced_response_type$>>(\n"
     "    Status(StatusCode::kUnimplemented, \"not implemented\"));\n"
     "}\n"
-    }
-                 // clang-format on
+    }  // clang-format on
              },
              All(IsNonStreaming, IsLongrunningOperation, Not(IsPaginated))),
          MethodPattern(
@@ -518,6 +520,7 @@ std::string ConnectionGenerator::ConnectionFactoryFunctionArguments() const {
   switch (EndpointLocationStyle()) {
     case ServiceConfiguration::LOCATION_DEPENDENT:
     case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:
+    case ServiceConfiguration::LOCATION_OPTIONALLY_DEPENDENT:
       args += "std::string const& location, ";
       break;
     default:
@@ -551,6 +554,7 @@ void ConnectionGenerator::EmitFactoryFunctionDeclaration(
   switch (endpoint_location_style) {
     case ServiceConfiguration::LOCATION_DEPENDENT:
     case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:
+    case ServiceConfiguration::LOCATION_OPTIONALLY_DEPENDENT:
       HeaderPrint(R"""(
  * @param location Sets the prefix for the default `EndpointOption` value.)""");
       break;
@@ -579,6 +583,19 @@ std::shared_ptr<$connection_class_name$> Make$connection_class_name$(
     Options options = {});
 )""");
       break;
+    case ServiceConfiguration::LOCATION_OPTIONALLY_DEPENDENT:
+      HeaderPrint(R"""(
+/**
+ * A factory function to construct an object of type `$connection_class_name$`.
+ *
+ * This overload of `Make$connection_class_name$` does not require a location
+ * argument, creating a connection to the global service endpoint.
+ */
+std::shared_ptr<$connection_class_name$> Make$connection_class_name$(
+    Options options = {});
+)""");
+      break;
+
     default:
       break;
   }
@@ -600,6 +617,7 @@ std::shared_ptr<$connection_class_name$> Make$connection_class_name$(
   switch (endpoint_location_style) {
     case ServiceConfiguration::LOCATION_DEPENDENT:
     case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:
+    case ServiceConfiguration::LOCATION_OPTIONALLY_DEPENDENT:
       CcPrint("location, ");
       break;
     default:
@@ -619,6 +637,7 @@ std::shared_ptr<$connection_class_name$> Make$connection_class_name$(
 
   switch (endpoint_location_style) {
     case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:
+    case ServiceConfiguration::LOCATION_OPTIONALLY_DEPENDENT:
       CcPrint(R"""(
 std::shared_ptr<$connection_class_name$> Make$connection_class_name$(
     Options options) {

@@ -156,6 +156,83 @@ StatusOr<google::longrunning::Operation> TpuMetadata::UpdateNode(
   return child_->UpdateNode(context, options, request);
 }
 
+StatusOr<google::cloud::tpu::v2::ListQueuedResourcesResponse>
+TpuMetadata::ListQueuedResources(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::tpu::v2::ListQueuedResourcesRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListQueuedResources(context, options, request);
+}
+
+StatusOr<google::cloud::tpu::v2::QueuedResource> TpuMetadata::GetQueuedResource(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::tpu::v2::GetQueuedResourceRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetQueuedResource(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+TpuMetadata::AsyncCreateQueuedResource(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::tpu::v2::CreateQueuedResourceRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateQueuedResource(cq, std::move(context),
+                                           std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation> TpuMetadata::CreateQueuedResource(
+    grpc::ClientContext& context, Options options,
+    google::cloud::tpu::v2::CreateQueuedResourceRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateQueuedResource(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+TpuMetadata::AsyncDeleteQueuedResource(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::tpu::v2::DeleteQueuedResourceRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteQueuedResource(cq, std::move(context),
+                                           std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation> TpuMetadata::DeleteQueuedResource(
+    grpc::ClientContext& context, Options options,
+    google::cloud::tpu::v2::DeleteQueuedResourceRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteQueuedResource(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+TpuMetadata::AsyncResetQueuedResource(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::tpu::v2::ResetQueuedResourceRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncResetQueuedResource(cq, std::move(context),
+                                          std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation> TpuMetadata::ResetQueuedResource(
+    grpc::ClientContext& context, Options options,
+    google::cloud::tpu::v2::ResetQueuedResourceRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->ResetQueuedResource(context, options, request);
+}
+
 StatusOr<google::cloud::tpu::v2::GenerateServiceIdentityResponse>
 TpuMetadata::GenerateServiceIdentity(
     grpc::ClientContext& context, Options const& options,

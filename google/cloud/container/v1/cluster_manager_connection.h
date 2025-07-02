@@ -285,6 +285,14 @@ class ClusterManagerConnection {
   virtual StatusOr<google::container::v1::CheckAutopilotCompatibilityResponse>
   CheckAutopilotCompatibility(
       google::container::v1::CheckAutopilotCompatibilityRequest const& request);
+
+  virtual StatusOr<google::container::v1::ClusterUpgradeInfo>
+  FetchClusterUpgradeInfo(
+      google::container::v1::FetchClusterUpgradeInfoRequest const& request);
+
+  virtual StatusOr<google::container::v1::NodePoolUpgradeInfo>
+  FetchNodePoolUpgradeInfo(
+      google::container::v1::FetchNodePoolUpgradeInfoRequest const& request);
 };
 
 /**

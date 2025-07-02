@@ -59,6 +59,11 @@ Idempotency NetAppConnectionIdempotencyPolicy::DeleteStoragePool(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency NetAppConnectionIdempotencyPolicy::ValidateDirectoryService(
+    google::cloud::netapp::v1::ValidateDirectoryServiceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency NetAppConnectionIdempotencyPolicy::SwitchActiveReplicaZone(
     google::cloud::netapp::v1::SwitchActiveReplicaZoneRequest const&) {
   return Idempotency::kNonIdempotent;
@@ -219,6 +224,16 @@ Idempotency NetAppConnectionIdempotencyPolicy::ReverseReplicationDirection(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency NetAppConnectionIdempotencyPolicy::EstablishPeering(
+    google::cloud::netapp::v1::EstablishPeeringRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency NetAppConnectionIdempotencyPolicy::SyncReplication(
+    google::cloud::netapp::v1::SyncReplicationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency NetAppConnectionIdempotencyPolicy::CreateBackupVault(
     google::cloud::netapp::v1::CreateBackupVaultRequest const&) {
   return Idempotency::kNonIdempotent;
@@ -291,6 +306,31 @@ Idempotency NetAppConnectionIdempotencyPolicy::UpdateBackupPolicy(
 
 Idempotency NetAppConnectionIdempotencyPolicy::DeleteBackupPolicy(
     google::cloud::netapp::v1::DeleteBackupPolicyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency NetAppConnectionIdempotencyPolicy::ListQuotaRules(
+    google::cloud::netapp::v1::ListQuotaRulesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency NetAppConnectionIdempotencyPolicy::GetQuotaRule(
+    google::cloud::netapp::v1::GetQuotaRuleRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency NetAppConnectionIdempotencyPolicy::CreateQuotaRule(
+    google::cloud::netapp::v1::CreateQuotaRuleRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency NetAppConnectionIdempotencyPolicy::UpdateQuotaRule(
+    google::cloud::netapp::v1::UpdateQuotaRuleRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency NetAppConnectionIdempotencyPolicy::DeleteQuotaRule(
+    google::cloud::netapp::v1::DeleteQuotaRuleRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 

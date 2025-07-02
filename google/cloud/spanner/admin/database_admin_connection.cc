@@ -268,6 +268,12 @@ DatabaseAdminConnection::ListDatabaseRoles(
       StreamRange<google::spanner::admin::database::v1::DatabaseRole>>();
 }
 
+StatusOr<google::spanner::admin::database::v1::AddSplitPointsResponse>
+DatabaseAdminConnection::AddSplitPoints(
+    google::spanner::admin::database::v1::AddSplitPointsRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StatusOr<google::spanner::admin::database::v1::BackupSchedule>
 DatabaseAdminConnection::CreateBackupSchedule(
     google::spanner::admin::database::v1::CreateBackupScheduleRequest const&) {

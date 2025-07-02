@@ -80,6 +80,8 @@ class StorageConnectionImpl
   StatusOr<EmptyResponse> DeleteObject(DeleteObjectRequest const&) override;
   StatusOr<ObjectMetadata> UpdateObject(
       UpdateObjectRequest const& request) override;
+  StatusOr<ObjectMetadata> MoveObject(
+      MoveObjectRequest const& request) override;
   StatusOr<ObjectMetadata> PatchObject(
       PatchObjectRequest const& request) override;
   StatusOr<ObjectMetadata> ComposeObject(

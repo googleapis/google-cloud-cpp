@@ -335,6 +335,27 @@ CloudFilestoreManagerMetadata::UpdateBackup(
   return child_->UpdateBackup(context, options, request);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+CloudFilestoreManagerMetadata::AsyncPromoteReplica(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::filestore::v1::PromoteReplicaRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncPromoteReplica(cq, std::move(context), std::move(options),
+                                     request);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudFilestoreManagerMetadata::PromoteReplica(
+    grpc::ClientContext& context, Options options,
+    google::cloud::filestore::v1::PromoteReplicaRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->PromoteReplica(context, options, request);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 CloudFilestoreManagerMetadata::ListLocations(
     grpc::ClientContext& context, Options const& options,

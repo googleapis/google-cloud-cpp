@@ -167,6 +167,7 @@ add_library(
     project.h
     retry_policy.h
     rpc_metadata.h
+    ssl_certificate.h
     status.cc
     status.h
     status_or.h

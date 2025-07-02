@@ -44,6 +44,16 @@ class ModelGardenServiceTracingConnection
       google::cloud::aiplatform::v1::GetPublisherModelRequest const& request)
       override;
 
+  future<StatusOr<google::cloud::aiplatform::v1::DeployResponse>> Deploy(
+      google::cloud::aiplatform::v1::DeployRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> Deploy(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::DeployRequest const& request) override;
+
+  future<StatusOr<google::cloud::aiplatform::v1::DeployResponse>> Deploy(
+      google::longrunning::Operation const& operation) override;
+
   StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request) override;
 

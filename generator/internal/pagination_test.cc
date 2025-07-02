@@ -683,27 +683,18 @@ TEST_P(BigQueryTestFixture, DetermineBigQueryPagination) {
             params.items_field_type_message_name);
 }
 
-INSTANTIATE_TEST_SUITE_P(
-    BigQueryTests, BigQueryTestFixture,
-    ValuesIn<BigQueryTestParams>(
-        {{.max_results_field_type_message_name = "google.protobuf.Int32Value",
-          .items_field_name = "jobs",
-          .items_field_type_message_name =
-              "google.cloud.bigquery.v2.ListFormatJob"},
-         {.max_results_field_type_message_name = "google.protobuf.UInt32Value",
-          .items_field_name = "rows",
-          .items_field_type_message_name = "google.protobuf.Struct"},
-         {.max_results_field_type_message_name = "google.protobuf.UInt32Value",
-          .items_field_name = "tables",
-          .items_field_type_message_name =
-              "google.cloud.bigquery.v2.ListFormatTable"},
-         {.max_results_field_type_message_name = "google.protobuf.UInt32Value",
-          .items_field_name = "datasets",
-          .items_field_type_message_name =
-              "google.cloud.bigquery.v2.ListFormatDataset"},
-         {.max_results_field_type_message_name = "google.protobuf.UInt32Value",
-          .items_field_name = "models",
-          .items_field_type_message_name = "google.cloud.bigquery.v2.Model"}}));
+INSTANTIATE_TEST_SUITE_P(BigQueryTests, BigQueryTestFixture,
+                         ValuesIn<BigQueryTestParams>(
+                             {{"google.protobuf.Int32Value", "jobs",
+                               "google.cloud.bigquery.v2.ListFormatJob"},
+                              {"google.protobuf.UInt32Value", "rows",
+                               "google.protobuf.Struct"},
+                              {"google.protobuf.UInt32Value", "tables",
+                               "google.cloud.bigquery.v2.ListFormatTable"},
+                              {"google.protobuf.UInt32Value", "datasets",
+                               "google.cloud.bigquery.v2.ListFormatDataset"},
+                              {"google.protobuf.UInt32Value", "models",
+                               "google.cloud.bigquery.v2.Model"}}));
 
 TEST(PaginationTest, PaginationBigQuerySpecialCaseSuccess) {
   FileDescriptorProto service_file;

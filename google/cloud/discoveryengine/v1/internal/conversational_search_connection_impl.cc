@@ -22,7 +22,9 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/internal/resumable_streaming_read_rpc.h"
 #include "google/cloud/internal/retry_loop.h"
+#include "google/cloud/internal/streaming_read_rpc_logging.h"
 #include <memory>
 #include <utility>
 
@@ -55,6 +57,10 @@ idempotency_policy(Options const& options) {
 }
 
 }  // namespace
+
+void ConversationalSearchServiceStreamAnswerQueryStreamingUpdater(
+    google::cloud::discoveryengine::v1::AnswerQueryResponse const&,
+    google::cloud::discoveryengine::v1::AnswerQueryRequest&) {}
 
 ConversationalSearchServiceConnectionImpl::
     ConversationalSearchServiceConnectionImpl(
@@ -200,6 +206,28 @@ ConversationalSearchServiceConnectionImpl::AnswerQuery(
         return stub_->AnswerQuery(context, options, request);
       },
       *current, request, __func__);
+}
+
+StreamRange<google::cloud::discoveryengine::v1::AnswerQueryResponse>
+ConversationalSearchServiceConnectionImpl::StreamAnswerQuery(
+    google::cloud::discoveryengine::v1::AnswerQueryRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto factory =
+      [stub = stub_,
+       current](google::cloud::discoveryengine::v1::AnswerQueryRequest const&
+                    request) {
+        return stub->StreamAnswerQuery(std::make_shared<grpc::ClientContext>(),
+                                       *current, request);
+      };
+  auto resumable = internal::MakeResumableStreamingReadRpc<
+      google::cloud::discoveryengine::v1::AnswerQueryResponse,
+      google::cloud::discoveryengine::v1::AnswerQueryRequest>(
+      retry_policy(*current), backoff_policy(*current), factory,
+      ConversationalSearchServiceStreamAnswerQueryStreamingUpdater, request);
+  return internal::MakeStreamRange(
+      internal::StreamReader<
+          google::cloud::discoveryengine::v1::AnswerQueryResponse>(
+          [resumable] { return resumable->Read(); }));
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Answer>

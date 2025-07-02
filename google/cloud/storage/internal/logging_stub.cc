@@ -224,6 +224,16 @@ StatusOr<ObjectMetadata> LoggingStub::UpdateObject(
       context, options, request, __func__);
 }
 
+StatusOr<ObjectMetadata> LoggingStub::MoveObject(
+    rest_internal::RestContext& context, Options const& options,
+    MoveObjectRequest const& request) {
+  return LogWrapper(
+      [this](auto& context, auto const& options, auto& request) {
+        return stub_->MoveObject(context, options, request);
+      },
+      context, options, request, __func__);
+}
+
 StatusOr<ObjectMetadata> LoggingStub::PatchObject(
     rest_internal::RestContext& context, Options const& options,
     PatchObjectRequest const& request) {

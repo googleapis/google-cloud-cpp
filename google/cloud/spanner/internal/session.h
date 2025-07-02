@@ -39,6 +39,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  */
 class Session {
  public:
+  enum class Mode { kPooled, kDisassociated, kMultiplexed };
+
   using Clock = ::google::cloud::internal::SteadyClock;
   Session(std::string session_name, std::shared_ptr<Channel> channel,
           std::shared_ptr<Clock> clock = std::make_shared<Clock>())
@@ -46,7 +48,14 @@ class Session {
         channel_(std::move(channel)),
         is_bad_(false),
         clock_(std::move(clock)),
-        last_use_time_(clock_->Now()) {}
+        last_use_time_(clock_->Now()),
+        creation_time_(clock_->Now()) {}
+
+  explicit Session(std::string session_name, Mode mode,
+                   std::shared_ptr<Clock> clock = std::make_shared<Clock>())
+      : Session(std::move(session_name), nullptr, std::move(clock)) {
+    mode_ = mode;
+  }
 
   // Not copyable or moveable.
   Session(Session const&) = delete;
@@ -60,6 +69,9 @@ class Session {
   void set_bad() { is_bad_.store(true, std::memory_order_relaxed); }
   bool is_bad() const { return is_bad_.load(std::memory_order_relaxed); }
 
+  bool is_disassociated() const { return mode_ == Mode::kDisassociated; }
+  bool is_multiplexed() const { return mode_ == Mode::kMultiplexed; }
+
  private:
   // Give `SessionPool` access to the private methods below.
   friend class SessionPool;
@@ -71,11 +83,15 @@ class Session {
   Clock::time_point last_use_time() const { return last_use_time_; }
   void update_last_use_time() { last_use_time_ = clock_->Now(); }
 
+  Clock::time_point creation_time() const { return creation_time_; }
+
   std::string const session_name_;
   std::shared_ptr<Channel> const channel_;
   std::atomic<bool> is_bad_;
   std::shared_ptr<Clock> clock_;
   Clock::time_point last_use_time_;
+  Clock::time_point creation_time_;
+  Mode mode_ = Mode::kPooled;
 };
 
 /**
@@ -93,6 +109,14 @@ using SessionHolder = std::shared_ptr<Session>;
  * machines and should not be returned to the pool.
  */
 SessionHolder MakeDissociatedSessionHolder(std::string session_name);
+
+/**
+ * Returns a `SessionHolder` for a new `Session` that is not associated with
+ * any pool; it just deletes the `Session`. This is for use with Multiplexed
+ * Sessions that do not require a pool.
+ */
+SessionHolder MakeMultiplexedSessionHolder(
+    std::string session_name, std::shared_ptr<Session::Clock> clock);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner_internal

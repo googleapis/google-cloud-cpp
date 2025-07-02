@@ -167,9 +167,9 @@ class NetAppClient {
   /// @param parent  Required. Value for parent.
   /// @param storage_pool  Required. The required parameters to create a new storage pool.
   /// @param storage_pool_id  Required. Id of the requesting storage pool. Must be unique within the
-  ///  parent resource. Must contain only letters, numbers, underscore and hyphen,
-  ///  with the first character a letter or underscore, the last a letter or
-  ///  underscore or a number, and a 63 character maximum.
+  ///  parent resource. Must contain only letters, numbers and hyphen, with the
+  ///  first character a letter, the last a letter or a number, and a 63 character
+  ///  maximum.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO
@@ -482,7 +482,7 @@ class NetAppClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.netapp.v1.DeleteStoragePoolRequest]: @googleapis_reference_link{google/cloud/netapp/v1/storage_pool.proto#L116}
-  /// [google.cloud.netapp.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/netapp/v1/cloud_netapp_service.proto#L667}
+  /// [google.cloud.netapp.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/netapp/v1/cloud_netapp_service.proto#L766}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
@@ -533,7 +533,7 @@ class NetAppClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.netapp.v1.DeleteStoragePoolRequest]: @googleapis_reference_link{google/cloud/netapp/v1/storage_pool.proto#L116}
-  /// [google.cloud.netapp.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/netapp/v1/cloud_netapp_service.proto#L667}
+  /// [google.cloud.netapp.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/netapp/v1/cloud_netapp_service.proto#L766}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
@@ -569,6 +569,75 @@ class NetAppClient {
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
   DeleteStoragePool(google::longrunning::Operation const& operation,
                     Options opts = {});
+
+  // clang-format off
+  ///
+  /// ValidateDirectoryService does a connectivity check for a directory service
+  /// policy attached to the storage pool.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.netapp.v1.ValidateDirectoryServiceRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.netapp.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.netapp.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/netapp/v1/cloud_netapp_service.proto#L766}
+  /// [google.cloud.netapp.v1.ValidateDirectoryServiceRequest]: @googleapis_reference_link{google/cloud/netapp/v1/storage_pool.proto#L277}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
+  ValidateDirectoryService(
+      google::cloud::netapp::v1::ValidateDirectoryServiceRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief ValidateDirectoryService
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> ValidateDirectoryService(
+      NoAwaitTag,
+      google::cloud::netapp::v1::ValidateDirectoryServiceRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief ValidateDirectoryService
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
+  ValidateDirectoryService(google::longrunning::Operation const& operation,
+                           Options opts = {});
 
   // clang-format off
   ///
@@ -666,8 +735,8 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.netapp.v1.ListVolumesRequest]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L119}
-  /// [google.cloud.netapp.v1.Volume]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L227}
+  /// [google.cloud.netapp.v1.ListVolumesRequest]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L120}
+  /// [google.cloud.netapp.v1.Volume]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L228}
   ///
   // clang-format on
   StreamRange<google::cloud::netapp::v1::Volume> ListVolumes(
@@ -705,8 +774,8 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.netapp.v1.ListVolumesRequest]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L119}
-  /// [google.cloud.netapp.v1.Volume]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L227}
+  /// [google.cloud.netapp.v1.ListVolumesRequest]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L120}
+  /// [google.cloud.netapp.v1.Volume]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L228}
   ///
   // clang-format on
   StreamRange<google::cloud::netapp::v1::Volume> ListVolumes(
@@ -730,8 +799,8 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.netapp.v1.GetVolumeRequest]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L155}
-  /// [google.cloud.netapp.v1.Volume]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L227}
+  /// [google.cloud.netapp.v1.GetVolumeRequest]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L156}
+  /// [google.cloud.netapp.v1.Volume]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L228}
   ///
   // clang-format on
   StatusOr<google::cloud::netapp::v1::Volume> GetVolume(std::string const& name,
@@ -760,8 +829,8 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.netapp.v1.GetVolumeRequest]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L155}
-  /// [google.cloud.netapp.v1.Volume]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L227}
+  /// [google.cloud.netapp.v1.GetVolumeRequest]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L156}
+  /// [google.cloud.netapp.v1.Volume]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L228}
   ///
   // clang-format on
   StatusOr<google::cloud::netapp::v1::Volume> GetVolume(
@@ -775,9 +844,9 @@ class NetAppClient {
   /// @param parent  Required. Value for parent.
   /// @param volume  Required. The volume being created.
   /// @param volume_id  Required. Id of the requesting volume. Must be unique within the parent
-  ///  resource. Must contain only letters, numbers, underscore and hyphen, with
-  ///  the first character a letter or underscore, the last a letter or underscore
-  ///  or a number, and a 63 character maximum.
+  ///  resource. Must contain only letters, numbers and hyphen, with the first
+  ///  character a letter, the last a letter or a number,
+  ///  and a 63 character maximum.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO
@@ -798,8 +867,8 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.netapp.v1.CreateVolumeRequest]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L164}
-  /// [google.cloud.netapp.v1.Volume]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L227}
+  /// [google.cloud.netapp.v1.CreateVolumeRequest]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L165}
+  /// [google.cloud.netapp.v1.Volume]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L228}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::Volume>> CreateVolume(
@@ -853,8 +922,8 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.netapp.v1.CreateVolumeRequest]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L164}
-  /// [google.cloud.netapp.v1.Volume]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L227}
+  /// [google.cloud.netapp.v1.CreateVolumeRequest]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L165}
+  /// [google.cloud.netapp.v1.Volume]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L228}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::Volume>> CreateVolume(
@@ -918,8 +987,8 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.netapp.v1.UpdateVolumeRequest]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L184}
-  /// [google.cloud.netapp.v1.Volume]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L227}
+  /// [google.cloud.netapp.v1.UpdateVolumeRequest]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L185}
+  /// [google.cloud.netapp.v1.Volume]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L228}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::Volume>> UpdateVolume(
@@ -971,8 +1040,8 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.netapp.v1.UpdateVolumeRequest]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L184}
-  /// [google.cloud.netapp.v1.Volume]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L227}
+  /// [google.cloud.netapp.v1.UpdateVolumeRequest]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L185}
+  /// [google.cloud.netapp.v1.Volume]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L228}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::Volume>> UpdateVolume(
@@ -1031,8 +1100,8 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.netapp.v1.DeleteVolumeRequest]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L198}
-  /// [google.cloud.netapp.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/netapp/v1/cloud_netapp_service.proto#L667}
+  /// [google.cloud.netapp.v1.DeleteVolumeRequest]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L199}
+  /// [google.cloud.netapp.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/netapp/v1/cloud_netapp_service.proto#L766}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>> DeleteVolume(
@@ -1083,8 +1152,8 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.netapp.v1.DeleteVolumeRequest]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L198}
-  /// [google.cloud.netapp.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/netapp/v1/cloud_netapp_service.proto#L667}
+  /// [google.cloud.netapp.v1.DeleteVolumeRequest]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L199}
+  /// [google.cloud.netapp.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/netapp/v1/cloud_netapp_service.proto#L766}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>> DeleteVolume(
@@ -1150,8 +1219,8 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.netapp.v1.RevertVolumeRequest]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L212}
-  /// [google.cloud.netapp.v1.Volume]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L227}
+  /// [google.cloud.netapp.v1.RevertVolumeRequest]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L213}
+  /// [google.cloud.netapp.v1.Volume]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L228}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::Volume>> RevertVolume(
@@ -1326,9 +1395,9 @@ class NetAppClient {
   ///  `projects/{project_id}/locations/{location}/volumes/{volume_id}`
   /// @param snapshot  Required. A snapshot resource
   /// @param snapshot_id  Required. ID of the snapshot to create. Must be unique within the parent
-  ///  resource. Must contain only letters, numbers, underscore and hyphen, with
-  ///  the first character a letter or underscore, the last a letter or underscore
-  ///  or a number, and a 63 character maximum.
+  ///  resource. Must contain only letters, numbers and hyphen, with the first
+  ///  character a letter, the last a letter or a
+  ///  number, and a 63 character maximum.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO
@@ -1467,7 +1536,7 @@ class NetAppClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.netapp.v1.DeleteSnapshotRequest]: @googleapis_reference_link{google/cloud/netapp/v1/snapshot.proto#L103}
-  /// [google.cloud.netapp.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/netapp/v1/cloud_netapp_service.proto#L667}
+  /// [google.cloud.netapp.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/netapp/v1/cloud_netapp_service.proto#L766}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>> DeleteSnapshot(
@@ -1518,7 +1587,7 @@ class NetAppClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.netapp.v1.DeleteSnapshotRequest]: @googleapis_reference_link{google/cloud/netapp/v1/snapshot.proto#L103}
-  /// [google.cloud.netapp.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/netapp/v1/cloud_netapp_service.proto#L667}
+  /// [google.cloud.netapp.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/netapp/v1/cloud_netapp_service.proto#L766}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>> DeleteSnapshot(
@@ -1807,9 +1876,9 @@ class NetAppClient {
   /// @param parent  Required. Value for parent.
   /// @param active_directory  Required. Fields of the to be created active directory.
   /// @param active_directory_id  Required. ID of the active directory to create. Must be unique within the
-  ///  parent resource. Must contain only letters, numbers, underscore and hyphen,
-  ///  with the first character a letter or underscore, the last a letter or
-  ///  underscore or a number, and a 63 character maximum.
+  ///  parent resource. Must contain only letters, numbers and hyphen, with the
+  ///  first character a letter , the last a letter or a number, and a 63
+  ///  character maximum.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO
@@ -2074,7 +2143,7 @@ class NetAppClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.netapp.v1.DeleteActiveDirectoryRequest]: @googleapis_reference_link{google/cloud/netapp/v1/active_directory.proto#L114}
-  /// [google.cloud.netapp.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/netapp/v1/cloud_netapp_service.proto#L667}
+  /// [google.cloud.netapp.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/netapp/v1/cloud_netapp_service.proto#L766}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
@@ -2125,7 +2194,7 @@ class NetAppClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.netapp.v1.DeleteActiveDirectoryRequest]: @googleapis_reference_link{google/cloud/netapp/v1/active_directory.proto#L114}
-  /// [google.cloud.netapp.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/netapp/v1/cloud_netapp_service.proto#L667}
+  /// [google.cloud.netapp.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/netapp/v1/cloud_netapp_service.proto#L766}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
@@ -2243,9 +2312,9 @@ class NetAppClient {
   /// @param parent  Required. Value for parent.
   /// @param kms_config  Required. The required parameters to create a new KmsConfig.
   /// @param kms_config_id  Required. Id of the requesting KmsConfig. Must be unique within the parent
-  ///  resource. Must contain only letters, numbers, underscore and hyphen, with
-  ///  the first character a letter or underscore, the last a letter or underscore
-  ///  or a number, and a 63 character maximum.
+  ///  resource. Must contain only letters, numbers and hyphen, with the first
+  ///  character a letter, the last a letter or a
+  ///  number, and a 63 character maximum.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO
@@ -2656,7 +2725,7 @@ class NetAppClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.netapp.v1.DeleteKmsConfigRequest]: @googleapis_reference_link{google/cloud/netapp/v1/kms.proto#L114}
-  /// [google.cloud.netapp.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/netapp/v1/cloud_netapp_service.proto#L667}
+  /// [google.cloud.netapp.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/netapp/v1/cloud_netapp_service.proto#L766}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
@@ -2707,7 +2776,7 @@ class NetAppClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.netapp.v1.DeleteKmsConfigRequest]: @googleapis_reference_link{google/cloud/netapp/v1/kms.proto#L114}
-  /// [google.cloud.netapp.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/netapp/v1/cloud_netapp_service.proto#L667}
+  /// [google.cloud.netapp.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/netapp/v1/cloud_netapp_service.proto#L766}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
@@ -2773,8 +2842,8 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.netapp.v1.ListReplicationsRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L208}
-  /// [google.cloud.netapp.v1.Replication]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L65}
+  /// [google.cloud.netapp.v1.ListReplicationsRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L274}
+  /// [google.cloud.netapp.v1.Replication]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L66}
   ///
   // clang-format on
   StreamRange<google::cloud::netapp::v1::Replication> ListReplications(
@@ -2812,8 +2881,8 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.netapp.v1.ListReplicationsRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L208}
-  /// [google.cloud.netapp.v1.Replication]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L65}
+  /// [google.cloud.netapp.v1.ListReplicationsRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L274}
+  /// [google.cloud.netapp.v1.Replication]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L66}
   ///
   // clang-format on
   StreamRange<google::cloud::netapp::v1::Replication> ListReplications(
@@ -2839,8 +2908,8 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.netapp.v1.GetReplicationRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L247}
-  /// [google.cloud.netapp.v1.Replication]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L65}
+  /// [google.cloud.netapp.v1.GetReplicationRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L313}
+  /// [google.cloud.netapp.v1.Replication]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L66}
   ///
   // clang-format on
   StatusOr<google::cloud::netapp::v1::Replication> GetReplication(
@@ -2869,8 +2938,8 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.netapp.v1.GetReplicationRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L247}
-  /// [google.cloud.netapp.v1.Replication]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L65}
+  /// [google.cloud.netapp.v1.GetReplicationRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L313}
+  /// [google.cloud.netapp.v1.Replication]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L66}
   ///
   // clang-format on
   StatusOr<google::cloud::netapp::v1::Replication> GetReplication(
@@ -2885,9 +2954,9 @@ class NetAppClient {
   ///  `projects/{project_id}/locations/{location}/volumes/{volume_id}`
   /// @param replication  Required. A replication resource
   /// @param replication_id  Required. ID of the replication to create. Must be unique within the parent
-  ///  resource. Must contain only letters, numbers, underscore and hyphen, with
-  ///  the first character a letter or underscore, the last a letter or underscore
-  ///  or a number, and a 63 character maximum.
+  ///  resource. Must contain only letters, numbers and hyphen, with the first
+  ///  character a letter, the last a letter or a
+  ///  number, and a 63 character maximum.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO
@@ -2908,8 +2977,8 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.netapp.v1.CreateReplicationRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L284}
-  /// [google.cloud.netapp.v1.Replication]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L65}
+  /// [google.cloud.netapp.v1.CreateReplicationRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L354}
+  /// [google.cloud.netapp.v1.Replication]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L66}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::Replication>> CreateReplication(
@@ -2963,8 +3032,8 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.netapp.v1.CreateReplicationRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L284}
-  /// [google.cloud.netapp.v1.Replication]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L65}
+  /// [google.cloud.netapp.v1.CreateReplicationRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L354}
+  /// [google.cloud.netapp.v1.Replication]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L66}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::Replication>> CreateReplication(
@@ -3025,8 +3094,8 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.netapp.v1.DeleteReplicationRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L305}
-  /// [google.cloud.netapp.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/netapp/v1/cloud_netapp_service.proto#L667}
+  /// [google.cloud.netapp.v1.DeleteReplicationRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L375}
+  /// [google.cloud.netapp.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/netapp/v1/cloud_netapp_service.proto#L766}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
@@ -3076,8 +3145,8 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.netapp.v1.DeleteReplicationRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L305}
-  /// [google.cloud.netapp.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/netapp/v1/cloud_netapp_service.proto#L667}
+  /// [google.cloud.netapp.v1.DeleteReplicationRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L375}
+  /// [google.cloud.netapp.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/netapp/v1/cloud_netapp_service.proto#L766}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
@@ -3141,8 +3210,8 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.netapp.v1.Replication]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L65}
-  /// [google.cloud.netapp.v1.UpdateReplicationRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L317}
+  /// [google.cloud.netapp.v1.Replication]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L66}
+  /// [google.cloud.netapp.v1.UpdateReplicationRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L387}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::Replication>> UpdateReplication(
@@ -3194,8 +3263,8 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.netapp.v1.Replication]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L65}
-  /// [google.cloud.netapp.v1.UpdateReplicationRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L317}
+  /// [google.cloud.netapp.v1.Replication]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L66}
+  /// [google.cloud.netapp.v1.UpdateReplicationRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L387}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::Replication>> UpdateReplication(
@@ -3260,8 +3329,8 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.netapp.v1.Replication]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L65}
-  /// [google.cloud.netapp.v1.StopReplicationRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L328}
+  /// [google.cloud.netapp.v1.Replication]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L66}
+  /// [google.cloud.netapp.v1.StopReplicationRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L398}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::Replication>> StopReplication(
@@ -3326,8 +3395,8 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.netapp.v1.Replication]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L65}
-  /// [google.cloud.netapp.v1.ResumeReplicationRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L348}
+  /// [google.cloud.netapp.v1.Replication]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L66}
+  /// [google.cloud.netapp.v1.ResumeReplicationRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L418}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::Replication>> ResumeReplication(
@@ -3393,8 +3462,8 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.netapp.v1.Replication]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L65}
-  /// [google.cloud.netapp.v1.ReverseReplicationDirectionRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L361}
+  /// [google.cloud.netapp.v1.Replication]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L66}
+  /// [google.cloud.netapp.v1.ReverseReplicationDirectionRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L431}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::Replication>>
@@ -3435,6 +3504,139 @@ class NetAppClient {
 
   // clang-format off
   ///
+  /// Establish replication peering.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.netapp.v1.EstablishPeeringRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.netapp.v1.Replication] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.netapp.v1.EstablishPeeringRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L444}
+  /// [google.cloud.netapp.v1.Replication]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L66}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::netapp::v1::Replication>> EstablishPeering(
+      google::cloud::netapp::v1::EstablishPeeringRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief EstablishPeering
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> EstablishPeering(
+      NoAwaitTag,
+      google::cloud::netapp::v1::EstablishPeeringRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief EstablishPeering
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::netapp::v1::Replication>> EstablishPeering(
+      google::longrunning::Operation const& operation, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Syncs the replication. This will invoke one time volume data transfer from
+  /// source to destination.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.netapp.v1.SyncReplicationRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.netapp.v1.Replication] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.netapp.v1.Replication]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L66}
+  /// [google.cloud.netapp.v1.SyncReplicationRequest]: @googleapis_reference_link{google/cloud/netapp/v1/replication.proto#L472}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::netapp::v1::Replication>> SyncReplication(
+      google::cloud::netapp::v1::SyncReplicationRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief SyncReplication
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> SyncReplication(
+      NoAwaitTag,
+      google::cloud::netapp::v1::SyncReplicationRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief SyncReplication
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::netapp::v1::Replication>> SyncReplication(
+      google::longrunning::Operation const& operation, Options opts = {});
+
+  // clang-format off
+  ///
   /// Creates new backup vault
   ///
   /// @param parent  Required. The location to create the backup vaults, in the format
@@ -3442,8 +3644,8 @@ class NetAppClient {
   /// @param backup_vault  Required. A backupVault resource
   /// @param backup_vault_id  Required. The ID to use for the backupVault.
   ///  The ID must be unique within the specified location.
-  ///  Must contain only letters, numbers, underscore and hyphen, with the first
-  ///  character a letter or underscore, the last a letter or underscore or a
+  ///  Must contain only letters, numbers and hyphen, with the first
+  ///  character a letter, the last a letter or a
   ///  number, and a 63 character maximum.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -3466,7 +3668,7 @@ class NetAppClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.netapp.v1.BackupVault]: @googleapis_reference_link{google/cloud/netapp/v1/backup_vault.proto#L33}
-  /// [google.cloud.netapp.v1.CreateBackupVaultRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup_vault.proto#L133}
+  /// [google.cloud.netapp.v1.CreateBackupVaultRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup_vault.proto#L220}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::BackupVault>> CreateBackupVault(
@@ -3521,7 +3723,7 @@ class NetAppClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.netapp.v1.BackupVault]: @googleapis_reference_link{google/cloud/netapp/v1/backup_vault.proto#L33}
-  /// [google.cloud.netapp.v1.CreateBackupVaultRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup_vault.proto#L133}
+  /// [google.cloud.netapp.v1.CreateBackupVaultRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup_vault.proto#L220}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::BackupVault>> CreateBackupVault(
@@ -3576,7 +3778,7 @@ class NetAppClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.netapp.v1.BackupVault]: @googleapis_reference_link{google/cloud/netapp/v1/backup_vault.proto#L33}
-  /// [google.cloud.netapp.v1.GetBackupVaultRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup_vault.proto#L82}
+  /// [google.cloud.netapp.v1.GetBackupVaultRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup_vault.proto#L169}
   ///
   // clang-format on
   StatusOr<google::cloud::netapp::v1::BackupVault> GetBackupVault(
@@ -3606,7 +3808,7 @@ class NetAppClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.netapp.v1.BackupVault]: @googleapis_reference_link{google/cloud/netapp/v1/backup_vault.proto#L33}
-  /// [google.cloud.netapp.v1.GetBackupVaultRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup_vault.proto#L82}
+  /// [google.cloud.netapp.v1.GetBackupVaultRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup_vault.proto#L169}
   ///
   // clang-format on
   StatusOr<google::cloud::netapp::v1::BackupVault> GetBackupVault(
@@ -3643,7 +3845,7 @@ class NetAppClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.netapp.v1.BackupVault]: @googleapis_reference_link{google/cloud/netapp/v1/backup_vault.proto#L33}
-  /// [google.cloud.netapp.v1.ListBackupVaultsRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup_vault.proto#L94}
+  /// [google.cloud.netapp.v1.ListBackupVaultsRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup_vault.proto#L181}
   ///
   // clang-format on
   StreamRange<google::cloud::netapp::v1::BackupVault> ListBackupVaults(
@@ -3682,7 +3884,7 @@ class NetAppClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.netapp.v1.BackupVault]: @googleapis_reference_link{google/cloud/netapp/v1/backup_vault.proto#L33}
-  /// [google.cloud.netapp.v1.ListBackupVaultsRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup_vault.proto#L94}
+  /// [google.cloud.netapp.v1.ListBackupVaultsRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup_vault.proto#L181}
   ///
   // clang-format on
   StreamRange<google::cloud::netapp::v1::BackupVault> ListBackupVaults(
@@ -3720,7 +3922,7 @@ class NetAppClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.netapp.v1.BackupVault]: @googleapis_reference_link{google/cloud/netapp/v1/backup_vault.proto#L33}
-  /// [google.cloud.netapp.v1.UpdateBackupVaultRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup_vault.proto#L167}
+  /// [google.cloud.netapp.v1.UpdateBackupVaultRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup_vault.proto#L254}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::BackupVault>> UpdateBackupVault(
@@ -3773,7 +3975,7 @@ class NetAppClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.netapp.v1.BackupVault]: @googleapis_reference_link{google/cloud/netapp/v1/backup_vault.proto#L33}
-  /// [google.cloud.netapp.v1.UpdateBackupVaultRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup_vault.proto#L167}
+  /// [google.cloud.netapp.v1.UpdateBackupVaultRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup_vault.proto#L254}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::BackupVault>> UpdateBackupVault(
@@ -3834,8 +4036,8 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.netapp.v1.DeleteBackupVaultRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup_vault.proto#L155}
-  /// [google.cloud.netapp.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/netapp/v1/cloud_netapp_service.proto#L667}
+  /// [google.cloud.netapp.v1.DeleteBackupVaultRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup_vault.proto#L242}
+  /// [google.cloud.netapp.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/netapp/v1/cloud_netapp_service.proto#L766}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
@@ -3885,8 +4087,8 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.netapp.v1.DeleteBackupVaultRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup_vault.proto#L155}
-  /// [google.cloud.netapp.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/netapp/v1/cloud_netapp_service.proto#L667}
+  /// [google.cloud.netapp.v1.DeleteBackupVaultRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup_vault.proto#L242}
+  /// [google.cloud.netapp.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/netapp/v1/cloud_netapp_service.proto#L766}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
@@ -3935,8 +4137,8 @@ class NetAppClient {
   /// @param backup  Required. A backup resource
   /// @param backup_id  Required. The ID to use for the backup.
   ///  The ID must be unique within the specified backupVault.
-  ///  Must contain only letters, numbers, underscore and hyphen, with the first
-  ///  character a letter or underscore, the last a letter or underscore or a
+  ///  Must contain only letters, numbers and hyphen, with the first
+  ///  character a letter, the last a letter or a
   ///  number, and a 63 character maximum.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -3959,7 +4161,7 @@ class NetAppClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.netapp.v1.Backup]: @googleapis_reference_link{google/cloud/netapp/v1/backup.proto#L33}
-  /// [google.cloud.netapp.v1.CreateBackupRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup.proto#L190}
+  /// [google.cloud.netapp.v1.CreateBackupRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup.proto#L218}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::Backup>> CreateBackup(
@@ -4017,7 +4219,7 @@ class NetAppClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.netapp.v1.Backup]: @googleapis_reference_link{google/cloud/netapp/v1/backup.proto#L33}
-  /// [google.cloud.netapp.v1.CreateBackupRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup.proto#L190}
+  /// [google.cloud.netapp.v1.CreateBackupRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup.proto#L218}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::Backup>> CreateBackup(
@@ -4071,7 +4273,7 @@ class NetAppClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.netapp.v1.Backup]: @googleapis_reference_link{google/cloud/netapp/v1/backup.proto#L33}
-  /// [google.cloud.netapp.v1.GetBackupRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup.proto#L180}
+  /// [google.cloud.netapp.v1.GetBackupRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup.proto#L208}
   ///
   // clang-format on
   StatusOr<google::cloud::netapp::v1::Backup> GetBackup(std::string const& name,
@@ -4101,7 +4303,7 @@ class NetAppClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.netapp.v1.Backup]: @googleapis_reference_link{google/cloud/netapp/v1/backup.proto#L33}
-  /// [google.cloud.netapp.v1.GetBackupRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup.proto#L180}
+  /// [google.cloud.netapp.v1.GetBackupRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup.proto#L208}
   ///
   // clang-format on
   StatusOr<google::cloud::netapp::v1::Backup> GetBackup(
@@ -4144,7 +4346,7 @@ class NetAppClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.netapp.v1.Backup]: @googleapis_reference_link{google/cloud/netapp/v1/backup.proto#L33}
-  /// [google.cloud.netapp.v1.ListBackupsRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup.proto#L130}
+  /// [google.cloud.netapp.v1.ListBackupsRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup.proto#L158}
   ///
   // clang-format on
   StreamRange<google::cloud::netapp::v1::Backup> ListBackups(
@@ -4183,7 +4385,7 @@ class NetAppClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.netapp.v1.Backup]: @googleapis_reference_link{google/cloud/netapp/v1/backup.proto#L33}
-  /// [google.cloud.netapp.v1.ListBackupsRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup.proto#L130}
+  /// [google.cloud.netapp.v1.ListBackupsRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup.proto#L158}
   ///
   // clang-format on
   StreamRange<google::cloud::netapp::v1::Backup> ListBackups(
@@ -4215,8 +4417,8 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.netapp.v1.DeleteBackupRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup.proto#L212}
-  /// [google.cloud.netapp.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/netapp/v1/cloud_netapp_service.proto#L667}
+  /// [google.cloud.netapp.v1.DeleteBackupRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup.proto#L240}
+  /// [google.cloud.netapp.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/netapp/v1/cloud_netapp_service.proto#L766}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>> DeleteBackup(
@@ -4267,8 +4469,8 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.netapp.v1.DeleteBackupRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup.proto#L212}
-  /// [google.cloud.netapp.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/netapp/v1/cloud_netapp_service.proto#L667}
+  /// [google.cloud.netapp.v1.DeleteBackupRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup.proto#L240}
+  /// [google.cloud.netapp.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/netapp/v1/cloud_netapp_service.proto#L766}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>> DeleteBackup(
@@ -4333,7 +4535,7 @@ class NetAppClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.netapp.v1.Backup]: @googleapis_reference_link{google/cloud/netapp/v1/backup.proto#L33}
-  /// [google.cloud.netapp.v1.UpdateBackupRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup.proto#L222}
+  /// [google.cloud.netapp.v1.UpdateBackupRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup.proto#L250}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::Backup>> UpdateBackup(
@@ -4386,7 +4588,7 @@ class NetAppClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.netapp.v1.Backup]: @googleapis_reference_link{google/cloud/netapp/v1/backup.proto#L33}
-  /// [google.cloud.netapp.v1.UpdateBackupRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup.proto#L222}
+  /// [google.cloud.netapp.v1.UpdateBackupRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup.proto#L250}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::Backup>> UpdateBackup(
@@ -4429,8 +4631,8 @@ class NetAppClient {
   /// @param backup_policy  Required. A backupPolicy resource
   /// @param backup_policy_id  Required. The ID to use for the backup policy.
   ///  The ID must be unique within the specified location.
-  ///  Must contain only letters, numbers, underscore and hyphen, with the first
-  ///  character a letter or underscore, the last a letter or underscore or a
+  ///  Must contain only letters, numbers and hyphen, with the first
+  ///  character a letter, the last a letter or a
   ///  number, and a 63 character maximum.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -4820,7 +5022,7 @@ class NetAppClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.netapp.v1.DeleteBackupPolicyRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup_policy.proto#L186}
-  /// [google.cloud.netapp.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/netapp/v1/cloud_netapp_service.proto#L667}
+  /// [google.cloud.netapp.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/netapp/v1/cloud_netapp_service.proto#L766}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
@@ -4871,7 +5073,7 @@ class NetAppClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.netapp.v1.DeleteBackupPolicyRequest]: @googleapis_reference_link{google/cloud/netapp/v1/backup_policy.proto#L186}
-  /// [google.cloud.netapp.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/netapp/v1/cloud_netapp_service.proto#L667}
+  /// [google.cloud.netapp.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/netapp/v1/cloud_netapp_service.proto#L766}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
@@ -4907,6 +5109,490 @@ class NetAppClient {
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
   DeleteBackupPolicy(google::longrunning::Operation const& operation,
                      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Returns list of all quota rules in a location.
+  ///
+  /// @param parent  Required. Parent value for ListQuotaRulesRequest
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.netapp.v1.QuotaRule], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.netapp.v1.ListQuotaRulesRequest]: @googleapis_reference_link{google/cloud/netapp/v1/quota_rule.proto#L33}
+  /// [google.cloud.netapp.v1.QuotaRule]: @googleapis_reference_link{google/cloud/netapp/v1/quota_rule.proto#L126}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::netapp::v1::QuotaRule> ListQuotaRules(
+      std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Returns list of all quota rules in a location.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.netapp.v1.ListQuotaRulesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.netapp.v1.QuotaRule], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.netapp.v1.ListQuotaRulesRequest]: @googleapis_reference_link{google/cloud/netapp/v1/quota_rule.proto#L33}
+  /// [google.cloud.netapp.v1.QuotaRule]: @googleapis_reference_link{google/cloud/netapp/v1/quota_rule.proto#L126}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::netapp::v1::QuotaRule> ListQuotaRules(
+      google::cloud::netapp::v1::ListQuotaRulesRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Returns details of the specified quota rule.
+  ///
+  /// @param name  Required. Name of the quota rule
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.netapp.v1.QuotaRule])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.netapp.v1.GetQuotaRuleRequest]: @googleapis_reference_link{google/cloud/netapp/v1/quota_rule.proto#L69}
+  /// [google.cloud.netapp.v1.QuotaRule]: @googleapis_reference_link{google/cloud/netapp/v1/quota_rule.proto#L126}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::netapp::v1::QuotaRule> GetQuotaRule(
+      std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Returns details of the specified quota rule.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.netapp.v1.GetQuotaRuleRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.netapp.v1.QuotaRule])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.netapp.v1.GetQuotaRuleRequest]: @googleapis_reference_link{google/cloud/netapp/v1/quota_rule.proto#L69}
+  /// [google.cloud.netapp.v1.QuotaRule]: @googleapis_reference_link{google/cloud/netapp/v1/quota_rule.proto#L126}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::netapp::v1::QuotaRule> GetQuotaRule(
+      google::cloud::netapp::v1::GetQuotaRuleRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a new quota rule.
+  ///
+  /// @param parent  Required. Parent value for CreateQuotaRuleRequest
+  /// @param quota_rule  Required. Fields of the to be created quota rule.
+  /// @param quota_rule_id  Required. ID of the quota rule to create. Must be unique within the parent
+  ///  resource. Must contain only letters, numbers, underscore and hyphen, with
+  ///  the first character a letter or underscore, the last a letter or underscore
+  ///  or a number, and a 63 character maximum.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.netapp.v1.QuotaRule] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.netapp.v1.CreateQuotaRuleRequest]: @googleapis_reference_link{google/cloud/netapp/v1/quota_rule.proto#L80}
+  /// [google.cloud.netapp.v1.QuotaRule]: @googleapis_reference_link{google/cloud/netapp/v1/quota_rule.proto#L126}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::netapp::v1::QuotaRule>> CreateQuotaRule(
+      std::string const& parent,
+      google::cloud::netapp::v1::QuotaRule const& quota_rule,
+      std::string const& quota_rule_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateQuotaRule
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateQuotaRule(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::netapp::v1::QuotaRule const& quota_rule,
+      std::string const& quota_rule_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a new quota rule.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.netapp.v1.CreateQuotaRuleRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.netapp.v1.QuotaRule] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.netapp.v1.CreateQuotaRuleRequest]: @googleapis_reference_link{google/cloud/netapp/v1/quota_rule.proto#L80}
+  /// [google.cloud.netapp.v1.QuotaRule]: @googleapis_reference_link{google/cloud/netapp/v1/quota_rule.proto#L126}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::netapp::v1::QuotaRule>> CreateQuotaRule(
+      google::cloud::netapp::v1::CreateQuotaRuleRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateQuotaRule
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateQuotaRule(
+      NoAwaitTag,
+      google::cloud::netapp::v1::CreateQuotaRuleRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateQuotaRule
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::netapp::v1::QuotaRule>> CreateQuotaRule(
+      google::longrunning::Operation const& operation, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates a quota rule.
+  ///
+  /// @param quota_rule  Required. The quota rule being updated
+  /// @param update_mask  Optional. Field mask is used to specify the fields to be overwritten in the
+  ///  Quota Rule resource by the update.
+  ///  The fields specified in the update_mask are relative to the resource, not
+  ///  the full request. A field will be overwritten if it is in the mask. If the
+  ///  user does not provide a mask then all fields will be overwritten.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.netapp.v1.QuotaRule] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.netapp.v1.QuotaRule]: @googleapis_reference_link{google/cloud/netapp/v1/quota_rule.proto#L126}
+  /// [google.cloud.netapp.v1.UpdateQuotaRuleRequest]: @googleapis_reference_link{google/cloud/netapp/v1/quota_rule.proto#L100}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::netapp::v1::QuotaRule>> UpdateQuotaRule(
+      google::cloud::netapp::v1::QuotaRule const& quota_rule,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateQuotaRule
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UpdateQuotaRule(
+      NoAwaitTag, google::cloud::netapp::v1::QuotaRule const& quota_rule,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates a quota rule.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.netapp.v1.UpdateQuotaRuleRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.netapp.v1.QuotaRule] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.netapp.v1.QuotaRule]: @googleapis_reference_link{google/cloud/netapp/v1/quota_rule.proto#L126}
+  /// [google.cloud.netapp.v1.UpdateQuotaRuleRequest]: @googleapis_reference_link{google/cloud/netapp/v1/quota_rule.proto#L100}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::netapp::v1::QuotaRule>> UpdateQuotaRule(
+      google::cloud::netapp::v1::UpdateQuotaRuleRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateQuotaRule
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UpdateQuotaRule(
+      NoAwaitTag,
+      google::cloud::netapp::v1::UpdateQuotaRuleRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateQuotaRule
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::netapp::v1::QuotaRule>> UpdateQuotaRule(
+      google::longrunning::Operation const& operation, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a quota rule.
+  ///
+  /// @param name  Required. Name of the quota rule.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.netapp.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.netapp.v1.DeleteQuotaRuleRequest]: @googleapis_reference_link{google/cloud/netapp/v1/quota_rule.proto#L114}
+  /// [google.cloud.netapp.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/netapp/v1/cloud_netapp_service.proto#L766}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
+  DeleteQuotaRule(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteQuotaRule
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteQuotaRule(
+      NoAwaitTag, std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a quota rule.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.netapp.v1.DeleteQuotaRuleRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.netapp.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.netapp.v1.DeleteQuotaRuleRequest]: @googleapis_reference_link{google/cloud/netapp/v1/quota_rule.proto#L114}
+  /// [google.cloud.netapp.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/netapp/v1/cloud_netapp_service.proto#L766}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
+  DeleteQuotaRule(
+      google::cloud::netapp::v1::DeleteQuotaRuleRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteQuotaRule
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteQuotaRule(
+      NoAwaitTag,
+      google::cloud::netapp::v1::DeleteQuotaRuleRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteQuotaRule
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
+  DeleteQuotaRule(google::longrunning::Operation const& operation,
+                  Options opts = {});
 
   // clang-format off
   ///
@@ -4983,14 +5669,6 @@ class NetAppClient {
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
   ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
-  ///
   /// @param name  The name of the operation's parent resource.
   /// @param filter  The standard list filter.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -5015,8 +5693,8 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StreamRange<google::longrunning::Operation> ListOperations(
@@ -5026,14 +5704,6 @@ class NetAppClient {
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -5063,8 +5733,8 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StreamRange<google::longrunning::Operation> ListOperations(
@@ -5090,8 +5760,8 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
@@ -5122,8 +5792,8 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> GetOperation(
@@ -5149,7 +5819,7 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L201}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
   Status DeleteOperation(std::string const& name, Options opts = {});
@@ -5178,7 +5848,7 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L201}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
   Status DeleteOperation(
@@ -5195,8 +5865,9 @@ class NetAppClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param name  The name of the operation resource to be cancelled.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -5210,9 +5881,9 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
@@ -5228,8 +5899,9 @@ class NetAppClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -5248,9 +5920,9 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on

@@ -63,7 +63,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// such a copy when using this class from multiple threads.
 ///
 /// [google.cloud.dialogflow.v2.EntityType]:
-/// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L293}
+/// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L292}
 ///
 class EntityTypesClient {
  public:
@@ -119,8 +119,8 @@ class EntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.EntityType]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L293}
-  /// [google.cloud.dialogflow.v2.ListEntityTypesRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L386}
+  /// [google.cloud.dialogflow.v2.EntityType]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L292}
+  /// [google.cloud.dialogflow.v2.ListEntityTypesRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L385}
   ///
   // clang-format on
   StreamRange<google::cloud::dialogflow::v2::EntityType> ListEntityTypes(
@@ -159,8 +159,8 @@ class EntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.EntityType]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L293}
-  /// [google.cloud.dialogflow.v2.ListEntityTypesRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L386}
+  /// [google.cloud.dialogflow.v2.EntityType]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L292}
+  /// [google.cloud.dialogflow.v2.ListEntityTypesRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L385}
   ///
   // clang-format on
   StreamRange<google::cloud::dialogflow::v2::EntityType> ListEntityTypes(
@@ -199,8 +199,8 @@ class EntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.EntityType]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L293}
-  /// [google.cloud.dialogflow.v2.ListEntityTypesRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L386}
+  /// [google.cloud.dialogflow.v2.EntityType]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L292}
+  /// [google.cloud.dialogflow.v2.ListEntityTypesRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L385}
   ///
   // clang-format on
   StreamRange<google::cloud::dialogflow::v2::EntityType> ListEntityTypes(
@@ -226,8 +226,8 @@ class EntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.EntityType]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L293}
-  /// [google.cloud.dialogflow.v2.GetEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L425}
+  /// [google.cloud.dialogflow.v2.EntityType]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L292}
+  /// [google.cloud.dialogflow.v2.GetEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L424}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::v2::EntityType> GetEntityType(
@@ -257,8 +257,8 @@ class EntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.EntityType]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L293}
-  /// [google.cloud.dialogflow.v2.GetEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L425}
+  /// [google.cloud.dialogflow.v2.EntityType]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L292}
+  /// [google.cloud.dialogflow.v2.GetEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L424}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::v2::EntityType> GetEntityType(
@@ -288,8 +288,8 @@ class EntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.EntityType]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L293}
-  /// [google.cloud.dialogflow.v2.GetEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L425}
+  /// [google.cloud.dialogflow.v2.EntityType]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L292}
+  /// [google.cloud.dialogflow.v2.GetEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L424}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::v2::EntityType> GetEntityType(
@@ -320,8 +320,8 @@ class EntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.CreateEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L445}
-  /// [google.cloud.dialogflow.v2.EntityType]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L293}
+  /// [google.cloud.dialogflow.v2.CreateEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L444}
+  /// [google.cloud.dialogflow.v2.EntityType]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L292}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::v2::EntityType> CreateEntityType(
@@ -358,8 +358,8 @@ class EntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.CreateEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L445}
-  /// [google.cloud.dialogflow.v2.EntityType]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L293}
+  /// [google.cloud.dialogflow.v2.CreateEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L444}
+  /// [google.cloud.dialogflow.v2.EntityType]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L292}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::v2::EntityType> CreateEntityType(
@@ -394,8 +394,8 @@ class EntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.CreateEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L445}
-  /// [google.cloud.dialogflow.v2.EntityType]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L293}
+  /// [google.cloud.dialogflow.v2.CreateEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L444}
+  /// [google.cloud.dialogflow.v2.EntityType]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L292}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::v2::EntityType> CreateEntityType(
@@ -424,8 +424,8 @@ class EntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.EntityType]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L293}
-  /// [google.cloud.dialogflow.v2.UpdateEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L468}
+  /// [google.cloud.dialogflow.v2.EntityType]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L292}
+  /// [google.cloud.dialogflow.v2.UpdateEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L467}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::v2::EntityType> UpdateEntityType(
@@ -459,8 +459,8 @@ class EntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.EntityType]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L293}
-  /// [google.cloud.dialogflow.v2.UpdateEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L468}
+  /// [google.cloud.dialogflow.v2.EntityType]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L292}
+  /// [google.cloud.dialogflow.v2.UpdateEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L467}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::v2::EntityType> UpdateEntityType(
@@ -494,8 +494,8 @@ class EntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.EntityType]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L293}
-  /// [google.cloud.dialogflow.v2.UpdateEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L468}
+  /// [google.cloud.dialogflow.v2.EntityType]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L292}
+  /// [google.cloud.dialogflow.v2.UpdateEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L467}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::v2::EntityType> UpdateEntityType(
@@ -523,7 +523,7 @@ class EntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.DeleteEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L486}
+  /// [google.cloud.dialogflow.v2.DeleteEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L485}
   ///
   // clang-format on
   Status DeleteEntityType(std::string const& name, Options opts = {});
@@ -553,7 +553,7 @@ class EntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.DeleteEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L486}
+  /// [google.cloud.dialogflow.v2.DeleteEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L485}
   ///
   // clang-format on
   Status DeleteEntityType(
@@ -603,8 +603,8 @@ class EntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.BatchUpdateEntityTypesRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L499}
-  /// [google.cloud.dialogflow.v2.BatchUpdateEntityTypesResponse]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L540}
+  /// [google.cloud.dialogflow.v2.BatchUpdateEntityTypesRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L498}
+  /// [google.cloud.dialogflow.v2.BatchUpdateEntityTypesResponse]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L539}
   ///
   // clang-format on
   future<
@@ -686,7 +686,7 @@ class EntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.BatchDeleteEntityTypesRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L547}
+  /// [google.cloud.dialogflow.v2.BatchDeleteEntityTypesRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L546}
   /// [google.protobuf.Struct]: @googleapis_reference_link{google/protobuf/struct.proto#L51}
   ///
   // clang-format on
@@ -752,7 +752,7 @@ class EntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.BatchDeleteEntityTypesRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L547}
+  /// [google.cloud.dialogflow.v2.BatchDeleteEntityTypesRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L546}
   /// [google.protobuf.Struct]: @googleapis_reference_link{google/protobuf/struct.proto#L51}
   ///
   // clang-format on
@@ -830,7 +830,7 @@ class EntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.BatchCreateEntitiesRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L565}
+  /// [google.cloud.dialogflow.v2.BatchCreateEntitiesRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L564}
   /// [google.protobuf.Struct]: @googleapis_reference_link{google/protobuf/struct.proto#L51}
   ///
   // clang-format on
@@ -902,7 +902,7 @@ class EntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.BatchCreateEntitiesRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L565}
+  /// [google.cloud.dialogflow.v2.BatchCreateEntitiesRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L564}
   /// [google.protobuf.Struct]: @googleapis_reference_link{google/protobuf/struct.proto#L51}
   ///
   // clang-format on
@@ -972,7 +972,7 @@ class EntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.BatchCreateEntitiesRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L565}
+  /// [google.cloud.dialogflow.v2.BatchCreateEntitiesRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L564}
   /// [google.protobuf.Struct]: @googleapis_reference_link{google/protobuf/struct.proto#L51}
   ///
   // clang-format on
@@ -1051,7 +1051,7 @@ class EntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.BatchUpdateEntitiesRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L589}
+  /// [google.cloud.dialogflow.v2.BatchUpdateEntitiesRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L588}
   /// [google.protobuf.Struct]: @googleapis_reference_link{google/protobuf/struct.proto#L51}
   ///
   // clang-format on
@@ -1126,7 +1126,7 @@ class EntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.BatchUpdateEntitiesRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L589}
+  /// [google.cloud.dialogflow.v2.BatchUpdateEntitiesRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L588}
   /// [google.protobuf.Struct]: @googleapis_reference_link{google/protobuf/struct.proto#L51}
   ///
   // clang-format on
@@ -1199,7 +1199,7 @@ class EntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.BatchUpdateEntitiesRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L589}
+  /// [google.cloud.dialogflow.v2.BatchUpdateEntitiesRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L588}
   /// [google.protobuf.Struct]: @googleapis_reference_link{google/protobuf/struct.proto#L51}
   ///
   // clang-format on
@@ -1277,7 +1277,7 @@ class EntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.BatchDeleteEntitiesRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L617}
+  /// [google.cloud.dialogflow.v2.BatchDeleteEntitiesRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L616}
   /// [google.protobuf.Struct]: @googleapis_reference_link{google/protobuf/struct.proto#L51}
   ///
   // clang-format on
@@ -1347,7 +1347,7 @@ class EntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.BatchDeleteEntitiesRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L617}
+  /// [google.cloud.dialogflow.v2.BatchDeleteEntitiesRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L616}
   /// [google.protobuf.Struct]: @googleapis_reference_link{google/protobuf/struct.proto#L51}
   ///
   // clang-format on
@@ -1414,7 +1414,7 @@ class EntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.BatchDeleteEntitiesRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L617}
+  /// [google.cloud.dialogflow.v2.BatchDeleteEntitiesRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L616}
   /// [google.protobuf.Struct]: @googleapis_reference_link{google/protobuf/struct.proto#L51}
   ///
   // clang-format on
@@ -1525,14 +1525,6 @@ class EntityTypesClient {
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
   ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
-  ///
   /// @param name  The name of the operation's parent resource.
   /// @param filter  The standard list filter.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -1557,8 +1549,8 @@ class EntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StreamRange<google::longrunning::Operation> ListOperations(
@@ -1568,14 +1560,6 @@ class EntityTypesClient {
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1605,8 +1589,8 @@ class EntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StreamRange<google::longrunning::Operation> ListOperations(
@@ -1632,8 +1616,8 @@ class EntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
@@ -1664,8 +1648,8 @@ class EntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> GetOperation(
@@ -1682,8 +1666,9 @@ class EntityTypesClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param name  The name of the operation resource to be cancelled.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -1697,9 +1682,9 @@ class EntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
@@ -1715,8 +1700,9 @@ class EntityTypesClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1735,9 +1721,9 @@ class EntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on

@@ -393,6 +393,19 @@ DefaultDatabaseAdminStub::ListDatabaseRoles(
   return response;
 }
 
+StatusOr<google::spanner::admin::database::v1::AddSplitPointsResponse>
+DefaultDatabaseAdminStub::AddSplitPoints(
+    grpc::ClientContext& context, Options const&,
+    google::spanner::admin::database::v1::AddSplitPointsRequest const&
+        request) {
+  google::spanner::admin::database::v1::AddSplitPointsResponse response;
+  auto status = grpc_stub_->AddSplitPoints(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::spanner::admin::database::v1::BackupSchedule>
 DefaultDatabaseAdminStub::CreateBackupSchedule(
     grpc::ClientContext& context, Options const&,

@@ -431,6 +431,68 @@ CatalogServiceTracingStub::SearchEntries(
                            child_->SearchEntries(context, options, request));
 }
 
+future<StatusOr<google::longrunning::Operation>>
+CatalogServiceTracingStub::AsyncCreateMetadataJob(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dataplex::v1::CreateMetadataJobRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.CatalogService",
+                                     "CreateMetadataJob");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f =
+      child_->AsyncCreateMetadataJob(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+CatalogServiceTracingStub::CreateMetadataJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::CreateMetadataJobRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.CatalogService",
+                                     "CreateMetadataJob");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->CreateMetadataJob(context, options, request));
+}
+
+StatusOr<google::cloud::dataplex::v1::MetadataJob>
+CatalogServiceTracingStub::GetMetadataJob(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataplex::v1::GetMetadataJobRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.CatalogService",
+                                     "GetMetadataJob");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetMetadataJob(context, options, request));
+}
+
+StatusOr<google::cloud::dataplex::v1::ListMetadataJobsResponse>
+CatalogServiceTracingStub::ListMetadataJobs(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataplex::v1::ListMetadataJobsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.CatalogService",
+                                     "ListMetadataJobs");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ListMetadataJobs(context, options, request));
+}
+
+Status CatalogServiceTracingStub::CancelMetadataJob(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataplex::v1::CancelMetadataJobRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.CatalogService",
+                                     "CancelMetadataJob");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->CancelMetadataJob(context, options, request));
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 CatalogServiceTracingStub::ListLocations(
     grpc::ClientContext& context, Options const& options,

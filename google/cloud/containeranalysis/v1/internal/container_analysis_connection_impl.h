@@ -64,6 +64,10 @@ class ContainerAnalysisConnectionImpl
       google::devtools::containeranalysis::v1::
           GetVulnerabilityOccurrencesSummaryRequest const& request) override;
 
+  StatusOr<google::devtools::containeranalysis::v1::ExportSBOMResponse>
+  ExportSBOM(google::devtools::containeranalysis::v1::ExportSBOMRequest const&
+                 request) override;
+
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<containeranalysis_v1_internal::ContainerAnalysisStub> stub_;

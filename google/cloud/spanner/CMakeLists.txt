@@ -211,6 +211,8 @@ add_library(
     transaction.cc
     transaction.h
     update_instance_request_builder.h
+    uuid.cc
+    uuid.h
     value.cc
     value.h
     version.cc
@@ -334,6 +336,7 @@ google_cloud_cpp_add_pkgconfig(
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)
 set(GOOGLE_CLOUD_CPP_CONFIG_LIBRARY "spanner")
+set(GOOGLE_CLOUD_CPP_TRANSPORT "grpc_utils")
 configure_file("${PROJECT_SOURCE_DIR}/cmake/templates/config.cmake.in"
                "google_cloud_cpp_spanner-config.cmake" @ONLY)
 write_basic_package_version_file(
@@ -501,6 +504,7 @@ function (spanner_client_define_tests)
         timestamp_test.cc
         transaction_test.cc
         update_instance_request_builder_test.cc
+        uuid_test.cc
         value_test.cc)
 
     # Export the list of unit tests to a .bzl file so we do not need to maintain

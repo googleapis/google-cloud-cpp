@@ -40,6 +40,45 @@ RowAccessPolicyServiceClient::ListRowAccessPolicies(
   return connection_->ListRowAccessPolicies(std::move(request));
 }
 
+StatusOr<google::cloud::bigquery::v2::RowAccessPolicy>
+RowAccessPolicyServiceClient::GetRowAccessPolicy(
+    google::cloud::bigquery::v2::GetRowAccessPolicyRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetRowAccessPolicy(request);
+}
+
+StatusOr<google::cloud::bigquery::v2::RowAccessPolicy>
+RowAccessPolicyServiceClient::CreateRowAccessPolicy(
+    google::cloud::bigquery::v2::CreateRowAccessPolicyRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateRowAccessPolicy(request);
+}
+
+StatusOr<google::cloud::bigquery::v2::RowAccessPolicy>
+RowAccessPolicyServiceClient::UpdateRowAccessPolicy(
+    google::cloud::bigquery::v2::UpdateRowAccessPolicyRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateRowAccessPolicy(request);
+}
+
+Status RowAccessPolicyServiceClient::DeleteRowAccessPolicy(
+    google::cloud::bigquery::v2::DeleteRowAccessPolicyRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteRowAccessPolicy(request);
+}
+
+Status RowAccessPolicyServiceClient::BatchDeleteRowAccessPolicies(
+    google::cloud::bigquery::v2::BatchDeleteRowAccessPoliciesRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->BatchDeleteRowAccessPolicies(request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquerycontrol_v2
 }  // namespace cloud

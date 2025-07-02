@@ -225,6 +225,26 @@ class InstanceAdminRestStub {
       google::spanner::admin::instance::v1::MoveInstanceRequest const&
           request) = 0;
 
+  virtual StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::longrunning::ListOperationsRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::longrunning::GetOperationRequest const& request) = 0;
+
+  virtual Status DeleteOperation(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::longrunning::DeleteOperationRequest const& request) = 0;
+
+  virtual Status CancelOperation(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::longrunning::CancelOperationRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
@@ -427,6 +447,26 @@ class DefaultInstanceAdminRestStub : public InstanceAdminRestStub {
       Options const& options,
       google::spanner::admin::instance::v1::MoveInstanceRequest const& request)
       override;
+
+  StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::longrunning::ListOperationsRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::longrunning::GetOperationRequest const& request) override;
+
+  Status DeleteOperation(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::longrunning::DeleteOperationRequest const& request) override;
+
+  Status CancelOperation(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::longrunning::CancelOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,

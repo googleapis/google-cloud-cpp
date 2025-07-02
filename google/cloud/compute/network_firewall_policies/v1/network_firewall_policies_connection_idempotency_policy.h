@@ -42,9 +42,17 @@ class NetworkFirewallPoliciesConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::network_firewall_policies::v1::
           AddAssociationRequest const& request);
 
+  virtual google::cloud::Idempotency AddPacketMirroringRule(
+      google::cloud::cpp::compute::network_firewall_policies::v1::
+          AddPacketMirroringRuleRequest const& request);
+
   virtual google::cloud::Idempotency AddRule(
       google::cloud::cpp::compute::network_firewall_policies::v1::
           AddRuleRequest const& request);
+
+  virtual google::cloud::Idempotency AggregatedListNetworkFirewallPolicies(
+      google::cloud::cpp::compute::network_firewall_policies::v1::
+          AggregatedListNetworkFirewallPoliciesRequest request);
 
   virtual google::cloud::Idempotency CloneRules(
       google::cloud::cpp::compute::network_firewall_policies::v1::
@@ -66,6 +74,10 @@ class NetworkFirewallPoliciesConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::network_firewall_policies::v1::
           GetIamPolicyRequest const& request);
 
+  virtual google::cloud::Idempotency GetPacketMirroringRule(
+      google::cloud::cpp::compute::network_firewall_policies::v1::
+          GetPacketMirroringRuleRequest const& request);
+
   virtual google::cloud::Idempotency GetRule(
       google::cloud::cpp::compute::network_firewall_policies::v1::
           GetRuleRequest const& request);
@@ -82,6 +94,10 @@ class NetworkFirewallPoliciesConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::network_firewall_policies::v1::
           PatchFirewallPolicyRequest const& request);
 
+  virtual google::cloud::Idempotency PatchPacketMirroringRule(
+      google::cloud::cpp::compute::network_firewall_policies::v1::
+          PatchPacketMirroringRuleRequest const& request);
+
   virtual google::cloud::Idempotency PatchRule(
       google::cloud::cpp::compute::network_firewall_policies::v1::
           PatchRuleRequest const& request);
@@ -89,6 +105,10 @@ class NetworkFirewallPoliciesConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency RemoveAssociation(
       google::cloud::cpp::compute::network_firewall_policies::v1::
           RemoveAssociationRequest const& request);
+
+  virtual google::cloud::Idempotency RemovePacketMirroringRule(
+      google::cloud::cpp::compute::network_firewall_policies::v1::
+          RemovePacketMirroringRuleRequest const& request);
 
   virtual google::cloud::Idempotency RemoveRule(
       google::cloud::cpp::compute::network_firewall_policies::v1::

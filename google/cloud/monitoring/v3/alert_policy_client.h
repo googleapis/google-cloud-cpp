@@ -133,7 +133,7 @@ class AlertPolicyServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.AlertPolicy]: @googleapis_reference_link{google/monitoring/v3/alert.proto#L40}
+  /// [google.monitoring.v3.AlertPolicy]: @googleapis_reference_link{google/monitoring/v3/alert.proto#L41}
   /// [google.monitoring.v3.AlertPolicyService.GetAlertPolicy]: @googleapis_reference_link{google/monitoring/v3/alert_service.proto#L61}
   /// [google.monitoring.v3.ListAlertPoliciesRequest]: @googleapis_reference_link{google/monitoring/v3/alert_service.proto#L153}
   ///
@@ -173,7 +173,7 @@ class AlertPolicyServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.AlertPolicy]: @googleapis_reference_link{google/monitoring/v3/alert.proto#L40}
+  /// [google.monitoring.v3.AlertPolicy]: @googleapis_reference_link{google/monitoring/v3/alert.proto#L41}
   /// [google.monitoring.v3.ListAlertPoliciesRequest]: @googleapis_reference_link{google/monitoring/v3/alert_service.proto#L153}
   ///
   // clang-format on
@@ -201,7 +201,7 @@ class AlertPolicyServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.AlertPolicy]: @googleapis_reference_link{google/monitoring/v3/alert.proto#L40}
+  /// [google.monitoring.v3.AlertPolicy]: @googleapis_reference_link{google/monitoring/v3/alert.proto#L41}
   /// [google.monitoring.v3.GetAlertPolicyRequest]: @googleapis_reference_link{google/monitoring/v3/alert_service.proto#L140}
   ///
   // clang-format on
@@ -231,7 +231,7 @@ class AlertPolicyServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.AlertPolicy]: @googleapis_reference_link{google/monitoring/v3/alert.proto#L40}
+  /// [google.monitoring.v3.AlertPolicy]: @googleapis_reference_link{google/monitoring/v3/alert.proto#L41}
   /// [google.monitoring.v3.GetAlertPolicyRequest]: @googleapis_reference_link{google/monitoring/v3/alert_service.proto#L140}
   ///
   // clang-format on
@@ -276,7 +276,7 @@ class AlertPolicyServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.AlertPolicy]: @googleapis_reference_link{google/monitoring/v3/alert.proto#L40}
+  /// [google.monitoring.v3.AlertPolicy]: @googleapis_reference_link{google/monitoring/v3/alert.proto#L41}
   /// [google.monitoring.v3.CreateAlertPolicyRequest]: @googleapis_reference_link{google/monitoring/v3/alert_service.proto#L112}
   ///
   // clang-format on
@@ -312,7 +312,7 @@ class AlertPolicyServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.AlertPolicy]: @googleapis_reference_link{google/monitoring/v3/alert.proto#L40}
+  /// [google.monitoring.v3.AlertPolicy]: @googleapis_reference_link{google/monitoring/v3/alert.proto#L41}
   /// [google.monitoring.v3.CreateAlertPolicyRequest]: @googleapis_reference_link{google/monitoring/v3/alert_service.proto#L112}
   ///
   // clang-format on
@@ -344,8 +344,8 @@ class AlertPolicyServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.AlertPolicy]: @googleapis_reference_link{google/monitoring/v3/alert.proto#L40}
-  /// [google.monitoring.v3.DeleteAlertPolicyRequest]: @googleapis_reference_link{google/monitoring/v3/alert_service.proto#L244}
+  /// [google.monitoring.v3.AlertPolicy]: @googleapis_reference_link{google/monitoring/v3/alert.proto#L41}
+  /// [google.monitoring.v3.DeleteAlertPolicyRequest]: @googleapis_reference_link{google/monitoring/v3/alert_service.proto#L246}
   ///
   // clang-format on
   Status DeleteAlertPolicy(std::string const& name, Options opts = {});
@@ -375,7 +375,7 @@ class AlertPolicyServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.DeleteAlertPolicyRequest]: @googleapis_reference_link{google/monitoring/v3/alert_service.proto#L244}
+  /// [google.monitoring.v3.DeleteAlertPolicyRequest]: @googleapis_reference_link{google/monitoring/v3/alert_service.proto#L246}
   ///
   // clang-format on
   Status DeleteAlertPolicy(
@@ -431,8 +431,8 @@ class AlertPolicyServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.AlertPolicy]: @googleapis_reference_link{google/monitoring/v3/alert.proto#L40}
-  /// [google.monitoring.v3.UpdateAlertPolicyRequest]: @googleapis_reference_link{google/monitoring/v3/alert_service.proto#L212}
+  /// [google.monitoring.v3.AlertPolicy]: @googleapis_reference_link{google/monitoring/v3/alert.proto#L41}
+  /// [google.monitoring.v3.UpdateAlertPolicyRequest]: @googleapis_reference_link{google/monitoring/v3/alert_service.proto#L213}
   ///
   // clang-format on
   StatusOr<google::monitoring::v3::AlertPolicy> UpdateAlertPolicy(
@@ -470,8 +470,8 @@ class AlertPolicyServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.AlertPolicy]: @googleapis_reference_link{google/monitoring/v3/alert.proto#L40}
-  /// [google.monitoring.v3.UpdateAlertPolicyRequest]: @googleapis_reference_link{google/monitoring/v3/alert_service.proto#L212}
+  /// [google.monitoring.v3.AlertPolicy]: @googleapis_reference_link{google/monitoring/v3/alert.proto#L41}
+  /// [google.monitoring.v3.UpdateAlertPolicyRequest]: @googleapis_reference_link{google/monitoring/v3/alert_service.proto#L213}
   ///
   // clang-format on
   StatusOr<google::monitoring::v3::AlertPolicy> UpdateAlertPolicy(

@@ -239,7 +239,7 @@ class DatasetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.DeleteDatasetRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/dataset.proto#L595}
+  /// [google.cloud.bigquery.v2.DeleteDatasetRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/dataset.proto#L617}
   ///
   // clang-format on
   Status DeleteDataset(
@@ -279,8 +279,8 @@ class DatasetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.ListDatasetsRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/dataset.proto#L608}
-  /// [google.cloud.bigquery.v2.ListFormatDataset]: @googleapis_reference_link{google/cloud/bigquery/v2/dataset.proto#L635}
+  /// [google.cloud.bigquery.v2.ListDatasetsRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/dataset.proto#L630}
+  /// [google.cloud.bigquery.v2.ListFormatDataset]: @googleapis_reference_link{google/cloud/bigquery/v2/dataset.proto#L657}
   ///
   // clang-format on
   StreamRange<google::cloud::bigquery::v2::ListFormatDataset> ListDatasets(
@@ -313,7 +313,7 @@ class DatasetServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.bigquery.v2.Dataset]: @googleapis_reference_link{google/cloud/bigquery/v2/dataset.proto#L213}
-  /// [google.cloud.bigquery.v2.UndeleteDatasetRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/dataset.proto#L688}
+  /// [google.cloud.bigquery.v2.UndeleteDatasetRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/dataset.proto#L715}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::v2::Dataset> UndeleteDataset(

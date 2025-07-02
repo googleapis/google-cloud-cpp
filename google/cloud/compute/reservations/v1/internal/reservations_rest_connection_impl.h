@@ -93,6 +93,18 @@ class ReservationsRestConnectionImpl
       google::cloud::cpp::compute::reservations::v1::ListReservationsRequest
           request) override;
 
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PerformMaintenance(google::cloud::cpp::compute::reservations::v1::
+                         PerformMaintenanceRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PerformMaintenance(
+      NoAwaitTag, google::cloud::cpp::compute::reservations::v1::
+                      PerformMaintenanceRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PerformMaintenance(
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Resize(
       google::cloud::cpp::compute::reservations::v1::ResizeRequest const&
           request) override;

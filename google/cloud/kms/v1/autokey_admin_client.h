@@ -245,8 +245,8 @@ class AutokeyAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.kms.v1.ShowEffectiveAutokeyConfigRequest]: @googleapis_reference_link{google/cloud/kms/v1/autokey_admin.proto#L154}
-  /// [google.cloud.kms.v1.ShowEffectiveAutokeyConfigResponse]: @googleapis_reference_link{google/cloud/kms/v1/autokey_admin.proto#L168}
+  /// [google.cloud.kms.v1.ShowEffectiveAutokeyConfigRequest]: @googleapis_reference_link{google/cloud/kms/v1/autokey_admin.proto#L160}
+  /// [google.cloud.kms.v1.ShowEffectiveAutokeyConfigResponse]: @googleapis_reference_link{google/cloud/kms/v1/autokey_admin.proto#L174}
   ///
   // clang-format on
   StatusOr<google::cloud::kms::v1::ShowEffectiveAutokeyConfigResponse>
@@ -275,8 +275,8 @@ class AutokeyAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.kms.v1.ShowEffectiveAutokeyConfigRequest]: @googleapis_reference_link{google/cloud/kms/v1/autokey_admin.proto#L154}
-  /// [google.cloud.kms.v1.ShowEffectiveAutokeyConfigResponse]: @googleapis_reference_link{google/cloud/kms/v1/autokey_admin.proto#L168}
+  /// [google.cloud.kms.v1.ShowEffectiveAutokeyConfigRequest]: @googleapis_reference_link{google/cloud/kms/v1/autokey_admin.proto#L160}
+  /// [google.cloud.kms.v1.ShowEffectiveAutokeyConfigResponse]: @googleapis_reference_link{google/cloud/kms/v1/autokey_admin.proto#L174}
   ///
   // clang-format on
   StatusOr<google::cloud::kms::v1::ShowEffectiveAutokeyConfigResponse>
@@ -476,8 +476,8 @@ class AutokeyAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
@@ -508,8 +508,8 @@ class AutokeyAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> GetOperation(

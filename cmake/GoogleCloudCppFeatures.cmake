@@ -33,7 +33,6 @@ set(GOOGLE_CLOUD_CPP_NO_GRPC_FEATURES
 
 set(GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES
     # cmake-format: sort
-    "bigquerycontrol" # Some proto RPC comments indicate experimental methods.
     "pubsublite" # This is WIP, it needs a number of hand-crafted APIs.
 )
 
@@ -61,11 +60,13 @@ set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     "batch"
     "beyondcorp"
     "bigquery"
+    "bigquerycontrol"
     "bigtable"
     "billing"
     "binaryauthorization"
     "certificatemanager"
     "channel"
+    "chronicle"
     "cloudbuild"
     "cloudcontrolspartner"
     "cloudquotas"
@@ -80,6 +81,7 @@ set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     "containeranalysis"
     "contentwarehouse"
     "datacatalog"
+    "dataform"
     "datafusion"
     "datamigration"
     "dataplex"
@@ -88,6 +90,7 @@ set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     "datastream"
     "deploy"
     "developerconnect"
+    "devicestreaming"
     "dialogflow_cx"
     "dialogflow_es"
     "discoveryengine"
@@ -99,6 +102,7 @@ set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     "essentialcontacts"
     "eventarc"
     "filestore"
+    "financialservices"
     "functions"
     "gkebackup"
     "gkeconnect"
@@ -110,9 +114,11 @@ set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     "kms"
     "language"
     "logging"
+    "lustre"
     "managedidentities"
     "managedkafka"
     "memcache"
+    "memorystore"
     "metastore"
     "migrationcenter"
     "monitoring"
@@ -124,10 +130,12 @@ set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     "notebooks"
     "oauth2"
     "optimization"
+    "oracledatabase"
     "orgpolicy"
     "osconfig"
     "oslogin"
     "parallelstore"
+    "parametermanager"
     "policysimulator"
     "policytroubleshooter"
     "privateca"
@@ -140,7 +148,6 @@ set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     "recommender"
     "redis"
     "resourcemanager"
-    "resourcesettings"
     "retail"
     "run"
     "scheduler"
@@ -158,6 +165,7 @@ set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     "speech"
     "sql"
     "storage"
+    "storagebatchoperations"
     "storagecontrol"
     "storageinsights"
     "storagetransfer"
@@ -377,6 +385,7 @@ macro (google_cloud_cpp_enable_cleanup)
         OR (bigquerycontrol IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
         OR (compute IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
         OR (experimental-bigquery_rest IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
+        OR (gkeconnect IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
         OR (oauth2 IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
         OR (opentelemetry IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
         OR (sql IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
@@ -505,6 +514,15 @@ function (google_cloud_cpp_define_dependent_legacy_feature_options)
         OR (experimental-storage_grpc IN_LIST GOOGLE_CLOUD_CPP_ENABLE))
         set(GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC_DEFAULT ON)
     endif ()
+
+    # Emit a warning if the deprecated option is explicitly set
+    if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
+        message(
+            WARNING
+                "GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC is deprecated. Please use -DGOOGLE_CLOUD_CPP_ENABLE=storage_grpc instead."
+        )
+    endif ()
+
     option(
         GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC
         "Enable compilation for the GCS gRPC plugin (EXPERIMENTAL).  Deprecated, prefer GOOGLE_CLOUD_CPP_ENABLE."

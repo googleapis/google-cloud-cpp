@@ -577,6 +577,61 @@ DefaultInstanceAdminRestStub::MoveInstance(
       std::move(query_params));
 }
 
+StatusOr<google::longrunning::ListOperationsResponse>
+DefaultInstanceAdminRestStub::ListOperations(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::longrunning::ListOperationsRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"filter", request.filter()});
+  query_params.push_back({"page_size", std::to_string(request.page_size())});
+  query_params.push_back({"page_token", request.page_token()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
+  return rest_internal::Get<google::longrunning::ListOperationsResponse>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
+                   request.name()),
+      std::move(query_params));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultInstanceAdminRestStub::GetOperation(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::longrunning::GetOperationRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  return rest_internal::Get<google::longrunning::Operation>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
+                   request.name()),
+      std::move(query_params));
+}
+
+Status DefaultInstanceAdminRestStub::DeleteOperation(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::longrunning::DeleteOperationRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  return rest_internal::Delete<google::cloud::rest_internal::EmptyResponseType>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
+                   request.name()),
+      std::move(query_params));
+}
+
+Status DefaultInstanceAdminRestStub::CancelOperation(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::longrunning::CancelOperationRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  return rest_internal::Post<google::cloud::rest_internal::EmptyResponseType>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
+                   request.name(), ":cancel"),
+      std::move(query_params));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultInstanceAdminRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

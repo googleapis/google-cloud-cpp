@@ -119,8 +119,8 @@ class WebRiskServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.webrisk.v1.ComputeThreatListDiffRequest]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L119}
-  /// [google.cloud.webrisk.v1.ComputeThreatListDiffResponse]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L152}
+  /// [google.cloud.webrisk.v1.ComputeThreatListDiffRequest]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L120}
+  /// [google.cloud.webrisk.v1.ComputeThreatListDiffResponse]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L153}
   ///
   // clang-format on
   StatusOr<google::cloud::webrisk::v1::ComputeThreatListDiffResponse>
@@ -159,8 +159,8 @@ class WebRiskServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.webrisk.v1.ComputeThreatListDiffRequest]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L119}
-  /// [google.cloud.webrisk.v1.ComputeThreatListDiffResponse]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L152}
+  /// [google.cloud.webrisk.v1.ComputeThreatListDiffRequest]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L120}
+  /// [google.cloud.webrisk.v1.ComputeThreatListDiffResponse]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L153}
   ///
   // clang-format on
   StatusOr<google::cloud::webrisk::v1::ComputeThreatListDiffResponse>
@@ -192,8 +192,8 @@ class WebRiskServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.webrisk.v1.SearchUrisRequest]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L204}
-  /// [google.cloud.webrisk.v1.SearchUrisResponse]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L213}
+  /// [google.cloud.webrisk.v1.SearchUrisRequest]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L205}
+  /// [google.cloud.webrisk.v1.SearchUrisResponse]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L214}
   ///
   // clang-format on
   StatusOr<google::cloud::webrisk::v1::SearchUrisResponse> SearchUris(
@@ -228,8 +228,8 @@ class WebRiskServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.webrisk.v1.SearchUrisRequest]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L204}
-  /// [google.cloud.webrisk.v1.SearchUrisResponse]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L213}
+  /// [google.cloud.webrisk.v1.SearchUrisRequest]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L205}
+  /// [google.cloud.webrisk.v1.SearchUrisResponse]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L214}
   ///
   // clang-format on
   StatusOr<google::cloud::webrisk::v1::SearchUrisResponse> SearchUris(
@@ -263,8 +263,8 @@ class WebRiskServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.webrisk.v1.SearchHashesRequest]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L229}
-  /// [google.cloud.webrisk.v1.SearchHashesResponse]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L241}
+  /// [google.cloud.webrisk.v1.SearchHashesRequest]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L230}
+  /// [google.cloud.webrisk.v1.SearchHashesResponse]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L242}
   ///
   // clang-format on
   StatusOr<google::cloud::webrisk::v1::SearchHashesResponse> SearchHashes(
@@ -299,8 +299,8 @@ class WebRiskServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.webrisk.v1.SearchHashesRequest]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L229}
-  /// [google.cloud.webrisk.v1.SearchHashesResponse]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L241}
+  /// [google.cloud.webrisk.v1.SearchHashesRequest]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L230}
+  /// [google.cloud.webrisk.v1.SearchHashesResponse]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L242}
   ///
   // clang-format on
   StatusOr<google::cloud::webrisk::v1::SearchHashesResponse> SearchHashes(
@@ -334,7 +334,7 @@ class WebRiskServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.webrisk.v1.CreateSubmissionRequest]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L493}
-  /// [google.cloud.webrisk.v1.Submission]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L371}
+  /// [google.cloud.webrisk.v1.Submission]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L372}
   ///
   // clang-format on
   StatusOr<google::cloud::webrisk::v1::Submission> CreateSubmission(
@@ -372,11 +372,72 @@ class WebRiskServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.webrisk.v1.CreateSubmissionRequest]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L493}
-  /// [google.cloud.webrisk.v1.Submission]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L371}
+  /// [google.cloud.webrisk.v1.Submission]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L372}
   ///
   // clang-format on
   StatusOr<google::cloud::webrisk::v1::Submission> CreateSubmission(
       google::cloud::webrisk::v1::CreateSubmissionRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Submits a URI suspected of containing malicious content to be reviewed.
+  /// Returns a google.longrunning.Operation which, once the review is complete,
+  /// is updated with its result. You can use the [Pub/Sub API]
+  /// (https://cloud.google.com/pubsub) to receive notifications for the returned
+  /// Operation. If the result verifies the existence of malicious content, the
+  /// site will be added to the [Google's Social Engineering lists]
+  /// (https://support.google.com/webmasters/answer/6350487/) in order to
+  /// protect users that could get exposed to this threat in the future. Only
+  /// allowlisted projects can use this method during Early Access. Please reach
+  /// out to Sales or your customer engineer to obtain access.
+  ///
+  /// @param parent  Required. The name of the project that is making the submission. This
+  ///  string is in the format "projects/{project_number}".
+  /// @param submission  Required. The submission that contains the URI to be scanned.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.webrisk.v1.Submission] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.webrisk.v1.Submission]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L372}
+  /// [google.cloud.webrisk.v1.SubmitUriRequest]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L508}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::webrisk::v1::Submission>> SubmitUri(
+      std::string const& parent,
+      google::cloud::webrisk::v1::Submission const& submission,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief SubmitUri
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> SubmitUri(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::webrisk::v1::Submission const& submission,
       Options opts = {});
 
   // clang-format off
@@ -418,7 +479,7 @@ class WebRiskServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.webrisk.v1.Submission]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L371}
+  /// [google.cloud.webrisk.v1.Submission]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L372}
   /// [google.cloud.webrisk.v1.SubmitUriRequest]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L508}
   ///
   // clang-format on
@@ -458,14 +519,6 @@ class WebRiskServiceClient {
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
   ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
-  ///
   /// @param name  The name of the operation's parent resource.
   /// @param filter  The standard list filter.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -490,8 +543,8 @@ class WebRiskServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StreamRange<google::longrunning::Operation> ListOperations(
@@ -501,14 +554,6 @@ class WebRiskServiceClient {
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -538,8 +583,8 @@ class WebRiskServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StreamRange<google::longrunning::Operation> ListOperations(
@@ -565,8 +610,8 @@ class WebRiskServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
@@ -597,8 +642,8 @@ class WebRiskServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> GetOperation(
@@ -624,7 +669,7 @@ class WebRiskServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L201}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
   Status DeleteOperation(std::string const& name, Options opts = {});
@@ -653,7 +698,7 @@ class WebRiskServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L201}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
   Status DeleteOperation(
@@ -670,8 +715,9 @@ class WebRiskServiceClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param name  The name of the operation resource to be cancelled.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -685,9 +731,9 @@ class WebRiskServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
@@ -703,8 +749,9 @@ class WebRiskServiceClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -723,9 +770,9 @@ class WebRiskServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on

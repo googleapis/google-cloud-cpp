@@ -42,6 +42,33 @@ ModelGardenServiceTracingConnection::GetPublisherModel(
   return internal::EndSpan(*span, child_->GetPublisherModel(request));
 }
 
+future<StatusOr<google::cloud::aiplatform::v1::DeployResponse>>
+ModelGardenServiceTracingConnection::Deploy(
+    google::cloud::aiplatform::v1::DeployRequest const& request) {
+  auto span =
+      internal::MakeSpan("aiplatform_v1::ModelGardenServiceConnection::Deploy");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->Deploy(request));
+}
+
+StatusOr<google::longrunning::Operation>
+ModelGardenServiceTracingConnection::Deploy(
+    NoAwaitTag, google::cloud::aiplatform::v1::DeployRequest const& request) {
+  auto span =
+      internal::MakeSpan("aiplatform_v1::ModelGardenServiceConnection::Deploy");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span, child_->Deploy(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::DeployResponse>>
+ModelGardenServiceTracingConnection::Deploy(
+    google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("aiplatform_v1::ModelGardenServiceConnection::Deploy");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->Deploy(operation));
+}
+
 StreamRange<google::cloud::location::Location>
 ModelGardenServiceTracingConnection::ListLocations(
     google::cloud::location::ListLocationsRequest request) {

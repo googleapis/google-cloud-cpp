@@ -7,6 +7,7 @@
   "python": {
     "enabled": false
   },
+  "baseBranches": ["main", "/^prepare.*v3/"],
   "regexManagers": [
     {
       "fileMatch": [

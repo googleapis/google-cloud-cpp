@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/async/writer_connection_impl.h"
+#include "google/cloud/storage/internal/async/handle_redirect_error.h"
 #include "google/cloud/storage/internal/async/partial_upload.h"
 #include "google/cloud/storage/internal/async/write_payload_impl.h"
 #include "google/cloud/storage/internal/grpc/ctype_cord_workaround.h"
@@ -48,11 +49,11 @@ AsyncWriterConnectionImpl::AsyncWriterConnectionImpl(
     google::storage::v2::BidiWriteObjectRequest request,
     std::unique_ptr<StreamingRpc> impl,
     std::shared_ptr<storage::internal::HashFunction> hash_function,
-    std::int64_t persisted_size)
-    : AsyncWriterConnectionImpl(std::move(options), std::move(request),
-                                std::move(impl), std::move(hash_function),
-                                PersistedStateType(persisted_size),
-                                /*offset=*/persisted_size) {}
+    std::int64_t persisted_size, bool first_request)
+    : AsyncWriterConnectionImpl(
+          std::move(options), std::move(request), std::move(impl),
+          std::move(hash_function), PersistedStateType(persisted_size),
+          /*offset=*/persisted_size, std::move(first_request)) {}
 
 AsyncWriterConnectionImpl::AsyncWriterConnectionImpl(
     google::cloud::internal::ImmutableOptions options,
@@ -70,13 +71,14 @@ AsyncWriterConnectionImpl::AsyncWriterConnectionImpl(
     google::storage::v2::BidiWriteObjectRequest request,
     std::unique_ptr<StreamingRpc> impl,
     std::shared_ptr<storage::internal::HashFunction> hash_function,
-    PersistedStateType persisted_state, std::int64_t offset)
+    PersistedStateType persisted_state, std::int64_t offset, bool first_request)
     : options_(std::move(options)),
       impl_(std::move(impl)),
       request_(std::move(request)),
       hash_function_(std::move(hash_function)),
       persisted_state_(std::move(persisted_state)),
       offset_(offset),
+      first_request_(std::move(first_request)),
       finished_(on_finish_.get_future()) {
   request_.clear_object_checksums();
   request_.set_state_lookup(false);
@@ -131,8 +133,11 @@ AsyncWriterConnectionImpl::Finalize(
 
   auto p = WritePayloadImpl::GetImpl(payload);
   auto size = p.size();
+  auto action = request_.has_append_object_spec()
+                    ? PartialUpload::kFinalize
+                    : PartialUpload::kFinalizeWithChecksum;
   auto coro = PartialUpload::Call(impl_, hash_function_, std::move(write),
-                                  std::move(p), PartialUpload::kFinalize);
+                                  std::move(p), std::move(action));
   return coro->Start().then([coro, size, this](auto f) mutable {
     coro.reset();  // breaks the cycle between the completion queue and coro
     return OnFinalUpload(size, f.get());
@@ -168,6 +173,8 @@ AsyncWriterConnectionImpl::MakeRequest() {
     first_request_ = false;
   } else {
     request.clear_upload_id();
+    request.clear_write_object_spec();
+    request.clear_append_object_spec();
   }
   request.set_write_offset(offset_);
   return request;
@@ -225,7 +232,14 @@ future<StatusOr<std::int64_t>> AsyncWriterConnectionImpl::OnQuery(
     return Finish()
         .then(HandleFinishAfterError(
             "Expected error in Finish() after non-ok Read()"))
-        .then([](auto f) { return StatusOr<std::int64_t>(f.get()); });
+        .then([this](auto g) {
+          auto result = g.get();
+          google::rpc::Status grpc_status = ExtractGrpcStatus(result);
+          EnsureFirstMessageAppendObjectSpec(request_, grpc_status);
+          ApplyWriteRedirectErrors(*request_.mutable_append_object_spec(),
+                                   grpc_status);
+          return StatusOr<std::int64_t>(std::move(result));
+        });
   }
   if (response->has_persisted_size()) {
     persisted_state_ = response->persisted_size();

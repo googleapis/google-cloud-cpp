@@ -144,7 +144,7 @@ class SqlConnectServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.sql.v1.GenerateEphemeralCertRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_connect.proto#L132}
-  /// [google.cloud.sql.v1.GenerateEphemeralCertResponse]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_connect.proto#L156}
+  /// [google.cloud.sql.v1.GenerateEphemeralCertResponse]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_connect.proto#L157}
   ///
   // clang-format on
   StatusOr<google::cloud::sql::v1::GenerateEphemeralCertResponse>

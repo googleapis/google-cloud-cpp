@@ -67,6 +67,11 @@ class ReservationServiceAuth : public ReservationServiceStub {
       google::cloud::bigquery::reservation::v1::UpdateReservationRequest const&
           request) override;
 
+  StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
+  FailoverReservation(grpc::ClientContext& context, Options const& options,
+                      google::cloud::bigquery::reservation::v1::
+                          FailoverReservationRequest const& request) override;
+
   StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
   CreateCapacityCommitment(
       grpc::ClientContext& context, Options const& options,

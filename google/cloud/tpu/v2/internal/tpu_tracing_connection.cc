@@ -156,6 +156,108 @@ future<StatusOr<google::cloud::tpu::v2::Node>> TpuTracingConnection::UpdateNode(
   return internal::EndSpan(std::move(span), child_->UpdateNode(operation));
 }
 
+StreamRange<google::cloud::tpu::v2::QueuedResource>
+TpuTracingConnection::ListQueuedResources(
+    google::cloud::tpu::v2::ListQueuedResourcesRequest request) {
+  auto span = internal::MakeSpan("tpu_v2::TpuConnection::ListQueuedResources");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListQueuedResources(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::tpu::v2::QueuedResource>(std::move(span), std::move(sr));
+}
+
+StatusOr<google::cloud::tpu::v2::QueuedResource>
+TpuTracingConnection::GetQueuedResource(
+    google::cloud::tpu::v2::GetQueuedResourceRequest const& request) {
+  auto span = internal::MakeSpan("tpu_v2::TpuConnection::GetQueuedResource");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetQueuedResource(request));
+}
+
+future<StatusOr<google::cloud::tpu::v2::QueuedResource>>
+TpuTracingConnection::CreateQueuedResource(
+    google::cloud::tpu::v2::CreateQueuedResourceRequest const& request) {
+  auto span = internal::MakeSpan("tpu_v2::TpuConnection::CreateQueuedResource");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateQueuedResource(request));
+}
+
+StatusOr<google::longrunning::Operation>
+TpuTracingConnection::CreateQueuedResource(
+    NoAwaitTag,
+    google::cloud::tpu::v2::CreateQueuedResourceRequest const& request) {
+  auto span = internal::MakeSpan("tpu_v2::TpuConnection::CreateQueuedResource");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->CreateQueuedResource(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::tpu::v2::QueuedResource>>
+TpuTracingConnection::CreateQueuedResource(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan("tpu_v2::TpuConnection::CreateQueuedResource");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateQueuedResource(operation));
+}
+
+future<StatusOr<google::cloud::tpu::v2::OperationMetadata>>
+TpuTracingConnection::DeleteQueuedResource(
+    google::cloud::tpu::v2::DeleteQueuedResourceRequest const& request) {
+  auto span = internal::MakeSpan("tpu_v2::TpuConnection::DeleteQueuedResource");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteQueuedResource(request));
+}
+
+StatusOr<google::longrunning::Operation>
+TpuTracingConnection::DeleteQueuedResource(
+    NoAwaitTag,
+    google::cloud::tpu::v2::DeleteQueuedResourceRequest const& request) {
+  auto span = internal::MakeSpan("tpu_v2::TpuConnection::DeleteQueuedResource");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->DeleteQueuedResource(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::tpu::v2::OperationMetadata>>
+TpuTracingConnection::DeleteQueuedResource(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan("tpu_v2::TpuConnection::DeleteQueuedResource");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteQueuedResource(operation));
+}
+
+future<StatusOr<google::cloud::tpu::v2::QueuedResource>>
+TpuTracingConnection::ResetQueuedResource(
+    google::cloud::tpu::v2::ResetQueuedResourceRequest const& request) {
+  auto span = internal::MakeSpan("tpu_v2::TpuConnection::ResetQueuedResource");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->ResetQueuedResource(request));
+}
+
+StatusOr<google::longrunning::Operation>
+TpuTracingConnection::ResetQueuedResource(
+    NoAwaitTag,
+    google::cloud::tpu::v2::ResetQueuedResourceRequest const& request) {
+  auto span = internal::MakeSpan("tpu_v2::TpuConnection::ResetQueuedResource");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->ResetQueuedResource(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::tpu::v2::QueuedResource>>
+TpuTracingConnection::ResetQueuedResource(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan("tpu_v2::TpuConnection::ResetQueuedResource");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->ResetQueuedResource(operation));
+}
+
 StatusOr<google::cloud::tpu::v2::GenerateServiceIdentityResponse>
 TpuTracingConnection::GenerateServiceIdentity(
     google::cloud::tpu::v2::GenerateServiceIdentityRequest const& request) {

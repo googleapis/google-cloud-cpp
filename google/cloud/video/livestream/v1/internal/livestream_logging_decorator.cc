@@ -478,6 +478,141 @@ StatusOr<google::longrunning::Operation> LivestreamServiceLogging::DeleteClip(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+LivestreamServiceLogging::AsyncCreateDvrSession(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::video::livestream::v1::CreateDvrSessionRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::video::livestream::v1::CreateDvrSessionRequest const&
+              request) {
+        return child_->AsyncCreateDvrSession(cq, std::move(context),
+                                             std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+LivestreamServiceLogging::CreateDvrSession(
+    grpc::ClientContext& context, Options options,
+    google::cloud::video::livestream::v1::CreateDvrSessionRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::video::livestream::v1::CreateDvrSessionRequest const&
+              request) {
+        return child_->CreateDvrSession(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::video::livestream::v1::ListDvrSessionsResponse>
+LivestreamServiceLogging::ListDvrSessions(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::video::livestream::v1::ListDvrSessionsRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::video::livestream::v1::ListDvrSessionsRequest const&
+                 request) {
+        return child_->ListDvrSessions(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::video::livestream::v1::DvrSession>
+LivestreamServiceLogging::GetDvrSession(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::video::livestream::v1::GetDvrSessionRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::video::livestream::v1::GetDvrSessionRequest const&
+                 request) {
+        return child_->GetDvrSession(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+LivestreamServiceLogging::AsyncDeleteDvrSession(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::video::livestream::v1::DeleteDvrSessionRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::video::livestream::v1::DeleteDvrSessionRequest const&
+              request) {
+        return child_->AsyncDeleteDvrSession(cq, std::move(context),
+                                             std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+LivestreamServiceLogging::DeleteDvrSession(
+    grpc::ClientContext& context, Options options,
+    google::cloud::video::livestream::v1::DeleteDvrSessionRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::video::livestream::v1::DeleteDvrSessionRequest const&
+              request) {
+        return child_->DeleteDvrSession(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+LivestreamServiceLogging::AsyncUpdateDvrSession(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::video::livestream::v1::UpdateDvrSessionRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::video::livestream::v1::UpdateDvrSessionRequest const&
+              request) {
+        return child_->AsyncUpdateDvrSession(cq, std::move(context),
+                                             std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+LivestreamServiceLogging::UpdateDvrSession(
+    grpc::ClientContext& context, Options options,
+    google::cloud::video::livestream::v1::UpdateDvrSessionRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::video::livestream::v1::UpdateDvrSessionRequest const&
+              request) {
+        return child_->UpdateDvrSession(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 LivestreamServiceLogging::AsyncCreateAsset(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

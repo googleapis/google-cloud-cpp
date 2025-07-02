@@ -5,6 +5,7 @@
 @com_google_googleapis//google/cloud/netapp/v1:cloud_netapp_service.proto
 @com_google_googleapis//google/cloud/netapp/v1:common.proto
 @com_google_googleapis//google/cloud/netapp/v1:kms.proto
+@com_google_googleapis//google/cloud/netapp/v1:quota_rule.proto
 @com_google_googleapis//google/cloud/netapp/v1:replication.proto
 @com_google_googleapis//google/cloud/netapp/v1:snapshot.proto
 @com_google_googleapis//google/cloud/netapp/v1:storage_pool.proto

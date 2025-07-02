@@ -22,6 +22,7 @@
 #include "google/cloud/aiplatform/v1/internal/model_garden_stub.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
+#include <google/longrunning/operations.grpc.pb.h>
 #include <map>
 #include <memory>
 #include <string>
@@ -43,6 +44,16 @@ class ModelGardenServiceMetadata : public ModelGardenServiceStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetPublisherModelRequest const& request)
       override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeploy(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::DeployRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> Deploy(
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::DeployRequest const& request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
       grpc::ClientContext& context, Options const& options,
@@ -83,6 +94,18 @@ class ModelGardenServiceMetadata : public ModelGardenServiceStub {
   StatusOr<google::longrunning::Operation> WaitOperation(
       grpc::ClientContext& context, Options const& options,
       google::longrunning::WaitOperationRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::longrunning::GetOperationRequest const& request) override;
+
+  future<Status> AsyncCancelOperation(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   void SetMetadata(grpc::ClientContext& context, Options const& options,

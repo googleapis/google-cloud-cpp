@@ -1,4 +1,4 @@
-// Copyright 2024 Google LLC
+// Copyright 2025 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -27,10 +27,10 @@
 
 // IWYU pragma: begin_exports
 #include <google/cloud/compute/v1/internal/common_016.pb.h>
-#include <google/cloud/compute/v1/internal/common_040.pb.h>
-#include <google/cloud/compute/v1/internal/common_045.pb.h>
-#include <google/cloud/compute/v1/internal/common_077.pb.h>
-#include <google/cloud/compute/v1/internal/common_132.pb.h>
+#include <google/cloud/compute/v1/internal/common_041.pb.h>
+#include <google/cloud/compute/v1/internal/common_046.pb.h>
+#include <google/cloud/compute/v1/internal/common_082.pb.h>
+#include <google/cloud/compute/v1/internal/common_140.pb.h>
 // IWYU pragma: end_exports
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_GLOBAL_FORWARDING_RULES_V1_GLOBAL_FORWARDING_RULES_PROTO_EXPORT_H

@@ -367,6 +367,34 @@ StatusOr<google::longrunning::Operation> DataCatalogAuth::ImportEntries(
   return child_->ImportEntries(context, options, request);
 }
 
+StatusOr<google::cloud::datacatalog::v1::MigrationConfig>
+DataCatalogAuth::SetConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::datacatalog::v1::SetConfigRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->SetConfig(context, options, request);
+}
+
+StatusOr<google::cloud::datacatalog::v1::OrganizationConfig>
+DataCatalogAuth::RetrieveConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::datacatalog::v1::RetrieveConfigRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->RetrieveConfig(context, options, request);
+}
+
+StatusOr<google::cloud::datacatalog::v1::MigrationConfig>
+DataCatalogAuth::RetrieveEffectiveConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::datacatalog::v1::RetrieveEffectiveConfigRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->RetrieveEffectiveConfig(context, options, request);
+}
+
 StatusOr<google::longrunning::ListOperationsResponse>
 DataCatalogAuth::ListOperations(
     grpc::ClientContext& context, Options const& options,

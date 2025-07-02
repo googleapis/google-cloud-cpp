@@ -102,6 +102,29 @@ ConversationsClient::CompleteConversation(
   return connection_->CompleteConversation(request);
 }
 
+StatusOr<google::cloud::dialogflow::v2::IngestContextReferencesResponse>
+ConversationsClient::IngestContextReferences(
+    std::string const& conversation,
+    std::map<std::string, google::cloud::dialogflow::v2::Conversation::
+                              ContextReference> const& context_references,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::dialogflow::v2::IngestContextReferencesRequest request;
+  request.set_conversation(conversation);
+  *request.mutable_context_references() = {context_references.begin(),
+                                           context_references.end()};
+  return connection_->IngestContextReferences(request);
+}
+
+StatusOr<google::cloud::dialogflow::v2::IngestContextReferencesResponse>
+ConversationsClient::IngestContextReferences(
+    google::cloud::dialogflow::v2::IngestContextReferencesRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->IngestContextReferences(request);
+}
+
 StreamRange<google::cloud::dialogflow::v2::Message>
 ConversationsClient::ListMessages(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -159,6 +182,23 @@ ConversationsClient::SearchKnowledge(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SearchKnowledge(request);
+}
+
+StatusOr<google::cloud::dialogflow::v2::GenerateSuggestionsResponse>
+ConversationsClient::GenerateSuggestions(std::string const& conversation,
+                                         Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::dialogflow::v2::GenerateSuggestionsRequest request;
+  request.set_conversation(conversation);
+  return connection_->GenerateSuggestions(request);
+}
+
+StatusOr<google::cloud::dialogflow::v2::GenerateSuggestionsResponse>
+ConversationsClient::GenerateSuggestions(
+    google::cloud::dialogflow::v2::GenerateSuggestionsRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GenerateSuggestions(request);
 }
 
 StreamRange<google::cloud::location::Location>

@@ -125,7 +125,7 @@ class BackupForGKEClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkebackup.v1.BackupPlan]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup_plan.proto#L37}
-  /// [google.cloud.gkebackup.v1.CreateBackupPlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L359}
+  /// [google.cloud.gkebackup.v1.CreateBackupPlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L518}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::BackupPlan>> CreateBackupPlan(
@@ -180,7 +180,7 @@ class BackupForGKEClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkebackup.v1.BackupPlan]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup_plan.proto#L37}
-  /// [google.cloud.gkebackup.v1.CreateBackupPlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L359}
+  /// [google.cloud.gkebackup.v1.CreateBackupPlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L518}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::BackupPlan>> CreateBackupPlan(
@@ -244,7 +244,7 @@ class BackupForGKEClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkebackup.v1.BackupPlan]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup_plan.proto#L37}
-  /// [google.cloud.gkebackup.v1.ListBackupPlansRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L384}
+  /// [google.cloud.gkebackup.v1.ListBackupPlansRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L543}
   ///
   // clang-format on
   StreamRange<google::cloud::gkebackup::v1::BackupPlan> ListBackupPlans(
@@ -283,7 +283,7 @@ class BackupForGKEClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkebackup.v1.BackupPlan]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup_plan.proto#L37}
-  /// [google.cloud.gkebackup.v1.ListBackupPlansRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L384}
+  /// [google.cloud.gkebackup.v1.ListBackupPlansRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L543}
   ///
   // clang-format on
   StreamRange<google::cloud::gkebackup::v1::BackupPlan> ListBackupPlans(
@@ -310,7 +310,7 @@ class BackupForGKEClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkebackup.v1.BackupPlan]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup_plan.proto#L37}
-  /// [google.cloud.gkebackup.v1.GetBackupPlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L434}
+  /// [google.cloud.gkebackup.v1.GetBackupPlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L593}
   ///
   // clang-format on
   StatusOr<google::cloud::gkebackup::v1::BackupPlan> GetBackupPlan(
@@ -340,7 +340,7 @@ class BackupForGKEClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkebackup.v1.BackupPlan]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup_plan.proto#L37}
-  /// [google.cloud.gkebackup.v1.GetBackupPlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L434}
+  /// [google.cloud.gkebackup.v1.GetBackupPlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L593}
   ///
   // clang-format on
   StatusOr<google::cloud::gkebackup::v1::BackupPlan> GetBackupPlan(
@@ -383,7 +383,7 @@ class BackupForGKEClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkebackup.v1.BackupPlan]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup_plan.proto#L37}
-  /// [google.cloud.gkebackup.v1.UpdateBackupPlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L446}
+  /// [google.cloud.gkebackup.v1.UpdateBackupPlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L605}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::BackupPlan>> UpdateBackupPlan(
@@ -436,7 +436,7 @@ class BackupForGKEClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkebackup.v1.BackupPlan]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup_plan.proto#L37}
-  /// [google.cloud.gkebackup.v1.UpdateBackupPlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L446}
+  /// [google.cloud.gkebackup.v1.UpdateBackupPlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L605}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::BackupPlan>> UpdateBackupPlan(
@@ -497,8 +497,8 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.DeleteBackupPlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L465}
-  /// [google.cloud.gkebackup.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L329}
+  /// [google.cloud.gkebackup.v1.DeleteBackupPlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L624}
+  /// [google.cloud.gkebackup.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L487}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
@@ -548,8 +548,8 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.DeleteBackupPlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L465}
-  /// [google.cloud.gkebackup.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L329}
+  /// [google.cloud.gkebackup.v1.DeleteBackupPlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L624}
+  /// [google.cloud.gkebackup.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L487}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
@@ -588,6 +588,646 @@ class BackupForGKEClient {
 
   // clang-format off
   ///
+  /// Creates a new BackupChannel in a given location.
+  ///
+  /// @param parent  Required. The location within which to create the BackupChannel.
+  ///  Format: `projects/*/locations/*`
+  /// @param backup_channel  Required. The BackupChannel resource object to create.
+  /// @param backup_channel_id  Optional. The client-provided short name for the BackupChannel resource.
+  ///  This name must:
+  ///  @n
+  ///  - be between 1 and 63 characters long (inclusive)
+  ///  - consist of only lower-case ASCII letters, numbers, and dashes
+  ///  - start with a lower-case letter
+  ///  - end with a lower-case letter or number
+  ///  - be unique within the set of BackupChannels in this location
+  ///  If the user does not provide a name, a uuid will be used as the name.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.gkebackup.v1.BackupChannel] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkebackup.v1.BackupChannel]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup_channel.proto#L36}
+  /// [google.cloud.gkebackup.v1.CreateBackupChannelRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L641}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::gkebackup::v1::BackupChannel>>
+  CreateBackupChannel(
+      std::string const& parent,
+      google::cloud::gkebackup::v1::BackupChannel const& backup_channel,
+      std::string const& backup_channel_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateBackupChannel
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateBackupChannel(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::gkebackup::v1::BackupChannel const& backup_channel,
+      std::string const& backup_channel_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a new BackupChannel in a given location.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.gkebackup.v1.CreateBackupChannelRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.gkebackup.v1.BackupChannel] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkebackup.v1.BackupChannel]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup_channel.proto#L36}
+  /// [google.cloud.gkebackup.v1.CreateBackupChannelRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L641}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::gkebackup::v1::BackupChannel>>
+  CreateBackupChannel(
+      google::cloud::gkebackup::v1::CreateBackupChannelRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateBackupChannel
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateBackupChannel(
+      NoAwaitTag,
+      google::cloud::gkebackup::v1::CreateBackupChannelRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateBackupChannel
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::gkebackup::v1::BackupChannel>>
+  CreateBackupChannel(google::longrunning::Operation const& operation,
+                      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists BackupChannels in a given location.
+  ///
+  /// @param parent  Required. The location that contains the BackupChannels to list.
+  ///  Format: `projects/*/locations/*`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.gkebackup.v1.BackupChannel], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkebackup.v1.BackupChannel]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup_channel.proto#L36}
+  /// [google.cloud.gkebackup.v1.ListBackupChannelsRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L667}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::gkebackup::v1::BackupChannel> ListBackupChannels(
+      std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists BackupChannels in a given location.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.gkebackup.v1.ListBackupChannelsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.gkebackup.v1.BackupChannel], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkebackup.v1.BackupChannel]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup_channel.proto#L36}
+  /// [google.cloud.gkebackup.v1.ListBackupChannelsRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L667}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::gkebackup::v1::BackupChannel> ListBackupChannels(
+      google::cloud::gkebackup::v1::ListBackupChannelsRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Retrieve the details of a single BackupChannel.
+  ///
+  /// @param name  Required. Fully qualified BackupChannel name.
+  ///  Format: `projects/*/locations/*/backupChannels/*`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.gkebackup.v1.BackupChannel])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkebackup.v1.BackupChannel]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup_channel.proto#L36}
+  /// [google.cloud.gkebackup.v1.GetBackupChannelRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L718}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::gkebackup::v1::BackupChannel> GetBackupChannel(
+      std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Retrieve the details of a single BackupChannel.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.gkebackup.v1.GetBackupChannelRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.gkebackup.v1.BackupChannel])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkebackup.v1.BackupChannel]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup_channel.proto#L36}
+  /// [google.cloud.gkebackup.v1.GetBackupChannelRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L718}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::gkebackup::v1::BackupChannel> GetBackupChannel(
+      google::cloud::gkebackup::v1::GetBackupChannelRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Update a BackupChannel.
+  ///
+  /// @param backup_channel  Required. A new version of the BackupChannel resource that contains updated
+  ///  fields. This may be sparsely populated if an `update_mask` is provided.
+  /// @param update_mask  Optional. This is used to specify the fields to be overwritten in the
+  ///  BackupChannel targeted for update. The values for each of these
+  ///  updated fields will be taken from the `backup_channel` provided
+  ///  with this request. Field names are relative to the root of the resource
+  ///  (e.g., `description`, `labels`, etc.)
+  ///  If no `update_mask` is provided, all fields in `backup_channel` will
+  ///  be written to the target BackupChannel resource. Note that
+  ///  OUTPUT_ONLY and IMMUTABLE fields in `backup_channel` are ignored and
+  ///  are not used to update the target BackupChannel.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.gkebackup.v1.BackupChannel] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkebackup.v1.BackupChannel]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup_channel.proto#L36}
+  /// [google.cloud.gkebackup.v1.UpdateBackupChannelRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L730}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::gkebackup::v1::BackupChannel>>
+  UpdateBackupChannel(
+      google::cloud::gkebackup::v1::BackupChannel const& backup_channel,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateBackupChannel
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UpdateBackupChannel(
+      NoAwaitTag,
+      google::cloud::gkebackup::v1::BackupChannel const& backup_channel,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Update a BackupChannel.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.gkebackup.v1.UpdateBackupChannelRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.gkebackup.v1.BackupChannel] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkebackup.v1.BackupChannel]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup_channel.proto#L36}
+  /// [google.cloud.gkebackup.v1.UpdateBackupChannelRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L730}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::gkebackup::v1::BackupChannel>>
+  UpdateBackupChannel(
+      google::cloud::gkebackup::v1::UpdateBackupChannelRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateBackupChannel
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UpdateBackupChannel(
+      NoAwaitTag,
+      google::cloud::gkebackup::v1::UpdateBackupChannelRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateBackupChannel
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::gkebackup::v1::BackupChannel>>
+  UpdateBackupChannel(google::longrunning::Operation const& operation,
+                      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes an existing BackupChannel.
+  ///
+  /// @param name  Required. Fully qualified BackupChannel name.
+  ///  Format: `projects/*/locations/*/backupChannels/*`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.gkebackup.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkebackup.v1.DeleteBackupChannelRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L749}
+  /// [google.cloud.gkebackup.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L487}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
+  DeleteBackupChannel(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteBackupChannel
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteBackupChannel(
+      NoAwaitTag, std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes an existing BackupChannel.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.gkebackup.v1.DeleteBackupChannelRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.gkebackup.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkebackup.v1.DeleteBackupChannelRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L749}
+  /// [google.cloud.gkebackup.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L487}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
+  DeleteBackupChannel(
+      google::cloud::gkebackup::v1::DeleteBackupChannelRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteBackupChannel
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteBackupChannel(
+      NoAwaitTag,
+      google::cloud::gkebackup::v1::DeleteBackupChannelRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteBackupChannel
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
+  DeleteBackupChannel(google::longrunning::Operation const& operation,
+                      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists BackupPlanBindings in a given location.
+  ///
+  /// @param parent  Required. The BackupChannel that contains the BackupPlanBindings to list.
+  ///  Format: `projects/*/locations/*/backupChannels/*`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.gkebackup.v1.BackupPlanBinding], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkebackup.v1.BackupPlanBinding]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup_plan_binding.proto#L37}
+  /// [google.cloud.gkebackup.v1.ListBackupPlanBindingsRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L771}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::gkebackup::v1::BackupPlanBinding>
+  ListBackupPlanBindings(std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists BackupPlanBindings in a given location.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.gkebackup.v1.ListBackupPlanBindingsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.gkebackup.v1.BackupPlanBinding], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkebackup.v1.BackupPlanBinding]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup_plan_binding.proto#L37}
+  /// [google.cloud.gkebackup.v1.ListBackupPlanBindingsRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L771}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::gkebackup::v1::BackupPlanBinding>
+  ListBackupPlanBindings(
+      google::cloud::gkebackup::v1::ListBackupPlanBindingsRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Retrieve the details of a single BackupPlanBinding.
+  ///
+  /// @param name  Required. Fully qualified BackupPlanBinding name.
+  ///  Format:
+  ///  `projects/*/locations/*/backupChannels/*/backupPlanBindings/*`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.gkebackup.v1.BackupPlanBinding])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkebackup.v1.BackupPlanBinding]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup_plan_binding.proto#L37}
+  /// [google.cloud.gkebackup.v1.GetBackupPlanBindingRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L822}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::gkebackup::v1::BackupPlanBinding>
+  GetBackupPlanBinding(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Retrieve the details of a single BackupPlanBinding.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.gkebackup.v1.GetBackupPlanBindingRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.gkebackup.v1.BackupPlanBinding])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkebackup.v1.BackupPlanBinding]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup_plan_binding.proto#L37}
+  /// [google.cloud.gkebackup.v1.GetBackupPlanBindingRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L822}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::gkebackup::v1::BackupPlanBinding>
+  GetBackupPlanBinding(
+      google::cloud::gkebackup::v1::GetBackupPlanBindingRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
   /// Creates a Backup for the given BackupPlan.
   ///
   /// @param parent  Required. The BackupPlan within which to create the Backup.
@@ -622,7 +1262,7 @@ class BackupForGKEClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkebackup.v1.Backup]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup.proto#L36}
-  /// [google.cloud.gkebackup.v1.CreateBackupRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L482}
+  /// [google.cloud.gkebackup.v1.CreateBackupRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L835}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::Backup>> CreateBackup(
@@ -677,7 +1317,7 @@ class BackupForGKEClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkebackup.v1.Backup]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup.proto#L36}
-  /// [google.cloud.gkebackup.v1.CreateBackupRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L482}
+  /// [google.cloud.gkebackup.v1.CreateBackupRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L835}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::Backup>> CreateBackup(
@@ -741,7 +1381,7 @@ class BackupForGKEClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkebackup.v1.Backup]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup.proto#L36}
-  /// [google.cloud.gkebackup.v1.ListBackupsRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L507}
+  /// [google.cloud.gkebackup.v1.ListBackupsRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L860}
   ///
   // clang-format on
   StreamRange<google::cloud::gkebackup::v1::Backup> ListBackups(
@@ -780,7 +1420,7 @@ class BackupForGKEClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkebackup.v1.Backup]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup.proto#L36}
-  /// [google.cloud.gkebackup.v1.ListBackupsRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L507}
+  /// [google.cloud.gkebackup.v1.ListBackupsRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L860}
   ///
   // clang-format on
   StreamRange<google::cloud::gkebackup::v1::Backup> ListBackups(
@@ -807,7 +1447,7 @@ class BackupForGKEClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkebackup.v1.Backup]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup.proto#L36}
-  /// [google.cloud.gkebackup.v1.GetBackupRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L553}
+  /// [google.cloud.gkebackup.v1.GetBackupRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L913}
   ///
   // clang-format on
   StatusOr<google::cloud::gkebackup::v1::Backup> GetBackup(
@@ -837,7 +1477,7 @@ class BackupForGKEClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkebackup.v1.Backup]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup.proto#L36}
-  /// [google.cloud.gkebackup.v1.GetBackupRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L553}
+  /// [google.cloud.gkebackup.v1.GetBackupRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L913}
   ///
   // clang-format on
   StatusOr<google::cloud::gkebackup::v1::Backup> GetBackup(
@@ -879,7 +1519,7 @@ class BackupForGKEClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkebackup.v1.Backup]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup.proto#L36}
-  /// [google.cloud.gkebackup.v1.UpdateBackupRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L565}
+  /// [google.cloud.gkebackup.v1.UpdateBackupRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L925}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::Backup>> UpdateBackup(
@@ -932,7 +1572,7 @@ class BackupForGKEClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkebackup.v1.Backup]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup.proto#L36}
-  /// [google.cloud.gkebackup.v1.UpdateBackupRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L565}
+  /// [google.cloud.gkebackup.v1.UpdateBackupRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L925}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::Backup>> UpdateBackup(
@@ -993,8 +1633,8 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.DeleteBackupRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L583}
-  /// [google.cloud.gkebackup.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L329}
+  /// [google.cloud.gkebackup.v1.DeleteBackupRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L943}
+  /// [google.cloud.gkebackup.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L487}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
@@ -1045,8 +1685,8 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.DeleteBackupRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L583}
-  /// [google.cloud.gkebackup.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L329}
+  /// [google.cloud.gkebackup.v1.DeleteBackupRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L943}
+  /// [google.cloud.gkebackup.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L487}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
@@ -1110,7 +1750,7 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.ListVolumeBackupsRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L605}
+  /// [google.cloud.gkebackup.v1.ListVolumeBackupsRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L965}
   /// [google.cloud.gkebackup.v1.VolumeBackup]: @googleapis_reference_link{google/cloud/gkebackup/v1/volume.proto#L35}
   ///
   // clang-format on
@@ -1149,7 +1789,7 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.ListVolumeBackupsRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L605}
+  /// [google.cloud.gkebackup.v1.ListVolumeBackupsRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L965}
   /// [google.cloud.gkebackup.v1.VolumeBackup]: @googleapis_reference_link{google/cloud/gkebackup/v1/volume.proto#L35}
   ///
   // clang-format on
@@ -1176,7 +1816,7 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.GetVolumeBackupRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L652}
+  /// [google.cloud.gkebackup.v1.GetVolumeBackupRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L1012}
   /// [google.cloud.gkebackup.v1.VolumeBackup]: @googleapis_reference_link{google/cloud/gkebackup/v1/volume.proto#L35}
   ///
   // clang-format on
@@ -1206,7 +1846,7 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.GetVolumeBackupRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L652}
+  /// [google.cloud.gkebackup.v1.GetVolumeBackupRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L1012}
   /// [google.cloud.gkebackup.v1.VolumeBackup]: @googleapis_reference_link{google/cloud/gkebackup/v1/volume.proto#L35}
   ///
   // clang-format on
@@ -1249,7 +1889,7 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.CreateRestorePlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L664}
+  /// [google.cloud.gkebackup.v1.CreateRestorePlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L1024}
   /// [google.cloud.gkebackup.v1.RestorePlan]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore_plan.proto#L34}
   ///
   // clang-format on
@@ -1304,7 +1944,7 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.CreateRestorePlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L664}
+  /// [google.cloud.gkebackup.v1.CreateRestorePlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L1024}
   /// [google.cloud.gkebackup.v1.RestorePlan]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore_plan.proto#L34}
   ///
   // clang-format on
@@ -1368,7 +2008,7 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.ListRestorePlansRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L689}
+  /// [google.cloud.gkebackup.v1.ListRestorePlansRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L1049}
   /// [google.cloud.gkebackup.v1.RestorePlan]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore_plan.proto#L34}
   ///
   // clang-format on
@@ -1407,7 +2047,7 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.ListRestorePlansRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L689}
+  /// [google.cloud.gkebackup.v1.ListRestorePlansRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L1049}
   /// [google.cloud.gkebackup.v1.RestorePlan]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore_plan.proto#L34}
   ///
   // clang-format on
@@ -1434,7 +2074,7 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.GetRestorePlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L739}
+  /// [google.cloud.gkebackup.v1.GetRestorePlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L1099}
   /// [google.cloud.gkebackup.v1.RestorePlan]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore_plan.proto#L34}
   ///
   // clang-format on
@@ -1464,7 +2104,7 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.GetRestorePlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L739}
+  /// [google.cloud.gkebackup.v1.GetRestorePlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L1099}
   /// [google.cloud.gkebackup.v1.RestorePlan]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore_plan.proto#L34}
   ///
   // clang-format on
@@ -1507,7 +2147,7 @@ class BackupForGKEClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkebackup.v1.RestorePlan]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore_plan.proto#L34}
-  /// [google.cloud.gkebackup.v1.UpdateRestorePlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L751}
+  /// [google.cloud.gkebackup.v1.UpdateRestorePlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L1111}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::RestorePlan>> UpdateRestorePlan(
@@ -1560,7 +2200,7 @@ class BackupForGKEClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkebackup.v1.RestorePlan]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore_plan.proto#L34}
-  /// [google.cloud.gkebackup.v1.UpdateRestorePlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L751}
+  /// [google.cloud.gkebackup.v1.UpdateRestorePlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L1111}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::RestorePlan>> UpdateRestorePlan(
@@ -1621,8 +2261,8 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.DeleteRestorePlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L769}
-  /// [google.cloud.gkebackup.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L329}
+  /// [google.cloud.gkebackup.v1.DeleteRestorePlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L1129}
+  /// [google.cloud.gkebackup.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L487}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
@@ -1672,8 +2312,8 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.DeleteRestorePlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L769}
-  /// [google.cloud.gkebackup.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L329}
+  /// [google.cloud.gkebackup.v1.DeleteRestorePlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L1129}
+  /// [google.cloud.gkebackup.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L487}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
@@ -1712,6 +2352,647 @@ class BackupForGKEClient {
 
   // clang-format off
   ///
+  /// Creates a new RestoreChannel in a given location.
+  ///
+  /// @param parent  Required. The location within which to create the RestoreChannel.
+  ///  Format: `projects/*/locations/*`
+  /// @param restore_channel  Required. The RestoreChannel resource object to create.
+  /// @param restore_channel_id  Optional. The client-provided short name for the RestoreChannel resource.
+  ///  This name must:
+  ///  @n
+  ///  - be between 1 and 63 characters long (inclusive)
+  ///  - consist of only lower-case ASCII letters, numbers, and dashes
+  ///  - start with a lower-case letter
+  ///  - end with a lower-case letter or number
+  ///  - be unique within the set of RestoreChannels in this location
+  ///  If the user does not provide a name, a uuid will be used as the name.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.gkebackup.v1.RestoreChannel] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkebackup.v1.CreateRestoreChannelRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L1151}
+  /// [google.cloud.gkebackup.v1.RestoreChannel]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore_channel.proto#L36}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::gkebackup::v1::RestoreChannel>>
+  CreateRestoreChannel(
+      std::string const& parent,
+      google::cloud::gkebackup::v1::RestoreChannel const& restore_channel,
+      std::string const& restore_channel_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateRestoreChannel
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateRestoreChannel(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::gkebackup::v1::RestoreChannel const& restore_channel,
+      std::string const& restore_channel_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a new RestoreChannel in a given location.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.gkebackup.v1.CreateRestoreChannelRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.gkebackup.v1.RestoreChannel] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkebackup.v1.CreateRestoreChannelRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L1151}
+  /// [google.cloud.gkebackup.v1.RestoreChannel]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore_channel.proto#L36}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::gkebackup::v1::RestoreChannel>>
+  CreateRestoreChannel(
+      google::cloud::gkebackup::v1::CreateRestoreChannelRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateRestoreChannel
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateRestoreChannel(
+      NoAwaitTag,
+      google::cloud::gkebackup::v1::CreateRestoreChannelRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateRestoreChannel
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::gkebackup::v1::RestoreChannel>>
+  CreateRestoreChannel(google::longrunning::Operation const& operation,
+                       Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists RestoreChannels in a given location.
+  ///
+  /// @param parent  Required. The location that contains the RestoreChannels to list.
+  ///  Format: `projects/*/locations/*`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.gkebackup.v1.RestoreChannel], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkebackup.v1.ListRestoreChannelsRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L1177}
+  /// [google.cloud.gkebackup.v1.RestoreChannel]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore_channel.proto#L36}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::gkebackup::v1::RestoreChannel> ListRestoreChannels(
+      std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists RestoreChannels in a given location.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.gkebackup.v1.ListRestoreChannelsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.gkebackup.v1.RestoreChannel], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkebackup.v1.ListRestoreChannelsRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L1177}
+  /// [google.cloud.gkebackup.v1.RestoreChannel]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore_channel.proto#L36}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::gkebackup::v1::RestoreChannel> ListRestoreChannels(
+      google::cloud::gkebackup::v1::ListRestoreChannelsRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Retrieve the details of a single RestoreChannel.
+  ///
+  /// @param name  Required. Fully qualified RestoreChannel name.
+  ///  Format: `projects/*/locations/*/restoreChannels/*`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.gkebackup.v1.RestoreChannel])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkebackup.v1.GetRestoreChannelRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L1228}
+  /// [google.cloud.gkebackup.v1.RestoreChannel]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore_channel.proto#L36}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::gkebackup::v1::RestoreChannel> GetRestoreChannel(
+      std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Retrieve the details of a single RestoreChannel.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.gkebackup.v1.GetRestoreChannelRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.gkebackup.v1.RestoreChannel])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkebackup.v1.GetRestoreChannelRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L1228}
+  /// [google.cloud.gkebackup.v1.RestoreChannel]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore_channel.proto#L36}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::gkebackup::v1::RestoreChannel> GetRestoreChannel(
+      google::cloud::gkebackup::v1::GetRestoreChannelRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Update a RestoreChannel.
+  ///
+  /// @param restore_channel  Required. A new version of the RestoreChannel resource that contains
+  ///  updated fields. This may be sparsely populated if an `update_mask` is
+  ///  provided.
+  /// @param update_mask  Optional. This is used to specify the fields to be overwritten in the
+  ///  RestoreChannel targeted for update. The values for each of these
+  ///  updated fields will be taken from the `restore_channel` provided
+  ///  with this request. Field names are relative to the root of the resource
+  ///  (e.g., `description`, `destination_project_id`, etc.)
+  ///  If no `update_mask` is provided, all fields in `restore_channel` will
+  ///  be written to the target RestoreChannel resource. Note that
+  ///  OUTPUT_ONLY and IMMUTABLE fields in `restore_channel` are ignored and
+  ///  are not used to update the target RestoreChannel.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.gkebackup.v1.RestoreChannel] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkebackup.v1.RestoreChannel]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore_channel.proto#L36}
+  /// [google.cloud.gkebackup.v1.UpdateRestoreChannelRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L1240}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::gkebackup::v1::RestoreChannel>>
+  UpdateRestoreChannel(
+      google::cloud::gkebackup::v1::RestoreChannel const& restore_channel,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateRestoreChannel
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UpdateRestoreChannel(
+      NoAwaitTag,
+      google::cloud::gkebackup::v1::RestoreChannel const& restore_channel,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Update a RestoreChannel.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.gkebackup.v1.UpdateRestoreChannelRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.gkebackup.v1.RestoreChannel] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkebackup.v1.RestoreChannel]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore_channel.proto#L36}
+  /// [google.cloud.gkebackup.v1.UpdateRestoreChannelRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L1240}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::gkebackup::v1::RestoreChannel>>
+  UpdateRestoreChannel(
+      google::cloud::gkebackup::v1::UpdateRestoreChannelRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateRestoreChannel
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UpdateRestoreChannel(
+      NoAwaitTag,
+      google::cloud::gkebackup::v1::UpdateRestoreChannelRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateRestoreChannel
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::gkebackup::v1::RestoreChannel>>
+  UpdateRestoreChannel(google::longrunning::Operation const& operation,
+                       Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes an existing RestoreChannel.
+  ///
+  /// @param name  Required. Fully qualified RestoreChannel name.
+  ///  Format: `projects/*/locations/*/restoreChannels/*`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.gkebackup.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkebackup.v1.DeleteRestoreChannelRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L1260}
+  /// [google.cloud.gkebackup.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L487}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
+  DeleteRestoreChannel(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteRestoreChannel
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteRestoreChannel(
+      NoAwaitTag, std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes an existing RestoreChannel.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.gkebackup.v1.DeleteRestoreChannelRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.gkebackup.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkebackup.v1.DeleteRestoreChannelRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L1260}
+  /// [google.cloud.gkebackup.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L487}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
+  DeleteRestoreChannel(
+      google::cloud::gkebackup::v1::DeleteRestoreChannelRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteRestoreChannel
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteRestoreChannel(
+      NoAwaitTag,
+      google::cloud::gkebackup::v1::DeleteRestoreChannelRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteRestoreChannel
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
+  DeleteRestoreChannel(google::longrunning::Operation const& operation,
+                       Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists RestorePlanBindings in a given location.
+  ///
+  /// @param parent  Required. The RestoreChannel that contains the ListRestorePlanBindings to
+  ///  list. Format: `projects/*/locations/*/restoreChannels/*`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.gkebackup.v1.RestorePlanBinding], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkebackup.v1.ListRestorePlanBindingsRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L1278}
+  /// [google.cloud.gkebackup.v1.RestorePlanBinding]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore_plan_binding.proto#L36}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::gkebackup::v1::RestorePlanBinding>
+  ListRestorePlanBindings(std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists RestorePlanBindings in a given location.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.gkebackup.v1.ListRestorePlanBindingsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.gkebackup.v1.RestorePlanBinding], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkebackup.v1.ListRestorePlanBindingsRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L1278}
+  /// [google.cloud.gkebackup.v1.RestorePlanBinding]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore_plan_binding.proto#L36}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::gkebackup::v1::RestorePlanBinding>
+  ListRestorePlanBindings(
+      google::cloud::gkebackup::v1::ListRestorePlanBindingsRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Retrieve the details of a single RestorePlanBinding.
+  ///
+  /// @param name  Required. Fully qualified RestorePlanBinding name.
+  ///  Format:
+  ///  `projects/*/locations/*/restoreChannels/*/restorePlanBindings/*`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.gkebackup.v1.RestorePlanBinding])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkebackup.v1.GetRestorePlanBindingRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L1330}
+  /// [google.cloud.gkebackup.v1.RestorePlanBinding]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore_plan_binding.proto#L36}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::gkebackup::v1::RestorePlanBinding>
+  GetRestorePlanBinding(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Retrieve the details of a single RestorePlanBinding.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.gkebackup.v1.GetRestorePlanBindingRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.gkebackup.v1.RestorePlanBinding])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkebackup.v1.GetRestorePlanBindingRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L1330}
+  /// [google.cloud.gkebackup.v1.RestorePlanBinding]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore_plan_binding.proto#L36}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::gkebackup::v1::RestorePlanBinding>
+  GetRestorePlanBinding(
+      google::cloud::gkebackup::v1::GetRestorePlanBindingRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
   /// Creates a new Restore for the given RestorePlan.
   ///
   /// @param parent  Required. The RestorePlan within which to create the Restore.
@@ -1745,7 +3026,7 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.CreateRestoreRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L791}
+  /// [google.cloud.gkebackup.v1.CreateRestoreRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L1343}
   /// [google.cloud.gkebackup.v1.Restore]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore.proto#L34}
   ///
   // clang-format on
@@ -1800,7 +3081,7 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.CreateRestoreRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L791}
+  /// [google.cloud.gkebackup.v1.CreateRestoreRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L1343}
   /// [google.cloud.gkebackup.v1.Restore]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore.proto#L34}
   ///
   // clang-format on
@@ -1864,7 +3145,7 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.ListRestoresRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L816}
+  /// [google.cloud.gkebackup.v1.ListRestoresRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L1368}
   /// [google.cloud.gkebackup.v1.Restore]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore.proto#L34}
   ///
   // clang-format on
@@ -1903,7 +3184,7 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.ListRestoresRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L816}
+  /// [google.cloud.gkebackup.v1.ListRestoresRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L1368}
   /// [google.cloud.gkebackup.v1.Restore]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore.proto#L34}
   ///
   // clang-format on
@@ -1930,7 +3211,7 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.GetRestoreRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L865}
+  /// [google.cloud.gkebackup.v1.GetRestoreRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L1417}
   /// [google.cloud.gkebackup.v1.Restore]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore.proto#L34}
   ///
   // clang-format on
@@ -1960,7 +3241,7 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.GetRestoreRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L865}
+  /// [google.cloud.gkebackup.v1.GetRestoreRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L1417}
   /// [google.cloud.gkebackup.v1.Restore]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore.proto#L34}
   ///
   // clang-format on
@@ -2003,7 +3284,7 @@ class BackupForGKEClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkebackup.v1.Restore]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore.proto#L34}
-  /// [google.cloud.gkebackup.v1.UpdateRestoreRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L877}
+  /// [google.cloud.gkebackup.v1.UpdateRestoreRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L1429}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::Restore>> UpdateRestore(
@@ -2056,7 +3337,7 @@ class BackupForGKEClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkebackup.v1.Restore]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore.proto#L34}
-  /// [google.cloud.gkebackup.v1.UpdateRestoreRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L877}
+  /// [google.cloud.gkebackup.v1.UpdateRestoreRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L1429}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::Restore>> UpdateRestore(
@@ -2117,8 +3398,8 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.DeleteRestoreRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L895}
-  /// [google.cloud.gkebackup.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L329}
+  /// [google.cloud.gkebackup.v1.DeleteRestoreRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L1447}
+  /// [google.cloud.gkebackup.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L487}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
@@ -2168,8 +3449,8 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.DeleteRestoreRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L895}
-  /// [google.cloud.gkebackup.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L329}
+  /// [google.cloud.gkebackup.v1.DeleteRestoreRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L1447}
+  /// [google.cloud.gkebackup.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L487}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
@@ -2234,8 +3515,8 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.ListVolumeRestoresRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L917}
-  /// [google.cloud.gkebackup.v1.VolumeRestore]: @googleapis_reference_link{google/cloud/gkebackup/v1/volume.proto#L141}
+  /// [google.cloud.gkebackup.v1.ListVolumeRestoresRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L1469}
+  /// [google.cloud.gkebackup.v1.VolumeRestore]: @googleapis_reference_link{google/cloud/gkebackup/v1/volume.proto#L153}
   ///
   // clang-format on
   StreamRange<google::cloud::gkebackup::v1::VolumeRestore> ListVolumeRestores(
@@ -2273,8 +3554,8 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.ListVolumeRestoresRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L917}
-  /// [google.cloud.gkebackup.v1.VolumeRestore]: @googleapis_reference_link{google/cloud/gkebackup/v1/volume.proto#L141}
+  /// [google.cloud.gkebackup.v1.ListVolumeRestoresRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L1469}
+  /// [google.cloud.gkebackup.v1.VolumeRestore]: @googleapis_reference_link{google/cloud/gkebackup/v1/volume.proto#L153}
   ///
   // clang-format on
   StreamRange<google::cloud::gkebackup::v1::VolumeRestore> ListVolumeRestores(
@@ -2300,8 +3581,8 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.GetVolumeRestoreRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L964}
-  /// [google.cloud.gkebackup.v1.VolumeRestore]: @googleapis_reference_link{google/cloud/gkebackup/v1/volume.proto#L141}
+  /// [google.cloud.gkebackup.v1.GetVolumeRestoreRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L1516}
+  /// [google.cloud.gkebackup.v1.VolumeRestore]: @googleapis_reference_link{google/cloud/gkebackup/v1/volume.proto#L153}
   ///
   // clang-format on
   StatusOr<google::cloud::gkebackup::v1::VolumeRestore> GetVolumeRestore(
@@ -2330,8 +3611,8 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.GetVolumeRestoreRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L964}
-  /// [google.cloud.gkebackup.v1.VolumeRestore]: @googleapis_reference_link{google/cloud/gkebackup/v1/volume.proto#L141}
+  /// [google.cloud.gkebackup.v1.GetVolumeRestoreRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L1516}
+  /// [google.cloud.gkebackup.v1.VolumeRestore]: @googleapis_reference_link{google/cloud/gkebackup/v1/volume.proto#L153}
   ///
   // clang-format on
   StatusOr<google::cloud::gkebackup::v1::VolumeRestore> GetVolumeRestore(
@@ -2358,8 +3639,8 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.GetBackupIndexDownloadUrlRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L976}
-  /// [google.cloud.gkebackup.v1.GetBackupIndexDownloadUrlResponse]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L989}
+  /// [google.cloud.gkebackup.v1.GetBackupIndexDownloadUrlRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L1528}
+  /// [google.cloud.gkebackup.v1.GetBackupIndexDownloadUrlResponse]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L1541}
   ///
   // clang-format on
   StatusOr<google::cloud::gkebackup::v1::GetBackupIndexDownloadUrlResponse>
@@ -2388,8 +3669,8 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.GetBackupIndexDownloadUrlRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L976}
-  /// [google.cloud.gkebackup.v1.GetBackupIndexDownloadUrlResponse]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L989}
+  /// [google.cloud.gkebackup.v1.GetBackupIndexDownloadUrlRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L1528}
+  /// [google.cloud.gkebackup.v1.GetBackupIndexDownloadUrlResponse]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L1541}
   ///
   // clang-format on
   StatusOr<google::cloud::gkebackup::v1::GetBackupIndexDownloadUrlResponse>
@@ -2575,14 +3856,6 @@ class BackupForGKEClient {
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
   ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
-  ///
   /// @param name  The name of the operation's parent resource.
   /// @param filter  The standard list filter.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -2607,8 +3880,8 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StreamRange<google::longrunning::Operation> ListOperations(
@@ -2618,14 +3891,6 @@ class BackupForGKEClient {
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -2655,8 +3920,8 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StreamRange<google::longrunning::Operation> ListOperations(
@@ -2682,8 +3947,8 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
@@ -2714,8 +3979,8 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> GetOperation(
@@ -2741,7 +4006,7 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L201}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
   Status DeleteOperation(std::string const& name, Options opts = {});
@@ -2770,7 +4035,7 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L201}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
   Status DeleteOperation(
@@ -2787,8 +4052,9 @@ class BackupForGKEClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param name  The name of the operation resource to be cancelled.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -2802,9 +4068,9 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
@@ -2820,8 +4086,9 @@ class BackupForGKEClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -2840,9 +4107,9 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on

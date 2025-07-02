@@ -813,7 +813,7 @@ class ArtifactRegistryClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.artifactregistry.v1.ListRepositoriesRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L657}
+  /// [google.devtools.artifactregistry.v1.ListRepositoriesRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L661}
   /// [google.devtools.artifactregistry.v1.Repository]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L426}
   ///
   // clang-format on
@@ -852,7 +852,7 @@ class ArtifactRegistryClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.artifactregistry.v1.ListRepositoriesRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L657}
+  /// [google.devtools.artifactregistry.v1.ListRepositoriesRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L661}
   /// [google.devtools.artifactregistry.v1.Repository]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L426}
   ///
   // clang-format on
@@ -879,7 +879,7 @@ class ArtifactRegistryClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.artifactregistry.v1.GetRepositoryRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L709}
+  /// [google.devtools.artifactregistry.v1.GetRepositoryRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L713}
   /// [google.devtools.artifactregistry.v1.Repository]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L426}
   ///
   // clang-format on
@@ -909,7 +909,7 @@ class ArtifactRegistryClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.artifactregistry.v1.GetRepositoryRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L709}
+  /// [google.devtools.artifactregistry.v1.GetRepositoryRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L713}
   /// [google.devtools.artifactregistry.v1.Repository]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L426}
   ///
   // clang-format on
@@ -947,7 +947,7 @@ class ArtifactRegistryClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.artifactregistry.v1.CreateRepositoryRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L720}
+  /// [google.devtools.artifactregistry.v1.CreateRepositoryRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L724}
   /// [google.devtools.artifactregistry.v1.Repository]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L426}
   ///
   // clang-format on
@@ -1004,7 +1004,7 @@ class ArtifactRegistryClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.artifactregistry.v1.CreateRepositoryRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L720}
+  /// [google.devtools.artifactregistry.v1.CreateRepositoryRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L724}
   /// [google.devtools.artifactregistry.v1.Repository]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L426}
   ///
   // clang-format on
@@ -1066,7 +1066,7 @@ class ArtifactRegistryClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.devtools.artifactregistry.v1.Repository]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L426}
-  /// [google.devtools.artifactregistry.v1.UpdateRepositoryRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L738}
+  /// [google.devtools.artifactregistry.v1.UpdateRepositoryRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L742}
   ///
   // clang-format on
   StatusOr<google::devtools::artifactregistry::v1::Repository> UpdateRepository(
@@ -1097,7 +1097,7 @@ class ArtifactRegistryClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.devtools.artifactregistry.v1.Repository]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L426}
-  /// [google.devtools.artifactregistry.v1.UpdateRepositoryRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L738}
+  /// [google.devtools.artifactregistry.v1.UpdateRepositoryRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L742}
   ///
   // clang-format on
   StatusOr<google::devtools::artifactregistry::v1::Repository> UpdateRepository(
@@ -1132,7 +1132,7 @@ class ArtifactRegistryClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.artifactregistry.v1.DeleteRepositoryRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L749}
+  /// [google.devtools.artifactregistry.v1.DeleteRepositoryRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L753}
   /// [google.devtools.artifactregistry.v1.OperationMetadata]: @googleapis_reference_link{google/devtools/artifactregistry/v1/service.proto#L547}
   ///
   // clang-format on
@@ -1185,7 +1185,7 @@ class ArtifactRegistryClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.artifactregistry.v1.DeleteRepositoryRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L749}
+  /// [google.devtools.artifactregistry.v1.DeleteRepositoryRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L753}
   /// [google.devtools.artifactregistry.v1.OperationMetadata]: @googleapis_reference_link{google/devtools/artifactregistry/v1/service.proto#L547}
   ///
   // clang-format on
@@ -1728,7 +1728,8 @@ class ArtifactRegistryClient {
   ///
   /// @param parent  The name of the repository holding all requested versions.
   /// @param names  Required. The names of the versions to delete.
-  ///  A maximum of 10000 versions can be deleted in a batch.
+  ///  The maximum number of versions deleted per batch is determined by the
+  ///  service and is dependent on the available resources in the region.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO
@@ -1749,7 +1750,7 @@ class ArtifactRegistryClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.artifactregistry.v1.BatchDeleteVersionsMetadata]: @googleapis_reference_link{google/devtools/artifactregistry/v1/version.proto#L203}
+  /// [google.devtools.artifactregistry.v1.BatchDeleteVersionsMetadata]: @googleapis_reference_link{google/devtools/artifactregistry/v1/version.proto#L204}
   /// [google.devtools.artifactregistry.v1.BatchDeleteVersionsRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/version.proto#L183}
   ///
   // clang-format on
@@ -1804,7 +1805,7 @@ class ArtifactRegistryClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.artifactregistry.v1.BatchDeleteVersionsMetadata]: @googleapis_reference_link{google/devtools/artifactregistry/v1/version.proto#L203}
+  /// [google.devtools.artifactregistry.v1.BatchDeleteVersionsMetadata]: @googleapis_reference_link{google/devtools/artifactregistry/v1/version.proto#L204}
   /// [google.devtools.artifactregistry.v1.BatchDeleteVersionsRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/version.proto#L183}
   ///
   // clang-format on
@@ -1867,7 +1868,7 @@ class ArtifactRegistryClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.artifactregistry.v1.UpdateVersionRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/version.proto#L209}
+  /// [google.devtools.artifactregistry.v1.UpdateVersionRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/version.proto#L210}
   /// [google.devtools.artifactregistry.v1.Version]: @googleapis_reference_link{google/devtools/artifactregistry/v1/version.proto#L51}
   ///
   // clang-format on
@@ -1898,7 +1899,7 @@ class ArtifactRegistryClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.artifactregistry.v1.UpdateVersionRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/version.proto#L209}
+  /// [google.devtools.artifactregistry.v1.UpdateVersionRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/version.proto#L210}
   /// [google.devtools.artifactregistry.v1.Version]: @googleapis_reference_link{google/devtools/artifactregistry/v1/version.proto#L51}
   ///
   // clang-format on
@@ -3676,8 +3677,8 @@ class ArtifactRegistryClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
@@ -3708,8 +3709,8 @@ class ArtifactRegistryClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> GetOperation(

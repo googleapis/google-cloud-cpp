@@ -1683,6 +1683,99 @@ BackupDRConnectionImpl::TriggerBackup(
       polling_policy(*current), __func__);
 }
 
+future<StatusOr<google::cloud::backupdr::v1::InitializeServiceResponse>>
+BackupDRConnectionImpl::InitializeService(
+    google::cloud::backupdr::v1::InitializeServiceRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->InitializeService(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::backupdr::v1::InitializeServiceResponse>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::backupdr::v1::InitializeServiceRequest const&
+              request) {
+        return stub->AsyncInitializeService(cq, std::move(context),
+                                            std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::backupdr::v1::InitializeServiceResponse>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+BackupDRConnectionImpl::InitializeService(
+    NoAwaitTag,
+    google::cloud::backupdr::v1::InitializeServiceRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->InitializeService(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::backupdr::v1::InitializeServiceRequest const&
+                 request) {
+        return stub_->InitializeService(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::backupdr::v1::InitializeServiceResponse>>
+BackupDRConnectionImpl::InitializeService(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::backupdr::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::backupdr::v1::InitializeServiceResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to InitializeService",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::backupdr::v1::InitializeServiceResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::backupdr::v1::InitializeServiceResponse>,
+      polling_policy(*current), __func__);
+}
+
 StreamRange<google::cloud::location::Location>
 BackupDRConnectionImpl::ListLocations(
     google::cloud::location::ListLocationsRequest request) {

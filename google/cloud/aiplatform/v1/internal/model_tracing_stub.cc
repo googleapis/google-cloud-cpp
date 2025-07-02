@@ -93,6 +93,20 @@ ModelServiceTracingStub::ListModelVersions(
       context, *span, child_->ListModelVersions(context, options, request));
 }
 
+StatusOr<google::cloud::aiplatform::v1::ListModelVersionCheckpointsResponse>
+ModelServiceTracingStub::ListModelVersionCheckpoints(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::aiplatform::v1::ListModelVersionCheckpointsRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.ModelService",
+                                     "ListModelVersionCheckpoints");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->ListModelVersionCheckpoints(context, options, request));
+}
+
 StatusOr<google::cloud::aiplatform::v1::Model>
 ModelServiceTracingStub::UpdateModel(
     grpc::ClientContext& context, Options const& options,

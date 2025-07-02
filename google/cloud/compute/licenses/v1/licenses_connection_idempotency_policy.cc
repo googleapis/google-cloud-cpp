@@ -70,6 +70,11 @@ Idempotency LicensesConnectionIdempotencyPolicy::TestIamPermissions(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency LicensesConnectionIdempotencyPolicy::UpdateLicense(
+    google::cloud::cpp::compute::licenses::v1::UpdateLicenseRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<LicensesConnectionIdempotencyPolicy>
 MakeDefaultLicensesConnectionIdempotencyPolicy() {
   return std::make_unique<LicensesConnectionIdempotencyPolicy>();

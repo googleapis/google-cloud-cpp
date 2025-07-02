@@ -34,7 +34,6 @@ project.
 - @ref storage-auth-example
 - @ref storage-retry-examples
 - @ref storage-mocking shows how to write tests mocking the [Client] class
-<!-- @ref storage-grpc "Using the GCS+gRPC plugin" -->
 - The [Setting up your development environment] guide describes how to set up
   a C++ development environment in various platforms, including the Google Cloud
   C++ client libraries.
@@ -50,7 +49,7 @@ project.
 [resource-link]: https://console.cloud.google.com/cloud-resource-manager 'Console Resource Manager'
 [billing-link]: https://cloud.google.com/billing/docs/how-to/modify-project 'How to: Modify Project'
 [concepts-link]: https://cloud.google.com/storage/docs/concepts 'GCS Concepts'
-[authentication-quickstart]: https://cloud.google.com/docs/authentication/getting-started 'Authentication Getting Started'
+[authentication-quickstart]: https://cloud.google.com/docs/authentication/client-libraries 'Authenticate for using client libraries'
 [gcloud-quickstart]: https://cloud.google.com/sdk/docs/quickstarts
 [bucket-definition-link]: https://cloud.google.com/storage/docs/key-terms#buckets
 [object-definition-link]: https://cloud.google.com/storage/docs/key-terms#objects

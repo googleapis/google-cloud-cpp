@@ -275,9 +275,9 @@ TEST_F(SubscriberIntegrationTest, StreamingSubscriptionBatchSource) {
           background.cq(), shutdown, stub, subscription_.FullName(),
           "test-client-0001",
           pubsub_internal::DefaultSubscriberOptions(
-              pubsub_testing::MakeTestOptions(
-                  Options{}.set<MaxDeadlineTimeOption>(
-                      std::chrono::seconds(300)))));
+              "", pubsub_testing::MakeTestOptions(
+                      Options{}.set<MaxDeadlineTimeOption>(
+                          std::chrono::seconds(300)))));
 
   // This must be declared after `source` as it captures it and uses it to send
   // back acknowledgements.

@@ -49,6 +49,10 @@ class ContainerAnalysisConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency GetVulnerabilityOccurrencesSummary(
       google::devtools::containeranalysis::v1::
           GetVulnerabilityOccurrencesSummaryRequest const& request);
+
+  virtual google::cloud::Idempotency ExportSBOM(
+      google::devtools::containeranalysis::v1::ExportSBOMRequest const&
+          request);
 };
 
 std::unique_ptr<ContainerAnalysisConnectionIdempotencyPolicy>

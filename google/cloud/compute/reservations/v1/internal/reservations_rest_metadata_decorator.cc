@@ -117,6 +117,27 @@ ReservationsRestMetadata::ListReservations(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ReservationsRestMetadata::AsyncPerformMaintenance(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::reservations::v1::
+        PerformMaintenanceRequest const& request) {
+  SetMetadata(*rest_context, *options);
+  return child_->AsyncPerformMaintenance(cq, std::move(rest_context),
+                                         std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ReservationsRestMetadata::PerformMaintenance(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::reservations::v1::
+        PerformMaintenanceRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->PerformMaintenance(rest_context, options, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ReservationsRestMetadata::AsyncResize(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,

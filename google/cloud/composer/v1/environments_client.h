@@ -116,7 +116,7 @@ class EnvironmentsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.orchestration.airflow.service.v1.CreateEnvironmentRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L328}
-  /// [google.cloud.orchestration.airflow.service.v1.Environment]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1886}
+  /// [google.cloud.orchestration.airflow.service.v1.Environment]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1902}
   ///
   // clang-format on
   future<
@@ -175,7 +175,7 @@ class EnvironmentsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.orchestration.airflow.service.v1.CreateEnvironmentRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L328}
-  /// [google.cloud.orchestration.airflow.service.v1.Environment]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1886}
+  /// [google.cloud.orchestration.airflow.service.v1.Environment]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1902}
   ///
   // clang-format on
   future<
@@ -234,7 +234,7 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.orchestration.airflow.service.v1.Environment]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1886}
+  /// [google.cloud.orchestration.airflow.service.v1.Environment]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1902}
   /// [google.cloud.orchestration.airflow.service.v1.GetEnvironmentRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L338}
   ///
   // clang-format on
@@ -264,7 +264,7 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.orchestration.airflow.service.v1.Environment]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1886}
+  /// [google.cloud.orchestration.airflow.service.v1.Environment]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1902}
   /// [google.cloud.orchestration.airflow.service.v1.GetEnvironmentRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L338}
   ///
   // clang-format on
@@ -301,7 +301,7 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.orchestration.airflow.service.v1.Environment]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1886}
+  /// [google.cloud.orchestration.airflow.service.v1.Environment]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1902}
   /// [google.cloud.orchestration.airflow.service.v1.ListEnvironmentsRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L345}
   ///
   // clang-format on
@@ -340,7 +340,7 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.orchestration.airflow.service.v1.Environment]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1886}
+  /// [google.cloud.orchestration.airflow.service.v1.Environment]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1902}
   /// [google.cloud.orchestration.airflow.service.v1.ListEnvironmentsRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L345}
   ///
   // clang-format on
@@ -386,7 +386,7 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.orchestration.airflow.service.v1.Environment]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1886}
+  /// [google.cloud.orchestration.airflow.service.v1.Environment]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1902}
   /// [google.cloud.orchestration.airflow.service.v1.UpdateEnvironmentRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L374}
   ///
   // clang-format on
@@ -445,7 +445,7 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.orchestration.airflow.service.v1.Environment]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1886}
+  /// [google.cloud.orchestration.airflow.service.v1.Environment]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1902}
   /// [google.cloud.orchestration.airflow.service.v1.UpdateEnvironmentRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L374}
   ///
   // clang-format on
@@ -710,7 +710,7 @@ class EnvironmentsClient {
   /// runs a single Composer component.
   ///
   /// This method is supported for Cloud Composer environments in versions
-  /// composer-3.*.*-airflow-*.*.* and newer.
+  /// composer-2.*.*-airflow-*.*.* and newer.
   ///
   /// @param parent  Required. The environment name to get workloads for, in the form:
   ///  "projects/{projectId}/locations/{locationId}/environments/{environmentId}"
@@ -736,8 +736,8 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.orchestration.airflow.service.v1.ListWorkloadsRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L814}
-  /// [google.cloud.orchestration.airflow.service.v1.ListWorkloadsResponse.ComposerWorkload]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L843}
+  /// [google.cloud.orchestration.airflow.service.v1.ListWorkloadsRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L828}
+  /// [google.cloud.orchestration.airflow.service.v1.ListWorkloadsResponse.ComposerWorkload]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L857}
   ///
   // clang-format on
   StreamRange<google::cloud::orchestration::airflow::service::v1::
@@ -750,7 +750,7 @@ class EnvironmentsClient {
   /// runs a single Composer component.
   ///
   /// This method is supported for Cloud Composer environments in versions
-  /// composer-3.*.*-airflow-*.*.* and newer.
+  /// composer-2.*.*-airflow-*.*.* and newer.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -780,8 +780,8 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.orchestration.airflow.service.v1.ListWorkloadsRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L814}
-  /// [google.cloud.orchestration.airflow.service.v1.ListWorkloadsResponse.ComposerWorkload]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L843}
+  /// [google.cloud.orchestration.airflow.service.v1.ListWorkloadsRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L828}
+  /// [google.cloud.orchestration.airflow.service.v1.ListWorkloadsResponse.ComposerWorkload]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L857}
   ///
   // clang-format on
   StreamRange<google::cloud::orchestration::airflow::service::v1::
@@ -823,8 +823,8 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.orchestration.airflow.service.v1.CheckUpgradeRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1958}
-  /// [google.cloud.orchestration.airflow.service.v1.CheckUpgradeResponse]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1993}
+  /// [google.cloud.orchestration.airflow.service.v1.CheckUpgradeRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1974}
+  /// [google.cloud.orchestration.airflow.service.v1.CheckUpgradeResponse]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L2009}
   ///
   // clang-format on
   future<StatusOr<
@@ -869,7 +869,7 @@ class EnvironmentsClient {
   /// Creates a user workloads Secret.
   ///
   /// This method is supported for Cloud Composer environments in versions
-  /// composer-3.*.*-airflow-*.*.* and newer.
+  /// composer-3-airflow-*.*.*-build.* and newer.
   ///
   /// @param parent  Required. The environment name to create a Secret for, in the form:
   ///  "projects/{projectId}/locations/{locationId}/environments/{environmentId}"
@@ -904,7 +904,7 @@ class EnvironmentsClient {
   /// Creates a user workloads Secret.
   ///
   /// This method is supported for Cloud Composer environments in versions
-  /// composer-3.*.*-airflow-*.*.* and newer.
+  /// composer-3-airflow-*.*.*-build.* and newer.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -941,7 +941,7 @@ class EnvironmentsClient {
   /// Values of the "data" field in the response are cleared.
   ///
   /// This method is supported for Cloud Composer environments in versions
-  /// composer-3.*.*-airflow-*.*.* and newer.
+  /// composer-3-airflow-*.*.*-build.* and newer.
   ///
   /// @param name  Required. The resource name of the Secret to get, in the form:
   ///  "projects/{projectId}/locations/{locationId}/environments/{environmentId}/userWorkloadsSecrets/{userWorkloadsSecretId}"
@@ -972,7 +972,7 @@ class EnvironmentsClient {
   /// Values of the "data" field in the response are cleared.
   ///
   /// This method is supported for Cloud Composer environments in versions
-  /// composer-3.*.*-airflow-*.*.* and newer.
+  /// composer-3-airflow-*.*.*-build.* and newer.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1008,7 +1008,7 @@ class EnvironmentsClient {
   /// Lists user workloads Secrets.
   ///
   /// This method is supported for Cloud Composer environments in versions
-  /// composer-3.*.*-airflow-*.*.* and newer.
+  /// composer-3-airflow-*.*.*-build.* and newer.
   ///
   /// @param parent  Required. List Secrets in the given environment, in the form:
   ///  "projects/{projectId}/locations/{locationId}/environments/{environmentId}"
@@ -1047,7 +1047,7 @@ class EnvironmentsClient {
   /// Lists user workloads Secrets.
   ///
   /// This method is supported for Cloud Composer environments in versions
-  /// composer-3.*.*-airflow-*.*.* and newer.
+  /// composer-3-airflow-*.*.*-build.* and newer.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1092,7 +1092,7 @@ class EnvironmentsClient {
   /// Updates a user workloads Secret.
   ///
   /// This method is supported for Cloud Composer environments in versions
-  /// composer-3.*.*-airflow-*.*.* and newer.
+  /// composer-3-airflow-*.*.*-build.* and newer.
   ///
   /// @param user_workloads_secret  Optional. User workloads Secret to override.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -1124,7 +1124,7 @@ class EnvironmentsClient {
   /// Updates a user workloads Secret.
   ///
   /// This method is supported for Cloud Composer environments in versions
-  /// composer-3.*.*-airflow-*.*.* and newer.
+  /// composer-3-airflow-*.*.*-build.* and newer.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1160,7 +1160,7 @@ class EnvironmentsClient {
   /// Deletes a user workloads Secret.
   ///
   /// This method is supported for Cloud Composer environments in versions
-  /// composer-3.*.*-airflow-*.*.* and newer.
+  /// composer-3-airflow-*.*.*-build.* and newer.
   ///
   /// @param name  Required. The Secret to delete, in the form:
   ///  "projects/{projectId}/locations/{locationId}/environments/{environmentId}/userWorkloadsSecrets/{userWorkloadsSecretId}"
@@ -1185,7 +1185,7 @@ class EnvironmentsClient {
   /// Deletes a user workloads Secret.
   ///
   /// This method is supported for Cloud Composer environments in versions
-  /// composer-3.*.*-airflow-*.*.* and newer.
+  /// composer-3-airflow-*.*.*-build.* and newer.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1217,7 +1217,7 @@ class EnvironmentsClient {
   /// Creates a user workloads ConfigMap.
   ///
   /// This method is supported for Cloud Composer environments in versions
-  /// composer-3.*.*-airflow-*.*.* and newer.
+  /// composer-3-airflow-*.*.*-build.* and newer.
   ///
   /// @param parent  Required. The environment name to create a ConfigMap for, in the form:
   ///  "projects/{projectId}/locations/{locationId}/environments/{environmentId}"
@@ -1236,7 +1236,7 @@ class EnvironmentsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.orchestration.airflow.service.v1.CreateUserWorkloadsConfigMapRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L689}
-  /// [google.cloud.orchestration.airflow.service.v1.UserWorkloadsConfigMap]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L786}
+  /// [google.cloud.orchestration.airflow.service.v1.UserWorkloadsConfigMap]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L793}
   ///
   // clang-format on
   StatusOr<google::cloud::orchestration::airflow::service::v1::
@@ -1252,7 +1252,7 @@ class EnvironmentsClient {
   /// Creates a user workloads ConfigMap.
   ///
   /// This method is supported for Cloud Composer environments in versions
-  /// composer-3.*.*-airflow-*.*.* and newer.
+  /// composer-3-airflow-*.*.*-build.* and newer.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1274,7 +1274,7 @@ class EnvironmentsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.orchestration.airflow.service.v1.CreateUserWorkloadsConfigMapRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L689}
-  /// [google.cloud.orchestration.airflow.service.v1.UserWorkloadsConfigMap]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L786}
+  /// [google.cloud.orchestration.airflow.service.v1.UserWorkloadsConfigMap]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L793}
   ///
   // clang-format on
   StatusOr<google::cloud::orchestration::airflow::service::v1::
@@ -1289,7 +1289,7 @@ class EnvironmentsClient {
   /// Gets an existing user workloads ConfigMap.
   ///
   /// This method is supported for Cloud Composer environments in versions
-  /// composer-3.*.*-airflow-*.*.* and newer.
+  /// composer-3-airflow-*.*.*-build.* and newer.
   ///
   /// @param name  Required. The resource name of the ConfigMap to get, in the form:
   ///  "projects/{projectId}/locations/{locationId}/environments/{environmentId}/userWorkloadsConfigMaps/{userWorkloadsConfigMapId}"
@@ -1307,7 +1307,7 @@ class EnvironmentsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.orchestration.airflow.service.v1.GetUserWorkloadsConfigMapRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L705}
-  /// [google.cloud.orchestration.airflow.service.v1.UserWorkloadsConfigMap]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L786}
+  /// [google.cloud.orchestration.airflow.service.v1.UserWorkloadsConfigMap]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L793}
   ///
   // clang-format on
   StatusOr<google::cloud::orchestration::airflow::service::v1::
@@ -1319,7 +1319,7 @@ class EnvironmentsClient {
   /// Gets an existing user workloads ConfigMap.
   ///
   /// This method is supported for Cloud Composer environments in versions
-  /// composer-3.*.*-airflow-*.*.* and newer.
+  /// composer-3-airflow-*.*.*-build.* and newer.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1341,7 +1341,7 @@ class EnvironmentsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.orchestration.airflow.service.v1.GetUserWorkloadsConfigMapRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L705}
-  /// [google.cloud.orchestration.airflow.service.v1.UserWorkloadsConfigMap]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L786}
+  /// [google.cloud.orchestration.airflow.service.v1.UserWorkloadsConfigMap]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L793}
   ///
   // clang-format on
   StatusOr<google::cloud::orchestration::airflow::service::v1::
@@ -1355,7 +1355,7 @@ class EnvironmentsClient {
   /// Lists user workloads ConfigMaps.
   ///
   /// This method is supported for Cloud Composer environments in versions
-  /// composer-3.*.*-airflow-*.*.* and newer.
+  /// composer-3-airflow-*.*.*-build.* and newer.
   ///
   /// @param parent  Required. List ConfigMaps in the given environment, in the form:
   ///  "projects/{projectId}/locations/{locationId}/environments/{environmentId}"
@@ -1382,7 +1382,7 @@ class EnvironmentsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.orchestration.airflow.service.v1.ListUserWorkloadsConfigMapsRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L717}
-  /// [google.cloud.orchestration.airflow.service.v1.UserWorkloadsConfigMap]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L786}
+  /// [google.cloud.orchestration.airflow.service.v1.UserWorkloadsConfigMap]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L793}
   ///
   // clang-format on
   StreamRange<google::cloud::orchestration::airflow::service::v1::
@@ -1394,7 +1394,7 @@ class EnvironmentsClient {
   /// Lists user workloads ConfigMaps.
   ///
   /// This method is supported for Cloud Composer environments in versions
-  /// composer-3.*.*-airflow-*.*.* and newer.
+  /// composer-3-airflow-*.*.*-build.* and newer.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1425,7 +1425,7 @@ class EnvironmentsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.orchestration.airflow.service.v1.ListUserWorkloadsConfigMapsRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L717}
-  /// [google.cloud.orchestration.airflow.service.v1.UserWorkloadsConfigMap]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L786}
+  /// [google.cloud.orchestration.airflow.service.v1.UserWorkloadsConfigMap]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L793}
   ///
   // clang-format on
   StreamRange<google::cloud::orchestration::airflow::service::v1::
@@ -1440,7 +1440,7 @@ class EnvironmentsClient {
   /// Updates a user workloads ConfigMap.
   ///
   /// This method is supported for Cloud Composer environments in versions
-  /// composer-3.*.*-airflow-*.*.* and newer.
+  /// composer-3-airflow-*.*.*-build.* and newer.
   ///
   /// @param user_workloads_config_map  Optional. User workloads ConfigMap to override.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -1457,7 +1457,7 @@ class EnvironmentsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.orchestration.airflow.service.v1.UpdateUserWorkloadsConfigMapRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L736}
-  /// [google.cloud.orchestration.airflow.service.v1.UserWorkloadsConfigMap]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L786}
+  /// [google.cloud.orchestration.airflow.service.v1.UserWorkloadsConfigMap]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L793}
   ///
   // clang-format on
   StatusOr<google::cloud::orchestration::airflow::service::v1::
@@ -1472,7 +1472,7 @@ class EnvironmentsClient {
   /// Updates a user workloads ConfigMap.
   ///
   /// This method is supported for Cloud Composer environments in versions
-  /// composer-3.*.*-airflow-*.*.* and newer.
+  /// composer-3-airflow-*.*.*-build.* and newer.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1494,7 +1494,7 @@ class EnvironmentsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.orchestration.airflow.service.v1.UpdateUserWorkloadsConfigMapRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L736}
-  /// [google.cloud.orchestration.airflow.service.v1.UserWorkloadsConfigMap]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L786}
+  /// [google.cloud.orchestration.airflow.service.v1.UserWorkloadsConfigMap]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L793}
   ///
   // clang-format on
   StatusOr<google::cloud::orchestration::airflow::service::v1::
@@ -1509,7 +1509,7 @@ class EnvironmentsClient {
   /// Deletes a user workloads ConfigMap.
   ///
   /// This method is supported for Cloud Composer environments in versions
-  /// composer-3.*.*-airflow-*.*.* and newer.
+  /// composer-3-airflow-*.*.*-build.* and newer.
   ///
   /// @param name  Required. The ConfigMap to delete, in the form:
   ///  "projects/{projectId}/locations/{locationId}/environments/{environmentId}/userWorkloadsConfigMaps/{userWorkloadsConfigMapId}"
@@ -1535,7 +1535,7 @@ class EnvironmentsClient {
   /// Deletes a user workloads ConfigMap.
   ///
   /// This method is supported for Cloud Composer environments in versions
-  /// composer-3.*.*-airflow-*.*.* and newer.
+  /// composer-3-airflow-*.*.*-build.* and newer.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1595,8 +1595,8 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.orchestration.airflow.service.v1.SaveSnapshotRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L930}
-  /// [google.cloud.orchestration.airflow.service.v1.SaveSnapshotResponse]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L941}
+  /// [google.cloud.orchestration.airflow.service.v1.SaveSnapshotRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L944}
+  /// [google.cloud.orchestration.airflow.service.v1.SaveSnapshotResponse]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L955}
   ///
   // clang-format on
   future<StatusOr<
@@ -1669,8 +1669,8 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.orchestration.airflow.service.v1.LoadSnapshotRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L950}
-  /// [google.cloud.orchestration.airflow.service.v1.LoadSnapshotResponse]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L977}
+  /// [google.cloud.orchestration.airflow.service.v1.LoadSnapshotRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L964}
+  /// [google.cloud.orchestration.airflow.service.v1.LoadSnapshotResponse]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L991}
   ///
   // clang-format on
   future<StatusOr<
@@ -1740,8 +1740,8 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.orchestration.airflow.service.v1.DatabaseFailoverRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L981}
-  /// [google.cloud.orchestration.airflow.service.v1.DatabaseFailoverResponse]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L988}
+  /// [google.cloud.orchestration.airflow.service.v1.DatabaseFailoverRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L995}
+  /// [google.cloud.orchestration.airflow.service.v1.DatabaseFailoverResponse]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1002}
   ///
   // clang-format on
   future<StatusOr<google::cloud::orchestration::airflow::service::v1::
@@ -1804,8 +1804,8 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.orchestration.airflow.service.v1.FetchDatabasePropertiesRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L991}
-  /// [google.cloud.orchestration.airflow.service.v1.FetchDatabasePropertiesResponse]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1003}
+  /// [google.cloud.orchestration.airflow.service.v1.FetchDatabasePropertiesRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1005}
+  /// [google.cloud.orchestration.airflow.service.v1.FetchDatabasePropertiesResponse]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1017}
   ///
   // clang-format on
   StatusOr<google::cloud::orchestration::airflow::service::v1::
@@ -1818,14 +1818,6 @@ class EnvironmentsClient {
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param name  The name of the operation's parent resource.
   /// @param filter  The standard list filter.
@@ -1851,8 +1843,8 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StreamRange<google::longrunning::Operation> ListOperations(
@@ -1862,14 +1854,6 @@ class EnvironmentsClient {
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1899,8 +1883,8 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StreamRange<google::longrunning::Operation> ListOperations(
@@ -1926,8 +1910,8 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
@@ -1958,8 +1942,8 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> GetOperation(
@@ -1985,7 +1969,7 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L201}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
   Status DeleteOperation(std::string const& name, Options opts = {});
@@ -2014,7 +1998,7 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L201}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
   Status DeleteOperation(

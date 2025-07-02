@@ -42,8 +42,8 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
   //     https://cloud.google.com/vpc/docs/private-google-access
   auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>(
       "private.googleapis.com");
-  auto client = google::cloud::gkeconnect_gateway_v1::GatewayControlClient(
-      google::cloud::gkeconnect_gateway_v1::MakeGatewayControlConnection(
+  auto vpc_client = google::cloud::gkeconnect_gateway_v1::GatewayControlClient(
+      google::cloud::gkeconnect_gateway_v1::MakeGatewayControlConnectionRest(
           options));
   //! [set-client-endpoint]
 }
@@ -84,7 +84,7 @@ void SetRetryPolicy(std::vector<std::string> const& argv) {
                              /*scaling=*/2.0)
                              .clone());
   auto connection =
-      google::cloud::gkeconnect_gateway_v1::MakeGatewayControlConnection(
+      google::cloud::gkeconnect_gateway_v1::MakeGatewayControlConnectionRest(
           options);
 
   // c1 and c2 share the same retry policies
@@ -124,7 +124,7 @@ void WithServiceAccount(std::vector<std::string> const& argv) {
         google::cloud::Options{}.set<google::cloud::UnifiedCredentialsOption>(
             google::cloud::MakeServiceAccountCredentials(contents));
     return google::cloud::gkeconnect_gateway_v1::GatewayControlClient(
-        google::cloud::gkeconnect_gateway_v1::MakeGatewayControlConnection(
+        google::cloud::gkeconnect_gateway_v1::MakeGatewayControlConnectionRest(
             options));
   }
   //! [with-service-account]

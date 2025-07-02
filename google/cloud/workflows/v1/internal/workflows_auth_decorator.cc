@@ -132,6 +132,15 @@ StatusOr<google::longrunning::Operation> WorkflowsAuth::UpdateWorkflow(
   return child_->UpdateWorkflow(context, options, request);
 }
 
+StatusOr<google::cloud::workflows::v1::ListWorkflowRevisionsResponse>
+WorkflowsAuth::ListWorkflowRevisions(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::workflows::v1::ListWorkflowRevisionsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListWorkflowRevisions(context, options, request);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 WorkflowsAuth::ListLocations(
     grpc::ClientContext& context, Options const& options,

@@ -591,8 +591,8 @@ class ProductServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.retail.v2.ImportProductsRequest]: @googleapis_reference_link{google/cloud/retail/v2/import_config.proto#L164}
-  /// [google.cloud.retail.v2.ImportProductsResponse]: @googleapis_reference_link{google/cloud/retail/v2/import_config.proto#L351}
+  /// [google.cloud.retail.v2.ImportProductsRequest]: @googleapis_reference_link{google/cloud/retail/v2/import_config.proto#L161}
+  /// [google.cloud.retail.v2.ImportProductsResponse]: @googleapis_reference_link{google/cloud/retail/v2/import_config.proto#L348}
   /// [google.cloud.retail.v2.Product]: @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
   ///
   // clang-format on
@@ -724,9 +724,9 @@ class ProductServiceClient {
   /// [google.cloud.retail.v2.SetInventoryRequest]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L588}
   /// [google.cloud.retail.v2.SetInventoryRequest.set_mask]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L656}
   /// [google.cloud.retail.v2.SetInventoryResponse]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L682}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
-  /// [google.longrunning.Operation.done]: @googleapis_reference_link{google/longrunning/operations.proto#L143}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
+  /// [google.longrunning.Operation.done]: @googleapis_reference_link{google/longrunning/operations.proto#L136}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   ///
   // clang-format on
   future<StatusOr<google::cloud::retail::v2::SetInventoryResponse>>
@@ -838,9 +838,9 @@ class ProductServiceClient {
   /// [google.cloud.retail.v2.SetInventoryRequest]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L588}
   /// [google.cloud.retail.v2.SetInventoryRequest.set_mask]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L656}
   /// [google.cloud.retail.v2.SetInventoryResponse]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L682}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
-  /// [google.longrunning.Operation.done]: @googleapis_reference_link{google/longrunning/operations.proto#L143}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
+  /// [google.longrunning.Operation.done]: @googleapis_reference_link{google/longrunning/operations.proto#L136}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   ///
   // clang-format on
   future<StatusOr<google::cloud::retail::v2::SetInventoryResponse>>
@@ -937,15 +937,15 @@ class ProductServiceClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.retail.v2.AddFulfillmentPlacesRequest]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L687}
   /// [google.cloud.retail.v2.AddFulfillmentPlacesResponse]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L763}
-  /// [google.cloud.retail.v2.FulfillmentInfo.place_ids]: @googleapis_reference_link{google/cloud/retail/v2/common.proto#L564}
+  /// [google.cloud.retail.v2.FulfillmentInfo.place_ids]: @googleapis_reference_link{google/cloud/retail/v2/common.proto#L614}
   /// [google.cloud.retail.v2.Product]: @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
   /// [google.cloud.retail.v2.ProductService.AddFulfillmentPlaces]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L229}
   /// [google.cloud.retail.v2.ProductService.AddLocalInventories]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L313}
   /// [google.cloud.retail.v2.ProductService.GetProduct]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L58}
   /// [google.cloud.retail.v2.ProductService.ListProducts]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L66}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
-  /// [google.longrunning.Operation.done]: @googleapis_reference_link{google/longrunning/operations.proto#L143}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
+  /// [google.longrunning.Operation.done]: @googleapis_reference_link{google/longrunning/operations.proto#L136}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   ///
   // clang-format on
   future<StatusOr<google::cloud::retail::v2::AddFulfillmentPlacesResponse>>
@@ -1026,15 +1026,15 @@ class ProductServiceClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.retail.v2.AddFulfillmentPlacesRequest]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L687}
   /// [google.cloud.retail.v2.AddFulfillmentPlacesResponse]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L763}
-  /// [google.cloud.retail.v2.FulfillmentInfo.place_ids]: @googleapis_reference_link{google/cloud/retail/v2/common.proto#L564}
+  /// [google.cloud.retail.v2.FulfillmentInfo.place_ids]: @googleapis_reference_link{google/cloud/retail/v2/common.proto#L614}
   /// [google.cloud.retail.v2.Product]: @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
   /// [google.cloud.retail.v2.ProductService.AddFulfillmentPlaces]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L229}
   /// [google.cloud.retail.v2.ProductService.AddLocalInventories]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L313}
   /// [google.cloud.retail.v2.ProductService.GetProduct]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L58}
   /// [google.cloud.retail.v2.ProductService.ListProducts]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L66}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
-  /// [google.longrunning.Operation.done]: @googleapis_reference_link{google/longrunning/operations.proto#L143}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
+  /// [google.longrunning.Operation.done]: @googleapis_reference_link{google/longrunning/operations.proto#L136}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   ///
   // clang-format on
   future<StatusOr<google::cloud::retail::v2::AddFulfillmentPlacesResponse>>
@@ -1131,7 +1131,7 @@ class ProductServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.retail.v2.FulfillmentInfo.place_ids]: @googleapis_reference_link{google/cloud/retail/v2/common.proto#L564}
+  /// [google.cloud.retail.v2.FulfillmentInfo.place_ids]: @googleapis_reference_link{google/cloud/retail/v2/common.proto#L614}
   /// [google.cloud.retail.v2.Product]: @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
   /// [google.cloud.retail.v2.ProductService.GetProduct]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L58}
   /// [google.cloud.retail.v2.ProductService.ListProducts]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L66}
@@ -1139,9 +1139,9 @@ class ProductServiceClient {
   /// [google.cloud.retail.v2.ProductService.RemoveLocalInventories]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L352}
   /// [google.cloud.retail.v2.RemoveFulfillmentPlacesRequest]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L882}
   /// [google.cloud.retail.v2.RemoveFulfillmentPlacesResponse]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L953}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
-  /// [google.longrunning.Operation.done]: @googleapis_reference_link{google/longrunning/operations.proto#L143}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
+  /// [google.longrunning.Operation.done]: @googleapis_reference_link{google/longrunning/operations.proto#L136}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   ///
   // clang-format on
   future<StatusOr<google::cloud::retail::v2::RemoveFulfillmentPlacesResponse>>
@@ -1220,7 +1220,7 @@ class ProductServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.retail.v2.FulfillmentInfo.place_ids]: @googleapis_reference_link{google/cloud/retail/v2/common.proto#L564}
+  /// [google.cloud.retail.v2.FulfillmentInfo.place_ids]: @googleapis_reference_link{google/cloud/retail/v2/common.proto#L614}
   /// [google.cloud.retail.v2.Product]: @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
   /// [google.cloud.retail.v2.ProductService.GetProduct]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L58}
   /// [google.cloud.retail.v2.ProductService.ListProducts]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L66}
@@ -1228,9 +1228,9 @@ class ProductServiceClient {
   /// [google.cloud.retail.v2.ProductService.RemoveLocalInventories]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L352}
   /// [google.cloud.retail.v2.RemoveFulfillmentPlacesRequest]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L882}
   /// [google.cloud.retail.v2.RemoveFulfillmentPlacesResponse]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L953}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
-  /// [google.longrunning.Operation.done]: @googleapis_reference_link{google/longrunning/operations.proto#L143}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
+  /// [google.longrunning.Operation.done]: @googleapis_reference_link{google/longrunning/operations.proto#L136}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   ///
   // clang-format on
   future<StatusOr<google::cloud::retail::v2::RemoveFulfillmentPlacesResponse>>
@@ -1332,9 +1332,9 @@ class ProductServiceClient {
   /// [google.cloud.retail.v2.ProductService.GetProduct]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L58}
   /// [google.cloud.retail.v2.ProductService.ListProducts]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L66}
   /// [google.cloud.retail.v2.ProductService.UpdateProduct]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L74}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
-  /// [google.longrunning.Operation.done]: @googleapis_reference_link{google/longrunning/operations.proto#L143}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
+  /// [google.longrunning.Operation.done]: @googleapis_reference_link{google/longrunning/operations.proto#L136}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   ///
   // clang-format on
   future<StatusOr<google::cloud::retail::v2::AddLocalInventoriesResponse>>
@@ -1418,9 +1418,9 @@ class ProductServiceClient {
   /// [google.cloud.retail.v2.ProductService.GetProduct]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L58}
   /// [google.cloud.retail.v2.ProductService.ListProducts]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L66}
   /// [google.cloud.retail.v2.ProductService.UpdateProduct]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L74}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
-  /// [google.longrunning.Operation.done]: @googleapis_reference_link{google/longrunning/operations.proto#L143}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
+  /// [google.longrunning.Operation.done]: @googleapis_reference_link{google/longrunning/operations.proto#L136}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   ///
   // clang-format on
   future<StatusOr<google::cloud::retail::v2::AddLocalInventoriesResponse>>
@@ -1520,9 +1520,9 @@ class ProductServiceClient {
   /// [google.cloud.retail.v2.ProductService.UpdateProduct]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L74}
   /// [google.cloud.retail.v2.RemoveLocalInventoriesRequest]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L834}
   /// [google.cloud.retail.v2.RemoveLocalInventoriesResponse]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L877}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
-  /// [google.longrunning.Operation.done]: @googleapis_reference_link{google/longrunning/operations.proto#L143}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
+  /// [google.longrunning.Operation.done]: @googleapis_reference_link{google/longrunning/operations.proto#L136}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   ///
   // clang-format on
   future<StatusOr<google::cloud::retail::v2::RemoveLocalInventoriesResponse>>
@@ -1604,9 +1604,9 @@ class ProductServiceClient {
   /// [google.cloud.retail.v2.ProductService.UpdateProduct]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L74}
   /// [google.cloud.retail.v2.RemoveLocalInventoriesRequest]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L834}
   /// [google.cloud.retail.v2.RemoveLocalInventoriesResponse]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L877}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
-  /// [google.longrunning.Operation.done]: @googleapis_reference_link{google/longrunning/operations.proto#L143}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
+  /// [google.longrunning.Operation.done]: @googleapis_reference_link{google/longrunning/operations.proto#L136}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   ///
   // clang-format on
   future<StatusOr<google::cloud::retail::v2::RemoveLocalInventoriesResponse>>
@@ -1648,14 +1648,6 @@ class ProductServiceClient {
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
   ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
-  ///
   /// @param name  The name of the operation's parent resource.
   /// @param filter  The standard list filter.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -1680,8 +1672,8 @@ class ProductServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StreamRange<google::longrunning::Operation> ListOperations(
@@ -1691,14 +1683,6 @@ class ProductServiceClient {
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1728,8 +1712,8 @@ class ProductServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StreamRange<google::longrunning::Operation> ListOperations(
@@ -1755,8 +1739,8 @@ class ProductServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
@@ -1787,8 +1771,8 @@ class ProductServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> GetOperation(

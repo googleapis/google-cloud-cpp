@@ -205,6 +205,33 @@ class CatalogServiceAuth : public CatalogServiceStub {
       google::cloud::dataplex::v1::SearchEntriesRequest const& request)
       override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateMetadataJob(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::dataplex::v1::CreateMetadataJobRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CreateMetadataJob(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dataplex::v1::CreateMetadataJobRequest const& request)
+      override;
+
+  StatusOr<google::cloud::dataplex::v1::MetadataJob> GetMetadataJob(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dataplex::v1::GetMetadataJobRequest const& request)
+      override;
+
+  StatusOr<google::cloud::dataplex::v1::ListMetadataJobsResponse>
+  ListMetadataJobs(grpc::ClientContext& context, Options const& options,
+                   google::cloud::dataplex::v1::ListMetadataJobsRequest const&
+                       request) override;
+
+  Status CancelMetadataJob(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dataplex::v1::CancelMetadataJobRequest const& request)
+      override;
+
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
       grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;

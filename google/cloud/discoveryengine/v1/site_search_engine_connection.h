@@ -263,6 +263,34 @@ class SiteSearchEngineServiceConnection {
   ListTargetSites(
       google::cloud::discoveryengine::v1::ListTargetSitesRequest request);
 
+  virtual future<StatusOr<google::cloud::discoveryengine::v1::Sitemap>>
+  CreateSitemap(
+      google::cloud::discoveryengine::v1::CreateSitemapRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> CreateSitemap(
+      NoAwaitTag,
+      google::cloud::discoveryengine::v1::CreateSitemapRequest const& request);
+
+  virtual future<StatusOr<google::cloud::discoveryengine::v1::Sitemap>>
+  CreateSitemap(google::longrunning::Operation const& operation);
+
+  virtual future<
+      StatusOr<google::cloud::discoveryengine::v1::DeleteSitemapMetadata>>
+  DeleteSitemap(
+      google::cloud::discoveryengine::v1::DeleteSitemapRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteSitemap(
+      NoAwaitTag,
+      google::cloud::discoveryengine::v1::DeleteSitemapRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::discoveryengine::v1::DeleteSitemapMetadata>>
+  DeleteSitemap(google::longrunning::Operation const& operation);
+
+  virtual StatusOr<google::cloud::discoveryengine::v1::FetchSitemapsResponse>
+  FetchSitemaps(
+      google::cloud::discoveryengine::v1::FetchSitemapsRequest const& request);
+
   virtual future<StatusOr<
       google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchResponse>>
   EnableAdvancedSiteSearch(

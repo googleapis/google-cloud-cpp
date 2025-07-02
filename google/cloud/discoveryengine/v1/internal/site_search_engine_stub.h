@@ -107,6 +107,35 @@ class SiteSearchEngineServiceStub {
       google::cloud::discoveryengine::v1::ListTargetSitesRequest const&
           request) = 0;
 
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateSitemap(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::discoveryengine::v1::CreateSitemapRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> CreateSitemap(
+      grpc::ClientContext& context, Options options,
+      google::cloud::discoveryengine::v1::CreateSitemapRequest const&
+          request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteSitemap(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::discoveryengine::v1::DeleteSitemapRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> DeleteSitemap(
+      grpc::ClientContext& context, Options options,
+      google::cloud::discoveryengine::v1::DeleteSitemapRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::cloud::discoveryengine::v1::FetchSitemapsResponse>
+  FetchSitemaps(grpc::ClientContext& context, Options const& options,
+                google::cloud::discoveryengine::v1::FetchSitemapsRequest const&
+                    request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncEnableAdvancedSiteSearch(
       google::cloud::CompletionQueue& cq,
@@ -265,6 +294,35 @@ class DefaultSiteSearchEngineServiceStub : public SiteSearchEngineServiceStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::discoveryengine::v1::ListTargetSitesRequest const& request)
       override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateSitemap(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::discoveryengine::v1::CreateSitemapRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CreateSitemap(
+      grpc::ClientContext& context, Options options,
+      google::cloud::discoveryengine::v1::CreateSitemapRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteSitemap(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::discoveryengine::v1::DeleteSitemapRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteSitemap(
+      grpc::ClientContext& context, Options options,
+      google::cloud::discoveryengine::v1::DeleteSitemapRequest const& request)
+      override;
+
+  StatusOr<google::cloud::discoveryengine::v1::FetchSitemapsResponse>
+  FetchSitemaps(grpc::ClientContext& context, Options const& options,
+                google::cloud::discoveryengine::v1::FetchSitemapsRequest const&
+                    request) override;
 
   future<StatusOr<google::longrunning::Operation>>
   AsyncEnableAdvancedSiteSearch(

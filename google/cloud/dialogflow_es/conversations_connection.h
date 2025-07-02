@@ -199,6 +199,12 @@ class ConversationsConnection {
       google::cloud::dialogflow::v2::CompleteConversationRequest const&
           request);
 
+  virtual StatusOr<
+      google::cloud::dialogflow::v2::IngestContextReferencesResponse>
+  IngestContextReferences(
+      google::cloud::dialogflow::v2::IngestContextReferencesRequest const&
+          request);
+
   virtual StreamRange<google::cloud::dialogflow::v2::Message> ListMessages(
       google::cloud::dialogflow::v2::ListMessagesRequest request);
 
@@ -223,6 +229,10 @@ class ConversationsConnection {
   virtual StatusOr<google::cloud::dialogflow::v2::SearchKnowledgeResponse>
   SearchKnowledge(
       google::cloud::dialogflow::v2::SearchKnowledgeRequest const& request);
+
+  virtual StatusOr<google::cloud::dialogflow::v2::GenerateSuggestionsResponse>
+  GenerateSuggestions(
+      google::cloud::dialogflow::v2::GenerateSuggestionsRequest const& request);
 
   virtual StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request);

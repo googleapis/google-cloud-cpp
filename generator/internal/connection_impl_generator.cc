@@ -75,9 +75,10 @@ Status ConnectionImplGenerator::GenerateHeader() {
            ? "google/cloud/stream_range.h"
            : "",
        "google/cloud/version.h"});
-  HeaderSystemIncludes(
-      {HasLongrunningMethod() ? "google/longrunning/operations.grpc.pb.h" : "",
-       "memory"});
+  HeaderProtobufGenCodeIncludes({HasLongrunningMethod()
+                                     ? "google/longrunning/operations.grpc.pb.h"
+                                     : ""});
+  HeaderSystemIncludes({"memory"});
 
   auto result = HeaderOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;

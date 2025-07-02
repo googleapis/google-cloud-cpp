@@ -97,6 +97,48 @@ class MockNetworkFirewallPoliciesConnection
   /// using ::testing::_;
   /// using ::testing::Matcher;
   /// EXPECT_CALL(*mock,
+  /// AddPacketMirroringRule(Matcher<google::cloud::cpp::compute::network_firewall_policies::v1::AddPacketMirroringRuleRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AddPacketMirroringRule,
+              (google::cloud::cpp::compute::network_firewall_policies::v1::
+                   AddPacketMirroringRuleRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, AddPacketMirroringRule(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              AddPacketMirroringRule,
+              (NoAwaitTag,
+               google::cloud::cpp::compute::network_firewall_policies::v1::
+                   AddPacketMirroringRuleRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// AddPacketMirroringRule(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AddPacketMirroringRule,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
   /// AddRule(Matcher<google::cloud::cpp::compute::network_firewall_policies::v1::AddRuleRequest
   /// const&>(_)))
   /// @endcode
@@ -130,6 +172,14 @@ class MockNetworkFirewallPoliciesConnection
               AddRule,
               (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
+
+  MOCK_METHOD(
+      (StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::
+                                              FirewallPoliciesScopedList>>),
+      AggregatedListNetworkFirewallPolicies,
+      (google::cloud::cpp::compute::network_firewall_policies::v1::
+           AggregatedListNetworkFirewallPoliciesRequest request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -229,6 +279,12 @@ class MockNetworkFirewallPoliciesConnection
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>, GetIamPolicy,
               (google::cloud::cpp::compute::network_firewall_policies::v1::
                    GetIamPolicyRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::FirewallPolicyRule>,
+              GetPacketMirroringRule,
+              (google::cloud::cpp::compute::network_firewall_policies::v1::
+                   GetPacketMirroringRuleRequest const& request),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::FirewallPolicyRule>,
@@ -333,6 +389,48 @@ class MockNetworkFirewallPoliciesConnection
   /// using ::testing::_;
   /// using ::testing::Matcher;
   /// EXPECT_CALL(*mock,
+  /// PatchPacketMirroringRule(Matcher<google::cloud::cpp::compute::network_firewall_policies::v1::PatchPacketMirroringRuleRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              PatchPacketMirroringRule,
+              (google::cloud::cpp::compute::network_firewall_policies::v1::
+                   PatchPacketMirroringRuleRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, PatchPacketMirroringRule(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              PatchPacketMirroringRule,
+              (NoAwaitTag,
+               google::cloud::cpp::compute::network_firewall_policies::v1::
+                   PatchPacketMirroringRuleRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// PatchPacketMirroringRule(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              PatchPacketMirroringRule,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
   /// PatchRule(Matcher<google::cloud::cpp::compute::network_firewall_policies::v1::PatchRuleRequest
   /// const&>(_)))
   /// @endcode
@@ -406,6 +504,48 @@ class MockNetworkFirewallPoliciesConnection
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               RemoveAssociation,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// RemovePacketMirroringRule(Matcher<google::cloud::cpp::compute::network_firewall_policies::v1::RemovePacketMirroringRuleRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              RemovePacketMirroringRule,
+              (google::cloud::cpp::compute::network_firewall_policies::v1::
+                   RemovePacketMirroringRuleRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, RemovePacketMirroringRule(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              RemovePacketMirroringRule,
+              (NoAwaitTag,
+               google::cloud::cpp::compute::network_firewall_policies::v1::
+                   RemovePacketMirroringRuleRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// RemovePacketMirroringRule(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              RemovePacketMirroringRule,
               (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 

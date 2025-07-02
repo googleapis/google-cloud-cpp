@@ -68,6 +68,78 @@ class StorageInsightsTracingConnection
       google::cloud::storageinsights::v1::GetReportDetailRequest const& request)
       override;
 
+  StreamRange<google::cloud::storageinsights::v1::DatasetConfig>
+  ListDatasetConfigs(
+      google::cloud::storageinsights::v1::ListDatasetConfigsRequest request)
+      override;
+
+  StatusOr<google::cloud::storageinsights::v1::DatasetConfig> GetDatasetConfig(
+      google::cloud::storageinsights::v1::GetDatasetConfigRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::storageinsights::v1::DatasetConfig>>
+  CreateDatasetConfig(
+      google::cloud::storageinsights::v1::CreateDatasetConfigRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> CreateDatasetConfig(
+      NoAwaitTag,
+      google::cloud::storageinsights::v1::CreateDatasetConfigRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::storageinsights::v1::DatasetConfig>>
+  CreateDatasetConfig(google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::storageinsights::v1::DatasetConfig>>
+  UpdateDatasetConfig(
+      google::cloud::storageinsights::v1::UpdateDatasetConfigRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateDatasetConfig(
+      NoAwaitTag,
+      google::cloud::storageinsights::v1::UpdateDatasetConfigRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::storageinsights::v1::DatasetConfig>>
+  UpdateDatasetConfig(google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::storageinsights::v1::OperationMetadata>>
+  DeleteDatasetConfig(
+      google::cloud::storageinsights::v1::DeleteDatasetConfigRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteDatasetConfig(
+      NoAwaitTag,
+      google::cloud::storageinsights::v1::DeleteDatasetConfigRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::storageinsights::v1::OperationMetadata>>
+  DeleteDatasetConfig(google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::storageinsights::v1::LinkDatasetResponse>>
+  LinkDataset(google::cloud::storageinsights::v1::LinkDatasetRequest const&
+                  request) override;
+
+  StatusOr<google::longrunning::Operation> LinkDataset(
+      NoAwaitTag,
+      google::cloud::storageinsights::v1::LinkDatasetRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::storageinsights::v1::LinkDatasetResponse>>
+  LinkDataset(google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::storageinsights::v1::OperationMetadata>>
+  UnlinkDataset(google::cloud::storageinsights::v1::UnlinkDatasetRequest const&
+                    request) override;
+
+  StatusOr<google::longrunning::Operation> UnlinkDataset(
+      NoAwaitTag,
+      google::cloud::storageinsights::v1::UnlinkDatasetRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::storageinsights::v1::OperationMetadata>>
+  UnlinkDataset(google::longrunning::Operation const& operation) override;
+
   StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request) override;
 

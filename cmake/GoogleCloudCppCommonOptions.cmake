@@ -34,6 +34,7 @@ check_cxx_compiler_flag(-Wno-sign-conversion
 check_cxx_compiler_flag(-Werror GOOGLE_CLOUD_CPP_COMPILER_SUPPORTS_WERROR)
 check_cxx_compiler_flag(-fclang-abi-compat=17
                         GOOGLE_CLOUD_CPP_COMPILER_SUPPORTS_CLANG_ABI_COMPAT_17)
+check_cxx_compiler_flag(-pedantic GOOGLE_CLOUD_CPP_COMPILER_SUPPORTS_PEDANTIC)
 
 #[=======================================================================[.rst:
 google_cloud_cpp_add_common_options(target [NO_WARNINGS])
@@ -80,6 +81,7 @@ function (google_cloud_cpp_add_common_options target)
             return()
         endif ()
         target_compile_options(${target} PRIVATE "/W3")
+        target_compile_options(${target} PRIVATE "/wd4996")
         if (GOOGLE_CLOUD_CPP_ENABLE_WERROR)
             target_compile_options(${target} PRIVATE "/WX")
         endif ()
@@ -107,5 +109,8 @@ function (google_cloud_cpp_add_common_options target)
         target_compile_options(${target} PRIVATE "-Werror")
         target_compile_options(${target}
                                PRIVATE "-Wno-error=deprecated-declarations")
+    endif ()
+    if (CMAKE_CXX_CLANG_TIDY AND GOOGLE_CLOUD_CPP_COMPILER_SUPPORTS_PEDANTIC)
+        target_compile_options(${target} PRIVATE "-pedantic")
     endif ()
 endfunction ()

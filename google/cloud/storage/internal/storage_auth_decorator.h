@@ -102,6 +102,14 @@ class StorageAuth : public StorageStub {
              Options const& options,
              google::storage::v2::ReadObjectRequest const& request) override;
 
+  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+      google::storage::v2::BidiReadObjectRequest,
+      google::storage::v2::BidiReadObjectResponse>>
+  AsyncBidiReadObject(
+      google::cloud::CompletionQueue const& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options) override;
+
   StatusOr<google::storage::v2::Object> UpdateObject(
       grpc::ClientContext& context, Options const& options,
       google::storage::v2::UpdateObjectRequest const& request) override;
@@ -136,6 +144,10 @@ class StorageAuth : public StorageStub {
   StatusOr<google::storage::v2::QueryWriteStatusResponse> QueryWriteStatus(
       grpc::ClientContext& context, Options const& options,
       google::storage::v2::QueryWriteStatusRequest const& request) override;
+
+  StatusOr<google::storage::v2::Object> MoveObject(
+      grpc::ClientContext& context, Options const& options,
+      google::storage::v2::MoveObjectRequest const& request) override;
 
   future<StatusOr<google::storage::v2::Object>> AsyncComposeObject(
       google::cloud::CompletionQueue& cq,

@@ -89,6 +89,17 @@ ReservationServiceTracingConnection::UpdateReservation(
   return internal::EndSpan(*span, child_->UpdateReservation(request));
 }
 
+StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
+ReservationServiceTracingConnection::FailoverReservation(
+    google::cloud::bigquery::reservation::v1::FailoverReservationRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "bigquery_reservation_v1::ReservationServiceConnection::"
+      "FailoverReservation");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->FailoverReservation(request));
+}
+
 StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
 ReservationServiceTracingConnection::CreateCapacityCommitment(
     google::cloud::bigquery::reservation::v1::

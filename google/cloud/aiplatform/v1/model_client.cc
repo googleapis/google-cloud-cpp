@@ -122,6 +122,23 @@ ModelServiceClient::ListModelVersions(
   return connection_->ListModelVersions(std::move(request));
 }
 
+StreamRange<google::cloud::aiplatform::v1::ModelVersionCheckpoint>
+ModelServiceClient::ListModelVersionCheckpoints(std::string const& name,
+                                                Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::aiplatform::v1::ListModelVersionCheckpointsRequest request;
+  request.set_name(name);
+  return connection_->ListModelVersionCheckpoints(request);
+}
+
+StreamRange<google::cloud::aiplatform::v1::ModelVersionCheckpoint>
+ModelServiceClient::ListModelVersionCheckpoints(
+    google::cloud::aiplatform::v1::ListModelVersionCheckpointsRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListModelVersionCheckpoints(std::move(request));
+}
+
 StatusOr<google::cloud::aiplatform::v1::Model> ModelServiceClient::UpdateModel(
     google::cloud::aiplatform::v1::Model const& model,
     google::protobuf::FieldMask const& update_mask, Options opts) {

@@ -231,6 +231,10 @@ class HubServiceConnection {
   ListHubSpokes(
       google::cloud::networkconnectivity::v1::ListHubSpokesRequest request);
 
+  virtual StreamRange<google::cloud::networkconnectivity::v1::HubStatusEntry>
+  QueryHubStatus(
+      google::cloud::networkconnectivity::v1::QueryHubStatusRequest request);
+
   virtual StreamRange<google::cloud::networkconnectivity::v1::Spoke> ListSpokes(
       google::cloud::networkconnectivity::v1::ListSpokesRequest request);
 
@@ -291,6 +295,36 @@ class HubServiceConnection {
       StatusOr<google::cloud::networkconnectivity::v1::AcceptHubSpokeResponse>>
   AcceptHubSpoke(google::longrunning::Operation const& operation);
 
+  virtual future<StatusOr<
+      google::cloud::networkconnectivity::v1::AcceptSpokeUpdateResponse>>
+  AcceptSpokeUpdate(
+      google::cloud::networkconnectivity::v1::AcceptSpokeUpdateRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> AcceptSpokeUpdate(
+      NoAwaitTag,
+      google::cloud::networkconnectivity::v1::AcceptSpokeUpdateRequest const&
+          request);
+
+  virtual future<StatusOr<
+      google::cloud::networkconnectivity::v1::AcceptSpokeUpdateResponse>>
+  AcceptSpokeUpdate(google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<
+      google::cloud::networkconnectivity::v1::RejectSpokeUpdateResponse>>
+  RejectSpokeUpdate(
+      google::cloud::networkconnectivity::v1::RejectSpokeUpdateRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> RejectSpokeUpdate(
+      NoAwaitTag,
+      google::cloud::networkconnectivity::v1::RejectSpokeUpdateRequest const&
+          request);
+
+  virtual future<StatusOr<
+      google::cloud::networkconnectivity::v1::RejectSpokeUpdateResponse>>
+  RejectSpokeUpdate(google::longrunning::Operation const& operation);
+
   virtual future<
       StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
   DeleteSpoke(google::cloud::networkconnectivity::v1::DeleteSpokeRequest const&
@@ -325,6 +359,18 @@ class HubServiceConnection {
 
   virtual StreamRange<google::cloud::networkconnectivity::v1::Group> ListGroups(
       google::cloud::networkconnectivity::v1::ListGroupsRequest request);
+
+  virtual future<StatusOr<google::cloud::networkconnectivity::v1::Group>>
+  UpdateGroup(google::cloud::networkconnectivity::v1::UpdateGroupRequest const&
+                  request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateGroup(
+      NoAwaitTag,
+      google::cloud::networkconnectivity::v1::UpdateGroupRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::networkconnectivity::v1::Group>>
+  UpdateGroup(google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request);

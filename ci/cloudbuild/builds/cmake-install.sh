@@ -91,6 +91,9 @@ expected_dirs+=(
   # no RPC services in google/cloud/compute common proto dirs
   ./include/google/cloud/compute/v1
   ./include/google/cloud/compute/v1/internal
+  # no RPC services in google/cloud/dataform/logging
+  ./include/google/cloud/dataform/logging
+  ./include/google/cloud/dataform/logging/v1
   ./include/google/cloud/gkebackup/logging
   ./include/google/cloud/gkebackup/logging/v1
   ./include/google/cloud/gkehub/v1/configmanagement
@@ -153,6 +156,7 @@ expected_dirs+=(
   ./lib64/cmake/google_cloud_cpp_grpc_utils
   ./lib64/cmake/google_cloud_cpp_logging_type
   ./lib64/cmake/google_cloud_cpp_iam_v2
+  ./lib64/cmake/google_cloud_cpp_iam_v3
   ./lib64/cmake/google_cloud_cpp_mocks
   ./lib64/cmake/google_cloud_cpp_oauth2
   ./lib64/cmake/google_cloud_cpp_opentelemetry

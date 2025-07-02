@@ -151,10 +151,21 @@ StatusOr<google::iam::v1::Policy> StorageMetadata::GetIamPolicy(
   std::vector<std::string> params;
   params.reserve(1);
 
-  if (!request.resource().empty()) {
-    params.push_back(
-        absl::StrCat("bucket=", internal::UrlEncode(request.resource())));
-  }
+  static auto* bucket_matcher = [] {
+    return new google::cloud::internal::RoutingMatcher<
+        google::iam::v1::GetIamPolicyRequest>{
+        "bucket=",
+        {
+            {[](google::iam::v1::GetIamPolicyRequest const& request)
+                 -> std::string const& { return request.resource(); },
+             std::regex{"(projects/[^/]+/buckets/[^/]+)/.*",
+                        std::regex::optimize}},
+            {[](google::iam::v1::GetIamPolicyRequest const& request)
+                 -> std::string const& { return request.resource(); },
+             absl::nullopt},
+        }};
+  }();
+  bucket_matcher->AppendParam(request, params);
 
   if (params.empty()) {
     SetMetadata(context, options);
@@ -170,10 +181,21 @@ StatusOr<google::iam::v1::Policy> StorageMetadata::SetIamPolicy(
   std::vector<std::string> params;
   params.reserve(1);
 
-  if (!request.resource().empty()) {
-    params.push_back(
-        absl::StrCat("bucket=", internal::UrlEncode(request.resource())));
-  }
+  static auto* bucket_matcher = [] {
+    return new google::cloud::internal::RoutingMatcher<
+        google::iam::v1::SetIamPolicyRequest>{
+        "bucket=",
+        {
+            {[](google::iam::v1::SetIamPolicyRequest const& request)
+                 -> std::string const& { return request.resource(); },
+             std::regex{"(projects/[^/]+/buckets/[^/]+)/.*",
+                        std::regex::optimize}},
+            {[](google::iam::v1::SetIamPolicyRequest const& request)
+                 -> std::string const& { return request.resource(); },
+             absl::nullopt},
+        }};
+  }();
+  bucket_matcher->AppendParam(request, params);
 
   if (params.empty()) {
     SetMetadata(context, options);
@@ -362,6 +384,18 @@ StorageMetadata::ReadObject(
   return child_->ReadObject(std::move(context), options, request);
 }
 
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::storage::v2::BidiReadObjectRequest,
+    google::storage::v2::BidiReadObjectResponse>>
+StorageMetadata::AsyncBidiReadObject(
+    google::cloud::CompletionQueue const& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
+  SetMetadata(*context, *options);
+  return child_->AsyncBidiReadObject(cq, std::move(context),
+                                     std::move(options));
+}
+
 StatusOr<google::storage::v2::Object> StorageMetadata::UpdateObject(
     grpc::ClientContext& context, Options const& options,
     google::storage::v2::UpdateObjectRequest const& request) {
@@ -492,6 +526,25 @@ StorageMetadata::QueryWriteStatus(
     SetMetadata(context, options, absl::StrJoin(params, "&"));
   }
   return child_->QueryWriteStatus(context, options, request);
+}
+
+StatusOr<google::storage::v2::Object> StorageMetadata::MoveObject(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::v2::MoveObjectRequest const& request) {
+  std::vector<std::string> params;
+  params.reserve(1);
+
+  if (!request.bucket().empty()) {
+    params.push_back(
+        absl::StrCat("bucket=", internal::UrlEncode(request.bucket())));
+  }
+
+  if (params.empty()) {
+    SetMetadata(context, options);
+  } else {
+    SetMetadata(context, options, absl::StrJoin(params, "&"));
+  }
+  return child_->MoveObject(context, options, request);
 }
 
 future<StatusOr<google::storage::v2::Object>>

@@ -191,6 +191,117 @@ StatusOr<google::longrunning::Operation> DefaultTpuStub::UpdateNode(
   return response;
 }
 
+StatusOr<google::cloud::tpu::v2::ListQueuedResourcesResponse>
+DefaultTpuStub::ListQueuedResources(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::tpu::v2::ListQueuedResourcesRequest const& request) {
+  google::cloud::tpu::v2::ListQueuedResourcesResponse response;
+  auto status = grpc_stub_->ListQueuedResources(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::tpu::v2::QueuedResource>
+DefaultTpuStub::GetQueuedResource(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::tpu::v2::GetQueuedResourceRequest const& request) {
+  google::cloud::tpu::v2::QueuedResource response;
+  auto status = grpc_stub_->GetQueuedResource(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultTpuStub::AsyncCreateQueuedResource(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::tpu::v2::CreateQueuedResourceRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::tpu::v2::CreateQueuedResourceRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::tpu::v2::CreateQueuedResourceRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCreateQueuedResource(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultTpuStub::CreateQueuedResource(
+    grpc::ClientContext& context, Options,
+    google::cloud::tpu::v2::CreateQueuedResourceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateQueuedResource(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultTpuStub::AsyncDeleteQueuedResource(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::tpu::v2::DeleteQueuedResourceRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::tpu::v2::DeleteQueuedResourceRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::tpu::v2::DeleteQueuedResourceRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeleteQueuedResource(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultTpuStub::DeleteQueuedResource(
+    grpc::ClientContext& context, Options,
+    google::cloud::tpu::v2::DeleteQueuedResourceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteQueuedResource(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultTpuStub::AsyncResetQueuedResource(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::tpu::v2::ResetQueuedResourceRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::tpu::v2::ResetQueuedResourceRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::tpu::v2::ResetQueuedResourceRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncResetQueuedResource(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultTpuStub::ResetQueuedResource(
+    grpc::ClientContext& context, Options,
+    google::cloud::tpu::v2::ResetQueuedResourceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->ResetQueuedResource(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::tpu::v2::GenerateServiceIdentityResponse>
 DefaultTpuStub::GenerateServiceIdentity(
     grpc::ClientContext& context, Options const&,

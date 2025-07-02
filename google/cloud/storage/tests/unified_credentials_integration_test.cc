@@ -21,6 +21,10 @@
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
+#ifndef _WIN32
+#include <openssl/err.h>
+#include <openssl/ssl.h>
+#endif
 #include <fstream>
 #include <string>
 #include <utility>
@@ -80,6 +84,9 @@ KlXA1yQW/ClmnHVg57SN1g1rvOJCcnHBnSbT7kGFqUol
 -----END CERTIFICATE-----
 )""";
 
+constexpr int kCurleAbortedByCallback = 42;
+constexpr int kCurleOk = 0;
+
 class UnifiedCredentialsIntegrationTest
     : public ::google::cloud::storage::testing::StorageIntegrationTest {
  protected:
@@ -98,6 +105,20 @@ class UnifiedCredentialsIntegrationTest
     ASSERT_THAT(project_id_, Not(IsEmpty()));
     ASSERT_THAT(service_account_, Not(IsEmpty()));
     ASSERT_THAT(roots_pem_, Not(IsEmpty()));
+
+    std::ifstream is(roots_pem_);
+    ca_certs_text_ = std::string{std::istreambuf_iterator<char>{is}, {}};
+    std::string begin_cert = "-----BEGIN CERTIFICATE-----";
+    std::string end_cert = "-----END CERTIFICATE-----";
+    size_t current = 0;
+    size_t begin;
+    while ((begin = ca_certs_text_.find(begin_cert, current)) !=
+           std::string::npos) {
+      auto end = ca_certs_text_.find(end_cert, begin);
+      current = end + end_cert.length();
+      ca_certs_.emplace_back(&ca_certs_text_[begin], current - begin);
+    }
+    ASSERT_THAT(ca_certs_, Not(IsEmpty()));
   }
 
   static Client MakeTestClient(Options opts) {
@@ -132,6 +153,87 @@ class UnifiedCredentialsIntegrationTest
         .set<internal::CAPathOption>(empty_file());
   }
 
+  Options ValidInMemoryTrustStoreOptions() {
+    return TestOptions()
+        // Populates in-memory trust store with Google's root CA certificates.
+        .set<experimental::CAInMemoryOption>(ca_certs_);
+  }
+
+  static Options InvalidInMemoryTrustStoreOptions() {
+    std::vector<absl::string_view> bogus_certs;
+    bogus_certs.emplace_back(kCACertificate);
+
+    return TestOptions()
+        // Populates in-memory trust store with an invalid CA certificate.
+        .set<experimental::CAInMemoryOption>(bogus_certs);
+  }
+
+  Options ValidCAStoreFromSslCtxCallbackOptions() {
+    auto ssl_ctx_callback = [ca_certs = ca_certs_](void*, void* ssl_ctx,
+                                                   void*) -> int {
+#ifndef _WIN32
+      struct BIOPtrCleanup {
+        int operator()(BIO* b) const { return BIO_free(b); }
+      };
+      using BioPtr = std::unique_ptr<BIO, BIOPtrCleanup>;
+      struct X509InfoPtrCleanup {
+        void operator()(STACK_OF(X509_INFO) * i) const {
+          return sk_X509_INFO_pop_free(i, X509_INFO_free);
+        }
+      };
+      using X509InfoPtr =
+          std::unique_ptr<STACK_OF(X509_INFO), X509InfoPtrCleanup>;
+
+      X509_STORE* cert_store =
+          SSL_CTX_get_cert_store(static_cast<SSL_CTX*>(ssl_ctx));
+      if (!cert_store) {
+        return kCurleAbortedByCallback;
+      }
+
+      // Add each of the provided certs to the store.
+      for (auto const& cert : ca_certs) {
+        BioPtr buf{
+            BIO_new_mem_buf(cert.data(), static_cast<int>(cert.length()))};
+        if (!buf) {
+          return kCurleAbortedByCallback;
+        }
+        X509InfoPtr info{
+            PEM_X509_INFO_read_bio(buf.get(), nullptr, nullptr, nullptr)};
+        if (!info) {
+          return kCurleAbortedByCallback;
+        }
+
+        for (decltype(sk_X509_INFO_num(info.get())) i = 0;
+             i < sk_X509_INFO_num(info.get()); ++i) {
+          X509_INFO* value = sk_X509_INFO_value(info.get(), i);
+          if (value->x509) {
+            X509_STORE_add_cert(cert_store, value->x509);
+          }
+          if (value->crl) {
+            X509_STORE_add_crl(cert_store, value->crl);
+          }
+        }
+      }
+      return kCurleOk;
+#else
+      return kCurleAbortedByCallback;
+#endif
+    };
+
+    return TestOptions()
+        // Populates in-memory trust store with Google's root CA certificates.
+        .set<experimental::SslCtxCallbackOption>(ssl_ctx_callback);
+  }
+
+  static Options InvalidCAStoreFromSslCtxCallbackOptions() {
+    auto ssl_ctx_callback = [=](void*, void*, void*) -> int {
+      return kCurleAbortedByCallback;
+    };
+    return TestOptions()
+        // Populates in-memory trust store with an invalid CA certificate.
+        .set<experimental::SslCtxCallbackOption>(ssl_ctx_callback);
+  }
+
   void UseClient(Client client, std::string const& bucket_name,
                  std::string const& object_name, std::string const& payload) {
     StatusOr<ObjectMetadata> meta = client.InsertObject(
@@ -157,6 +259,8 @@ class UnifiedCredentialsIntegrationTest
   std::string project_id_;
   std::string service_account_;
   std::string roots_pem_;
+  std::string ca_certs_text_;
+  std::vector<absl::string_view> ca_certs_;
   TempFile invalid_pem_{kCACertificate};
   TempFile empty_file_{std::string{}};
 };
@@ -339,6 +443,84 @@ TEST_F(UnifiedCredentialsIntegrationTest, AccessTokenEmptyTrustStore) {
   EXPECT_NO_FATAL_FAILURE(
       ExpectInsertFailure(client, bucket_name(), MakeRandomObjectName()));
 }
+
+TEST_F(UnifiedCredentialsIntegrationTest, ValidCAStoreInMemory) {
+  if (GetEnv("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG") != "none") GTEST_SKIP();
+  if (UsingEmulator()) GTEST_SKIP();
+  auto keyfile = GetEnv("GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON");
+  if (!keyfile.has_value()) GTEST_SKIP();
+
+  auto contents = [](std::string const& filename) {
+    std::ifstream is(filename);
+    return std::string{std::istreambuf_iterator<char>{is}, {}};
+  }(keyfile.value());
+
+  auto client = MakeTestClient(
+      ValidInMemoryTrustStoreOptions().set<UnifiedCredentialsOption>(
+          MakeServiceAccountCredentials(contents)));
+
+  ASSERT_NO_FATAL_FAILURE(
+      UseClient(client, bucket_name(), MakeRandomObjectName(), LoremIpsum()));
+}
+
+TEST_F(UnifiedCredentialsIntegrationTest, InvalidCAStoreInMemory) {
+  if (GetEnv("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG") != "none") GTEST_SKIP();
+  if (UsingEmulator()) GTEST_SKIP();
+  auto keyfile = GetEnv("GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON");
+  if (!keyfile.has_value()) GTEST_SKIP();
+
+  auto contents = [](std::string const& filename) {
+    std::ifstream is(filename);
+    return std::string{std::istreambuf_iterator<char>{is}, {}};
+  }(keyfile.value());
+
+  auto client = MakeTestClient(
+      InvalidInMemoryTrustStoreOptions().set<UnifiedCredentialsOption>(
+          MakeServiceAccountCredentials(contents)));
+
+  EXPECT_NO_FATAL_FAILURE(
+      ExpectInsertFailure(client, bucket_name(), MakeRandomObjectName()));
+}
+
+#ifndef _WIN32
+TEST_F(UnifiedCredentialsIntegrationTest, ValidCAStoreFromSslCtxCallback) {
+  if (GetEnv("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG") != "none") GTEST_SKIP();
+  if (UsingEmulator()) GTEST_SKIP();
+  auto keyfile = GetEnv("GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON");
+  if (!keyfile.has_value()) GTEST_SKIP();
+
+  auto contents = [](std::string const& filename) {
+    std::ifstream is(filename);
+    return std::string{std::istreambuf_iterator<char>{is}, {}};
+  }(keyfile.value());
+
+  auto client = MakeTestClient(
+      ValidCAStoreFromSslCtxCallbackOptions().set<UnifiedCredentialsOption>(
+          MakeServiceAccountCredentials(contents)));
+
+  ASSERT_NO_FATAL_FAILURE(
+      UseClient(client, bucket_name(), MakeRandomObjectName(), LoremIpsum()));
+}
+
+TEST_F(UnifiedCredentialsIntegrationTest, InvalidCAStoreFromSslCtxCallback) {
+  if (GetEnv("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG") != "none") GTEST_SKIP();
+  if (UsingEmulator()) GTEST_SKIP();
+  auto keyfile = GetEnv("GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON");
+  if (!keyfile.has_value()) GTEST_SKIP();
+
+  auto contents = [](std::string const& filename) {
+    std::ifstream is(filename);
+    return std::string{std::istreambuf_iterator<char>{is}, {}};
+  }(keyfile.value());
+
+  auto client = MakeTestClient(
+      InvalidCAStoreFromSslCtxCallbackOptions().set<UnifiedCredentialsOption>(
+          MakeServiceAccountCredentials(contents)));
+
+  EXPECT_NO_FATAL_FAILURE(
+      ExpectInsertFailure(client, bucket_name(), MakeRandomObjectName()));
+}
+#endif
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

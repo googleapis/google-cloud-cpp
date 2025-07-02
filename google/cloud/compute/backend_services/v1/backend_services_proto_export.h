@@ -1,4 +1,4 @@
-// Copyright 2024 Google LLC
+// Copyright 2025 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -32,11 +32,11 @@
 #include <google/cloud/compute/v1/internal/common_016.pb.h>
 #include <google/cloud/compute/v1/internal/common_029.pb.h>
 #include <google/cloud/compute/v1/internal/common_031.pb.h>
-#include <google/cloud/compute/v1/internal/common_046.pb.h>
-#include <google/cloud/compute/v1/internal/common_050.pb.h>
-#include <google/cloud/compute/v1/internal/common_110.pb.h>
-#include <google/cloud/compute/v1/internal/common_113.pb.h>
-#include <google/cloud/compute/v1/internal/common_137.pb.h>
+#include <google/cloud/compute/v1/internal/common_047.pb.h>
+#include <google/cloud/compute/v1/internal/common_052.pb.h>
+#include <google/cloud/compute/v1/internal/common_118.pb.h>
+#include <google/cloud/compute/v1/internal/common_121.pb.h>
+#include <google/cloud/compute/v1/internal/common_145.pb.h>
 // IWYU pragma: end_exports
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_BACKEND_SERVICES_V1_BACKEND_SERVICES_PROTO_EXPORT_H

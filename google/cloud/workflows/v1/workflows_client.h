@@ -117,8 +117,8 @@ class WorkflowsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.workflows.v1.ListWorkflowsRequest]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L272}
-  /// [google.cloud.workflows.v1.Workflow]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L113}
+  /// [google.cloud.workflows.v1.ListWorkflowsRequest]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L330}
+  /// [google.cloud.workflows.v1.Workflow]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L125}
   ///
   // clang-format on
   StreamRange<google::cloud::workflows::v1::Workflow> ListWorkflows(
@@ -157,8 +157,8 @@ class WorkflowsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.workflows.v1.ListWorkflowsRequest]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L272}
-  /// [google.cloud.workflows.v1.Workflow]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L113}
+  /// [google.cloud.workflows.v1.ListWorkflowsRequest]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L330}
+  /// [google.cloud.workflows.v1.Workflow]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L125}
   ///
   // clang-format on
   StreamRange<google::cloud::workflows::v1::Workflow> ListWorkflows(
@@ -184,8 +184,8 @@ class WorkflowsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.workflows.v1.GetWorkflowRequest]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L322}
-  /// [google.cloud.workflows.v1.Workflow]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L113}
+  /// [google.cloud.workflows.v1.GetWorkflowRequest]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L390}
+  /// [google.cloud.workflows.v1.Workflow]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L125}
   ///
   // clang-format on
   StatusOr<google::cloud::workflows::v1::Workflow> GetWorkflow(
@@ -214,8 +214,8 @@ class WorkflowsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.workflows.v1.GetWorkflowRequest]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L322}
-  /// [google.cloud.workflows.v1.Workflow]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L113}
+  /// [google.cloud.workflows.v1.GetWorkflowRequest]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L390}
+  /// [google.cloud.workflows.v1.Workflow]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L125}
   ///
   // clang-format on
   StatusOr<google::cloud::workflows::v1::Workflow> GetWorkflow(
@@ -259,8 +259,8 @@ class WorkflowsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.workflows.v1.CreateWorkflowRequest]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L343}
-  /// [google.cloud.workflows.v1.Workflow]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L113}
+  /// [google.cloud.workflows.v1.CreateWorkflowRequest]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L411}
+  /// [google.cloud.workflows.v1.Workflow]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L125}
   ///
   // clang-format on
   future<StatusOr<google::cloud::workflows::v1::Workflow>> CreateWorkflow(
@@ -316,8 +316,8 @@ class WorkflowsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.workflows.v1.CreateWorkflowRequest]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L343}
-  /// [google.cloud.workflows.v1.Workflow]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L113}
+  /// [google.cloud.workflows.v1.CreateWorkflowRequest]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L411}
+  /// [google.cloud.workflows.v1.Workflow]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L125}
   ///
   // clang-format on
   future<StatusOr<google::cloud::workflows::v1::Workflow>> CreateWorkflow(
@@ -380,8 +380,8 @@ class WorkflowsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.workflows.v1.DeleteWorkflowRequest]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L370}
-  /// [google.cloud.workflows.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L394}
+  /// [google.cloud.workflows.v1.DeleteWorkflowRequest]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L438}
+  /// [google.cloud.workflows.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L462}
   ///
   // clang-format on
   future<StatusOr<google::cloud::workflows::v1::OperationMetadata>>
@@ -433,8 +433,8 @@ class WorkflowsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.workflows.v1.DeleteWorkflowRequest]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L370}
-  /// [google.cloud.workflows.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L394}
+  /// [google.cloud.workflows.v1.DeleteWorkflowRequest]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L438}
+  /// [google.cloud.workflows.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L462}
   ///
   // clang-format on
   future<StatusOr<google::cloud::workflows::v1::OperationMetadata>>
@@ -502,8 +502,8 @@ class WorkflowsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.workflows.v1.UpdateWorkflowRequest]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L384}
-  /// [google.cloud.workflows.v1.Workflow]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L113}
+  /// [google.cloud.workflows.v1.UpdateWorkflowRequest]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L452}
+  /// [google.cloud.workflows.v1.Workflow]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L125}
   ///
   // clang-format on
   future<StatusOr<google::cloud::workflows::v1::Workflow>> UpdateWorkflow(
@@ -559,8 +559,8 @@ class WorkflowsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.workflows.v1.UpdateWorkflowRequest]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L384}
-  /// [google.cloud.workflows.v1.Workflow]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L113}
+  /// [google.cloud.workflows.v1.UpdateWorkflowRequest]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L452}
+  /// [google.cloud.workflows.v1.Workflow]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L125}
   ///
   // clang-format on
   future<StatusOr<google::cloud::workflows::v1::Workflow>> UpdateWorkflow(
@@ -594,6 +594,46 @@ class WorkflowsClient {
   // clang-format on
   future<StatusOr<google::cloud::workflows::v1::Workflow>> UpdateWorkflow(
       google::longrunning::Operation const& operation, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists revisions for a given workflow.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.workflows.v1.ListWorkflowRevisionsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.workflows.v1.Workflow], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.workflows.v1.ListWorkflowRevisionsRequest]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L482}
+  /// [google.cloud.workflows.v1.Workflow]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L125}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::workflows::v1::Workflow> ListWorkflowRevisions(
+      google::cloud::workflows::v1::ListWorkflowRevisionsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -670,14 +710,6 @@ class WorkflowsClient {
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
   ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
-  ///
   /// @param name  The name of the operation's parent resource.
   /// @param filter  The standard list filter.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -702,8 +734,8 @@ class WorkflowsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StreamRange<google::longrunning::Operation> ListOperations(
@@ -713,14 +745,6 @@ class WorkflowsClient {
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -750,8 +774,8 @@ class WorkflowsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StreamRange<google::longrunning::Operation> ListOperations(
@@ -777,8 +801,8 @@ class WorkflowsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
@@ -809,8 +833,8 @@ class WorkflowsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> GetOperation(
@@ -836,7 +860,7 @@ class WorkflowsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L201}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
   Status DeleteOperation(std::string const& name, Options opts = {});
@@ -865,7 +889,7 @@ class WorkflowsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L201}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
   Status DeleteOperation(

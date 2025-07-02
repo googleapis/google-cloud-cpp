@@ -14,7 +14,7 @@
 
 #include "google/cloud/internal/curl_impl.h"
 #include "google/cloud/common_options.h"
-#include "google/cloud/testing_util/status_matchers.h"
+#include "google/cloud/rest_options.h"
 #include <gmock/gmock.h>
 #include <vector>
 
@@ -180,6 +180,216 @@ TEST_F(CurlImplTest, CurlOptProxyPassword) {
       CurlOptProxyPassword(Options{}.set<ProxyOption>(
           ProxyConfig().set_hostname("hostname").set_password("password"))),
       absl::make_optional(std::string("password")));
+}
+
+TEST_F(CurlImplTest, CurlOptInterface) {
+  EXPECT_EQ(CurlOptInterface(Options{}), absl::nullopt);
+  EXPECT_EQ(CurlOptInterface(Options{}.set<Interface>("interface")),
+            absl::make_optional(std::string("interface")));
+}
+
+TEST_F(CurlImplTest, MergeAndWriteHeadersEmpty) {
+  std::vector<std::string> headers_written;
+  auto write_fn = [&headers_written](HttpHeader const& header) {
+    headers_written.push_back(std::string(header));
+  };
+  auto impl = CurlImpl(std::move(handle_), factory_, {});
+  impl.MergeAndWriteHeaders(write_fn);
+  EXPECT_THAT(headers_written, ElementsAre());
+}
+
+TEST_F(CurlImplTest, MergeAndWriteHeadersOneEntry) {
+  std::vector<std::string> headers_written;
+  auto write_fn = [&headers_written](HttpHeader const& header) {
+    headers_written.push_back(std::string(header));
+  };
+  auto impl = CurlImpl(std::move(handle_), factory_, {});
+  HttpHeader h("my-key", "my-value");
+  impl.SetHeader(h);
+  impl.MergeAndWriteHeaders(write_fn);
+  EXPECT_THAT(headers_written, ElementsAre(std::string(h)));
+}
+
+TEST_F(CurlImplTest, MergeAndWriteHeadersTwoUniqueEntries) {
+  std::vector<std::string> headers_written;
+  auto write_fn = [&headers_written](HttpHeader const& header) {
+    headers_written.push_back(std::string(header));
+  };
+  auto impl = CurlImpl(std::move(handle_), factory_, {});
+  HttpHeader h("my-key", "my-value");
+  impl.SetHeader(h);
+  HttpHeader h2("my-key2", "my-value2");
+  impl.SetHeader(h2);
+  impl.MergeAndWriteHeaders(write_fn);
+  EXPECT_THAT(headers_written, ElementsAre(std::string(h), std::string(h2)));
+}
+
+TEST_F(CurlImplTest, MergeAndWriteHeadersMoreThanTwoUniqueEntries) {
+  std::vector<std::string> headers_written;
+  auto write_fn = [&headers_written](HttpHeader const& header) {
+    headers_written.push_back(std::string(header));
+  };
+  auto impl = CurlImpl(std::move(handle_), factory_, {});
+  HttpHeader h("my-key", "my-value");
+  impl.SetHeader(h);
+  HttpHeader h2("my-key2", "my-value2");
+  impl.SetHeader(h2);
+  HttpHeader h3("my-key3", "my-value3");
+  impl.SetHeader(h3);
+  impl.MergeAndWriteHeaders(write_fn);
+  EXPECT_THAT(headers_written,
+              ElementsAre(std::string(h), std::string(h2), std::string(h3)));
+}
+
+TEST_F(CurlImplTest, MergeAndWriteHeadersTwoDuplicateEntries) {
+  std::vector<std::string> headers_written;
+  auto write_fn = [&headers_written](HttpHeader const& header) {
+    headers_written.push_back(std::string(header));
+  };
+
+  auto impl = CurlImpl(std::move(handle_), factory_, {});
+  HttpHeader h("my-key", "my-value");
+  impl.SetHeader(h);
+  HttpHeader h2("my-key", "my-value2");
+  impl.SetHeader(h2);
+  impl.MergeAndWriteHeaders(write_fn);
+  HttpHeader expected("my-key", "my-value,my-value2");
+  EXPECT_THAT(headers_written, ElementsAre(std::string(expected)));
+}
+
+TEST_F(CurlImplTest, MergeAndWriteHeadersMoreThanTwoDuplicateEntries) {
+  std::vector<std::string> headers_written;
+  auto write_fn = [&headers_written](HttpHeader const& header) {
+    headers_written.push_back(std::string(header));
+  };
+
+  auto impl = CurlImpl(std::move(handle_), factory_, {});
+  HttpHeader h("my-key", "my-value");
+  impl.SetHeader(h);
+  HttpHeader h2("my-key", "my-value2");
+  impl.SetHeader(h2);
+  HttpHeader h3("my-key", "my-value3");
+  impl.SetHeader(h3);
+  impl.MergeAndWriteHeaders(write_fn);
+  HttpHeader expected("my-key", "my-value,my-value2,my-value3");
+  EXPECT_THAT(headers_written, ElementsAre(std::string(expected)));
+}
+
+TEST_F(CurlImplTest, MergeAndWriteHeadersBeginningDuplicateEntries) {
+  std::vector<std::string> headers_written;
+  auto write_fn = [&headers_written](HttpHeader const& header) {
+    headers_written.push_back(std::string(header));
+  };
+
+  auto impl = CurlImpl(std::move(handle_), factory_, {});
+  HttpHeader i("i-key", "value");
+  impl.SetHeader(i);
+  HttpHeader h("h-key", "my-value");
+  impl.SetHeader(h);
+  HttpHeader k("k-key", "my-value");
+  impl.SetHeader(k);
+  HttpHeader h2("h-key", "my-value2");
+  impl.SetHeader(h2);
+  HttpHeader h3("h-key", "my-value3");
+  impl.SetHeader(h3);
+
+  impl.MergeAndWriteHeaders(write_fn);
+  HttpHeader i_expected("i-key", "value");
+  HttpHeader h_expected("h-key", "my-value,my-value2,my-value3");
+  HttpHeader k_expected("k-key", "my-value");
+  EXPECT_THAT(headers_written,
+              ElementsAre(std::string(h_expected), std::string(i_expected),
+                          std::string(k_expected)));
+}
+
+TEST_F(CurlImplTest, MergeAndWriteHeadersMiddleDuplicateEntries) {
+  std::vector<std::string> headers_written;
+  auto write_fn = [&headers_written](HttpHeader const& header) {
+    headers_written.push_back(std::string(header));
+  };
+
+  auto impl = CurlImpl(std::move(handle_), factory_, {});
+  HttpHeader i("i-key", "value");
+  impl.SetHeader(i);
+  HttpHeader h("h-key", "my-value");
+  impl.SetHeader(h);
+  HttpHeader k("k-key", "my-value");
+  impl.SetHeader(k);
+  HttpHeader i2("i-key", "my-value2");
+  impl.SetHeader(i2);
+  HttpHeader i3("i-key", "my-value3");
+  impl.SetHeader(i3);
+
+  impl.MergeAndWriteHeaders(write_fn);
+  HttpHeader i_expected("i-key", "value,my-value2,my-value3");
+  HttpHeader h_expected("h-key", "my-value");
+  HttpHeader k_expected("k-key", "my-value");
+  EXPECT_THAT(headers_written,
+              ElementsAre(std::string(h_expected), std::string(i_expected),
+                          std::string(k_expected)));
+}
+
+TEST_F(CurlImplTest, MergeAndWriteHeadersEndingDuplicateEntries) {
+  std::vector<std::string> headers_written;
+  auto write_fn = [&headers_written](HttpHeader const& header) {
+    headers_written.push_back(std::string(header));
+  };
+
+  auto impl = CurlImpl(std::move(handle_), factory_, {});
+  HttpHeader i("i-key", "value");
+  impl.SetHeader(i);
+  HttpHeader h("h-key", "my-value");
+  impl.SetHeader(h);
+  HttpHeader k("k-key", "my-value");
+  impl.SetHeader(k);
+  HttpHeader k2("k-key", "my-value2");
+  impl.SetHeader(k2);
+  HttpHeader k3("k-key", "my-value3");
+  impl.SetHeader(k3);
+
+  impl.MergeAndWriteHeaders(write_fn);
+  HttpHeader i_expected("i-key", "value");
+  HttpHeader h_expected("h-key", "my-value");
+  HttpHeader k_expected("k-key", "my-value,my-value2,my-value3");
+  EXPECT_THAT(headers_written,
+              ElementsAre(std::string(h_expected), std::string(i_expected),
+                          std::string(k_expected)));
+}
+
+TEST_F(CurlImplTest, MergeAndWriteHeadersDoNotMergeAuthorization) {
+  std::vector<std::string> headers_written;
+  auto write_fn = [&headers_written](HttpHeader const& header) {
+    headers_written.push_back(std::string(header));
+  };
+
+  auto impl = CurlImpl(std::move(handle_), factory_, {});
+  HttpHeader auth("Authorization", "Bearer my-token");
+  impl.SetHeader(auth);
+  HttpHeader auth2("Authorization", "Bearer my-token");
+  impl.SetHeader(auth2);
+  HttpHeader auth3("authorization", "Bearer my-token");
+  impl.SetHeader(auth3);
+  impl.MergeAndWriteHeaders(write_fn);
+  HttpHeader expected("Authorization", "Bearer my-token");
+  EXPECT_THAT(headers_written, ElementsAre(std::string(expected)));
+}
+
+TEST_F(CurlImplTest, MergeAndWriteHeadersDoNotMergeContentLength) {
+  std::vector<std::string> headers_written;
+  auto write_fn = [&headers_written](HttpHeader const& header) {
+    headers_written.push_back(std::string(header));
+  };
+
+  auto impl = CurlImpl(std::move(handle_), factory_, {});
+  HttpHeader auth("content-length", "42");
+  impl.SetHeader(auth);
+  HttpHeader auth2("Content-Length", "43");
+  impl.SetHeader(auth2);
+  HttpHeader auth3("content-length", "44");
+  impl.SetHeader(auth3);
+  impl.MergeAndWriteHeaders(write_fn);
+  HttpHeader expected("content-length", "42");
+  EXPECT_THAT(headers_written, ElementsAre(std::string(expected)));
 }
 
 }  // namespace

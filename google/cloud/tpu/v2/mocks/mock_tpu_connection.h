@@ -225,6 +225,133 @@ class MockTpuConnection : public tpu_v2::TpuConnection {
   MOCK_METHOD(future<StatusOr<google::cloud::tpu::v2::Node>>, UpdateNode,
               (google::longrunning::Operation const& operation), (override));
 
+  MOCK_METHOD((StreamRange<google::cloud::tpu::v2::QueuedResource>),
+              ListQueuedResources,
+              (google::cloud::tpu::v2::ListQueuedResourcesRequest request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::tpu::v2::QueuedResource>,
+              GetQueuedResource,
+              (google::cloud::tpu::v2::GetQueuedResourceRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateQueuedResource(Matcher<google::cloud::tpu::v2::CreateQueuedResourceRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::tpu::v2::QueuedResource>>,
+      CreateQueuedResource,
+      (google::cloud::tpu::v2::CreateQueuedResourceRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateQueuedResource(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateQueuedResource,
+      (NoAwaitTag,
+       google::cloud::tpu::v2::CreateQueuedResourceRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateQueuedResource(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::tpu::v2::QueuedResource>>,
+              CreateQueuedResource,
+              (google::longrunning::Operation const& operation), (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteQueuedResource(Matcher<google::cloud::tpu::v2::DeleteQueuedResourceRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::tpu::v2::OperationMetadata>>,
+      DeleteQueuedResource,
+      (google::cloud::tpu::v2::DeleteQueuedResourceRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteQueuedResource(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteQueuedResource,
+      (NoAwaitTag,
+       google::cloud::tpu::v2::DeleteQueuedResourceRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteQueuedResource(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::tpu::v2::OperationMetadata>>,
+              DeleteQueuedResource,
+              (google::longrunning::Operation const& operation), (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ResetQueuedResource(Matcher<google::cloud::tpu::v2::ResetQueuedResourceRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::tpu::v2::QueuedResource>>,
+      ResetQueuedResource,
+      (google::cloud::tpu::v2::ResetQueuedResourceRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, ResetQueuedResource(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, ResetQueuedResource,
+      (NoAwaitTag,
+       google::cloud::tpu::v2::ResetQueuedResourceRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ResetQueuedResource(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::tpu::v2::QueuedResource>>,
+              ResetQueuedResource,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(
       StatusOr<google::cloud::tpu::v2::GenerateServiceIdentityResponse>,
       GenerateServiceIdentity,
