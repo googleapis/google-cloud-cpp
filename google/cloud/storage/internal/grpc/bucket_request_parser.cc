@@ -229,8 +229,7 @@ Status PatchIpFilter(Bucket& b, nlohmann::json const& p) {
     auto& pns = *ip_filter.mutable_public_network_source();
     auto const& public_network_source = p["publicNetworkSource"];
     if (public_network_source.contains("allowedIpCidrRanges")) {
-      for (auto const& v :
-           public_network_source["allowedIpCidrRanges"]) {
+      for (auto const& v : public_network_source["allowedIpCidrRanges"]) {
         pns.add_allowed_ip_cidr_ranges(v.get<std::string>());
       }
     }
