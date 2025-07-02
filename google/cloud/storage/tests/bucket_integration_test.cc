@@ -568,7 +568,6 @@ TEST_F(BucketIntegrationTest, PatchIpFilter) {
   ASSERT_STATUS_OK(insert_meta);
   ScheduleForDelete(*insert_meta);
 
-  // Patch the iam_configuration().
   BucketIpFilter ip_filter;
   ip_filter.mode = "Enabled";
   ip_filter.allow_all_service_agent_access = true;
