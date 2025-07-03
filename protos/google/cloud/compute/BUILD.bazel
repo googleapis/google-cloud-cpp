@@ -16,7 +16,7 @@ load(
     "@com_google_googleapis_imports//:imports.bzl",
     "cc_proto_library",
 )
-load("@rules_proto//proto:defs.bzl", "proto_library")
+load("@com_google_protobuf//bazel:proto_library.bzl", "proto_library")
 load("//google/cloud/compute:service_dirs.bzl", "operation_service_dirs", "service_dirs")
 
 package(default_visibility = ["//visibility:private"])
