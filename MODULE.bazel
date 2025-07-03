@@ -62,6 +62,8 @@ archive_override(
         "https://github.com/googleapis/googleapis/archive/ea40277431fb821fd5a9b1eb8227535846388770.tar.gz",
     ],
 )
+bazel_dep(name = "googleapis-cc", version = "1.0.0")
+bazel_dep(name = "googleapis-grpc-cc", version = "1.0.0")
 
 switched_rules = use_extension("@com_google_googleapis//:extensions.bzl", "switched_rules")
 switched_rules.use_languages(
