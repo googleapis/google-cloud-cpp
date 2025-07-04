@@ -14,6 +14,7 @@
 
 #include "google/cloud/bigtable/emulator/column_family.h"
 #include "google/cloud/bigtable/emulator/table.h"
+#include "google/cloud/bigtable/emulator/test_util.h"
 #include "google/cloud/internal/big_endian.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/status.h"
@@ -40,25 +41,6 @@ namespace bigtable {
 namespace emulator {
 using ::google::protobuf::TextFormat;
 using std::string;
-
-struct SetCellParams {
-  std::string column_family_name;
-  std::string column_qualifier;
-  int64_t timestamp_micros;
-  std::string data;
-};
-
-StatusOr<std::shared_ptr<Table>> CreateTable(
-    std::string const& table_name, std::vector<std::string>& column_families) {
-  ::google::bigtable::admin::v2::Table schema;
-  schema.set_name(table_name);
-  for (auto& column_family_name : column_families) {
-    (*schema.mutable_column_families())[column_family_name] =
-        ::google::bigtable::admin::v2::ColumnFamily();
-  }
-
-  return Table::Create(schema);
-}
 
 ::google::bigtable::admin::v2::ColumnFamily MakeBEAggregateCFProto(
     ::google::bigtable::admin::v2::Type_Aggregate::AggregatorCase aggregator) {
@@ -149,26 +131,6 @@ Status DeleteFromColumns(
     delete_from_column_mutation->set_column_qualifier(param.column_qualifier);
     delete_from_column_mutation->set_allocated_time_range(
         param.timestamp_range);
-  }
-
-  return table->MutateRow(mutation_request);
-}
-
-Status SetCells(
-    std::shared_ptr<google::cloud::bigtable::emulator::Table>& table,
-    std::string const& table_name, std::string const& row_key,
-    std::vector<SetCellParams>& set_cell_params) {
-  ::google::bigtable::v2::MutateRowRequest mutation_request;
-  mutation_request.set_table_name(table_name);
-  mutation_request.set_row_key(row_key);
-
-  for (auto m : set_cell_params) {
-    auto* mutation_request_mutation = mutation_request.add_mutations();
-    auto* set_cell_mutation = mutation_request_mutation->mutable_set_cell();
-    set_cell_mutation->set_family_name(m.column_family_name);
-    set_cell_mutation->set_column_qualifier(m.column_qualifier);
-    set_cell_mutation->set_timestamp_micros(m.timestamp_micros);
-    set_cell_mutation->set_value(m.data);
   }
 
   return table->MutateRow(mutation_request);

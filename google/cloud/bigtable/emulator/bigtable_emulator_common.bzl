@@ -26,6 +26,7 @@ bigtable_emulator_common_hdrs = [
     "row_streamer.h",
     "server.h",
     "table.h",
+    "test_util.h",
     "to_grpc_status.h",
 ]
 
@@ -38,5 +39,6 @@ bigtable_emulator_common_srcs = [
     "row_streamer.cc",
     "server.cc",
     "table.cc",
+    "test_util.cc",
     "to_grpc_status.cc",
 ]

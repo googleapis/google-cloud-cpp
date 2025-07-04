@@ -214,7 +214,7 @@ class CellStream {
   CellView const* operator->() const { return &Value(); }
   /// equivalent to `HasValue()`
   explicit operator bool() const { return HasValue(); }
-  AbstractCellStreamImpl const& impl() const { return *impl_; }
+  AbstractCellStreamImpl& impl() const { return *impl_; }
 
  private:
   void NextColumn();
