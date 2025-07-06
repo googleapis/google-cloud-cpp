@@ -38,8 +38,10 @@ ObjectDescriptorImpl::ObjectDescriptorImpl(
       make_stream_(std::move(make_stream)),
       read_object_spec_(std::move(read_object_spec)),
       options_(std::move(options)),
-      active_stream_(0),
-      streams_{std::move(stream)} {}
+      streams_{std::move(stream)} {
+        std::unordered_map<std::int64_t, std::shared_ptr<ReadRange>> initial_ranges;
+        active_ranges_.push_back(std::move(initial_ranges));
+      }
 
 ObjectDescriptorImpl::~ObjectDescriptorImpl() {
   for (auto const& stream : streams_) {
@@ -74,9 +76,10 @@ void ObjectDescriptorImpl::MakeSubsequentStream() {
   std::unique_lock<std::mutex> lk(mu_);
   active_stream_ = streams_.size();
   streams_.push_back(std::move(stream));
+  std::unordered_map<std::int64_t, std::shared_ptr<ReadRange>> active_ranges;
+  active_ranges_.push_back(std::move(active_ranges));
   lk.unlock();
-
-  Start(std::move(stream_result->first_response));
+  OnRead(std::move(stream_result->first_response));
 }
 
 std::unique_ptr<storage_experimental::AsyncReaderConnection>
@@ -93,7 +96,7 @@ ObjectDescriptorImpl::Read(ReadParams p) {
 
   std::unique_lock<std::mutex> lk(mu_);
   auto const id = ++read_id_generator_;
-  active_ranges_.emplace(id, range);
+  active_ranges_[active_stream_].emplace(id, range);
   auto& read_range = *next_request_.add_read_ranges();
   read_range.set_read_id(id);
   read_range.set_read_offset(p.start);
@@ -170,9 +173,10 @@ void ObjectDescriptorImpl::OnRead(
 
 void ObjectDescriptorImpl::CleanupDoneRanges(
     std::unique_lock<std::mutex> const&) {
-  for (auto i = active_ranges_.begin(); i != active_ranges_.end();) {
+  auto &active_ranges = active_ranges_[active_stream_];
+  for (auto i = active_ranges.begin(); i != active_ranges.end();) {
     if (i->second->IsDone()) {
-      i = active_ranges_.erase(i);
+      i = active_ranges.erase(i);
     } else {
       ++i;
     }
@@ -209,7 +213,7 @@ void ObjectDescriptorImpl::Resume(google::rpc::Status const& proto_status) {
   ApplyRedirectErrors(read_object_spec_, proto_status);
   auto request = google::storage::v2::BidiReadObjectRequest{};
   *request.mutable_read_object_spec() = read_object_spec_;
-  for (auto const& kv : active_ranges_) {
+  for (auto const& kv : active_ranges_[active_stream_]) {
     auto range = kv.second->RangeForResume(kv.first);
     if (!range) continue;
     *request.add_read_ranges() = *std::move(range);
