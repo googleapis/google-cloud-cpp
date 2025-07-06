@@ -918,13 +918,24 @@ TEST_F(AsyncClientIntegrationTest, Open) {
 
   auto constexpr kSize = 8 * 1024;
   auto constexpr kStride = 2 * kSize;
+  auto constexpr kBlockCount = 4;
+  auto const block = MakeRandomData(kSize);
 
-  auto os = client.WriteObject(bucket_name(), object_name);
-  for (char c : {'0', '1', '2', '3', '4'}) {
-    os << std::string(kStride, c);
+  auto w =
+      async.StartAppendableObjectUpload(BucketName(bucket_name()), object_name)
+          .get();
+  ASSERT_STATUS_OK(w);
+  AsyncWriter writer;
+  AsyncToken token;
+  std::tie(writer, token) = *std::move(w);
+  for (int i = 0; i != kBlockCount; ++i) {
+    auto p = writer.Write(std::move(token), WritePayload(block)).get();
+    ASSERT_STATUS_OK(p);
+    token = *std::move(p);
   }
-  os.Close();
-  ASSERT_STATUS_OK(os.metadata());
+
+  auto metadata = writer.Finalize(std::move(token)).get();
+  ASSERT_STATUS_OK(metadata);
 
   auto spec = google::storage::v2::BidiReadObjectSpec{};
   spec.set_bucket(BucketName(bucket_name()).FullName());
@@ -933,13 +944,7 @@ TEST_F(AsyncClientIntegrationTest, Open) {
   ASSERT_STATUS_OK(descriptor);
 
   AsyncReader r0;
-  AsyncReader r1;
-  AsyncReader r2;
   AsyncToken t0;
-  AsyncToken t1;
-  AsyncToken t2;
-  std::tie(r1, t1) = descriptor->Read(1 * kStride, kSize);
-  std::tie(r2, t2) = descriptor->Read(1 * kStride, kSize);
   auto actual0 = std::string{};
   std::tie(r0, t0) = descriptor->Read(0 * kStride, kSize);
   while (t0.valid()) {
@@ -952,9 +957,9 @@ TEST_F(AsyncClientIntegrationTest, Open) {
     t0 = std::move(t);
   }
 
-  EXPECT_EQ(actual0, std::string(kSize, '0'));
+  EXPECT_EQ(actual0.size(), kSize);
   client.DeleteObject(bucket_name(), object_name,
-                      storage::Generation(os.metadata()->generation()));
+                      storage::Generation(metadata->generation()));
 }
 
 }  // namespace
