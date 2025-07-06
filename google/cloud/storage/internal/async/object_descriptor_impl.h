@@ -72,7 +72,7 @@ class ObjectDescriptorImpl
   // This may seem expensive, but it is less bug-prone than iterating over
   // the map with the lock held.
   auto CopyActiveRanges(std::unique_lock<std::mutex> const&) const {
-    return active_ranges_;
+    return active_ranges_[active_stream_];
   }
 
   auto CopyActiveRanges() const {
@@ -106,10 +106,10 @@ class ObjectDescriptorImpl
   bool write_pending_ = false;
   google::storage::v2::BidiReadObjectRequest next_request_;
 
-  std::unordered_map<std::int64_t, std::shared_ptr<ReadRange>> active_ranges_;
+  std::vector<std::unordered_map<std::int64_t, std::shared_ptr<ReadRange>>> active_ranges_;
   Options options_;
-  std::int64_t active_stream_ = 0;
-  std::vector<std::shared_ptr<OpenStream>> streams_ = {};
+  std::size_t active_stream_ = 0;
+  std::vector<std::shared_ptr<OpenStream>> streams_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
