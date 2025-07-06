@@ -39,9 +39,8 @@ ObjectDescriptorImpl::ObjectDescriptorImpl(
       read_object_spec_(std::move(read_object_spec)),
       options_(std::move(options)),
       streams_{std::move(stream)} {
-        std::unordered_map<std::int64_t, std::shared_ptr<ReadRange>> initial_ranges;
-        active_ranges_.push_back(std::move(initial_ranges));
-      }
+  AddNewActiveRanges();
+}
 
 ObjectDescriptorImpl::~ObjectDescriptorImpl() {
   for (auto const& stream : streams_) {
@@ -60,6 +59,10 @@ void ObjectDescriptorImpl::Cancel() {
   }
 }
 
+void ObjectDescriptorImpl::CancelStream(std::shared_ptr<OpenStream> stream) {
+  stream->Cancel();
+}
+
 absl::optional<google::storage::v2::Object> ObjectDescriptorImpl::metadata()
     const {
   std::unique_lock<std::mutex> lk(mu_);
@@ -76,8 +79,7 @@ void ObjectDescriptorImpl::MakeSubsequentStream() {
   std::unique_lock<std::mutex> lk(mu_);
   active_stream_ = streams_.size();
   streams_.push_back(std::move(stream));
-  std::unordered_map<std::int64_t, std::shared_ptr<ReadRange>> active_ranges;
-  active_ranges_.push_back(std::move(active_ranges));
+  AddNewActiveRanges(lk);
   lk.unlock();
   OnRead(std::move(stream_result->first_response));
 }
@@ -173,7 +175,7 @@ void ObjectDescriptorImpl::OnRead(
 
 void ObjectDescriptorImpl::CleanupDoneRanges(
     std::unique_lock<std::mutex> const&) {
-  auto &active_ranges = active_ranges_[active_stream_];
+  auto& active_ranges = active_ranges_[active_stream_];
   for (auto i = active_ranges.begin(); i != active_ranges.end();) {
     if (i->second->IsDone()) {
       i = active_ranges.erase(i);
@@ -204,6 +206,10 @@ void ObjectDescriptorImpl::OnFinish(Status const& status) {
   for (auto const& kv : copy) {
     kv.second->OnFinish(status);
   }
+  CancelStream(streams_[active_stream_]);
+  streams_.erase(streams_.begin() + active_stream_);
+  active_ranges_.erase(active_ranges_.begin() + active_stream_);
+  active_stream_ = streams_.size();
 }
 
 void ObjectDescriptorImpl::Resume(google::rpc::Status const& proto_status) {
@@ -228,7 +234,9 @@ void ObjectDescriptorImpl::Resume(google::rpc::Status const& proto_status) {
 void ObjectDescriptorImpl::OnResume(StatusOr<OpenStreamResult> result) {
   if (!result) return OnFinish(std::move(result).status());
   std::unique_lock<std::mutex> lk(mu_);
-  streams_[0] = std::move(result->stream);
+  active_stream_ = streams_.size();
+  streams_.push_back(std::move(result->stream));
+  AddNewActiveRanges(lk);
   // TODO(#15105) - this should be done without release the lock.
   Flush(std::move(lk));
   OnRead(std::move(result->first_response));
