@@ -79,10 +79,20 @@ class ObjectDescriptorImpl
     return CopyActiveRanges(std::unique_lock<std::mutex>(mu_));
   }
 
+  auto AddNewActiveRanges(std::unique_lock<std::mutex> const&) {
+    std::unordered_map<std::int64_t, std::shared_ptr<ReadRange>> active_ranges;
+    return active_ranges_.push_back(std::move(active_ranges));
+  }
+
+  auto AddNewActiveRanges() {
+    return AddNewActiveRanges(std::unique_lock<std::mutex>(mu_));
+  }
+
   auto CurrentStream(std::unique_lock<std::mutex>) const {
     return streams_[active_stream_];
   }
 
+  void CancelStream(std::shared_ptr<OpenStream> stream);
   void Flush(std::unique_lock<std::mutex> lk);
   void OnWrite(bool ok);
   void DoRead(std::unique_lock<std::mutex>);
@@ -106,7 +116,8 @@ class ObjectDescriptorImpl
   bool write_pending_ = false;
   google::storage::v2::BidiReadObjectRequest next_request_;
 
-  std::vector<std::unordered_map<std::int64_t, std::shared_ptr<ReadRange>>> active_ranges_;
+  std::vector<std::unordered_map<std::int64_t, std::shared_ptr<ReadRange>>>
+      active_ranges_;
   Options options_;
   std::size_t active_stream_ = 0;
   std::vector<std::shared_ptr<OpenStream>> streams_;
