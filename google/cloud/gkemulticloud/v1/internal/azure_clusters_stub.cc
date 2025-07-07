@@ -17,10 +17,10 @@
 // source: google/cloud/gkemulticloud/v1/azure_service.proto
 
 #include "google/cloud/gkemulticloud/v1/internal/azure_clusters_stub.h"
+#include "google/cloud/gkemulticloud/v1/azure_service.grpc.pb.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/gkemulticloud/v1/azure_service.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>
 

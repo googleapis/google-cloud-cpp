@@ -17,7 +17,7 @@
 // source: google/cloud/dataproc/v1/workflow_templates.proto
 
 #include "google/cloud/dataproc/v1/internal/workflow_template_auth_decorator.h"
-#include <google/cloud/dataproc/v1/workflow_templates.grpc.pb.h>
+#include "google/cloud/dataproc/v1/workflow_templates.grpc.pb.h"
 #include <memory>
 #include <utility>
 

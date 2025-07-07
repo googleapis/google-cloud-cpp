@@ -17,7 +17,7 @@
 // source: google/cloud/retail/v2/control_service.proto
 
 #include "google/cloud/retail/v2/internal/control_auth_decorator.h"
-#include <google/cloud/retail/v2/control_service.grpc.pb.h>
+#include "google/cloud/retail/v2/control_service.grpc.pb.h"
 #include <memory>
 #include <utility>
 

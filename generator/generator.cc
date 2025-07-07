@@ -22,7 +22,7 @@
 #include "google/cloud/internal/filesystem.h"
 #include "google/cloud/status_or.h"
 #include "absl/strings/str_split.h"
-#include <google/api/client.pb.h>
+#include "google/api/client.pb.h"
 #include <future>
 #include <string>
 #include <vector>

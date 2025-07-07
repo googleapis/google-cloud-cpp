@@ -19,8 +19,8 @@
 #include "google/cloud/storagecontrol/v2/internal/storage_control_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/longrunning/operations.grpc.pb.h>
-#include <google/storage/control/v2/storage_control.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
+#include "google/storage/control/v2/storage_control.grpc.pb.h"
 #include <memory>
 #include <utility>
 
@@ -283,6 +283,90 @@ DefaultStorageControlStub::ListAnywhereCaches(
     google::storage::control::v2::ListAnywhereCachesRequest const& request) {
   google::storage::control::v2::ListAnywhereCachesResponse response;
   auto status = grpc_stub_->ListAnywhereCaches(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::storage::control::v2::IntelligenceConfig>
+DefaultStorageControlStub::GetProjectIntelligenceConfig(
+    grpc::ClientContext& context, Options const&,
+    google::storage::control::v2::GetProjectIntelligenceConfigRequest const&
+        request) {
+  google::storage::control::v2::IntelligenceConfig response;
+  auto status =
+      grpc_stub_->GetProjectIntelligenceConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::storage::control::v2::IntelligenceConfig>
+DefaultStorageControlStub::UpdateProjectIntelligenceConfig(
+    grpc::ClientContext& context, Options const&,
+    google::storage::control::v2::UpdateProjectIntelligenceConfigRequest const&
+        request) {
+  google::storage::control::v2::IntelligenceConfig response;
+  auto status =
+      grpc_stub_->UpdateProjectIntelligenceConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::storage::control::v2::IntelligenceConfig>
+DefaultStorageControlStub::GetFolderIntelligenceConfig(
+    grpc::ClientContext& context, Options const&,
+    google::storage::control::v2::GetFolderIntelligenceConfigRequest const&
+        request) {
+  google::storage::control::v2::IntelligenceConfig response;
+  auto status =
+      grpc_stub_->GetFolderIntelligenceConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::storage::control::v2::IntelligenceConfig>
+DefaultStorageControlStub::UpdateFolderIntelligenceConfig(
+    grpc::ClientContext& context, Options const&,
+    google::storage::control::v2::UpdateFolderIntelligenceConfigRequest const&
+        request) {
+  google::storage::control::v2::IntelligenceConfig response;
+  auto status =
+      grpc_stub_->UpdateFolderIntelligenceConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::storage::control::v2::IntelligenceConfig>
+DefaultStorageControlStub::GetOrganizationIntelligenceConfig(
+    grpc::ClientContext& context, Options const&,
+    google::storage::control::v2::
+        GetOrganizationIntelligenceConfigRequest const& request) {
+  google::storage::control::v2::IntelligenceConfig response;
+  auto status = grpc_stub_->GetOrganizationIntelligenceConfig(&context, request,
+                                                              &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::storage::control::v2::IntelligenceConfig>
+DefaultStorageControlStub::UpdateOrganizationIntelligenceConfig(
+    grpc::ClientContext& context, Options const&,
+    google::storage::control::v2::
+        UpdateOrganizationIntelligenceConfigRequest const& request) {
+  google::storage::control::v2::IntelligenceConfig response;
+  auto status = grpc_stub_->UpdateOrganizationIntelligenceConfig(
+      &context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

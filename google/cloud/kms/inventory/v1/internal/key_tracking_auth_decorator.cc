@@ -17,7 +17,7 @@
 // source: google/cloud/kms/inventory/v1/key_tracking_service.proto
 
 #include "google/cloud/kms/inventory/v1/internal/key_tracking_auth_decorator.h"
-#include <google/cloud/kms/inventory/v1/key_tracking_service.grpc.pb.h>
+#include "google/cloud/kms/inventory/v1/key_tracking_service.grpc.pb.h"
 #include <memory>
 #include <utility>
 

@@ -17,7 +17,7 @@
 // source: google/cloud/dataplex/v1/metadata.proto
 
 #include "google/cloud/dataplex/v1/internal/metadata_auth_decorator.h"
-#include <google/cloud/dataplex/v1/metadata.grpc.pb.h>
+#include "google/cloud/dataplex/v1/metadata.grpc.pb.h"
 #include <memory>
 #include <utility>
 

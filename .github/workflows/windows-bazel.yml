@@ -88,6 +88,9 @@ jobs:
     - name: Pre Build Disk Space
       shell: bash
       run: df -m
+    - name: Check installed curl version
+      shell: bash
+      run: curl --version
     - name: Build google-cloud-cpp
       shell: bash
       run: |

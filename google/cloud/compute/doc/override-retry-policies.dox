@@ -108,7 +108,9 @@ Follow these links to find examples for other \c *Client classes:
 - [\c compute_instance_templates_v1::InstanceTemplatesClient](@ref compute_instance_templates_v1::InstanceTemplatesClient-retry-snippet)
 - [\c compute_instances_v1::InstancesClient](@ref compute_instances_v1::InstancesClient-retry-snippet)
 - [\c compute_instant_snapshots_v1::InstantSnapshotsClient](@ref compute_instant_snapshots_v1::InstantSnapshotsClient-retry-snippet)
+- [\c compute_interconnect_attachment_groups_v1::InterconnectAttachmentGroupsClient](@ref compute_interconnect_attachment_groups_v1::InterconnectAttachmentGroupsClient-retry-snippet)
 - [\c compute_interconnect_attachments_v1::InterconnectAttachmentsClient](@ref compute_interconnect_attachments_v1::InterconnectAttachmentsClient-retry-snippet)
+- [\c compute_interconnect_groups_v1::InterconnectGroupsClient](@ref compute_interconnect_groups_v1::InterconnectGroupsClient-retry-snippet)
 - [\c compute_interconnect_locations_v1::InterconnectLocationsClient](@ref compute_interconnect_locations_v1::InterconnectLocationsClient-retry-snippet)
 - [\c compute_interconnect_remote_locations_v1::InterconnectRemoteLocationsClient](@ref compute_interconnect_remote_locations_v1::InterconnectRemoteLocationsClient-retry-snippet)
 - [\c compute_interconnects_v1::InterconnectsClient](@ref compute_interconnects_v1::InterconnectsClient-retry-snippet)
@@ -544,6 +546,18 @@ Assuming you have created a custom idempotency policy. Such as:
 
 */
 
+/*! @page compute_interconnect_attachment_groups_v1::InterconnectAttachmentGroupsClient-retry-snippet Override compute_interconnect_attachment_groups_v1::InterconnectAttachmentGroupsClient Retry Policies
+
+This shows how to override the retry policies for compute_interconnect_attachment_groups_v1::InterconnectAttachmentGroupsClient:
+
+@snippet google/cloud/compute/interconnect_attachment_groups/v1/samples/interconnect_attachment_groups_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/interconnect_attachment_groups/v1/samples/interconnect_attachment_groups_client_samples.cc custom-idempotency-policy
+
+*/
+
 /*! @page compute_interconnect_attachments_v1::InterconnectAttachmentsClient-retry-snippet Override compute_interconnect_attachments_v1::InterconnectAttachmentsClient Retry Policies
 
 This shows how to override the retry policies for compute_interconnect_attachments_v1::InterconnectAttachmentsClient:
@@ -553,6 +567,18 @@ This shows how to override the retry policies for compute_interconnect_attachmen
 Assuming you have created a custom idempotency policy. Such as:
 
 @snippet google/cloud/compute/interconnect_attachments/v1/samples/interconnect_attachments_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_interconnect_groups_v1::InterconnectGroupsClient-retry-snippet Override compute_interconnect_groups_v1::InterconnectGroupsClient Retry Policies
+
+This shows how to override the retry policies for compute_interconnect_groups_v1::InterconnectGroupsClient:
+
+@snippet google/cloud/compute/interconnect_groups/v1/samples/interconnect_groups_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/interconnect_groups/v1/samples/interconnect_groups_client_samples.cc custom-idempotency-policy
 
 */
 

@@ -25,12 +25,15 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::size_t DefaultThreadCount();
 
+Options DefaultCommonOptions(std::string const& location, Options opts);
 Options DefaultCommonOptions(Options opts);
 
+Options DefaultPublisherOptions(std::string const& location, Options opts);
 Options DefaultPublisherOptions(Options opts);
 
 Options DefaultPublisherOptionsOnly(Options opts);
 
+Options DefaultSubscriberOptions(std::string const& location, Options opts);
 Options DefaultSubscriberOptions(Options opts);
 
 Options DefaultSubscriberOptionsOnly(Options opts);

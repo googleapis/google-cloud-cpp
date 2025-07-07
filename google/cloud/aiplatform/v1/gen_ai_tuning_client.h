@@ -26,7 +26,7 @@
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <map>
 #include <memory>
 #include <string>
@@ -314,8 +314,8 @@ class GenAiTuningServiceClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.CancelTuningJobRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/genai_tuning_service.proto#L173}
   /// [google.cloud.aiplatform.v1.GenAiTuningService.GetTuningJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/genai_tuning_service.proto#L54}
-  /// [google.cloud.aiplatform.v1.TuningJob.error]: @googleapis_reference_link{google/cloud/aiplatform/v1/tuning_job.proto#L98}
-  /// [google.cloud.aiplatform.v1.TuningJob.state]: @googleapis_reference_link{google/cloud/aiplatform/v1/tuning_job.proto#L71}
+  /// [google.cloud.aiplatform.v1.TuningJob.error]: @googleapis_reference_link{google/cloud/aiplatform/v1/tuning_job.proto#L99}
+  /// [google.cloud.aiplatform.v1.TuningJob.state]: @googleapis_reference_link{google/cloud/aiplatform/v1/tuning_job.proto#L72}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
@@ -355,8 +355,8 @@ class GenAiTuningServiceClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.CancelTuningJobRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/genai_tuning_service.proto#L173}
   /// [google.cloud.aiplatform.v1.GenAiTuningService.GetTuningJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/genai_tuning_service.proto#L54}
-  /// [google.cloud.aiplatform.v1.TuningJob.error]: @googleapis_reference_link{google/cloud/aiplatform/v1/tuning_job.proto#L98}
-  /// [google.cloud.aiplatform.v1.TuningJob.state]: @googleapis_reference_link{google/cloud/aiplatform/v1/tuning_job.proto#L71}
+  /// [google.cloud.aiplatform.v1.TuningJob.error]: @googleapis_reference_link{google/cloud/aiplatform/v1/tuning_job.proto#L99}
+  /// [google.cloud.aiplatform.v1.TuningJob.state]: @googleapis_reference_link{google/cloud/aiplatform/v1/tuning_job.proto#L72}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on

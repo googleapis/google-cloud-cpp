@@ -17,7 +17,7 @@
 // source: google/cloud/cloudcontrolspartner/v1/core.proto
 
 #include "google/cloud/cloudcontrolspartner/v1/internal/cloud_controls_partner_core_auth_decorator.h"
-#include <google/cloud/cloudcontrolspartner/v1/core.grpc.pb.h>
+#include "google/cloud/cloudcontrolspartner/v1/core.grpc.pb.h"
 #include <memory>
 #include <utility>
 
@@ -109,6 +109,35 @@ CloudControlsPartnerCoreAuth::GetPartner(
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetPartner(context, options, request);
+}
+
+StatusOr<google::cloud::cloudcontrolspartner::v1::Customer>
+CloudControlsPartnerCoreAuth::CreateCustomer(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::cloudcontrolspartner::v1::CreateCustomerRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateCustomer(context, options, request);
+}
+
+StatusOr<google::cloud::cloudcontrolspartner::v1::Customer>
+CloudControlsPartnerCoreAuth::UpdateCustomer(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::cloudcontrolspartner::v1::UpdateCustomerRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateCustomer(context, options, request);
+}
+
+Status CloudControlsPartnerCoreAuth::DeleteCustomer(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::cloudcontrolspartner::v1::DeleteCustomerRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteCustomer(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

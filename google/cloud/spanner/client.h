@@ -41,7 +41,7 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
-#include <google/spanner/v1/spanner.pb.h>
+#include "google/spanner/v1/spanner.pb.h"
 #include <grpcpp/grpcpp.h>
 #include <functional>
 #include <initializer_list>

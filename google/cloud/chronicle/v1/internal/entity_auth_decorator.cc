@@ -17,7 +17,7 @@
 // source: google/cloud/chronicle/v1/entity.proto
 
 #include "google/cloud/chronicle/v1/internal/entity_auth_decorator.h"
-#include <google/cloud/chronicle/v1/entity.grpc.pb.h>
+#include "google/cloud/chronicle/v1/entity.grpc.pb.h"
 #include <memory>
 #include <utility>
 

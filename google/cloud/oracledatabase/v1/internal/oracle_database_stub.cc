@@ -17,10 +17,10 @@
 // source: google/cloud/oracledatabase/v1/oracledatabase.proto
 
 #include "google/cloud/oracledatabase/v1/internal/oracle_database_stub.h"
+#include "google/cloud/oracledatabase/v1/oracledatabase.grpc.pb.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/oracledatabase/v1/oracledatabase.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>
 

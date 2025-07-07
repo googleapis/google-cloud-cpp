@@ -440,6 +440,32 @@ ClusterManagerTracingStub::CheckAutopilotCompatibility(
       child_->CheckAutopilotCompatibility(context, options, request));
 }
 
+StatusOr<google::container::v1::ClusterUpgradeInfo>
+ClusterManagerTracingStub::FetchClusterUpgradeInfo(
+    grpc::ClientContext& context, Options const& options,
+    google::container::v1::FetchClusterUpgradeInfoRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.container.v1.ClusterManager",
+                                     "FetchClusterUpgradeInfo");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->FetchClusterUpgradeInfo(context, options, request));
+}
+
+StatusOr<google::container::v1::NodePoolUpgradeInfo>
+ClusterManagerTracingStub::FetchNodePoolUpgradeInfo(
+    grpc::ClientContext& context, Options const& options,
+    google::container::v1::FetchNodePoolUpgradeInfoRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.container.v1.ClusterManager",
+                                     "FetchNodePoolUpgradeInfo");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->FetchNodePoolUpgradeInfo(context, options, request));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<ClusterManagerStub> MakeClusterManagerTracingStub(

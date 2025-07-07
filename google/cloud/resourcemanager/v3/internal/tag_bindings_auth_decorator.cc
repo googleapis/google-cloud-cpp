@@ -17,7 +17,7 @@
 // source: google/cloud/resourcemanager/v3/tag_bindings.proto
 
 #include "google/cloud/resourcemanager/v3/internal/tag_bindings_auth_decorator.h"
-#include <google/cloud/resourcemanager/v3/tag_bindings.grpc.pb.h>
+#include "google/cloud/resourcemanager/v3/tag_bindings.grpc.pb.h"
 #include <memory>
 #include <utility>
 

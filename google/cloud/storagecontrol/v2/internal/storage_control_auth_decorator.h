@@ -22,7 +22,7 @@
 #include "google/cloud/storagecontrol/v2/internal/storage_control_stub.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <set>
 #include <string>
@@ -143,6 +143,42 @@ class StorageControlAuth : public StorageControlStub {
       grpc::ClientContext& context, Options const& options,
       google::storage::control::v2::ListAnywhereCachesRequest const& request)
       override;
+
+  StatusOr<google::storage::control::v2::IntelligenceConfig>
+  GetProjectIntelligenceConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::storage::control::v2::GetProjectIntelligenceConfigRequest const&
+          request) override;
+
+  StatusOr<google::storage::control::v2::IntelligenceConfig>
+  UpdateProjectIntelligenceConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::storage::control::v2::
+          UpdateProjectIntelligenceConfigRequest const& request) override;
+
+  StatusOr<google::storage::control::v2::IntelligenceConfig>
+  GetFolderIntelligenceConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::storage::control::v2::GetFolderIntelligenceConfigRequest const&
+          request) override;
+
+  StatusOr<google::storage::control::v2::IntelligenceConfig>
+  UpdateFolderIntelligenceConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::storage::control::v2::UpdateFolderIntelligenceConfigRequest const&
+          request) override;
+
+  StatusOr<google::storage::control::v2::IntelligenceConfig>
+  GetOrganizationIntelligenceConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::storage::control::v2::
+          GetOrganizationIntelligenceConfigRequest const& request) override;
+
+  StatusOr<google::storage::control::v2::IntelligenceConfig>
+  UpdateOrganizationIntelligenceConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::storage::control::v2::
+          UpdateOrganizationIntelligenceConfigRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,

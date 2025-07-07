@@ -339,6 +339,24 @@ ClusterManagerTracingConnection::CheckAutopilotCompatibility(
   return internal::EndSpan(*span, child_->CheckAutopilotCompatibility(request));
 }
 
+StatusOr<google::container::v1::ClusterUpgradeInfo>
+ClusterManagerTracingConnection::FetchClusterUpgradeInfo(
+    google::container::v1::FetchClusterUpgradeInfoRequest const& request) {
+  auto span = internal::MakeSpan(
+      "container_v1::ClusterManagerConnection::FetchClusterUpgradeInfo");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->FetchClusterUpgradeInfo(request));
+}
+
+StatusOr<google::container::v1::NodePoolUpgradeInfo>
+ClusterManagerTracingConnection::FetchNodePoolUpgradeInfo(
+    google::container::v1::FetchNodePoolUpgradeInfoRequest const& request) {
+  auto span = internal::MakeSpan(
+      "container_v1::ClusterManagerConnection::FetchNodePoolUpgradeInfo");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->FetchNodePoolUpgradeInfo(request));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<container_v1::ClusterManagerConnection>

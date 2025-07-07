@@ -17,7 +17,7 @@
 // source: google/datastore/v1/datastore.proto
 
 #include "google/cloud/datastore/v1/internal/datastore_auth_decorator.h"
-#include <google/datastore/v1/datastore.grpc.pb.h>
+#include "google/datastore/v1/datastore.grpc.pb.h"
 #include <memory>
 #include <utility>
 

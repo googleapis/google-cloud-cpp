@@ -32,7 +32,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 
 namespace google {
@@ -127,6 +127,31 @@ class ManagedKafkaConnectionImpl
   Status DeleteConsumerGroup(
       google::cloud::managedkafka::v1::DeleteConsumerGroupRequest const&
           request) override;
+
+  StreamRange<google::cloud::managedkafka::v1::Acl> ListAcls(
+      google::cloud::managedkafka::v1::ListAclsRequest request) override;
+
+  StatusOr<google::cloud::managedkafka::v1::Acl> GetAcl(
+      google::cloud::managedkafka::v1::GetAclRequest const& request) override;
+
+  StatusOr<google::cloud::managedkafka::v1::Acl> CreateAcl(
+      google::cloud::managedkafka::v1::CreateAclRequest const& request)
+      override;
+
+  StatusOr<google::cloud::managedkafka::v1::Acl> UpdateAcl(
+      google::cloud::managedkafka::v1::UpdateAclRequest const& request)
+      override;
+
+  Status DeleteAcl(google::cloud::managedkafka::v1::DeleteAclRequest const&
+                       request) override;
+
+  StatusOr<google::cloud::managedkafka::v1::AddAclEntryResponse> AddAclEntry(
+      google::cloud::managedkafka::v1::AddAclEntryRequest const& request)
+      override;
+
+  StatusOr<google::cloud::managedkafka::v1::RemoveAclEntryResponse>
+  RemoveAclEntry(google::cloud::managedkafka::v1::RemoveAclEntryRequest const&
+                     request) override;
 
   StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request) override;

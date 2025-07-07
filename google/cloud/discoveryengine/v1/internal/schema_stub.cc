@@ -17,10 +17,10 @@
 // source: google/cloud/discoveryengine/v1/schema_service.proto
 
 #include "google/cloud/discoveryengine/v1/internal/schema_stub.h"
+#include "google/cloud/discoveryengine/v1/schema_service.grpc.pb.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/discoveryengine/v1/schema_service.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>
 

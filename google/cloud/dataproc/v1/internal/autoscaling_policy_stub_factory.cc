@@ -17,6 +17,7 @@
 // source: google/cloud/dataproc/v1/autoscaling_policies.proto
 
 #include "google/cloud/dataproc/v1/internal/autoscaling_policy_stub_factory.h"
+#include "google/cloud/dataproc/v1/autoscaling_policies.grpc.pb.h"
 #include "google/cloud/dataproc/v1/internal/autoscaling_policy_auth_decorator.h"
 #include "google/cloud/dataproc/v1/internal/autoscaling_policy_logging_decorator.h"
 #include "google/cloud/dataproc/v1/internal/autoscaling_policy_metadata_decorator.h"
@@ -28,9 +29,8 @@
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-#include <google/cloud/dataproc/v1/autoscaling_policies.grpc.pb.h>
-#include <google/iam/v1/iam_policy.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/iam/v1/iam_policy.grpc.pb.h"
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>
 

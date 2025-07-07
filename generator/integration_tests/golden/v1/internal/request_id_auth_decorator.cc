@@ -17,7 +17,7 @@
 // source: generator/integration_tests/test_request_id.proto
 
 #include "generator/integration_tests/golden/v1/internal/request_id_auth_decorator.h"
-#include <generator/integration_tests/test_request_id.grpc.pb.h>
+#include "generator/integration_tests/test_request_id.grpc.pb.h"
 #include <memory>
 #include <utility>
 

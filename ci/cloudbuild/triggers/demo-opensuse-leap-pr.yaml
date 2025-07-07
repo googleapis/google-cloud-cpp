@@ -12,17 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-createTime: '2021-04-13T23:36:01.288217115Z'
 filename: ci/cloudbuild/cloudbuild.yaml
 github:
   name: google-cloud-cpp
   owner: googleapis
   pullRequest:
-    branch: ^main$
+    branch: prepare-for-v3.0.0
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
-id: f18095de-383b-45bd-835e-06a70adbf296
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: demo-opensuse-leap-pr
+name: prepare-for-v3-0-0-demo-opensuse-leap-pr
 substitutions:
   _BUILD_NAME: demo-install
   _DISTRO: demo-opensuse-leap

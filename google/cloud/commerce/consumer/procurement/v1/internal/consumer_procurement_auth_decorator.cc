@@ -18,7 +18,7 @@
 // google/cloud/commerce/consumer/procurement/v1/procurement_service.proto
 
 #include "google/cloud/commerce/consumer/procurement/v1/internal/consumer_procurement_auth_decorator.h"
-#include <google/cloud/commerce/consumer/procurement/v1/procurement_service.grpc.pb.h>
+#include "google/cloud/commerce/consumer/procurement/v1/procurement_service.grpc.pb.h"
 #include <memory>
 #include <utility>
 

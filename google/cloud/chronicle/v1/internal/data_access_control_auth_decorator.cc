@@ -17,7 +17,7 @@
 // source: google/cloud/chronicle/v1/data_access_control.proto
 
 #include "google/cloud/chronicle/v1/internal/data_access_control_auth_decorator.h"
-#include <google/cloud/chronicle/v1/data_access_control.grpc.pb.h>
+#include "google/cloud/chronicle/v1/data_access_control.grpc.pb.h"
 #include <memory>
 #include <utility>
 

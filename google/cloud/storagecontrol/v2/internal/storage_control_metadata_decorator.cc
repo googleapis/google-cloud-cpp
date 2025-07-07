@@ -24,7 +24,7 @@
 #include "google/cloud/internal/routing_matcher.h"
 #include "google/cloud/internal/url_encode.h"
 #include "google/cloud/status_or.h"
-#include <google/storage/control/v2/storage_control.grpc.pb.h>
+#include "google/storage/control/v2/storage_control.grpc.pb.h"
 #include <memory>
 #include <string>
 #include <utility>
@@ -558,6 +558,73 @@ StorageControlMetadata::ListAnywhereCaches(
     SetMetadata(context, options, absl::StrJoin(params, "&"));
   }
   return child_->ListAnywhereCaches(context, options, request);
+}
+
+StatusOr<google::storage::control::v2::IntelligenceConfig>
+StorageControlMetadata::GetProjectIntelligenceConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::control::v2::GetProjectIntelligenceConfigRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetProjectIntelligenceConfig(context, options, request);
+}
+
+StatusOr<google::storage::control::v2::IntelligenceConfig>
+StorageControlMetadata::UpdateProjectIntelligenceConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::control::v2::UpdateProjectIntelligenceConfigRequest const&
+        request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("intelligence_config.name=",
+                   internal::UrlEncode(request.intelligence_config().name())));
+  return child_->UpdateProjectIntelligenceConfig(context, options, request);
+}
+
+StatusOr<google::storage::control::v2::IntelligenceConfig>
+StorageControlMetadata::GetFolderIntelligenceConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::control::v2::GetFolderIntelligenceConfigRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetFolderIntelligenceConfig(context, options, request);
+}
+
+StatusOr<google::storage::control::v2::IntelligenceConfig>
+StorageControlMetadata::UpdateFolderIntelligenceConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::control::v2::UpdateFolderIntelligenceConfigRequest const&
+        request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("intelligence_config.name=",
+                   internal::UrlEncode(request.intelligence_config().name())));
+  return child_->UpdateFolderIntelligenceConfig(context, options, request);
+}
+
+StatusOr<google::storage::control::v2::IntelligenceConfig>
+StorageControlMetadata::GetOrganizationIntelligenceConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::control::v2::
+        GetOrganizationIntelligenceConfigRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetOrganizationIntelligenceConfig(context, options, request);
+}
+
+StatusOr<google::storage::control::v2::IntelligenceConfig>
+StorageControlMetadata::UpdateOrganizationIntelligenceConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::control::v2::
+        UpdateOrganizationIntelligenceConfigRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("intelligence_config.name=",
+                   internal::UrlEncode(request.intelligence_config().name())));
+  return child_->UpdateOrganizationIntelligenceConfig(context, options,
+                                                      request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

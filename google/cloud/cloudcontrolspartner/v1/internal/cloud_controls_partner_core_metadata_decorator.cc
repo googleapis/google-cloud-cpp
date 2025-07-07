@@ -17,12 +17,12 @@
 // source: google/cloud/cloudcontrolspartner/v1/core.proto
 
 #include "google/cloud/cloudcontrolspartner/v1/internal/cloud_controls_partner_core_metadata_decorator.h"
+#include "google/cloud/cloudcontrolspartner/v1/core.grpc.pb.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/url_encode.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/cloudcontrolspartner/v1/core.grpc.pb.h>
 #include <memory>
 #include <string>
 #include <utility>
@@ -122,6 +122,36 @@ CloudControlsPartnerCoreMetadata::GetPartner(
   SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetPartner(context, options, request);
+}
+
+StatusOr<google::cloud::cloudcontrolspartner::v1::Customer>
+CloudControlsPartnerCoreMetadata::CreateCustomer(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::cloudcontrolspartner::v1::CreateCustomerRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateCustomer(context, options, request);
+}
+
+StatusOr<google::cloud::cloudcontrolspartner::v1::Customer>
+CloudControlsPartnerCoreMetadata::UpdateCustomer(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::cloudcontrolspartner::v1::UpdateCustomerRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("customer.name=",
+                           internal::UrlEncode(request.customer().name())));
+  return child_->UpdateCustomer(context, options, request);
+}
+
+Status CloudControlsPartnerCoreMetadata::DeleteCustomer(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::cloudcontrolspartner::v1::DeleteCustomerRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteCustomer(context, options, request);
 }
 
 void CloudControlsPartnerCoreMetadata::SetMetadata(

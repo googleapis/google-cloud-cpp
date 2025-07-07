@@ -239,6 +239,18 @@ ClusterManagerConnection::CheckAutopilotCompatibility(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::container::v1::ClusterUpgradeInfo>
+ClusterManagerConnection::FetchClusterUpgradeInfo(
+    google::container::v1::FetchClusterUpgradeInfoRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::container::v1::NodePoolUpgradeInfo>
+ClusterManagerConnection::FetchNodePoolUpgradeInfo(
+    google::container::v1::FetchNodePoolUpgradeInfoRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 std::shared_ptr<ClusterManagerConnection> MakeClusterManagerConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

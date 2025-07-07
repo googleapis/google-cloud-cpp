@@ -623,6 +623,184 @@ LivestreamServiceClient::DeleteClip(
   return connection_->DeleteClip(operation);
 }
 
+future<StatusOr<google::cloud::video::livestream::v1::DvrSession>>
+LivestreamServiceClient::CreateDvrSession(
+    std::string const& parent,
+    google::cloud::video::livestream::v1::DvrSession const& dvr_session,
+    std::string const& dvr_session_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::video::livestream::v1::CreateDvrSessionRequest request;
+  request.set_parent(parent);
+  *request.mutable_dvr_session() = dvr_session;
+  request.set_dvr_session_id(dvr_session_id);
+  return connection_->CreateDvrSession(request);
+}
+
+StatusOr<google::longrunning::Operation>
+LivestreamServiceClient::CreateDvrSession(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::video::livestream::v1::DvrSession const& dvr_session,
+    std::string const& dvr_session_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::video::livestream::v1::CreateDvrSessionRequest request;
+  request.set_parent(parent);
+  *request.mutable_dvr_session() = dvr_session;
+  request.set_dvr_session_id(dvr_session_id);
+  return connection_->CreateDvrSession(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::video::livestream::v1::DvrSession>>
+LivestreamServiceClient::CreateDvrSession(
+    google::cloud::video::livestream::v1::CreateDvrSessionRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateDvrSession(request);
+}
+
+StatusOr<google::longrunning::Operation>
+LivestreamServiceClient::CreateDvrSession(
+    NoAwaitTag,
+    google::cloud::video::livestream::v1::CreateDvrSessionRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateDvrSession(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::video::livestream::v1::DvrSession>>
+LivestreamServiceClient::CreateDvrSession(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateDvrSession(operation);
+}
+
+StreamRange<google::cloud::video::livestream::v1::DvrSession>
+LivestreamServiceClient::ListDvrSessions(std::string const& parent,
+                                         Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::video::livestream::v1::ListDvrSessionsRequest request;
+  request.set_parent(parent);
+  return connection_->ListDvrSessions(request);
+}
+
+StreamRange<google::cloud::video::livestream::v1::DvrSession>
+LivestreamServiceClient::ListDvrSessions(
+    google::cloud::video::livestream::v1::ListDvrSessionsRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListDvrSessions(std::move(request));
+}
+
+StatusOr<google::cloud::video::livestream::v1::DvrSession>
+LivestreamServiceClient::GetDvrSession(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::video::livestream::v1::GetDvrSessionRequest request;
+  request.set_name(name);
+  return connection_->GetDvrSession(request);
+}
+
+StatusOr<google::cloud::video::livestream::v1::DvrSession>
+LivestreamServiceClient::GetDvrSession(
+    google::cloud::video::livestream::v1::GetDvrSessionRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetDvrSession(request);
+}
+
+future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
+LivestreamServiceClient::DeleteDvrSession(std::string const& name,
+                                          Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::video::livestream::v1::DeleteDvrSessionRequest request;
+  request.set_name(name);
+  return connection_->DeleteDvrSession(request);
+}
+
+StatusOr<google::longrunning::Operation>
+LivestreamServiceClient::DeleteDvrSession(NoAwaitTag, std::string const& name,
+                                          Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::video::livestream::v1::DeleteDvrSessionRequest request;
+  request.set_name(name);
+  return connection_->DeleteDvrSession(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
+LivestreamServiceClient::DeleteDvrSession(
+    google::cloud::video::livestream::v1::DeleteDvrSessionRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteDvrSession(request);
+}
+
+StatusOr<google::longrunning::Operation>
+LivestreamServiceClient::DeleteDvrSession(
+    NoAwaitTag,
+    google::cloud::video::livestream::v1::DeleteDvrSessionRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteDvrSession(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
+LivestreamServiceClient::DeleteDvrSession(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteDvrSession(operation);
+}
+
+future<StatusOr<google::cloud::video::livestream::v1::DvrSession>>
+LivestreamServiceClient::UpdateDvrSession(
+    google::cloud::video::livestream::v1::DvrSession const& dvr_session,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::video::livestream::v1::UpdateDvrSessionRequest request;
+  *request.mutable_dvr_session() = dvr_session;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateDvrSession(request);
+}
+
+StatusOr<google::longrunning::Operation>
+LivestreamServiceClient::UpdateDvrSession(
+    NoAwaitTag,
+    google::cloud::video::livestream::v1::DvrSession const& dvr_session,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::video::livestream::v1::UpdateDvrSessionRequest request;
+  *request.mutable_dvr_session() = dvr_session;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateDvrSession(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::video::livestream::v1::DvrSession>>
+LivestreamServiceClient::UpdateDvrSession(
+    google::cloud::video::livestream::v1::UpdateDvrSessionRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateDvrSession(request);
+}
+
+StatusOr<google::longrunning::Operation>
+LivestreamServiceClient::UpdateDvrSession(
+    NoAwaitTag,
+    google::cloud::video::livestream::v1::UpdateDvrSessionRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateDvrSession(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::video::livestream::v1::DvrSession>>
+LivestreamServiceClient::UpdateDvrSession(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateDvrSession(operation);
+}
+
 future<StatusOr<google::cloud::video::livestream::v1::Asset>>
 LivestreamServiceClient::CreateAsset(
     std::string const& parent,

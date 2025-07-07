@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_LICENSES_V1_LICENSES_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_LICENSES_V1_LICENSES_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/compute/licenses/v1/licenses.pb.h"
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/licenses/v1/licenses.pb.h>
 #include <memory>
 
 namespace google {
@@ -62,6 +62,10 @@ class LicensesConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency TestIamPermissions(
       google::cloud::cpp::compute::licenses::v1::
           TestIamPermissionsRequest const& request);
+
+  virtual google::cloud::Idempotency UpdateLicense(
+      google::cloud::cpp::compute::licenses::v1::UpdateLicenseRequest const&
+          request);
 };
 
 std::unique_ptr<LicensesConnectionIdempotencyPolicy>

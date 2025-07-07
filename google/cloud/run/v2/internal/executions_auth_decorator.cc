@@ -17,7 +17,7 @@
 // source: google/cloud/run/v2/execution.proto
 
 #include "google/cloud/run/v2/internal/executions_auth_decorator.h"
-#include <google/cloud/run/v2/execution.grpc.pb.h>
+#include "google/cloud/run/v2/execution.grpc.pb.h"
 #include <memory>
 #include <utility>
 

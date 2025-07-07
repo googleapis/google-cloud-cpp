@@ -71,10 +71,19 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "rules_cc",
         urls = [
-            "https://github.com/bazelbuild/rules_cc/releases/download/0.0.17/rules_cc-0.0.17.tar.gz",
+            "https://github.com/bazelbuild/rules_cc/releases/download/0.1.1/rules_cc-0.1.1.tar.gz",
         ],
-        sha256 = "abc605dd850f813bb37004b77db20106a19311a96b2da1c92b789da529d28fe1",
-        strip_prefix = "rules_cc-0.0.17",
+        sha256 = "712d77868b3152dd618c4d64faaddefcc5965f90f5de6e6dd1d5ddcd0be82d42",
+        strip_prefix = "rules_cc-0.1.1",
+    )
+
+    maybe(
+        http_archive,
+        name = "com_envoyproxy_protoc_gen_validate",
+        urls = [
+            "https://github.com/bufbuild/protoc-gen-validate/archive/v1.2.1.tar.gz",
+        ],
+        strip_prefix = "protoc-gen-validate-1.2.1",
     )
 
     # protobuf requires this
@@ -93,15 +102,15 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "build_bazel_rules_apple",
         urls = [
-            "https://github.com/bazelbuild/rules_apple/releases/download/3.20.1/rules_apple.3.20.1.tar.gz",
+            "https://github.com/bazelbuild/rules_apple/releases/download/3.22.0/rules_apple.3.22.0.tar.gz",
         ],
-        sha256 = "73ad768dfe824c736d0a8a81521867b1fb7a822acda2ed265897c03de6ae6767",
+        sha256 = "a78f26c22ac8d6e3f3fcaad50eace4d9c767688bd7254b75bdf4a6735b299f6a",
     )
 
     # Load Abseil
     maybe(
         http_archive,
-        name = "com_google_absl",
+        name = "abseil-cpp",
         urls = [
             "https://github.com/abseil/abseil-cpp/archive/20250127.1.tar.gz",
         ],
@@ -126,18 +135,18 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "com_google_googleapis",
         urls = [
-            "https://github.com/googleapis/googleapis/archive/079e5305050859d0e3a8c0768611283ee4863c07.tar.gz",
+            "https://github.com/googleapis/googleapis/archive/ea40277431fb821fd5a9b1eb8227535846388770.tar.gz",
         ],
-        sha256 = "0546bdba7815f7fedbb0fc5100d4f38390ee679304660fe78cd388c4484d869d",
-        strip_prefix = "googleapis-079e5305050859d0e3a8c0768611283ee4863c07",
-        build_file = Label("//bazel:googleapis.BUILD"),
+        sha256 = "75b3403d645e112d863f80c16ec9da01ba15d1e20128eea8f65a18eee8e5d650",
+        strip_prefix = "googleapis-ea40277431fb821fd5a9b1eb8227535846388770",
+        # build_file = Label("//bazel:googleapis.BUILD"),
         # Scaffolding for patching googleapis after download. For example:
         #   patches = ["googleapis.patch"]
         # NOTE: This should only be used while developing with a new
         # protobuf message. No changes to `patches` should ever be
         # committed to the main branch.
         patch_tool = "patch",
-        patch_args = ["-p1"],
+        patch_args = ["-p1", "-l", "-n"],
         patches = [],
     )
 
@@ -146,10 +155,10 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "com_google_protobuf",
         urls = [
-            "https://github.com/protocolbuffers/protobuf/archive/v29.4.tar.gz",
+            "https://github.com/protocolbuffers/protobuf/archive/v31.1.tar.gz",
         ],
-        sha256 = "6bd9dcc91b17ef25c26adf86db71c67ec02431dc92e9589eaf82e22889230496",
-        strip_prefix = "protobuf-29.4",
+        sha256 = "c3a0a9ece8932e31c3b736e2db18b1c42e7070cd9b881388b26d01aa71e24ca2",
+        strip_prefix = "protobuf-31.1",
     )
 
     # Load BoringSSL. This could be automatically loaded by gRPC. But as of
@@ -172,10 +181,13 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "com_github_grpc_grpc",
         urls = [
-            "https://github.com/grpc/grpc/archive/v1.69.0.tar.gz",
+            "https://github.com/grpc/grpc/archive/v1.71.0.tar.gz",
         ],
-        sha256 = "cd256d91781911d46a57506978b3979bfee45d5086a1b6668a3ae19c5e77f8dc",
-        strip_prefix = "grpc-1.69.0",
+        repo_mapping = {
+            "@com_google_absl": "@abseil-cpp",
+        },
+        sha256 = "0d631419e54ec5b29def798623ee3bf5520dac77abeab3284ef7027ec2363f91",
+        strip_prefix = "grpc-1.71.0",
     )
 
     # We use the cc_proto_library() rule from @com_google_protobuf, which

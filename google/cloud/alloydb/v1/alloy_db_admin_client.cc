@@ -152,6 +152,159 @@ AlloyDBAdminClient::UpdateCluster(
   return connection_->UpdateCluster(operation);
 }
 
+future<StatusOr<google::cloud::alloydb::v1::ExportClusterResponse>>
+AlloyDBAdminClient::ExportCluster(
+    std::string const& name,
+    google::cloud::alloydb::v1::GcsDestination const& gcs_destination,
+    std::string const& database,
+    google::cloud::alloydb::v1::ExportClusterRequest::CsvExportOptions const&
+        csv_export_options,
+    google::cloud::alloydb::v1::ExportClusterRequest::SqlExportOptions const&
+        sql_export_options,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::alloydb::v1::ExportClusterRequest request;
+  request.set_name(name);
+  *request.mutable_gcs_destination() = gcs_destination;
+  request.set_database(database);
+  *request.mutable_csv_export_options() = csv_export_options;
+  *request.mutable_sql_export_options() = sql_export_options;
+  return connection_->ExportCluster(request);
+}
+
+StatusOr<google::longrunning::Operation> AlloyDBAdminClient::ExportCluster(
+    NoAwaitTag, std::string const& name,
+    google::cloud::alloydb::v1::GcsDestination const& gcs_destination,
+    std::string const& database,
+    google::cloud::alloydb::v1::ExportClusterRequest::CsvExportOptions const&
+        csv_export_options,
+    google::cloud::alloydb::v1::ExportClusterRequest::SqlExportOptions const&
+        sql_export_options,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::alloydb::v1::ExportClusterRequest request;
+  request.set_name(name);
+  *request.mutable_gcs_destination() = gcs_destination;
+  request.set_database(database);
+  *request.mutable_csv_export_options() = csv_export_options;
+  *request.mutable_sql_export_options() = sql_export_options;
+  return connection_->ExportCluster(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::alloydb::v1::ExportClusterResponse>>
+AlloyDBAdminClient::ExportCluster(
+    google::cloud::alloydb::v1::ExportClusterRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ExportCluster(request);
+}
+
+StatusOr<google::longrunning::Operation> AlloyDBAdminClient::ExportCluster(
+    NoAwaitTag, google::cloud::alloydb::v1::ExportClusterRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ExportCluster(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::alloydb::v1::ExportClusterResponse>>
+AlloyDBAdminClient::ExportCluster(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ExportCluster(operation);
+}
+
+future<StatusOr<google::cloud::alloydb::v1::ImportClusterResponse>>
+AlloyDBAdminClient::ImportCluster(std::string const& name,
+                                  std::string const& gcs_uri,
+                                  std::string const& database,
+                                  std::string const& user, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::alloydb::v1::ImportClusterRequest request;
+  request.set_name(name);
+  request.set_gcs_uri(gcs_uri);
+  request.set_database(database);
+  request.set_user(user);
+  return connection_->ImportCluster(request);
+}
+
+StatusOr<google::longrunning::Operation> AlloyDBAdminClient::ImportCluster(
+    NoAwaitTag, std::string const& name, std::string const& gcs_uri,
+    std::string const& database, std::string const& user, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::alloydb::v1::ImportClusterRequest request;
+  request.set_name(name);
+  request.set_gcs_uri(gcs_uri);
+  request.set_database(database);
+  request.set_user(user);
+  return connection_->ImportCluster(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::alloydb::v1::ImportClusterResponse>>
+AlloyDBAdminClient::ImportCluster(
+    google::cloud::alloydb::v1::ImportClusterRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ImportCluster(request);
+}
+
+StatusOr<google::longrunning::Operation> AlloyDBAdminClient::ImportCluster(
+    NoAwaitTag, google::cloud::alloydb::v1::ImportClusterRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ImportCluster(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::alloydb::v1::ImportClusterResponse>>
+AlloyDBAdminClient::ImportCluster(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ImportCluster(operation);
+}
+
+future<StatusOr<google::cloud::alloydb::v1::UpgradeClusterResponse>>
+AlloyDBAdminClient::UpgradeCluster(
+    std::string const& name,
+    google::cloud::alloydb::v1::DatabaseVersion version, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::alloydb::v1::UpgradeClusterRequest request;
+  request.set_name(name);
+  request.set_version(version);
+  return connection_->UpgradeCluster(request);
+}
+
+StatusOr<google::longrunning::Operation> AlloyDBAdminClient::UpgradeCluster(
+    NoAwaitTag, std::string const& name,
+    google::cloud::alloydb::v1::DatabaseVersion version, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::alloydb::v1::UpgradeClusterRequest request;
+  request.set_name(name);
+  request.set_version(version);
+  return connection_->UpgradeCluster(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::alloydb::v1::UpgradeClusterResponse>>
+AlloyDBAdminClient::UpgradeCluster(
+    google::cloud::alloydb::v1::UpgradeClusterRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpgradeCluster(request);
+}
+
+StatusOr<google::longrunning::Operation> AlloyDBAdminClient::UpgradeCluster(
+    NoAwaitTag,
+    google::cloud::alloydb::v1::UpgradeClusterRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpgradeCluster(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::alloydb::v1::UpgradeClusterResponse>>
+AlloyDBAdminClient::UpgradeCluster(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpgradeCluster(operation);
+}
+
 future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>>
 AlloyDBAdminClient::DeleteCluster(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));

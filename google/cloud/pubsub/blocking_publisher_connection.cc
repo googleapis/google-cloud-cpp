@@ -54,16 +54,21 @@ BlockingConnectionFromDecoratedStub(
 }  // namespace
 
 std::shared_ptr<BlockingPublisherConnection> MakeBlockingPublisherConnection(
-    Options opts) {
+    std::string const& location, Options opts) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  UnifiedCredentialsOptionList, PolicyOptionList,
                                  PublisherOptionList>(opts, __func__);
-  opts = pubsub_internal::DefaultPublisherOptions(std::move(opts));
+  opts = pubsub_internal::DefaultPublisherOptions(location, std::move(opts));
   auto background = internal::MakeBackgroundThreadsFactory(opts)();
   auto stub =
       pubsub_internal::MakeRoundRobinPublisherStub(background->cq(), opts);
   return BlockingConnectionFromDecoratedStub(
       std::move(opts), std::move(background), std::move(stub));
+}
+
+std::shared_ptr<BlockingPublisherConnection> MakeBlockingPublisherConnection(
+    Options opts) {
+  return MakeBlockingPublisherConnection("", std::move(opts));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

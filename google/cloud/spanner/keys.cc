@@ -14,8 +14,8 @@
 
 #include "google/cloud/spanner/keys.h"
 #include "google/cloud/spanner/value.h"
+#include "google/spanner/v1/keys.pb.h"
 #include <google/protobuf/util/message_differencer.h>
-#include <google/spanner/v1/keys.pb.h>
 
 namespace google {
 namespace cloud {

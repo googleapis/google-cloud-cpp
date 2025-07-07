@@ -17,9 +17,9 @@
 // source: google/cloud/cloudcontrolspartner/v1/core.proto
 
 #include "google/cloud/cloudcontrolspartner/v1/internal/cloud_controls_partner_core_stub.h"
+#include "google/cloud/cloudcontrolspartner/v1/core.grpc.pb.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/cloudcontrolspartner/v1/core.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -134,6 +134,44 @@ DefaultCloudControlsPartnerCoreStub::GetPartner(
     return google::cloud::MakeStatusFromRpcError(status);
   }
   return response;
+}
+
+StatusOr<google::cloud::cloudcontrolspartner::v1::Customer>
+DefaultCloudControlsPartnerCoreStub::CreateCustomer(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::cloudcontrolspartner::v1::CreateCustomerRequest const&
+        request) {
+  google::cloud::cloudcontrolspartner::v1::Customer response;
+  auto status = grpc_stub_->CreateCustomer(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::cloudcontrolspartner::v1::Customer>
+DefaultCloudControlsPartnerCoreStub::UpdateCustomer(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::cloudcontrolspartner::v1::UpdateCustomerRequest const&
+        request) {
+  google::cloud::cloudcontrolspartner::v1::Customer response;
+  auto status = grpc_stub_->UpdateCustomer(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+Status DefaultCloudControlsPartnerCoreStub::DeleteCustomer(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::cloudcontrolspartner::v1::DeleteCustomerRequest const&
+        request) {
+  google::protobuf::Empty response;
+  auto status = grpc_stub_->DeleteCustomer(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -44,7 +44,7 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
   //     https://cloud.google.com/vpc/docs/private-google-access
   auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>(
       "private.googleapis.com");
-  auto client = google::cloud::redis_v1::CloudRedisClient(
+  auto vpc_client = google::cloud::redis_v1::CloudRedisClient(
       google::cloud::redis_v1::MakeCloudRedisConnection(options));
   //! [set-client-endpoint]
 }

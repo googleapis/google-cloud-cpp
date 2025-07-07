@@ -67,10 +67,13 @@ cc_grpc_library(
 
 filegroup(
     name = "golden_srcs",
-    srcs = glob([
-        "golden/v1/internal/*_sources.cc",
-        "golden/v1/internal/streaming.cc",
-    ]),
+    srcs = glob(
+        [
+            "golden/v1/internal/*_sources.cc",
+            "golden/v1/internal/streaming.cc",
+        ],
+        allow_empty = True,
+    ),
 )
 
 filegroup(
@@ -106,7 +109,7 @@ cc_library(
         "//:grpc_utils",
         "//google/cloud:google_cloud_cpp_rest_internal",
         "//google/cloud:google_cloud_cpp_rest_protobuf_internal",
-        "@com_google_absl//absl/strings",
+        "@abseil-cpp//absl/strings",
         "@com_google_googleapis//google/longrunning:longrunning_cc_grpc",
     ],
 )

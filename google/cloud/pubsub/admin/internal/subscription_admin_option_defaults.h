@@ -21,13 +21,15 @@
 
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
+#include <string>
 
 namespace google {
 namespace cloud {
 namespace pubsub_admin_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-Options SubscriptionAdminDefaultOptions(Options options);
+Options SubscriptionAdminDefaultOptions(std::string const& location,
+                                        Options options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_admin_internal

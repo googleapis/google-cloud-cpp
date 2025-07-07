@@ -144,6 +144,36 @@ LicensesTracingConnection::TestIamPermissions(
   return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
 
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+LicensesTracingConnection::UpdateLicense(
+    google::cloud::cpp::compute::licenses::v1::UpdateLicenseRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_licenses_v1::LicensesConnection::UpdateLicense");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateLicense(request));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+LicensesTracingConnection::UpdateLicense(
+    NoAwaitTag,
+    google::cloud::cpp::compute::licenses::v1::UpdateLicenseRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_licenses_v1::LicensesConnection::UpdateLicense");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span, child_->UpdateLicense(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+LicensesTracingConnection::UpdateLicense(
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_licenses_v1::LicensesConnection::UpdateLicense");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateLicense(operation));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<compute_licenses_v1::LicensesConnection>

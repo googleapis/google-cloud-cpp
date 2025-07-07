@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_TARGET_GRPC_PROXIES_V1_INTERNAL_TARGET_GRPC_PROXIES_REST_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_TARGET_GRPC_PROXIES_V1_INTERNAL_TARGET_GRPC_PROXIES_REST_CONNECTION_IMPL_H
 
+#include "google/cloud/compute/global_operations/v1/global_operations.pb.h"
 #include "google/cloud/compute/target_grpc_proxies/v1/internal/target_grpc_proxies_rest_stub.h"
 #include "google/cloud/compute/target_grpc_proxies/v1/internal/target_grpc_proxies_retry_traits.h"
 #include "google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies_connection.h"
@@ -30,7 +31,6 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/global_operations/v1/global_operations.pb.h>
 #include <memory>
 
 namespace google {

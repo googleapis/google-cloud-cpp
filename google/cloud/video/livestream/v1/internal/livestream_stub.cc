@@ -17,10 +17,10 @@
 // source: google/cloud/video/livestream/v1/service.proto
 
 #include "google/cloud/video/livestream/v1/internal/livestream_stub.h"
+#include "google/cloud/video/livestream/v1/service.grpc.pb.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/video/livestream/v1/service.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>
 
@@ -454,6 +454,133 @@ DefaultLivestreamServiceStub::DeleteClip(
     google::cloud::video::livestream::v1::DeleteClipRequest const& request) {
   google::longrunning::Operation response;
   auto status = grpc_stub_->DeleteClip(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultLivestreamServiceStub::AsyncCreateDvrSession(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::video::livestream::v1::CreateDvrSessionRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::video::livestream::v1::CreateDvrSessionRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::video::livestream::v1::CreateDvrSessionRequest const&
+              request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCreateDvrSession(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultLivestreamServiceStub::CreateDvrSession(
+    grpc::ClientContext& context, Options,
+    google::cloud::video::livestream::v1::CreateDvrSessionRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateDvrSession(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::video::livestream::v1::ListDvrSessionsResponse>
+DefaultLivestreamServiceStub::ListDvrSessions(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::video::livestream::v1::ListDvrSessionsRequest const&
+        request) {
+  google::cloud::video::livestream::v1::ListDvrSessionsResponse response;
+  auto status = grpc_stub_->ListDvrSessions(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::video::livestream::v1::DvrSession>
+DefaultLivestreamServiceStub::GetDvrSession(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::video::livestream::v1::GetDvrSessionRequest const& request) {
+  google::cloud::video::livestream::v1::DvrSession response;
+  auto status = grpc_stub_->GetDvrSession(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultLivestreamServiceStub::AsyncDeleteDvrSession(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::video::livestream::v1::DeleteDvrSessionRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::video::livestream::v1::DeleteDvrSessionRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::video::livestream::v1::DeleteDvrSessionRequest const&
+              request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeleteDvrSession(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultLivestreamServiceStub::DeleteDvrSession(
+    grpc::ClientContext& context, Options,
+    google::cloud::video::livestream::v1::DeleteDvrSessionRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteDvrSession(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultLivestreamServiceStub::AsyncUpdateDvrSession(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::video::livestream::v1::UpdateDvrSessionRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::video::livestream::v1::UpdateDvrSessionRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::video::livestream::v1::UpdateDvrSessionRequest const&
+              request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUpdateDvrSession(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultLivestreamServiceStub::UpdateDvrSession(
+    grpc::ClientContext& context, Options,
+    google::cloud::video::livestream::v1::UpdateDvrSessionRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateDvrSession(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

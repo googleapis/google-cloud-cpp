@@ -33,7 +33,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 
 namespace google {
@@ -141,6 +141,36 @@ class StorageControlConnectionImpl
 
   StreamRange<google::storage::control::v2::AnywhereCache> ListAnywhereCaches(
       google::storage::control::v2::ListAnywhereCachesRequest request) override;
+
+  StatusOr<google::storage::control::v2::IntelligenceConfig>
+  GetProjectIntelligenceConfig(
+      google::storage::control::v2::GetProjectIntelligenceConfigRequest const&
+          request) override;
+
+  StatusOr<google::storage::control::v2::IntelligenceConfig>
+  UpdateProjectIntelligenceConfig(
+      google::storage::control::v2::
+          UpdateProjectIntelligenceConfigRequest const& request) override;
+
+  StatusOr<google::storage::control::v2::IntelligenceConfig>
+  GetFolderIntelligenceConfig(
+      google::storage::control::v2::GetFolderIntelligenceConfigRequest const&
+          request) override;
+
+  StatusOr<google::storage::control::v2::IntelligenceConfig>
+  UpdateFolderIntelligenceConfig(
+      google::storage::control::v2::UpdateFolderIntelligenceConfigRequest const&
+          request) override;
+
+  StatusOr<google::storage::control::v2::IntelligenceConfig>
+  GetOrganizationIntelligenceConfig(
+      google::storage::control::v2::
+          GetOrganizationIntelligenceConfigRequest const& request) override;
+
+  StatusOr<google::storage::control::v2::IntelligenceConfig>
+  UpdateOrganizationIntelligenceConfig(
+      google::storage::control::v2::
+          UpdateOrganizationIntelligenceConfigRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

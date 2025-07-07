@@ -17,7 +17,7 @@
 // source: google/cloud/aiplatform/v1/deployment_resource_pool_service.proto
 
 #include "google/cloud/aiplatform/v1/internal/deployment_resource_pool_auth_decorator.h"
-#include <google/cloud/aiplatform/v1/deployment_resource_pool_service.grpc.pb.h>
+#include "google/cloud/aiplatform/v1/deployment_resource_pool_service.grpc.pb.h"
 #include <memory>
 #include <utility>
 

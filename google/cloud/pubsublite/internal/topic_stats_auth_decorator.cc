@@ -17,7 +17,7 @@
 // source: google/cloud/pubsublite/v1/topic_stats.proto
 
 #include "google/cloud/pubsublite/internal/topic_stats_auth_decorator.h"
-#include <google/cloud/pubsublite/v1/topic_stats.grpc.pb.h>
+#include "google/cloud/pubsublite/v1/topic_stats.grpc.pb.h"
 #include <memory>
 #include <utility>
 
