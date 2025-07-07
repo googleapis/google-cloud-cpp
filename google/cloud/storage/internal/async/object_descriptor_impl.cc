@@ -59,7 +59,8 @@ void ObjectDescriptorImpl::Cancel() {
   }
 }
 
-void ObjectDescriptorImpl::CancelStream(std::shared_ptr<OpenStream> stream) {
+void ObjectDescriptorImpl::CancelStream(
+    std::shared_ptr<OpenStream> const& stream) {
   stream->Cancel();
 }
 
