@@ -38,6 +38,9 @@ namespace internal {
 /// Return true if the row key is empty.
 inline bool IsEmptyRowKey(std::string const& key) { return key.empty(); }
 
+/// Clear the row key.
+inline void Clear(std::string& key) { key.clear(); }
+
 /// Return true if the row key is empty.
 inline bool IsEmptyRowKey(char const* key) { return std::string{} == key; }
 
