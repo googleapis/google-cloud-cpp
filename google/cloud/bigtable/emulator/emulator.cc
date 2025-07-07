@@ -13,11 +13,29 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/emulator/server.h"
+#include "absl/flags/flag.h"
+#include "absl/flags/parse.h"
+#include "absl/flags/usage.h"
+#include <absl/strings/str_cat.h>
+#include <absl/strings/str_split.h>
+#include <cstdint>
+#include <cstdlib>
 #include <iostream>
+#include <string>
 
-int main() {
+ABSL_FLAG(std::string, host, "localhost",
+          "the address to bind to on the local machine");
+ABSL_FLAG(std::uint16_t, port, 8888,
+          "the port to bind to on the local machine");
+
+int main(int argc, char* argv[]) {
+  absl::SetProgramUsageMessage(
+      absl::StrCat("Usage: %s -h <host> -p <port>", argv[0]));
+  absl::ParseCommandLine(argc, argv);
+
   auto server = google::cloud::bigtable::emulator::CreateDefaultEmulatorServer(
-      "[::]", 8888);
+      absl::GetFlag(FLAGS_host), absl::GetFlag(FLAGS_port));
+
   std::cout << "Server running on port " << server->bound_port() << "\n";
   server->Wait();
   return 0;
