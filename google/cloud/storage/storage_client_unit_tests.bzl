@@ -42,8 +42,6 @@ storage_client_unit_tests = [
     "hashing_options_test.cc",
     "hmac_key_metadata_test.cc",
     "idempotency_policy_test.cc",
-    "internal/access_control_common_parser_test.cc",
-    "internal/access_control_common_test.cc",
     "internal/access_token_credentials_test.cc",
     "internal/base64_test.cc",
     "internal/bucket_acl_requests_test.cc",
