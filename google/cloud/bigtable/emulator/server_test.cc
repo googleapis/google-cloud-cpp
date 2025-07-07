@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/emulator/server.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <google/bigtable/admin/v2/bigtable_table_admin.grpc.pb.h>
 #include <google/bigtable/admin/v2/bigtable_table_admin.pb.h>
 #include <google/bigtable/admin/v2/table.pb.h>
@@ -20,6 +21,7 @@
 #include <google/bigtable/v2/bigtable.pb.h>
 #include <gmock/gmock.h>
 #include <grpcpp/grpcpp.h>
+#include <gtest/gtest.h>
 
 namespace google {
 namespace cloud {
@@ -33,7 +35,9 @@ class ServerTest : public ::testing::Test {
   grpc::ClientContext ctx_;
 
   void SetUp() override {
-    server_ = CreateDefaultEmulatorServer("127.0.0.1", 0);
+    auto maybe_server = CreateDefaultEmulatorServer("127.0.0.1", 0);
+    ASSERT_STATUS_OK(maybe_server);
+    server_ = std::move(maybe_server.value());
     channel_ = grpc::CreateChannel(
         "localhost:" + std::to_string(server_->bound_port()),
         grpc::InsecureChannelCredentials());
@@ -213,6 +217,12 @@ TEST_F(ServerTest, TableAdminUpdateTable) {
   grpc::Status status =
       TableAdminClient()->UpdateTable(&ctx_, request, &response);
   EXPECT_NE(status.error_code(), grpc::StatusCode::UNIMPLEMENTED);
+}
+
+// Test that the failure path for server creation does not crash.
+TEST(ServerCreationTest, TestServerCreationFailurePath) {
+  auto maybe_server = CreateDefaultEmulatorServer("invalid_host_address", 0);
+  ASSERT_EQ(false, maybe_server.ok());
 }
 
 }  // namespace emulator

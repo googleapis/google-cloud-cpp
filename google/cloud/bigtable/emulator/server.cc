@@ -333,6 +333,7 @@ class DefaultEmulatorServer : public EmulatorServer {
   int bound_port() override { return bound_port_; }
   void Shutdown() override { server_->Shutdown(); }
   void Wait() override { server_->Wait(); }
+  bool HasValidServer() { return static_cast<bool>(server_); }
 
  private:
   int bound_port_;
@@ -343,9 +344,17 @@ class DefaultEmulatorServer : public EmulatorServer {
   std::unique_ptr<grpc::Server> server_;
 };
 
-std::unique_ptr<EmulatorServer> CreateDefaultEmulatorServer(
+StatusOr<std::unique_ptr<EmulatorServer>> CreateDefaultEmulatorServer(
     std::string const& host, std::uint16_t port) {
-  return std::unique_ptr<EmulatorServer>(new DefaultEmulatorServer(host, port));
+  auto* default_emulator_server = new DefaultEmulatorServer(host, port);
+  if (!default_emulator_server->HasValidServer()) {
+    return UnknownError("An unknown error occurred when starting server",
+                        GCP_ERROR_INFO()
+                            .WithMetadata("host", host)
+                            .WithMetadata("port", absl::StrCat("%d", port)));
+  }
+
+  return std::unique_ptr<EmulatorServer>(default_emulator_server);
 }
 
 }  // namespace emulator

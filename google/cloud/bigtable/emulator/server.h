@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_EMULATOR_SERVER_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_EMULATOR_SERVER_H
 
+#include "google/cloud/status_or.h"
 #include <cstdint>
 #include <memory>
 #include <string>
@@ -36,7 +37,7 @@ class EmulatorServer {
   virtual void Wait() = 0;
 };
 
-std::unique_ptr<EmulatorServer> CreateDefaultEmulatorServer(
+StatusOr<std::unique_ptr<EmulatorServer>> CreateDefaultEmulatorServer(
     std::string const& host, std::uint16_t port);
 
 }  // namespace emulator

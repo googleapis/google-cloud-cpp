@@ -33,8 +33,17 @@ int main(int argc, char* argv[]) {
       absl::StrCat("Usage: %s -h <host> -p <port>", argv[0]));
   absl::ParseCommandLine(argc, argv);
 
-  auto server = google::cloud::bigtable::emulator::CreateDefaultEmulatorServer(
-      absl::GetFlag(FLAGS_host), absl::GetFlag(FLAGS_port));
+  auto maybe_server =
+      google::cloud::bigtable::emulator::CreateDefaultEmulatorServer(
+          absl::GetFlag(FLAGS_host), absl::GetFlag(FLAGS_port));
+  if (!maybe_server) {
+    std::cerr << "CreateDefaultEmulatorServer() failed. See logs for "
+                 "possible reason"
+              << std::endl;
+    return 1;
+  }
+
+  auto& server = maybe_server.value();
 
   std::cout << "Server running on port " << server->bound_port() << "\n";
   server->Wait();
