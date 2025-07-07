@@ -17,8 +17,8 @@
 // source: google/cloud/texttospeech/v1/cloud_tts.proto
 
 #include "google/cloud/texttospeech/v1/internal/text_to_speech_auth_decorator.h"
+#include "google/cloud/texttospeech/v1/cloud_tts.grpc.pb.h"
 #include "google/cloud/internal/async_read_write_stream_auth.h"
-#include <google/cloud/texttospeech/v1/cloud_tts.grpc.pb.h>
 #include <memory>
 #include <utility>
 

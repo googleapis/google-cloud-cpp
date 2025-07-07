@@ -223,6 +223,62 @@ LicensesClient::TestIamPermissions(
   return connection_->TestIamPermissions(request);
 }
 
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+LicensesClient::UpdateLicense(
+    std::string const& project, std::string const& license,
+    std::string const& update_mask,
+    google::cloud::cpp::compute::v1::License const& license_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::licenses::v1::UpdateLicenseRequest request;
+  request.set_project(project);
+  request.set_license(license);
+  request.set_update_mask(update_mask);
+  *request.mutable_license_resource() = license_resource;
+  return connection_->UpdateLicense(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+LicensesClient::UpdateLicense(
+    NoAwaitTag, std::string const& project, std::string const& license,
+    std::string const& update_mask,
+    google::cloud::cpp::compute::v1::License const& license_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::licenses::v1::UpdateLicenseRequest request;
+  request.set_project(project);
+  request.set_license(license);
+  request.set_update_mask(update_mask);
+  *request.mutable_license_resource() = license_resource;
+  return connection_->UpdateLicense(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+LicensesClient::UpdateLicense(
+    google::cloud::cpp::compute::licenses::v1::UpdateLicenseRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateLicense(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+LicensesClient::UpdateLicense(
+    NoAwaitTag,
+    google::cloud::cpp::compute::licenses::v1::UpdateLicenseRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateLicense(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+LicensesClient::UpdateLicense(
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateLicense(operation);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_licenses_v1
 }  // namespace cloud

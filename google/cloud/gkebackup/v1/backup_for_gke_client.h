@@ -26,7 +26,7 @@
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <map>
 #include <memory>
 #include <string>
@@ -1119,7 +1119,7 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.BackupPlanBinding]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup_plan_binding.proto#L36}
+  /// [google.cloud.gkebackup.v1.BackupPlanBinding]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup_plan_binding.proto#L37}
   /// [google.cloud.gkebackup.v1.ListBackupPlanBindingsRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L771}
   ///
   // clang-format on
@@ -1158,7 +1158,7 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.BackupPlanBinding]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup_plan_binding.proto#L36}
+  /// [google.cloud.gkebackup.v1.BackupPlanBinding]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup_plan_binding.proto#L37}
   /// [google.cloud.gkebackup.v1.ListBackupPlanBindingsRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L771}
   ///
   // clang-format on
@@ -1187,7 +1187,7 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.BackupPlanBinding]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup_plan_binding.proto#L36}
+  /// [google.cloud.gkebackup.v1.BackupPlanBinding]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup_plan_binding.proto#L37}
   /// [google.cloud.gkebackup.v1.GetBackupPlanBindingRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L822}
   ///
   // clang-format on
@@ -1217,7 +1217,7 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.BackupPlanBinding]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup_plan_binding.proto#L36}
+  /// [google.cloud.gkebackup.v1.BackupPlanBinding]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup_plan_binding.proto#L37}
   /// [google.cloud.gkebackup.v1.GetBackupPlanBindingRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L822}
   ///
   // clang-format on

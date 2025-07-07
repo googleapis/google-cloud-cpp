@@ -17,7 +17,7 @@
 // source: google/cloud/discoveryengine/v1/schema_service.proto
 
 #include "google/cloud/discoveryengine/v1/internal/schema_auth_decorator.h"
-#include <google/cloud/discoveryengine/v1/schema_service.grpc.pb.h>
+#include "google/cloud/discoveryengine/v1/schema_service.grpc.pb.h"
 #include <memory>
 #include <utility>
 

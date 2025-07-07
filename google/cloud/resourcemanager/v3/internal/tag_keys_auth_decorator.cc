@@ -17,7 +17,7 @@
 // source: google/cloud/resourcemanager/v3/tag_keys.proto
 
 #include "google/cloud/resourcemanager/v3/internal/tag_keys_auth_decorator.h"
-#include <google/cloud/resourcemanager/v3/tag_keys.grpc.pb.h>
+#include "google/cloud/resourcemanager/v3/tag_keys.grpc.pb.h"
 #include <memory>
 #include <utility>
 

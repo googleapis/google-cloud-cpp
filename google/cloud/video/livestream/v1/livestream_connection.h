@@ -21,6 +21,7 @@
 
 #include "google/cloud/video/livestream/v1/internal/livestream_retry_traits.h"
 #include "google/cloud/video/livestream/v1/livestream_connection_idempotency_policy.h"
+#include "google/cloud/video/livestream/v1/service.pb.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
@@ -30,8 +31,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/video/livestream/v1/service.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 
 namespace google {
@@ -344,6 +344,56 @@ class LivestreamServiceConnection {
   virtual future<
       StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
   DeleteClip(google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::video::livestream::v1::DvrSession>>
+  CreateDvrSession(
+      google::cloud::video::livestream::v1::CreateDvrSessionRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> CreateDvrSession(
+      NoAwaitTag,
+      google::cloud::video::livestream::v1::CreateDvrSessionRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::video::livestream::v1::DvrSession>>
+  CreateDvrSession(google::longrunning::Operation const& operation);
+
+  virtual StreamRange<google::cloud::video::livestream::v1::DvrSession>
+  ListDvrSessions(
+      google::cloud::video::livestream::v1::ListDvrSessionsRequest request);
+
+  virtual StatusOr<google::cloud::video::livestream::v1::DvrSession>
+  GetDvrSession(
+      google::cloud::video::livestream::v1::GetDvrSessionRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
+  DeleteDvrSession(
+      google::cloud::video::livestream::v1::DeleteDvrSessionRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteDvrSession(
+      NoAwaitTag,
+      google::cloud::video::livestream::v1::DeleteDvrSessionRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
+  DeleteDvrSession(google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::video::livestream::v1::DvrSession>>
+  UpdateDvrSession(
+      google::cloud::video::livestream::v1::UpdateDvrSessionRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateDvrSession(
+      NoAwaitTag,
+      google::cloud::video::livestream::v1::UpdateDvrSessionRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::video::livestream::v1::DvrSession>>
+  UpdateDvrSession(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::video::livestream::v1::Asset>>
   CreateAsset(

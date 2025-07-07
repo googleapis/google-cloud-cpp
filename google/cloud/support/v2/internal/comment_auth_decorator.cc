@@ -17,7 +17,7 @@
 // source: google/cloud/support/v2/comment_service.proto
 
 #include "google/cloud/support/v2/internal/comment_auth_decorator.h"
-#include <google/cloud/support/v2/comment_service.grpc.pb.h>
+#include "google/cloud/support/v2/comment_service.grpc.pb.h"
 #include <memory>
 #include <utility>
 

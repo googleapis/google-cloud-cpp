@@ -17,12 +17,12 @@
 // source: google/cloud/video/livestream/v1/service.proto
 
 #include "google/cloud/video/livestream/v1/internal/livestream_metadata_decorator.h"
+#include "google/cloud/video/livestream/v1/service.grpc.pb.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/url_encode.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/video/livestream/v1/service.grpc.pb.h>
 #include <memory>
 #include <string>
 #include <utility>
@@ -339,6 +339,96 @@ StatusOr<google::longrunning::Operation> LivestreamServiceMetadata::DeleteClip(
   SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteClip(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+LivestreamServiceMetadata::AsyncCreateDvrSession(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::video::livestream::v1::CreateDvrSessionRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateDvrSession(cq, std::move(context),
+                                       std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+LivestreamServiceMetadata::CreateDvrSession(
+    grpc::ClientContext& context, Options options,
+    google::cloud::video::livestream::v1::CreateDvrSessionRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateDvrSession(context, options, request);
+}
+
+StatusOr<google::cloud::video::livestream::v1::ListDvrSessionsResponse>
+LivestreamServiceMetadata::ListDvrSessions(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::video::livestream::v1::ListDvrSessionsRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListDvrSessions(context, options, request);
+}
+
+StatusOr<google::cloud::video::livestream::v1::DvrSession>
+LivestreamServiceMetadata::GetDvrSession(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::video::livestream::v1::GetDvrSessionRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetDvrSession(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+LivestreamServiceMetadata::AsyncDeleteDvrSession(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::video::livestream::v1::DeleteDvrSessionRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteDvrSession(cq, std::move(context),
+                                       std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+LivestreamServiceMetadata::DeleteDvrSession(
+    grpc::ClientContext& context, Options options,
+    google::cloud::video::livestream::v1::DeleteDvrSessionRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteDvrSession(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+LivestreamServiceMetadata::AsyncUpdateDvrSession(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::video::livestream::v1::UpdateDvrSessionRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("dvr_session.name=",
+                           internal::UrlEncode(request.dvr_session().name())));
+  return child_->AsyncUpdateDvrSession(cq, std::move(context),
+                                       std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+LivestreamServiceMetadata::UpdateDvrSession(
+    grpc::ClientContext& context, Options options,
+    google::cloud::video::livestream::v1::UpdateDvrSessionRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("dvr_session.name=",
+                           internal::UrlEncode(request.dvr_session().name())));
+  return child_->UpdateDvrSession(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

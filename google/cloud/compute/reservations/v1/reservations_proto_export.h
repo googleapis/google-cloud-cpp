@@ -26,17 +26,18 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_RESERVATIONS_V1_RESERVATIONS_PROTO_EXPORT_H
 
 // IWYU pragma: begin_exports
-#include <google/cloud/compute/v1/internal/common_001.pb.h>
-#include <google/cloud/compute/v1/internal/common_006.pb.h>
-#include <google/cloud/compute/v1/internal/common_007.pb.h>
-#include <google/cloud/compute/v1/internal/common_016.pb.h>
-#include <google/cloud/compute/v1/internal/common_031.pb.h>
-#include <google/cloud/compute/v1/internal/common_048.pb.h>
-#include <google/cloud/compute/v1/internal/common_108.pb.h>
-#include <google/cloud/compute/v1/internal/common_116.pb.h>
-#include <google/cloud/compute/v1/internal/common_141.pb.h>
-#include <google/cloud/compute/v1/internal/common_142.pb.h>
-#include <google/cloud/compute/v1/internal/common_148.pb.h>
+#include "google/cloud/compute/v1/internal/common_001.pb.h"
+#include "google/cloud/compute/v1/internal/common_006.pb.h"
+#include "google/cloud/compute/v1/internal/common_007.pb.h"
+#include "google/cloud/compute/v1/internal/common_016.pb.h"
+#include "google/cloud/compute/v1/internal/common_029.pb.h"
+#include "google/cloud/compute/v1/internal/common_031.pb.h"
+#include "google/cloud/compute/v1/internal/common_048.pb.h"
+#include "google/cloud/compute/v1/internal/common_111.pb.h"
+#include "google/cloud/compute/v1/internal/common_119.pb.h"
+#include "google/cloud/compute/v1/internal/common_144.pb.h"
+#include "google/cloud/compute/v1/internal/common_145.pb.h"
+#include "google/cloud/compute/v1/internal/common_151.pb.h"
 // IWYU pragma: end_exports
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_RESERVATIONS_V1_RESERVATIONS_PROTO_EXPORT_H

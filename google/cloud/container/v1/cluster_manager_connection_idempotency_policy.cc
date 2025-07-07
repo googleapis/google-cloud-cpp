@@ -205,6 +205,16 @@ ClusterManagerConnectionIdempotencyPolicy::CheckAutopilotCompatibility(
   return Idempotency::kIdempotent;
 }
 
+Idempotency ClusterManagerConnectionIdempotencyPolicy::FetchClusterUpgradeInfo(
+    google::container::v1::FetchClusterUpgradeInfoRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency ClusterManagerConnectionIdempotencyPolicy::FetchNodePoolUpgradeInfo(
+    google::container::v1::FetchNodePoolUpgradeInfoRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 std::unique_ptr<ClusterManagerConnectionIdempotencyPolicy>
 MakeDefaultClusterManagerConnectionIdempotencyPolicy() {
   return std::make_unique<ClusterManagerConnectionIdempotencyPolicy>();

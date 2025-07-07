@@ -28,7 +28,7 @@
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-#include <google/monitoring/dashboard/v1/dashboards_service.grpc.pb.h>
+#include "google/monitoring/dashboard/v1/dashboards_service.grpc.pb.h"
 #include <memory>
 #include <utility>
 

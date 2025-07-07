@@ -44,7 +44,7 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
   //     https://cloud.google.com/vpc/docs/private-google-access
   auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>(
       "private.googleapis.com");
-  auto client = google::cloud::appengine_v1::ApplicationsClient(
+  auto vpc_client = google::cloud::appengine_v1::ApplicationsClient(
       google::cloud::appengine_v1::MakeApplicationsConnection(options));
   //! [set-client-endpoint]
 }

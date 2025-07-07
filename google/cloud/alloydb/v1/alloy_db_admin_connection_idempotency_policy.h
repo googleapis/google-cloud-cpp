@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ALLOYDB_V1_ALLOY_DB_ADMIN_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ALLOYDB_V1_ALLOY_DB_ADMIN_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/alloydb/v1/service.grpc.pb.h"
+#include "google/cloud/location/locations.grpc.pb.h"
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include <google/cloud/alloydb/v1/service.grpc.pb.h>
-#include <google/cloud/location/locations.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 
 namespace google {
@@ -50,6 +50,15 @@ class AlloyDBAdminConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency UpdateCluster(
       google::cloud::alloydb::v1::UpdateClusterRequest const& request);
+
+  virtual google::cloud::Idempotency ExportCluster(
+      google::cloud::alloydb::v1::ExportClusterRequest const& request);
+
+  virtual google::cloud::Idempotency ImportCluster(
+      google::cloud::alloydb::v1::ImportClusterRequest const& request);
+
+  virtual google::cloud::Idempotency UpgradeCluster(
+      google::cloud::alloydb::v1::UpgradeClusterRequest const& request);
 
   virtual google::cloud::Idempotency DeleteCluster(
       google::cloud::alloydb::v1::DeleteClusterRequest const& request);

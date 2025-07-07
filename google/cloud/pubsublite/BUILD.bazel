@@ -85,7 +85,7 @@ cc_library(
             "//:mocks",
             "//google/cloud/testing_util:google_cloud_cpp_testing_grpc_private",
             "//google/cloud/testing_util:google_cloud_cpp_testing_private",
-            "@com_google_absl//absl/memory",
+            "@abseil-cpp//absl/memory",
             "@com_google_googletest//:gtest_main",
         ],
     )

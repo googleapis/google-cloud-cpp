@@ -17,7 +17,7 @@
 // source: google/container/v1/cluster_service.proto
 
 #include "google/cloud/container/v1/internal/cluster_manager_auth_decorator.h"
-#include <google/container/v1/cluster_service.grpc.pb.h>
+#include "google/container/v1/cluster_service.grpc.pb.h"
 #include <memory>
 #include <utility>
 
@@ -315,6 +315,24 @@ ClusterManagerAuth::CheckAutopilotCompatibility(
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CheckAutopilotCompatibility(context, options, request);
+}
+
+StatusOr<google::container::v1::ClusterUpgradeInfo>
+ClusterManagerAuth::FetchClusterUpgradeInfo(
+    grpc::ClientContext& context, Options const& options,
+    google::container::v1::FetchClusterUpgradeInfoRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->FetchClusterUpgradeInfo(context, options, request);
+}
+
+StatusOr<google::container::v1::NodePoolUpgradeInfo>
+ClusterManagerAuth::FetchNodePoolUpgradeInfo(
+    grpc::ClientContext& context, Options const& options,
+    google::container::v1::FetchNodePoolUpgradeInfoRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->FetchNodePoolUpgradeInfo(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

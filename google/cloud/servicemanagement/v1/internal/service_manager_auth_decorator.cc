@@ -17,7 +17,7 @@
 // source: google/api/servicemanagement/v1/servicemanager.proto
 
 #include "google/cloud/servicemanagement/v1/internal/service_manager_auth_decorator.h"
-#include <google/api/servicemanagement/v1/servicemanager.grpc.pb.h>
+#include "google/api/servicemanagement/v1/servicemanager.grpc.pb.h"
 #include <memory>
 #include <utility>
 

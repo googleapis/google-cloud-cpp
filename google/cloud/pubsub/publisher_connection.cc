@@ -114,17 +114,22 @@ std::shared_ptr<PublisherConnection> MakePublisherConnection(
   return MakePublisherConnection(std::move(topic));
 }
 
-std::shared_ptr<PublisherConnection> MakePublisherConnection(Topic topic,
-                                                             Options opts) {
+std::shared_ptr<PublisherConnection> MakePublisherConnection(
+    std::string const& location, Topic topic, Options opts) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  UnifiedCredentialsOptionList, PolicyOptionList,
                                  PublisherOptionList>(opts, __func__);
-  opts = pubsub_internal::DefaultPublisherOptions(std::move(opts));
+  opts = pubsub_internal::DefaultPublisherOptions(location, std::move(opts));
   auto background = internal::MakeBackgroundThreadsFactory(opts)();
   auto stub =
       pubsub_internal::MakeRoundRobinPublisherStub(background->cq(), opts);
   return ConnectionFromDecoratedStub(std::move(topic), std::move(opts),
                                      std::move(background), std::move(stub));
+}
+
+std::shared_ptr<PublisherConnection> MakePublisherConnection(Topic topic,
+                                                             Options opts) {
+  return MakePublisherConnection("", std::move(topic), std::move(opts));
 }
 
 std::shared_ptr<PublisherConnection> MakePublisherConnection(

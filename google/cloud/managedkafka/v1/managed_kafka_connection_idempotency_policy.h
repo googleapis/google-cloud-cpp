@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MANAGEDKAFKA_V1_MANAGED_KAFKA_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MANAGEDKAFKA_V1_MANAGED_KAFKA_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/location/locations.grpc.pb.h"
+#include "google/cloud/managedkafka/v1/managed_kafka.grpc.pb.h"
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include <google/cloud/location/locations.grpc.pb.h>
-#include <google/cloud/managedkafka/v1/managed_kafka.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 
 namespace google {
@@ -82,6 +82,27 @@ class ManagedKafkaConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency DeleteConsumerGroup(
       google::cloud::managedkafka::v1::DeleteConsumerGroupRequest const&
           request);
+
+  virtual google::cloud::Idempotency ListAcls(
+      google::cloud::managedkafka::v1::ListAclsRequest request);
+
+  virtual google::cloud::Idempotency GetAcl(
+      google::cloud::managedkafka::v1::GetAclRequest const& request);
+
+  virtual google::cloud::Idempotency CreateAcl(
+      google::cloud::managedkafka::v1::CreateAclRequest const& request);
+
+  virtual google::cloud::Idempotency UpdateAcl(
+      google::cloud::managedkafka::v1::UpdateAclRequest const& request);
+
+  virtual google::cloud::Idempotency DeleteAcl(
+      google::cloud::managedkafka::v1::DeleteAclRequest const& request);
+
+  virtual google::cloud::Idempotency AddAclEntry(
+      google::cloud::managedkafka::v1::AddAclEntryRequest const& request);
+
+  virtual google::cloud::Idempotency RemoveAclEntry(
+      google::cloud::managedkafka::v1::RemoveAclEntryRequest const& request);
 
   virtual google::cloud::Idempotency ListLocations(
       google::cloud::location::ListLocationsRequest request);

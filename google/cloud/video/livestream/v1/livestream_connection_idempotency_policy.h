@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VIDEO_LIVESTREAM_V1_LIVESTREAM_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VIDEO_LIVESTREAM_V1_LIVESTREAM_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/location/locations.grpc.pb.h"
+#include "google/cloud/video/livestream/v1/service.grpc.pb.h"
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include <google/cloud/location/locations.grpc.pb.h>
-#include <google/cloud/video/livestream/v1/service.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 
 namespace google {
@@ -101,6 +101,25 @@ class LivestreamServiceConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency DeleteClip(
       google::cloud::video::livestream::v1::DeleteClipRequest const& request);
+
+  virtual google::cloud::Idempotency CreateDvrSession(
+      google::cloud::video::livestream::v1::CreateDvrSessionRequest const&
+          request);
+
+  virtual google::cloud::Idempotency ListDvrSessions(
+      google::cloud::video::livestream::v1::ListDvrSessionsRequest request);
+
+  virtual google::cloud::Idempotency GetDvrSession(
+      google::cloud::video::livestream::v1::GetDvrSessionRequest const&
+          request);
+
+  virtual google::cloud::Idempotency DeleteDvrSession(
+      google::cloud::video::livestream::v1::DeleteDvrSessionRequest const&
+          request);
+
+  virtual google::cloud::Idempotency UpdateDvrSession(
+      google::cloud::video::livestream::v1::UpdateDvrSessionRequest const&
+          request);
 
   virtual google::cloud::Idempotency CreateAsset(
       google::cloud::video::livestream::v1::CreateAssetRequest const& request);

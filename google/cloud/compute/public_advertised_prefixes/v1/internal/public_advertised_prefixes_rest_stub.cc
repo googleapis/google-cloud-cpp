@@ -18,12 +18,12 @@
 // google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto
 
 #include "google/cloud/compute/public_advertised_prefixes/v1/internal/public_advertised_prefixes_rest_stub.h"
+#include "google/cloud/compute/global_operations/v1/global_operations.pb.h"
+#include "google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.pb.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/rest_stub_helpers.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/compute/global_operations/v1/global_operations.pb.h>
-#include <google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.pb.h>
 #include <memory>
 #include <utility>
 

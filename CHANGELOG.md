@@ -11,6 +11,8 @@ breaking changes in the upcoming 3.x release. This release is scheduled for
 We are happy to announce the following GA libraries. Unless specifically noted,
 the APIs in these libraries are stable, and are ready for production use.
 
+- [Dataform API](/google/cloud/dataform/README.md)
+- [Google Cloud Managed Lustre API](/google/cloud/lustre/README.md)
 - [Memorystore API](/google/cloud/memorystore/README.md)
 - [Oracle Database@Google Cloud API](/google/cloud/oracledatabase/README.md)
 

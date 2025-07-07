@@ -17,12 +17,12 @@
 // source: google/cloud/managedkafka/v1/managed_kafka.proto
 
 #include "google/cloud/managedkafka/v1/internal/managed_kafka_metadata_decorator.h"
+#include "google/cloud/managedkafka/v1/managed_kafka.grpc.pb.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/url_encode.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/managedkafka/v1/managed_kafka.grpc.pb.h>
 #include <memory>
 #include <string>
 #include <utility>
@@ -205,6 +205,66 @@ Status ManagedKafkaMetadata::DeleteConsumerGroup(
   SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteConsumerGroup(context, options, request);
+}
+
+StatusOr<google::cloud::managedkafka::v1::ListAclsResponse>
+ManagedKafkaMetadata::ListAcls(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::managedkafka::v1::ListAclsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListAcls(context, options, request);
+}
+
+StatusOr<google::cloud::managedkafka::v1::Acl> ManagedKafkaMetadata::GetAcl(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::managedkafka::v1::GetAclRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetAcl(context, options, request);
+}
+
+StatusOr<google::cloud::managedkafka::v1::Acl> ManagedKafkaMetadata::CreateAcl(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::managedkafka::v1::CreateAclRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateAcl(context, options, request);
+}
+
+StatusOr<google::cloud::managedkafka::v1::Acl> ManagedKafkaMetadata::UpdateAcl(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::managedkafka::v1::UpdateAclRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("acl.name=", internal::UrlEncode(request.acl().name())));
+  return child_->UpdateAcl(context, options, request);
+}
+
+Status ManagedKafkaMetadata::DeleteAcl(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::managedkafka::v1::DeleteAclRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteAcl(context, options, request);
+}
+
+StatusOr<google::cloud::managedkafka::v1::AddAclEntryResponse>
+ManagedKafkaMetadata::AddAclEntry(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::managedkafka::v1::AddAclEntryRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("acl=", internal::UrlEncode(request.acl())));
+  return child_->AddAclEntry(context, options, request);
+}
+
+StatusOr<google::cloud::managedkafka::v1::RemoveAclEntryResponse>
+ManagedKafkaMetadata::RemoveAclEntry(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::managedkafka::v1::RemoveAclEntryRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("acl=", internal::UrlEncode(request.acl())));
+  return child_->RemoveAclEntry(context, options, request);
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>

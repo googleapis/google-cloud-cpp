@@ -27,8 +27,9 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/pubsub/v1/pubsub.pb.h>
+#include "google/pubsub/v1/pubsub.pb.h"
 #include <memory>
+#include <string>
 
 namespace google {
 namespace cloud {
@@ -234,8 +235,18 @@ class TopicAdminConnection {
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
+ * @param location Sets the prefix for the default `EndpointOption` value.
  * @param options (optional) Configure the `TopicAdminConnection` created by
  * this function.
+ */
+std::shared_ptr<TopicAdminConnection> MakeTopicAdminConnection(
+    std::string const& location, Options options = {});
+
+/**
+ * A factory function to construct an object of type `TopicAdminConnection`.
+ *
+ * This overload of `MakeTopicAdminConnection` does not require a location
+ * argument, creating a connection to the global service endpoint.
  */
 std::shared_ptr<TopicAdminConnection> MakeTopicAdminConnection(
     Options options = {});

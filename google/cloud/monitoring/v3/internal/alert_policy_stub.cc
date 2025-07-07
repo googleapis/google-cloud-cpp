@@ -19,7 +19,7 @@
 #include "google/cloud/monitoring/v3/internal/alert_policy_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/monitoring/v3/alert_service.grpc.pb.h>
+#include "google/monitoring/v3/alert_service.grpc.pb.h"
 #include <memory>
 #include <utility>
 

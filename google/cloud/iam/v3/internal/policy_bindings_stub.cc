@@ -19,8 +19,8 @@
 #include "google/cloud/iam/v3/internal/policy_bindings_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/iam/v3/policy_bindings_service.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/iam/v3/policy_bindings_service.grpc.pb.h"
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>
 

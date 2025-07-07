@@ -32,7 +32,7 @@ licenses(["notice"])  # Apache 2.0
         "//google/cloud/spanner:spanner_client_testing_private",
         "//google/cloud/testing_util:google_cloud_cpp_testing_grpc_private",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
-        "//protos:system_includes",
+        #        "//protos:system_includes",
         "//protos/google/cloud/spanner/testing:singer_cc_proto",
         "@com_google_googletest//:gtest_main",
     ],

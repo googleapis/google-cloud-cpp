@@ -110,6 +110,7 @@ std::shared_ptr<PublisherConnection> MakePublisherConnection(
  *
  * @see `PublisherConnection`
  *
+ * @param location Sets the prefix for the default `EndpointOption` value.
  * @param topic the Cloud Pub/Sub topic used by the returned
  *     `PublisherConnection`.
  * @param opts The options to use for this call. Expected options are any of
@@ -118,6 +119,15 @@ std::shared_ptr<PublisherConnection> MakePublisherConnection(
  *       - `google::cloud::GrpcOptionList`
  *       - `google::cloud::pubsub::PolicyOptionList`
  *       - `google::cloud::pubsub::PublisherOptionList`
+ */
+std::shared_ptr<PublisherConnection> MakePublisherConnection(
+    std::string const& location, Topic topic, Options opts = {});
+
+/**
+ * A factory function to construct an object of type `PublisherConnection`.
+ *
+ * This overload of `MakePublisherConnection` does not require a location
+ * argument, creating a connection to the global service endpoint.
  */
 std::shared_ptr<PublisherConnection> MakePublisherConnection(Topic topic,
                                                              Options opts = {});

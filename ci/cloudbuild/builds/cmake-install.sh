@@ -35,6 +35,7 @@ readonly ENABLED_FEATURES
 # Compiles and installs all libraries and headers.
 cmake "${cmake_args[@]}" \
   -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" \
+  -DCMAKE_CXX_STANDARD=17 \
   -DCMAKE_INSTALL_MESSAGE=NEVER \
   -DGOOGLE_CLOUD_CPP_ENABLE_CLANG_ABI_COMPAT_17=ON \
   -DBUILD_TESTING=OFF \
@@ -91,6 +92,9 @@ expected_dirs+=(
   # no RPC services in google/cloud/compute common proto dirs
   ./include/google/cloud/compute/v1
   ./include/google/cloud/compute/v1/internal
+  # no RPC services in google/cloud/dataform/logging
+  ./include/google/cloud/dataform/logging
+  ./include/google/cloud/dataform/logging/v1
   ./include/google/cloud/gkebackup/logging
   ./include/google/cloud/gkebackup/logging/v1
   ./include/google/cloud/gkehub/v1/configmanagement

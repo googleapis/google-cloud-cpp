@@ -94,6 +94,69 @@ AlloyDBAdminConnection::UpdateCluster(google::longrunning::Operation const&) {
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+future<StatusOr<google::cloud::alloydb::v1::ExportClusterResponse>>
+AlloyDBAdminConnection::ExportCluster(
+    google::cloud::alloydb::v1::ExportClusterRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::alloydb::v1::ExportClusterResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> AlloyDBAdminConnection::ExportCluster(
+    NoAwaitTag, google::cloud::alloydb::v1::ExportClusterRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::alloydb::v1::ExportClusterResponse>>
+AlloyDBAdminConnection::ExportCluster(google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::alloydb::v1::ExportClusterResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::alloydb::v1::ImportClusterResponse>>
+AlloyDBAdminConnection::ImportCluster(
+    google::cloud::alloydb::v1::ImportClusterRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::alloydb::v1::ImportClusterResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> AlloyDBAdminConnection::ImportCluster(
+    NoAwaitTag, google::cloud::alloydb::v1::ImportClusterRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::alloydb::v1::ImportClusterResponse>>
+AlloyDBAdminConnection::ImportCluster(google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::alloydb::v1::ImportClusterResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::alloydb::v1::UpgradeClusterResponse>>
+AlloyDBAdminConnection::UpgradeCluster(
+    google::cloud::alloydb::v1::UpgradeClusterRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::alloydb::v1::UpgradeClusterResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> AlloyDBAdminConnection::UpgradeCluster(
+    NoAwaitTag, google::cloud::alloydb::v1::UpgradeClusterRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::alloydb::v1::UpgradeClusterResponse>>
+AlloyDBAdminConnection::UpgradeCluster(google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::alloydb::v1::UpgradeClusterResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>>
 AlloyDBAdminConnection::DeleteCluster(
     google::cloud::alloydb::v1::DeleteClusterRequest const&) {

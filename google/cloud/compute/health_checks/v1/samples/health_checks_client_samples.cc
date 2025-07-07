@@ -44,7 +44,7 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
   //     https://cloud.google.com/vpc/docs/private-google-access
   auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>(
       "private.googleapis.com");
-  auto client = google::cloud::compute_health_checks_v1::HealthChecksClient(
+  auto vpc_client = google::cloud::compute_health_checks_v1::HealthChecksClient(
       google::cloud::compute_health_checks_v1::MakeHealthChecksConnectionRest(
           options));
   //! [set-client-endpoint]

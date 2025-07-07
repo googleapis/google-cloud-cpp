@@ -1,4 +1,4 @@
-# Copyright 2022 Google LLC
+# Copyright 2025 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,20 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-createTime: '2022-06-23T15:35:45.803275576Z'
-filename: ci/cloudbuild/cloudbuild.yaml
-github:
-  name: google-cloud-cpp
-  owner: googleapis
-  push:
-    branch: ^main$
-id: 23c2a0e2-d64f-4ca4-869a-1064e2549624
-includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: cxx14-ci
-resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/23c2a0e2-d64f-4ca4-869a-1064e2549624
-substitutions:
-  _BUILD_NAME: cxx14
-  _DISTRO: fedora-latest-cxx14
-  _TRIGGER_TYPE: ci
-tags:
-- ci
+licenses(["notice"])  # Apache 2.0
+
+cc_binary(
+    name = "quickstart",
+    srcs = [
+        "quickstart.cc",
+    ],
+    deps = [
+        "@google_cloud_cpp//:dataform",
+    ],
+)

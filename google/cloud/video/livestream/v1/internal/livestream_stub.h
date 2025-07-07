@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VIDEO_LIVESTREAM_V1_INTERNAL_LIVESTREAM_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VIDEO_LIVESTREAM_V1_INTERNAL_LIVESTREAM_STUB_H
 
+#include "google/cloud/location/locations.grpc.pb.h"
+#include "google/cloud/video/livestream/v1/service.grpc.pb.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/cloud/location/locations.grpc.pb.h>
-#include <google/cloud/video/livestream/v1/service.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>
 
@@ -204,6 +204,58 @@ class LivestreamServiceStub {
   virtual StatusOr<google::longrunning::Operation> DeleteClip(
       grpc::ClientContext& context, Options options,
       google::cloud::video::livestream::v1::DeleteClipRequest const&
+          request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateDvrSession(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::video::livestream::v1::CreateDvrSessionRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> CreateDvrSession(
+      grpc::ClientContext& context, Options options,
+      google::cloud::video::livestream::v1::CreateDvrSessionRequest const&
+          request) = 0;
+
+  virtual StatusOr<
+      google::cloud::video::livestream::v1::ListDvrSessionsResponse>
+  ListDvrSessions(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::video::livestream::v1::ListDvrSessionsRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::cloud::video::livestream::v1::DvrSession>
+  GetDvrSession(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::video::livestream::v1::GetDvrSessionRequest const&
+          request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteDvrSession(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::video::livestream::v1::DeleteDvrSessionRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> DeleteDvrSession(
+      grpc::ClientContext& context, Options options,
+      google::cloud::video::livestream::v1::DeleteDvrSessionRequest const&
+          request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncUpdateDvrSession(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::video::livestream::v1::UpdateDvrSessionRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> UpdateDvrSession(
+      grpc::ClientContext& context, Options options,
+      google::cloud::video::livestream::v1::UpdateDvrSessionRequest const&
           request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateAsset(
@@ -476,6 +528,53 @@ class DefaultLivestreamServiceStub : public LivestreamServiceStub {
       grpc::ClientContext& context, Options options,
       google::cloud::video::livestream::v1::DeleteClipRequest const& request)
       override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateDvrSession(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::video::livestream::v1::CreateDvrSessionRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> CreateDvrSession(
+      grpc::ClientContext& context, Options options,
+      google::cloud::video::livestream::v1::CreateDvrSessionRequest const&
+          request) override;
+
+  StatusOr<google::cloud::video::livestream::v1::ListDvrSessionsResponse>
+  ListDvrSessions(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::video::livestream::v1::ListDvrSessionsRequest const&
+          request) override;
+
+  StatusOr<google::cloud::video::livestream::v1::DvrSession> GetDvrSession(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::video::livestream::v1::GetDvrSessionRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteDvrSession(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::video::livestream::v1::DeleteDvrSessionRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteDvrSession(
+      grpc::ClientContext& context, Options options,
+      google::cloud::video::livestream::v1::DeleteDvrSessionRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateDvrSession(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::video::livestream::v1::UpdateDvrSessionRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateDvrSession(
+      grpc::ClientContext& context, Options options,
+      google::cloud::video::livestream::v1::UpdateDvrSessionRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateAsset(
       google::cloud::CompletionQueue& cq,

@@ -26,13 +26,14 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_COMMITMENTS_V1_REGION_COMMITMENTS_PROTO_EXPORT_H
 
 // IWYU pragma: begin_exports
-#include <google/cloud/compute/v1/internal/common_001.pb.h>
-#include <google/cloud/compute/v1/internal/common_006.pb.h>
-#include <google/cloud/compute/v1/internal/common_016.pb.h>
-#include <google/cloud/compute/v1/internal/common_018.pb.h>
-#include <google/cloud/compute/v1/internal/common_048.pb.h>
-#include <google/cloud/compute/v1/internal/common_116.pb.h>
-#include <google/cloud/compute/v1/internal/common_142.pb.h>
+#include "google/cloud/compute/v1/internal/common_001.pb.h"
+#include "google/cloud/compute/v1/internal/common_006.pb.h"
+#include "google/cloud/compute/v1/internal/common_016.pb.h"
+#include "google/cloud/compute/v1/internal/common_018.pb.h"
+#include "google/cloud/compute/v1/internal/common_029.pb.h"
+#include "google/cloud/compute/v1/internal/common_048.pb.h"
+#include "google/cloud/compute/v1/internal/common_119.pb.h"
+#include "google/cloud/compute/v1/internal/common_145.pb.h"
 // IWYU pragma: end_exports
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_COMMITMENTS_V1_REGION_COMMITMENTS_PROTO_EXPORT_H

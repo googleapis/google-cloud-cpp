@@ -134,6 +134,14 @@ environment variables are convenient when troubleshooting problems.
   `EndpointOption` (which defaults to "compute.googleapis.com")
   used by `MakeInterconnectAttachmentsConnection()`.
 
+- `GOOGLE_CLOUD_CPP_INTERCONNECT_ATTACHMENT_GROUPS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeInterconnectAttachmentGroupsConnection()`.
+
+- `GOOGLE_CLOUD_CPP_INTERCONNECT_GROUPS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeInterconnectGroupsConnection()`.
+
 - `GOOGLE_CLOUD_CPP_INTERCONNECT_LOCATIONS_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "compute.googleapis.com")
   used by `MakeInterconnectLocationsConnection()`.

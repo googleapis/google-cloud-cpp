@@ -17,7 +17,7 @@
 #include "google/cloud/internal/absl_str_replace_quiet.h"
 #include "google/cloud/log.h"
 #include "absl/strings/str_split.h"
-#include <google/api/routing.pb.h>
+#include "google/api/routing.pb.h"
 #include <google/protobuf/compiler/cpp/names.h>
 #include <regex>
 using ::google::protobuf::compiler::cpp::FieldName;

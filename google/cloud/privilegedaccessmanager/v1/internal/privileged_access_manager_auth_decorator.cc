@@ -17,7 +17,7 @@
 // source: google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto
 
 #include "google/cloud/privilegedaccessmanager/v1/internal/privileged_access_manager_auth_decorator.h"
-#include <google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.grpc.pb.h>
+#include "google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.grpc.pb.h"
 #include <memory>
 #include <utility>
 

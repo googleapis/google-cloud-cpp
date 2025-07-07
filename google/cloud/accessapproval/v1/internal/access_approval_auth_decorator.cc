@@ -17,7 +17,7 @@
 // source: google/cloud/accessapproval/v1/accessapproval.proto
 
 #include "google/cloud/accessapproval/v1/internal/access_approval_auth_decorator.h"
-#include <google/cloud/accessapproval/v1/accessapproval.grpc.pb.h>
+#include "google/cloud/accessapproval/v1/accessapproval.grpc.pb.h"
 #include <memory>
 #include <utility>
 

@@ -17,7 +17,7 @@
 // source: google/cloud/managedkafka/v1/managed_kafka.proto
 
 #include "google/cloud/managedkafka/v1/internal/managed_kafka_auth_decorator.h"
-#include <google/cloud/managedkafka/v1/managed_kafka.grpc.pb.h>
+#include "google/cloud/managedkafka/v1/managed_kafka.grpc.pb.h"
 #include <memory>
 #include <utility>
 
@@ -208,6 +208,65 @@ Status ManagedKafkaAuth::DeleteConsumerGroup(
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteConsumerGroup(context, options, request);
+}
+
+StatusOr<google::cloud::managedkafka::v1::ListAclsResponse>
+ManagedKafkaAuth::ListAcls(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::managedkafka::v1::ListAclsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListAcls(context, options, request);
+}
+
+StatusOr<google::cloud::managedkafka::v1::Acl> ManagedKafkaAuth::GetAcl(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::managedkafka::v1::GetAclRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetAcl(context, options, request);
+}
+
+StatusOr<google::cloud::managedkafka::v1::Acl> ManagedKafkaAuth::CreateAcl(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::managedkafka::v1::CreateAclRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateAcl(context, options, request);
+}
+
+StatusOr<google::cloud::managedkafka::v1::Acl> ManagedKafkaAuth::UpdateAcl(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::managedkafka::v1::UpdateAclRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateAcl(context, options, request);
+}
+
+Status ManagedKafkaAuth::DeleteAcl(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::managedkafka::v1::DeleteAclRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteAcl(context, options, request);
+}
+
+StatusOr<google::cloud::managedkafka::v1::AddAclEntryResponse>
+ManagedKafkaAuth::AddAclEntry(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::managedkafka::v1::AddAclEntryRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->AddAclEntry(context, options, request);
+}
+
+StatusOr<google::cloud::managedkafka::v1::RemoveAclEntryResponse>
+ManagedKafkaAuth::RemoveAclEntry(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::managedkafka::v1::RemoveAclEntryRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->RemoveAclEntry(context, options, request);
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>

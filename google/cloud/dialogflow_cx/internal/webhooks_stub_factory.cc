@@ -17,20 +17,20 @@
 // source: google/cloud/dialogflow/cx/v3/webhook.proto
 
 #include "google/cloud/dialogflow_cx/internal/webhooks_stub_factory.h"
+#include "google/cloud/dialogflow/cx/v3/webhook.grpc.pb.h"
 #include "google/cloud/dialogflow_cx/internal/webhooks_auth_decorator.h"
 #include "google/cloud/dialogflow_cx/internal/webhooks_logging_decorator.h"
 #include "google/cloud/dialogflow_cx/internal/webhooks_metadata_decorator.h"
 #include "google/cloud/dialogflow_cx/internal/webhooks_stub.h"
 #include "google/cloud/dialogflow_cx/internal/webhooks_tracing_stub.h"
+#include "google/cloud/location/locations.grpc.pb.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-#include <google/cloud/dialogflow/cx/v3/webhook.grpc.pb.h>
-#include <google/cloud/location/locations.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>
 

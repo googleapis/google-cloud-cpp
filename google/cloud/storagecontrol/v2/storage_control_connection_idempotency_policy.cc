@@ -137,6 +137,46 @@ Idempotency StorageControlConnectionIdempotencyPolicy::ListAnywhereCaches(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency
+StorageControlConnectionIdempotencyPolicy::GetProjectIntelligenceConfig(
+    google::storage::control::v2::GetProjectIntelligenceConfigRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency
+StorageControlConnectionIdempotencyPolicy::UpdateProjectIntelligenceConfig(
+    google::storage::control::v2::
+        UpdateProjectIntelligenceConfigRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
+StorageControlConnectionIdempotencyPolicy::GetFolderIntelligenceConfig(
+    google::storage::control::v2::GetFolderIntelligenceConfigRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency
+StorageControlConnectionIdempotencyPolicy::UpdateFolderIntelligenceConfig(
+    google::storage::control::v2::
+        UpdateFolderIntelligenceConfigRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
+StorageControlConnectionIdempotencyPolicy::GetOrganizationIntelligenceConfig(
+    google::storage::control::v2::
+        GetOrganizationIntelligenceConfigRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency
+StorageControlConnectionIdempotencyPolicy::UpdateOrganizationIntelligenceConfig(
+    google::storage::control::v2::
+        UpdateOrganizationIntelligenceConfigRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<StorageControlConnectionIdempotencyPolicy>
 MakeDefaultStorageControlConnectionIdempotencyPolicy() {
   return std::make_unique<StorageControlConnectionIdempotencyPolicy>();

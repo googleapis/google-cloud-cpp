@@ -19,8 +19,8 @@
 #include "google/cloud/serviceusage/v1/internal/service_usage_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/api/serviceusage/v1/serviceusage.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/api/serviceusage/v1/serviceusage.grpc.pb.h"
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>
 

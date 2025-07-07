@@ -18,7 +18,7 @@
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/log.h"
 #include "google/cloud/tracing_options.h"
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <type_traits>
 
 namespace google {

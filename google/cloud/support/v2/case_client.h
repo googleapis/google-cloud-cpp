@@ -87,9 +87,9 @@ class CaseServiceClient {
 
   // clang-format off
   ///
-  /// Retrieve the specified case.
+  /// Retrieve a case.
   ///
-  /// @param name  Required. The fully qualified name of a case to be retrieved.
+  /// @param name  Required. The full name of a case to be retrieved.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -103,8 +103,8 @@ class CaseServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.support.v2.Case]: @googleapis_reference_link{google/cloud/support/v2/case.proto#L33}
-  /// [google.cloud.support.v2.GetCaseRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L143}
+  /// [google.cloud.support.v2.Case]: @googleapis_reference_link{google/cloud/support/v2/case.proto#L59}
+  /// [google.cloud.support.v2.GetCaseRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L150}
   ///
   // clang-format on
   StatusOr<google::cloud::support::v2::Case> GetCase(std::string const& name,
@@ -112,7 +112,7 @@ class CaseServiceClient {
 
   // clang-format off
   ///
-  /// Retrieve the specified case.
+  /// Retrieve a case.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -133,8 +133,8 @@ class CaseServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.support.v2.Case]: @googleapis_reference_link{google/cloud/support/v2/case.proto#L33}
-  /// [google.cloud.support.v2.GetCaseRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L143}
+  /// [google.cloud.support.v2.Case]: @googleapis_reference_link{google/cloud/support/v2/case.proto#L59}
+  /// [google.cloud.support.v2.GetCaseRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L150}
   ///
   // clang-format on
   StatusOr<google::cloud::support::v2::Case> GetCase(
@@ -143,14 +143,13 @@ class CaseServiceClient {
 
   // clang-format off
   ///
-  /// Retrieve all cases under the specified parent.
+  /// Retrieve all cases under a parent, but not its children.
   ///
-  /// Note: Listing cases under an Organization returns only the cases directly
-  /// parented by that organization. To retrieve all cases under an organization,
-  /// including cases parented by projects under that organization, use
-  /// `cases.search`.
+  /// For example, listing cases under an organization only returns the cases
+  /// that are directly parented by that organization. To retrieve cases
+  /// under an organization and its projects, use `cases.search`.
   ///
-  /// @param parent  Required. The fully qualified name of parent resource to list cases under.
+  /// @param parent  Required. The name of a parent to list cases under.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -173,8 +172,8 @@ class CaseServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.support.v2.Case]: @googleapis_reference_link{google/cloud/support/v2/case.proto#L33}
-  /// [google.cloud.support.v2.ListCasesRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L169}
+  /// [google.cloud.support.v2.Case]: @googleapis_reference_link{google/cloud/support/v2/case.proto#L59}
+  /// [google.cloud.support.v2.ListCasesRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L175}
   ///
   // clang-format on
   StreamRange<google::cloud::support::v2::Case> ListCases(
@@ -182,12 +181,11 @@ class CaseServiceClient {
 
   // clang-format off
   ///
-  /// Retrieve all cases under the specified parent.
+  /// Retrieve all cases under a parent, but not its children.
   ///
-  /// Note: Listing cases under an Organization returns only the cases directly
-  /// parented by that organization. To retrieve all cases under an organization,
-  /// including cases parented by projects under that organization, use
-  /// `cases.search`.
+  /// For example, listing cases under an organization only returns the cases
+  /// that are directly parented by that organization. To retrieve cases
+  /// under an organization and its projects, use `cases.search`.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -217,8 +215,8 @@ class CaseServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.support.v2.Case]: @googleapis_reference_link{google/cloud/support/v2/case.proto#L33}
-  /// [google.cloud.support.v2.ListCasesRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L169}
+  /// [google.cloud.support.v2.Case]: @googleapis_reference_link{google/cloud/support/v2/case.proto#L59}
+  /// [google.cloud.support.v2.ListCasesRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L175}
   ///
   // clang-format on
   StreamRange<google::cloud::support::v2::Case> ListCases(
@@ -226,7 +224,7 @@ class CaseServiceClient {
 
   // clang-format off
   ///
-  /// Search cases using the specified query.
+  /// Search for cases using a query.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -256,8 +254,8 @@ class CaseServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.support.v2.Case]: @googleapis_reference_link{google/cloud/support/v2/case.proto#L33}
-  /// [google.cloud.support.v2.SearchCasesRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L218}
+  /// [google.cloud.support.v2.Case]: @googleapis_reference_link{google/cloud/support/v2/case.proto#L59}
+  /// [google.cloud.support.v2.SearchCasesRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L226}
   ///
   // clang-format on
   StreamRange<google::cloud::support::v2::Case> SearchCases(
@@ -266,12 +264,13 @@ class CaseServiceClient {
 
   // clang-format off
   ///
-  /// Create a new case and associate it with the given Google Cloud Resource.
-  /// The case object must have the following fields set: `display_name`,
-  /// `description`, `classification`, and `priority`.
+  /// Create a new case and associate it with a parent.
   ///
-  /// @param parent  Required. The name of the Google Cloud Resource under which the case should
-  ///  be created.
+  /// It must have the following fields set: `display_name`, `description`,
+  /// `classification`, and `priority`. If you're just testing the API and don't
+  /// want to route your case to an agent, set `testCase=true`.
+  ///
+  /// @param parent  Required. The name of the parent under which the case should be created.
   /// @param case_  Required. The case to be created.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -286,8 +285,8 @@ class CaseServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.support.v2.Case]: @googleapis_reference_link{google/cloud/support/v2/case.proto#L33}
-  /// [google.cloud.support.v2.CreateCaseRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L154}
+  /// [google.cloud.support.v2.Case]: @googleapis_reference_link{google/cloud/support/v2/case.proto#L59}
+  /// [google.cloud.support.v2.CreateCaseRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L161}
   ///
   // clang-format on
   StatusOr<google::cloud::support::v2::Case> CreateCase(
@@ -296,9 +295,11 @@ class CaseServiceClient {
 
   // clang-format off
   ///
-  /// Create a new case and associate it with the given Google Cloud Resource.
-  /// The case object must have the following fields set: `display_name`,
-  /// `description`, `classification`, and `priority`.
+  /// Create a new case and associate it with a parent.
+  ///
+  /// It must have the following fields set: `display_name`, `description`,
+  /// `classification`, and `priority`. If you're just testing the API and don't
+  /// want to route your case to an agent, set `testCase=true`.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -319,8 +320,8 @@ class CaseServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.support.v2.Case]: @googleapis_reference_link{google/cloud/support/v2/case.proto#L33}
-  /// [google.cloud.support.v2.CreateCaseRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L154}
+  /// [google.cloud.support.v2.Case]: @googleapis_reference_link{google/cloud/support/v2/case.proto#L59}
+  /// [google.cloud.support.v2.CreateCaseRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L161}
   ///
   // clang-format on
   StatusOr<google::cloud::support::v2::Case> CreateCase(
@@ -329,17 +330,16 @@ class CaseServiceClient {
 
   // clang-format off
   ///
-  /// Update the specified case. Only a subset of fields can be updated.
+  /// Update a case. Only some fields can be updated.
   ///
-  /// @param case_  Required. The case object to update.
-  /// @param update_mask  A list of attributes of the case object that should be updated
-  ///  as part of this request. Supported values are `priority`, `display_name`,
-  ///  and `subscriber_email_addresses`. If no fields are specified, all supported
-  ///  fields are updated.
+  /// @param case_  Required. The case to update.
+  /// @param update_mask  A list of attributes of the case that should be updated. Supported values
+  ///  are `priority`, `display_name`, and `subscriber_email_addresses`. If no
+  ///  fields are specified, all supported fields are updated.
   ///  @n
-  ///  WARNING: If you do not provide a field mask, then you might accidentally
-  ///  clear some fields. For example, if you leave the field mask empty and do
-  ///  not provide a value for `subscriber_email_addresses`, then
+  ///  Be careful - if you do not provide a field mask, then you might
+  ///  accidentally clear some fields. For example, if you leave the field mask
+  ///  empty and do not provide a value for `subscriber_email_addresses`, then
   ///  `subscriber_email_addresses` is updated to empty.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -354,8 +354,8 @@ class CaseServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.support.v2.Case]: @googleapis_reference_link{google/cloud/support/v2/case.proto#L33}
-  /// [google.cloud.support.v2.UpdateCaseRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L295}
+  /// [google.cloud.support.v2.Case]: @googleapis_reference_link{google/cloud/support/v2/case.proto#L59}
+  /// [google.cloud.support.v2.UpdateCaseRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L300}
   ///
   // clang-format on
   StatusOr<google::cloud::support::v2::Case> UpdateCase(
@@ -364,7 +364,7 @@ class CaseServiceClient {
 
   // clang-format off
   ///
-  /// Update the specified case. Only a subset of fields can be updated.
+  /// Update a case. Only some fields can be updated.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -385,8 +385,8 @@ class CaseServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.support.v2.Case]: @googleapis_reference_link{google/cloud/support/v2/case.proto#L33}
-  /// [google.cloud.support.v2.UpdateCaseRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L295}
+  /// [google.cloud.support.v2.Case]: @googleapis_reference_link{google/cloud/support/v2/case.proto#L59}
+  /// [google.cloud.support.v2.UpdateCaseRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L300}
   ///
   // clang-format on
   StatusOr<google::cloud::support::v2::Case> UpdateCase(
@@ -395,13 +395,13 @@ class CaseServiceClient {
 
   // clang-format off
   ///
-  /// Escalate a case. Escalating a case will initiate the Google Cloud Support
-  /// escalation management process.
+  /// Escalate a case, starting the Google Cloud Support escalation management
+  /// process.
   ///
-  /// This operation is only available to certain Customer Care tiers. Go to
+  /// This operation is only available for some support services. Go to
   /// https://cloud.google.com/support and look for 'Technical support
-  /// escalations' in the feature list to find out which tiers are able to
-  /// perform escalations.
+  /// escalations' in the feature list to find out which ones let you
+  /// do that.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -422,8 +422,8 @@ class CaseServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.support.v2.Case]: @googleapis_reference_link{google/cloud/support/v2/case.proto#L33}
-  /// [google.cloud.support.v2.EscalateCaseRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L281}
+  /// [google.cloud.support.v2.Case]: @googleapis_reference_link{google/cloud/support/v2/case.proto#L59}
+  /// [google.cloud.support.v2.EscalateCaseRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L286}
   ///
   // clang-format on
   StatusOr<google::cloud::support::v2::Case> EscalateCase(
@@ -432,7 +432,7 @@ class CaseServiceClient {
 
   // clang-format off
   ///
-  /// Close the specified case.
+  /// Close a case.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -453,8 +453,8 @@ class CaseServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.support.v2.Case]: @googleapis_reference_link{google/cloud/support/v2/case.proto#L33}
-  /// [google.cloud.support.v2.CloseCaseRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L312}
+  /// [google.cloud.support.v2.Case]: @googleapis_reference_link{google/cloud/support/v2/case.proto#L59}
+  /// [google.cloud.support.v2.CloseCaseRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L316}
   ///
   // clang-format on
   StatusOr<google::cloud::support::v2::Case> CloseCase(
@@ -463,10 +463,16 @@ class CaseServiceClient {
 
   // clang-format off
   ///
-  /// Retrieve valid classifications to be used when creating a support case.
-  /// The classications are hierarchical, with each classification containing
-  /// all levels of the hierarchy, separated by " > ". For example "Technical
-  /// Issue > Compute > Compute Engine".
+  /// Retrieve valid classifications to use when creating a support case.
+  ///
+  /// Classifications are hierarchical. Each classification is a string
+  /// containing all levels of the hierarchy separated by `" > "`. For example,
+  /// `"Technical Issue > Compute > Compute Engine"`.
+  ///
+  /// Classification IDs returned by this endpoint are valid for at least six
+  /// months. When a classification is deactivated, this endpoint immediately
+  /// stops returning it. After six months, `case.create` requests using the
+  /// classification will fail.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -496,8 +502,8 @@ class CaseServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.support.v2.CaseClassification]: @googleapis_reference_link{google/cloud/support/v2/case.proto#L149}
-  /// [google.cloud.support.v2.SearchCaseClassificationsRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L323}
+  /// [google.cloud.support.v2.CaseClassification]: @googleapis_reference_link{google/cloud/support/v2/case.proto#L180}
+  /// [google.cloud.support.v2.SearchCaseClassificationsRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L327}
   ///
   // clang-format on
   StreamRange<google::cloud::support::v2::CaseClassification>

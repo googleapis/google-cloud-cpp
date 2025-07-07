@@ -17,6 +17,7 @@
 // source: google/cloud/shell/v1/cloudshell.proto
 
 #include "google/cloud/shell/v1/internal/cloud_shell_stub_factory.h"
+#include "google/cloud/shell/v1/cloudshell.grpc.pb.h"
 #include "google/cloud/shell/v1/internal/cloud_shell_auth_decorator.h"
 #include "google/cloud/shell/v1/internal/cloud_shell_logging_decorator.h"
 #include "google/cloud/shell/v1/internal/cloud_shell_metadata_decorator.h"
@@ -28,7 +29,6 @@
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-#include <google/cloud/shell/v1/cloudshell.grpc.pb.h>
 #include <memory>
 #include <utility>
 

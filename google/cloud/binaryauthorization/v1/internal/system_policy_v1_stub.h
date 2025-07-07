@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BINARYAUTHORIZATION_V1_INTERNAL_SYSTEM_POLICY_V1_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BINARYAUTHORIZATION_V1_INTERNAL_SYSTEM_POLICY_V1_STUB_H
 
+#include "google/cloud/binaryauthorization/v1/service.grpc.pb.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/cloud/binaryauthorization/v1/service.grpc.pb.h>
 #include <memory>
 #include <utility>
 

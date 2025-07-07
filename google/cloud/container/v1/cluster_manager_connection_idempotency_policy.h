@@ -21,7 +21,7 @@
 
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include <google/container/v1/cluster_service.grpc.pb.h>
+#include "google/container/v1/cluster_service.grpc.pb.h"
 #include <memory>
 
 namespace google {
@@ -138,6 +138,12 @@ class ClusterManagerConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency CheckAutopilotCompatibility(
       google::container::v1::CheckAutopilotCompatibilityRequest const& request);
+
+  virtual google::cloud::Idempotency FetchClusterUpgradeInfo(
+      google::container::v1::FetchClusterUpgradeInfoRequest const& request);
+
+  virtual google::cloud::Idempotency FetchNodePoolUpgradeInfo(
+      google::container::v1::FetchNodePoolUpgradeInfoRequest const& request);
 };
 
 std::unique_ptr<ClusterManagerConnectionIdempotencyPolicy>

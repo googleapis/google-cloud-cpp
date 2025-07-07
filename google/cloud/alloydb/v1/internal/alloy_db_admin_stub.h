@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ALLOYDB_V1_INTERNAL_ALLOY_DB_ADMIN_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ALLOYDB_V1_INTERNAL_ALLOY_DB_ADMIN_STUB_H
 
+#include "google/cloud/alloydb/v1/service.grpc.pb.h"
+#include "google/cloud/location/locations.grpc.pb.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/cloud/alloydb/v1/service.grpc.pb.h>
-#include <google/cloud/location/locations.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>
 
@@ -67,6 +67,36 @@ class AlloyDBAdminStub {
   virtual StatusOr<google::longrunning::Operation> UpdateCluster(
       grpc::ClientContext& context, Options options,
       google::cloud::alloydb::v1::UpdateClusterRequest const& request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncExportCluster(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::alloydb::v1::ExportClusterRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> ExportCluster(
+      grpc::ClientContext& context, Options options,
+      google::cloud::alloydb::v1::ExportClusterRequest const& request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncImportCluster(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::alloydb::v1::ImportClusterRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> ImportCluster(
+      grpc::ClientContext& context, Options options,
+      google::cloud::alloydb::v1::ImportClusterRequest const& request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncUpgradeCluster(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::alloydb::v1::UpgradeClusterRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> UpgradeCluster(
+      grpc::ClientContext& context, Options options,
+      google::cloud::alloydb::v1::UpgradeClusterRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteCluster(
       google::cloud::CompletionQueue& cq,
@@ -382,6 +412,38 @@ class DefaultAlloyDBAdminStub : public AlloyDBAdminStub {
   StatusOr<google::longrunning::Operation> UpdateCluster(
       grpc::ClientContext& context, Options options,
       google::cloud::alloydb::v1::UpdateClusterRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncExportCluster(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::alloydb::v1::ExportClusterRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> ExportCluster(
+      grpc::ClientContext& context, Options options,
+      google::cloud::alloydb::v1::ExportClusterRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncImportCluster(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::alloydb::v1::ImportClusterRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> ImportCluster(
+      grpc::ClientContext& context, Options options,
+      google::cloud::alloydb::v1::ImportClusterRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncUpgradeCluster(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::alloydb::v1::UpgradeClusterRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UpgradeCluster(
+      grpc::ClientContext& context, Options options,
+      google::cloud::alloydb::v1::UpgradeClusterRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteCluster(
       google::cloud::CompletionQueue& cq,

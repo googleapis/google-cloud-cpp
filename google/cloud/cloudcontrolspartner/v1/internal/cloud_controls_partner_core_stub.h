@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDCONTROLSPARTNER_V1_INTERNAL_CLOUD_CONTROLS_PARTNER_CORE_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDCONTROLSPARTNER_V1_INTERNAL_CLOUD_CONTROLS_PARTNER_CORE_STUB_H
 
+#include "google/cloud/cloudcontrolspartner/v1/core.grpc.pb.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/cloud/cloudcontrolspartner/v1/core.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -81,6 +81,23 @@ class CloudControlsPartnerCoreStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::cloudcontrolspartner::v1::GetPartnerRequest const&
           request) = 0;
+
+  virtual StatusOr<google::cloud::cloudcontrolspartner::v1::Customer>
+  CreateCustomer(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::cloudcontrolspartner::v1::CreateCustomerRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::cloud::cloudcontrolspartner::v1::Customer>
+  UpdateCustomer(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::cloudcontrolspartner::v1::UpdateCustomerRequest const&
+          request) = 0;
+
+  virtual Status DeleteCustomer(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::cloudcontrolspartner::v1::DeleteCustomerRequest const&
+          request) = 0;
 };
 
 class DefaultCloudControlsPartnerCoreStub
@@ -137,6 +154,21 @@ class DefaultCloudControlsPartnerCoreStub
       grpc::ClientContext& context, Options const& options,
       google::cloud::cloudcontrolspartner::v1::GetPartnerRequest const& request)
       override;
+
+  StatusOr<google::cloud::cloudcontrolspartner::v1::Customer> CreateCustomer(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::cloudcontrolspartner::v1::CreateCustomerRequest const&
+          request) override;
+
+  StatusOr<google::cloud::cloudcontrolspartner::v1::Customer> UpdateCustomer(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::cloudcontrolspartner::v1::UpdateCustomerRequest const&
+          request) override;
+
+  Status DeleteCustomer(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::cloudcontrolspartner::v1::DeleteCustomerRequest const&
+          request) override;
 
  private:
   std::unique_ptr<google::cloud::cloudcontrolspartner::v1::

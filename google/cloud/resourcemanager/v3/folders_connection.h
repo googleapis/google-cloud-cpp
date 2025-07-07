@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_V3_FOLDERS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_V3_FOLDERS_CONNECTION_H
 
+#include "google/cloud/resourcemanager/v3/folders.pb.h"
 #include "google/cloud/resourcemanager/v3/folders_connection_idempotency_policy.h"
 #include "google/cloud/resourcemanager/v3/internal/folders_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
@@ -30,9 +31,9 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/resourcemanager/v3/folders.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
+#include <string>
 
 namespace google {
 namespace cloud {
@@ -278,8 +279,18 @@ class FoldersConnection {
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
+ * @param location Sets the prefix for the default `EndpointOption` value.
  * @param options (optional) Configure the `FoldersConnection` created by
  * this function.
+ */
+std::shared_ptr<FoldersConnection> MakeFoldersConnection(
+    std::string const& location, Options options = {});
+
+/**
+ * A factory function to construct an object of type `FoldersConnection`.
+ *
+ * This overload of `MakeFoldersConnection` does not require a location
+ * argument, creating a connection to the global service endpoint.
  */
 std::shared_ptr<FoldersConnection> MakeFoldersConnection(Options options = {});
 

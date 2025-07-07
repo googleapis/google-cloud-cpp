@@ -196,6 +196,18 @@ class MockClusterManagerConnection
       (google::container::v1::CheckAutopilotCompatibilityRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::container::v1::ClusterUpgradeInfo>,
+      FetchClusterUpgradeInfo,
+      (google::container::v1::FetchClusterUpgradeInfoRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::container::v1::NodePoolUpgradeInfo>,
+      FetchNodePoolUpgradeInfo,
+      (google::container::v1::FetchNodePoolUpgradeInfoRequest const& request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

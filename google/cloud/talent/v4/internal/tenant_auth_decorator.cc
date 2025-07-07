@@ -17,7 +17,7 @@
 // source: google/cloud/talent/v4/tenant_service.proto
 
 #include "google/cloud/talent/v4/internal/tenant_auth_decorator.h"
-#include <google/cloud/talent/v4/tenant_service.grpc.pb.h>
+#include "google/cloud/talent/v4/tenant_service.grpc.pb.h"
 #include <memory>
 #include <utility>
 
