@@ -27,6 +27,7 @@
 #include <grpcpp/server_builder.h>
 #include <grpcpp/support/client_callback.h>
 #include <grpcpp/support/status.h>
+#include <cstddef>
 #include <cstdint>
 
 namespace google {
@@ -56,10 +57,16 @@ class EmulatorService final : public btproto::Bigtable::Service {
 
   grpc::Status SampleRowKeys(
       grpc::ServerContext* /* context */,
-      btproto::SampleRowKeysRequest const* /* request */,
-      grpc::ServerWriter<btproto::SampleRowKeysResponse>* /* writer */)
-      override {
-    return grpc::Status::OK;
+      btproto::SampleRowKeysRequest const* request,
+      grpc::ServerWriter<btproto::SampleRowKeysResponse>* writer) override {
+    auto maybe_table = cluster_->FindTable(request->table_name());
+    if (!maybe_table) {
+      return ToGrpcStatus(maybe_table.status());
+    }
+
+    auto& table = maybe_table.value();
+
+    return ToGrpcStatus(table->SampleRowKeys(0.0001, writer));
   }
 
   grpc::Status MutateRow(grpc::ServerContext* /* context */,

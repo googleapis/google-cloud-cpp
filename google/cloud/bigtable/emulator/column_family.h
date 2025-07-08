@@ -30,6 +30,7 @@
 #include <google/bigtable/v2/types.pb.h>
 #include <absl/strings/str_format.h>
 #include <chrono>
+#include <cstddef>
 #include <cstdint>
 #include <map>
 #include <memory>
@@ -373,6 +374,8 @@ class ColumnFamily {
   iterator upper_bound(std::string const& row_key) {
     return rows_.upper_bound(row_key);
   }
+
+  std::size_t size() { return rows_.size(); }
 
   std::map<std::string, ColumnFamilyRow>::iterator find(
       std::string const& row_key) {

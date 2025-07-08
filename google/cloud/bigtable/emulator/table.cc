@@ -16,27 +16,42 @@
 #include "google/cloud/bigtable/emulator/column_family.h"
 #include "google/cloud/bigtable/emulator/filter.h"
 #include "google/cloud/bigtable/emulator/range_set.h"
-#include "google/cloud/bigtable/internal/google_bytes_traits.h"
+#include "google/cloud/bigtable/emulator/row_streamer.h"
 #include "google/cloud/internal/big_endian.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/status.h"
+#include "google/cloud/status_or.h"
 #include "google/protobuf/util/field_mask_util.h"
-#include <grpc/grpc_security_constants.h>
+#include <google/bigtable/admin/v2/bigtable_table_admin.pb.h>
+#include <google/bigtable/admin/v2/table.pb.h>
 #include <google/bigtable/admin/v2/types.pb.h>
 #include <google/bigtable/v2/bigtable.pb.h>
 #include <google/bigtable/v2/data.pb.h>
+#include <google/protobuf/field_mask.pb.h>
 #include <absl/strings/match.h>
 #include <absl/strings/str_format.h>
 #include <absl/types/optional.h>
+#include <absl/types/variant.h>
+#include <grpcpp/support/sync_stream.h>
 #include <re2/re2.h>
+#include <cassert>
 #include <chrono>
+#include <climits>
+#include <cmath>
+#include <cstddef>
 #include <cstdint>
 #include <cstdlib>
+#include <functional>
+#include <iostream>
+#include <map>
 #include <memory>
 #include <mutex>
-#include <optional>
+#include <ostream>
+#include <stack>
 #include <string>
 #include <type_traits>
+#include <utility>
+#include <vector>
 
 namespace google {
 namespace cloud {
@@ -600,6 +615,134 @@ bool Table::IsDeleteProtected() const {
 
 bool Table::IsDeleteProtectedNoLock() const {
   return schema_.deletion_protection();
+}
+
+Status Table::SampleRowKeys(
+    double pass_probability,
+    grpc::ServerWriter<google::bigtable::v2::SampleRowKeysResponse>* writer) {
+  if (pass_probability <= 0.0) {
+    return InvalidArgumentError(
+        "The sampling probabality must be positive",
+        GCP_ERROR_INFO().WithMetadata("provided sampling probability",
+                                      absl::StrFormat("%f", pass_probability)));
+  }
+
+  auto sample_every =
+      static_cast<std::uint64_t>(std::ceil(1.0 / pass_probability));
+
+  std::lock_guard<std::mutex> lock(mu_);
+
+  // First, stream all rows and cells and compute the offsets.
+  auto all_rows_set = std::make_shared<StringRangeSet>(StringRangeSet::All());
+  auto maybe_all_rows_stream = CreateCellStream(all_rows_set, absl::nullopt);
+  if (!maybe_all_rows_stream) {
+    return maybe_all_rows_stream.status();
+  }
+
+  auto& stream = *maybe_all_rows_stream;
+
+  absl::optional<std::string> first_row_key;
+  // The first row read will be used as a constant estimate of row
+  // sizes. If we are sampling 1/n rows, the value added to the offset
+  // (which is to be regarded as the size of all the rows before the
+  // sampled one) will be (n * row_size_estimate).
+  //
+  // That is every time a row is sampled, we do: offset += (n *
+  // row_size_estimate).
+  std::size_t row_size_estimate = 0;
+
+  for (; stream; ++stream) {
+    if (first_row_key.has_value() &&
+        stream->row_key() != first_row_key.value()) {
+      break;
+    }
+
+    first_row_key = stream->row_key();
+
+    row_size_estimate += stream->row_key().size();
+    row_size_estimate += stream->column_qualifier().size();
+    row_size_estimate += stream->value().size();
+    row_size_estimate += sizeof(stream->timestamp());
+  }
+
+  if (!first_row_key.has_value()) {
+    // No rows in the table
+    google::bigtable::v2::SampleRowKeysResponse resp;
+    resp.set_row_key("");
+    resp.set_offset_bytes(0);
+
+    auto opts = grpc::WriteOptions();
+    opts.set_last_message();
+
+    writer->WriteLast(std::move(resp), opts);
+    return Status();
+  }
+
+  std::int64_t offset_delta = sample_every * row_size_estimate;
+
+  google::bigtable::v2::RowFilter sample_filter;
+  sample_filter.set_row_sample_filter(pass_probability);
+
+  auto maybe_stream = CreateCellStream(all_rows_set, sample_filter);
+  if (!maybe_stream) {
+    return maybe_stream.status();
+  }
+
+  auto& sampled_stream = *maybe_stream;
+
+  std::int64_t offset = 0;
+
+  bool wrote_a_sample;
+
+  for (; sampled_stream; sampled_stream.Next(NextMode::kRow)) {
+    google::bigtable::v2::SampleRowKeysResponse resp;
+    offset += offset_delta;
+    resp.set_row_key(sampled_stream->row_key());
+    resp.set_offset_bytes(offset);
+
+    writer->Write(std::move(resp));
+
+    wrote_a_sample = true;
+  }
+
+  // Cloud bigtable client tests expect that, if they populated the
+  // table with at least one row, then at least one row sample is
+  // returned.
+  //
+  // In such a case, return any string that represents the last key,
+  // and an offset that is the estimated row size * the number of rows
+  // in the largest column family. We can return any string because
+  // the keys returned need not be in the table. See the proto
+  // specification.
+  if (!wrote_a_sample) {
+    std::size_t row_count_estimate = 0;
+
+    for (auto const& cf : *get()) {
+      if (cf.second->size() > row_count_estimate) {
+        row_count_estimate = cf.second->size();
+      }
+    }
+
+    std::int64_t this_offset = row_count_estimate * row_size_estimate;
+
+    google::bigtable::v2::SampleRowKeysResponse resp;
+    resp.set_row_key("last_key");
+    resp.set_offset_bytes(this_offset);
+    writer->Write(std::move(resp));
+
+    offset += this_offset;
+  }
+
+  google::bigtable::v2::SampleRowKeysResponse resp;
+  resp.set_row_key("");
+  // Client test code expects offset_bytes to be strictly
+  // increasing.
+  resp.set_offset_bytes(offset + 1);
+  auto opts = grpc::WriteOptions();
+  opts.set_last_message();
+  writer->WriteLast(std::move(resp), opts);
+
+  return Status();
 }
 
 Status Table::DropRowRange(
