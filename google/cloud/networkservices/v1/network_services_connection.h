@@ -30,6 +30,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
+#include <google/cloud/networkservices/v1/extensibility.pb.h>
 #include <google/cloud/networkservices/v1/network_services.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
