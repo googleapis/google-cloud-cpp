@@ -6,6 +6,11 @@ breaking changes in the upcoming 3.x release. This release is scheduled for
 
 ## v2.39.0 - 2025-07
 
+### [Storage](/google/cloud/storage/README.md)
+
+- feat(storage): Link traces between Open and ReadRange traces. ([#15236](https://github.com/googleapis/google-cloud-cpp/pull/15236))
+- feat(storage): Add check for writeHandle before transforming write_object_spec to append_object_spec ([#15224])(https://github.com/googleapis/google-cloud-cpp/pull/15224))
+
 ### [Google APIs interface definitions](https://github.com/googleapis/googleapis)
 
 - This release is based on definitions as of [2025-07-03T11:36:10-07:00](https://github.com/googleapis/googleapis/tree/f9d6fe4a6ad9ed89dfc315f284124d2104377940)
